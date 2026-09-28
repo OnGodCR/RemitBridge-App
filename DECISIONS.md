@@ -202,3 +202,51 @@ website, linked from the app.** *Resolves:* the D17 open point.
 
 **D34. Rate alerts come after launch, as push notifications** rather than
 WhatsApp template messages, since push is free. *Touches:* PRD 7 Phase A and 5.8.
+
+---
+
+## 2026-09-28: during the first build slice
+
+**D35. Mid-market reference: Frankfurter, cross-checked against open.er-api.com.**
+Both are free and keyless, and both are daily references, not live rates; the
+methodology screen says so. Frankfurter is the reference because the website uses
+it. On 2026-09-28 the two agreed within 0.12% on INR, MXN, PHP and VND. Coinbase
+was tried and dropped: its MXN was 1.4% off both. A live keyed source (the
+website uses Twelve Data) is an open option if daily references prove too coarse.
+*Touches:* PRD 9.7 check 3 and 9.13.
+
+**D36. Publish-gate defaults (the thresholds D10 asked for).** These live in
+`engine/src/remitbridge_engine/config.py`. Change the code and this entry together.
+- FX sources may disagree by up to **0.5%**; beyond that, the currency is held.
+- Math tolerance: the larger of **0.2%** or **1 unit** of the receiving currency,
+  because providers round.
+- Markup range: **−0.5% to 15%**. The floor sits below zero because the reference
+  is daily and the provider's rate is live; a bigger gap has to be a labelled promotion.
+- A fee above **15%** of the amount sent is held.
+- Tier consistency: markup may jump by at most **3 points** between neighboring grid amounts.
+- Anomaly: total cost moving more than **2 points** from the provider's 7-day median
+  is held.
+- Circuit breaker: opens after **3** failed runs in a row, or at once on a block,
+  with a **6-hour** cooldown.
+- Manual quotes must be run within **6 hours** of being observed.
+- Per domain: a delay of at least **3 s** between requests (more if robots.txt asks),
+  a 20 s timeout, and 3 attempts for transient errors only.
+
+**D37. Correction to D18: the website's typeface is Plus Jakarta Sans, not
+Geist.** Plus Jakarta Sans is what the site's `index.html` loads and what its CSS
+names; the Geist package in its `package.json` is unused. The app uses Plus
+Jakarta Sans.
+
+**D38. Wise and Remitly get no adapter (D4 applied).** Their terms forbid
+automated access (see `docs/MANUAL_RESEARCH.md`). The other six couldn't be read with
+a plain request. The engine ships with the manual adapter only, and the scraping
+approach is waiting on Angad.
+
+**D39. Manual quotes run when a file is added, not on the schedule.** A push to
+`engine/manual/quotes/` triggers the Scrape workflow for the manual adapter.
+Scheduled runs pass `--skip-manual`. Observations older than 6 hours are skipped
+and reported, not failed.
+
+**D40. Scheduled workflows stay off until the first scraping adapter exists.**
+There's nothing for them to do yet, and each run spends private-repo Actions
+minutes. The `schedule:` blocks are commented out in `scrape.yml` and `health.yml`.

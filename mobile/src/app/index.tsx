@@ -148,7 +148,7 @@ function Results({
         <AppText variant="heading">Not connected yet</AppText>
         <AppText muted>
           This build has no database configured, so there are no prices to show. Set
-          EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY in mobile/.env.
+          EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY in mobile/.env.local.
         </AppText>
       </Card>
     );

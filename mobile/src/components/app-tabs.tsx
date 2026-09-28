@@ -8,6 +8,7 @@ export default function AppTabs() {
     <NativeTabs
       backgroundColor={t.card}
       indicatorColor={t.accent}
+      tintColor={t.primary}
       labelStyle={{ selected: { color: t.primary } }}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Compare</NativeTabs.Trigger.Label>

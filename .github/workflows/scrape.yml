@@ -1,0 +1,57 @@
+name: Scrape
+
+# Every 6 hours for digital providers (PRD 9.11). The minute is off the hour on purpose:
+# GitHub delays scheduled runs most at :00, and it keeps us off the providers' busiest
+# moment too. Timing is best-effort (DECISIONS.md D13).
+#
+# Manual quotes run when a file lands in engine/manual/quotes/, not on the schedule.
+
+on:
+  # Off until the first scraping adapter is registered: there is nothing to run yet,
+  # and each run costs private-repo Actions minutes. Uncomment to enable.
+  # schedule:
+  #   - cron: "17 */6 * * *"
+  push:
+    branches: [main]
+    paths: ["engine/manual/quotes/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scrape
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - name: Stop if the database isn't configured
+        id: configured
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            echo "SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY secrets are not set; skipping."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.configured.outputs.ok == 'true'
+      - uses: astral-sh/setup-uv@v6
+        if: steps.configured.outputs.ok == 'true'
+      - if: steps.configured.outputs.ok == 'true'
+        run: uv sync --locked --no-dev
+      - name: Manual quotes
+        if: steps.configured.outputs.ok == 'true' && github.event_name == 'push'
+        run: uv run rb-engine run --adapter manual --store supabase
+      - name: Scraping adapters
+        if: steps.configured.outputs.ok == 'true' && github.event_name != 'push'
+        run: uv run rb-engine run --skip-manual --store supabase
