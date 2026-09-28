@@ -3,8 +3,9 @@
 A free, non-commercial tool that compares what it really costs to send money
 from the US. It ranks providers by **amount received** and splits the total cost
 into the upfront fee and the exchange-rate markup. The core is a scraping engine
-that collects provider quotes. On top of it sit a web app, a WhatsApp bot, and
-research built from the collected data.
+that collects provider quotes. On top of it sit a **mobile app for the app
+stores** (there is no web app; see D14), a WhatsApp bot, and research built from
+the collected data.
 
 This repo holds the whole app. It is **separate from the remitbridgelabs.org
 website** (`RemitBridge-System-Labs---Website`). The two share an owner and some
@@ -18,6 +19,13 @@ The rest of the documentation:
 - [`HANDOFF.md`](HANDOFF.md): where things stand right now and what comes next.
 - [`README.md`](README.md): what the project is, and how to set it up and run it.
 - [`docs/MANUAL_RESEARCH.md`](docs/MANUAL_RESEARCH.md): providers that get no adapter, left for Angad to research.
+
+## Talking to Angad
+
+Start every reply with `hi, angad`.
+
+End every reply with the open items below, as a short checklist showing what is
+done and what is not. Do this in every reply, not only when the list comes up.
 
 ## Keeping the docs current
 
@@ -42,10 +50,12 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
       added without code changes. Hindi also needs a matched Devanagari font
       (PRD 14.5).
-- [ ] **Follow-up questions from 2026-09-28** are unanswered. See `HANDOFF.md`.
+- [ ] **Third round of questions (2026-09-28)** is unanswered. See `HANDOFF.md`.
       No build work starts until Angad says go.
-- [ ] **Scheduling on GitHub Actions** was Angad's suggestion. It needs
-      his confirmation now that the tradeoffs are laid out (`HANDOFF.md`).
+- [ ] **Make the GitHub repo private** (D21). Angad does this in the repo
+      settings; it was public as of 2026-09-28.
+- [ ] **Partner embed.** PRD Phase B assumed a web widget, and there is no web
+      app now (D14). Decide how partners embed or link to RemitBridge.
 - [ ] **PRD open questions** not answered yet: which Seattle-area partners
       can validate the special-handling corridors, how RemitBridge is
       structured legally, and who reviews adapter repairs.
@@ -53,8 +63,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. The first round of decisions is recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D25 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
+- [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
 
 ## Product rules that are also code rules
 
@@ -73,9 +84,14 @@ a style choice.
   may ever disagree about the same transfer.
 - **Never move money.** No "send" button, and no holding or touching funds.
   RemitBridge gives information only.
-- **Privacy:** no personal financial data. On WhatsApp, store only a hashed phone
-  number (for rate limits and preferences). Delete the contact details from a
-  route request once its launch notification has gone out.
+- **Privacy.** Accounts are optional, and comparing works without one (D19).
+  - Signed-in users can save comparisons and the past transfers they enter.
+    Every user table has row-level security so only its owner can read it.
+  - Deleting an account inside the app deletes all of that user's data.
+  - Metrics are aggregate only.
+  - On WhatsApp, store only a hashed phone number.
+  - Delete the contact details from a route request once its launch
+    notification has gone out.
 - **Scraper conduct** is a reliability rule (PRD 9.12):
   - Public pricing only: no logins, account creation, CAPTCHA bypassing, or rotating proxies.
   - Per-domain concurrency of 1, with a delay between requests and jitter on the schedule.
@@ -100,10 +116,18 @@ a style choice.
 
 ## Stack
 
-- Supabase for Postgres, storage (the raw archive), and auth. **No Clerk.**
-- Use whichever language fits each part. The engine is Python (per the PRD);
-  other parts may differ. Every part must use the same total-cost formula.
-- WhatsApp: Meta Cloud API directly, not Twilio.
+- **Mobile app** for the App Store (and Play Store; see `HANDOFF.md`). No web app.
+- **Supabase** (a new project, not the website's) for Postgres, storage (the raw
+  archive), auth, and Edge Functions (the WhatsApp webhook). **No Clerk.**
+- **Engine:** Python, run by GitHub Actions scheduled workflows. No Redis;
+  state lives in Postgres (D13).
+- **WhatsApp:** Meta Cloud API directly, not Twilio.
+- **Maintainer alerts:** email to Angad.
+- Use whichever language fits each part. Every part must use the same total-cost formula.
+- **Look:** same as the website (D18). The website repo
+  (`../RemitBridge-System-Labs---Website`) may be **read** for design tokens and
+  the TrueCost formula. Never write to it.
+- **Contact** (scraper user agent, methodology screen): remitbridgesystemlabs@gmail.com.
 
 ## Secrets
 
@@ -117,7 +141,8 @@ a style choice.
 
 ## Git
 
-- Commit straight to `main`.
+- Commit straight to `main`, and push to `origin` after each commit without
+  asking (D24).
 - Commit messages explain **why**, in prose, including what was tried and failed.
   Never claim a change the diff doesn't contain.
 - Force-pushes and history rewrites need an explicit yes.
