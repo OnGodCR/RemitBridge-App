@@ -50,27 +50,32 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
       added without code changes. Hindi also needs a matched Devanagari font
       (PRD 14.5).
-- [ ] **Go-ahead to build.** Every question is answered (D1–D34). No build
-      work starts until Angad says go.
+- [ ] **Scraping decision.** Wise's and Remitly's terms forbid it; six providers
+      are unread (D38). Choose between manual quotes plus permission requests
+      (recommended), partner APIs, or scraping anyway.
+- [ ] **Supabase project not visible to the CLI.** The new account is logged in, but
+      the project list is empty. The migration isn't pushed yet.
+- [ ] **App icon and splash.** Still the Expo template's placeholders.
 - [ ] **Bank connections or receipt scanning** for past transfers. Manual
       entry only for now (D30).
 - [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
       submission (D32).
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Make the GitHub repo private** (D21). Angad does this in the repo
-      settings; it was public as of 2026-09-28.
 - [ ] **Partner embed.** PRD Phase B assumed a web widget, and there is no web
       app now (D14). Decide how partners embed or link to RemitBridge.
 - [ ] **PRD open questions** not answered yet: which Seattle-area partners
       can validate the special-handling corridors, how RemitBridge is
       structured legally, and who reviews adapter repairs.
-- [ ] **Providers needing manual research.** None so far. See
+- [ ] **Providers needing manual research:** Wise and Remitly. See
       `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. Decisions D1–D34 are recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D40 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
 - [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
+- [x] First build slice: formula (pinned to TrueCost), engine core, schema, and
+      the Compare and How it works screens, plus CI. Done 2026-09-28.
+- [x] Repo made private (D21). Done 2026-09-28.
 
 ## Product rules that are also code rules
 

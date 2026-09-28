@@ -48,6 +48,7 @@ class RunReport:
     quarantined: int = 0
     rejected: int = 0
     failed_requests: int = 0
+    skipped: int = 0  # manual observations too old to match a mid-market rate
     error_class: ErrorClass | None = None
     errors: list[str] = field(default_factory=list)
 
@@ -57,6 +58,8 @@ class RunReport:
             f"quarantined {self.quarantined}, rejected {self.rejected}, "
             f"failed requests {self.failed_requests}"
         )
+        if self.skipped:
+            s += f", skipped {self.skipped} (observed too long ago)"
         if self.error_class:
             s += f" | {self.error_class}: {self.errors[0] if self.errors else ''}"
         return s
@@ -145,7 +148,8 @@ async def run_adapter(
         if isinstance(adapter, ManualAdapter):
             age = (mid.fetched_at - parsed.captured_at).total_seconds()
             if age > C.MANUAL_QUOTE_MAX_AGE_S:
-                report.failed_requests += 1
+                # Not a failure: an old file in the folder. Skipped, and said so.
+                report.skipped += 1
                 report.errors.append(
                     f"manual quote {provider_id} {req.route_id} {req.send_amount:g} observed "
                     f"{age / 3600:.1f}h before the mid-market fetch; re-observe it"

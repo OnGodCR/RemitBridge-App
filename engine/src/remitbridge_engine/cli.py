@@ -1,6 +1,6 @@
 """rb-engine: the command the scheduled workflows run.
 
-    rb-engine run [--adapter ID ...] [--store local|supabase]
+    rb-engine run [--adapter ID ...] [--store local|supabase] [--skip-manual]
     rb-engine health [--store local|supabase]
     rb-engine fx
     rb-engine accept-drift ADAPTER_ID [--store local|supabase]
@@ -39,6 +39,12 @@ def _backends(kind: str, client: httpx.AsyncClient):
 
 async def _run(args) -> int:
     adapters = [a for a in all_adapters() if not args.adapter or a.meta.adapter_id in args.adapter]
+    if args.skip_manual:
+        # Scheduled runs: manual quotes run when a file is added, not every six hours.
+        adapters = [a for a in adapters if a.meta.adapter_id != "manual"]
+        if not adapters:
+            print("no scraping adapters registered yet; nothing to run")
+            return 0
     if not adapters:
         print(f"no adapters match {args.adapter}", file=sys.stderr)
         return 2
@@ -104,6 +110,7 @@ def main(argv: list[str] | None = None) -> int:
     run = sub.add_parser("run", help="run adapters and publish what passes the gate")
     run.add_argument("--adapter", action="append", help="adapter id; repeat for several")
     run.add_argument("--store", choices=["local", "supabase"], default="local")
+    run.add_argument("--skip-manual", action="store_true", help="for scheduled runs")
     health = sub.add_parser("health", help="one cheap known-good request per adapter")
     health.add_argument("--store", choices=["local", "supabase"], default="local")
     sub.add_parser("fx", help="show today's cross-checked mid-market rates")

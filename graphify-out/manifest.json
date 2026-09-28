@@ -33,5 +33,300 @@
     "mtime": 1790617667.537922,
     "ast_hash": "fb26409727b2116a1c0dbc91a03839d3",
     "semantic_hash": ""
+  },
+  "engine/pyproject.toml": {
+    "mtime": 1790635714.5898075,
+    "ast_hash": "3e977e67c79b0ad691e5537fa8aef8f2",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/__init__.py": {
+    "mtime": 1790636507.7893517,
+    "ast_hash": "80fe0bc2b580ca7984abbf4b0a57b4b8",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/adapters/__init__.py": {
+    "mtime": 1790636507.791234,
+    "ast_hash": "aa49bc4e18e870e11b0b8454e395d764",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/adapters/base.py": {
+    "mtime": 1790636201.6022465,
+    "ast_hash": "214bc1cabb5a0c538f6923eeeff78568",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/adapters/manual.py": {
+    "mtime": 1790636525.8292227,
+    "ast_hash": "d01776a10e2ff658c7200bdc158cdf3f",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/archive.py": {
+    "mtime": 1790636113.1437583,
+    "ast_hash": "a4aebc4b8e44bf263f419f84aa7c66dc",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/cli.py": {
+    "mtime": 1790636507.7950032,
+    "ast_hash": "eef94959877d5de39a0f547bb1ce634f",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/config.py": {
+    "mtime": 1790636113.0852401,
+    "ast_hash": "c4f74574bacfe0c3e3283cc9f8df2ff8",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/fx.py": {
+    "mtime": 1790636113.1282485,
+    "ast_hash": "0a079336952338679f5e7181126abf74",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/gate.py": {
+    "mtime": 1790636519.5373507,
+    "ast_hash": "6aa55813047638fa4e500aeee04549dc",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/http.py": {
+    "mtime": 1790636201.5599487,
+    "ast_hash": "65de3629b2f1c9a4b48ab615059adaa2",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/models.py": {
+    "mtime": 1790636113.1125567,
+    "ast_hash": "7a190466d7d5bdb75adda073bf892541",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/normalize.py": {
+    "mtime": 1790636139.1552036,
+    "ast_hash": "23ad9e9c672987a73ab82f967693d608",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/registry.py": {
+    "mtime": 1790636507.7931173,
+    "ast_hash": "f2fbf71a5adbe6950a779ccb56f39755",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/runner.py": {
+    "mtime": 1790636507.7858717,
+    "ast_hash": "e5e1353ab4ea60ea242f25416d228cf4",
+    "semantic_hash": ""
+  },
+  "engine/src/remitbridge_engine/store.py": {
+    "mtime": 1790636448.6481485,
+    "ast_hash": "a2a2af406fbc7b7c94bb21ca0179c19d",
+    "semantic_hash": ""
+  },
+  "engine/tests/__init__.py": {
+    "mtime": 1790636570.370577,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "engine/tests/conftest.py": {
+    "mtime": 1790636570.3584898,
+    "ast_hash": "8f37cd86b6d649edc50bba38cb997d93",
+    "semantic_hash": ""
+  },
+  "engine/tests/test_fx.py": {
+    "mtime": 1790636570.3653083,
+    "ast_hash": "faa67f3e7d4647c0f800c4fbae4639cf",
+    "semantic_hash": ""
+  },
+  "engine/tests/test_gate.py": {
+    "mtime": 1790636594.335572,
+    "ast_hash": "564fc2647507763ac7dadb27b6d90e1a",
+    "semantic_hash": ""
+  },
+  "engine/tests/test_http.py": {
+    "mtime": 1790636570.3624778,
+    "ast_hash": "9362a984a9340cd48df696e7c66e943e",
+    "semantic_hash": ""
+  },
+  "engine/tests/test_runner.py": {
+    "mtime": 1790636599.7330232,
+    "ast_hash": "7f4f2e0d762808d847329ac115a6432e",
+    "semantic_hash": ""
+  },
+  "mobile/app.json": {
+    "mtime": 1790636916.7247481,
+    "ast_hash": "30f29a15465d62761749c3fc38c0cd0c",
+    "semantic_hash": ""
+  },
+  "mobile/eslint.config.js": {
+    "mtime": 1790636931.5477023,
+    "ast_hash": "b713dd66aa3ad59ed5098d7b9f8dc202",
+    "semantic_hash": ""
+  },
+  "mobile/package.json": {
+    "mtime": 1790636924.5006258,
+    "ast_hash": "48169f5f28b41f6ec7f4337ddf99711e",
+    "semantic_hash": ""
+  },
+  "mobile/src/app/_layout.tsx": {
+    "mtime": 1790636904.7507317,
+    "ast_hash": "41a3bd9ae58d1677a88f9f46754f1cb6",
+    "semantic_hash": ""
+  },
+  "mobile/src/app/index.tsx": {
+    "mtime": 1790636965.3061934,
+    "ast_hash": "a11e3fb823b60d5ec7ed4284918f501d",
+    "semantic_hash": ""
+  },
+  "mobile/src/app/methodology.tsx": {
+    "mtime": 1790636952.6102118,
+    "ast_hash": "51f1736bfebeb803679bec39b0c32a58",
+    "semantic_hash": ""
+  },
+  "mobile/src/components/app-tabs.tsx": {
+    "mtime": 1790636904.7740629,
+    "ast_hash": "0356b609593e9852e2ea12a875f9559c",
+    "semantic_hash": ""
+  },
+  "mobile/src/components/does-not-tell-you.tsx": {
+    "mtime": 1790636863.1791277,
+    "ast_hash": "c17ca2b18b8ae1284a7da4ee6dbcf964",
+    "semantic_hash": ""
+  },
+  "mobile/src/components/quote-card.tsx": {
+    "mtime": 1790636863.168656,
+    "ast_hash": "ccf5b6cfc17056873df8be7831e9fbe7",
+    "semantic_hash": ""
+  },
+  "mobile/src/components/ui.tsx": {
+    "mtime": 1790636863.1517253,
+    "ast_hash": "43eea9744a1b55ebd81cf314a524febe",
+    "semantic_hash": ""
+  },
+  "mobile/src/constants/theme.ts": {
+    "mtime": 1790636827.7724218,
+    "ast_hash": "30cf9d35394040b04d44fa6b069ff91a",
+    "semantic_hash": ""
+  },
+  "mobile/src/hooks/use-color-scheme.ts": {
+    "mtime": 1790636665.5469816,
+    "ast_hash": "6f3444fcb9c7013a839a7832be518831",
+    "semantic_hash": ""
+  },
+  "mobile/src/hooks/use-theme.ts": {
+    "mtime": 1790636827.879742,
+    "ast_hash": "c79ef25c716c49fee3d33a3b969bd747",
+    "semantic_hash": ""
+  },
+  "mobile/src/lib/format.ts": {
+    "mtime": 1790636827.9077725,
+    "ast_hash": "e2476bceac51fbe9757f2d83168259ee",
+    "semantic_hash": ""
+  },
+  "mobile/src/lib/quotes.ts": {
+    "mtime": 1790636827.9159505,
+    "ast_hash": "49602b1fbc98706058e0e1b199bc8f24",
+    "semantic_hash": ""
+  },
+  "mobile/src/lib/routes.ts": {
+    "mtime": 1790636827.9015217,
+    "ast_hash": "9f93bb896419119752da5b60cfe8808b",
+    "semantic_hash": ""
+  },
+  "mobile/src/lib/supabase.ts": {
+    "mtime": 1790636827.8918872,
+    "ast_hash": "3286233b9daacc9d672f27f2ee31758a",
+    "semantic_hash": ""
+  },
+  "mobile/tsconfig.json": {
+    "mtime": 1790636665.5315979,
+    "ast_hash": "6794be22dd9dd00003515895d3b4ff06",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1790635692.5132003,
+    "ast_hash": "6f0e3dea9709c184031b0258c777d2b2",
+    "semantic_hash": ""
+  },
+  "packages/formula/package.json": {
+    "mtime": 1790635687.1498315,
+    "ast_hash": "080d19911299eab1a7435a7cb99c9e25",
+    "semantic_hash": ""
+  },
+  "packages/formula/python/pyproject.toml": {
+    "mtime": 1790635687.190746,
+    "ast_hash": "cab1113d90960d655cc6afe6257d5a65",
+    "semantic_hash": ""
+  },
+  "packages/formula/python/remitbridge_formula/__init__.py": {
+    "mtime": 1790635687.175655,
+    "ast_hash": "3f287e53a12b251e777e3d69818d5ff1",
+    "semantic_hash": ""
+  },
+  "packages/formula/python/tests/test_vectors.py": {
+    "mtime": 1790635687.1809437,
+    "ast_hash": "09955cc716005451f2b34d6c7a039998",
+    "semantic_hash": ""
+  },
+  "packages/formula/src/index.test.ts": {
+    "mtime": 1790635687.145945,
+    "ast_hash": "f139062bfb3590b9f4f6cb761d3e5655",
+    "semantic_hash": ""
+  },
+  "packages/formula/src/index.ts": {
+    "mtime": 1790635687.1434548,
+    "ast_hash": "1fdec4d6acfb5d7bb23a736bf66fb939",
+    "semantic_hash": ""
+  },
+  "packages/formula/tsconfig.json": {
+    "mtime": 1790635687.1707442,
+    "ast_hash": "6bfdb4e40a10d1a45b7e66d90602d92d",
+    "semantic_hash": ""
+  },
+  "mobile/AGENTS.md": {
+    "mtime": 1790636665.5588183,
+    "ast_hash": "233d1484702a528f5dcb4333cd01bb43",
+    "semantic_hash": ""
+  },
+  "mobile/CLAUDE.md": {
+    "mtime": 1790636665.5587811,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": ""
+  },
+  "mobile/README.md": {
+    "mtime": 1790636916.7329314,
+    "ast_hash": "b5c8aa886bbec6409bc54bfedfa3fca6",
+    "semantic_hash": ""
+  },
+  "mobile/assets/expo.icon/Assets/expo-symbol 2.svg": {
+    "mtime": 1790636665.546497,
+    "ast_hash": "6979b664c1ce82c10426a051082412a7",
+    "semantic_hash": ""
+  },
+  "mobile/assets/expo.icon/Assets/grid.png": {
+    "mtime": 1790636665.5385828,
+    "ast_hash": "37cdeda9d1af5d7432716d9671b098da",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/android-icon-background.png": {
+    "mtime": 1790636665.5322788,
+    "ast_hash": "2d65569cc0e2afdcea0af9f9902d4173",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/android-icon-foreground.png": {
+    "mtime": 1790636665.5327725,
+    "ast_hash": "72e71a9c846c6aa4ae32476641a00e18",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/android-icon-monochrome.png": {
+    "mtime": 1790636665.533008,
+    "ast_hash": "1e097dab989759fc0b69440092ca22cd",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/favicon.png": {
+    "mtime": 1790636665.5349517,
+    "ast_hash": "d9f444efbdfbe7931aa93beada07318a",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/icon.png": {
+    "mtime": 1790636665.5434377,
+    "ast_hash": "8d892ef03dbd43e8d899c1d605ad42df",
+    "semantic_hash": ""
+  },
+  "mobile/assets/images/splash-icon.png": {
+    "mtime": 1790636665.5459697,
+    "ast_hash": "5ee5db91d59518c45ebcc99a2f5afc57",
+    "semantic_hash": ""
   }
 }

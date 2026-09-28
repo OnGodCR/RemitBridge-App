@@ -1,0 +1,28 @@
+name: Health checks
+
+# Roughly hourly (PRD 9.6): one cheap known-good request per adapter, separate from the
+# full scrape. A failure fails the workflow, and GitHub emails the repo owner. Richer
+# alerts (D23) come with engine hardening.
+
+on:
+  # Off until the first scraping adapter is registered: there is nothing to run yet,
+  # and each run costs private-repo Actions minutes. Uncomment to enable.
+  # schedule:
+  #   - cron: "41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+      - run: uv run rb-engine health

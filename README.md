@@ -11,8 +11,8 @@ bot, and research built from the collected price data.
 
 ## Status
 
-**Pre-build.** Only the planning docs exist so far. See [`HANDOFF.md`](HANDOFF.md) for
-where things stand.
+**First build slice done.** It has the formula, the engine core, the schema, and the Compare
+screen. See [`HANDOFF.md`](HANDOFF.md) for where things stand.
 
 ## Launch routes
 
@@ -20,22 +20,29 @@ The launch routes all send from the US to: India (INR), Mexico (MXN), the
 Philippines (PHP), and Vietnam (VND). More follow in tiers (see
 [`docs/PRD.md`](docs/PRD.md), section 6).
 
-## Planned layout
-
-This layout is a proposal and will change once the stack is confirmed.
+## Layout
 
 ```
-engine/              Python scraping engine: adapters, normalizer, publish gate, raw archive
-mobile/              Mobile app: Compare, results, the rebuilt tools, accounts
-packages/formula/    The one total-cost formula, with shared test cases every language must pass
-supabase/            Schema migrations, row-level security policies, Edge Functions (WhatsApp webhook)
-.github/workflows/   Scheduled scrapes, health checks, CI
-docs/                PRD, adapter guide, manual research list
+engine/              Python scraping engine: adapters, publish gate, raw archive, rb-engine CLI
+mobile/              Expo app (iOS and Android): Compare, How it works
+packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
+supabase/            Schema migrations and row-level security
+.github/workflows/   CI, scheduled scrapes, health checks
+docs/                PRD, manual-research list
 ```
 
 ## Setup
 
-Setup commands will go here once there is code to run.
+You need Node 22+ (npm workspaces) and [uv](https://docs.astral.sh/uv/) for Python.
+
+```bash
+npm install                          # formula + mobile
+npm test -w @remitbridge/formula     # formula vectors (TypeScript)
+cd engine && uv sync && uv run pytest -q   # engine + formula vectors (Python)
+cd mobile && cp .env.example .env.local && npx expo start --lan
+```
+
+More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 
 ## Docs
 

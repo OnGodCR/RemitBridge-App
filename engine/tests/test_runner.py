@@ -133,7 +133,8 @@ async def test_manual_quotes_go_through_the_same_gate(tmp_path, no_sleep):
     (d / "2026-09-28.json").write_text(json.dumps([obs, stale, wrong]))
     env = setup(tmp_path, no_sleep)
     report = await run_adapter(ManualAdapter(d), **env)
-    assert report.published == 1 and report.rejected == 1 and report.failed_requests == 1
+    assert report.published == 1 and report.rejected == 1 and report.skipped == 1
+    assert report.failed_requests == 0
     [published] = [q for q in env["store"].data["quotes"].values()
                    if q["validation_status"] == ValidationStatus.PUBLISHED]
     assert published["provider_id"] == "remitly" and published["source"] == "manual"
