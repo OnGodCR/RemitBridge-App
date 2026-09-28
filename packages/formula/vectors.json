@@ -1,0 +1,335 @@
+{
+  "_about": "Shared test cases for the total-cost formula. Expected values were generated on 2026-09-28 by running the website's TrueCost implementation (RemitBridge-System-Labs---Website/src/lib/receipt.js, computeReceipt) on these inputs, so every implementation here is pinned to the TrueCost method. Do not hand-edit expected values. Relative tolerance: 1e-9.",
+  "cases": [
+    {
+      "name": "typical USD to MXN",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 8,
+        "quotedRate": 16.2,
+        "midRate": 17.05
+      },
+      "expected": {
+        "converted": 192,
+        "amountReceived": 3110.3999999999996,
+        "benchmarkReceived": 3410,
+        "shortfall": 299.60000000000036,
+        "markupPct": 4.9853372434017675,
+        "markupCost": 9.571847507331395,
+        "pickupCost": 0,
+        "feeCost": 8,
+        "totalCost": 17.571847507331395,
+        "totalCostPct": 8.785923753665697
+      }
+    },
+    {
+      "name": "no fee, markup only",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 500,
+        "fee": 0,
+        "quotedRate": 90.1,
+        "midRate": 95.35
+      },
+      "expected": {
+        "converted": 500,
+        "amountReceived": 45050,
+        "benchmarkReceived": 47675,
+        "shortfall": 2625,
+        "markupPct": 5.5060304142632415,
+        "markupCost": 27.530152071316206,
+        "pickupCost": 0,
+        "feeCost": 0,
+        "totalCost": 27.530152071316206,
+        "totalCostPct": 5.5060304142632415
+      }
+    },
+    {
+      "name": "fee only, rate at mid-market",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 300,
+        "fee": 12,
+        "quotedRate": 61.27,
+        "midRate": 61.27
+      },
+      "expected": {
+        "converted": 288,
+        "amountReceived": 17645.760000000002,
+        "benchmarkReceived": 18381,
+        "shortfall": 735.239999999998,
+        "markupPct": 0,
+        "markupCost": 0,
+        "pickupCost": 0,
+        "feeCost": 12,
+        "totalCost": 12,
+        "totalCostPct": 4
+      }
+    },
+    {
+      "name": "with a pickup charge",
+      "input": {
+        "pickupCharge": 40,
+        "sent": 200,
+        "fee": 5,
+        "quotedRate": 16.2,
+        "midRate": 17.05
+      },
+      "expected": {
+        "converted": 195,
+        "amountReceived": 3119,
+        "benchmarkReceived": 3410,
+        "shortfall": 291,
+        "markupPct": 4.9853372434017675,
+        "markupCost": 9.721407624633446,
+        "pickupCost": 2.3460410557184748,
+        "feeCost": 5,
+        "totalCost": 17.067448680351923,
+        "totalCostPct": 8.533724340175961
+      }
+    },
+    {
+      "name": "rate better than mid-market",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 3,
+        "quotedRate": 17.6,
+        "midRate": 17.05
+      },
+      "expected": {
+        "converted": 197,
+        "amountReceived": 3467.2000000000003,
+        "benchmarkReceived": 3410,
+        "shortfall": -57.20000000000027,
+        "markupPct": -3.2258064516129075,
+        "markupCost": -6.354838709677427,
+        "pickupCost": 0,
+        "feeCost": 3,
+        "totalCost": -3.354838709677427,
+        "totalCostPct": -1.6774193548387135
+      }
+    },
+    {
+      "name": "very small transfer",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 5,
+        "fee": 0.5,
+        "quotedRate": 16,
+        "midRate": 17.05
+      },
+      "expected": {
+        "converted": 4.5,
+        "amountReceived": 72,
+        "benchmarkReceived": 85.25,
+        "shortfall": 13.25,
+        "markupPct": 6.158357771261001,
+        "markupCost": 0.27712609970674507,
+        "pickupCost": 0,
+        "feeCost": 0.5,
+        "totalCost": 0.7771260997067451,
+        "totalCostPct": 15.5425219941349
+      }
+    },
+    {
+      "name": "very large transfer",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 250000,
+        "fee": 40,
+        "quotedRate": 16.9,
+        "midRate": 17.05
+      },
+      "expected": {
+        "converted": 249960,
+        "amountReceived": 4224324,
+        "benchmarkReceived": 4262500,
+        "shortfall": 38176,
+        "markupPct": 0.8797653958944406,
+        "markupCost": 2199.0615835777435,
+        "pickupCost": 0,
+        "feeCost": 40,
+        "totalCost": 2239.0615835777435,
+        "totalCostPct": 0.8956246334310974
+      }
+    },
+    {
+      "name": "high-magnitude rate, VND",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 6,
+        "quotedRate": 24000,
+        "midRate": 25400
+      },
+      "expected": {
+        "converted": 194,
+        "amountReceived": 4656000,
+        "benchmarkReceived": 5080000,
+        "shortfall": 424000,
+        "markupPct": 5.511811023622047,
+        "markupCost": 10.692913385826772,
+        "pickupCost": 0,
+        "feeCost": 6,
+        "totalCost": 16.69291338582677,
+        "totalCostPct": 8.346456692913385
+      }
+    },
+    {
+      "name": "sub-unit rate, USD to GBP",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 4,
+        "quotedRate": 0.74,
+        "midRate": 0.78
+      },
+      "expected": {
+        "converted": 196,
+        "amountReceived": 145.04,
+        "benchmarkReceived": 156,
+        "shortfall": 10.960000000000008,
+        "markupPct": 5.128205128205133,
+        "markupCost": 10.05128205128206,
+        "pickupCost": 0,
+        "feeCost": 4,
+        "totalCost": 14.05128205128206,
+        "totalCostPct": 7.02564102564103
+      }
+    },
+    {
+      "name": "everything at once",
+      "input": {
+        "pickupCharge": 250,
+        "sent": 1234.56,
+        "fee": 17.25,
+        "quotedRate": 122.4,
+        "midRate": 123.25
+      },
+      "expected": {
+        "converted": 1217.31,
+        "amountReceived": 148748.744,
+        "benchmarkReceived": 152159.52,
+        "shortfall": 3410.7759999999835,
+        "markupPct": 0.6896551724137885,
+        "markupCost": 8.395241379310288,
+        "pickupCost": 2.028397565922921,
+        "feeCost": 17.25,
+        "totalCost": 27.673638945233208,
+        "totalCostPct": 2.241579100670134
+      }
+    },
+    {
+      "name": "fee taken before conversion",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 20,
+        "quotedRate": 16,
+        "midRate": 17
+      },
+      "expected": {
+        "converted": 180,
+        "amountReceived": 2880,
+        "benchmarkReceived": 3400,
+        "shortfall": 520,
+        "markupPct": 5.88235294117647,
+        "markupCost": 10.588235294117647,
+        "pickupCost": 0,
+        "feeCost": 20,
+        "totalCost": 30.588235294117645,
+        "totalCostPct": 15.294117647058822
+      }
+    },
+    {
+      "name": "nothing charged at all",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 200,
+        "fee": 0,
+        "quotedRate": 17,
+        "midRate": 17
+      },
+      "expected": {
+        "converted": 200,
+        "amountReceived": 3400,
+        "benchmarkReceived": 3400,
+        "shortfall": 0,
+        "markupPct": 0,
+        "markupCost": 0,
+        "pickupCost": 0,
+        "feeCost": 0,
+        "totalCost": 0,
+        "totalCostPct": 0
+      }
+    },
+    {
+      "name": "pickup charge only",
+      "input": {
+        "pickupCharge": 34,
+        "sent": 200,
+        "fee": 0,
+        "quotedRate": 17,
+        "midRate": 17
+      },
+      "expected": {
+        "converted": 200,
+        "amountReceived": 3366,
+        "benchmarkReceived": 3400,
+        "shortfall": 34,
+        "markupPct": 0,
+        "markupCost": 0,
+        "pickupCost": 2,
+        "feeCost": 0,
+        "totalCost": 2,
+        "totalCostPct": 1
+      }
+    },
+    {
+      "name": "USD to INR, realistic",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 500,
+        "fee": 3.99,
+        "quotedRate": 95.1,
+        "midRate": 95.81
+      },
+      "expected": {
+        "converted": 496.01,
+        "amountReceived": 47170.551,
+        "benchmarkReceived": 47905,
+        "shortfall": 734.4490000000005,
+        "markupPct": 0.7410499947813464,
+        "markupCost": 3.675682079114956,
+        "pickupCost": 0,
+        "feeCost": 3.99,
+        "totalCost": 7.665682079114957,
+        "totalCostPct": 1.5331364158229914
+      }
+    },
+    {
+      "name": "USD to PHP, realistic",
+      "input": {
+        "pickupCharge": 0,
+        "sent": 1000,
+        "fee": 0,
+        "quotedRate": 61.9,
+        "midRate": 62.47
+      },
+      "expected": {
+        "converted": 1000,
+        "amountReceived": 61900,
+        "benchmarkReceived": 62470,
+        "shortfall": 570,
+        "markupPct": 0.9124379702257088,
+        "markupCost": 9.124379702257087,
+        "pickupCost": 0,
+        "feeCost": 0,
+        "totalCost": 9.124379702257087,
+        "totalCostPct": 0.9124379702257088
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[project]
+name = "remitbridge-formula"
+version = "0.1.0"
+description = "The one total-cost formula (TrueCost method), Python twin of packages/formula/src"
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["remitbridge_formula"]

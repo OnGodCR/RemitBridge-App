@@ -1,0 +1,38 @@
+[project]
+name = "remitbridge-engine"
+version = "0.1.0"
+description = "RemitBridge scraping engine: adapters, publish gate, raw archive"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "remitbridge-formula",
+]
+
+[project.scripts]
+rb-engine = "remitbridge_engine.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "respx>=0.21",
+    "ruff>=0.6",
+]
+
+[tool.uv.sources]
+remitbridge-formula = { path = "../packages/formula/python", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/remitbridge_engine"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "../packages/formula/python/tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
