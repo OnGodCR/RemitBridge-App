@@ -50,8 +50,13 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
       added without code changes. Hindi also needs a matched Devanagari font
       (PRD 14.5).
-- [ ] **Third round of questions (2026-09-28)** is unanswered. See `HANDOFF.md`.
-      No build work starts until Angad says go.
+- [ ] **Go-ahead to build.** Every question is answered (D1–D34). No build
+      work starts until Angad says go.
+- [ ] **Bank connections or receipt scanning** for past transfers. Manual
+      entry only for now (D30).
+- [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
+      submission (D32).
+- [ ] **Rate alerts as push notifications.** Post-launch (D34).
 - [ ] **Make the GitHub repo private** (D21). Angad does this in the repo
       settings; it was public as of 2026-09-28.
 - [ ] **Partner embed.** PRD Phase B assumed a web widget, and there is no web
@@ -63,7 +68,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. Decisions D1–D25 are recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D34 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
 - [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
 
@@ -116,7 +121,11 @@ a style choice.
 
 ## Stack
 
-- **Mobile app** for the App Store (and Play Store; see `HANDOFF.md`). No web app.
+- **Mobile app:** Expo (React Native, TypeScript), for iOS and Android. No web app.
+  The pages the store requires (privacy policy, support, link handling) live on a
+  remitbridgelabs.org subdomain served from this repo (D28).
+- **Auth:** email code, Sign in with Apple, and Google, through Supabase Auth.
+- **Metrics:** first-party events in Supabase, with the honesty and privacy rules in D31.
 - **Supabase** (a new project, not the website's) for Postgres, storage (the raw
   archive), auth, and Edge Functions (the WhatsApp webhook). **No Clerk.**
 - **Engine:** Python, run by GitHub Actions scheduled workflows. No Redis;

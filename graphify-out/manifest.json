@@ -1,0 +1,37 @@
+{
+  ".claude/settings.json": {
+    "mtime": 1790617148.0580842,
+    "ast_hash": "0498e7e07c7f48ab1bb5735060c5f850",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1790618021.8339617,
+    "ast_hash": "0d2b70a5eca9b45fb83453d0c876e39a",
+    "semantic_hash": ""
+  },
+  "DECISIONS.md": {
+    "mtime": 1790617994.2191646,
+    "ast_hash": "d183f89ab4ff87b6d4fb25ad15d3cca3",
+    "semantic_hash": ""
+  },
+  "HANDOFF.md": {
+    "mtime": 1790618049.3923178,
+    "ast_hash": "0acebf24bc8743b6ad98b6f2b128d596",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790618049.7868183,
+    "ast_hash": "d152c311d81922a2abef673063d32372",
+    "semantic_hash": ""
+  },
+  "docs/MANUAL_RESEARCH.md": {
+    "mtime": 1790617708.971121,
+    "ast_hash": "b55e525004eba2bac6b17f6432babea6",
+    "semantic_hash": ""
+  },
+  "docs/PRD.md": {
+    "mtime": 1790617667.537922,
+    "ast_hash": "fb26409727b2116a1c0dbc91a03839d3",
+    "semantic_hash": ""
+  }
+}

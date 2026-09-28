@@ -7,16 +7,18 @@ resume. Update it at the end of every working session.
 
 ## Status: pre-build
 
-No application code exists yet. **Angad said not to start building until he
-gives the go-ahead.** That go-ahead is waiting on the third round of questions below.
+No application code exists yet. Every question is answered (D1–D34).
+**Building starts only when Angad gives the go-ahead.**
 
-## The shape of the product (as of D25)
+## The shape of the product (as of D34)
 
-- **Mobile app** on the app stores. No web app. Screens: Compare, Results, Quote
+- **Mobile app** (Expo, iOS and Android) on the app stores. No web app. Screens: Compare, Results, Quote
   detail, Route not covered, Route board, Methodology, and the rebuilt tools:
   TrueCost, Fair rate, Yearly cost, Rate history, and Scam check.
-- **Optional accounts** (Supabase Auth) to save comparisons and past transfers.
-  Comparing works without an account.
+- **Optional accounts** (email code, Apple, Google) to save comparisons and
+  past transfers entered by hand. Comparing works without an account.
+- **Metrics:** broad, first-party, and honest (D31), with an admin metrics screen.
+- **Store-required pages** live on a remitbridgelabs.org subdomain served from this repo (D28).
 - **Engine:** Python, run by GitHub Actions on a schedule (every 6 hours for
   digital providers, roughly hourly for health checks). Tier 1 adapters:
   Remitly, Wise, Xoom, Western Union, MoneyGram, Xe, WorldRemit, and Ria.
@@ -32,7 +34,7 @@ gives the go-ahead.** That go-ahead is waiting on the third round of questions b
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items, graphify |
 | `HANDOFF.md` | This file |
 | `README.md` | What the project is, with the planned layout (setup commands come later) |
-| `DECISIONS.md` | Decisions made on top of the PRD (D1–D25) |
+| `DECISIONS.md` | Decisions made on top of the PRD (D1–D34) |
 | `docs/PRD.md` | PRD v0.4, converted from the published artifact and kept as written |
 | `docs/MANUAL_RESEARCH.md` | Providers blocked from scraping, left for manual research (empty) |
 | `.claude/settings.json` | graphify hooks that check the knowledge graph before searches and reads |
@@ -42,63 +44,50 @@ gives the go-ahead.** That go-ahead is waiting on the third round of questions b
 The remote is `https://github.com/OnGodCR/RemitBridge-App.git`. The branch is
 `main`, and it's pushed. The repo is **public** and should be made private (D21).
 
-## What's next
+## What's next: the first build slice (on go-ahead)
 
-1. Angad answers the third round of questions below.
-2. Record the answers in `DECISIONS.md`.
-3. On his go-ahead, build a bare-minimum scaffold (D12):
-   - A monorepo with an `engine/` (Python) folder, a `mobile/` folder, the
-     shared formula with its test cases, `supabase/` migrations, and the
-     scheduled workflows.
-   - One adapter working end to end.
-   - The Compare screen reading real quotes.
+The goal is a bare-minimum scaffold where one real quote flows from a provider
+site to a phone screen:
 
-## Third round of questions (asked 2026-09-28, not yet answered)
+1. **Repo skeleton:** `engine/` (Python 3.12 with uv), `mobile/` (Expo),
+   `packages/formula/` (the total-cost formula in TypeScript and Python, plus
+   shared test cases), `supabase/` (migrations and RLS), and
+   `.github/workflows/`.
+2. **Formula first.** Copy the TrueCost method from the website repo (read-only)
+   and write the shared test cases before anything uses it.
+3. **Supabase schema:** the PRD section 8 tables, the engine's state tables
+   (D13), and the events table (D31), all with RLS written first.
+4. **Engine core:** the adapter base class, **one** Tier 1 adapter end to
+   end, the normalizer, the publish gate, and the raw archive, run by a
+   scheduled workflow.
+5. **Mobile:** a Compare screen that reads published quotes, in the website's
+   look.
 
-1. **Platforms:** iOS only, or iOS and Android? *(Recommended: both, from one
-   codebase.)*
-2. **App framework:** Expo (React Native, TypeScript)? One codebase serves both
-   stores, and it's React, like the website, so its look carries over.
-   *(Recommended.)*
-3. **Domain:** which domain is it (remitbridgelabs.org)? The app still needs
-   a few web pages even without a web app:
-   - a privacy policy URL and a support URL, which the App Store requires;
-   - a target for the bot's "full list" link, so it opens the app if it's
-     installed and the store listing if not;
-   - a small file that lets links open the app.
+Later slices: the other 7 adapters, the rest of the screens and tools, accounts,
+metrics, the WhatsApp bot, the store-required pages, and engine hardening.
 
-   Where should those live: a subdomain served from this repo (e.g.
-   `app.remitbridgelabs.org`), or pages added to the website? *(Recommended:
-   the subdomain, so the website repo stays untouched.)*
-4. **Sign-in methods:** email code, Sign in with Apple, Google? Apple requires
-   Sign in with Apple whenever Google sign-in is offered. *(Recommended: all three.)*
-5. **Past transfers:** users type them in themselves (e.g. from a TrueCost
-   receipt check), with no bank connections and no receipt-photo scanning?
-   *(Recommended for MVP.)*
-6. **Metrics:** which numbers matter most? Recommended: downloads from App Store
-   Connect and Play Console, plus our own events table in Supabase
-   (comparisons, routes, savings found, sign-ups), and no third-party trackers.
-   That keeps the store privacy label clean and fits the no-ads promise.
-   Or do you want a product-analytics service such as PostHog?
-7. **Developer accounts:** Apple Developer Program ($99/yr) and Google Play
-   ($25 one-time) need enrolling, and only Angad can do that. Enroll as an
-   individual or as an organization? An organization needs a legal entity and
-   a D-U-N-S number, and its name shows as the seller. This ties into the
-   PRD's open question about how RemitBridge is structured.
-8. **Website content in the app:** should the blog, papers, glossary,
-   workshops and fellowships come in? Recommended: the glossary in the app
-   (it feeds the shared terminology), and the rest stays on the website,
-   linked from the app.
-9. **Rate alerts:** an app can send push notifications for free, which is cheaper
-   than WhatsApp template messages. Keep rate alerts post-MVP as the PRD says, but
-   plan for them as push notifications? *(Recommended.)*
+### What Angad will need to do (Claude can't)
+
+- **Create the new Supabase project** in his Supabase account. Then run
+  `supabase login` in a terminal so Claude can link and push migrations. Keys go
+  in through `supabase secrets set` and GitHub Actions secrets, never the chat.
+- **Make the repo private** (D21).
+- **Later:** create the Meta WhatsApp Business account, the Google and Apple
+  sign-in credentials, DNS for the subdomain, and the developer accounts (D32).
+
+### Local toolchain (checked 2026-09-28)
+
+Installed: Xcode, Homebrew, Node 25, Python 3.12 (Homebrew), and the Supabase
+CLI. Missing: `uv`, which Claude installs via Homebrew at build start. The
+system `python3` is 3.9; don't use it for the engine.
 
 ## Known gaps between the PRD and the decisions
 
 - PRD 14.1 puts the app inside the website. D1 and D14 replace that with a
   separate mobile app.
 - PRD 5.6 and 11 say no personal financial data. D19 allows opt-in accounts
-  with saved transfers, under RLS, with in-app deletion.
+  with saved transfers, under RLS, with in-app deletion. D31 widens analytics
+  well beyond PRD 5.6, keeping it first-party and aggregate.
 - PRD 9.2 and 9.13 assume Redis and an always-on worker. D13 uses GitHub Actions
   with state in Postgres.
 - PRD 14.11 assumes a design-system package shared with the website. Under D18
