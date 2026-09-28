@@ -138,3 +138,67 @@ Force-pushes and history rewrites still need an explicit yes.
 
 **D25. Reply conventions match the website repo:** every reply starts with
 "hi, angad" and ends with the open-items checklist.
+
+---
+
+## 2026-09-28: third round
+
+**D26. Ship on both iOS and Android.**
+
+**D27. The app is built with Expo (React Native, TypeScript).** Angad left this to
+Claude. One codebase serves both stores. It's React, like the website, so the
+website's look (D18) carries over. It also runs on a phone through Expo Go
+before any developer account exists (see D32).
+
+**D28. The web pages the app needs live on a subdomain of remitbridgelabs.org,
+served from this repo** (e.g. `app.remitbridgelabs.org`). They are: the privacy
+policy, the support page, the links from the bot that open the app or the
+store, and the association files that let links open the app. The website repo
+stays untouched. The exact subdomain is confirmed when it's set up.
+*Resolves:* D16.
+
+**D29. Sign-in methods: email code, Sign in with Apple, and Google.** All go
+through Supabase Auth.
+
+**D30. Users enter past transfers by hand.** No bank connections and no
+receipt scanning for now. Revisiting that is an open item.
+
+**D31. Metrics: track as much as honestly possible.** The app's purpose
+includes supporting Angad's college applications, so broad measurement is a
+goal in its own right. How:
+- **First-party events in Supabase, with no third-party analytics SDK.** We own
+  the raw data, so every figure can be reproduced and defended if someone
+  asks, and the store privacy labels stay simple.
+- **What gets tracked:**
+  - Usage: installs, sessions, daily/weekly/monthly active users, retention
+    (day 1, 7, 30), screen views, and the funnel from route picked to results
+    seen to quote detail opened.
+  - Activity: comparisons by channel (app or WhatsApp), routes and amounts
+    (bucketed), use of each tool, sign-ups, saved transfers, route requests,
+    and reports of wrong prices.
+  - Impact: estimated savings, the engine's quotes collected, providers and
+    routes covered, the engine's reliability and accuracy, and partner
+    organizations reached.
+- **Honesty rules, so the numbers survive scrutiny:**
+  - Every metric has a written definition.
+  - Savings are always best option vs. the median option (PRD 10).
+  - Internal and test devices and accounts are excluded.
+  - App and WhatsApp counts are never double-counted.
+  - No number is shown without a way to reproduce it from the raw events.
+- **Privacy limits:** installs are identified by a random anonymous ID. There
+  is no cross-app tracking (so no App Tracking Transparency prompt), no device
+  fingerprinting, and no location beyond the route the user picks. Everything
+  is disclosed in the store privacy labels.
+- An **admin-only metrics screen** shows these totals, and it can be exported.
+*Supersedes:* the "basic analytics" of PRD 5.6 in scope, while keeping its
+aggregate-only principle.
+
+**D32. The Apple and Google developer accounts come later.** Angad enrolls when
+store submission is near. Until then, development runs in simulators and in
+Expo Go.
+
+**D33. Glossary in the app; blog, papers, workshops and fellowships stay on the
+website, linked from the app.** *Resolves:* the D17 open point.
+
+**D34. Rate alerts come after launch, as push notifications** rather than
+WhatsApp template messages, since push is free. *Touches:* PRD 7 Phase A and 5.8.
