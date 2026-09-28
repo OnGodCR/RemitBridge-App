@@ -1,0 +1,40 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Engine local output (the real raw archive lives in Supabase Storage)
+engine/.archive/
+
+# graphify cache (graph.json and GRAPH_REPORT.md stay tracked)
+graphify-out/cache/
