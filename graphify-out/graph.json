@@ -7,7 +7,7 @@
       "label": "Git",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L142",
+      "source_location": "L151",
       "_origin": "ast",
       "id": "claude_git",
       "community": 0,
@@ -18,7 +18,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L150",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "claude_graphify",
       "community": 0,
@@ -51,7 +51,7 @@
       "label": "Product rules that are also code rules",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L70",
+      "source_location": "L75",
       "_origin": "ast",
       "id": "claude_product_rules_that_are_also_code_rules",
       "community": 0,
@@ -73,7 +73,7 @@
       "label": "Secrets",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L132",
+      "source_location": "L141",
       "_origin": "ast",
       "id": "claude_secrets",
       "community": 0,
@@ -84,7 +84,7 @@
       "label": "Stack",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L117",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "claude_stack",
       "community": 0,
@@ -106,7 +106,7 @@
       "label": "Words and voice",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L106",
+      "source_location": "L111",
       "_origin": "ast",
       "id": "claude_words_and_voice",
       "community": 0,
@@ -128,12 +128,23 @@
       "label": "Known gaps between the PRD and the decisions",
       "file_type": "document",
       "source_file": "HANDOFF.md",
-      "source_location": "L96",
+      "source_location": "L84",
       "_origin": "ast",
       "id": "handoff_known_gaps_between_the_prd_and_the_decisions",
       "community": 1,
       "community_name": "Handoff",
       "norm_label": "known gaps between the prd and the decisions"
+    },
+    {
+      "label": "Local toolchain (checked 2026-09-28)",
+      "file_type": "document",
+      "source_file": "HANDOFF.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "handoff_local_toolchain_checked_2026_09_28",
+      "community": 1,
+      "community_name": "Handoff",
+      "norm_label": "local toolchain (checked 2026-09-28)"
     },
     {
       "label": "Status: pre-build",
@@ -147,32 +158,32 @@
       "norm_label": "status: pre-build"
     },
     {
-      "label": "The shape of the product (as of D25)",
+      "label": "The shape of the product (as of D34)",
       "file_type": "document",
       "source_file": "HANDOFF.md",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "handoff_the_shape_of_the_product_as_of_d25",
+      "id": "handoff_the_shape_of_the_product_as_of_d34",
       "community": 1,
       "community_name": "Handoff",
-      "norm_label": "the shape of the product (as of d25)"
+      "norm_label": "the shape of the product (as of d34)"
     },
     {
-      "label": "Third round of questions (asked 2026-09-28, not yet answered)",
+      "label": "What Angad will need to do (Claude can't)",
       "file_type": "document",
       "source_file": "HANDOFF.md",
-      "source_location": "L56",
+      "source_location": "L69",
       "_origin": "ast",
-      "id": "handoff_third_round_of_questions_asked_2026_09_28_not_yet_answered",
+      "id": "handoff_what_angad_will_need_to_do_claude_can_t",
       "community": 1,
       "community_name": "Handoff",
-      "norm_label": "third round of questions (asked 2026-09-28, not yet answered)"
+      "norm_label": "what angad will need to do (claude can't)"
     },
     {
       "label": "What exists",
       "file_type": "document",
       "source_file": "HANDOFF.md",
-      "source_location": "L28",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "handoff_what_exists",
       "community": 1,
@@ -180,15 +191,15 @@
       "norm_label": "what exists"
     },
     {
-      "label": "What's next",
+      "label": "What's next: the first build slice (on go-ahead)",
       "file_type": "document",
       "source_file": "HANDOFF.md",
-      "source_location": "L45",
+      "source_location": "L47",
       "_origin": "ast",
-      "id": "handoff_what_s_next",
+      "id": "handoff_what_s_next_the_first_build_slice_on_go_ahead",
       "community": 1,
       "community_name": "Handoff",
-      "norm_label": "what's next"
+      "norm_label": "what's next: the first build slice (on go-ahead)"
     },
     {
       "label": "Docs",
@@ -196,10 +207,10 @@
       "source_file": "README.md",
       "source_location": "L40",
       "_origin": "ast",
-      "id": "readme_docs",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "docs"
+      "norm_label": "docs",
+      "id": "readme_docs"
     },
     {
       "label": "Launch routes",
@@ -207,10 +218,10 @@
       "source_file": "README.md",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "readme_launch_routes",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "launch routes"
+      "norm_label": "launch routes",
+      "id": "readme_launch_routes"
     },
     {
       "label": "Planned layout",
@@ -218,10 +229,10 @@
       "source_file": "README.md",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "readme_planned_layout",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "planned layout"
+      "norm_label": "planned layout",
+      "id": "readme_planned_layout"
     },
     {
       "label": "RemitBridge",
@@ -229,10 +240,10 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_remitbridge",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "remitbridge"
+      "norm_label": "remitbridge",
+      "id": "readme_remitbridge"
     },
     {
       "label": "Setup",
@@ -240,10 +251,10 @@
       "source_file": "README.md",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "readme_setup",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "setup"
+      "norm_label": "setup",
+      "id": "readme_setup"
     },
     {
       "label": "Status",
@@ -251,10 +262,10 @@
       "source_file": "README.md",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "readme_status",
       "community": 2,
       "community_name": "RemitBridge",
-      "norm_label": "status"
+      "norm_label": "status",
+      "id": "readme_status"
     },
     {
       "label": "CLAUDE.md",
@@ -295,10 +306,10 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme",
       "community": 3,
       "community_name": "CLAUDE.md",
-      "norm_label": "readme.md"
+      "norm_label": "readme.md",
+      "id": "readme"
     },
     {
       "label": "2026-09-28: first round, after reading PRD v0.4",
@@ -321,6 +332,17 @@
       "community": 4,
       "community_name": "Decisions",
       "norm_label": "2026-09-28: second round"
+    },
+    {
+      "label": "2026-09-28: third round",
+      "file_type": "document",
+      "source_file": "DECISIONS.md",
+      "source_location": "L144",
+      "_origin": "ast",
+      "id": "decisions_2026_09_28_third_round",
+      "community": 4,
+      "community_name": "Decisions",
+      "norm_label": "2026-09-28: third round"
     },
     {
       "label": "Decisions",
@@ -350,7 +372,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L106",
+      "source_location": "L111",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -361,7 +383,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L117",
+      "source_location": "L122",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -372,7 +394,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L132",
+      "source_location": "L141",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -383,7 +405,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L142",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -394,7 +416,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L150",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -438,7 +460,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L70",
+      "source_location": "L75",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -471,6 +493,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "DECISIONS.md",
+      "source_location": "L144",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "decisions_decisions",
+      "target": "decisions_2026_09_28_third_round",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "DECISIONS.md",
       "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
@@ -497,14 +530,14 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "handoff_handoff",
-      "target": "handoff_the_shape_of_the_product_as_of_d25",
+      "target": "handoff_the_shape_of_the_product_as_of_d34",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "HANDOFF.md",
-      "source_location": "L28",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "handoff_handoff",
@@ -515,22 +548,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "HANDOFF.md",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "handoff_handoff",
-      "target": "handoff_what_s_next",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "HANDOFF.md",
-      "source_location": "L56",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "handoff_handoff",
-      "target": "handoff_third_round_of_questions_asked_2026_09_28_not_yet_answered",
+      "target": "handoff_what_s_next_the_first_build_slice_on_go_ahead",
       "confidence_score": 1.0
     },
     {
@@ -548,7 +570,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "HANDOFF.md",
-      "source_location": "L96",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "handoff_handoff",
@@ -558,13 +580,35 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "HANDOFF.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "handoff_what_s_next_the_first_build_slice_on_go_ahead",
+      "target": "handoff_what_angad_will_need_to_do_claude_can_t",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "HANDOFF.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "handoff_what_s_next_the_first_build_slice_on_go_ahead",
+      "target": "handoff_local_toolchain_checked_2026_09_28",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme",
-      "target": "readme_remitbridge",
-      "confidence_score": 1.0
+      "target": "readme_remitbridge"
     },
     {
       "relation": "contains",
@@ -573,9 +617,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme_remitbridge",
-      "target": "readme_status",
-      "confidence_score": 1.0
+      "target": "readme_status"
     },
     {
       "relation": "contains",
@@ -584,9 +628,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme_remitbridge",
-      "target": "readme_launch_routes",
-      "confidence_score": 1.0
+      "target": "readme_launch_routes"
     },
     {
       "relation": "contains",
@@ -595,9 +639,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme_remitbridge",
-      "target": "readme_planned_layout",
-      "confidence_score": 1.0
+      "target": "readme_planned_layout"
     },
     {
       "relation": "contains",
@@ -606,9 +650,9 @@
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme_remitbridge",
-      "target": "readme_setup",
-      "confidence_score": 1.0
+      "target": "readme_setup"
     },
     {
       "relation": "contains",
@@ -617,9 +661,9 @@
       "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme_remitbridge",
-      "target": "readme_docs",
-      "confidence_score": 1.0
+      "target": "readme_docs"
     },
     {
       "relation": "references",
@@ -661,9 +705,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme",
-      "target": "handoff",
-      "confidence_score": 1.0
+      "target": "handoff"
     },
     {
       "relation": "references",
@@ -672,11 +716,11 @@
       "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "readme",
-      "target": "decisions",
-      "confidence_score": 1.0
+      "target": "decisions"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "11a33005b4f2225701f03cf9c4686d704bd3a123"
+  "built_at_commit": "1b07daafce9a750ab2cdc018e96f8a45a6eadc26"
 }

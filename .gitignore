@@ -38,3 +38,5 @@ engine/.archive/
 
 # graphify cache (graph.json and GRAPH_REPORT.md stay tracked)
 graphify-out/cache/
+# graphify dated snapshots (the current graph at graphify-out/ is tracked)
+graphify-out/20*/
