@@ -6,8 +6,8 @@ your family receives**. Total cost is split into the upfront fee and the
 exchange-rate markup hidden inside the rate. There are no affiliate links, the
 method is public, and RemitBridge never touches anyone's money.
 
-Planned surfaces: a web comparison page, a WhatsApp bot, and research built
-from the collected price data.
+Planned surfaces: a mobile app for the App Store and Play Store, a WhatsApp
+bot, and research built from the collected price data.
 
 ## Status
 
@@ -26,10 +26,9 @@ This layout is a proposal and will change once the stack is confirmed.
 
 ```
 engine/              Python scraping engine: adapters, normalizer, publish gate, raw archive
-web/                 Web app: Compare, results, methodology, route board
-bot/                 WhatsApp webhook (Meta Cloud API)
+mobile/              Mobile app: Compare, results, the rebuilt tools, accounts
 packages/formula/    The one total-cost formula, with shared test cases every language must pass
-supabase/            Schema migrations and row-level security policies
+supabase/            Schema migrations, row-level security policies, Edge Functions (WhatsApp webhook)
 .github/workflows/   Scheduled scrapes, health checks, CI
 docs/                PRD, adapter guide, manual research list
 ```

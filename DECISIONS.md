@@ -66,3 +66,75 @@ with its reasoning, so it can be tuned later.
 **D12. Build order: start with a bare-minimum scaffold, then refine.** Claude
 picks the natural starting point.
 *Touches:* PRD 12.
+
+---
+
+## 2026-09-28: second round
+
+**D13. Scheduling on GitHub Actions is confirmed.** This makes D6 final.
+There is no Redis queue: each scheduled run is one process, with per-domain
+concurrency handled in memory. Circuit-breaker state, adapter health, and
+response fingerprints live in Supabase, so each run picks up where the last
+one stopped. Loose timing is accepted: GitHub may delay or skip scheduled runs,
+and the "hourly" health check is really roughly hourly. The engine stays a plain
+command-line tool, so a VM could run it later without changes.
+*Supersedes:* PRD 9.2 (Redis and worker pool) and 9.13 (always-on worker).
+
+**D14. There is no web app. The product is a mobile app published on the app
+stores.** Angad's reason: app-store distribution gives the metrics he wants.
+Every screen in PRD 14.7 becomes an app screen, and "Compare page" in the PRD
+means the Compare screen. The server-rendering advice in PRD 14.10 doesn't apply;
+its goal (fast answers on old phones and slow networks) still does.
+*Supersedes:* the web parts of PRD 5.1, 5.4, 14.7, and 14.10. The partner web
+widget (Phase B) is an open item.
+
+**D15. The WhatsApp webhook runs on Supabase Edge Functions.**
+
+**D16. The app uses Angad's existing domain.** Which domain it is, and what the
+bot's "full list" link opens, are pending (see `HANDOFF.md`).
+
+**D17. The website's tools are rebuilt for the app:** TrueCost, Fair rate,
+Yearly cost, Rate history, and Scam check. They read live data where PRD 5.7
+says they should.
+*Touches:* PRD 5.7. It is still open whether the blog, papers, glossary,
+workshops, and fellowships come into the app.
+
+**D18. The app looks like the website.** Same brand green `#14705A`, Geist, and
+the same semantic money colors. Claude may **read** the website repo, never
+write to it, to copy the design tokens and the exact TrueCost formula.
+*Touches:* PRD 14.4 and 14.5. The two repos still share no code (D1): tokens
+and the formula are copied here and pinned by test cases.
+
+**D19. Anyone can create an account (Supabase Auth)** to keep their history:
+saved comparisons and past transfers they enter themselves. Comparing works
+without an account.
+*Supersedes:* PRD 5.6 and the privacy row of PRD 11 ("no personal financial
+data"). Transfer amounts are now stored against signed-in users. The rules that
+follow from that: storing anything is opt-in; every user table has row-level
+security so only its owner can read it; deleting an account inside the app
+deletes all of that user's data (Apple requires in-app account deletion); and
+aggregate metrics never expose an individual user.
+
+**D20. The new app gets its own new Supabase project**, separate from the
+website's.
+
+**D21. The repo should be private.** Angad left this to Claude. Reasons: the
+adapters contain provider endpoints and terms-of-service notes that are better
+left unpublished; the Tier 1 load (~1,000–1,500 Actions minutes a month) fits
+the 2,000 free private minutes; and private repos don't have the 60-day
+inactivity shutoff for scheduled workflows. The method is still public, on the
+methodology screen. Opening the source later stays possible. **The repo was
+public as of this entry; Angad flips it in GitHub settings.**
+
+**D22. The contact email is remitbridgesystemlabs@gmail.com.** It goes in the
+scraper's user agent and on the methodology screen.
+
+**D23. Engine alerts (PRD 9.9) go to Angad by email.** They're for maintainers,
+not users. The triggers are: two failures in a row, a circuit breaker tripping,
+schema drift, a route falling below 5 providers, and a missed coverage target.
+
+**D24. Claude pushes to `origin` after each commit without asking.**
+Force-pushes and history rewrites still need an explicit yes.
+
+**D25. Reply conventions match the website repo:** every reply starts with
+"hi, angad" and ends with the open-items checklist.
