@@ -37,15 +37,20 @@ remitbridgesystemlabs@gmail.com
 
 ## Where to send
 
-Use each provider's own published contact. Don't guess addresses.
+Use each provider's own published contact. Don't guess addresses. Checked 2026-09-28;
+"page" means the address was read on the company's own site, "release" means it
+appears as the media contact on the company's own press releases.
 
-| Provider | Contact | Source | Sent | Reply |
+| Provider | Send to | Where it's published | Sent | Reply |
 |---|---|---|---|---|
-| Wise | comparison@wise.com | Wise Platform Comparison API docs ("If you have questions or suspect any data to be inaccurate… contact us at comparison@wise.com") | | |
-| Remitly | Partnerships or press contact on remitly.com | find on the site | | |
-| Xoom (PayPal) | PayPal / Xoom partnerships or press contact | find on the site | | |
-| MoneyGram | Partnerships or media contact on moneygram.com | find on the site | | |
-| Xe | Business or partnerships contact on xe.com | find on the site | | |
-| WorldRemit (Zepz) | Partnerships or press contact | find on the site | | |
-| Ria | Partnerships or media contact on riamoneytransfer.com | find on the site | | |
-| Western Union | Partnerships or media contact on westernunion.com | find on the site | | |
+| Wise | comparison@wise.com | Wise Platform Comparison API docs (the address for comparison sites) | | |
+| Remitly | press@remitly.com | page: news.remitly.com, Contact | | |
+| MoneyGram | media@moneygram.com | page: corporate.moneygram.com/contact, "Media inquiries" | | |
+| Western Union | media@westernunion.com | page: corporate.westernunion.com/media-contacts.html (our fetch was blocked; confirmed through search of that page) | | |
+| Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | | |
+| WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | | |
+| Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | | |
+| Xe (Euronet) | No press address published. Use the Xe Help Centre contact form (help.xe.com), asking for it to go to partnerships | Xe's pages block automated fetches; the only public email found, currency@xe.com, is customer support | | |
+
+Ria and Xe are both Euronet companies. If neither answers in three weeks, one
+follow-up to Euronet corporate communications covers both.
