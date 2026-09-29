@@ -1,8 +1,9 @@
 """Manual quotes: strategy 5 of PRD 9.4, and the source for any provider whose terms
 forbid automated access (DECISIONS.md D4).
 
-A person opens a provider's public calculator, reads off the numbers, and records them
-as a JSON file under `engine/manual/quotes/`. This adapter feeds those observations
+A person opens a provider's public calculator, reads off the numbers, and records them,
+either in the app's admin "Add a price" form (a pending row in `manual_observations`,
+DECISIONS.md D54) or as a JSON file under `engine/manual/quotes/`. This adapter feeds those observations
 through exactly the same normaliser, publish gate and archive as a scraped quote, so a
 manual number is held to the same standard and traced the same way. It is labelled
 `source: manual` everywhere it appears.
@@ -10,6 +11,9 @@ manual number is held to the same standard and traced the same way. It is labell
 A manual quote must be run within MANUAL_QUOTE_MAX_AGE_S of when it was observed:
 its markup is measured against the mid-market rate fetched at run time, and an old
 observation against today's reference rate would be the wrong comparison.
+
+A row from the database carries its `row_id`; the runner writes the gate's outcome
+back to that row so the person who entered it can see what happened.
 
 File format (a list, one object per observation):
 
@@ -72,30 +76,35 @@ class ManualAdapter(Adapter):
     source = Source.MANUAL
     strategies = (Strategy.MANUAL,)
 
-    def __init__(self, directory: Path) -> None:
+    def __init__(self, directory: Path | None = None, rows: list[dict] | None = None) -> None:
         self.directory = directory
+        self.rows = rows or []
         self._observations: list[tuple[str, QuoteRequest, dict]] | None = None
 
     def observations(self) -> list[tuple[str, QuoteRequest, dict]]:
         """(provider_id, request, observation) for every recorded observation."""
         if self._observations is not None:
             return self._observations
+        sources: list[tuple[str, dict]] = []
+        if self.directory is not None:
+            for path in sorted(self.directory.glob("*.json")):
+                sources += [(f"{path.name}[{i}]", o) for i, o in enumerate(json.loads(path.read_text()))]
+        sources += [(f"manual_observations #{r.get('row_id')}", r) for r in self.rows]
         out = []
-        for path in sorted(self.directory.glob("*.json")):
-            for i, obs in enumerate(json.loads(path.read_text())):
-                missing = [k for k in REQUIRED if obs.get(k) in (None, "")]
-                if missing:
-                    raise ValueError(f"{path.name}[{i}] is missing {', '.join(missing)}")
-                route = ROUTES_BY_ID[obs["route_id"]]
-                req = QuoteRequest(
-                    route_id=route.id,
-                    send_currency=route.send_currency,
-                    receive_currency=route.receive_currency,
-                    send_amount=float(obs["send_amount"]),
-                    delivery_method=DeliveryMethod(obs["delivery_method"]),
-                    payment_method=PaymentMethod(obs.get("payment_method") or "bank_account"),
-                )
-                out.append((obs["provider_id"], req, obs))
+        for where, obs in sources:
+            missing = [k for k in REQUIRED if obs.get(k) in (None, "")]
+            if missing:
+                raise ValueError(f"{where} is missing {', '.join(missing)}")
+            route = ROUTES_BY_ID[obs["route_id"]]
+            req = QuoteRequest(
+                route_id=route.id,
+                send_currency=route.send_currency,
+                receive_currency=route.receive_currency,
+                send_amount=float(obs["send_amount"]),
+                delivery_method=DeliveryMethod(obs["delivery_method"]),
+                payment_method=PaymentMethod(obs.get("payment_method") or "bank_account"),
+            )
+            out.append((obs["provider_id"], req, obs))
         self._observations = out
         return out
 

@@ -138,3 +138,32 @@ async def test_manual_quotes_go_through_the_same_gate(tmp_path, no_sleep):
     [published] = [q for q in env["store"].data["quotes"].values()
                    if q["validation_status"] == ValidationStatus.PUBLISHED]
     assert published["provider_id"] == "remitly" and published["source"] == "manual"
+
+
+async def test_prices_entered_in_the_app_get_their_outcome_written_back(tmp_path, no_sleep):
+    now = datetime.now(UTC)
+    base = {
+        "provider_id": "wise", "route_id": "us-in", "send_amount": 200,
+        "delivery_method": "bank_deposit", "payment_method": "bank_account", "fee": 2.5,
+        "offered_rate": 95.1, "pickup_charge": 0, "observed_at": now.isoformat(),
+        "observed_by": "8f7c0d1e-0000-4000-8000-000000000001",
+        "source_url": "https://wise.com/us/send-money/send-money-to-india",
+    }
+    good = {**base, "row_id": 1, "amount_received": round((200 - 2.5) * 95.1, 2)}
+    wrong = {**base, "row_id": 2, "send_amount": 500, "amount_received": 1.0}
+    old = {**base, "row_id": 3, "send_amount": 1000,
+           "amount_received": round((1000 - 2.5) * 95.1, 2),
+           "observed_at": (now - timedelta(hours=9)).isoformat()}
+    env = setup(tmp_path, no_sleep)
+    store = env["store"]
+    store.data["manual_observations"] = [dict(good), dict(wrong), dict(old)]
+
+    rows = await store.pending_manual_observations()
+    report = await run_adapter(ManualAdapter(None, rows), **env)
+
+    assert report.published == 1 and report.rejected == 1 and report.skipped == 1
+    status = {o["row_id"]: o["status"] for o in store.data["manual_observations"]}
+    assert status == {1: "published", 2: "rejected", 3: "skipped"}
+    [wrong_row] = [o for o in store.data["manual_observations"] if o["row_id"] == 2]
+    assert any(n.startswith("math:") for n in wrong_row["result_notes"])
+    assert await store.pending_manual_observations() == []

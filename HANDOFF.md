@@ -13,17 +13,21 @@ works, Account. What's missing:
 - **Prices.** All eight Tier 1 providers' terms forbid automated access, or in Western
   Union's case aren't clear and its site blocks it (D52, `docs/MANUAL_RESEARCH.md`). So
   prices come from manual entry until a provider gives written permission. Angad sends
-  the permission emails (all 8 sent 2026-09-28, follow-up 2026-10-12; `docs/outreach/permission-request.md`). Next to build: the
-  admin-only manual price entry form.
+  the permission emails (all 8 sent 2026-09-28, follow-up 2026-10-12; `docs/outreach/permission-request.md`).
+  The admin "Add a price" screen is built (D54): Account tab → Add a price, visible to
+  admins only. Entries are checked by the "Manual prices" workflow and the outcome shows
+  under Recent on the same screen.
 - **Sign-in.** Email codes work: Resend is connected and the code template is live (D53).
-  Apple and Google still need credentials. Angad's account still needs `is_admin` set
-  once he has signed in, before the admin-only entry form.
+  Apple and Google still need credentials. **remitbridgesystemlabs@gmail.com's
+  profile still needs `is_admin = true`** (Angad sets it in the Supabase SQL editor; the
+  account already exists). Optional: `GITHUB_DISPATCH_TOKEN` in Supabase secrets so
+  entries are checked in minutes instead of within three hours.
 - **GitHub Actions secrets** are set, and the Scrape workflow starts with a database
   connection check (run 36531671087 read all 4 routes).
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
-RemitBridge account (the CLI is logged into that account). Both migrations are
-applied. `supabase/tests/rls_smoke.sh` passes 24/24 with the publishable key: every
+RemitBridge account (the CLI is logged into that account). All three migrations are
+applied. `supabase/tests/rls_smoke.sh` passes 26/26 with the publishable key: every
 denial returns Postgres's `42501`, not just any 4xx. The events trigger was proven
 to overwrite a backdated `created_at` (migration `20260928000100` asserts it).
 

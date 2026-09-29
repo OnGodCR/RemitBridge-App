@@ -56,6 +56,8 @@ class Store(Protocol):
     ) -> list[float]: ...
     async def get_adapter_state(self, adapter_id: str) -> dict[str, Any]: ...
     async def set_adapter_state(self, adapter_id: str, **fields: Any) -> None: ...
+    async def pending_manual_observations(self) -> list[dict[str, Any]]: ...
+    async def record_manual_outcomes(self, outcomes: list[tuple[int, str, list[str]]]) -> None: ...
 
 
 class LocalStore:
@@ -65,6 +67,7 @@ class LocalStore:
             json.loads(path.read_text()) if path.exists()
             else {"runs": {}, "quotes": {}, "mid_market": [], "adapter_state": {}}
         )
+        self.data.setdefault("manual_observations", [])
 
     def _flush(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -107,6 +110,16 @@ class LocalStore:
 
     async def set_adapter_state(self, adapter_id: str, **fields: Any) -> None:
         self.data["adapter_state"].setdefault(adapter_id, {}).update(fields)
+        self._flush()
+
+    async def pending_manual_observations(self) -> list[dict[str, Any]]:
+        return [dict(o) for o in self.data["manual_observations"] if o.get("status", "pending") == "pending"]
+
+    async def record_manual_outcomes(self, outcomes: list[tuple[int, str, list[str]]]) -> None:
+        by_id = {o["row_id"]: o for o in self.data["manual_observations"]}
+        for row_id, status, notes in outcomes:
+            by_id[row_id].update(status=str(status), result_notes=notes,
+                                 processed_at=datetime.now(UTC).isoformat())
         self._flush()
 
 
@@ -186,3 +199,28 @@ class SupabaseStore:
 
     async def set_adapter_state(self, adapter_id: str, **fields: Any) -> None:
         await self._post("adapter_state", {"adapter_id": adapter_id, **fields}, upsert_on="adapter_id")
+
+    # Prices entered in the app (DECISIONS.md D54). The table's `id` becomes the
+    # observation's `row_id`, so the id never collides with anything in a JSON file.
+    async def pending_manual_observations(self) -> list[dict[str, Any]]:
+        r = await self.client.get(
+            f"{self.rest}/manual_observations",
+            params={"select": "*", "status": "eq.pending", "order": "created_at"},
+            headers=self.headers,
+        )
+        r.raise_for_status()
+        rows = []
+        for row in r.json():
+            row["row_id"] = row.pop("id")
+            rows.append(row)
+        return rows
+
+    async def record_manual_outcomes(self, outcomes: list[tuple[int, str, list[str]]]) -> None:
+        now = datetime.now(UTC).isoformat()
+        for row_id, status, notes in outcomes:
+            r = await self.client.patch(
+                f"{self.rest}/manual_observations", params={"id": f"eq.{row_id}"},
+                json={"status": str(status), "result_notes": notes, "processed_at": now},
+                headers=self.headers,
+            )
+            r.raise_for_status()

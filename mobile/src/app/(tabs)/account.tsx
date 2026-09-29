@@ -6,6 +6,7 @@ import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
 import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
@@ -14,6 +15,7 @@ export default function AccountScreen() {
   const t = useTheme();
   const { session, signOut, resetOnboarding } = useAuth();
   const [busy, setBusy] = useState(false);
+  const isAdmin = useIsAdmin();
 
   const confirmDelete = () =>
     Alert.alert('Delete your account?', 'Your saved routes and transfers go with it.', [
@@ -46,6 +48,7 @@ export default function AccountScreen() {
         <View style={[styles.content, { backgroundColor: t.background }]}>
         {session ? (
           <>
+            {isAdmin ? <Button label="Add a price" onPress={() => router.push('/admin')} /> : null}
             <Button label="Sign out" variant="secondary" onPress={signOut} />
             <Button label="Delete account" variant="plain" loading={busy} onPress={confirmDelete} />
           </>

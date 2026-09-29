@@ -47,6 +47,13 @@ Thresholds are in `config.py` and recorded in DECISIONS.md D36.
 
 ## Manual quotes
 
-Add a JSON file to `manual/quotes/` in the format documented in `adapters/manual.py`,
-then push. The Scrape workflow runs the manual adapter on that push. Observations must
-be run within 6 hours of being made.
+Two ways in, one gate:
+
+- **The app** (the usual way): Account → Add a price, for admins. The entry is saved to
+  `manual_observations` as pending, and the Manual prices workflow checks it (started by the
+  `process-prices` Edge Function, or by its three-hourly schedule). The outcome is written
+  back to the row and shows on the same screen (DECISIONS.md D54).
+- **A JSON file** in `manual/quotes/`, in the format documented in `adapters/manual.py`,
+  then push. The Scrape workflow runs the manual adapter on that push.
+
+Either way, observations must be checked within 6 hours of being made.
