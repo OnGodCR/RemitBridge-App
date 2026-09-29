@@ -300,3 +300,23 @@ decoration.
 narrows the results to that provider, and clearing it shows everyone again.
 Searches are logged as `provider_searched` (D31). The "Most to your family" tag
 is hidden when a single provider is shown, since there's nothing to rank.
+
+**D46. Provider search removed; the country dropdowns get search instead.**
+Supersedes D45. Angad clarified that "search for companies" meant search inside
+the From and To country lists. Each country sheet now has a search field that
+matches on name, two-letter code or currency ("mex", "MX" and "MXN" all find
+Mexico). The provider search component is deleted; it's in git history
+(`acac6e0`) if it's ever wanted.
+
+**D47. Color, in the website's own vocabulary.** Refines D44 after Angad found the
+restrained pass "too basic". The colors used:
+- **Brand green (#14705A) as a full-width header band** on every tab, running under
+  a light status bar. On Compare it holds the countries and amount in white fields.
+- **A green onboarding welcome.**
+- **The selected delivery segment filled green.**
+- **Country code marks in mint and green.**
+- **"What this does not tell you" as a mint panel.**
+- **A 4pt green left edge on the top-ranked quote** (the website's "rule" mark).
+- **Mint icon tiles on How it works.**
+
+Dark mode has its own deeper band (#0E4A3C). Still no emoji and no pills (D44).

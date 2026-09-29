@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
-import { AppText, Button, Card } from '@/components/ui';
+import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useAuth } from '@/lib/auth';
@@ -35,25 +35,22 @@ export default function AccountScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: t.background }]} edges={['top']}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <AppText variant="title">Account</AppText>
+    <View style={[styles.fill, { backgroundColor: t.background }]}>
+      <HeroBackdrop />
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <HeroHeader title="Account">
+          <AppText style={{ color: t.heroMuted }}>
+            {session ? (session.user.email ?? 'Signed in with Apple') : 'Save your routes and past transfers.'}
+          </AppText>
+        </HeroHeader>
+        <View style={[styles.content, { backgroundColor: t.background }]}>
         {session ? (
           <>
-            <Card>
-              <AppText variant="small" muted>
-                Signed in as
-              </AppText>
-              <AppText variant="heading">{session.user.email ?? 'Apple ID'}</AppText>
-            </Card>
             <Button label="Sign out" variant="secondary" onPress={signOut} />
             <Button label="Delete account" variant="plain" loading={busy} onPress={confirmDelete} />
           </>
         ) : (
-          <>
-            <AppText muted>Save your routes and past transfers.</AppText>
-            <Button label="Create account" onPress={() => router.push('/sign-in')} />
-          </>
+          <Button label="Create account" onPress={() => router.push('/sign-in')} />
         )}
         {__DEV__ ? (
           <Button
@@ -65,12 +62,14 @@ export default function AccountScreen() {
             }}
           />
         ) : null}
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  content: { padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
+  scroll: { flexGrow: 1 },
+  content: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
 });

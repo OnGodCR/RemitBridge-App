@@ -8,19 +8,17 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { QuoteCard } from '@/components/quote-card';
 import { CountrySelect } from '@/components/select-field';
-import { ProviderSearch } from '@/components/provider-search';
+import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
 import { AppText, Card, Segmented } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
-import type { Provider } from '@/lib/providers';
 import {
   atAmount,
   checkedAmountFor,
@@ -65,7 +63,6 @@ export default function CompareScreen() {
   const checked = checkedAmountFor(amount);
   const [loaded, setLoaded] = useState<{ key: string; result: QuotesResult } | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const [provider, setProvider] = useState<Provider | null>(null);
   const key = `${route.id}|${checked}|${activeMethod}`;
   const result = loaded?.key === key ? loaded.result : null;
 
@@ -89,16 +86,16 @@ export default function CompareScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: t.background }]} edges={['top']}>
+    <View style={[styles.fill, { backgroundColor: t.background }]}>
+      <HeroBackdrop />
       <ScrollView
-        contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} />}>
-        <AppText variant="title">Compare</AppText>
-
-        <ProviderSearch selected={provider} onSelect={setProvider} />
-
+        contentContainerStyle={styles.scroll}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={refresh} tintColor={t.heroText} />
+        }>
+        <HeroHeader title="Compare">
         <View style={styles.countries}>
           <CountrySelect
             label="From"
@@ -110,7 +107,7 @@ export default function CompareScreen() {
           <CountrySelect label="To" title="Send to" value={to} options={RECEIVING} onChange={setTo} />
         </View>
 
-        <View style={[styles.amount, { backgroundColor: t.card, borderColor: t.border }]}>
+        <View style={[styles.amount, { backgroundColor: t.heroField }]}>
           <AppText variant="small" muted>
             You send
           </AppText>
@@ -134,7 +131,9 @@ export default function CompareScreen() {
             </AppText>
           </View>
         </View>
+        </HeroHeader>
 
+        <View style={[styles.body, { backgroundColor: t.background }]}>
         <Segmented
           options={route.deliveryMethods.map((m) => ({ value: m, label: DELIVERY_LABELS[m] }))}
           value={activeMethod}
@@ -142,36 +141,28 @@ export default function CompareScreen() {
         />
 
         {amount > 0 ? (
-          <Results result={result} amount={amount} provider={provider} />
+          <Results result={result} amount={amount} />
         ) : (
           <AppText muted>Enter an amount.</AppText>
         )}
 
         <DoesNotTellYou items={LIMITS} />
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
-function Results({
-  result,
-  amount,
-  provider,
-}: {
-  result: QuotesResult | null;
-  amount: number;
-  provider: Provider | null;
-}) {
+function Results({ result, amount }: { result: QuotesResult | null; amount: number }) {
   const shown = useMemo(() => {
     if (!result || result.kind !== 'ok') return null;
     const at = (list: typeof result.standing) =>
       list
-        .filter((q) => !provider || q.provider_id === provider.id)
         .map((q) => atAmount(q, amount))
         .filter((q): q is ShownQuote => q !== null)
         .sort((a, b) => b.amount_received - a.amount_received);
     return { standing: at(result.standing), promotional: at(result.promotional) };
-  }, [result, amount, provider]);
+  }, [result, amount]);
 
   if (!result) return <ActivityIndicator style={styles.loading} />;
 
@@ -198,11 +189,7 @@ function Results({
     return (
       <Card>
         <AppText variant="heading">No prices yet</AppText>
-        <AppText muted>
-          {provider
-            ? `${provider.name} has no checked price for this route yet.`
-            : 'Only checked prices show here.'}
-        </AppText>
+        <AppText muted>Only checked prices show here.</AppText>
       </Card>
     );
   }
@@ -220,7 +207,8 @@ function Results({
         <QuoteCard
           key={q.id}
           quote={q}
-          highlight={i === 0 && !provider && standing.length > 1 ? 'Most to your family' : undefined}
+          featured={i === 0 && standing.length > 1}
+          highlight={i === 0 && standing.length > 1 ? 'Most to your family' : undefined}
         />
       ))}
       {promotional.length > 0 ? (
@@ -239,11 +227,11 @@ function Results({
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  content: { padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
+  scroll: { flexGrow: 1 },
+  body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
   countries: { flexDirection: 'row', gap: Spacing.two },
   amount: {
     borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
   },

@@ -1,10 +1,10 @@
 import { SymbolView } from 'expo-symbols';
 import { useState } from 'react';
-import { FlatList, Modal, Pressable, StyleSheet, View } from 'react-native';
+import { FlatList, Modal, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, CodeBadge } from '@/components/ui';
-import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import type { Country } from '@/lib/countries';
 
@@ -15,6 +15,9 @@ import type { Country } from '@/lib/countries';
  * The sheet closes three ways: the close button (top left, clear of anything floating
  * at top right, such as Expo Go's dev button, which hid a top-right "Done"), a swipe
  * down, or picking any live country, including the current one.
+ *
+ * A search field at the top filters by country name, two-letter code or currency, so
+ * "mex", "MX" and "MXN" all find Mexico.
  */
 export function CountrySelect({
   label,
@@ -31,8 +34,18 @@ export function CountrySelect({
 }) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const current = options.find((o) => o.code === value) ?? options[0];
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    setQuery('');
+  };
+  const q = normalize(query);
+  const shown = q
+    ? options.filter((o) =>
+        [o.name, o.short ?? '', o.code, o.currency].some((f) => normalize(f).includes(q)),
+      )
+    : options;
 
   return (
     <>
@@ -42,7 +55,7 @@ export function CountrySelect({
         accessibilityLabel={`${label}: ${current.name}. Change`}
         style={({ pressed }) => [
           styles.field,
-          { backgroundColor: t.card, borderColor: t.border, opacity: pressed ? 0.8 : 1 },
+          { backgroundColor: t.heroField, opacity: pressed ? 0.85 : 1 },
         ]}>
         <AppText variant="small" muted>
           {label}
@@ -87,8 +100,36 @@ export function CountrySelect({
             </Pressable>
             <AppText variant="heading">{title}</AppText>
           </View>
+          <View style={[styles.search, { backgroundColor: t.card, borderColor: t.border }]}>
+            <SymbolView
+              pointerEvents="none"
+              name="magnifyingglass"
+              size={15}
+              weight="medium"
+              tintColor={t.textSecondary}
+              fallback={<AppText muted>⌕</AppText>}
+            />
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search countries"
+              placeholderTextColor={t.textSecondary}
+              autoCorrect={false}
+              autoCapitalize="none"
+              returnKeyType="search"
+              clearButtonMode="while-editing"
+              accessibilityLabel="Search countries"
+              style={[styles.searchInput, { color: t.text }]}
+            />
+          </View>
           <FlatList
-            data={options}
+            data={shown}
+            keyboardShouldPersistTaps="handled"
+            ListEmptyComponent={
+              <AppText muted style={styles.empty}>
+                No country matches “{query.trim()}”.
+              </AppText>
+            }
             keyExtractor={(c) => c.code}
             ItemSeparatorComponent={() => (
               <View style={[styles.separator, { backgroundColor: t.border }]} />
@@ -140,12 +181,15 @@ export function CountrySelect({
   );
 }
 
+function normalize(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
 const styles = StyleSheet.create({
   field: {
     flex: 1,
     minHeight: 60,
     borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
     justifyContent: 'center',
@@ -174,6 +218,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  search: {
+    minHeight: MinTapTarget,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.two,
+    marginHorizontal: Spacing.three,
+    marginBottom: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  searchInput: { flex: 1, fontFamily: Fonts.medium, fontSize: 16, paddingVertical: Spacing.two },
+  empty: { padding: Spacing.three },
   row: {
     minHeight: 56,
     flexDirection: 'row',

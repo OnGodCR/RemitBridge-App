@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { SymbolView } from 'expo-symbols';
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -17,18 +18,23 @@ export function Step({
   of,
   children,
   actions,
+  tone = 'plain',
 }: {
   step?: number;
   of?: number;
   children: ReactNode;
   actions: ReactNode;
+  /** 'hero' puts the step on the brand-green band, with light text. */
+  tone?: 'plain' | 'hero';
 }) {
   const t = useTheme();
+  const hero = tone === 'hero';
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: t.background }]}>
+    <SafeAreaView style={[styles.fill, { backgroundColor: hero ? t.hero : t.background }]}>
+      <StatusBar style={hero ? 'light' : 'auto'} />
       <View style={styles.top}>
-        {router.canGoBack() ? <BackButton /> : <View style={styles.backSpace} />}
-        {step && of ? <Dots step={step} of={of} /> : null}
+        {router.canGoBack() ? <BackButton light={hero} /> : <View style={styles.backSpace} />}
+        {step && of ? <Dots step={step} of={of} light={hero} /> : null}
         <View style={styles.backSpace} />
       </View>
       <View style={styles.body}>{children}</View>
@@ -37,7 +43,7 @@ export function Step({
   );
 }
 
-function BackButton() {
+function BackButton({ light }: { light?: boolean }) {
   const t = useTheme();
   return (
     <Pressable
@@ -50,7 +56,7 @@ function BackButton() {
       <SymbolView
         pointerEvents="none"
         name="chevron.left"
-        tintColor={t.text}
+        tintColor={light ? t.heroText : t.text}
         size={22}
         weight="semibold"
         fallback={<AppText variant="heading">‹</AppText>}
@@ -59,12 +65,17 @@ function BackButton() {
   );
 }
 
-function Dots({ step, of }: { step: number; of: number }) {
+function Dots({ step, of, light }: { step: number; of: number; light?: boolean }) {
   const t = useTheme();
+  const on = light ? t.heroText : t.primary;
+  const off = light ? t.heroMuted : t.border;
   return (
     <View style={styles.dots} accessible accessibilityLabel={`Step ${step} of ${of}`}>
       {Array.from({ length: of }, (_, i) => (
-        <View key={i} style={[styles.dot, { backgroundColor: i < step ? t.primary : t.border }]} />
+        <View
+          key={i}
+          style={[styles.dot, { backgroundColor: i < step ? on : off, opacity: i < step ? 1 : 0.4 }]}
+        />
       ))}
     </View>
   );

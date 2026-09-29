@@ -17,11 +17,20 @@ const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
  * One provider's quote (PRD 14.6): the amount received is the largest text, then total
  * cost, the breakdown, and where the number came from and when.
  */
-export function QuoteCard({ quote, highlight }: { quote: ShownQuote; highlight?: string }) {
+export function QuoteCard({
+  quote,
+  highlight,
+  featured,
+}: {
+  quote: ShownQuote;
+  highlight?: string;
+  /** The top-ranked card: a saturated left edge, the website's mark for "this one counts". */
+  featured?: boolean;
+}) {
   const t = useTheme();
   const q = quote;
   return (
-    <Card>
+    <Card style={featured ? [styles.featured, { borderLeftColor: t.primary }] : undefined}>
       <View style={styles.header}>
         <AppText variant="heading">{q.provider_name}</AppText>
         {highlight ? (
@@ -116,6 +125,7 @@ export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
 }
 
 const styles = StyleSheet.create({
+  featured: { borderLeftWidth: 4 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   tag: { fontFamily: Fonts.semibold },
   bar: { height: 8, borderRadius: Radius.sm, overflow: 'hidden', flexDirection: 'row', gap: 1 },

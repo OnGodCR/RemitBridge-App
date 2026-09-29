@@ -78,7 +78,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. Decisions D1–D45 are recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D47 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
 - [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
 - [x] First build slice: formula (pinned to TrueCost), engine core, schema, and
@@ -90,8 +90,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       (the `delete-account` Edge Function), and far less text. Done 2026-09-28.
 - [x] Compare has From/To dropdowns and a typed amount, estimated between
       checked amounts with the shared formula (D43). Done 2026-09-28.
-- [x] Provider search, no emoji, and a restrained visual pass (D44, D45); the
-      country sheet's close button moved clear of Expo Go's dev button. Done 2026-09-28.
+- [x] No emoji, a restrained visual pass, then brand color in the website's
+      vocabulary (D44, D47). Search inside the country dropdowns (D46). The country
+      sheet's close button moved clear of Expo Go's dev button. Done 2026-09-28.
 
 ## Product rules that are also code rules
 
@@ -131,8 +132,10 @@ a style choice.
 
 ## Words and voice
 
-Visual register (D44): no emoji, modest corners, hairlines over shadows,
-segmented controls over pill chips, and text labels over decoration.
+Visual register (D44, D47): no emoji, modest corners, hairlines over shadows,
+segmented controls over pill chips, and text labels over decoration. Color comes
+from the website's vocabulary: a brand-green header band, mint tints, and a green
+left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 
 - American English. English is the only language for now (see Open items).
 - Use the terminology table in PRD 14.4: *mid-market rate*, *exchange-rate

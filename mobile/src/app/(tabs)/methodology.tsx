@@ -1,8 +1,10 @@
-import { Linking, ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SymbolView, type SFSymbol } from 'expo-symbols';
+import type { ReactNode } from 'react';
+import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 
+import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
 import { AppText, Card } from '@/components/ui';
-import { Spacing } from '@/constants/theme';
+import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 const CONTACT = 'remitbridgesystemlabs@gmail.com';
@@ -15,42 +17,69 @@ const CONTACT = 'remitbridgesystemlabs@gmail.com';
 export default function MethodologyScreen() {
   const t = useTheme();
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: t.background }]} edges={['top']}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <AppText variant="title">How it works</AppText>
-
-        <Point title="Fee + hidden markup">
-          Total cost is the fee plus the markup hidden in the exchange rate.
-        </Point>
-        <Point title="Checked prices only">
-          Every price passes our checks, or it isn’t shown. Mid-market rates from Frankfurter.
-        </Point>
-        <Point title="No affiliate deals">
-          Nobody pays to rank. We never touch your money.
-        </Point>
-        <Point title="Wrong price?">
-          <AppText
-            style={{ color: t.primary }}
-            accessibilityRole="link"
-            onPress={() => Linking.openURL(`mailto:${CONTACT}`)}>
-            {CONTACT}
-          </AppText>
-        </Point>
+    <View style={[styles.fill, { backgroundColor: t.background }]}>
+      <HeroBackdrop />
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <HeroHeader title="How it works">
+          <AppText style={{ color: t.heroMuted }}>What it costs, where prices come from.</AppText>
+        </HeroHeader>
+        <View style={[styles.body, { backgroundColor: t.background }]}>
+          <Point icon="percent" title="Fee + hidden markup">
+            Total cost is the fee plus the markup hidden in the exchange rate.
+          </Point>
+          <Point icon="checkmark.seal" title="Checked prices only">
+            Every price passes our checks, or it isn’t shown. Mid-market rates from Frankfurter.
+          </Point>
+          <Point icon="hand.raised" title="No affiliate deals">
+            Nobody pays to rank. We never touch your money.
+          </Point>
+          <Point icon="envelope" title="Wrong price?">
+            <AppText
+              style={{ color: t.primary }}
+              accessibilityRole="link"
+              onPress={() => Linking.openURL(`mailto:${CONTACT}`)}>
+              {CONTACT}
+            </AppText>
+          </Point>
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
-function Point({ title, children }: { title: string; children: React.ReactNode }) {
+function Point({ icon, title, children }: { icon: SFSymbol; title: string; children: ReactNode }) {
+  const t = useTheme();
   return (
-    <Card>
-      <AppText variant="heading">{title}</AppText>
-      <AppText muted>{children}</AppText>
+    <Card style={styles.point}>
+      <View style={[styles.tile, { backgroundColor: t.accent }]}>
+        <SymbolView
+          pointerEvents="none"
+          name={icon}
+          size={18}
+          weight="semibold"
+          tintColor={t.accentForeground}
+          fallback={null}
+        />
+      </View>
+      <View style={styles.pointText}>
+        <AppText variant="heading">{title}</AppText>
+        <AppText muted>{children}</AppText>
+      </View>
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  content: { padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
+  scroll: { flexGrow: 1 },
+  body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
+  point: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.three },
+  tile: {
+    width: 36,
+    height: 36,
+    borderRadius: Radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pointText: { flex: 1, gap: Spacing.one },
 });
