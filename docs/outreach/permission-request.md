@@ -57,7 +57,7 @@ appears as the media contact on the company's own press releases.
 | Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | 2026-09-28 | waiting |
 | WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | 2026-09-28 | waiting |
 | Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | 2026-09-28 | waiting |
-| Xe (Euronet) | No press address published. Use the Xe Help Centre contact form (help.xe.com), asking for it to go to partnerships | Xe's pages block automated fetches; the only public email found, currency@xe.com, is customer support | | |
+| Xe (Euronet) | Xe Help Centre request form (help.xe.com/hc/en-gb/requests/new); no press or partnerships email is published | Xe's contact page lists only chat (needs an account) and phone | 2026-09-28 | waiting |
 
-Ria and Xe are both Euronet companies. If neither answers in three weeks, one
+Follow-up reminder: 2026-10-12 (Angad's calendar). Ria and Xe are both Euronet companies. If neither answers, one
 follow-up to Euronet corporate communications covers both.
