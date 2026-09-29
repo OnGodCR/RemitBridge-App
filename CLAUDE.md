@@ -55,8 +55,6 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Manual price entry form** (D52): an admin-only screen where prices read off
       providers' sites are entered and then run through the engine's gate. It needs
       Angad signed in once, then marked admin.
-- [ ] **GitHub Actions secrets** `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
-      (Angad adds them in GitHub settings).
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **App icon and splash.** Still the Expo template's placeholders.
 - [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
@@ -77,6 +75,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       See `docs/MANUAL_RESEARCH.md`.
 - [x] Email sign-in through Resend on remitbridgelabs.org, code template live
       (D53). Done 2026-09-28.
+- [x] GitHub Actions secrets `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set
+      (piped from the Supabase CLI, never displayed); a scrape run read the database
+      with them. Done 2026-09-28.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in

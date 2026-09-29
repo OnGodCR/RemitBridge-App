@@ -18,7 +18,8 @@ works, Account. What's missing:
 - **Sign-in.** Email codes work: Resend is connected and the code template is live (D53).
   Apple and Google still need credentials. Angad's account still needs `is_admin` set
   once he has signed in, before the admin-only entry form.
-- **GitHub Actions secrets** for the engine: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
+- **GitHub Actions secrets** are set, and the Scrape workflow starts with a database
+  connection check (run 36531671087 read all 4 routes).
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
 RemitBridge account (the CLI is logged into that account). Both migrations are
