@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -93,6 +94,53 @@ export function ChipRow({ children }: { children: ReactNode }) {
   return <View style={styles.chipRow}>{children}</View>;
 }
 
+/** Full-width button. `primary` is brand green; `secondary` is an outline. */
+export function Button({
+  label,
+  onPress,
+  variant = 'primary',
+  disabled,
+  loading,
+  icon,
+}: {
+  label: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+  loading?: boolean;
+  icon?: ReactNode;
+}) {
+  const t = useTheme();
+  const bg = variant === 'primary' ? t.primary : variant === 'secondary' ? t.card : 'transparent';
+  const fg = variant === 'primary' ? t.primaryForeground : variant === 'plain' ? t.textSecondary : t.text;
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={disabled || loading}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: disabled || loading, busy: loading }}
+      style={({ pressed }) => [
+        styles.button,
+        {
+          backgroundColor: bg,
+          borderColor: variant === 'secondary' ? t.border : 'transparent',
+          opacity: disabled ? 0.45 : pressed ? 0.8 : 1,
+        },
+      ]}>
+      {loading ? (
+        <ActivityIndicator color={fg} />
+      ) : (
+        <View style={styles.buttonInner}>
+          {icon}
+          <AppText variant="label" style={[styles.buttonLabel, { color: fg }]}>
+            {label}
+          </AppText>
+        </View>
+      )}
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
   card: {
     borderRadius: Radius.lg,
@@ -108,4 +156,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
+  button: {
+    minHeight: 52,
+    borderRadius: Radius.pill,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: Spacing.four,
+  },
+  buttonInner: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  buttonLabel: { fontSize: 16 },
 });

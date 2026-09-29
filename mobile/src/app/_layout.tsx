@@ -6,12 +6,12 @@ import {
   PlusJakartaSans_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/plus-jakarta-sans';
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
-import AppTabs from '@/components/app-tabs';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AuthProvider, useAuth } from '@/lib/auth';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,16 +25,38 @@ export default function RootLayout() {
     PlusJakartaSans_800ExtraBold,
   });
 
-  useEffect(() => {
-    // A font that fails to load falls back to the system face; never block the app on it.
-    if (fontsLoaded || fontError) SplashScreen.hideAsync();
-  }, [fontsLoaded, fontError]);
-
   if (!fontsLoaded && !fontError) return null;
 
   return (
     <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AppTabs />
+      <AuthProvider>
+        <Navigator />
+      </AuthProvider>
     </ThemeProvider>
+  );
+}
+
+function Navigator() {
+  const { ready, onboarded } = useAuth();
+
+  useEffect(() => {
+    // Hold the splash until the stored session is read, so nobody sees onboarding flash
+    // before the app knows they're already signed in.
+    if (ready) SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) return null;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!onboarded}>
+        <Stack.Screen name="onboarding" />
+      </Stack.Protected>
+      <Stack.Protected guard={onboarded}>
+        <Stack.Screen name="(tabs)" />
+      </Stack.Protected>
+      {/* Reachable from onboarding and from the Account tab. */}
+      <Stack.Screen name="sign-in" />
+    </Stack>
   );
 }

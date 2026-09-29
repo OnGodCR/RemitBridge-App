@@ -5,8 +5,8 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790639051.4037824,
-    "ast_hash": "911de272d351127e8918b1805cb34a04",
+    "mtime": 1790649352.9407365,
+    "ast_hash": "0e2d142c06d77a90d7db51e20aa2546a",
     "semantic_hash": ""
   },
   "DECISIONS.md": {
@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "HANDOFF.md": {
-    "mtime": 1790639060.6720004,
-    "ast_hash": "abbccbc3cd473ba8db9638cf2b87ae8a",
+    "mtime": 1790649352.9321153,
+    "ast_hash": "648cf5698eb702d0c67ec49cc43672fd",
     "semantic_hash": ""
   },
   "README.md": {
@@ -377,6 +377,11 @@
   "engine/README.md": {
     "mtime": 1790639017.7260864,
     "ast_hash": "2ae7726a62014736d22287ee108ae68c",
+    "semantic_hash": ""
+  },
+  "supabase/tests/rls_smoke.sh": {
+    "mtime": 1790647918.1093054,
+    "ast_hash": "2fc5a8b35460659d11ccf388f71a23c4",
     "semantic_hash": ""
   }
 }

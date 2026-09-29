@@ -7,10 +7,10 @@ import { checkedAgo, money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote } from '@/lib/quotes';
 
 const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
-  scraper: "the provider's public calculator",
-  api: "the provider's official API",
-  manual: "the provider's public calculator, read by a person",
-  partner: 'a partner organization',
+  scraper: 'Public calculator',
+  api: 'Official API',
+  manual: 'Checked by hand',
+  partner: 'Partner',
 };
 
 /**
@@ -40,38 +40,14 @@ export function QuoteCard({ quote, highlight }: { quote: LatestQuote; highlight?
           {money(q.amount_received, q.receive_currency)}
         </AppText>
         <AppText muted>
-          arrives · {pct(q.total_cost_pct)} total cost
-          {q.delivery_time ? ` · ${q.delivery_time}` : ''}
+          arrives · {pct(q.total_cost_pct)} cost{q.delivery_time ? ` · ${q.delivery_time}` : ''}
         </AppText>
       </View>
 
       <CostBreakdownBar quote={q} />
 
-      <View style={styles.facts}>
-        <Fact label="Fee" value={money(q.fee, q.send_currency)} />
-        <Fact label="Exchange-rate markup" value={pct(q.markup_pct, 2)} />
-        <Fact label="Rate offered" value={q.offered_rate.toLocaleString('en-US')} />
-        <Fact label="Mid-market rate" value={q.mid_market_rate.toLocaleString('en-US')} />
-      </View>
-
       <FreshnessBadge quote={q} />
-      <AppText variant="small" muted>
-        Source: {SOURCE_LABEL[q.source]}. Mid-market rate from {q.mid_market_source}.
-      </AppText>
     </Card>
-  );
-}
-
-function Fact({ label, value }: { label: string; value: string }) {
-  return (
-    <View style={styles.fact}>
-      <AppText variant="small" muted>
-        {label}
-      </AppText>
-      <AppText variant="label" style={{ fontVariant: ['tabular-nums'] }}>
-        {value}
-      </AppText>
-    </View>
   );
 }
 
@@ -118,13 +94,20 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
   );
 }
 
-/** "Checked 3 hours ago" · "Stale" (PRD 14.6). Never colour alone. */
+/**
+ * "Checked 3h ago · Public calculator" (PRD 14.6): freshness and source in one line.
+ * Stale gets a word, never colour alone. The mid-market source is in the accessibility
+ * label and on How it works.
+ */
 export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
   const t = useTheme();
   return (
-    <AppText variant="small" style={{ color: quote.is_stale ? t.stale : t.textSecondary }}>
+    <AppText
+      variant="small"
+      style={{ color: quote.is_stale ? t.stale : t.textSecondary }}
+      accessibilityLabel={`${quote.is_stale ? 'Stale. ' : ''}${checkedAgo(quote.captured_at)}. Source: ${SOURCE_LABEL[quote.source]}. Mid-market rate from ${quote.mid_market_source}.`}>
       {quote.is_stale ? 'Stale · ' : ''}
-      {checkedAgo(quote.captured_at)}
+      {checkedAgo(quote.captured_at)} · {SOURCE_LABEL[quote.source]}
     </AppText>
   );
 }
@@ -132,8 +115,6 @@ export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   tag: { paddingHorizontal: Spacing.two, paddingVertical: Spacing.half, borderRadius: Radius.pill },
-  facts: { flexDirection: 'row', flexWrap: 'wrap', rowGap: Spacing.two },
-  fact: { width: '50%' },
   bar: { height: 12, borderRadius: Radius.pill, overflow: 'hidden', flexDirection: 'row' },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three, marginTop: Spacing.two },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
