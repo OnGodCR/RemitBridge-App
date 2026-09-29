@@ -1,13 +1,26 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
+import { LogoMark } from '@/components/brand';
+import { rise } from '@/components/motion';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
-import { Radius, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { track } from '@/lib/track';
 
+/**
+ * Welcome (DECISIONS.md D62): the website's home hero, on a phone. The outlined mark, the
+ * two-tone display line ("the size and tracking carry it, so it needs no other
+ * decoration"), one plain sentence, and two buttons, over the site's tiled-mark ground.
+ *
+ * The first version had a glowing blob, a shadowed "illustrative" receipt card in grey and
+ * amber, and a column of icon-plus-promise bullets. Every one of those is a template move,
+ * and the website has none of them, so they went. The figures that make the case come on
+ * the next step, as the website shows them: real, sourced, and in green.
+ */
 export default function Welcome() {
   const t = useTheme();
   useEffect(() => track('onboarding_started'), []);
@@ -15,69 +28,40 @@ export default function Welcome() {
   return (
     <Step
       step={1}
-      of={3}
-      tone="hero"
+      of={4}
       actions={
-        <>
-          <Button
-            label="Get started"
-            variant="inverse"
-            onPress={() => router.push('/onboarding/route')}
-          />
+        <Animated.View entering={rise(4)} style={styles.actions}>
+          <Button label="Get started" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />
           <Button
             label="I already have an account"
-            variant="inverse-plain"
+            variant="secondary"
             onPress={() => router.push({ pathname: '/sign-in', params: { from: 'onboarding' } })}
           />
-        </>
+        </Animated.View>
       }>
-      <AppText variant="label" style={{ color: t.heroMuted }}>
-        RemitBridge
-      </AppText>
-      <AppText variant="title" style={[styles.headline, { color: t.heroText }]}>
-        See what really arrives.
-      </AppText>
-      <AppText style={{ color: t.heroMuted }}>Every fee and hidden markup, side by side.</AppText>
-
-      {/* The idea in one picture: most of the money arrives, some goes to the fee, and
-          some disappears into the exchange rate. Illustrative, so no numbers. */}
-      <View style={styles.bar} accessible accessibilityLabel="Most of your money arrives. Some goes to the fee, and some to a hidden markup in the exchange rate.">
-        {/* On the green band, "arrives" is white so it doesn't vanish into the ground. */}
-        <View style={{ flex: 8, backgroundColor: t.heroText }} />
-        <View style={{ flex: 1, backgroundColor: t.moneyFee }} />
-        <View style={{ flex: 1.4, backgroundColor: t.moneyMarkup }} />
-      </View>
-      <View style={styles.legend}>
-        <Legend color={t.heroText} label="Arrives" />
-        <Legend color={t.moneyFee} label="Fee" />
-        <Legend color={t.moneyMarkup} label="Hidden markup" />
+      <View style={styles.hero}>
+        <Animated.View entering={rise(0)}>
+          <LogoMark width={88} />
+        </Animated.View>
+        <Animated.View entering={rise(1)}>
+          <AppText style={[styles.display, { color: t.text }]}>Sending money home</AppText>
+          {/* Broken by hand: left to wrap, the green line strands "much" on its own. */}
+          <AppText style={[styles.display, { color: t.primary }]}>{'shouldn’t cost\nthis much'}</AppText>
+        </Animated.View>
+        <Animated.View entering={rise(2)}>
+          <AppText style={[styles.intro, { color: t.textSecondary }]}>
+            RemitBridge shows what a transfer really costs, and which provider leaves your family the most.
+          </AppText>
+        </Animated.View>
       </View>
     </Step>
   );
 }
 
-function Legend({ color, label }: { color: string; label: string }) {
-  const t = useTheme();
-  return (
-    <View style={styles.legendItem}>
-      <View style={[styles.swatch, { backgroundColor: color }]} />
-      <AppText variant="small" style={{ color: t.heroMuted }}>
-        {label}
-      </AppText>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
-  headline: { fontSize: 32, lineHeight: 38, letterSpacing: -0.8 },
-  bar: {
-    height: 12,
-    borderRadius: Radius.sm,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    marginTop: Spacing.four,
-  },
-  legend: { flexDirection: 'row', gap: Spacing.three },
-  legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  swatch: { width: 10, height: 10, borderRadius: 2 },
+  hero: { alignItems: 'center', gap: Spacing.four },
+  // The website's h1: bold, -0.025em tracking, 1.1 line height.
+  display: { fontFamily: Fonts.bold, fontSize: 34, lineHeight: 37, letterSpacing: -0.85, textAlign: 'center' },
+  intro: { fontSize: 17, lineHeight: 26, textAlign: 'center', maxWidth: 330 },
+  actions: { gap: Spacing.three },
 });

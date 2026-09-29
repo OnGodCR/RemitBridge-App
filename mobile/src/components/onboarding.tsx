@@ -5,32 +5,37 @@ import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Ground } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 /**
- * Full-screen onboarding step: a back button (when there's somewhere to go back to),
- * progress dots, content in the middle, actions pinned to the bottom.
+ * Full-screen onboarding and sign-in step: a back button (when there's somewhere to go
+ * back to), progress bars, content in the middle, actions pinned to the bottom.
+ *
+ * The surface is the website's (D62): its page ground with the tiled mark, or for one
+ * step its green band. Flat fills made these screens look like a template.
  */
 export function Step({
   step,
   of,
   children,
   actions,
-  tone = 'plain',
+  tone = 'ground',
 }: {
   step?: number;
   of?: number;
   children: ReactNode;
   actions: ReactNode;
-  /** 'hero' puts the step on the brand-green band, with light text. */
-  tone?: 'plain' | 'hero';
+  /** 'band' puts the step on the brand-green band, with light text. */
+  tone?: 'ground' | 'band';
 }) {
   const t = useTheme();
-  const hero = tone === 'hero';
+  const hero = tone === 'band';
   return (
     <SafeAreaView style={[styles.fill, { backgroundColor: hero ? t.hero : t.background }]}>
+      <Ground tone={tone} />
       <StatusBar style={hero ? 'light' : 'auto'} />
       <View style={styles.top}>
         {router.canGoBack() ? <BackButton light={hero} /> : <View style={styles.backSpace} />}

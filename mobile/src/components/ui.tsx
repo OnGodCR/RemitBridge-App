@@ -1,3 +1,4 @@
+import { SymbolView, type SFSymbol } from 'expo-symbols';
 import type { ReactNode } from 'react';
 import {
   ActivityIndicator,
@@ -100,7 +101,12 @@ export function Segmented<T extends string>({
   );
 }
 
-/** Full-width button. `primary` is brand green; `secondary` is an outline. */
+/**
+ * Full-width button, shaped like the website's: fully rounded and bold, because a button
+ * should look pressable (the site's own rule). `primary` is brand green; `secondary` is an
+ * outline. `trailingIcon` puts a symbol after the label, like the site's "Try the
+ * calculator" arrow.
+ */
 export function Button({
   label,
   onPress,
@@ -108,6 +114,7 @@ export function Button({
   disabled,
   loading,
   icon,
+  trailingIcon,
 }: {
   label: string;
   onPress: () => void;
@@ -115,6 +122,7 @@ export function Button({
   disabled?: boolean;
   loading?: boolean;
   icon?: ReactNode;
+  trailingIcon?: SFSymbol;
 }) {
   const t = useTheme();
   const bg =
@@ -157,6 +165,9 @@ export function Button({
           <AppText variant="label" style={[styles.buttonLabel, { color: fg }]}>
             {label}
           </AppText>
+          {trailingIcon ? (
+            <SymbolView pointerEvents="none" name={trailingIcon} size={15} weight="bold" tintColor={fg} fallback={null} />
+          ) : null}
         </View>
       )}
     </Pressable>
@@ -194,13 +205,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   button: {
-    minHeight: 50,
-    borderRadius: Radius.md,
+    minHeight: 54,
+    borderRadius: Radius.pill,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacing.four,
   },
   buttonInner: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
-  buttonLabel: { fontSize: 16, fontFamily: Fonts.semibold },
+  buttonLabel: { fontSize: 16, fontFamily: Fonts.bold },
 });
