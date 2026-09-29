@@ -430,3 +430,13 @@ no library. It reads top to bottom without script, turns motion off under
 prefers-reduced-motion, and on phones stacks the text under the phone. Screenshots are
 from the simulator with Expo Go's floating dev button painted out; they get replaced with
 development-build captures before launch.
+
+**D60. Sign in with Apple is native only, and needs no secret.** The app uses Apple's own
+sheet (expo-apple-authentication) and hands the identity token to Supabase
+(signInWithIdToken). Supabase trusts two audiences: `org.remitbridgelabs.app` (the app)
+and `host.exp.Exponent` (Expo Go, for testing now). Expo Go is removed from the list
+before launch. No Services ID or signing key is needed, since there's no web or Android
+Apple sign-in; the button only shows on iOS devices that support it. The App ID's "Sign in
+with Apple" capability gets switched on by EAS at the first build (`usesAppleSignIn` is
+already in app.json). Enabled 2026-09-29, the day Angad's Apple Developer account came
+through (D32).

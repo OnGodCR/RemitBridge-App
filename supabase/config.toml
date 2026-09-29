@@ -314,10 +314,13 @@ max_frequency = "5s"
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
 # `twitter`, `x`, `slack`, `spotify`, `workos`, `zoom`.
+# Native Sign in with Apple (DECISIONS.md D60): the app sends Apple's identity token, so
+# Supabase only needs the app IDs to trust, no secret. host.exp.Exponent is Expo Go, for
+# testing; remove it before launch. Set live 2026-09-29 through the Management API.
 [auth.external.apple]
-enabled = false
-client_id = ""
-# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
+enabled = true
+client_id = "org.remitbridgelabs.app,host.exp.Exponent"
+# Only needed for web or Android Apple sign-in, which the app doesn't offer.
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 # Overrides the default auth redirectUrl.
 redirect_uri = ""
