@@ -8,45 +8,58 @@ import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import type { Country } from '@/lib/countries';
+import { CURRENCIES } from '@/lib/currencies';
 
 /**
- * A dropdown for countries: a field showing the current choice that opens a sheet with
- * the full list. Countries that aren't live yet are listed but can't be picked.
+ * A dropdown: a field showing the current choice that opens a sheet with the full list.
+ * Used for countries on Compare and for currencies in the tools.
  *
  * The sheet closes three ways: the close button (top left, clear of anything floating
  * at top right, such as Expo Go's dev button, which hid a top-right "Done"), a swipe
- * down, or picking any live country, including the current one.
+ * down, or picking any enabled option, including the current one.
  *
- * A search field at the top filters by country name, two-letter code or currency, so
- * "mex", "MX" and "MXN" all find Mexico.
+ * A search field at the top filters by every string in `search`, so "mex", "MX" and
+ * "MXN" all find Mexico.
  */
-export function CountrySelect({
+export interface SelectOption {
+  value: string;
+  /** Country code for the flag. */
+  flag: string;
+  name: string;
+  /** Shown in the field when the full name won't fit. */
+  short?: string;
+  /** Right-hand detail in the list, e.g. the currency code. */
+  detail: string;
+  disabled?: boolean;
+  search: string[];
+}
+
+export function SelectField({
   label,
   title,
   value,
   options,
   onChange,
+  tone = 'hero',
 }: {
   label: string;
   title: string;
   value: string;
-  options: Country[];
-  onChange: (code: string) => void;
+  options: SelectOption[];
+  onChange: (value: string) => void;
+  /** `hero` sits on the green header band; `plain` on the page background. */
+  tone?: 'hero' | 'plain';
 }) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const current = options.find((o) => o.code === value) ?? options[0];
+  const current = options.find((o) => o.value === value) ?? options[0];
   const close = () => {
     setOpen(false);
     setQuery('');
   };
   const q = normalize(query);
-  const shown = q
-    ? options.filter((o) =>
-        [o.name, o.short ?? '', o.code, o.currency].some((f) => normalize(f).includes(q)),
-      )
-    : options;
+  const shown = q ? options.filter((o) => o.search.some((f) => normalize(f).includes(q))) : options;
 
   return (
     <>
@@ -56,13 +69,16 @@ export function CountrySelect({
         accessibilityLabel={`${label}: ${current.name}. Change`}
         style={({ pressed }) => [
           styles.field,
-          { backgroundColor: t.heroField, opacity: pressed ? 0.85 : 1 },
+          tone === 'hero'
+            ? { backgroundColor: t.heroField }
+            : { backgroundColor: t.card, borderColor: t.border, borderWidth: StyleSheet.hairlineWidth },
+          { opacity: pressed ? 0.85 : 1 },
         ]}>
         <AppText variant="small" muted>
           {label}
         </AppText>
         <View style={styles.fieldRow}>
-          <Flag code={current.code} height={16} />
+          <Flag code={current.flag} height={16} />
           <AppText variant="label" style={styles.fieldName} numberOfLines={1}>
             {current.short ?? current.name}
           </AppText>
@@ -77,11 +93,7 @@ export function CountrySelect({
         </View>
       </Pressable>
 
-      <Modal
-        visible={open}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={close}>
+      <Modal visible={open} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
         <SafeAreaView style={[styles.sheet, { backgroundColor: t.background }]} edges={['bottom']}>
           <View style={[styles.grabber, { backgroundColor: t.border }]} />
           <View style={styles.sheetHeader}>
@@ -114,13 +126,13 @@ export function CountrySelect({
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search countries"
+              placeholder="Search"
               placeholderTextColor={t.textSecondary}
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
               clearButtonMode="while-editing"
-              accessibilityLabel="Search countries"
+              accessibilityLabel={`Search ${title.toLowerCase()}`}
               style={[styles.searchInput, { color: t.text }]}
             />
           </View>
@@ -129,37 +141,32 @@ export function CountrySelect({
             keyboardShouldPersistTaps="handled"
             ListEmptyComponent={
               <AppText muted style={styles.empty}>
-                No country matches “{query.trim()}”.
+                Nothing matches “{query.trim()}”.
               </AppText>
             }
-            keyExtractor={(c) => c.code}
-            ItemSeparatorComponent={() => (
-              <View style={[styles.separator, { backgroundColor: t.border }]} />
-            )}
+            keyExtractor={(o) => o.value}
+            ItemSeparatorComponent={() => <View style={[styles.separator, { backgroundColor: t.border }]} />}
             renderItem={({ item }) => {
-              const selected = item.code === current.code;
+              const selected = item.value === current.value;
               return (
                 <Pressable
-                  disabled={!item.live}
+                  disabled={item.disabled}
                   onPress={() => {
-                    onChange(item.code);
+                    onChange(item.value);
                     close();
                   }}
                   accessibilityRole="button"
-                  accessibilityState={{ selected, disabled: !item.live }}
-                  accessibilityLabel={`${item.name}${item.live ? '' : ', coming soon'}`}
-                  style={({ pressed }) => [
-                    styles.row,
-                    { backgroundColor: pressed ? t.muted : 'transparent' },
-                  ]}>
-                  <FlagSlot code={item.code} dim={!item.live} />
+                  accessibilityState={{ selected, disabled: !!item.disabled }}
+                  accessibilityLabel={`${item.name}${item.disabled ? ', coming soon' : ''}`}
+                  style={({ pressed }) => [styles.row, { backgroundColor: pressed ? t.muted : 'transparent' }]}>
+                  <FlagSlot code={item.flag} dim={item.disabled} />
                   <AppText
                     variant="label"
-                    style={[styles.rowName, { color: item.live ? t.text : t.textSecondary }]}>
+                    style={[styles.rowName, { color: item.disabled ? t.textSecondary : t.text }]}>
                     {item.name}
                   </AppText>
                   <AppText variant="small" muted>
-                    {item.live ? item.currency : 'Coming soon'}
+                    {item.disabled ? 'Coming soon' : item.detail}
                   </AppText>
                   <View style={styles.check}>
                     {selected ? (
@@ -183,8 +190,49 @@ export function CountrySelect({
   );
 }
 
+/** Countries for Compare. Countries that aren't live yet are listed but can't be picked. */
+export function CountrySelect({
+  options,
+  ...rest
+}: {
+  label: string;
+  title: string;
+  value: string;
+  options: Country[];
+  onChange: (code: string) => void;
+}) {
+  return (
+    <SelectField
+      {...rest}
+      options={options.map((c) => ({
+        value: c.code,
+        flag: c.code,
+        name: c.name,
+        short: c.short,
+        detail: c.currency,
+        disabled: !c.live,
+        search: [c.name, c.short ?? '', c.code, c.currency],
+      }))}
+    />
+  );
+}
+
+const CURRENCY_OPTIONS: SelectOption[] = CURRENCIES.map((c) => ({
+  value: c.code,
+  flag: c.flag,
+  name: c.name,
+  short: c.code,
+  detail: c.code,
+  search: [c.name, c.code, c.flag],
+}));
+
+/** Currencies for the tools, on the page background. */
+export function CurrencySelect(props: { label: string; value: string; onChange: (code: string) => void }) {
+  return <SelectField {...props} title="Currency" options={CURRENCY_OPTIONS} tone="plain" />;
+}
+
 function normalize(s: string): string {
-  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 }
 
 const styles = StyleSheet.create({
@@ -200,13 +248,7 @@ const styles = StyleSheet.create({
   fieldRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
   fieldName: { flex: 1, fontSize: 16 },
   sheet: { flex: 1 },
-  grabber: {
-    alignSelf: 'center',
-    width: 36,
-    height: 5,
-    borderRadius: 3,
-    marginTop: Spacing.two,
-  },
+  grabber: { alignSelf: 'center', width: 36, height: 5, borderRadius: 3, marginTop: Spacing.two },
   sheetHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -214,12 +256,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.two,
   },
-  close: {
-    width: MinTapTarget,
-    height: MinTapTarget,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  close: { width: MinTapTarget, height: MinTapTarget, alignItems: 'center', justifyContent: 'center' },
   search: {
     minHeight: MinTapTarget,
     flexDirection: 'row',

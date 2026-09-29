@@ -24,7 +24,7 @@ Philippines (PHP), and Vietnam (VND). More follow in tiers (see
 
 ```
 engine/              Python scraping engine: adapters, publish gate, raw archive, rb-engine CLI
-mobile/              Expo app (iOS and Android): Compare, How it works
+mobile/              Expo app (iOS and Android): Compare, Tools, Learn, Account
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 supabase/            Schema migrations, row-level security, Edge Functions (delete-account, process-prices)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks

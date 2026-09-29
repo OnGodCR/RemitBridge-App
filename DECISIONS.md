@@ -403,3 +403,30 @@ Universal links (the association files) wait for the Apple developer account (D3
 which provides the team ID they need. The privacy policy describes exactly what
 `track()` and the schema store, including that signed-in events carry the account ID
 until the account is deleted. *Resolves:* D28's hosting question. *Touches:* D48.
+
+**D58. The website's tools move into the app, under four tabs.** Compare · Tools · Learn ·
+Account. *Tools* groups them by when you'd use them: before sending (Fair rate, Scam
+check), after (TrueCost, Yearly cost), and Rates (Rate history). *Learn* absorbs the old
+"How it works" tab and adds the Glossary (all 80 terms, ported with American spelling and
+"markup" for "margin") and RemitBench (the research design, results not yet claimed);
+the blog, papers and workshops open on the website (D33). *Account* gains "Your checks":
+TrueCost receipts saved to `saved_transfers`, costs recomputed from the saved inputs with
+the one formula rather than stored. Each tool is a screen pushed on the root stack, so it
+gets a native back button (nested stacks gave their first screen none) and a plain URL
+(/fair-rate, /true-cost...; folders named tools/ and learn/ collided with the tabs of the
+same name). Mid-market rates for the tools come straight from Frankfurter v2 (31
+currencies, any date, date ranges); no user data goes over the wire. The chart and the
+slider are plain views, so no new native dependency was added, with disk space short.
+Every figure names its source (World Bank RPW Q3 2025 global average 6.36%, UN SDG 10.c
+target 3%). *Ports:* the website's /truecost, /fair-rate, /reckoner, /rate-history,
+/scam-check, /glossary, /remitbench.
+
+**D59. The landing page is a scroll story, after hidewire.org.** At Angad's request,
+app.remitbridgelabs.org opens on a dark hero, then a pinned phone that walks through five
+steps (Fair rate, TrueCost, Rate history, Scam check, the app), swapping to the matching
+real screenshot and shifting the glow color at each, with the step text alternating
+sides and progress bars below. Plain CSS (sticky positioning) and a few lines of script;
+no library. It reads top to bottom without script, turns motion off under
+prefers-reduced-motion, and on phones stacks the text under the phone. Screenshots are
+from the simulator with Expo Go's floating dev button painted out; they get replaced with
+development-build captures before launch.
