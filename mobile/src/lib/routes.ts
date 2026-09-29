@@ -56,6 +56,11 @@ export const ROUTES: Route[] = [
   },
 ];
 
+/** The route between two country codes, if it's live. */
+export function routeFor(from: string, to: string): Route | undefined {
+  return ROUTES.find((r) => r.id === `${from}-${to}`.toLowerCase());
+}
+
 /** The engine's amount grid (PRD 9.11). Prices exist for these amounts only. */
 export const AMOUNTS = [100, 200, 500, 1000, 2000] as const;
 

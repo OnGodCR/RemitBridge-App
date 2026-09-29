@@ -250,3 +250,35 @@ and reported, not failed.
 **D40. Scheduled workflows stay off until the first scraping adapter exists.**
 There's nothing for them to do yet, and each run spends private-repo Actions
 minutes. The `schedule:` blocks are commented out in `scrape.yml` and `health.yml`.
+
+---
+
+## 2026-09-28: onboarding and the Compare controls
+
+**D41. Onboarding leads with account creation, but "Skip for now" stays.** Angad
+asked for onboarding where people create an account. It has three steps:
+welcome, "Where do you send money?", then Apple / Google / email code. Skipping
+remains possible because Apple rejects apps that force sign-up when the core
+feature doesn't need an account (App Store guideline 5.1.1), and comparing
+prices doesn't. The country picked in onboarding becomes Compare's default.
+*Refines:* D19.
+
+**D42. Email sign-in needs custom SMTP before launch.** On the free tier,
+Supabase refuses email-template changes while using its built-in sender, and
+that sender only mails the project's own team. So the 6-digit code email
+(`supabase/templates/code.html`) can't go live until custom SMTP is set up.
+Resend is the natural choice: the website already uses it. Until then, email
+sign-in shows "isn't open yet". Apple and Google need their provider
+credentials in the dashboard, and show "isn't set up yet" until then.
+
+**D43. The amount is typed freely; prices are exact only at checked amounts.**
+Angad asked for a typed amount and From/To dropdowns. The engine still checks
+prices only at $100, $200, $500, $1,000 and $2,000 (PRD 9.11: each extra amount
+multiplies request volume). For any other amount, the app takes each provider's
+quote at the largest checked amount at or below it (the smallest one if the
+amount is below the grid) and runs the same fee and rate through the shared
+formula package, so it's the same arithmetic as the engine. Each card then says
+"Estimated from the $500 check". Metrics record the checked amount, never the
+exact figure typed. From lists the PRD 6.5 sending countries and To lists the
+Tier 2 countries, all as "Soon" until they're live.
+*Touches:* PRD 5.1 and 14.6 (route picker, amount input).

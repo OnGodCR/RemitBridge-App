@@ -1,10 +1,13 @@
+import { computeTransferCost } from '@remitbridge/formula';
+
+import { AMOUNTS, type DeliveryMethod } from '@/lib/routes';
 import { supabase } from '@/lib/supabase';
-import type { DeliveryMethod } from '@/lib/routes';
 
 /**
  * A row of the `latest_quotes` view: the newest published quote per provider, no older
  * than 48 hours. Every cost figure was computed by the engine with the one formula
- * (packages/formula); the app never recomputes or rounds them into different numbers.
+ * (packages/formula). The app only recomputes for an amount that wasn't checked, with
+ * the same formula (atAmount below), and labels the result as an estimate.
  */
 export interface LatestQuote {
   id: number;
@@ -30,6 +33,44 @@ export interface LatestQuote {
   source: 'scraper' | 'api' | 'manual' | 'partner';
   captured_at: string;
   is_stale: boolean;
+}
+
+/** A quote as shown for the amount the person typed. */
+export interface ShownQuote extends LatestQuote {
+  /** The checked amount this was worked out from, or null when the amount was checked. */
+  basedOn: number | null;
+}
+
+/**
+ * Prices are checked at the grid amounts only (PRD 9.11). For any other amount, use the
+ * largest checked amount at or below it (the smallest one if it's below the grid): same
+ * fee and same rate, run through the one formula. Fees often change at tier breaks, so
+ * these are labelled as estimates wherever they show.
+ */
+export function checkedAmountFor(amount: number): number {
+  const below = AMOUNTS.filter((a) => a <= amount);
+  return below.length ? below[below.length - 1] : AMOUNTS[0];
+}
+
+export function atAmount(q: LatestQuote, amount: number): ShownQuote | null {
+  if (amount === Number(q.send_amount)) return { ...q, basedOn: null };
+  const c = computeTransferCost({
+    sent: amount,
+    fee: Number(q.fee),
+    quotedRate: Number(q.offered_rate),
+    midRate: Number(q.mid_market_rate),
+    pickupCharge: Number(q.pickup_charge),
+  });
+  if (c.amountReceived <= 0) return null; // the fee alone would eat the whole amount
+  return {
+    ...q,
+    send_amount: amount,
+    amount_received: c.amountReceived,
+    markup_pct: c.markupPct,
+    total_cost: c.totalCost,
+    total_cost_pct: c.totalCostPct,
+    basedOn: Number(q.send_amount),
+  };
 }
 
 export type QuotesResult =
