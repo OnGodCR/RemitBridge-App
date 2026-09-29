@@ -13,7 +13,7 @@ works, Account. What's missing:
 - **Prices.** All eight Tier 1 providers' terms forbid automated access, or in Western
   Union's case aren't clear and its site blocks it (D52, `docs/MANUAL_RESEARCH.md`). So
   prices come from manual entry until a provider gives written permission. Angad sends
-  the permission emails (`docs/outreach/permission-request.md`). Next to build: the
+  the permission emails (7 of 8 sent 2026-09-28; Xe needs its web form; `docs/outreach/permission-request.md`). Next to build: the
   admin-only manual price entry form.
 - **Sign-in.** Email codes work: Resend is connected and the code template is live (D53).
   Apple and Google still need credentials. Angad's account still needs `is_admin` set
