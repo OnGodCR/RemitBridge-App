@@ -116,7 +116,17 @@ async def run_adapter(
         await store.save_mid_market([m for m in mid_rates.values() if isinstance(m, MidMarketRate)])
 
     quotes: list[Quote] = []
+    quote_obs: list[dict | None] = []  # the observation behind each quote (manual only)
     promo_texts: list[str | None] = []
+    # Outcomes for observations entered in the app, written back to their rows after the
+    # quotes are saved. An observation that couldn't be checked yet (no mid-market rate)
+    # gets no outcome and stays pending for the next run.
+    outcomes: list[tuple[int, str, list[str]]] = []
+
+    def outcome(obs: dict | None, status: str, notes: list[str]) -> None:
+        if obs and obs.get("row_id") is not None:
+            outcomes.append((int(obs["row_id"]), status, notes))
+
     drifted: set[int] = set()
     fingerprints = dict(state.get("fingerprints") or {})
     blocked = False
@@ -143,6 +153,7 @@ async def run_adapter(
             report.error_class = ErrorClass.PARSE_ERROR
             report.errors.append(f"{req}: {e!r}")
             log.debug(traceback.format_exc())
+            outcome(obs, ValidationStatus.REJECTED, [f"could not read the entry: {e}"])
             continue
 
         if isinstance(adapter, ManualAdapter):
@@ -150,10 +161,12 @@ async def run_adapter(
             if age > C.MANUAL_QUOTE_MAX_AGE_S:
                 # Not a failure: an old file in the folder. Skipped, and said so.
                 report.skipped += 1
-                report.errors.append(
+                msg = (
                     f"manual quote {provider_id} {req.route_id} {req.send_amount:g} observed "
                     f"{age / 3600:.1f}h before the mid-market fetch; re-observe it"
                 )
+                report.errors.append(msg)
+                outcome(obs, "skipped", [msg])
                 continue
 
         q = normalize(parsed, req, mid, provider_id=provider_id, source=adapter.source,
@@ -170,6 +183,7 @@ async def run_adapter(
                 report.errors.append(f"response shape changed for {raw.strategy}: {known} -> {fp}")
 
         quotes.append(q)
+        quote_obs.append(obs)
         promo_texts.append(parsed.promo_text)
 
     # --- Publish gate over the whole batch (tier consistency needs the full grid).
@@ -188,6 +202,10 @@ async def run_adapter(
         quotes[i].validation_notes.append("drift: response shape changed; held until accepted")
 
     await store.save_quotes(quotes)
+    for q, obs in zip(quotes, quote_obs, strict=True):
+        outcome(obs, q.validation_status, list(q.validation_notes))
+    if outcomes:
+        await store.record_manual_outcomes(outcomes)
 
     report.published = sum(q.validation_status == ValidationStatus.PUBLISHED for q in quotes)
     report.quarantined = sum(q.validation_status == ValidationStatus.QUARANTINED for q in quotes)

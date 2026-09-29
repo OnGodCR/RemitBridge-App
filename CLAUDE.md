@@ -53,9 +53,12 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
       form), waiting on replies. Follow up on 2026-10-12 (calendar reminder set).
       Log replies in `docs/outreach/permission-request.md` (D52).
-- [ ] **Manual price entry form** (D52): an admin-only screen where prices read off
-      providers' sites are entered and then run through the engine's gate. It needs
-      Angad signed in once, then marked admin.
+- [ ] **Make remitbridgesystemlabs@gmail.com an admin** (Angad, Supabase SQL editor:
+      `update profiles set is_admin = true` for that user). The "Add a price" screen (D54)
+      is built and appears on the Account tab once this is set.
+- [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
+      RemitBridge-App only, Actions read and write) so entries are checked in minutes.
+      Without it, the three-hourly schedule checks them.
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **App icon and splash.** Still the Expo template's placeholders.
 - [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
@@ -79,6 +82,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] GitHub Actions secrets `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set
       (piped from the Supabase CLI, never displayed); a scrape run read the database
       with them. Done 2026-09-28.
+- [x] Admin "Add a price" screen, `manual_observations` table with RLS (26/26
+      smoke checks), engine write-back of each outcome, Manual prices workflow, and the
+      `process-prices` Edge Function (D54). Done 2026-09-28.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in

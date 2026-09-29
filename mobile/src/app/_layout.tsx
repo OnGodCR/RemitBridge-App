@@ -11,6 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
 
 SplashScreen.preventAutoHideAsync();
@@ -38,6 +39,7 @@ export default function RootLayout() {
 
 function Navigator() {
   const { ready, onboarded } = useAuth();
+  const isAdmin = useIsAdmin();
 
   useEffect(() => {
     // Hold the splash until the stored session is read, so nobody sees onboarding flash
@@ -57,6 +59,11 @@ function Navigator() {
       </Stack.Protected>
       {/* Reachable from onboarding and from the Account tab. */}
       <Stack.Screen name="sign-in" />
+      {/* Price entry (D54). The screen is hidden from everyone else, and RLS refuses the
+          insert anyway: the guard is convenience, the policy is the protection. */}
+      <Stack.Protected guard={isAdmin}>
+        <Stack.Screen name="admin" />
+      </Stack.Protected>
     </Stack>
   );
 }

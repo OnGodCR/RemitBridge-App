@@ -362,3 +362,18 @@ into Supabase without passing through anyone's hands. The sender is
 plus SPF and MX on `send`) are in GoDaddy. The code template and sender name were
 set through the Management API, not `supabase config push`: with the password
 absent locally, a push could blank the SMTP settings. *Closes:* D42's blocker.
+
+**D54. Prices entered in the app go through the engine's gate, not around it.**
+The admin-only "Add a price" screen (Account tab, admins only) saves one quote per entry to
+`manual_observations`, under RLS: admins insert as themselves and read all rows,
+nobody else sees anything, and only the engine changes a row. The engine's manual adapter
+takes pending rows alongside the JSON files, runs them through the same normaliser, gate and
+archive, and writes each outcome (published, quarantined, rejected, or skipped as too old)
+back to the row, where the screen shows it. The app checks only the arithmetic before saving,
+with the shared formula and the engine's tolerance, to catch typos early; it never decides
+what is shown. A new "Manual prices" workflow runs the check. The `process-prices` Edge
+Function starts it right after an entry when `GITHUB_DISPATCH_TOKEN` (a fine-grained token,
+this repo only, Actions read and write) is set in Supabase; otherwise a three-hourly
+schedule catches it, inside the six-hour freshness limit. Chosen over re-implementing the
+gate in TypeScript, which would have created a second gate that could drift from the first.
+*Touches:* D52, PRD 9.4 strategy 5, PRD 9.7.

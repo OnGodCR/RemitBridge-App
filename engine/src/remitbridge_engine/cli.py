@@ -20,11 +20,12 @@ from pathlib import Path
 import httpx
 
 from . import config as C
+from .adapters.manual import ManualAdapter
 from .archive import LocalArchive, SupabaseArchive
 from .fx import FxUnavailable, fetch_mid_market
 from .http import PoliteClient
 from .models import RunStatus
-from .registry import all_adapters
+from .registry import MANUAL_DIR, all_adapters
 from .runner import run_adapter
 from .store import LocalStore, SupabaseStore
 
@@ -50,6 +51,13 @@ async def _run(args) -> int:
         return 2
     async with httpx.AsyncClient(timeout=C.REQUEST_TIMEOUT_S) as backend_client:
         store, archive = _backends(args.store, backend_client)
+        # The manual adapter also takes prices entered in the app that are waiting to be
+        # checked (DECISIONS.md D54).
+        adapters = [
+            ManualAdapter(MANUAL_DIR, await store.pending_manual_observations())
+            if isinstance(a, ManualAdapter) else a
+            for a in adapters
+        ]
         http = PoliteClient()
         try:
             reports = []

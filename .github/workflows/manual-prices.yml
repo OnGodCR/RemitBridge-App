@@ -1,0 +1,49 @@
+name: Manual prices
+
+# Checks prices entered in the app's "Add a price" form (DECISIONS.md D54): each pending
+# row in manual_observations goes through the same gate as any other quote, and its
+# outcome is written back to the row.
+#
+# The app's process-prices Edge Function starts this right after an entry, when
+# GITHUB_DISPATCH_TOKEN is set in Supabase. The schedule is the fallback. It's every three
+# hours because an entry must be checked within six (MANUAL_QUOTE_MAX_AGE_S), and each run
+# costs private-repo Actions minutes. A run with nothing pending stops after one request.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 */3 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manual-prices
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Anything waiting?
+        id: pending
+        run: |
+          n=$(curl -fsS "$SUPABASE_URL/rest/v1/manual_observations?select=id&status=eq.pending" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" | jq length)
+          echo "Pending entries: $n"
+          echo "n=$n" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.pending.outputs.n != '0'
+      - uses: astral-sh/setup-uv@v6
+        if: steps.pending.outputs.n != '0'
+      - if: steps.pending.outputs.n != '0'
+        working-directory: engine
+        run: uv sync --locked --no-dev
+      - if: steps.pending.outputs.n != '0'
+        working-directory: engine
+        run: uv run rb-engine run --adapter manual --store supabase

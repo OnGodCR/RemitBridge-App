@@ -61,6 +61,7 @@ check "profiles are not readable"                 "0" "$(count "${H[@]}" "$REST/
 check "saved transfers are not readable"          "0" "$(count "${H[@]}" "$REST/saved_transfers?select=id")"
 check "saved comparisons are not readable"        "0" "$(count "${H[@]}" "$REST/saved_comparisons?select=id")"
 check "internal installs are not readable"        "0" "$(count "${H[@]}" "$REST/internal_installs?select=install_id")"
+check "entered prices are not readable"           "0" "$(count "${H[@]}" "$REST/manual_observations?select=id")"
 
 echo "--- writes a stranger must not make (each must fail with 42501)"
 check "can't insert a published quote" "42501" "$(post quotes "$(printf '{"dedupe_key":"rls","provider_id":"wise","route_id":"us-in","send_currency":"USD","receive_currency":"INR","send_amount":500,"delivery_method":"bank_deposit","payment_method":"bank_account","fee":0,"offered_rate":99,"mid_market_rate":95,"mid_market_source":"x","amount_received":49500,"computed_amount_received":49500,"markup_pct":-4,"total_cost":0,"total_cost_pct":0,"source":"scraper","strategy":"x","captured_at":"2026-09-28T00:00:00Z","validation_status":"published"}')")"
@@ -70,6 +71,7 @@ check "can't save a transfer" "42501" "$(post saved_transfers "$(printf '{"user_
 check "can't save a comparison" "42501" "$(post saved_comparisons "$(printf '{"user_id":"%s","route_id":"us-in","send_amount":500,"delivery_method":"upi"}' "$FAKE_USER")")"
 check "can't register an internal install" "42501" "$(post internal_installs "$(printf '{"install_id":"%s","label":"x"}' "$FAKE_USER")")"
 check "can't log an event as someone else" "42501" "$(post events "$(printf '{"install_id":"%s","user_id":"%s","name":"rls_test"}' "$TEST_INSTALL" "$FAKE_USER")")"
+check "can't enter a price" "42501" "$(post manual_observations "$(printf '{"provider_id":"wise","route_id":"us-in","send_amount":500,"delivery_method":"bank_deposit","fee":0,"offered_rate":99,"amount_received":49500,"source_url":"x","observed_by":"%s"}' "$FAKE_USER")")"
 check "event names are validated (23514)" "23514" "$(post events "$(printf '{"install_id":"%s","name":"DROP TABLE"}' "$TEST_INSTALL")")"
 curl -s -m 20 -o /dev/null "${H[@]}" -X PATCH "$REST/routes?id=eq.us-in" -d '{"status":"not_feasible"}'
 check "can't change a route (still 'building')" "building" "$(curl -s -m 20 "${H[@]}" "$REST/routes?id=eq.us-in&select=status" | python3 -c 'import sys,json; print(json.load(sys.stdin)[0]["status"])')"
