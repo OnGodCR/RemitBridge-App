@@ -62,6 +62,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
       needs the developer account (D32); Google needs a Cloud OAuth client.
+- [ ] **Store screenshots from a development build** (no Expo Go dev button); also
+      swap them into `site/screens/` (D59).
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
       change was sometimes dropped. It looked like Expo Go's dev overlay, but
       that's unconfirmed.
@@ -93,6 +95,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] `site/` live at https://app.remitbridgelabs.org (Vercel project, root `site`;
       GoDaddy CNAME `app`), SSL valid, all pages 200; Privacy and Support linked from
       the Account tab. Done 2026-09-29.
+- [x] The website's tools rebuilt in the app under Compare · Tools · Learn · Account:
+      Fair rate, Scam check, TrueCost (with saved checks), Yearly cost, Rate history,
+      Glossary, RemitBench (D58). Done 2026-09-29.
+- [x] Landing page at app.remitbridgelabs.org rebuilt as a scroll story with a pinned
+      phone, after hidewire.org (D59). Done 2026-09-29.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in

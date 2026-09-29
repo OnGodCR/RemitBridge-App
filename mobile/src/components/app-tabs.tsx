@@ -15,9 +15,14 @@ export default function AppTabs() {
         <NativeTabs.Trigger.Icon sf="arrow.left.arrow.right" md="compare_arrows" />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="methodology">
-        <NativeTabs.Trigger.Label>How it works</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="info.circle" md="info" />
+      <NativeTabs.Trigger name="tools">
+        <NativeTabs.Trigger.Label>Tools</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="wrench.and.screwdriver" md="build" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="learn">
+        <NativeTabs.Trigger.Label>Learn</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="book" md="menu_book" />
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="account">

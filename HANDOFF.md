@@ -5,8 +5,7 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-09-28
 
-## Status: app built and connected; waiting on prices and sign-in
-
+## Status: app has its tools; waiting on prices and Apple/Google sign-in
 The app is built and connected: onboarding, Compare with search and estimates, How it
 works, Account. What's missing:
 
@@ -26,6 +25,11 @@ works, Account. What's missing:
   /privacy, /support, and partner links /p/<partner-name>. Vercel redeploys on every push
   to main. The Account tab links Privacy and Support (opened in an in-app browser sheet).
 - **App icon and flags** are in (D55, D56).
+- **Tabs are Compare · Tools · Learn · Account** (D58). Tools: Fair rate, Scam check,
+  TrueCost, Yearly cost, Rate history, each a root-stack screen at its own path
+  (/fair-rate etc.). Learn: How it works, Glossary, RemitBench, website links. Account:
+  "Your checks" (saved TrueCost receipts). All checked in the simulator against hand math.
+- **Landing page** (site/index.html) is a scroll story with a pinned phone (D59).
 - **GitHub Actions secrets** are set, and the Scrape workflow starts with a database
   connection check (run 36531671087 read all 4 routes).
 

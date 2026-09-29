@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { SavedChecks } from '@/components/saved-checks';
 import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
@@ -43,12 +44,13 @@ export default function AccountScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title="Account">
           <AppText style={{ color: t.heroMuted }}>
-            {session ? (session.user.email ?? 'Signed in with Apple') : 'Save your routes and past transfers.'}
+            {session ? (session.user.email ?? 'Signed in with Apple') : 'Save the receipts you check.'}
           </AppText>
         </HeroHeader>
         <View style={[styles.content, { backgroundColor: t.background }]}>
         {session ? (
           <>
+            <SavedChecks />
             {isAdmin ? <Button label="Add a price" onPress={() => router.push('/admin')} /> : null}
             <Button label="Sign out" variant="secondary" onPress={signOut} />
             <Button label="Delete account" variant="plain" loading={busy} onPress={confirmDelete} />

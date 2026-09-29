@@ -32,6 +32,18 @@ const FLAGS: Record<string, ImageSourcePropType> = {
   NG: require('../../assets/flags/ng.png'),
   PK: require('../../assets/flags/pk.png'),
   BD: require('../../assets/flags/bd.png'),
+  EU: require('../../assets/flags/eu.png'),
+  NP: require('../../assets/flags/np.png'),
+  GH: require('../../assets/flags/gh.png'),
+  HT: require('../../assets/flags/ht.png'),
+  CO: require('../../assets/flags/co.png'),
+  JM: require('../../assets/flags/jm.png'),
+  EG: require('../../assets/flags/eg.png'),
+  LK: require('../../assets/flags/lk.png'),
+  ID: require('../../assets/flags/id.png'),
+  BR: require('../../assets/flags/br.png'),
+  PE: require('../../assets/flags/pe.png'),
+  KR: require('../../assets/flags/kr.png'),
 };
 
 export function Flag({ code, height = 18, dim }: { code: string; height?: number; dim?: boolean }) {
