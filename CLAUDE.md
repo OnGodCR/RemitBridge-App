@@ -70,9 +70,6 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
       submission (D32).
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Deploy `site/`** (D57): Angad adds a Vercel project from this repo with root
-      directory `site`, adds the domain app.remitbridgelabs.org, and adds the CNAME
-      Vercel shows in GoDaddy. Then link Privacy and Support from the Account tab.
 - [ ] **Universal links** (open the app straight from a link): need the Apple team ID,
       so they wait for the developer account (D32).
 - [ ] **Partner outreach** (D50): no partners yet; Seattle-area organizations, special
@@ -93,6 +90,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       .icon), Android (adaptive + monochrome) and the splash (D56). Done 2026-09-29.
 - [x] Store-required pages and the partner link, built as `site/` (home, privacy,
       support, `/p/<partner>` with a counted visit) (D57). Done 2026-09-29.
+- [x] `site/` live at https://app.remitbridgelabs.org (Vercel project, root `site`;
+      GoDaddy CNAME `app`), SSL valid, all pages 200; Privacy and Support linked from
+      the Account tab. Done 2026-09-29.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in
