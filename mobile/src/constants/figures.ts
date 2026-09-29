@@ -4,6 +4,9 @@
  * Every figure names where it came from wherever it is shown (PRD 14.3).
  */
 export const FIGURES = {
+  /** Global remittance flows, 2024. */
+  flowsUsdBn: 905,
+  flowsSource: 'World Bank / KNOMAD, Migration and Development Brief, 2024',
   /** Global average total cost of sending $200, World Bank RPW Issue 54 (Q3 2025 data). */
   globalCostPct: 6.36,
   globalCostSource: 'World Bank, Remittance Prices Worldwide, Q3 2025',

@@ -454,3 +454,14 @@ Checked: Supabase's authorize endpoint answers 302 to accounts.google.com, and t
 Google's sign-in page. Until Google verifies the brand, that page says "continue to
 gmzljjdnwndvqciqicbx.supabase.co" rather than "RemitBridge"; brand verification (proving
 remitbridgelabs.org in Search Console) fixes that for free.
+
+**D62. Onboarding and sign-in use the website's own elements, not template ones.** Angad
+called the first redesign vibe-coded. It had a glow blob, a shadowed "illustrative" card in
+grey and amber, and icon-bullet promises. Rebuilt from the website's components instead: its
+page ground (the bridge mark tiled at 6%, with a mint light) and green band, rendered by
+`mobile/scripts/make-onboarding-art.py` from Backdrop.jsx; the outlined LogoMark; the
+two-tone DisplayTitle; uppercase eyebrows; divided-index lists instead of card grids; the
+green left-rule callout; its sourced figures ($905B, 6.36%, 3%) on a new "Why it matters"
+step; its 0.55s, 12pt "rise" entrance; and fully rounded bold buttons, app-wide. Sign-in
+buttons carry the providers' own marks (Apple's official button, Google's "G" per its
+guidelines, an envelope for email). Onboarding is now four steps.

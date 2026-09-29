@@ -1,18 +1,31 @@
 import { router } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
+import { DisplayTitle, Eyebrow } from '@/components/brand';
+import { Flag } from '@/components/flag';
+import { rise } from '@/components/motion';
 import { Step } from '@/components/onboarding';
-import { FlagSlot } from '@/components/flag';
 import { AppText } from '@/components/ui';
-import { Radius, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { RECEIVING } from '@/lib/countries';
 import { prefs } from '@/lib/prefs';
-import { ROUTES } from '@/lib/routes';
+import { DELIVERY_LABELS, ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
 
+/**
+ * Pick the route Compare opens on (DECISIONS.md D62), as the website's divided index
+ * ("rather than a card grid... a list you scan down instead of panels you compare"):
+ * hairline rows, the country in bold, one plain line, an arrow. One tap moves on.
+ *
+ * The countries that aren't live yet are a plain line of text, following the site's rule
+ * that tags are text and never pills.
+ */
 export default function PickRoute() {
   const t = useTheme();
+  const soon = RECEIVING.filter((c) => !c.live).map((c) => c.short ?? c.name);
 
   const pick = (routeId: string) => {
     prefs.setHomeRoute(routeId);
@@ -21,58 +34,56 @@ export default function PickRoute() {
   };
 
   return (
-    <Step step={2} of={3} actions={null}>
-      <AppText variant="title">Where do you send money?</AppText>
-      <View style={[styles.list, { backgroundColor: t.card, borderColor: t.border }]}>
-        {ROUTES.map((r, i) => (
+    <Step step={3} of={4} actions={null}>
+      <Animated.View entering={rise(0)} style={styles.head}>
+        <Eyebrow>Your route</Eyebrow>
+        <DisplayTitle lead="Where do you" accent="send money?" />
+        <AppText style={[styles.intro, { color: t.textSecondary }]}>
+          Compare opens on this route. You can change it anytime.
+        </AppText>
+      </Animated.View>
+
+      <Animated.View entering={rise(1)} style={[styles.index, { borderTopColor: t.border }]}>
+        {ROUTES.map((r) => (
           <Pressable
             key={r.id}
             onPress={() => pick(r.id)}
             accessibilityRole="button"
-            accessibilityLabel={r.country}
-            style={({ pressed }) => [
-              styles.row,
-              i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border },
-              { backgroundColor: pressed ? t.muted : 'transparent' },
-            ]}>
-            <FlagSlot code={r.id.split('-')[1]} />
-            <AppText variant="label" style={styles.name}>
-              {r.country}
-            </AppText>
-            <AppText variant="small" muted>
-              {r.receiveCurrency}
-            </AppText>
-            <SymbolView
-              pointerEvents="none"
-              name="chevron.right"
-              size={13}
-              weight="semibold"
-              tintColor={t.textSecondary}
-              fallback={<AppText muted>›</AppText>}
-            />
+            accessibilityLabel={`${r.country}. ${r.sendCurrency} to ${r.receiveCurrency}`}
+            style={({ pressed }) => [styles.row, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
+            <Flag code={r.id.split('-')[1]} height={22} />
+            <View style={styles.rowText}>
+              <AppText style={[styles.country, { color: t.text }]}>{r.country}</AppText>
+              <AppText variant="small" style={{ color: t.textSecondary }}>
+                {r.sendCurrency} to {r.receiveCurrency} · {r.deliveryMethods.map((m) => DELIVERY_LABELS[m]).join(', ')}
+              </AppText>
+            </View>
+            <SymbolView pointerEvents="none" name="arrow.right" size={17} weight="semibold" tintColor={t.primary} fallback={null} />
           </Pressable>
         ))}
-      </View>
-      <AppText variant="small" muted>
-        More countries soon.
-      </AppText>
+      </Animated.View>
+
+      <Animated.View entering={rise(2)}>
+        <AppText variant="small" style={{ color: t.textSecondary }}>
+          Coming next: {soon.join(', ')}.
+        </AppText>
+      </Animated.View>
     </Step>
   );
 }
 
 const styles = StyleSheet.create({
-  list: {
-    borderRadius: Radius.lg,
-    borderWidth: StyleSheet.hairlineWidth,
-    overflow: 'hidden',
-    marginTop: Spacing.two,
-  },
+  head: { gap: Spacing.three, marginBottom: Spacing.two },
+  intro: { fontSize: 16, lineHeight: 23 },
+  index: { borderTopWidth: StyleSheet.hairlineWidth },
   row: {
-    minHeight: 60,
+    minHeight: 76,
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.three,
-    paddingHorizontal: Spacing.three,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingVertical: Spacing.three,
   },
-  name: { flex: 1, fontSize: 16 },
+  rowText: { flex: 1, gap: 3 },
+  country: { fontFamily: Fonts.bold, fontSize: 20, letterSpacing: -0.4 },
 });
