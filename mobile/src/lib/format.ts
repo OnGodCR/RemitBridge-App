@@ -29,13 +29,12 @@ export function pct(value: number, digits = 1): string {
   return `${value.toFixed(digits)}%`;
 }
 
-/** "Checked 3 hours ago". Minutes under an hour, hours under two days, then days. */
+/** "Checked 3h ago". Minutes under an hour, hours under two days, then days. */
 export function checkedAgo(iso: string, now: Date = new Date()): string {
   const mins = Math.max(0, Math.round((now.getTime() - new Date(iso).getTime()) / 60000));
   if (mins < 1) return 'Checked just now';
-  if (mins < 60) return `Checked ${mins} minute${mins === 1 ? '' : 's'} ago`;
+  if (mins < 60) return `Checked ${mins}m ago`;
   const hours = Math.round(mins / 60);
-  if (hours < 48) return `Checked ${hours} hour${hours === 1 ? '' : 's'} ago`;
-  const days = Math.round(hours / 24);
-  return `Checked ${days} days ago`;
+  if (hours < 48) return `Checked ${hours}h ago`;
+  return `Checked ${Math.round(hours / 24)}d ago`;
 }

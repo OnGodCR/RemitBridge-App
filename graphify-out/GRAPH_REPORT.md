@@ -1,16 +1,16 @@
 # Graph Report - RemitBridge-App  (2026-09-28)
 
 ## Corpus Check
-- 65 files · ~63,092 words
+- 67 files · ~63,972 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 513 nodes · 885 edges · 48 communities (21 shown, 27 thin omitted)
+- 519 nodes · 892 edges · 49 communities (22 shown, 27 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f95cf886`
+- Built from commit: `680f0eb1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,10 +61,11 @@
 - AdapterError
 - AsyncClient
 - datetime
+- rls_smoke.sh
 
 ## God Nodes (most connected - your core abstractions)
-1. `run_adapter()` - 21 edges
-2. `RawResponse` - 21 edges
+1. `RawResponse` - 21 edges
+2. `run_adapter()` - 21 edges
 3. `PoliteClient` - 19 edges
 4. `Quote` - 19 edges
 5. `ManualAdapter` - 16 edges
@@ -77,19 +78,19 @@
 ## Surprising Connections (you probably didn't know these)
 - `normalize()` --calls--> `compute_transfer_cost()`  [EXTRACTED]
   engine/src/remitbridge_engine/normalize.py → packages/formula/python/remitbridge_formula/__init__.py
-- `setup()` --calls--> `LocalArchive`  [INFERRED]
-  engine/tests/test_runner.py → engine/src/remitbridge_engine/archive.py
-- `setup()` --calls--> `LocalStore`  [INFERRED]
-  engine/tests/test_runner.py → engine/src/remitbridge_engine/store.py
 - `test_manual_quotes_go_through_the_same_gate()` --calls--> `ManualAdapter`  [INFERRED]
   engine/tests/test_runner.py → engine/src/remitbridge_engine/adapters/manual.py
+- `setup()` --calls--> `LocalArchive`  [INFERRED]
+  engine/tests/test_runner.py → engine/src/remitbridge_engine/archive.py
 - `AdapterError` --uses--> `ErrorClass`  [INFERRED]
   engine/src/remitbridge_engine/http.py → engine/src/remitbridge_engine/models.py
+- `SupabaseArchive` --uses--> `RawResponse`  [INFERRED]
+  engine/src/remitbridge_engine/archive.py → engine/src/remitbridge_engine/models.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 27 thin omitted)
+## Communities (49 total, 27 thin omitted)
 
 ### Community 0 - "RemitBridge App"
 Cohesion: 0.05
@@ -167,6 +168,10 @@ Nodes (27): Archive, datetime, _breaker_open(), _fetch_and_parse(), Adapter, Try
 Cohesion: 0.29
 Nodes (4): AdapterError, AsyncClient, Exception, Response
 
+### Community 48 - "rls_smoke.sh"
+Cohesion: 0.47
+Nodes (4): check(), pg(), post(), rls_smoke.sh script
+
 ## Knowledge Gaps
 - **141 isolated node(s):** `Talking to Angad`, `Keeping the docs current`, `Open items`, `Product rules that are also code rules`, `Words and voice` (+136 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -176,7 +181,7 @@ Nodes (4): AdapterError, AsyncClient, Exception, Response
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `RawResponse` connect `models.py` to `test_gate.py`, `SupabaseArchive`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Why does `Quote` connect `Quote` to `models.py`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Why does `run_adapter()` connect `run_adapter` to `models.py`, `Quote`, `fetch_mid_market`?**

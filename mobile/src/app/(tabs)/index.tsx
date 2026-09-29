@@ -8,19 +8,23 @@ import { AppText, Card, Chip, ChipRow } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { money } from '@/lib/format';
+import { prefs } from '@/lib/prefs';
 import { fetchQuotes, type QuotesResult } from '@/lib/quotes';
 import { AMOUNTS, DELIVERY_LABELS, ROUTES, type DeliveryMethod } from '@/lib/routes';
 
 const LIMITS = [
-  'First-transfer promotions are shown apart from standing rates, and may not apply to you.',
-  'Charges an agent adds in person, and any tax in the receiving country.',
-  'How the rate has moved since the price was checked. The time is on every card.',
-  'Prices for amounts between the ones shown. Fees often change at tier breaks.',
+  'Agent fees charged in person',
+  'Taxes where the money arrives',
+  'Rate moves since the last check',
+  'Amounts between the ones shown',
 ];
 
 export default function CompareScreen() {
   const t = useTheme();
-  const [routeId, setRouteId] = useState(ROUTES[0].id);
+  const [routeId, setRouteId] = useState(() => {
+    const home = prefs.homeRoute();
+    return ROUTES.some((r) => r.id === home) ? home! : ROUTES[0].id;
+  });
   const [amount, setAmount] = useState<number>(500);
   const route = ROUTES.find((r) => r.id === routeId) ?? ROUTES[0];
   const [method, setMethod] = useState<DeliveryMethod>(route.deliveryMethods[0]);
@@ -65,11 +69,8 @@ export default function CompareScreen() {
           />
         }>
         <AppText variant="title">Compare</AppText>
-        <AppText muted>
-          Ranked by how much your family receives, not by the fee. No ads, no affiliate deals.
-        </AppText>
 
-        <Section label="Sending from the US to">
+        <Section label="To">
           <ChipRow>
             {ROUTES.map((r) => (
               <Chip
@@ -96,7 +97,7 @@ export default function CompareScreen() {
           </ChipRow>
         </Section>
 
-        <Section label="How it arrives">
+        <Section label="Delivery">
           <ChipRow>
             {route.deliveryMethods.map((m) => (
               <Chip
@@ -109,12 +110,9 @@ export default function CompareScreen() {
           </ChipRow>
         </Section>
 
-        <Results result={result} amount={amount} country={route.country} />
+        <Results result={result} />
 
         <DoesNotTellYou items={LIMITS} />
-        <AppText variant="small" muted>
-          Nothing you pick here is saved or tied to you.
-        </AppText>
       </ScrollView>
     </SafeAreaView>
   );
@@ -131,25 +129,14 @@ function Section({ label, children }: { label: string; children: React.ReactNode
   );
 }
 
-function Results({
-  result,
-  amount,
-  country,
-}: {
-  result: QuotesResult | null;
-  amount: number;
-  country: string;
-}) {
+function Results({ result }: { result: QuotesResult | null }) {
   if (!result) return <ActivityIndicator style={styles.loading} />;
 
   if (result.kind === 'not_connected') {
     return (
       <Card>
-        <AppText variant="heading">Not connected yet</AppText>
-        <AppText muted>
-          This build has no database configured, so there are no prices to show. Set
-          EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY in mobile/.env.local.
-        </AppText>
+        <AppText variant="heading">Not connected</AppText>
+        <AppText muted>Set the Supabase env in mobile/.env.local.</AppText>
       </Card>
     );
   }
@@ -158,7 +145,7 @@ function Results({
     return (
       <Card>
         <AppText variant="heading">Prices didn’t load</AppText>
-        <AppText muted>Pull down to try again. ({result.message})</AppText>
+        <AppText muted>Pull down to retry.</AppText>
       </Card>
     );
   }
@@ -167,12 +154,8 @@ function Results({
   if (standing.length === 0 && promotional.length === 0) {
     return (
       <Card>
-        <AppText variant="heading">No checked prices for this yet</AppText>
-        <AppText muted>
-          We only show a price once it has passed every check, and none has for this route,
-          amount and delivery method in the last 48 hours. A missing price is better than a
-          wrong one.
-        </AppText>
+        <AppText variant="heading">No prices yet</AppText>
+        <AppText muted>Only checked prices show here.</AppText>
       </Card>
     );
   }
@@ -183,9 +166,7 @@ function Results({
     <View style={styles.results}>
       {standing.length > 1 ? (
         <AppText variant="label">
-          Sending {money(amount, 'USD')} to {country}: recipients get between{' '}
-          {money(Math.min(...received), receive)} and {money(Math.max(...received), receive)}{' '}
-          depending on provider.
+          {money(Math.min(...received), receive)} – {money(Math.max(...received), receive)} arrives
         </AppText>
       ) : null}
       {standing.map((q, i) => (
@@ -194,11 +175,7 @@ function Results({
       {promotional.length > 0 ? (
         <>
           <AppText variant="heading" style={styles.promoHeading}>
-            Promotional rates
-          </AppText>
-          <AppText muted>
-            One-time offers, usually for a first transfer. Shown apart because the next
-            transfer won’t get them.
+            First-transfer offers
           </AppText>
           {promotional.map((q) => (
             <QuoteCard key={q.id} quote={q} highlight="Promotion" />
