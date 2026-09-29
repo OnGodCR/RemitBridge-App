@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { FlatList, Modal, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, CodeBadge } from '@/components/ui';
+import { Flag, FLAG_SLOT, FlagSlot } from '@/components/flag';
+import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import type { Country } from '@/lib/countries';
@@ -61,6 +62,7 @@ export function CountrySelect({
           {label}
         </AppText>
         <View style={styles.fieldRow}>
+          <Flag code={current.code} height={16} />
           <AppText variant="label" style={styles.fieldName} numberOfLines={1}>
             {current.short ?? current.name}
           </AppText>
@@ -150,7 +152,7 @@ export function CountrySelect({
                     styles.row,
                     { backgroundColor: pressed ? t.muted : 'transparent' },
                   ]}>
-                  <CodeBadge code={item.code} dim={!item.live} />
+                  <FlagSlot code={item.code} dim={!item.live} />
                   <AppText
                     variant="label"
                     style={[styles.rowName, { color: item.live ? t.text : t.textSecondary }]}>
@@ -240,5 +242,5 @@ const styles = StyleSheet.create({
   },
   rowName: { flex: 1, fontSize: 16 },
   check: { width: 18, alignItems: 'flex-end' },
-  separator: { height: StyleSheet.hairlineWidth, marginLeft: Spacing.three + 32 + Spacing.three },
+  separator: { height: StyleSheet.hairlineWidth, marginLeft: Spacing.three + FLAG_SLOT + Spacing.three },
 });

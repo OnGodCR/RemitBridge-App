@@ -3,7 +3,8 @@ import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Step } from '@/components/onboarding';
-import { AppText, CodeBadge } from '@/components/ui';
+import { FlagSlot } from '@/components/flag';
+import { AppText } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { prefs } from '@/lib/prefs';
@@ -34,7 +35,7 @@ export default function PickRoute() {
               i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border },
               { backgroundColor: pressed ? t.muted : 'transparent' },
             ]}>
-            <CodeBadge code={r.id.split('-')[1].toUpperCase()} />
+            <FlagSlot code={r.id.split('-')[1]} />
             <AppText variant="label" style={styles.name}>
               {r.country}
             </AppText>

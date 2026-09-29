@@ -100,21 +100,6 @@ export function Segmented<T extends string>({
   );
 }
 
-/** A two-letter country code in a small square, in place of a flag emoji. */
-export function CodeBadge({ code, dim }: { code: string; dim?: boolean }) {
-  const t = useTheme();
-  return (
-    <View
-      style={[styles.badge, { backgroundColor: t.accent, borderColor: t.accent, opacity: dim ? 0.45 : 1 }]}
-      importantForAccessibility="no-hide-descendants"
-      accessibilityElementsHidden>
-      <AppText variant="label" style={[styles.badgeText, { color: t.accentForeground }]}>
-        {code}
-      </AppText>
-    </View>
-  );
-}
-
 /** Full-width button. `primary` is brand green; `secondary` is an outline. */
 export function Button({
   label,
@@ -208,15 +193,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOffset: { width: 0, height: 1 },
   },
-  badge: {
-    width: 32,
-    height: 24,
-    borderRadius: Radius.sm,
-    borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  badgeText: { fontSize: 11, letterSpacing: 0.5 },
   button: {
     minHeight: 50,
     borderRadius: Radius.md,
