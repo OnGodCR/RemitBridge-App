@@ -5,28 +5,28 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790618292.7478662,
-    "ast_hash": "ff53f79d8508b4a02a77af063b199b59",
+    "mtime": 1790639051.4037824,
+    "ast_hash": "911de272d351127e8918b1805cb34a04",
     "semantic_hash": ""
   },
   "DECISIONS.md": {
-    "mtime": 1790618292.7034667,
-    "ast_hash": "378c4526183a15b743ce0ef1afa3bb28",
+    "mtime": 1790639017.7237866,
+    "ast_hash": "8c92fecfb88cf7b43642a490e64b04b1",
     "semantic_hash": ""
   },
   "HANDOFF.md": {
-    "mtime": 1790618313.832733,
-    "ast_hash": "bbf0181db335ee1583d65bdd86c154cc",
+    "mtime": 1790639060.6720004,
+    "ast_hash": "abbccbc3cd473ba8db9638cf2b87ae8a",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790618049.7868183,
-    "ast_hash": "d152c311d81922a2abef673063d32372",
+    "mtime": 1790639051.4041135,
+    "ast_hash": "b24991fbd9cde987c195f08627cc37f0",
     "semantic_hash": ""
   },
   "docs/MANUAL_RESEARCH.md": {
-    "mtime": 1790617708.971121,
-    "ast_hash": "b55e525004eba2bac6b17f6432babea6",
+    "mtime": 1790639017.7189245,
+    "ast_hash": "e5ec5f741f1b2d2cbc3a8fea9ad7c346",
     "semantic_hash": ""
   },
   "docs/PRD.md": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "engine/src/remitbridge_engine/cli.py": {
-    "mtime": 1790636507.7950032,
-    "ast_hash": "eef94959877d5de39a0f547bb1ce634f",
+    "mtime": 1790638960.8828835,
+    "ast_hash": "b4f26424f904c3082abe7c717e678ad8",
     "semantic_hash": ""
   },
   "engine/src/remitbridge_engine/config.py": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "engine/src/remitbridge_engine/runner.py": {
-    "mtime": 1790636507.7858717,
-    "ast_hash": "e5e1353ab4ea60ea242f25416d228cf4",
+    "mtime": 1790638960.8809927,
+    "ast_hash": "3ecf52935ce82743448bf28f086c0d4e",
     "semantic_hash": ""
   },
   "engine/src/remitbridge_engine/store.py": {
@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "engine/tests/test_runner.py": {
-    "mtime": 1790636599.7330232,
-    "ast_hash": "7f4f2e0d762808d847329ac115a6432e",
+    "mtime": 1790638960.8824997,
+    "ast_hash": "173ab8d96e4479434ea2b05c49779ff0",
     "semantic_hash": ""
   },
   "mobile/app.json": {
@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "mobile/src/app/index.tsx": {
-    "mtime": 1790636965.3061934,
-    "ast_hash": "a11e3fb823b60d5ec7ed4284918f501d",
+    "mtime": 1790638611.0128613,
+    "ast_hash": "4267cacb184a28a41b73f725401e8637",
     "semantic_hash": ""
   },
   "mobile/src/app/methodology.tsx": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "mobile/src/components/app-tabs.tsx": {
-    "mtime": 1790636904.7740629,
-    "ast_hash": "0356b609593e9852e2ea12a875f9559c",
+    "mtime": 1790638611.0123348,
+    "ast_hash": "0838f8f34b0f476c82ccef3f5b85f98a",
     "semantic_hash": ""
   },
   "mobile/src/components/does-not-tell-you.tsx": {
@@ -327,6 +327,56 @@
   "mobile/assets/images/splash-icon.png": {
     "mtime": 1790636665.5459697,
     "ast_hash": "5ee5db91d59518c45ebcc99a2f5afc57",
+    "semantic_hash": ""
+  },
+  "mobile/.claude/settings.json": {
+    "mtime": 1790636665.5587292,
+    "ast_hash": "dc580fca35a0e98ed20777ede5e545a1",
+    "semantic_hash": ""
+  },
+  "mobile/.vscode/extensions.json": {
+    "mtime": 1790636665.5304594,
+    "ast_hash": "b2354ba0225f5689d13651ec0fac0de0",
+    "semantic_hash": ""
+  },
+  "mobile/.vscode/settings.json": {
+    "mtime": 1790636665.5313585,
+    "ast_hash": "6b9302c1f72c315e90233c7539c48c9f",
+    "semantic_hash": ""
+  },
+  "mobile/assets/expo.icon/icon.json": {
+    "mtime": 1790636665.530825,
+    "ast_hash": "35cb915a0bebbebbe69cf7815e174462",
+    "semantic_hash": ""
+  },
+  "packages/formula/vectors.json": {
+    "mtime": 1790635655.7350357,
+    "ast_hash": "2d95a656be1a071010020c6846a3cc5b",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260928000000_init.sql": {
+    "mtime": 1790636642.272065,
+    "ast_hash": "b6b04c13d1ed2c468eafdb2742b2d448",
+    "semantic_hash": ""
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1790638976.5674484,
+    "ast_hash": "5a42fcbeab58987ab9922adf843da001",
+    "semantic_hash": ""
+  },
+  ".github/workflows/health.yml": {
+    "mtime": 1790638987.3679798,
+    "ast_hash": "9a0d61fd9cfcf4348a9a559dcd986f9f",
+    "semantic_hash": ""
+  },
+  ".github/workflows/scrape.yml": {
+    "mtime": 1790638987.36786,
+    "ast_hash": "8fb0865cbf5e8d41040725d7497382a9",
+    "semantic_hash": ""
+  },
+  "engine/README.md": {
+    "mtime": 1790639017.7260864,
+    "ast_hash": "2ae7726a62014736d22287ee108ae68c",
     "semantic_hash": ""
   }
 }

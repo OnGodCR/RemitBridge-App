@@ -53,8 +53,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Scraping decision.** Wise's and Remitly's terms forbid it; six providers
       are unread (D38). Choose between manual quotes plus permission requests
       (recommended), partner APIs, or scraping anyway.
-- [ ] **Supabase project not visible to the CLI.** The new account is logged in, but
-      the project list is empty. The migration isn't pushed yet.
+- [ ] **GitHub Actions secrets** `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+      (Angad adds them in GitHub settings).
+- [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **App icon and splash.** Still the Expo template's placeholders.
 - [ ] **Bank connections or receipt scanning** for past transfers. Manual
       entry only for now (D30).
@@ -76,6 +77,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] First build slice: formula (pinned to TrueCost), engine core, schema, and
       the Compare and How it works screens, plus CI. Done 2026-09-28.
 - [x] Repo made private (D21). Done 2026-09-28.
+- [x] Supabase linked (`gmzljjdnwndvqciqicbx`), both migrations applied, RLS smoke
+      test 24/24, and the app reads the live project. Done 2026-09-28.
 
 ## Product rules that are also code rules
 
@@ -151,7 +154,9 @@ a style choice.
   platform (`supabase secrets set`, GitHub Actions secrets, host env).
 - The Supabase service-role key never goes into a browser bundle.
 - Row-level security is what protects the data, not the UI. Write the policy
-  before the feature, and test it with curl.
+  before the feature, and test it with curl: extend and run
+  `supabase/tests/rls_smoke.sh`. A denial only counts if Postgres returns `42501`;
+  a bare 4xx can be a malformed request passing for a policy.
 
 ## Git
 
