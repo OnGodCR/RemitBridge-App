@@ -440,3 +440,17 @@ Apple sign-in; the button only shows on iOS devices that support it. The App ID'
 with Apple" capability gets switched on by EAS at the first build (`usesAppleSignIn` is
 already in app.json). Enabled 2026-09-29, the day Angad's Apple Developer account came
 through (D32).
+
+**D61. Google sign-in uses a web OAuth client in the RemitBridge Google account.** The
+client "RemitBridge via Supabase" (web application) lives in the Google Cloud project
+"Remittances Benchmarking", owned by remitbridgesystemlabs@gmail.com (which needed
+2-Step Verification turned on first: Google Cloud enforces it since September 2, 2026).
+Its only redirect URI is Supabase's `/auth/v1/callback`. The consent screen is named
+"RemitBridge", links the home page and privacy policy, authorizes remitbridgelabs.org and
+the Supabase domain, has no logo (a logo forces Google's review), asks only for basic
+scopes, and is published to production. Angad pasted the ID and secret into Supabase
+himself; the "Enable" switch had stayed off and was turned on through the Management API.
+Checked: Supabase's authorize endpoint answers 302 to accounts.google.com, and the app opens
+Google's sign-in page. Until Google verifies the brand, that page says "continue to
+gmzljjdnwndvqciqicbx.supabase.co" rather than "RemitBridge"; brand verification (proving
+remitbridgelabs.org in Search Console) fixes that for free.

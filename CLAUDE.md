@@ -60,8 +60,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
-- [ ] **Google sign-in credentials**: a Google Cloud OAuth client (web type), with its
-      ID and secret entered in the Supabase dashboard by Angad.
+- [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
+      the Supabase address (verify remitbridgelabs.org in Search Console, then submit) (D61).
+- [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
 - [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also
       swap them into `site/screens/` (D59).
@@ -102,6 +103,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] Landing page at app.remitbridgelabs.org rebuilt as a scroll story with a pinned
       phone, after hidewire.org (D59). Done 2026-09-29.
 - [x] Sign in with Apple enabled in Supabase (native; app + Expo Go audiences) (D60).
+      Done 2026-09-29.
+- [x] Google sign-in: OAuth client, consent screen published, enabled in Supabase (D61).
       Done 2026-09-29.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
