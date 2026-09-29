@@ -4,71 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "label": "RouteConfig",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/config.py",
-      "source_location": "L18",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "routeconfig",
-      "id": "engine_src_remitbridge_engine_config_routeconfig"
-    },
-    {
-      "label": "AdapterError",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/http.py",
-      "source_location": "L23",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "adaptererror",
-      "id": "engine_src_remitbridge_engine_http_adaptererror"
-    },
-    {
-      "label": "DeliveryMethod",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L10",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "deliverymethod",
-      "id": "engine_src_remitbridge_engine_models_deliverymethod"
-    },
-    {
-      "label": "ErrorClass",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L57",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "errorclass",
-      "id": "engine_src_remitbridge_engine_models_errorclass"
-    },
-    {
-      "label": "RunStatus",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L49",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "runstatus",
-      "id": "engine_src_remitbridge_engine_models_runstatus"
-    },
-    {
       "label": "TransferCost",
       "file_type": "code",
       "source_file": "packages/formula/python/remitbridge_formula/__init__.py",
@@ -98,7 +33,7 @@
       "label": "ThemeColors",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L56",
+      "source_location": "L68",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
@@ -128,23 +63,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_lib_countries_country",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "country"
-    },
-    {
-      "label": "Provider",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L3",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "mobile_src_lib_providers_provider",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "provider"
+      "norm_label": "country",
+      "id": "mobile_src_lib_countries_country"
     },
     {
       "label": "Result",
@@ -168,7 +90,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "latestquote",
       "id": "mobile_src_lib_quotes_latestquote"
     },
@@ -181,7 +103,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "quotesresult",
       "id": "mobile_src_lib_quotes_quotesresult"
     },
@@ -194,7 +116,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "shownquote",
       "id": "mobile_src_lib_quotes_shownquote"
     },
@@ -206,10 +128,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_lib_routes_deliverymethod",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "deliverymethod"
+      "community_name": "quotes.ts",
+      "norm_label": "deliverymethod",
+      "id": "mobile_src_lib_routes_deliverymethod"
     },
     {
       "label": "Route",
@@ -219,10 +141,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_lib_routes_route",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "route"
+      "community_name": "quotes.ts",
+      "norm_label": "route",
+      "id": "mobile_src_lib_routes_route"
     },
     {
       "label": "TransferCost",
@@ -233,7 +155,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "transfercost",
       "id": "packages_formula_src_index_transfercost"
     },
@@ -246,22 +168,9 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "transferinput",
       "id": "packages_formula_src_index_transferinput"
-    },
-    {
-      "label": "MidMarketRate",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L107",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Quote",
-      "norm_label": "midmarketrate",
-      "id": "engine_src_remitbridge_engine_models_midmarketrate"
     },
     {
       "label": "Quote",
@@ -275,19 +184,6 @@
       "community_name": "Quote",
       "norm_label": "quote",
       "id": "engine_src_remitbridge_engine_models_quote"
-    },
-    {
-      "label": "ValidationStatus",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L43",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Quote",
-      "norm_label": "validationstatus",
-      "id": "engine_src_remitbridge_engine_models_validationstatus"
     },
     {
       "label": "LocalStore",
@@ -329,6 +225,19 @@
       "id": "engine_src_remitbridge_engine_store_supabasestore"
     },
     {
+      "label": "MidMarketRate",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L107",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "midmarketrate",
+      "id": "engine_src_remitbridge_engine_models_midmarketrate"
+    },
+    {
       "label": "ParsedQuote",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/models.py",
@@ -337,9 +246,22 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "parsedquote",
       "id": "engine_src_remitbridge_engine_models_parsedquote"
+    },
+    {
+      "label": "PaymentMethod",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L19",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "paymentmethod",
+      "id": "engine_src_remitbridge_engine_models_paymentmethod"
     },
     {
       "label": "QuoteRequest",
@@ -350,9 +272,22 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "quoterequest",
       "id": "engine_src_remitbridge_engine_models_quoterequest"
+    },
+    {
+      "label": "RunStatus",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L49",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "runstatus",
+      "id": "engine_src_remitbridge_engine_models_runstatus"
     },
     {
       "label": "Source",
@@ -363,9 +298,22 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "source",
       "id": "engine_src_remitbridge_engine_models_source"
+    },
+    {
+      "label": "ValidationStatus",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L43",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "validationstatus",
+      "id": "engine_src_remitbridge_engine_models_validationstatus"
     },
     {
       "label": "FxUnavailable",
@@ -407,6 +355,19 @@
       "id": "engine_tests_test_runner_fakeadapter"
     },
     {
+      "label": "AdapterError",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/http.py",
+      "source_location": "L23",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "adaptererror",
+      "id": "engine_src_remitbridge_engine_http_adaptererror"
+    },
+    {
       "label": "PoliteClient",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/http.py",
@@ -418,6 +379,19 @@
       "community_name": "PoliteClient",
       "norm_label": "politeclient",
       "id": "engine_src_remitbridge_engine_http_politeclient"
+    },
+    {
+      "label": "ErrorClass",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L57",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "errorclass",
+      "id": "engine_src_remitbridge_engine_models_errorclass"
     },
     {
       "label": "Strategy",
@@ -485,6 +459,19 @@
       "id": "engine_src_remitbridge_engine_models_rawresponse"
     },
     {
+      "label": "RouteSupport",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
+      "source_location": "L50",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "ManualAdapter",
+      "norm_label": "routesupport",
+      "id": "engine_src_remitbridge_engine_adapters_base_routesupport"
+    },
+    {
       "label": "ManualAdapter",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/adapters/manual.py",
@@ -524,66 +511,30 @@
       "id": "engine_src_remitbridge_engine_adapters_base_adaptermeta"
     },
     {
-      "label": "RouteSupport",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
-      "source_location": "L50",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": "routesupport",
-      "id": "engine_src_remitbridge_engine_adapters_base_routesupport"
-    },
-    {
-      "label": "PaymentMethod",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L19",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": "paymentmethod",
-      "id": "engine_src_remitbridge_engine_models_paymentmethod"
-    },
-    {
-      "label": ".id()",
+      "label": "RouteConfig",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/config.py",
-      "source_location": "L27",
+      "source_location": "L18",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": ".id()",
-      "id": "engine_src_remitbridge_engine_config_routeconfig_id"
+      "community": 52,
+      "community_name": "base.py",
+      "norm_label": "routeconfig",
+      "id": "engine_src_remitbridge_engine_config_routeconfig"
     },
     {
-      "label": ".__init__()",
+      "label": "DeliveryMethod",
       "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/http.py",
-      "source_location": "L24",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L10",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": ".__init__()",
-      "id": "engine_src_remitbridge_engine_http_adaptererror_init"
-    },
-    {
-      "label": ".__init__()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/http.py",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": ".__init__()",
-      "id": "engine_src_remitbridge_engine_http_politeclient_init"
+      "community": 52,
+      "community_name": "base.py",
+      "norm_label": "deliverymethod",
+      "id": "engine_src_remitbridge_engine_models_deliverymethod"
     },
     {
       "label": "compute_transfer_cost()",
@@ -685,7 +636,7 @@
       "label": "Legend()",
       "file_type": "code",
       "source_file": "mobile/src/app/onboarding/index.tsx",
-      "source_location": "L53",
+      "source_location": "L59",
       "_callable": true,
       "_origin": "ast",
       "id": "mobile_src_app_onboarding_index_legend",
@@ -724,10 +675,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_app_onboarding_route_pickroute",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "pickroute()"
+      "norm_label": "pickroute()",
+      "id": "mobile_src_app_onboarding_route_pickroute"
     },
     {
       "label": "Callback()",
@@ -784,10 +735,10 @@
       "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_app_sign_in_index_signinoptions",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "signinoptions()"
+      "norm_label": "signinoptions()",
+      "id": "mobile_src_app_sign_in_index_signinoptions"
     },
     {
       "label": "SignInLayout()",
@@ -808,58 +759,46 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_account_accountscreen",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "accountscreen()",
-      "id": "mobile_src_app_tabs_account_accountscreen"
+      "norm_label": "accountscreen()"
     },
     {
-      "label": "cleanAmount()",
+      "label": "Results()",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L44",
+      "source_location": "L156",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_app_tabs_index_cleanamount",
+      "id": "mobile_src_app_tabs_index_results",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "cleanamount()"
-    },
-    {
-      "label": "CompareScreen()",
-      "file_type": "code",
-      "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L50",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_app_tabs_index_comparescreen",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "comparescreen()"
+      "norm_label": "results()"
     },
     {
       "label": "MethodologyScreen()",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "_callable": true,
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_methodology_methodologyscreen",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "methodologyscreen()",
-      "id": "mobile_src_app_tabs_methodology_methodologyscreen"
+      "norm_label": "methodologyscreen()"
     },
     {
       "label": "Point()",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L44",
+      "source_location": "L50",
       "_callable": true,
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_methodology_point",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "point()",
-      "id": "mobile_src_app_tabs_methodology_point"
+      "norm_label": "point()"
     },
     {
       "label": "DoesNotTellYou()",
@@ -874,10 +813,34 @@
       "norm_label": "doesnottellyou()"
     },
     {
+      "label": "HeroBackdrop()",
+      "file_type": "code",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L32",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "mobile_src_components_hero_header_herobackdrop",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "herobackdrop()"
+    },
+    {
+      "label": "HeroHeader()",
+      "file_type": "code",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L14",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "mobile_src_components_hero_header_heroheader",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "heroheader()"
+    },
+    {
       "label": "BackButton()",
       "file_type": "code",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L40",
+      "source_location": "L46",
       "_callable": true,
       "_origin": "ast",
       "id": "mobile_src_components_onboarding_backbutton",
@@ -889,7 +852,7 @@
       "label": "Dots()",
       "file_type": "code",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L62",
+      "source_location": "L68",
       "_callable": true,
       "_origin": "ast",
       "id": "mobile_src_components_onboarding_dots",
@@ -901,7 +864,7 @@
       "label": "Step()",
       "file_type": "code",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
       "id": "mobile_src_components_onboarding_step",
@@ -910,28 +873,64 @@
       "norm_label": "step()"
     },
     {
-      "label": "ProviderSearch()",
+      "label": "CostBreakdownBar()",
       "file_type": "code",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L22",
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L71",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_provider_search_providersearch",
+      "id": "mobile_src_components_quote_card_costbreakdownbar",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "providersearch()"
+      "norm_label": "costbreakdownbar()"
+    },
+    {
+      "label": "FreshnessBadge()",
+      "file_type": "code",
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L114",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "mobile_src_components_quote_card_freshnessbadge",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "freshnessbadge()"
+    },
+    {
+      "label": "QuoteCard()",
+      "file_type": "code",
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "mobile_src_components_quote_card_quotecard",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "quotecard()"
     },
     {
       "label": "CountrySelect()",
       "file_type": "code",
       "source_file": "mobile/src/components/select-field.tsx",
-      "source_location": "L19",
+      "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
       "id": "mobile_src_components_select_field_countryselect",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
       "norm_label": "countryselect()"
+    },
+    {
+      "label": "normalize()",
+      "file_type": "code",
+      "source_file": "mobile/src/components/select-field.tsx",
+      "source_location": "L184",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "mobile_src_components_select_field_normalize",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "normalize()"
     },
     {
       "label": "AppText()",
@@ -1042,6 +1041,54 @@
       "id": "mobile_src_lib_finish_sign_in_leavesignin"
     },
     {
+      "label": "checkedAgo()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L33",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "checkedago()",
+      "id": "mobile_src_lib_format_checkedago"
+    },
+    {
+      "label": "money()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "money()",
+      "id": "mobile_src_lib_format_money"
+    },
+    {
+      "label": "moneySpoken()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "moneyspoken()",
+      "id": "mobile_src_lib_format_moneyspoken"
+    },
+    {
+      "label": "pct()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "pct()",
+      "id": "mobile_src_lib_format_pct"
+    },
+    {
       "label": "get()",
       "file_type": "code",
       "source_file": "mobile/src/lib/prefs.ts",
@@ -1064,54 +1111,6 @@
       "community_name": "(tabs)/index.tsx",
       "norm_label": "set()",
       "id": "mobile_src_lib_prefs_set"
-    },
-    {
-      "label": "fetchProviders()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L10",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_lib_providers_fetchproviders",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "fetchproviders()"
-    },
-    {
-      "label": "matchProviders()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_lib_providers_matchproviders",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "matchproviders()"
-    },
-    {
-      "label": "checkedAmountFor()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/quotes.ts",
-      "source_location": "L50",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "checkedamountfor()",
-      "id": "mobile_src_lib_quotes_checkedamountfor"
-    },
-    {
-      "label": "routeFor()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/routes.ts",
-      "source_location": "L59",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_lib_routes_routefor",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "routefor()"
     },
     {
       "label": "friendly()",
@@ -1198,100 +1197,28 @@
       "id": "mobile_src_lib_track_track"
     },
     {
-      "label": "Results()",
+      "label": "cleanAmount()",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L156",
+      "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_app_tabs_index_results",
+      "id": "mobile_src_app_tabs_index_cleanamount",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "results()"
+      "community_name": "quotes.ts",
+      "norm_label": "cleanamount()"
     },
     {
-      "label": "CostBreakdownBar()",
+      "label": "CompareScreen()",
       "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L62",
+      "source_file": "mobile/src/app/(tabs)/index.tsx",
+      "source_location": "L48",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_quote_card_costbreakdownbar",
+      "id": "mobile_src_app_tabs_index_comparescreen",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "costbreakdownbar()"
-    },
-    {
-      "label": "FreshnessBadge()",
-      "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L105",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_components_quote_card_freshnessbadge",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "freshnessbadge()"
-    },
-    {
-      "label": "QuoteCard()",
-      "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "mobile_src_components_quote_card_quotecard",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "quotecard()"
-    },
-    {
-      "label": "checkedAgo()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L33",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "checkedago()",
-      "id": "mobile_src_lib_format_checkedago"
-    },
-    {
-      "label": "money()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "money()",
-      "id": "mobile_src_lib_format_money"
-    },
-    {
-      "label": "moneySpoken()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "moneyspoken()",
-      "id": "mobile_src_lib_format_moneyspoken"
-    },
-    {
-      "label": "pct()",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L28",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "pct()",
-      "id": "mobile_src_lib_format_pct"
+      "community_name": "quotes.ts",
+      "norm_label": "comparescreen()"
     },
     {
       "label": "atAmount()",
@@ -1301,9 +1228,21 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "atamount()",
       "id": "mobile_src_lib_quotes_atamount"
+    },
+    {
+      "label": "checkedAmountFor()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/quotes.ts",
+      "source_location": "L50",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "quotes.ts",
+      "norm_label": "checkedamountfor()",
+      "id": "mobile_src_lib_quotes_checkedamountfor"
     },
     {
       "label": "fetchQuotes()",
@@ -1313,7 +1252,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "fetchquotes()",
       "id": "mobile_src_lib_quotes_fetchquotes"
     },
@@ -1325,9 +1264,21 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "rank()",
       "id": "mobile_src_lib_quotes_rank"
+    },
+    {
+      "label": "routeFor()",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/routes.ts",
+      "source_location": "L59",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "quotes.ts",
+      "norm_label": "routefor()",
+      "id": "mobile_src_lib_routes_routefor"
     },
     {
       "label": "computeTransferCost()",
@@ -1337,7 +1288,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "computetransfercost()",
       "id": "packages_formula_src_index_computetransfercost"
     },
@@ -1349,7 +1300,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "close()",
       "id": "packages_formula_src_index_test_close"
     },
@@ -1361,7 +1312,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "yearlycost()",
       "id": "packages_formula_src_index_yearlycost"
     },
@@ -1556,18 +1507,6 @@
       "community_name": "Quote",
       "norm_label": ".set_adapter_state()",
       "id": "engine_src_remitbridge_engine_store_localstore_set_adapter_state"
-    },
-    {
-      "label": "mid_market_rows()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/store.py",
-      "source_location": "L33",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Quote",
-      "norm_label": "mid_market_rows()",
-      "id": "engine_src_remitbridge_engine_store_mid_market_rows"
     },
     {
       "label": "quote_row()",
@@ -1793,7 +1732,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": ".parse()",
       "id": "engine_src_remitbridge_engine_adapters_base_adapter_parse"
     },
@@ -1805,7 +1744,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": ".parse()",
       "id": "engine_src_remitbridge_engine_adapters_manual_manualadapter_parse"
     },
@@ -1817,9 +1756,33 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "normalize()",
       "id": "engine_src_remitbridge_engine_normalize_normalize"
+    },
+    {
+      "label": "mid_market_rows()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/store.py",
+      "source_location": "L33",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "mid_market_rows()",
+      "id": "engine_src_remitbridge_engine_store_mid_market_rows"
+    },
+    {
+      "label": "_fx()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/cli.py",
+      "source_location": "L87",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "fetch_mid_market",
+      "norm_label": "_fx()",
+      "id": "engine_src_remitbridge_engine_cli_fx"
     },
     {
       "label": "_er_api()",
@@ -1952,18 +1915,6 @@
       "community_name": "fetch_mid_market",
       "norm_label": "test_waits_between_requests_to_the_same_domain()",
       "id": "engine_tests_test_http_test_waits_between_requests_to_the_same_domain"
-    },
-    {
-      "label": "_breaker_open()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/runner.py",
-      "source_location": "L68",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "run_adapter",
-      "norm_label": "_breaker_open()",
-      "id": "engine_src_remitbridge_engine_runner_breaker_open"
     },
     {
       "label": "_fetch_and_parse()",
@@ -2170,6 +2121,18 @@
       "id": "engine_src_remitbridge_engine_adapters_manual_manualadapter_fetch_quote"
     },
     {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/http.py",
+      "source_location": "L24",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": ".__init__()",
+      "id": "engine_src_remitbridge_engine_http_adaptererror_init"
+    },
+    {
       "label": ".aclose()",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/http.py",
@@ -2192,6 +2155,18 @@
       "community_name": "PoliteClient",
       "norm_label": ".get()",
       "id": "engine_src_remitbridge_engine_http_politeclient_get"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/http.py",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": ".__init__()",
+      "id": "engine_src_remitbridge_engine_http_politeclient_init"
     },
     {
       "label": ".request()",
@@ -2225,7 +2200,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "_accept_drift()",
       "id": "engine_src_remitbridge_engine_cli_accept_drift"
     },
@@ -2237,21 +2212,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "_backends()",
       "id": "engine_src_remitbridge_engine_cli_backends"
-    },
-    {
-      "label": "_fx()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/cli.py",
-      "source_location": "L87",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "cli.py",
-      "norm_label": "_fx()",
-      "id": "engine_src_remitbridge_engine_cli_fx"
     },
     {
       "label": "_health()",
@@ -2261,7 +2224,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "_health()",
       "id": "engine_src_remitbridge_engine_cli_health"
     },
@@ -2273,7 +2236,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "main()",
       "id": "engine_src_remitbridge_engine_cli_main"
     },
@@ -2285,7 +2248,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "_run()",
       "id": "engine_src_remitbridge_engine_cli_run"
     },
@@ -2297,9 +2260,21 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "all_adapters()",
       "id": "engine_src_remitbridge_engine_registry_all_adapters"
+    },
+    {
+      "label": "_breaker_open()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/runner.py",
+      "source_location": "L68",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "_breaker_open()",
+      "id": "engine_src_remitbridge_engine_runner_breaker_open"
     },
     {
       "label": "archive_key()",
@@ -2384,6 +2359,30 @@
       "community_name": "RawResponse",
       "norm_label": ".save()",
       "id": "engine_src_remitbridge_engine_archive_supabasearchive_save"
+    },
+    {
+      "label": ".corridors()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
+      "source_location": "L62",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "ManualAdapter",
+      "norm_label": ".corridors()",
+      "id": "engine_src_remitbridge_engine_adapters_base_adapter_corridors"
+    },
+    {
+      "label": ".requests()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
+      "source_location": "L65",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "ManualAdapter",
+      "norm_label": ".requests()",
+      "id": "engine_src_remitbridge_engine_adapters_base_adapter_requests"
     },
     {
       "label": ".corridors()",
@@ -2494,18 +2493,6 @@
       "id": "mobile_src_components_app_tabs_apptabs"
     },
     {
-      "label": ".corridors()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
-      "source_location": "L62",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": ".corridors()",
-      "id": "engine_src_remitbridge_engine_adapters_base_adapter_corridors"
-    },
-    {
       "label": ".fingerprint()",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/adapters/base.py",
@@ -2518,18 +2505,6 @@
       "id": "engine_src_remitbridge_engine_adapters_base_adapter_fingerprint"
     },
     {
-      "label": ".requests()",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
-      "source_location": "L65",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": ".requests()",
-      "id": "engine_src_remitbridge_engine_adapters_base_adapter_requests"
-    },
-    {
       "label": "_shape()",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/adapters/base.py",
@@ -2540,6 +2515,18 @@
       "community_name": "base.py",
       "norm_label": "_shape()",
       "id": "engine_src_remitbridge_engine_adapters_base_shape"
+    },
+    {
+      "label": ".id()",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/config.py",
+      "source_location": "L27",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "base.py",
+      "norm_label": ".id()",
+      "id": "engine_src_remitbridge_engine_config_routeconfig_id"
     },
     {
       "label": "json()",
@@ -2724,7 +2711,7 @@
       "label": "Git",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L177",
+      "source_location": "L180",
       "_origin": "ast",
       "id": "claude_git",
       "community": 0,
@@ -2735,7 +2722,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L185",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "claude_graphify",
       "community": 0,
@@ -2768,7 +2755,7 @@
       "label": "Product rules that are also code rules",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L96",
+      "source_location": "L97",
       "_origin": "ast",
       "id": "claude_product_rules_that_are_also_code_rules",
       "community": 0,
@@ -2790,7 +2777,7 @@
       "label": "Secrets",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L165",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "claude_secrets",
       "community": 0,
@@ -2801,7 +2788,7 @@
       "label": "Stack",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L146",
+      "source_location": "L149",
       "_origin": "ast",
       "id": "claude_stack",
       "community": 0,
@@ -2823,7 +2810,7 @@
       "label": "Words and voice",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L132",
+      "source_location": "L133",
       "_origin": "ast",
       "id": "claude_words_and_voice",
       "community": 0,
@@ -3194,158 +3181,26 @@
       "id": "readme_status"
     },
     {
-      "label": "config.py",
+      "label": "expo",
       "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/config.py",
-      "source_location": "L1",
+      "source_file": "mobile/package.json",
+      "source_location": "L10",
       "_origin": "ast",
       "community": 1,
-      "community_name": "models.py",
-      "norm_label": "config.py",
-      "id": "engine_src_remitbridge_engine_config"
+      "community_name": "expo",
+      "norm_label": "expo",
+      "id": "mobile_package_dependencies_expo"
     },
     {
-      "label": "http.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/http.py",
-      "source_location": "L1",
+      "label": "expo",
+      "file_type": "concept",
+      "source_file": "mobile/package.json",
+      "source_location": "L10",
       "_origin": "ast",
       "community": 1,
-      "community_name": "models.py",
-      "norm_label": "http.py",
-      "id": "engine_src_remitbridge_engine_http"
-    },
-    {
-      "label": "AsyncClient",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "asyncclient",
-      "id": "engine_src_remitbridge_engine_http_py_asyncclient"
-    },
-    {
-      "label": "Exception",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "exception",
-      "id": "engine_src_remitbridge_engine_http_py_exception"
-    },
-    {
-      "label": "remitbridge_engine/__init__.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/__init__.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "remitbridge_engine/__init__.py",
-      "id": "engine_src_remitbridge_engine_init"
-    },
-    {
-      "label": "models.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "models.py",
-      "id": "engine_src_remitbridge_engine_models"
-    },
-    {
-      "label": "runner.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/runner.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "runner.py",
-      "id": "engine_src_remitbridge_engine_runner"
-    },
-    {
-      "label": "StrEnum",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "strenum",
-      "id": "strenum"
-    },
-    {
-      "label": "Engine configuration: routes, the amount grid, conduct limits and the publish-\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/config.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "engine configuration: routes, the amount grid, conduct limits and the publish-...",
-      "id": "engine_src_remitbridge_engine_config_rationale_1"
-    },
-    {
-      "label": "The polite client every adapter fetches through (PRD 9.5 and 9.12). Conduct is\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/http.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "the polite client every adapter fetches through (prd 9.5 and 9.12). conduct is...",
-      "id": "engine_src_remitbridge_engine_http_rationale_1"
-    },
-    {
-      "label": "RemitBridge scraping engine. See engine/README.md.",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/__init__.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "remitbridge scraping engine. see engine/readme.md.",
-      "id": "engine_src_remitbridge_engine_init_rationale_1"
-    },
-    {
-      "label": "Data shapes that move through the engine. Mirrors the tables in\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "data shapes that move through the engine. mirrors the tables in...",
-      "id": "engine_src_remitbridge_engine_models_rationale_1"
-    },
-    {
-      "label": "PRD 9.5: every failure is tagged so the dashboard shows why, not just that.",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/models.py",
-      "source_location": "L58",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "prd 9.5: every failure is tagged so the dashboard shows why, not just that.",
-      "id": "engine_src_remitbridge_engine_models_rationale_58"
-    },
-    {
-      "label": "One adapter, one run: the shared machinery every adapter gets for free (PRD\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/runner.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "norm_label": "one adapter, one run: the shared machinery every adapter gets for free (prd...",
-      "id": "engine_src_remitbridge_engine_runner_rationale_1"
+      "community_name": "expo",
+      "norm_label": "expo",
+      "id": "expo"
     },
     {
       "label": "mobile/tsconfig.json",
@@ -3799,17 +3654,6 @@
       "id": "mobile_package_dependencies"
     },
     {
-      "label": "expo",
-      "file_type": "code",
-      "source_file": "mobile/package.json",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "dependencies",
-      "norm_label": "expo",
-      "id": "mobile_package_dependencies_expo"
-    },
-    {
       "label": "expo-crypto",
       "file_type": "code",
       "source_file": "mobile/package.json",
@@ -3832,6 +3676,17 @@
       "id": "mobile_package_dependencies_expo_linking"
     },
     {
+      "label": "expo-system-ui",
+      "file_type": "code",
+      "source_file": "mobile/package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "dependencies",
+      "norm_label": "expo-system-ui",
+      "id": "mobile_package_dependencies_expo_system_ui"
+    },
+    {
       "label": "expo-web-browser",
       "file_type": "code",
       "source_file": "mobile/package.json",
@@ -3841,17 +3696,6 @@
       "community_name": "dependencies",
       "norm_label": "expo-web-browser",
       "id": "mobile_package_dependencies_expo_web_browser"
-    },
-    {
-      "label": "expo",
-      "file_type": "concept",
-      "source_file": "mobile/package.json",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "dependencies",
-      "norm_label": "expo",
-      "id": "expo"
     },
     {
       "label": "expo-crypto",
@@ -3874,6 +3718,17 @@
       "community_name": "dependencies",
       "norm_label": "expo-linking",
       "id": "expo_linking"
+    },
+    {
+      "label": "expo-system-ui",
+      "file_type": "concept",
+      "source_file": "mobile/package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "dependencies",
+      "norm_label": "expo-system-ui",
+      "id": "expo_system_ui"
     },
     {
       "label": "expo-web-browser",
@@ -4077,7 +3932,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/app/onboarding/index.tsx",
-      "source_location": "L64",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "mobile_src_app_onboarding_index_styles",
       "community": 2,
@@ -4101,10 +3956,10 @@
       "source_file": "mobile/src/app/onboarding/route.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_app_onboarding_route",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "route.tsx"
+      "norm_label": "route.tsx",
+      "id": "mobile_src_app_onboarding_route"
     },
     {
       "label": "styles",
@@ -4112,10 +3967,10 @@
       "source_file": "mobile/src/app/onboarding/route.tsx",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "mobile_src_app_onboarding_route_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "styles"
+      "norm_label": "styles",
+      "id": "mobile_src_app_onboarding_route_styles"
     },
     {
       "label": "callback.tsx",
@@ -4178,10 +4033,10 @@
       "source_file": "mobile/src/app/sign-in/index.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_app_sign_in_index",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "sign-in/index.tsx"
+      "norm_label": "sign-in/index.tsx",
+      "id": "mobile_src_app_sign_in_index"
     },
     {
       "label": "styles",
@@ -4189,10 +4044,10 @@
       "source_file": "mobile/src/app/sign-in/index.tsx",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "mobile_src_app_sign_in_index_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "styles"
+      "norm_label": "styles",
+      "id": "mobile_src_app_sign_in_index_styles"
     },
     {
       "label": "sign-in/_layout.tsx",
@@ -4211,21 +4066,21 @@
       "source_file": "mobile/src/app/(tabs)/account.tsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_account",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "account.tsx",
-      "id": "mobile_src_app_tabs_account"
+      "norm_label": "account.tsx"
     },
     {
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/account.tsx",
-      "source_location": "L73",
+      "source_location": "L71",
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_account_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "styles",
-      "id": "mobile_src_app_tabs_account_styles"
+      "norm_label": "styles"
     },
     {
       "label": "(tabs)/index.tsx",
@@ -4242,7 +4097,7 @@
       "label": "LIMITS",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L34",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "mobile_src_app_tabs_index_limits",
       "community": 2,
@@ -4253,7 +4108,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L240",
+      "source_location": "L228",
       "_origin": "ast",
       "id": "mobile_src_app_tabs_index_styles",
       "community": 2,
@@ -4266,21 +4121,21 @@
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_methodology",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "methodology.tsx",
-      "id": "mobile_src_app_tabs_methodology"
+      "norm_label": "methodology.tsx"
     },
     {
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L53",
+      "source_location": "L72",
       "_origin": "ast",
+      "id": "mobile_src_app_tabs_methodology_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "styles",
-      "id": "mobile_src_app_tabs_methodology_styles"
+      "norm_label": "styles"
     },
     {
       "label": "does-not-tell-you.tsx",
@@ -4297,9 +4152,31 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/components/does-not-tell-you.tsx",
-      "source_location": "L48",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "mobile_src_components_does_not_tell_you_styles",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "styles"
+    },
+    {
+      "label": "hero-header.tsx",
+      "file_type": "code",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "mobile_src_components_hero_header",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "hero-header.tsx"
+    },
+    {
+      "label": "styles",
+      "file_type": "code",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "mobile_src_components_hero_header_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
       "norm_label": "styles"
@@ -4319,7 +4196,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L73",
+      "source_location": "L84",
       "_origin": "ast",
       "id": "mobile_src_components_onboarding_styles",
       "community": 2,
@@ -4327,37 +4204,37 @@
       "norm_label": "styles"
     },
     {
-      "label": "provider-search.tsx",
+      "label": "quote-card.tsx",
       "file_type": "code",
-      "source_file": "mobile/src/components/provider-search.tsx",
+      "source_file": "mobile/src/components/quote-card.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_components_provider_search",
+      "id": "mobile_src_components_quote_card",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "provider-search.tsx"
+      "norm_label": "quote-card.tsx"
+    },
+    {
+      "label": "SOURCE_LABEL",
+      "file_type": "code",
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "mobile_src_components_quote_card_source_label",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "source_label"
     },
     {
       "label": "styles",
       "file_type": "code",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L138",
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L127",
       "_origin": "ast",
-      "id": "mobile_src_components_provider_search_styles",
+      "id": "mobile_src_components_quote_card_styles",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
       "norm_label": "styles"
-    },
-    {
-      "label": "TYPE_LABEL",
-      "file_type": "code",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "mobile_src_components_provider_search_type_label",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "type_label"
     },
     {
       "label": "select-field.tsx",
@@ -4374,7 +4251,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/components/select-field.tsx",
-      "source_location": "L143",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "mobile_src_components_select_field_styles",
       "community": 2,
@@ -4396,7 +4273,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "mobile/src/components/ui.tsx",
-      "source_location": "L165",
+      "source_location": "L181",
       "_origin": "ast",
       "id": "mobile_src_components_ui_styles",
       "community": 2,
@@ -4429,7 +4306,7 @@
       "label": "Colors",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L55",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_colors",
       "community": 2,
@@ -4440,7 +4317,7 @@
       "label": "dark",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L34",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_dark",
       "community": 2,
@@ -4451,7 +4328,7 @@
       "label": "Fonts",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L59",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_fonts",
       "community": 2,
@@ -4473,7 +4350,7 @@
       "label": "MinTapTarget",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L90",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_mintaptarget",
       "community": 2,
@@ -4484,7 +4361,7 @@
       "label": "Radius",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L82",
+      "source_location": "L94",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_radius",
       "community": 2,
@@ -4495,7 +4372,7 @@
       "label": "Spacing",
       "file_type": "code",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L67",
+      "source_location": "L79",
       "_origin": "ast",
       "id": "mobile_src_constants_theme_spacing",
       "community": 2,
@@ -4552,10 +4429,10 @@
       "source_file": "mobile/src/lib/countries.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_lib_countries",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "countries.ts"
+      "norm_label": "countries.ts",
+      "id": "mobile_src_lib_countries"
     },
     {
       "label": "RECEIVING",
@@ -4563,10 +4440,10 @@
       "source_file": "mobile/src/lib/countries.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "mobile_src_lib_countries_receiving",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "receiving"
+      "norm_label": "receiving",
+      "id": "mobile_src_lib_countries_receiving"
     },
     {
       "label": "SENDING",
@@ -4574,10 +4451,10 @@
       "source_file": "mobile/src/lib/countries.ts",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "mobile_src_lib_countries_sending",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "sending"
+      "norm_label": "sending",
+      "id": "mobile_src_lib_countries_sending"
     },
     {
       "label": "finish-sign-in.ts",
@@ -4589,6 +4466,28 @@
       "community_name": "(tabs)/index.tsx",
       "norm_label": "finish-sign-in.ts",
       "id": "mobile_src_lib_finish_sign_in"
+    },
+    {
+      "label": "format.ts",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "format.ts",
+      "id": "mobile_src_lib_format"
+    },
+    {
+      "label": "WHOLE_UNIT_CURRENCIES",
+      "file_type": "code",
+      "source_file": "mobile/src/lib/format.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "(tabs)/index.tsx",
+      "norm_label": "whole_unit_currencies",
+      "id": "mobile_src_lib_format_whole_unit_currencies"
     },
     {
       "label": "prefs.ts",
@@ -4624,26 +4523,15 @@
       "id": "mobile_src_lib_prefs_prefs"
     },
     {
-      "label": "providers.ts",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "mobile_src_lib_providers",
-      "community": 2,
-      "community_name": "(tabs)/index.tsx",
-      "norm_label": "providers.ts"
-    },
-    {
       "label": "ROUTES",
       "file_type": "code",
       "source_file": "mobile/src/lib/routes.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "mobile_src_lib_routes_routes",
       "community": 2,
       "community_name": "(tabs)/index.tsx",
-      "norm_label": "routes"
+      "norm_label": "routes",
+      "id": "mobile_src_lib_routes_routes"
     },
     {
       "label": "sign-in.ts",
@@ -4789,68 +4677,13 @@
       "id": "expo_image"
     },
     {
-      "label": "quote-card.tsx",
-      "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "mobile_src_components_quote_card",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "quote-card.tsx"
-    },
-    {
-      "label": "SOURCE_LABEL",
-      "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "mobile_src_components_quote_card_source_label",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "source_label"
-    },
-    {
-      "label": "styles",
-      "file_type": "code",
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L118",
-      "_origin": "ast",
-      "id": "mobile_src_components_quote_card_styles",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "styles"
-    },
-    {
-      "label": "format.ts",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "format.ts",
-      "id": "mobile_src_lib_format"
-    },
-    {
-      "label": "WHOLE_UNIT_CURRENCIES",
-      "file_type": "code",
-      "source_file": "mobile/src/lib/format.ts",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "whole_unit_currencies",
-      "id": "mobile_src_lib_format_whole_unit_currencies"
-    },
-    {
       "label": "quotes.ts",
       "file_type": "code",
       "source_file": "mobile/src/lib/quotes.ts",
       "source_location": "L1",
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "quotes.ts",
       "id": "mobile_src_lib_quotes"
     },
@@ -4860,10 +4693,10 @@
       "source_file": "mobile/src/lib/routes.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_lib_routes",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "routes.ts"
+      "community_name": "quotes.ts",
+      "norm_label": "routes.ts",
+      "id": "mobile_src_lib_routes"
     },
     {
       "label": "AMOUNTS",
@@ -4871,10 +4704,10 @@
       "source_file": "mobile/src/lib/routes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "mobile_src_lib_routes_amounts",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "amounts"
+      "community_name": "quotes.ts",
+      "norm_label": "amounts",
+      "id": "mobile_src_lib_routes_amounts"
     },
     {
       "label": "DELIVERY_LABELS",
@@ -4882,10 +4715,10 @@
       "source_file": "mobile/src/lib/routes.ts",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "mobile_src_lib_routes_delivery_labels",
       "community": 24,
-      "community_name": "quote-card.tsx",
-      "norm_label": "delivery_labels"
+      "community_name": "quotes.ts",
+      "norm_label": "delivery_labels",
+      "id": "mobile_src_lib_routes_delivery_labels"
     },
     {
       "label": "src/index.ts",
@@ -4894,7 +4727,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "src/index.ts",
       "id": "packages_formula_src_index"
     },
@@ -4905,7 +4738,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 24,
-      "community_name": "quote-card.tsx",
+      "community_name": "quotes.ts",
       "norm_label": "index.test.ts",
       "id": "packages_formula_src_index_test"
     },
@@ -4998,28 +4831,6 @@
       "id": "expo_symbols"
     },
     {
-      "label": "expo-system-ui",
-      "file_type": "code",
-      "source_file": "mobile/package.json",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "expo-system-ui",
-      "norm_label": "expo-system-ui",
-      "id": "mobile_package_dependencies_expo_system_ui"
-    },
-    {
-      "label": "expo-system-ui",
-      "file_type": "concept",
-      "source_file": "mobile/package.json",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "expo-system-ui",
-      "norm_label": "expo-system-ui",
-      "id": "expo_system_ui"
-    },
-    {
       "label": "Any",
       "file_type": "code",
       "source_file": "",
@@ -5040,17 +4851,6 @@
       "community_name": "Quote",
       "norm_label": "gate.py",
       "id": "engine_src_remitbridge_engine_gate"
-    },
-    {
-      "label": "store.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/store.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Quote",
-      "norm_label": "store.py",
-      "id": "engine_src_remitbridge_engine_store"
     },
     {
       "label": "AsyncClient",
@@ -5152,17 +4952,6 @@
       "id": "engine_src_remitbridge_engine_models_rationale_151"
     },
     {
-      "label": "Where runs, quotes and engine state are kept. Engine state (circuit breakers,\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/store.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Quote",
-      "norm_label": "where runs, quotes and engine state are kept. engine state (circuit breakers,...",
-      "id": "engine_src_remitbridge_engine_store_rationale_1"
-    },
-    {
       "label": "@expo/ui",
       "file_type": "code",
       "source_file": "mobile/package.json",
@@ -5185,15 +4974,48 @@
       "id": "expo_ui"
     },
     {
+      "label": "models.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "models.py",
+      "id": "engine_src_remitbridge_engine_models"
+    },
+    {
       "label": "normalize.py",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/normalize.py",
       "source_location": "L1",
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "normalize.py",
       "id": "engine_src_remitbridge_engine_normalize"
+    },
+    {
+      "label": "store.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/store.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "store.py",
+      "id": "engine_src_remitbridge_engine_store"
+    },
+    {
+      "label": "StrEnum",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "strenum",
+      "id": "strenum"
     },
     {
       "label": "Read a raw response into what the provider said. Raise ValueError if it can't.",
@@ -5202,9 +5024,20 @@
       "source_location": "L93",
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "read a raw response into what the provider said. raise valueerror if it can't.",
       "id": "engine_src_remitbridge_engine_adapters_base_rationale_93"
+    },
+    {
+      "label": "Data shapes that move through the engine. Mirrors the tables in\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "data shapes that move through the engine. mirrors the tables in...",
+      "id": "engine_src_remitbridge_engine_models_rationale_1"
     },
     {
       "label": "What the provider said, in its own terms. The adapter's `parse` returns this.",
@@ -5213,7 +5046,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "what the provider said, in its own terms. the adapter's `parse` returns this.",
       "id": "engine_src_remitbridge_engine_models_rationale_93"
     },
@@ -5224,9 +5057,20 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 31,
-      "community_name": "QuoteRequest",
+      "community_name": "models.py",
       "norm_label": "parsedquote -> quote. the cost figures come from the one formula and nowhere...",
       "id": "engine_src_remitbridge_engine_normalize_rationale_1"
+    },
+    {
+      "label": "Where runs, quotes and engine state are kept. Engine state (circuit breakers,\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/store.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "models.py",
+      "norm_label": "where runs, quotes and engine state are kept. engine state (circuit breakers,...",
+      "id": "engine_src_remitbridge_engine_store_rationale_1"
     },
     {
       "label": "react",
@@ -5405,17 +5249,6 @@
       "id": "react_native_worklets"
     },
     {
-      "label": "fx.py",
-      "file_type": "code",
-      "source_file": "engine/src/remitbridge_engine/fx.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "fetch_mid_market",
-      "norm_label": "fx.py",
-      "id": "engine_src_remitbridge_engine_fx"
-    },
-    {
       "label": "AsyncClient",
       "file_type": "code",
       "source_file": "",
@@ -5471,17 +5304,6 @@
       "id": "engine_tests_test_http_py_parametrize"
     },
     {
-      "label": "Mid-market reference rates from two free sources, cross-checked (PRD 9.7 check\u2026",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/fx.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "fetch_mid_market",
-      "norm_label": "mid-market reference rates from two free sources, cross-checked (prd 9.7 check...",
-      "id": "engine_src_remitbridge_engine_fx_rationale_1"
-    },
-    {
       "label": "No trustworthy mid-market rate for a pair right now.",
       "file_type": "rationale",
       "source_file": "engine/src/remitbridge_engine/fx.py",
@@ -5535,17 +5357,6 @@
       "community_name": "run_adapter",
       "norm_label": "archive",
       "id": "archive"
-    },
-    {
-      "label": "datetime",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "run_adapter",
-      "norm_label": "datetime",
-      "id": "datetime"
     },
     {
       "label": "Adapter",
@@ -5741,6 +5552,39 @@
       "id": "mobile_claude"
     },
     {
+      "label": "http.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/http.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "http.py",
+      "id": "engine_src_remitbridge_engine_http"
+    },
+    {
+      "label": "AsyncClient",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "asyncclient",
+      "id": "engine_src_remitbridge_engine_http_py_asyncclient"
+    },
+    {
+      "label": "Exception",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "exception",
+      "id": "engine_src_remitbridge_engine_http_py_exception"
+    },
+    {
       "label": "Response",
       "file_type": "code",
       "source_file": "",
@@ -5774,6 +5618,17 @@
       "id": "engine_src_remitbridge_engine_adapters_base_rationale_96"
     },
     {
+      "label": "The polite client every adapter fetches through (PRD 9.5 and 9.12). Conduct is\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/http.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "the polite client every adapter fetches through (prd 9.5 and 9.12). conduct is...",
+      "id": "engine_src_remitbridge_engine_http_rationale_1"
+    },
+    {
       "label": "PRD 9.4, in fallback order.",
       "file_type": "rationale",
       "source_file": "engine/src/remitbridge_engine/models.py",
@@ -5783,6 +5638,17 @@
       "community_name": "PoliteClient",
       "norm_label": "prd 9.4, in fallback order.",
       "id": "engine_src_remitbridge_engine_models_rationale_34"
+    },
+    {
+      "label": "PRD 9.5: every failure is tagged so the dashboard shows why, not just that.",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/models.py",
+      "source_location": "L58",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "PoliteClient",
+      "norm_label": "prd 9.5: every failure is tagged so the dashboard shows why, not just that.",
+      "id": "engine_src_remitbridge_engine_models_rationale_58"
     },
     {
       "label": "AsyncClient",
@@ -5903,9 +5769,20 @@
       "source_location": "",
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "asyncclient",
       "id": "asyncclient"
+    },
+    {
+      "label": "datetime",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "datetime",
+      "id": "datetime"
     },
     {
       "label": "cli.py",
@@ -5914,9 +5791,42 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "cli.py",
       "id": "engine_src_remitbridge_engine_cli"
+    },
+    {
+      "label": "fx.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/fx.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "fx.py",
+      "id": "engine_src_remitbridge_engine_fx"
+    },
+    {
+      "label": "remitbridge_engine/__init__.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "remitbridge_engine/__init__.py",
+      "id": "engine_src_remitbridge_engine_init"
+    },
+    {
+      "label": "runner.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/runner.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "runner.py",
+      "id": "engine_src_remitbridge_engine_runner"
     },
     {
       "label": "rb-engine: the command the scheduled workflows run. rb-engine run [--adapter ID\u2026",
@@ -5925,9 +5835,42 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 49,
-      "community_name": "cli.py",
+      "community_name": "runner.py",
       "norm_label": "rb-engine: the command the scheduled workflows run. rb-engine run [--adapter id...",
       "id": "engine_src_remitbridge_engine_cli_rationale_1"
+    },
+    {
+      "label": "Mid-market reference rates from two free sources, cross-checked (PRD 9.7 check\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/fx.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "mid-market reference rates from two free sources, cross-checked (prd 9.7 check...",
+      "id": "engine_src_remitbridge_engine_fx_rationale_1"
+    },
+    {
+      "label": "RemitBridge scraping engine. See engine/README.md.",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "remitbridge scraping engine. see engine/readme.md.",
+      "id": "engine_src_remitbridge_engine_init_rationale_1"
+    },
+    {
+      "label": "One adapter, one run: the shared machinery every adapter gets for free (PRD\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/runner.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "runner.py",
+      "norm_label": "one adapter, one run: the shared machinery every adapter gets for free (prd...",
+      "id": "engine_src_remitbridge_engine_runner_rationale_1"
     },
     {
       "label": "archive.py",
@@ -6029,6 +5972,28 @@
       "id": "engine_src_remitbridge_engine_adapters_manual_py_path"
     },
     {
+      "label": "Which routes, delivery methods and payment methods this provider serves.",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
+      "source_location": "L63",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "ManualAdapter",
+      "norm_label": "which routes, delivery methods and payment methods this provider serves.",
+      "id": "engine_src_remitbridge_engine_adapters_base_rationale_63"
+    },
+    {
+      "label": "Every quote to ask for this run: supported routes x methods x the amount grid.",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
+      "source_location": "L66",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "ManualAdapter",
+      "norm_label": "every quote to ask for this run: supported routes x methods x the amount grid.",
+      "id": "engine_src_remitbridge_engine_adapters_base_rationale_66"
+    },
+    {
       "label": "(provider_id, request, observation) for every recorded observation.",
       "file_type": "rationale",
       "source_file": "engine/src/remitbridge_engine/adapters/manual.py",
@@ -6095,6 +6060,17 @@
       "id": "engine_src_remitbridge_engine_adapters_manual"
     },
     {
+      "label": "config.py",
+      "file_type": "code",
+      "source_file": "engine/src/remitbridge_engine/config.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "base.py",
+      "norm_label": "config.py",
+      "id": "engine_src_remitbridge_engine_config"
+    },
+    {
       "label": "registry.py",
       "file_type": "code",
       "source_file": "engine/src/remitbridge_engine/registry.py",
@@ -6128,28 +6104,6 @@
       "id": "engine_src_remitbridge_engine_adapters_base_rationale_103"
     },
     {
-      "label": "Which routes, delivery methods and payment methods this provider serves.",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
-      "source_location": "L63",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": "which routes, delivery methods and payment methods this provider serves.",
-      "id": "engine_src_remitbridge_engine_adapters_base_rationale_63"
-    },
-    {
-      "label": "Every quote to ask for this run: supported routes x methods x the amount grid.",
-      "file_type": "rationale",
-      "source_file": "engine/src/remitbridge_engine/adapters/base.py",
-      "source_location": "L66",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "base.py",
-      "norm_label": "every quote to ask for this run: supported routes x methods x the amount grid.",
-      "id": "engine_src_remitbridge_engine_adapters_base_rationale_66"
-    },
-    {
       "label": "Manual quotes: strategy 5 of PRD 9.4, and the source for any provider whose\u2026",
       "file_type": "rationale",
       "source_file": "engine/src/remitbridge_engine/adapters/manual.py",
@@ -6159,6 +6113,17 @@
       "community_name": "base.py",
       "norm_label": "manual quotes: strategy 5 of prd 9.4, and the source for any provider whose...",
       "id": "engine_src_remitbridge_engine_adapters_manual_rationale_1"
+    },
+    {
+      "label": "Engine configuration: routes, the amount grid, conduct limits and the publish-\u2026",
+      "file_type": "rationale",
+      "source_file": "engine/src/remitbridge_engine/config.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "base.py",
+      "norm_label": "engine configuration: routes, the amount grid, conduct limits and the publish-...",
+      "id": "engine_src_remitbridge_engine_config_rationale_1"
     },
     {
       "label": "Every adapter the engine runs. Add a new adapter here after its robots.txt and\u2026",
@@ -8227,6 +8192,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/onboarding/index.tsx",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_onboarding_index_legend",
+      "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mobile/src/app/onboarding/index.tsx",
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
@@ -8502,7 +8479,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L121",
+      "source_location": "L118",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8515,7 +8492,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L51",
+      "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8527,7 +8504,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L57",
+      "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8539,7 +8516,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L65",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8551,7 +8528,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L74",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8563,7 +8540,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L78",
+      "source_location": "L75",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_comparescreen",
@@ -8575,7 +8552,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L170",
+      "source_location": "L161",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_results",
@@ -8587,7 +8564,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L216",
+      "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index_results",
@@ -8599,10 +8576,22 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L16",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_methodology_methodologyscreen",
+      "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology_point",
       "target": "mobile_src_hooks_use_theme_usetheme"
     },
     {
@@ -8634,8 +8623,32 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header_herobackdrop",
+      "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header_heroheader",
+      "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L41",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding_backbutton",
@@ -8647,7 +8660,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L63",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding_dots",
@@ -8659,7 +8672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L26",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding_step",
@@ -8670,80 +8683,8 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search_providersearch",
-      "target": "mobile_src_hooks_use_theme_usetheme"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search_providersearch",
-      "target": "mobile_src_lib_providers_fetchproviders"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search_providersearch",
-      "target": "mobile_src_lib_providers_matchproviders"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L44",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search_providersearch",
-      "target": "mobile_src_lib_track_track"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_quote_card_costbreakdownbar",
-      "target": "mobile_src_hooks_use_theme_usetheme"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L79",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_quote_card_costbreakdownbar",
-      "target": "mobile_src_lib_format_moneyspoken"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L91",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_costbreakdownbar",
@@ -8755,7 +8696,31 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L106",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_quote_card_costbreakdownbar",
+      "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_quote_card_costbreakdownbar",
+      "target": "mobile_src_lib_format_moneyspoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mobile/src/components/quote-card.tsx",
+      "source_location": "L115",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_freshnessbadge",
@@ -8767,7 +8732,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L111",
+      "source_location": "L120",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_freshnessbadge",
@@ -8779,7 +8744,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L21",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_quotecard",
@@ -8791,7 +8756,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_quotecard",
@@ -8803,7 +8768,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L38",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_quotecard",
@@ -8815,7 +8780,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L41",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card_quotecard",
@@ -8827,11 +8792,23 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "mobile/src/components/select-field.tsx",
-      "source_location": "L32",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_select_field_countryselect",
       "target": "mobile_src_hooks_use_theme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/select-field.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_select_field_countryselect",
+      "target": "mobile_src_components_select_field_normalize",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10677,9 +10654,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_routes_routes",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_routes"
     },
     {
       "relation": "imports",
@@ -10689,9 +10666,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_track_track",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_track_track"
     },
     {
       "relation": "imports",
@@ -10701,9 +10678,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_components_onboarding_step",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_onboarding_step"
     },
     {
       "relation": "imports",
@@ -10713,9 +10690,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_components_ui_apptext",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_apptext"
     },
     {
       "relation": "imports",
@@ -10725,9 +10702,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_components_ui_codebadge",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_codebadge"
     },
     {
       "relation": "imports",
@@ -10737,9 +10714,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_constants_theme_radius",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_radius"
     },
     {
       "relation": "imports",
@@ -10749,9 +10726,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_constants_theme_spacing",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_spacing"
     },
     {
       "relation": "imports",
@@ -10761,9 +10738,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme_usetheme"
     },
     {
       "relation": "imports",
@@ -10773,9 +10750,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_prefs_prefs",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_prefs_prefs"
     },
     {
       "relation": "imports",
@@ -11025,9 +11002,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme_usetheme"
     },
     {
       "relation": "imports",
@@ -11037,9 +11014,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_auth_useauth",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_auth_useauth"
     },
     {
       "relation": "imports",
@@ -11049,9 +11026,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_finish_sign_in_leavesignin",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_finish_sign_in_leavesignin"
     },
     {
       "relation": "imports",
@@ -11061,9 +11038,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_sign_in_signinwithapple",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_sign_in_signinwithapple"
     },
     {
       "relation": "imports",
@@ -11073,9 +11050,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_sign_in_signinwithgoogle",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_sign_in_signinwithgoogle"
     },
     {
       "relation": "imports",
@@ -11085,9 +11062,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_track_track",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_track_track"
     },
     {
       "relation": "imports",
@@ -11097,9 +11074,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_components_onboarding_step",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_onboarding_step"
     },
     {
       "relation": "imports",
@@ -11109,9 +11086,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_components_ui_apptext",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_apptext"
     },
     {
       "relation": "imports",
@@ -11121,9 +11098,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_components_ui_button",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_button"
     },
     {
       "relation": "imports",
@@ -11133,9 +11110,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_constants_theme_radius",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_radius"
     },
     {
       "relation": "imports",
@@ -11145,9 +11122,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_supabase_supabase"
+      "target": "mobile_src_lib_supabase_supabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11157,9 +11134,33 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_track_track"
+      "target": "mobile_src_lib_track_track",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/account.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_account",
+      "target": "mobile_src_components_hero_header_herobackdrop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/account.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_account",
+      "target": "mobile_src_components_hero_header_heroheader",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11169,9 +11170,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_components_ui_apptext"
+      "target": "mobile_src_components_ui_apptext",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11181,21 +11182,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_components_ui_button"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/app/(tabs)/account.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_components_ui_card"
+      "target": "mobile_src_components_ui_button",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11205,9 +11194,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_constants_theme_spacing"
+      "target": "mobile_src_constants_theme_spacing",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11217,9 +11206,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_hooks_use_theme_usetheme"
+      "target": "mobile_src_hooks_use_theme_usetheme",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11229,16 +11218,16 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_auth_useauth"
+      "target": "mobile_src_lib_auth_useauth",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11250,7 +11239,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11262,7 +11251,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11274,11 +11263,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L16",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
-      "target": "mobile_src_components_provider_search_providersearch",
+      "target": "mobile_src_components_hero_header_herobackdrop",
       "confidence_score": 1.0
     },
     {
@@ -11286,7 +11275,19 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L17",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_index",
+      "target": "mobile_src_components_hero_header_heroheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/index.tsx",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11298,7 +11299,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L17",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11310,7 +11311,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L17",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11322,7 +11323,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11334,7 +11335,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11346,7 +11347,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11358,7 +11359,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L19",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11370,7 +11371,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11382,7 +11383,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11394,7 +11395,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11406,7 +11407,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L22",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11418,19 +11419,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_app_tabs_index",
-      "target": "mobile_src_lib_providers_provider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11442,7 +11431,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11454,7 +11443,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11466,7 +11455,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11478,7 +11467,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11490,7 +11479,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11502,7 +11491,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11514,7 +11503,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11526,7 +11515,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11538,7 +11527,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L32",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -11562,24 +11551,12 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_components_ui_apptext"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_components_ui_card"
+      "target": "mobile_src_components_hero_header_herobackdrop",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11589,9 +11566,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_constants_theme_spacing"
+      "target": "mobile_src_components_hero_header_heroheader",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11601,9 +11578,57 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_hooks_use_theme_usetheme"
+      "target": "mobile_src_components_ui_apptext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_components_ui_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_constants_theme_radius",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_constants_theme_spacing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_hooks_use_theme_usetheme",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -11681,8 +11706,56 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/onboarding.tsx",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_components_ui_apptext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
       "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_constants_theme_spacing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_hooks_use_theme_usetheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/onboarding.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_onboarding",
+      "target": "mobile_src_hooks_use_theme_usetheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/onboarding.tsx",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -11694,7 +11767,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -11706,7 +11779,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -11718,143 +11791,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_onboarding",
-      "target": "mobile_src_constants_theme_spacing",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/onboarding.tsx",
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_components_ui_apptext",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_constants_theme_fonts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_constants_theme_mintaptarget",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_constants_theme_radius",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
       "target": "mobile_src_constants_theme_spacing",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_providers_fetchproviders",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_providers_matchproviders",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_providers_provider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_track_track",
       "confidence_score": 1.0
     },
     {
@@ -12034,6 +11975,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_select_field",
+      "target": "mobile_src_constants_theme_fonts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/select-field.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_select_field",
       "target": "mobile_src_constants_theme_mintaptarget",
       "confidence_score": 1.0
     },
@@ -12192,18 +12145,6 @@
       "confidence_score": 1.0,
       "source": "mobile_src_lib_auth",
       "target": "mobile_src_lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_lib_providers",
-      "target": "mobile_src_lib_supabase_supabase",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13173,9 +13114,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "ref_expo_router",
-      "confidence_score": 1.0
+      "target": "ref_expo_router"
     },
     {
       "relation": "imports_from",
@@ -13185,9 +13126,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_routes",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes"
     },
     {
       "relation": "imports_from",
@@ -13197,9 +13138,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_track",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_track"
     },
     {
       "relation": "imports_from",
@@ -13209,9 +13150,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_components_onboarding",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_onboarding"
     },
     {
       "relation": "imports_from",
@@ -13221,9 +13162,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_components_ui",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui"
     },
     {
       "relation": "imports_from",
@@ -13233,9 +13174,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_constants_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme"
     },
     {
       "relation": "imports_from",
@@ -13245,9 +13186,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme"
     },
     {
       "relation": "imports_from",
@@ -13257,9 +13198,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_lib_prefs",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_prefs"
     },
     {
       "relation": "imports_from",
@@ -13473,9 +13414,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "ref_expo_apple_authentication",
-      "confidence_score": 1.0
+      "target": "ref_expo_apple_authentication"
     },
     {
       "relation": "imports_from",
@@ -13485,9 +13426,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme"
     },
     {
       "relation": "imports_from",
@@ -13497,9 +13438,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_auth",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_auth"
     },
     {
       "relation": "imports_from",
@@ -13509,9 +13450,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_finish_sign_in",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_finish_sign_in"
     },
     {
       "relation": "imports_from",
@@ -13521,9 +13462,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_sign_in",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_sign_in"
     },
     {
       "relation": "imports_from",
@@ -13533,9 +13474,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_lib_track",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_track"
     },
     {
       "relation": "imports_from",
@@ -13545,9 +13486,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "ref_expo_router",
-      "confidence_score": 1.0
+      "target": "ref_expo_router"
     },
     {
       "relation": "imports_from",
@@ -13557,9 +13498,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_components_onboarding",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_onboarding"
     },
     {
       "relation": "imports_from",
@@ -13569,9 +13510,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_components_ui",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui"
     },
     {
       "relation": "imports_from",
@@ -13581,9 +13522,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_constants_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme"
     },
     {
       "relation": "imports_from",
@@ -13593,9 +13534,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_hooks_use_color_scheme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_color_scheme"
     },
     {
       "relation": "imports_from",
@@ -13617,9 +13558,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "ref_expo_router"
+      "target": "ref_expo_router",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13629,9 +13570,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_supabase"
+      "target": "mobile_src_lib_supabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13641,9 +13582,21 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_track"
+      "target": "mobile_src_lib_track",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/account.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_account",
+      "target": "mobile_src_components_hero_header",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13653,9 +13606,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_components_ui"
+      "target": "mobile_src_components_ui",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13665,9 +13618,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_constants_theme"
+      "target": "mobile_src_constants_theme",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13677,9 +13630,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_hooks_use_theme"
+      "target": "mobile_src_hooks_use_theme",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13689,16 +13642,16 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_lib_auth"
+      "target": "mobile_src_lib_auth",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13710,7 +13663,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13722,7 +13675,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13734,11 +13687,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L16",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
-      "target": "mobile_src_components_provider_search",
+      "target": "mobile_src_components_hero_header",
       "confidence_score": 1.0
     },
     {
@@ -13746,7 +13699,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L17",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13758,7 +13711,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13770,7 +13723,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L19",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13782,7 +13735,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13794,7 +13747,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13806,7 +13759,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L22",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13818,19 +13771,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_app_tabs_index",
-      "target": "mobile_src_lib_providers",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L24",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13842,7 +13783,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13854,7 +13795,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L32",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -13878,24 +13819,12 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_components_ui"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_constants_theme"
+      "target": "mobile_src_components_hero_header",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13905,9 +13834,33 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_hooks_use_theme"
+      "target": "mobile_src_components_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_constants_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/app/(tabs)/methodology.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_app_tabs_methodology",
+      "target": "mobile_src_hooks_use_theme",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13961,6 +13914,42 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_components_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_constants_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_hooks_use_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
       "source_location": "L1",
       "weight": 1.0,
@@ -13974,11 +13963,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L7",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
-      "target": "mobile_src_components_ui",
+      "target": "mobile_src_hooks_use_theme",
       "confidence_score": 1.0
     },
     {
@@ -13990,7 +13979,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
-      "target": "mobile_src_constants_theme",
+      "target": "mobile_src_components_ui",
       "confidence_score": 1.0
     },
     {
@@ -14002,67 +13991,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_components_ui",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
       "target": "mobile_src_constants_theme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_providers",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_lib_track",
       "confidence_score": 1.0
     },
     {
@@ -14256,18 +14185,6 @@
       "confidence_score": 1.0,
       "source": "mobile_src_lib_finish_sign_in",
       "target": "ref_expo_router"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_lib_providers",
-      "target": "mobile_src_lib_supabase",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -15304,7 +15221,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L132",
+      "source_location": "L133",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -15315,7 +15232,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L146",
+      "source_location": "L149",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -15326,7 +15243,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L165",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -15337,7 +15254,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L177",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -15348,7 +15265,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L185",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -15392,7 +15309,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -17405,7 +17322,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/onboarding/index.tsx",
-      "source_location": "L53",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_onboarding_index",
@@ -17416,7 +17333,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/onboarding/index.tsx",
-      "source_location": "L64",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_onboarding_index",
@@ -17441,9 +17358,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_app_onboarding_route_pickroute",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_onboarding_route_pickroute"
     },
     {
       "relation": "contains",
@@ -17452,9 +17369,9 @@
       "source_location": "L62",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_onboarding_route",
-      "target": "mobile_src_app_onboarding_route_styles",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_onboarding_route_styles"
     },
     {
       "relation": "contains",
@@ -17529,9 +17446,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_app_sign_in_index_signinoptions",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_sign_in_index_signinoptions"
     },
     {
       "relation": "contains",
@@ -17540,9 +17457,9 @@
       "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_sign_in_index",
-      "target": "mobile_src_app_sign_in_index_styles",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_sign_in_index_styles"
     },
     {
       "relation": "contains",
@@ -17562,20 +17479,20 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_app_tabs_account_accountscreen"
+      "target": "mobile_src_app_tabs_account_accountscreen",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/account.tsx",
-      "source_location": "L73",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_account",
-      "target": "mobile_src_app_tabs_account_styles"
+      "target": "mobile_src_app_tabs_account_styles",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17592,7 +17509,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L240",
+      "source_location": "L228",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -17603,7 +17520,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L34",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -17614,7 +17531,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L44",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -17625,7 +17542,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/index.tsx",
-      "source_location": "L50",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_app_tabs_index",
@@ -17647,34 +17564,34 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_app_tabs_methodology_methodologyscreen"
+      "target": "mobile_src_app_tabs_methodology_methodologyscreen",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L44",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_app_tabs_methodology_point"
+      "target": "mobile_src_app_tabs_methodology_point",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/app/(tabs)/methodology.tsx",
-      "source_location": "L53",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_methodology",
-      "target": "mobile_src_app_tabs_methodology_styles"
+      "target": "mobile_src_app_tabs_methodology_styles",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17702,7 +17619,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/does-not-tell-you.tsx",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_does_not_tell_you",
@@ -17712,8 +17629,41 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_components_hero_header_heroheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_components_hero_header_herobackdrop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/hero-header.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_hero_header",
+      "target": "mobile_src_components_hero_header_styles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -17724,7 +17674,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L40",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -17735,7 +17685,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L62",
+      "source_location": "L68",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -17746,7 +17696,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/onboarding.tsx",
-      "source_location": "L73",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_onboarding",
@@ -17756,41 +17706,8 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_components_provider_search_type_label",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L138",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_components_provider_search_styles",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/components/provider-search.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_components_provider_search",
-      "target": "mobile_src_components_provider_search_providersearch",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L105",
+      "source_location": "L114",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card",
@@ -17801,7 +17718,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L118",
+      "source_location": "L127",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card",
@@ -17823,7 +17740,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/quote-card.tsx",
-      "source_location": "L62",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_quote_card",
@@ -17845,7 +17762,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/select-field.tsx",
-      "source_location": "L143",
+      "source_location": "L184",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_components_select_field",
+      "target": "mobile_src_components_select_field_normalize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/components/select-field.tsx",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_select_field",
@@ -17856,7 +17784,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/select-field.tsx",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_select_field",
@@ -17889,22 +17817,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/ui.tsx",
-      "source_location": "L165",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_ui",
-      "target": "mobile_src_components_ui_styles",
+      "target": "mobile_src_components_ui_variant",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/components/ui.tsx",
-      "source_location": "L17",
+      "source_location": "L181",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_components_ui",
-      "target": "mobile_src_components_ui_variant",
+      "target": "mobile_src_components_ui_styles",
       "confidence_score": 1.0
     },
     {
@@ -17955,6 +17883,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "mobile_src_constants_theme",
+      "target": "mobile_src_constants_theme_mintaptarget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "mobile/src/constants/theme.ts",
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
@@ -17966,7 +17905,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L34",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
@@ -17977,7 +17916,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L55",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
@@ -17988,7 +17927,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L56",
+      "source_location": "L68",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
@@ -17999,7 +17938,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L59",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
@@ -18010,7 +17949,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L67",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
@@ -18021,22 +17960,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L82",
+      "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
       "source": "mobile_src_constants_theme",
       "target": "mobile_src_constants_theme_radius",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/constants/theme.ts",
-      "source_location": "L90",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_constants_theme",
-      "target": "mobile_src_constants_theme_mintaptarget",
       "confidence_score": 1.0
     },
     {
@@ -18101,9 +18029,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_countries",
-      "target": "mobile_src_lib_countries_sending",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_countries_sending"
     },
     {
       "relation": "contains",
@@ -18112,9 +18040,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_countries",
-      "target": "mobile_src_lib_countries_receiving",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_countries_receiving"
     },
     {
       "relation": "contains",
@@ -18123,9 +18051,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_countries",
-      "target": "mobile_src_lib_countries_country",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_countries_country"
     },
     {
       "relation": "contains",
@@ -18240,39 +18168,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_lib_providers",
-      "target": "mobile_src_lib_providers_fetchproviders",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_lib_providers",
-      "target": "mobile_src_lib_providers_matchproviders",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "mobile/src/lib/providers.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "mobile_src_lib_providers",
-      "target": "mobile_src_lib_providers_provider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "mobile/src/lib/quotes.ts",
       "source_location": "L102",
       "weight": 1.0,
@@ -18354,9 +18249,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_route",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_route"
     },
     {
       "relation": "contains",
@@ -18365,9 +18260,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_routes",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_routes"
     },
     {
       "relation": "contains",
@@ -18376,9 +18271,9 @@
       "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_routefor",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_routefor"
     },
     {
       "relation": "contains",
@@ -18387,9 +18282,9 @@
       "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_amounts",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_amounts"
     },
     {
       "relation": "contains",
@@ -18398,9 +18293,9 @@
       "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_delivery_labels",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_delivery_labels"
     },
     {
       "relation": "contains",
@@ -18409,9 +18304,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_lib_routes",
-      "target": "mobile_src_lib_routes_deliverymethod",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_deliverymethod"
     },
     {
       "relation": "contains",
@@ -20802,5 +20697,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "acac6e0ce2bca6c2556a40db1fa1dbca1782e544"
+  "built_at_commit": "d05c37f2dd4c94885b7c575d30989f609201a866"
 }
