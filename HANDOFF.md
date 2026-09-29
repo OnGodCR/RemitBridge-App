@@ -22,6 +22,10 @@ works, Account. What's missing:
   profile still needs `is_admin = true`** (Angad sets it in the Supabase SQL editor; the
   account already exists). Optional: `GITHUB_DISPATCH_TOKEN` in Supabase secrets so
   entries are checked in minutes instead of within three hours.
+- **Web pages** (`site/`, D57): home, privacy, support and partner links are built and
+  previewed locally; they go live when Angad creates the Vercel project and the
+  app.remitbridgelabs.org DNS record. Partner links look like `/p/<partner-name>`.
+- **App icon and flags** are in (D55, D56).
 - **GitHub Actions secrets** are set, and the Scrape workflow starts with a database
   connection check (run 36531671087 read all 4 routes).
 

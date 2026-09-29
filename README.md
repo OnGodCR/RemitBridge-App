@@ -28,6 +28,7 @@ mobile/              Expo app (iOS and Android): Compare, How it works
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 supabase/            Schema migrations, row-level security, Edge Functions (delete-account, process-prices)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks
+site/                app.remitbridgelabs.org: privacy policy, support, partner links (Vercel, root "site")
 docs/                PRD, manual-research list
 ```
 
