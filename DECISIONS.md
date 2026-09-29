@@ -391,3 +391,15 @@ white arch-and-pier mark from remitbridgelabs.org's favicon, on brand green #147
 uses the layered `.icon` format with the mark as a vector layer; Android gets an adaptive
 icon sized inside the launcher's safe zone plus a monochrome version for themed icons; the
 splash shows the mark on green. `mobile/scripts/make-icons.py` regenerates the PNGs.
+
+**D57. The app's web pages are a static site in `site/`, deployed as its own Vercel
+project at app.remitbridgelabs.org.** The website is already on Vercel, so this adds one
+more project from this repo (root directory `site`) rather than a new host. Pages: home,
+privacy policy, support, and the partner link `/p/<partner>` (D48). The partner page
+records a `partner_link_opened` event (D31, platform `web`, a random ID kept in the
+browser) and offers "Open the app" with the partner passed along, plus "Learn more". It
+doesn't auto-redirect: that is flaky across browsers, and a clear button is honest.
+Universal links (the association files) wait for the Apple developer account (D32),
+which provides the team ID they need. The privacy policy describes exactly what
+`track()` and the schema store, including that signed-in events carry the account ID
+until the account is deleted. *Resolves:* D28's hosting question. *Touches:* D48.
