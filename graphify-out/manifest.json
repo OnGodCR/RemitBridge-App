@@ -5,18 +5,18 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790649352.9407365,
-    "ast_hash": "0e2d142c06d77a90d7db51e20aa2546a",
+    "mtime": 1790660549.6407328,
+    "ast_hash": "6b8edb644a743068d2289e2fee54a7ac",
     "semantic_hash": ""
   },
   "DECISIONS.md": {
-    "mtime": 1790639017.7237866,
-    "ast_hash": "8c92fecfb88cf7b43642a490e64b04b1",
+    "mtime": 1790660549.4296134,
+    "ast_hash": "06899b93ce460d37d30a06e72c5c8001",
     "semantic_hash": ""
   },
   "HANDOFF.md": {
-    "mtime": 1790649352.9321153,
-    "ast_hash": "648cf5698eb702d0c67ec49cc43672fd",
+    "mtime": 1790660549.6413794,
+    "ast_hash": "25645d23ceca756f637d5c663c7941c4",
     "semantic_hash": ""
   },
   "README.md": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "mobile/package.json": {
-    "mtime": 1790659617.9679089,
-    "ast_hash": "6c9ecb5d2dcbe51024ed0b720188fa0a",
+    "mtime": 1790660294.9205856,
+    "ast_hash": "b5372f7c0cac54f91b309641562a4422",
     "semantic_hash": ""
   },
   "mobile/src/app/_layout.tsx": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "mobile/src/components/quote-card.tsx": {
-    "mtime": 1790659839.870825,
-    "ast_hash": "03e8dc446e1c8a72be2d245559060937",
+    "mtime": 1790660349.11043,
+    "ast_hash": "9047f71927d8d6e9c085811f28e2f406",
     "semantic_hash": ""
   },
   "mobile/src/components/ui.tsx": {
@@ -205,13 +205,13 @@
     "semantic_hash": ""
   },
   "mobile/src/lib/quotes.ts": {
-    "mtime": 1790636827.9159505,
-    "ast_hash": "49602b1fbc98706058e0e1b199bc8f24",
+    "mtime": 1790660379.3892634,
+    "ast_hash": "4c73779a69f95dccec878153a915ca61",
     "semantic_hash": ""
   },
   "mobile/src/lib/routes.ts": {
-    "mtime": 1790636827.9015217,
-    "ast_hash": "9f93bb896419119752da5b60cfe8808b",
+    "mtime": 1790660349.1098175,
+    "ast_hash": "eaa8d73962b3f4e38cacfc9c58aa0cab",
     "semantic_hash": ""
   },
   "mobile/src/lib/supabase.ts": {
@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/index.tsx": {
-    "mtime": 1790659820.272596,
-    "ast_hash": "6224eaf382e1d6cf1d983663c56065b1",
+    "mtime": 1790660540.20818,
+    "ast_hash": "db1d88e3e1ef88073611bd0e5dc20dd9",
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/methodology.tsx": {
@@ -477,6 +477,16 @@
   "supabase/templates/code.html": {
     "mtime": 1790659533.5137684,
     "ast_hash": "cacb1b2b804f1ddbf03344e052447692",
+    "semantic_hash": ""
+  },
+  "mobile/src/components/select-field.tsx": {
+    "mtime": 1790660421.5392022,
+    "ast_hash": "657387c3578cf2d3d0689ab840d4d1ae",
+    "semantic_hash": ""
+  },
+  "mobile/src/lib/countries.ts": {
+    "mtime": 1790660421.5385022,
+    "ast_hash": "5956033a1c682f35bc4fb8c8bee85426",
     "semantic_hash": ""
   }
 }

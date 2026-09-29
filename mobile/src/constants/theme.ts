@@ -74,11 +74,15 @@ export const Spacing = {
   six: 64,
 } as const;
 
-/** The website's --radius is 1rem. */
+/**
+ * Corners stay modest: the website reads like a document, not a marketing page, and
+ * pill-shaped everything was the main thing making the app look templated. Pills are
+ * kept only for tiny status marks.
+ */
 export const Radius = {
-  sm: 12,
-  md: 14,
-  lg: 16,
+  sm: 6,
+  md: 10,
+  lg: 12,
   pill: 9999,
 } as const;
 

@@ -15,7 +15,6 @@ export type DeliveryMethod =
 export interface Route {
   id: string;
   country: string;
-  flag: string;
   sendCurrency: string;
   receiveCurrency: string;
   deliveryMethods: DeliveryMethod[];
@@ -25,7 +24,7 @@ export const ROUTES: Route[] = [
   {
     id: 'us-in',
     country: 'India',
-    flag: '🇮🇳',
+   
     sendCurrency: 'USD',
     receiveCurrency: 'INR',
     deliveryMethods: ['bank_deposit', 'upi'],
@@ -33,7 +32,7 @@ export const ROUTES: Route[] = [
   {
     id: 'us-mx',
     country: 'Mexico',
-    flag: '🇲🇽',
+   
     sendCurrency: 'USD',
     receiveCurrency: 'MXN',
     deliveryMethods: ['bank_deposit', 'cash_pickup', 'debit_card'],
@@ -41,7 +40,7 @@ export const ROUTES: Route[] = [
   {
     id: 'us-ph',
     country: 'Philippines',
-    flag: '🇵🇭',
+   
     sendCurrency: 'USD',
     receiveCurrency: 'PHP',
     deliveryMethods: ['bank_deposit', 'cash_pickup', 'mobile_wallet'],
@@ -49,7 +48,7 @@ export const ROUTES: Route[] = [
   {
     id: 'us-vn',
     country: 'Vietnam',
-    flag: '🇻🇳',
+   
     sendCurrency: 'USD',
     receiveCurrency: 'VND',
     deliveryMethods: ['bank_deposit', 'cash_pickup', 'home_delivery'],

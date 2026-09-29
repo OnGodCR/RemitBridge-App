@@ -53,7 +53,7 @@ function BackButton() {
         tintColor={t.text}
         size={22}
         weight="semibold"
-        fallback={<AppText variant="heading">←</AppText>}
+        fallback={<AppText variant="heading">‹</AppText>}
       />
     </Pressable>
   );
@@ -62,18 +62,9 @@ function BackButton() {
 function Dots({ step, of }: { step: number; of: number }) {
   const t = useTheme();
   return (
-    <View
-      style={styles.dots}
-      accessible
-      accessibilityLabel={`Step ${step} of ${of}`}>
+    <View style={styles.dots} accessible accessibilityLabel={`Step ${step} of ${of}`}>
       {Array.from({ length: of }, (_, i) => (
-        <View
-          key={i}
-          style={[
-            styles.dot,
-            { backgroundColor: i < step ? t.primary : t.border, width: i === step - 1 ? 24 : 8 },
-          ]}
-        />
+        <View key={i} style={[styles.dot, { backgroundColor: i < step ? t.primary : t.border }]} />
       ))}
     </View>
   );
@@ -90,8 +81,8 @@ const styles = StyleSheet.create({
   },
   back: { width: MinTapTarget, height: MinTapTarget, justifyContent: 'center' },
   backSpace: { width: MinTapTarget },
-  dots: { flexDirection: 'row', gap: 6, justifyContent: 'center' },
-  dot: { height: 8, borderRadius: Radius.pill },
+  dots: { flex: 1, flexDirection: 'row', gap: 4, marginHorizontal: Spacing.three },
+  dot: { flex: 1, height: 3, borderRadius: Radius.pill },
   body: { flex: 1, justifyContent: 'center', gap: Spacing.three },
   actions: { gap: Spacing.two, paddingBottom: Spacing.three },
 });

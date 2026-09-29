@@ -62,7 +62,7 @@ export default function SignInOptions() {
                   ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
                   : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
               }
-              cornerRadius={Radius.pill}
+              cornerRadius={Radius.md}
               style={styles.apple}
               onPress={() => run('apple')}
             />
@@ -93,5 +93,5 @@ export default function SignInOptions() {
 }
 
 const styles = StyleSheet.create({
-  apple: { height: 52, width: '100%' },
+  apple: { height: 50, width: "100%" },
 });
