@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FlatList, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText } from '@/components/ui';
+import { AppText, CodeBadge } from '@/components/ui';
 import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import type { Country } from '@/lib/countries';
@@ -11,6 +11,10 @@ import type { Country } from '@/lib/countries';
 /**
  * A dropdown for countries: a field showing the current choice that opens a sheet with
  * the full list. Countries that aren't live yet are listed but can't be picked.
+ *
+ * The sheet closes three ways: the close button (top left, clear of anything floating
+ * at top right, such as Expo Go's dev button, which hid a top-right "Done"), a swipe
+ * down, or picking any live country, including the current one.
  */
 export function CountrySelect({
   label,
@@ -28,6 +32,7 @@ export function CountrySelect({
   const t = useTheme();
   const [open, setOpen] = useState(false);
   const current = options.find((o) => o.code === value) ?? options[0];
+  const close = () => setOpen(false);
 
   return (
     <>
@@ -43,17 +48,16 @@ export function CountrySelect({
           {label}
         </AppText>
         <View style={styles.fieldRow}>
-          <AppText style={styles.flag}>{current.flag}</AppText>
           <AppText variant="label" style={styles.fieldName} numberOfLines={1}>
             {current.short ?? current.name}
           </AppText>
           <SymbolView
             pointerEvents="none"
             name="chevron.down"
-            size={14}
+            size={13}
             weight="semibold"
             tintColor={t.textSecondary}
-            fallback={<AppText muted>▾</AppText>}
+            fallback={<AppText muted>›</AppText>}
           />
         </View>
       </Pressable>
@@ -62,20 +66,26 @@ export function CountrySelect({
         visible={open}
         animationType="slide"
         presentationStyle="pageSheet"
-        onRequestClose={() => setOpen(false)}>
+        onRequestClose={close}>
         <SafeAreaView style={[styles.sheet, { backgroundColor: t.background }]} edges={['bottom']}>
+          <View style={[styles.grabber, { backgroundColor: t.border }]} />
           <View style={styles.sheetHeader}>
-            <AppText variant="heading">{title}</AppText>
             <Pressable
-              onPress={() => setOpen(false)}
+              onPress={close}
               accessibilityRole="button"
               accessibilityLabel="Close"
               hitSlop={8}
               style={styles.close}>
-              <AppText variant="label" style={{ color: t.primary }}>
-                Done
-              </AppText>
+              <SymbolView
+                pointerEvents="none"
+                name="xmark"
+                size={17}
+                weight="semibold"
+                tintColor={t.text}
+                fallback={<AppText variant="label">Close</AppText>}
+              />
             </Pressable>
+            <AppText variant="heading">{title}</AppText>
           </View>
           <FlatList
             data={options}
@@ -90,39 +100,36 @@ export function CountrySelect({
                   disabled={!item.live}
                   onPress={() => {
                     onChange(item.code);
-                    setOpen(false);
+                    close();
                   }}
                   accessibilityRole="button"
                   accessibilityState={{ selected, disabled: !item.live }}
                   accessibilityLabel={`${item.name}${item.live ? '' : ', coming soon'}`}
-                  style={({ pressed }) => [styles.row, { opacity: pressed ? 0.6 : 1 }]}>
-                  <AppText style={[styles.flag, !item.live && styles.dim]}>{item.flag}</AppText>
-                  <AppText variant="label" style={[styles.rowName, !item.live && styles.dim]}>
+                  style={({ pressed }) => [
+                    styles.row,
+                    { backgroundColor: pressed ? t.muted : 'transparent' },
+                  ]}>
+                  <CodeBadge code={item.code} dim={!item.live} />
+                  <AppText
+                    variant="label"
+                    style={[styles.rowName, { color: item.live ? t.text : t.textSecondary }]}>
                     {item.name}
                   </AppText>
-                  {item.live ? (
-                    <AppText variant="small" muted>
-                      {item.currency}
-                    </AppText>
-                  ) : (
-                    <View style={[styles.soon, { backgroundColor: t.muted }]}>
-                      <AppText variant="small" muted>
-                        Soon
-                      </AppText>
-                    </View>
-                  )}
-                  {selected ? (
-                    <SymbolView
-                      pointerEvents="none"
-                      name="checkmark"
-                      size={16}
-                      weight="bold"
-                      tintColor={t.primary}
-                      fallback={<AppText style={{ color: t.primary }}>✓</AppText>}
-                    />
-                  ) : (
-                    <View style={styles.checkSpace} />
-                  )}
+                  <AppText variant="small" muted>
+                    {item.live ? item.currency : 'Coming soon'}
+                  </AppText>
+                  <View style={styles.check}>
+                    {selected ? (
+                      <SymbolView
+                        pointerEvents="none"
+                        name="checkmark"
+                        size={15}
+                        weight="bold"
+                        tintColor={t.primary}
+                        fallback={<AppText style={{ color: t.primary }}>✓</AppText>}
+                      />
+                    ) : null}
+                  </View>
                 </Pressable>
               );
             }}
@@ -136,25 +143,37 @@ export function CountrySelect({
 const styles = StyleSheet.create({
   field: {
     flex: 1,
-    minHeight: 64,
+    minHeight: 60,
     borderRadius: Radius.md,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
     justifyContent: 'center',
     gap: 2,
   },
   fieldRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
-  fieldName: { flex: 1, fontSize: 15 },
-  flag: { fontSize: 22, lineHeight: 28 },
+  fieldName: { flex: 1, fontSize: 16 },
   sheet: { flex: 1 },
+  grabber: {
+    alignSelf: 'center',
+    width: 36,
+    height: 5,
+    borderRadius: 3,
+    marginTop: Spacing.two,
+  },
   sheetHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: Spacing.three,
+    gap: Spacing.two,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.two,
   },
-  close: { minHeight: MinTapTarget, justifyContent: 'center' },
+  close: {
+    width: MinTapTarget,
+    height: MinTapTarget,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   row: {
     minHeight: 56,
     flexDirection: 'row',
@@ -163,8 +182,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
   },
   rowName: { flex: 1, fontSize: 16 },
-  dim: { opacity: 0.45 },
-  soon: { paddingHorizontal: Spacing.two, paddingVertical: 2, borderRadius: Radius.pill },
-  checkSpace: { width: 16 },
-  separator: { height: StyleSheet.hairlineWidth, marginLeft: 56 },
+  check: { width: 18, alignItems: 'flex-end' },
+  separator: { height: StyleSheet.hairlineWidth, marginLeft: Spacing.three + 32 + Spacing.three },
 });

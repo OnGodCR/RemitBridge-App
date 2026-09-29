@@ -282,3 +282,21 @@ formula package, so it's the same arithmetic as the engine. Each card then says
 exact figure typed. From lists the PRD 6.5 sending countries and To lists the
 Tier 2 countries, all as "Soon" until they're live.
 *Touches:* PRD 5.1 and 14.6 (route picker, amount input).
+
+**D44. Visual direction: restrained, like the website.** Angad said the app looked
+"vibecoded". The fixes:
+- No emoji anywhere. Countries get a two-letter code mark instead of a flag.
+- Modest corners (6/10/12) instead of pills. Pills are kept only for tiny status marks.
+- A segmented control for delivery method instead of pill chips.
+- Divided lists instead of floating tiles, and a thin step bar in onboarding.
+- Calmer headline sizes and weights.
+- The ranking tag is plain green text, not a pill badge.
+
+Keep new UI in this register: hairlines, not shadows; text labels, not
+decoration.
+
+**D45. Provider search on Compare.** A search field matches provider names
+(case- and accent-insensitive) against the public `providers` table. Picking one
+narrows the results to that provider, and clearing it shows everyone again.
+Searches are logged as `provider_searched` (D31). The "Most to your family" tag
+is hidden when a single provider is shown, since there's nothing to rank.

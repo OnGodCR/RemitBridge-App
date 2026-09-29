@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Step } from '@/components/onboarding';
-import { AppText } from '@/components/ui';
+import { AppText, CodeBadge } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { prefs } from '@/lib/prefs';
@@ -21,19 +22,33 @@ export default function PickRoute() {
   return (
     <Step step={2} of={3} actions={null}>
       <AppText variant="title">Where do you send money?</AppText>
-      <View style={styles.grid}>
-        {ROUTES.map((r) => (
+      <View style={[styles.list, { backgroundColor: t.card, borderColor: t.border }]}>
+        {ROUTES.map((r, i) => (
           <Pressable
             key={r.id}
             onPress={() => pick(r.id)}
             accessibilityRole="button"
             accessibilityLabel={r.country}
             style={({ pressed }) => [
-              styles.tile,
-              { backgroundColor: t.card, borderColor: t.border, opacity: pressed ? 0.7 : 1 },
+              styles.row,
+              i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border },
+              { backgroundColor: pressed ? t.muted : 'transparent' },
             ]}>
-            <AppText style={styles.flag}>{r.flag}</AppText>
-            <AppText variant="heading">{r.country}</AppText>
+            <CodeBadge code={r.id.split('-')[1].toUpperCase()} />
+            <AppText variant="label" style={styles.name}>
+              {r.country}
+            </AppText>
+            <AppText variant="small" muted>
+              {r.receiveCurrency}
+            </AppText>
+            <SymbolView
+              pointerEvents="none"
+              name="chevron.right"
+              size={13}
+              weight="semibold"
+              tintColor={t.textSecondary}
+              fallback={<AppText muted>›</AppText>}
+            />
           </Pressable>
         ))}
       </View>
@@ -45,14 +60,18 @@ export default function PickRoute() {
 }
 
 const styles = StyleSheet.create({
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three, marginTop: Spacing.two },
-  tile: {
-    width: '47%',
-    aspectRatio: 1.15,
+  list: {
     borderRadius: Radius.lg,
-    borderWidth: 1,
-    padding: Spacing.three,
-    justifyContent: 'space-between',
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+    marginTop: Spacing.two,
   },
-  flag: { fontSize: 40, lineHeight: 48 },
+  row: {
+    minHeight: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.three,
+    paddingHorizontal: Spacing.three,
+  },
+  name: { flex: 1, fontSize: 16 },
 });

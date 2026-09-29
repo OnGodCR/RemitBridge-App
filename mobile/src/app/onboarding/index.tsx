@@ -62,15 +62,15 @@ function Legend({ color, label }: { color: string; label: string }) {
 }
 
 const styles = StyleSheet.create({
-  headline: { fontSize: 40, lineHeight: 44, letterSpacing: -1.2 },
+  headline: { fontSize: 32, lineHeight: 38, letterSpacing: -0.8 },
   bar: {
-    height: 20,
-    borderRadius: Radius.pill,
+    height: 12,
+    borderRadius: Radius.sm,
     overflow: 'hidden',
     flexDirection: 'row',
     marginTop: Spacing.four,
   },
   legend: { flexDirection: 'row', gap: Spacing.three },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  swatch: { width: 10, height: 10, borderRadius: 5 },
+  swatch: { width: 10, height: 10, borderRadius: 2 },
 });

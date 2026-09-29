@@ -45,14 +45,14 @@ to overwrite a backdated `created_at` (migration `20260928000100` asserts it).
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items, graphify |
 | `HANDOFF.md` | This file |
 | `README.md` | What the project is, with the planned layout (setup commands come later) |
-| `DECISIONS.md` | Decisions made on top of the PRD (D1–D43) |
+| `DECISIONS.md` | Decisions made on top of the PRD (D1–D45) |
 | `docs/PRD.md` | PRD v0.4, converted from the published artifact and kept as written |
 | `docs/MANUAL_RESEARCH.md` | Wise and Remitly (terms forbid scraping); six providers not yet checked |
 | `packages/formula/` | The total-cost formula in TypeScript (`src/`) and Python (`python/`), both pinned to `vectors.json`, which was generated from the website's TrueCost code |
 | `engine/` | Python engine: adapter framework, polite client, FX cross-check, archive, publish gate, runner, `rb-engine` CLI, manual adapter. See `engine/README.md` |
 | `supabase/migrations/` | `…000000_init.sql`: the schema with RLS, the `latest_quotes` view, the raw-archive bucket, and the Tier 1 seed. `…000100_rls_test_install.sql`: asserts the events trigger, removes the smoke test's events, and marks its install as internal. **Both applied to the live project.** |
 | `supabase/tests/rls_smoke.sh` | curl-based RLS test run with the public key. Run it after every schema change |
-| `mobile/` | Expo SDK 57 app. Onboarding (`app/onboarding`), sign-in (`app/sign-in`: Apple, Google, email code), and tabs (`app/(tabs)`): Compare (From/To dropdowns, a typed amount, delivery chips), How it works, and Account (sign out, delete account). Session in expo-sqlite localStorage; metrics via `lib/track.ts`. Checked in the iOS Simulator against the live project |
+| `mobile/` | Expo SDK 57 app. Onboarding (`app/onboarding`), sign-in (`app/sign-in`: Apple, Google, email code), and tabs (`app/(tabs)`): Compare (provider search, From/To dropdowns, a typed amount, a delivery segmented control), How it works, and Account (sign out, delete account). Session in expo-sqlite localStorage; metrics via `lib/track.ts`. Checked in the iOS Simulator against the live project |
 | `supabase/functions/delete-account/` | Deletes the caller's own account with the service-role key the platform injects. Deployed; refuses anonymous and forged-token calls |
 | `.github/workflows/` | `ci.yml` (engine lint and tests, formula tests, typecheck, expo lint); `scrape.yml` and `health.yml` with their schedules off until an adapter exists (D40) |
 | `.claude/settings.json` | graphify hooks that check the knowledge graph before searches and reads |

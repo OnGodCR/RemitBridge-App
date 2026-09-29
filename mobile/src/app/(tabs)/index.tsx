@@ -13,12 +13,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { QuoteCard } from '@/components/quote-card';
 import { CountrySelect } from '@/components/select-field';
-import { AppText, Card, Chip, ChipRow } from '@/components/ui';
+import { ProviderSearch } from '@/components/provider-search';
+import { AppText, Card, Segmented } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
+import type { Provider } from '@/lib/providers';
 import {
   atAmount,
   checkedAmountFor,
@@ -63,6 +65,7 @@ export default function CompareScreen() {
   const checked = checkedAmountFor(amount);
   const [loaded, setLoaded] = useState<{ key: string; result: QuotesResult } | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [provider, setProvider] = useState<Provider | null>(null);
   const key = `${route.id}|${checked}|${activeMethod}`;
   const result = loaded?.key === key ? loaded.result : null;
 
@@ -93,6 +96,8 @@ export default function CompareScreen() {
         keyboardDismissMode="on-drag"
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} />}>
         <AppText variant="title">Compare</AppText>
+
+        <ProviderSearch selected={provider} onSelect={setProvider} />
 
         <View style={styles.countries}>
           <CountrySelect
@@ -130,19 +135,14 @@ export default function CompareScreen() {
           </View>
         </View>
 
-        <ChipRow>
-          {route.deliveryMethods.map((m) => (
-            <Chip
-              key={m}
-              label={DELIVERY_LABELS[m]}
-              selected={m === activeMethod}
-              onPress={() => setMethod(m)}
-            />
-          ))}
-        </ChipRow>
+        <Segmented
+          options={route.deliveryMethods.map((m) => ({ value: m, label: DELIVERY_LABELS[m] }))}
+          value={activeMethod}
+          onChange={setMethod}
+        />
 
         {amount > 0 ? (
-          <Results result={result} amount={amount} />
+          <Results result={result} amount={amount} provider={provider} />
         ) : (
           <AppText muted>Enter an amount.</AppText>
         )}
@@ -153,16 +153,25 @@ export default function CompareScreen() {
   );
 }
 
-function Results({ result, amount }: { result: QuotesResult | null; amount: number }) {
+function Results({
+  result,
+  amount,
+  provider,
+}: {
+  result: QuotesResult | null;
+  amount: number;
+  provider: Provider | null;
+}) {
   const shown = useMemo(() => {
     if (!result || result.kind !== 'ok') return null;
     const at = (list: typeof result.standing) =>
       list
+        .filter((q) => !provider || q.provider_id === provider.id)
         .map((q) => atAmount(q, amount))
         .filter((q): q is ShownQuote => q !== null)
         .sort((a, b) => b.amount_received - a.amount_received);
     return { standing: at(result.standing), promotional: at(result.promotional) };
-  }, [result, amount]);
+  }, [result, amount, provider]);
 
   if (!result) return <ActivityIndicator style={styles.loading} />;
 
@@ -189,7 +198,11 @@ function Results({ result, amount }: { result: QuotesResult | null; amount: numb
     return (
       <Card>
         <AppText variant="heading">No prices yet</AppText>
-        <AppText muted>Only checked prices show here.</AppText>
+        <AppText muted>
+          {provider
+            ? `${provider.name} has no checked price for this route yet.`
+            : 'Only checked prices show here.'}
+        </AppText>
       </Card>
     );
   }
@@ -204,7 +217,11 @@ function Results({ result, amount }: { result: QuotesResult | null; amount: numb
         </AppText>
       ) : null}
       {standing.map((q, i) => (
-        <QuoteCard key={q.id} quote={q} highlight={i === 0 ? 'Most to your family' : undefined} />
+        <QuoteCard
+          key={q.id}
+          quote={q}
+          highlight={i === 0 && !provider && standing.length > 1 ? 'Most to your family' : undefined}
+        />
       ))}
       {promotional.length > 0 ? (
         <>
@@ -226,17 +243,17 @@ const styles = StyleSheet.create({
   countries: { flexDirection: 'row', gap: Spacing.two },
   amount: {
     borderRadius: Radius.md,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
   },
   amountRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  amountSymbol: { fontFamily: Fonts.medium, fontSize: 28, lineHeight: 44 },
+  amountSymbol: { fontFamily: Fonts.medium, fontSize: 26, lineHeight: 40 },
   amountInput: {
     flex: 1,
-    fontFamily: Fonts.extrabold,
-    fontSize: 36,
-    letterSpacing: -0.8,
+    fontFamily: Fonts.bold,
+    fontSize: 32,
+    letterSpacing: -0.6,
     paddingVertical: Spacing.one,
     fontVariant: ['tabular-nums'],
   },

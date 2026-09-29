@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import { AppText, Card } from '@/components/ui';
-import { Radius, Spacing } from '@/constants/theme';
+import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { checkedAgo, money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
@@ -25,11 +25,9 @@ export function QuoteCard({ quote, highlight }: { quote: ShownQuote; highlight?:
       <View style={styles.header}>
         <AppText variant="heading">{q.provider_name}</AppText>
         {highlight ? (
-          <View style={[styles.tag, { backgroundColor: t.accent }]}>
-            <AppText variant="label" style={{ color: t.accentForeground }}>
-              {highlight}
-            </AppText>
-          </View>
+          <AppText variant="small" style={[styles.tag, { color: t.primary }]}>
+            {highlight}
+          </AppText>
         ) : null}
       </View>
 
@@ -119,9 +117,9 @@ export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
-  tag: { paddingHorizontal: Spacing.two, paddingVertical: Spacing.half, borderRadius: Radius.pill },
-  bar: { height: 12, borderRadius: Radius.pill, overflow: 'hidden', flexDirection: 'row' },
+  tag: { fontFamily: Fonts.semibold },
+  bar: { height: 8, borderRadius: Radius.sm, overflow: 'hidden', flexDirection: 'row', gap: 1 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three, marginTop: Spacing.two },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  dot: { width: 8, height: 8, borderRadius: 4 },
+  dot: { width: 8, height: 8, borderRadius: 2 },
 });
