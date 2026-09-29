@@ -60,7 +60,6 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
-- [ ] **App icon and splash.** Still the Expo template's placeholders.
 - [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
       needs the developer account (D32); Google needs a Cloud OAuth client.
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
@@ -87,6 +86,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `process-prices` Edge Function (D54). Done 2026-09-28.
 - [x] Country flags as bundled images in the pickers, fields and onboarding (D55).
       Done 2026-09-29.
+- [x] App icon and splash: the website's bridge mark on brand green, for iOS (layered
+      .icon), Android (adaptive + monochrome) and the splash (D56). Done 2026-09-29.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in

@@ -385,3 +385,9 @@ Windows or some Android builds and look different everywhere else. The images ar
 flat flags (public domain), downloaded once, so the app makes no third-party request for them.
 Each keeps its real proportions at a fixed height, in a fixed-width column so names line up.
 *Revises:* D44's "text labels over decoration" for countries only.
+
+**D56. The app icon is the website's bridge mark.** Same look as the website (D18): the
+white arch-and-pier mark from remitbridgelabs.org's favicon, on brand green #14705A. iOS
+uses the layered `.icon` format with the mark as a vector layer; Android gets an adaptive
+icon sized inside the launcher's safe zone plus a monochrome version for themed icons; the
+splash shows the mark on green. `mobile/scripts/make-icons.py` regenerates the PNGs.
