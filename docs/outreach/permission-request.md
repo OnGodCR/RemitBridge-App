@@ -1,39 +1,46 @@
 # Permission request: pricing data
 
-A draft for Angad to send from remitbridgesystemlabs@gmail.com to each Tier 1 provider
-(D52). Personalize the two bracketed lines. Log every send and every reply in the table
+The request Angad sent from remitbridgesystemlabs@gmail.com to each Tier 1 provider
+(D52). Log every send and every reply in the table
 at the bottom, and record any written permission in DECISIONS.md before building
 an adapter.
 
----
+## What was sent
 
-**Subject:** Permission to show [Provider]'s public transfer prices in a free comparison app
+Sent 2026-09-28 from remitbridgesystemlabs@gmail.com, one email per provider. Most
+got the standard version below. Wise's asked about its Comparison API instead,
+Western Union's noted that its US terms are silent on automated access, and Xoom's
+went to PayPal's media desk with a line saying so.
 
-Hello [Provider] team,
+**Subject:** Question about showing {Provider} prices in a free comparison app
 
-I run RemitBridge, a free, non-commercial project that helps people in the US see
-what their families actually receive when they send money home. It compares the
-fee *and* the exchange rate, ranks providers only by the amount received, and has
-no ads or affiliate links.
+```
+Hi {Provider} team,
 
-Your terms don't allow automated access to your website, so I'm asking before we
-do anything automated. Could we have permission to read your public price quotes
-(the same numbers your calculator shows anyone) for US → India, Mexico, the
-Philippines and Vietnam? We'd check a handful of amounts a few times a day, at low
-volume, with a clearly identified contact. Or, if you have a pricing feed or API
-for comparison sites, we'd happily use that instead.
+My name is Angad Kochar, and I'm building RemitBridge, a free app that helps people in the US compare the cost of sending money to family abroad. We're starting with India, Mexico, the Philippines and Vietnam.
 
-Until we hear back, we only show prices a person has read off your public site by
-hand, labeled as such, with the time they were checked.
+For each provider the app shows the fee and the exchange rate, then sorts the list by how much the recipient ends up with. There are no ads, affiliate links or paid placements, and the app never handles anyone's money.
 
-[One line on why this matters to you, e.g. your family or the communities you work with.]
+I went through your terms of use and saw that automated access to your website isn't permitted, so I wanted to ask before doing anything. Would you be open to us checking {Provider}'s public quotes for those four countries on a light schedule? It would be a handful of amounts a few times a day, with our contact email in every request. If you already share a rate feed or API with comparison sites, we'd be glad to use that instead.
 
-Thank you,
+In the meantime, any {Provider} prices in the app will be ones someone looked up by hand on your public site, shown with the date and time they were checked.
+
+If this should go to someone else on your team, I'd appreciate a pointer. Thanks for taking a look.
+
+Best,
 Angad Kochar
-RemitBridge Systems Lab
+RemitBridge
 remitbridgesystemlabs@gmail.com
+```
 
----
+Wise's third paragraph:
+
+```
+I saw in your documentation that Wise offers a Comparison API for sites like ours. Your terms don't allow automated access to the website, so an official source is what we'd prefer anyway. Is the API open to a small free project, and if so, what does the process look like?
+```
+
+Western Union's third paragraph opened: "Your US terms don't say much about automated
+access, but some of your other terms prohibit it, so I wanted to ask before doing anything."
 
 ## Where to send
 
@@ -43,13 +50,13 @@ appears as the media contact on the company's own press releases.
 
 | Provider | Send to | Where it's published | Sent | Reply |
 |---|---|---|---|---|
-| Wise | comparison@wise.com | Wise Platform Comparison API docs (the address for comparison sites) | | |
-| Remitly | press@remitly.com | page: news.remitly.com, Contact | | |
-| MoneyGram | media@moneygram.com | page: corporate.moneygram.com/contact, "Media inquiries" | | |
-| Western Union | media@westernunion.com | page: corporate.westernunion.com/media-contacts.html (our fetch was blocked; confirmed through search of that page) | | |
-| Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | | |
-| WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | | |
-| Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | | |
+| Wise | comparison@wise.com | Wise Platform Comparison API docs (the address for comparison sites) | 2026-09-28 | waiting |
+| Remitly | press@remitly.com | page: news.remitly.com, Contact | 2026-09-28 | waiting |
+| MoneyGram | media@moneygram.com | page: corporate.moneygram.com/contact, "Media inquiries" | 2026-09-28 | waiting |
+| Western Union | media@westernunion.com | page: corporate.westernunion.com/media-contacts.html (our fetch was blocked; confirmed through search of that page) | 2026-09-28 | waiting |
+| Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | 2026-09-28 | waiting |
+| WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | 2026-09-28 | waiting |
+| Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | 2026-09-28 | waiting |
 | Xe (Euronet) | No press address published. Use the Xe Help Centre contact form (help.xe.com), asking for it to go to partnerships | Xe's pages block automated fetches; the only public email found, currency@xe.com, is customer support | | |
 
 Ria and Xe are both Euronet companies. If neither answers in three weeks, one

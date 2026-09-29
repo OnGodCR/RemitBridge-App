@@ -50,8 +50,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
       added without code changes. Hindi also needs a matched Devanagari font
       (PRD 14.5).
-- [ ] **Permission emails to all eight providers** (Angad sends; the draft is in
-      `docs/outreach/permission-request.md`). Log replies there (D52).
+- [ ] **Permission requests: 7 of 8 sent 2026-09-28**, waiting on replies. Xe
+      publishes no email, so it needs its help-centre form. Log replies in
+      `docs/outreach/permission-request.md` (D52). Follow up after three weeks.
 - [ ] **Manual price entry form** (D52): an admin-only screen where prices read off
       providers' sites are entered and then run through the engine's gate. It needs
       Angad signed in once, then marked admin.
