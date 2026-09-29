@@ -1,26 +1,26 @@
 # Graph Report - RemitBridge-App  (2026-09-28)
 
 ## Corpus Check
-- 64 files · ~61,210 words
+- 65 files · ~63,092 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 491 nodes · 933 edges · 45 communities (19 shown, 26 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 52 edges (avg confidence: 0.5)
+- 513 nodes · 885 edges · 48 communities (21 shown, 27 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1f5d7dfa`
+- Built from commit: `f95cf886`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - RemitBridge App
-- runner.py
+- models.py
 - index.tsx
 - Quote
-- FakeAdapter
-- cli.py
+- fetch_mid_market
+- SupabaseArchive
 - expo
 - mobile/package.json
 - test_gate.py
@@ -56,45 +56,48 @@
 - react-native-web
 - react-native-worklets
 - @supabase/supabase-js
-- mobile/README.md
+- run_adapter
 - remitbridge-engine
+- AdapterError
+- AsyncClient
+- datetime
 
 ## God Nodes (most connected - your core abstractions)
-1. `PoliteClient` - 26 edges
-2. `RawResponse` - 26 edges
-3. `FakeAdapter` - 23 edges
-4. `Quote` - 21 edges
-5. `run_adapter()` - 21 edges
-6. `ManualAdapter` - 18 edges
-7. `MidMarketRate` - 18 edges
-8. `LocalStore` - 17 edges
-9. `Adapter` - 16 edges
-10. `QuoteRequest` - 16 edges
+1. `run_adapter()` - 21 edges
+2. `RawResponse` - 21 edges
+3. `PoliteClient` - 19 edges
+4. `Quote` - 19 edges
+5. `ManualAdapter` - 16 edges
+6. `MidMarketRate` - 15 edges
+7. `LocalStore` - 15 edges
+8. `useTheme()` - 15 edges
+9. `make()` - 15 edges
+10. `SupabaseStore` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `normalize()` --calls--> `compute_transfer_cost()`  [EXTRACTED]
   engine/src/remitbridge_engine/normalize.py → packages/formula/python/remitbridge_formula/__init__.py
-- `remitbridge-engine` --depends_on--> `remitbridge-formula`  [EXTRACTED]
-  engine/pyproject.toml → packages/formula/python/pyproject.toml
-- `FakeAdapter` --uses--> `AdapterMeta`  [INFERRED]
-  engine/tests/test_runner.py → engine/src/remitbridge_engine/adapters/base.py
-- `FakeAdapter` --uses--> `RouteSupport`  [INFERRED]
-  engine/tests/test_runner.py → engine/src/remitbridge_engine/adapters/base.py
-- `FakeAdapter` --uses--> `Adapter`  [INFERRED]
-  engine/tests/test_runner.py → engine/src/remitbridge_engine/adapters/base.py
+- `setup()` --calls--> `LocalArchive`  [INFERRED]
+  engine/tests/test_runner.py → engine/src/remitbridge_engine/archive.py
+- `setup()` --calls--> `LocalStore`  [INFERRED]
+  engine/tests/test_runner.py → engine/src/remitbridge_engine/store.py
+- `test_manual_quotes_go_through_the_same_gate()` --calls--> `ManualAdapter`  [INFERRED]
+  engine/tests/test_runner.py → engine/src/remitbridge_engine/adapters/manual.py
+- `AdapterError` --uses--> `ErrorClass`  [INFERRED]
+  engine/src/remitbridge_engine/http.py → engine/src/remitbridge_engine/models.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (45 total, 26 thin omitted)
+## Communities (48 total, 27 thin omitted)
 
 ### Community 0 - "RemitBridge App"
-Cohesion: 0.07
-Nodes (28): Git, graphify, Keeping the docs current, Open items, Product rules that are also code rules, RemitBridge App, Secrets, Stack (+20 more)
+Cohesion: 0.05
+Nodes (36): Git, graphify, Keeping the docs current, Open items, Product rules that are also code rules, RemitBridge App, Secrets, Stack (+28 more)
 
-### Community 1 - "runner.py"
-Cohesion: 0.06
-Nodes (56): ABC, Adapter, AdapterMeta, The adapter framework (PRD 9.3). An adapter holds only what is specific to one…, A hash of the response's structure (keys and types, not values), for drift…, Which routes, delivery methods and payment methods this provider serves., Every quote to ask for this run: supported routes x methods x the amount grid., Ask for one quote with one strategy. Return the raw response untouched. (+48 more)
+### Community 1 - "models.py"
+Cohesion: 0.05
+Nodes (56): ABC, AsyncClient, Adapter, AdapterMeta, The adapter framework (PRD 9.3). An adapter holds only what is specific to one…, A hash of the response's structure (keys and types, not values), for drift…, Which routes, delivery methods and payment methods this provider serves., Every quote to ask for this run: supported routes x methods x the amount grid. (+48 more)
 
 ### Community 2 - "index.tsx"
 Cohesion: 0.07
@@ -102,15 +105,15 @@ Nodes (45): CompareScreen(), LIMITS, Results(), styles, MethodologyScreen(), sty
 
 ### Community 3 - "Quote"
 Cohesion: 0.07
-Nodes (24): Any, _anomaly(), _is_promotional(), _math_ok(), _range_problems(), The publish gate (PRD 9.7). A quote reaches users only if it passes every…, Sets validation_status, validation_notes and is_promotional on each quote, in…, Index -> problem, for quotes whose markup jumps against their grid neighbour. (+16 more)
+Nodes (25): Any, _anomaly(), _is_promotional(), _math_ok(), _range_problems(), The publish gate (PRD 9.7). A quote reaches users only if it passes every…, Sets validation_status, validation_notes and is_promotional on each quote, in…, Index -> problem, for quotes whose markup jumps against their grid neighbour. (+17 more)
 
-### Community 4 - "FakeAdapter"
-Cohesion: 0.15
-Nodes (24): _er_api(), fetch_mid_market(), _frankfurter(), FxUnavailable, AsyncClient, Exception, Mid-market reference rates from two free sources, cross-checked (PRD 9.7 check…, No trustworthy mid-market rate for a pair right now. (+16 more)
+### Community 4 - "fetch_mid_market"
+Cohesion: 0.16
+Nodes (18): _er_api(), fetch_mid_market(), _frankfurter(), FxUnavailable, AsyncClient, Exception, Mid-market reference rates from two free sources, cross-checked (PRD 9.7 check…, No trustworthy mid-market rate for a pair right now. (+10 more)
 
-### Community 5 - "cli.py"
-Cohesion: 0.12
-Nodes (18): archive_key(), LocalArchive, AsyncClient, Path, The raw archive (PRD 9.1 principle 4): every response, compressed and…, Writes to engine/.archive. For development and tests; gitignored., Uploads to the private `raw-archive` bucket in Supabase Storage., SupabaseArchive (+10 more)
+### Community 5 - "SupabaseArchive"
+Cohesion: 0.50
+Nodes (3): AsyncClient, Uploads to the private `raw-archive` bucket in Supabase Storage., SupabaseArchive
 
 ### Community 6 - "expo"
 Cohesion: 0.08
@@ -156,25 +159,33 @@ Nodes (4): computeTransferCost(), TransferCost, TransferInput, yearlyCost()
 Cohesion: 0.33
 Nodes (5): Building with EAS, Commands, Expo has changed — do not trust your training data, Navigation & Routing, Rules
 
+### Community 41 - "run_adapter"
+Cohesion: 0.12
+Nodes (27): Archive, datetime, _breaker_open(), _fetch_and_parse(), Adapter, Try each strategy in order; archive every response, including ones that fail to…, run_adapter(), RunReport (+19 more)
+
+### Community 45 - "AdapterError"
+Cohesion: 0.29
+Nodes (4): AdapterError, AsyncClient, Exception, Response
+
 ## Knowledge Gaps
-- **136 isolated node(s):** `remitbridge-engine`, `Expo has changed — do not trust your training data`, `Commands`, `Navigation & Routing`, `Building with EAS` (+131 more)
+- **141 isolated node(s):** `Talking to Angad`, `Keeping the docs current`, `Open items`, `Product rules that are also code rules`, `Words and voice` (+136 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **26 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `PoliteClient` connect `runner.py` to `FakeAdapter`, `cli.py`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Why does `RawResponse` connect `runner.py` to `test_gate.py`, `FakeAdapter`, `cli.py`?**
+- **Why does `RawResponse` connect `models.py` to `test_gate.py`, `SupabaseArchive`?**
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `Quote` connect `Quote` to `models.py`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **Why does `run_adapter()` connect `run_adapter` to `models.py`, `Quote`, `fetch_mid_market`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Why does `Quote` connect `Quote` to `runner.py`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
-- **Are the 3 inferred relationships involving `PoliteClient` (e.g. with `ErrorClass` and `RunReport`) actually correct?**
-  _`PoliteClient` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 5 inferred relationships involving `RawResponse` (e.g. with `Archive` and `LocalArchive`) actually correct?**
-  _`RawResponse` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 13 inferred relationships involving `FakeAdapter` (e.g. with `Adapter` and `AdapterMeta`) actually correct?**
-  _`FakeAdapter` has 13 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 4 inferred relationships involving `Quote` (e.g. with `RunReport` and `LocalStore`) actually correct?**
-  _`Quote` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 3 inferred relationships involving `RawResponse` (e.g. with `Archive` and `LocalArchive`) actually correct?**
+  _`RawResponse` has 3 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 3 inferred relationships involving `Quote` (e.g. with `LocalStore` and `Store`) actually correct?**
+  _`Quote` has 3 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `Talking to Angad`, `Keeping the docs current`, `Open items` to the rest of the system?**
+  _141 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `RemitBridge App` be split into smaller, more focused modules?**
+  _Cohesion score 0.04983388704318937 - nodes in this community are weakly interconnected._

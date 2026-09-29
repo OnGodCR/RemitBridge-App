@@ -5,18 +5,21 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-09-28
 
-## Status: first build slice done, waiting on two things
+## Status: first slice done and connected; one decision outstanding
 
-The first slice is built, tested and pushed (2026-09-28). What's blocking:
+The first slice is built, tested and pushed. The Supabase project is linked and
+migrated, and the app reads from it (2026-09-28). What's still blocking:
 
-1. **The scraping decision.** Wise's and Remitly's terms forbid automated access,
-   and the other six couldn't be read with a plain request (D38,
-   `docs/MANUAL_RESEARCH.md`). The recommendation to Angad: launch on manual
-   quotes while asking providers for written permission or official feeds. The
-   alternatives are partner APIs, or scraping despite the terms (not recommended).
-2. **The Supabase project isn't visible to the CLI.** Angad signed the CLI into the
-   new account (orgs "RemitBridge App" and "RemitBridge System Labs"), but
-   `supabase projects list` returns no projects. The migration hasn't been pushed yet.
+- **The scraping decision.** Wise's and Remitly's terms forbid automated access,
+  and the other six couldn't be read with a plain request (D38,
+  `docs/MANUAL_RESEARCH.md`). The recommendation to Angad: launch on manual
+  quotes while asking providers for written permission or official feeds.
+
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
+RemitBridge account (the CLI is logged into that account). Both migrations are
+applied. `supabase/tests/rls_smoke.sh` passes 24/24 with the publishable key: every
+denial returns Postgres's `42501`, not just any 4xx. The events trigger was proven
+to overwrite a backdated `created_at` (migration `20260928000100` asserts it).
 
 ## The shape of the product (as of D34)
 
@@ -47,8 +50,9 @@ The first slice is built, tested and pushed (2026-09-28). What's blocking:
 | `docs/MANUAL_RESEARCH.md` | Wise and Remitly (terms forbid scraping); six providers not yet checked |
 | `packages/formula/` | The total-cost formula in TypeScript (`src/`) and Python (`python/`), both pinned to `vectors.json`, which was generated from the website's TrueCost code |
 | `engine/` | Python engine: adapter framework, polite client, FX cross-check, archive, publish gate, runner, `rb-engine` CLI, manual adapter. See `engine/README.md` |
-| `supabase/migrations/20260928000000_init.sql` | The schema with RLS, the `latest_quotes` view, the raw-archive bucket, and the Tier 1 seed. Parses with Postgres's parser; **not yet run against a live database** |
-| `mobile/` | Expo SDK 57 app: Compare and How it works screens, the website's tokens and font. Seen running in the iOS Simulator (iPhone 18 Pro) showing the "Not connected yet" state |
+| `supabase/migrations/` | `…000000_init.sql`: the schema with RLS, the `latest_quotes` view, the raw-archive bucket, and the Tier 1 seed. `…000100_rls_test_install.sql`: asserts the events trigger, removes the smoke test's events, and marks its install as internal. **Both applied to the live project.** |
+| `supabase/tests/rls_smoke.sh` | curl-based RLS test run with the public key. Run it after every schema change |
+| `mobile/` | Expo SDK 57 app: Compare and How it works screens, the website's tokens and font. Seen running in the iOS Simulator (iPhone 18 Pro), connected to the live project and showing the "No checked prices for this yet" state |
 | `.github/workflows/` | `ci.yml` (engine lint and tests, formula tests, typecheck, expo lint); `scrape.yml` and `health.yml` with their schedules off until an adapter exists (D40) |
 | `.claude/settings.json` | graphify hooks that check the knowledge graph before searches and reads |
 | `.gitattributes` | graphify's merge driver for `graphify-out/graph.json` |
@@ -59,27 +63,23 @@ The remote is `https://github.com/OnGodCR/RemitBridge-App.git`. The branch is
 
 ## What's next
 
-1. **Supabase.** Once the CLI can see the project: `supabase link --project-ref <ref>`,
-   then `supabase db push`, then test the RLS with curl (anon can read published
-   quotes; anon can't read events, quarantined quotes or saved data; a user can't
-   read another user's rows).
-2. **Wire it up.** Put `EXPO_PUBLIC_SUPABASE_URL` and
-   `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in `mobile/.env.local`. Add the
-   `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` GitHub Actions secrets (Angad adds
-   them in GitHub settings; never through the chat).
-3. **First real quotes.** Record a manual observation, push it, watch Scrape
+1. **GitHub Actions secrets** (Angad, in the repo's Settings → Secrets and variables
+   → Actions): `SUPABASE_URL` = `https://gmzljjdnwndvqciqicbx.supabase.co`, and
+   `SUPABASE_SERVICE_ROLE_KEY` = the **secret** key from the Supabase dashboard
+   (Project Settings → API keys). Never through the chat.
+2. **First real quotes.** Record a manual observation, push it, watch Scrape
    publish it, and see it on the Compare screen.
-4. **Scraping, depending on Angad's decision:** check the six unread terms in a real
+3. **Scraping, depending on Angad's decision:** check the six unread terms in a real
    browser; draft permission emails; build adapters only for cleared providers.
-5. **Later slices:**
+4. **Later slices:**
    - accounts (email code, Apple, Google), saved comparisons and transfers, in-app
      account deletion;
    - metrics events and the admin metrics screen (D31);
-   - the rebuilt tools (TrueCost first, since it uses the shared formula);
+   - the rebuilt tools (TrueCost first);
    - route requests and the route board;
    - the WhatsApp bot;
    - the store-required pages on the subdomain;
-   - engine hardening: AI extraction and repair, coverage matrix, email alerts;
+   - engine hardening;
    - an app icon.
 
 ### How to run things
@@ -87,10 +87,12 @@ The remote is `https://github.com/OnGodCR/RemitBridge-App.git`. The branch is
 - Engine: `cd engine && uv sync && uv run pytest -q` (see `engine/README.md`).
 - Formula (TypeScript): `npm test -w @remitbridge/formula`.
 - App: `cd mobile && npx expo start --lan`, then open `exp://<LAN IP>:8081` in Expo
-  Go. On this Mac, `--localhost` didn't work: Metro bound to IPv6 `[::1]` only and
+  Go (`ipconfig getifaddr en0` shows the current LAN IP; it changes between networks).
+  `mobile/.env.local` holds the project URL and publishable key (gitignored). On this Mac, `--localhost` didn't work: Metro bound to IPv6 `[::1]` only and
   the simulator couldn't reach it. The LAN IP (192.168.1.25 at the time) did.
-- Disk: the Mac had about 4 GB free on 2026-09-28 (the npm cache was cleared, which
-  brought it to 7.7 GB). Native iOS builds will need 15–20 GB free.
+- Disk: after the npm cache was cleared on 2026-09-28 the Mac had 7.7 GB free, but it
+  drifted back to 3.9 GB within hours. Native iOS builds will need 15–20 GB free.
+- RLS: `SUPABASE_URL=... SUPABASE_PUBLISHABLE_KEY=... supabase/tests/rls_smoke.sh`.
 
 ### Local toolchain (checked 2026-09-28)
 
