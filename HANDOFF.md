@@ -5,15 +5,19 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-09-28
 
-## Status: first slice done and connected; one decision outstanding
+## Status: app built and connected; waiting on prices and sign-in
 
-The first slice is built, tested and pushed. The Supabase project is linked and
-migrated, and the app reads from it (2026-09-28). What's still blocking:
+The app is built and connected: onboarding, Compare with search and estimates, How it
+works, Account. What's missing:
 
-- **The scraping decision.** Wise's and Remitly's terms forbid automated access,
-  and the other six couldn't be read with a plain request (D38,
-  `docs/MANUAL_RESEARCH.md`). The recommendation to Angad: launch on manual
-  quotes while asking providers for written permission or official feeds.
+- **Prices.** All eight Tier 1 providers' terms forbid automated access, or in Western
+  Union's case aren't clear and its site blocks it (D52, `docs/MANUAL_RESEARCH.md`). So
+  prices come from manual entry until a provider gives written permission. Angad sends
+  the permission emails (`docs/outreach/permission-request.md`). Next to build: the
+  admin-only manual price entry form.
+- **Sign-in.** It needs custom SMTP (Resend) for email codes (D42), plus Apple and Google
+  credentials. The entry form is admin-only, so Angad has to be able to sign in first.
+- **GitHub Actions secrets** for the engine: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
 RemitBridge account (the CLI is logged into that account). Both migrations are
@@ -45,9 +49,10 @@ to overwrite a backdated `created_at` (migration `20260928000100` asserts it).
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items, graphify |
 | `HANDOFF.md` | This file |
 | `README.md` | What the project is, with the planned layout (setup commands come later) |
-| `DECISIONS.md` | Decisions made on top of the PRD (D1–D47) |
+| `DECISIONS.md` | Decisions made on top of the PRD (D1–D52) |
 | `docs/PRD.md` | PRD v0.4, converted from the published artifact and kept as written |
-| `docs/MANUAL_RESEARCH.md` | Wise and Remitly (terms forbid scraping); six providers not yet checked |
+| `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted and the date checked |
+| `docs/outreach/permission-request.md` | The permission email draft and a send/reply log |
 | `packages/formula/` | The total-cost formula in TypeScript (`src/`) and Python (`python/`), both pinned to `vectors.json`, which was generated from the website's TrueCost code |
 | `engine/` | Python engine: adapter framework, polite client, FX cross-check, archive, publish gate, runner, `rb-engine` CLI, manual adapter. See `engine/README.md` |
 | `supabase/migrations/` | `…000000_init.sql`: the schema with RLS, the `latest_quotes` view, the raw-archive bucket, and the Tier 1 seed. `…000100_rls_test_install.sql`: asserts the events trigger, removes the smoke test's events, and marks its install as internal. **Both applied to the live project.** |

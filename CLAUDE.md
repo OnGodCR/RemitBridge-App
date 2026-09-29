@@ -50,9 +50,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
       added without code changes. Hindi also needs a matched Devanagari font
       (PRD 14.5).
-- [ ] **Scraping decision.** Wise's and Remitly's terms forbid it; six providers
-      are unread (D38). Choose between manual quotes plus permission requests
-      (recommended), partner APIs, or scraping anyway.
+- [ ] **Permission emails to all eight providers** (Angad sends; the draft is in
+      `docs/outreach/permission-request.md`). Log replies there (D52).
+- [ ] **Manual price entry form** (D52): an admin-only screen where prices read off
+      providers' sites are entered and then run through the engine's gate. It needs
+      sign-in working first (Resend SMTP).
 - [ ] **GitHub Actions secrets** `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
       (Angad adds them in GitHub settings).
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
@@ -69,16 +71,15 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
       submission (D32).
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Partner embed.** PRD Phase B assumed a web widget, and there is no web
-      app now (D14). Decide how partners embed or link to RemitBridge.
-- [ ] **PRD open questions** not answered yet: which Seattle-area partners
-      can validate the special-handling corridors, how RemitBridge is
-      structured legally, and who reviews adapter repairs.
-- [ ] **Providers needing manual research:** Wise and Remitly. See
-      `docs/MANUAL_RESEARCH.md`.
+- [ ] **Partner link** (D48): a shareable link on the app subdomain that opens the
+      app or falls back to the store or website. Build it with the subdomain pages (D28).
+- [ ] **Partner outreach** (D50): no partners yet; Seattle-area organizations, special
+      corridors first.
+- [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
+      See `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. Decisions D1–D47 are recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
 - [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
 - [x] First build slice: formula (pinned to TrueCost), engine core, schema, and

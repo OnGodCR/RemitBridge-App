@@ -5,18 +5,18 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790661232.767594,
-    "ast_hash": "423b7556dfde67ddf009b0ceeb40e415",
+    "mtime": 1790661923.419383,
+    "ast_hash": "84151754f56fdea403d47ffcbe631757",
     "semantic_hash": ""
   },
   "DECISIONS.md": {
-    "mtime": 1790661232.6931388,
-    "ast_hash": "3a2d327b9b58e5c6a4a855f826bca7aa",
+    "mtime": 1790661923.2923367,
+    "ast_hash": "cb9138fefeadffdeb8aa9401f3ad43b3",
     "semantic_hash": ""
   },
   "HANDOFF.md": {
-    "mtime": 1790661232.7683904,
-    "ast_hash": "76d9ac550f1eb9375330deae6a1b8b07",
+    "mtime": 1790661923.4210632,
+    "ast_hash": "4f7e7f3176dcbc61e0dc9485f915b35d",
     "semantic_hash": ""
   },
   "README.md": {
@@ -170,23 +170,23 @@
     "semantic_hash": ""
   },
   "mobile/src/components/does-not-tell-you.tsx": {
-    "mtime": 1790660778.4299192,
-    "ast_hash": "4a8a582538aa896c6460633ee8e9d3ec",
+    "mtime": 1790661652.828271,
+    "ast_hash": "999000f1cc00de017b54367dbbb90f91",
     "semantic_hash": ""
   },
   "mobile/src/components/quote-card.tsx": {
-    "mtime": 1790660778.429443,
-    "ast_hash": "6dfa6e6d6fcedb1039aef3db4b7b6a6e",
+    "mtime": 1790661652.8226995,
+    "ast_hash": "288159678b694c4da1fd830018d3d884",
     "semantic_hash": ""
   },
   "mobile/src/components/ui.tsx": {
-    "mtime": 1790660703.1662214,
-    "ast_hash": "47625c18f3a54e9e08784f0c6c8d2d4a",
+    "mtime": 1790661607.2771642,
+    "ast_hash": "ed95049c2e2dc8fd52797ecf43194f16",
     "semantic_hash": ""
   },
   "mobile/src/constants/theme.ts": {
-    "mtime": 1790660703.1655848,
-    "ast_hash": "3993992e24f9fad67aab0e7192e70bab",
+    "mtime": 1790661607.2739158,
+    "ast_hash": "a54e77ba02325aaa0b90644d11df1abc",
     "semantic_hash": ""
   },
   "mobile/src/hooks/use-color-scheme.ts": {
@@ -380,18 +380,18 @@
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/account.tsx": {
-    "mtime": 1790660171.2973084,
-    "ast_hash": "4291b939e7ff990cf01271e0c36b5207",
+    "mtime": 1790661683.2991958,
+    "ast_hash": "20795aefc13e12efc5d5d3c0564d2730",
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/index.tsx": {
-    "mtime": 1790660796.2328186,
-    "ast_hash": "664b558a6f180b39eb02863282e0c0d7",
+    "mtime": 1790661652.8136506,
+    "ast_hash": "752b9ba6bb725f28b4c8913ee1167e3a",
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/methodology.tsx": {
-    "mtime": 1790659839.8730614,
-    "ast_hash": "e33bcd328f5f3a3d1d6eebe6c4cef6f2",
+    "mtime": 1790661683.2600248,
+    "ast_hash": "83c9976fe81a28c55828a82c291ed179",
     "semantic_hash": ""
   },
   "mobile/src/app/onboarding/_layout.tsx": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "mobile/src/app/onboarding/index.tsx": {
-    "mtime": 1790660745.0430717,
-    "ast_hash": "1d87bf6795eab4104322a422facc7c4b",
+    "mtime": 1790661708.9193244,
+    "ast_hash": "01376a2b51a6ece1e877b72ef10bae1b",
     "semantic_hash": ""
   },
   "mobile/src/app/onboarding/route.tsx": {
@@ -435,8 +435,8 @@
     "semantic_hash": ""
   },
   "mobile/src/components/onboarding.tsx": {
-    "mtime": 1790660745.042726,
-    "ast_hash": "9c14579a45a5a1db55960952966c4abf",
+    "mtime": 1790661708.9190965,
+    "ast_hash": "20e6161732d22c353bdca0330be8330c",
     "semantic_hash": ""
   },
   "mobile/src/lib/auth.tsx": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "mobile/src/components/select-field.tsx": {
-    "mtime": 1790660726.9694288,
-    "ast_hash": "971a9f8a56d7f46a947f12fa1bfe3df3",
+    "mtime": 1790661652.8138711,
+    "ast_hash": "d8f9e5998aa1bc43b76219cfa14a8610",
     "semantic_hash": ""
   },
   "mobile/src/lib/countries.ts": {
@@ -489,14 +489,9 @@
     "ast_hash": "71c4cb43e5b86af88864288d0034dde9",
     "semantic_hash": ""
   },
-  "mobile/src/components/provider-search.tsx": {
-    "mtime": 1790661126.8635426,
-    "ast_hash": "f3edf1551d65b6f8d8481c6385a43007",
-    "semantic_hash": ""
-  },
-  "mobile/src/lib/providers.ts": {
-    "mtime": 1790660778.4346802,
-    "ast_hash": "81dbcf0e9aefbfdc3d87e46af5960033",
+  "mobile/src/components/hero-header.tsx": {
+    "mtime": 1790661607.4054008,
+    "ast_hash": "8f19e46b0b9d393831383671b9320a40",
     "semantic_hash": ""
   }
 }

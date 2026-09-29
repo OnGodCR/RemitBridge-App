@@ -320,3 +320,37 @@ restrained pass "too basic". The colors used:
 - **Mint icon tiles on How it works.**
 
 Dark mode has its own deeper band (#0E4A3C). Still no emoji and no pills (D44).
+
+---
+
+## 2026-09-28: Angad's answers on partners, structure, and prices
+
+**D48. Partners get a plain link, not an embed or a QR code.** A shareable link on
+the app's subdomain (D28) opens the app if it's installed, and otherwise sends
+people to the App Store or the website. It replaces PRD Phase B's embeddable
+widget and QR code.
+
+**D49. Structure: a personal project that runs like a nonprofit, not
+registered.** Angad is the seller of record in the app stores and the name on the
+data license. Nothing in the app, the store listings or the docs may call
+RemitBridge a nonprofit, charity or 501(c)(3). It may say "free" and
+"non-commercial". *Answers:* PRD 13 open question 4.
+
+**D50. No partner organizations yet.** Outreach to Seattle-area organizations
+(especially for the special-handling corridors, PRD 6.4) is an open item.
+*Answers:* PRD 13 open question 2 (none yet).
+
+**D51. Angad reviews and merges every adapter repair.** Claude drafts fixes
+(PRD 9.6), and nothing merges without him. *Answers:* PRD 13 open question 5.
+
+**D52. Prices: entered by hand, plus asking for permission.** On 2026-09-28 all
+eight Tier 1 providers were checked on their live terms. Seven forbid automated
+access outright. Western Union's US terms don't mention it, but its other
+terms do and its site blocks automated requests. So under D4 no provider gets a
+scraper for now. Prices come from people reading providers' public calculators
+and entering them. Meanwhile Angad emails every provider asking for written
+permission or an official feed (`docs/outreach/permission-request.md`). A
+provider moves to automated collection only with permission in writing, recorded
+here and in its adapter's `terms_note`.
+*Supersedes:* the scraping parts of D3 and D38 for now. *Touches:* PRD 9 (the
+engine's gate, archive and runner are unchanged; only where quotes come from changes).
