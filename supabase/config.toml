@@ -214,27 +214,29 @@ otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
 otp_expiry = 600
 
-# Use a production-ready SMTP server
-# [auth.email.smtp]
-# enabled = true
-# host = "smtp.sendgrid.net"
-# port = 587
-# user = "apikey"
-# pass = "env(SENDGRID_API_KEY)"
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+# Resend, connected 2026-09-28 through Resend's Supabase integration (DECISIONS.md D53).
+# The password is Resend's API key and lives only in Supabase. Mirrored here so a
+# `supabase config push` doesn't switch SMTP off: only push with
+# SUPABASE_AUTH_SMTP_PASS set in your shell, or the push will blank the password.
+[auth.email.smtp]
+enabled = true
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(SUPABASE_AUTH_SMTP_PASS)"
+admin_email = "RemitBridge@remitbridgelabs.org"
+sender_name = "RemitBridge"
 
 # Sign-in is by a 6-digit code typed into the app, not a link (DECISIONS.md D29).
 # New users get the confirmation template and returning users the magic-link one,
-# so both carry the code. OFF until custom SMTP is configured: the free tier refuses
-# template changes on Supabase's default sender (DECISIONS.md D42).
-# [auth.email.template.magic_link]
-# subject = "Your RemitBridge code"
-# content_path = "./supabase/templates/code.html"
-#
-# [auth.email.template.confirmation]
-# subject = "Your RemitBridge code"
-# content_path = "./supabase/templates/code.html"
+# so both carry the code. Live since 2026-09-28, set through the Management API.
+[auth.email.template.magic_link]
+subject = "Your RemitBridge code"
+content_path = "./supabase/templates/code.html"
+
+[auth.email.template.confirmation]
+subject = "Your RemitBridge code"
+content_path = "./supabase/templates/code.html"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

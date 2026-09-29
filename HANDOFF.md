@@ -15,8 +15,9 @@ works, Account. What's missing:
   prices come from manual entry until a provider gives written permission. Angad sends
   the permission emails (`docs/outreach/permission-request.md`). Next to build: the
   admin-only manual price entry form.
-- **Sign-in.** It needs custom SMTP (Resend) for email codes (D42), plus Apple and Google
-  credentials. The entry form is admin-only, so Angad has to be able to sign in first.
+- **Sign-in.** Email codes work: Resend is connected and the code template is live (D53).
+  Apple and Google still need credentials. Angad's account still needs `is_admin` set
+  once he has signed in, before the admin-only entry form.
 - **GitHub Actions secrets** for the engine: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
