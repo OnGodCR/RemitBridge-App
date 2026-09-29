@@ -377,3 +377,11 @@ this repo only, Actions read and write) is set in Supabase; otherwise a three-ho
 schedule catches it, inside the six-hour freshness limit. Chosen over re-implementing the
 gate in TypeScript, which would have created a second gate that could drift from the first.
 *Touches:* D52, PRD 9.4 strategy 5, PRD 9.7.
+
+**D55. Flags are back, as bundled images.** Angad found the two-letter code badges didn't
+say clearly enough which country was which. Flags return as small flat PNGs bundled in the
+app (`mobile/assets/flags`, 1x/2x/3x, 240 KB total), not emoji: emoji flags don't render on
+Windows or some Android builds and look different everywhere else. The images are flagcdn.com's
+flat flags (public domain), downloaded once, so the app makes no third-party request for them.
+Each keeps its real proportions at a fixed height, in a fixed-width column so names line up.
+*Revises:* D44's "text labels over decoration" for countries only.

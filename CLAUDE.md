@@ -85,6 +85,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] Admin "Add a price" screen, `manual_observations` table with RLS (26/26
       smoke checks), engine write-back of each outcome, Manual prices workflow, and the
       `process-prices` Edge Function (D54). Done 2026-09-28.
+- [x] Country flags as bundled images in the pickers, fields and onboarding (D55).
+      Done 2026-09-29.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in
