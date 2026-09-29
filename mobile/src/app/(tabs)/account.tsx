@@ -8,6 +8,7 @@ import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
+import { LINKS, openPage } from '@/lib/links';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 
@@ -55,6 +56,10 @@ export default function AccountScreen() {
         ) : (
           <Button label="Create account" onPress={() => router.push('/sign-in')} />
         )}
+        <View style={styles.links}>
+          <Button label="Privacy policy" variant="plain" onPress={() => openPage(LINKS.privacy)} />
+          <Button label="Support" variant="plain" onPress={() => openPage(LINKS.support)} />
+        </View>
         {__DEV__ ? (
           <Button
             label="Replay onboarding (dev only)"
@@ -74,5 +79,6 @@ export default function AccountScreen() {
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
+  links: { marginTop: Spacing.four },
   content: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
 });
