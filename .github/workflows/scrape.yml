@@ -36,6 +36,7 @@ jobs:
     steps:
       - name: Stop if the database isn't configured
         id: configured
+        working-directory: .
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
             echo "SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY secrets are not set; skipping."
