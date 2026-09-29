@@ -54,13 +54,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `docs/outreach/permission-request.md`). Log replies there (D52).
 - [ ] **Manual price entry form** (D52): an admin-only screen where prices read off
       providers' sites are entered and then run through the engine's gate. It needs
-      sign-in working first (Resend SMTP).
+      Angad signed in once, then marked admin.
 - [ ] **GitHub Actions secrets** `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
       (Angad adds them in GitHub settings).
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **App icon and splash.** Still the Expo template's placeholders.
-- [ ] **Custom SMTP (Resend) for email sign-in** (D42), then push the code
-      template in `supabase/config.toml`.
 - [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
       needs the developer account (D32); Google needs a Cloud OAuth client.
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
@@ -77,6 +75,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       corridors first.
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Email sign-in through Resend on remitbridgelabs.org, code template live
+      (D53). Done 2026-09-28.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
 - [x] PRD v0.4 read end to end. Decisions D1–D52 are recorded in

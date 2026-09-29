@@ -354,3 +354,11 @@ provider moves to automated collection only with permission in writing, recorded
 here and in its adapter's `terms_note`.
 *Supersedes:* the scraping parts of D3 and D38 for now. *Touches:* PRD 9 (the
 engine's gate, archive and runner are unchanged; only where quotes come from changes).
+
+**D53. Email sign-in goes through Resend on remitbridgelabs.org.** Connected
+2026-09-28 with Resend's Supabase integration, so the API key went from Resend
+into Supabase without passing through anyone's hands. The sender is
+`RemitBridge <RemitBridge@remitbridgelabs.org>`, and the DNS records (DKIM,
+plus SPF and MX on `send`) are in GoDaddy. The code template and sender name were
+set through the Management API, not `supabase config push`: with the password
+absent locally, a push could blank the SMTP settings. *Closes:* D42's blocker.
