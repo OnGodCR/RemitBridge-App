@@ -57,6 +57,13 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       (Angad adds them in GitHub settings).
 - [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
 - [ ] **App icon and splash.** Still the Expo template's placeholders.
+- [ ] **Custom SMTP (Resend) for email sign-in** (D42), then push the code
+      template in `supabase/config.toml`.
+- [ ] **Apple and Google sign-in credentials** in the Supabase dashboard. Apple
+      needs the developer account (D32); Google needs a Cloud OAuth client.
+- [ ] **Check on a real phone:** in the simulator, the first tap after a screen
+      change was sometimes dropped. It looked like Expo Go's dev overlay, but
+      that's unconfirmed.
 - [ ] **Bank connections or receipt scanning** for past transfers. Manual
       entry only for now (D30).
 - [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
@@ -71,7 +78,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `docs/MANUAL_RESEARCH.md`.
 - [x] graphify installed: CLAUDE.md rules, search hooks, and post-commit and
       post-checkout rebuild hooks. The graph builds once code exists. Done 2026-09-28.
-- [x] PRD v0.4 read end to end. Decisions D1–D40 are recorded in
+- [x] PRD v0.4 read end to end. Decisions D1–D43 are recorded in
       `DECISIONS.md`. Done 2026-09-28.
 - [x] Project docs set up and pushed to `origin/main`. Done 2026-09-28.
 - [x] First build slice: formula (pinned to TrueCost), engine core, schema, and
@@ -79,6 +86,10 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] Repo made private (D21). Done 2026-09-28.
 - [x] Supabase linked (`gmzljjdnwndvqciqicbx`), both migrations applied, RLS smoke
       test 24/24, and the app reads the live project. Done 2026-09-28.
+- [x] Onboarding with account creation, the Account tab with in-app deletion
+      (the `delete-account` Edge Function), and far less text. Done 2026-09-28.
+- [x] Compare has From/To dropdowns and a typed amount, estimated between
+      checked amounts with the shared formula (D43). Done 2026-09-28.
 
 ## Product rules that are also code rules
 

@@ -4,7 +4,7 @@ import { AppText, Card } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { checkedAgo, money, moneySpoken, pct } from '@/lib/format';
-import type { LatestQuote } from '@/lib/quotes';
+import type { LatestQuote, ShownQuote } from '@/lib/quotes';
 
 const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
   scraper: 'Public calculator',
@@ -17,7 +17,7 @@ const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
  * One provider's quote (PRD 14.6): the amount received is the largest text, then total
  * cost, the breakdown, and where the number came from and when.
  */
-export function QuoteCard({ quote, highlight }: { quote: LatestQuote; highlight?: string }) {
+export function QuoteCard({ quote, highlight }: { quote: ShownQuote; highlight?: string }) {
   const t = useTheme();
   const q = quote;
   return (
@@ -47,6 +47,11 @@ export function QuoteCard({ quote, highlight }: { quote: LatestQuote; highlight?
       <CostBreakdownBar quote={q} />
 
       <FreshnessBadge quote={q} />
+      {q.basedOn !== null ? (
+        <AppText variant="small" muted>
+          Estimated from the {money(q.basedOn, q.send_currency).replace('.00', '')} check
+        </AppText>
+      ) : null}
     </Card>
   );
 }
