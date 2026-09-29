@@ -85,12 +85,12 @@ export function Segmented<T extends string>({
             accessibilityState={{ selected }}
             style={[
               styles.segment,
-              selected && [styles.segmentSelected, { backgroundColor: t.card, borderColor: t.border }],
+              selected && [styles.segmentSelected, { backgroundColor: t.primary, borderColor: t.primary }],
             ]}>
             <AppText
               variant="label"
               numberOfLines={1}
-              style={{ color: selected ? t.text : t.textSecondary }}>
+              style={{ color: selected ? t.primaryForeground : t.textSecondary }}>
               {o.label}
             </AppText>
           </Pressable>
@@ -105,10 +105,10 @@ export function CodeBadge({ code, dim }: { code: string; dim?: boolean }) {
   const t = useTheme();
   return (
     <View
-      style={[styles.badge, { backgroundColor: t.muted, borderColor: t.border, opacity: dim ? 0.5 : 1 }]}
+      style={[styles.badge, { backgroundColor: t.accent, borderColor: t.accent, opacity: dim ? 0.45 : 1 }]}
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden>
-      <AppText variant="label" style={[styles.badgeText, { color: t.textSecondary }]}>
+      <AppText variant="label" style={[styles.badgeText, { color: t.accentForeground }]}>
         {code}
       </AppText>
     </View>
@@ -126,14 +126,30 @@ export function Button({
 }: {
   label: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'plain';
+  variant?: 'primary' | 'secondary' | 'plain' | 'inverse' | 'inverse-plain';
   disabled?: boolean;
   loading?: boolean;
   icon?: ReactNode;
 }) {
   const t = useTheme();
-  const bg = variant === 'primary' ? t.primary : variant === 'secondary' ? t.card : 'transparent';
-  const fg = variant === 'primary' ? t.primaryForeground : variant === 'plain' ? t.textSecondary : t.text;
+  const bg =
+    variant === 'primary'
+      ? t.primary
+      : variant === 'secondary'
+        ? t.card
+        : variant === 'inverse'
+          ? t.heroField
+          : 'transparent';
+  const fg =
+    variant === 'primary'
+      ? t.primaryForeground
+      : variant === 'plain'
+        ? t.textSecondary
+        : variant === 'inverse'
+          ? t.primary
+          : variant === 'inverse-plain'
+            ? t.heroText
+            : t.text;
   return (
     <Pressable
       onPress={onPress}

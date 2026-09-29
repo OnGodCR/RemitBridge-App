@@ -22,6 +22,13 @@ const light = {
   accentForeground: '#14705a',
   destructive: '#b3261e', // genuine errors and Scam check only, never "expensive" (PRD 14.5)
 
+  // The brand band: the website's full-bleed green feature band, used as each tab's
+  // header and the onboarding welcome.
+  hero: '#14705a',
+  heroText: '#ffffff',
+  heroMuted: 'rgba(255,255,255,0.74)',
+  heroField: '#ffffff',
+
   // Semantic money colours (PRD 14.5), identical in every chart and breakdown.
   moneyReceived: '#14705a', // brand green: the part that reaches family
   moneyFee: '#8d97a3', // neutral grey: visible, expected cost
@@ -43,6 +50,11 @@ const dark: typeof light = {
   accent: '#173229',
   accentForeground: '#7fd1b5',
   destructive: '#f2b8b5',
+
+  hero: '#0e4a3c',
+  heroText: '#f2f6f4',
+  heroMuted: 'rgba(242,246,244,0.7)',
+  heroField: '#1a1e22',
 
   moneyReceived: '#3fae8e',
   moneyFee: '#7b858f',

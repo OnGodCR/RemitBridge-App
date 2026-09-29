@@ -16,33 +16,39 @@ export default function Welcome() {
     <Step
       step={1}
       of={3}
+      tone="hero"
       actions={
         <>
-          <Button label="Get started" onPress={() => router.push('/onboarding/route')} />
+          <Button
+            label="Get started"
+            variant="inverse"
+            onPress={() => router.push('/onboarding/route')}
+          />
           <Button
             label="I already have an account"
-            variant="plain"
+            variant="inverse-plain"
             onPress={() => router.push({ pathname: '/sign-in', params: { from: 'onboarding' } })}
           />
         </>
       }>
-      <AppText variant="label" style={{ color: t.primary }}>
+      <AppText variant="label" style={{ color: t.heroMuted }}>
         RemitBridge
       </AppText>
-      <AppText variant="title" style={styles.headline}>
+      <AppText variant="title" style={[styles.headline, { color: t.heroText }]}>
         See what really arrives.
       </AppText>
-      <AppText muted>Every fee and hidden markup, side by side.</AppText>
+      <AppText style={{ color: t.heroMuted }}>Every fee and hidden markup, side by side.</AppText>
 
       {/* The idea in one picture: most of the money arrives, some goes to the fee, and
           some disappears into the exchange rate. Illustrative, so no numbers. */}
       <View style={styles.bar} accessible accessibilityLabel="Most of your money arrives. Some goes to the fee, and some to a hidden markup in the exchange rate.">
-        <View style={{ flex: 8, backgroundColor: t.moneyReceived }} />
+        {/* On the green band, "arrives" is white so it doesn't vanish into the ground. */}
+        <View style={{ flex: 8, backgroundColor: t.heroText }} />
         <View style={{ flex: 1, backgroundColor: t.moneyFee }} />
         <View style={{ flex: 1.4, backgroundColor: t.moneyMarkup }} />
       </View>
       <View style={styles.legend}>
-        <Legend color={t.moneyReceived} label="Arrives" />
+        <Legend color={t.heroText} label="Arrives" />
         <Legend color={t.moneyFee} label="Fee" />
         <Legend color={t.moneyMarkup} label="Hidden markup" />
       </View>
@@ -51,10 +57,11 @@ export default function Welcome() {
 }
 
 function Legend({ color, label }: { color: string; label: string }) {
+  const t = useTheme();
   return (
     <View style={styles.legendItem}>
       <View style={[styles.swatch, { backgroundColor: color }]} />
-      <AppText variant="small" muted>
+      <AppText variant="small" style={{ color: t.heroMuted }}>
         {label}
       </AppText>
     </View>

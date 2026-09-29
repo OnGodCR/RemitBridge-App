@@ -14,19 +14,21 @@ export function DoesNotTellYou({ items }: { items: string[] }) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
   return (
-    <Card>
+    <Card style={{ backgroundColor: t.accent, borderColor: t.accent }}>
       <Pressable
         onPress={() => setOpen((o) => !o)}
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
         style={styles.toggle}>
-        <AppText variant="heading">What this does not tell you</AppText>
+        <AppText variant="heading" style={{ color: t.accentForeground }}>
+          What this does not tell you
+        </AppText>
         <SymbolView
           pointerEvents="none"
           name={open ? 'chevron.up' : 'chevron.down'}
           size={13}
           weight="semibold"
-          tintColor={t.textSecondary}
+          tintColor={t.accentForeground}
           fallback={<AppText muted>{open ? '−' : '+'}</AppText>}
         />
       </Pressable>
