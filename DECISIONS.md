@@ -663,7 +663,8 @@ exempt. This matches the "$500, $5 tax" examples in public guides, but the IRS p
 regulations (Federal Register 2026-07085) couldn't be read from Claude's sandbox. So the tax
 check says it's an assumption until the base is checked. *Answers:* 6.
 
-**D79. The model fallback runs only on the server, on Claude.** The `scan-receipt` Edge
+**D79. The model fallback runs only on the server, on Claude.** *Model and API superseded by
+D91 (Qwen through OpenRouter); the scope, schema and cap rules stand.* The `scan-receipt` Edge
 Function calls the Anthropic API with the official SDK. The key is the `ANTHROPIC_API_KEY`
 Supabase secret, which Angad sets. Details:
 - **Model:** `claude-opus-5-5` at `low` effort by default; `RECEIPT_MODEL` overrides it.
@@ -756,3 +757,31 @@ mid-market rate when it loads, otherwise the quote's own.
   column and the formula treats the two identically.
 - **The engine's payment methods** gain `money_order` and `cashiers_check`. A test pins
   them to the formula's funding list.
+
+## 2026-09-30: The receipt model
+
+**D91. Receipts are read by Qwen3 VL 32B through OpenRouter, not Claude** (replaces D79's
+model and API). Angad chose cost first, and asked for a cheaper Chinese model through
+OpenRouter.
+- **Model:** `qwen/qwen3-vl-32b-instruct` (Alibaba's Qwen3 VL 32B Instruct). It reads photos,
+  supports a strict JSON schema, and lists at about $0.10 per million input tokens and $0.42
+  per million output tokens. A receipt (photo, text and answer) is about 2,000–3,000 tokens,
+  so roughly a tenth of a cent, against 2–5 cents on Claude. OpenRouter's site is blocked from
+  Claude's sandbox, so these figures come from search results, not the live model list;
+  check them on openrouter.ai before relying on them. Qwen3.7 Flash is cheaper still; the
+  Phase 4 benchmark will show whether it reads well enough.
+- **Why Qwen VL:** of the cheap Chinese models, DeepSeek's are text only, and the fallback
+  sends the redacted photo as well as the text. Qwen's VL line is the established vision one.
+- **API:** OpenRouter's chat completions endpoint over plain `fetch`, so no SDK. The key is
+  the `OPENROUTER_API_KEY` Supabase secret, which Angad sets. `RECEIPT_MODEL` overrides the
+  model and `RECEIPT_MODEL_FALLBACKS` (comma-separated) lists models to try if it fails; none
+  by default.
+- **Privacy:** every request asks OpenRouter for providers that don't store or train on what
+  they're sent (`data_collection: "deny"`) and that honor every parameter, so the schema is
+  enforced (`require_parameters: true`). Only the redacted photo and text are ever sent, as
+  before. If no provider of a model meets both, OpenRouter refuses the request, and the
+  person types the values; the fix is another model, not relaxing either rule.
+- **Spend cap:** raised from 300 to **2,000 calls a month**, which is about $2 at the listed
+  price.
+- **Unchanged:** the strict schema, our own check of every value, the 0.8 threshold, and
+  that only the scan-receipt Edge Function calls the model.

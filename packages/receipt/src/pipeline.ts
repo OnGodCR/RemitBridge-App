@@ -21,7 +21,7 @@ export interface ReadInput {
    * The model, or null to read with the rules alone (over the monthly cap, no key set, or
    * the benchmark's parser-only mode).
    */
-  model: { client: ModelClient; model?: string } | null
+  model: { client: ModelClient; model?: string; fallbacks?: string[] } | null
   /** 'combined' (the default) asks the model only for what the rules missed; 'model' asks it for everything. */
   mode?: 'combined' | 'model'
   /** The mid-market rate for the receipt's currencies and date, looked up by the caller. */
@@ -63,6 +63,7 @@ export async function readReceipt(input: ReadInput): Promise<ReadResult> {
         image: input.image,
         today: input.today,
         model: input.model.model,
+        fallbacks: input.model.fallbacks,
       })
       modelFields = answer.fields
       problems.push(...answer.problems.map((p) => ({ ...p, from: 'model' as const })))

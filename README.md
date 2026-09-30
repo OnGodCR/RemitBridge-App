@@ -33,7 +33,7 @@ mobile/src/i18n/     Every string the app shows: English source, drafts in Hindi
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 packages/bot/        The WhatsApp bot's logic (parser, replies in English and Hindi), tested with vitest
 packages/receipt/    The receipt pipeline: redaction, the rule-based parser (its extractors are Angad's
-                     TODOs), provider templates, the Claude fallback, validation; fixtures and harness
+                     TODOs), provider templates, the model fallback, validation; fixtures and harness
 supabase/            Migrations, row-level security, Edge Functions (delete-account, process-prices,
                      notify-route-launch, whatsapp, scan-receipt)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks
@@ -70,8 +70,8 @@ Database changes: `supabase db push`, then the RLS smoke test
 (`SUPABASE_URL=... SUPABASE_PUBLISHABLE_KEY=... supabase/tests/rls_smoke.sh`). Edge Functions
 deploy with `supabase functions deploy <name> --use-api`; their secrets are listed at the
 top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
-reads `ANTHROPIC_API_KEY` (without it, receipts are read by the rules alone), and optionally
-`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D76).
+reads `OPENROUTER_API_KEY` (without it, receipts are read by the rules alone), and optionally
+`RECEIPT_MODEL`, `RECEIPT_MODEL_FALLBACKS` and `RECEIPT_MODEL_MONTHLY_CAP` (D91).
 
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 

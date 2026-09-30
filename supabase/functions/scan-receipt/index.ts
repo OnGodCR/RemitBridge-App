@@ -5,7 +5,7 @@
 //   1. checks the request, and runs the same PII detection over the text again; if it
 //      finds anything, it hides it in the text and drops the image, which then never
 //      goes to the model or into storage;
-//   2. reads the receipt with packages/receipt: the rules first, then Claude for what they
+//   2. reads the receipt with packages/receipt: the rules first, then the model for what they
 //      missed or weren't sure of (within this month's cap), then the checks with the one
 //      formula and the day's mid-market rate;
 //   3. stores the values, where each came from, and the two consent flags; never the text,
@@ -14,16 +14,17 @@
 // It also deletes a receipt on request ('forget'), and every receipt past its 30 days.
 //
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
-//   ANTHROPIC_API_KEY           the model fallback; without it, the rules alone
+//   OPENROUTER_API_KEY          the model fallback, through OpenRouter; without it, the
+//                               rules alone (D91)
 // Optional:
-//   RECEIPT_MODEL               default claude-opus-5-5 (D79)
-//   RECEIPT_MODEL_MONTHLY_CAP   default 300 model calls a month
+//   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D91)
+//   RECEIPT_MODEL_FALLBACKS     comma-separated OpenRouter models to try if it fails
+//   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
 //
 // Called by the app, signed in or not. The publishable key isn't a JWT, so JWT verification
 // is off (supabase/config.toml); parseRequest checks everything that arrives, and the
 // monthly cap bounds what a flood of requests could spend. Logs never carry the text, the
 // image or any value.
-import Anthropic from 'npm:@anthropic-ai/sdk@0.129.0';
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 
 import {
@@ -33,6 +34,7 @@ import {
   detectPii,
   matchQuote,
   ModelError,
+  openRouterClient,
   parseRequest,
   readReceipt,
   redactPage,
@@ -55,7 +57,7 @@ import {
 } from '../../../packages/receipt/src/index.ts';
 import { checkedAmountFor, ROUTES } from '../../../mobile/src/lib/routes.ts';
 
-const DEFAULT_CAP = 300;
+const DEFAULT_CAP = 2000;
 const KEEP_DAYS = 30;
 const BUCKET = 'receipt-images';
 
@@ -104,10 +106,11 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const image = leftovers.length ? undefined : request.image;
   const today = trustedToday(request.today, new Date());
 
-  const key = Deno.env.get('ANTHROPIC_API_KEY');
+  const key = Deno.env.get('OPENROUTER_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
+  const fallbacks = (Deno.env.get('RECEIPT_MODEL_FALLBACKS') ?? '').split(',').map((m) => m.trim()).filter(Boolean);
   const model = key
-    ? { client: capped(new Anthropic({ apiKey: key }), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined }
+    ? { client: capped(openRouterClient(key), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined, fallbacks }
     : null;
 
   const result = await readReceipt({ page, image, today, model, midRate });
@@ -305,14 +308,10 @@ async function forget(db: SupabaseClient, id: string) {
  */
 function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClient {
   return {
-    beta: {
-      messages: {
-        create: async (params) => {
-          const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap });
-          if (error || data !== true) throw new ModelError('this month’s model calls are used up', 'over_cap');
-          return client.beta.messages.create(params);
-        },
-      },
+    complete: async (request) => {
+      const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap });
+      if (error || data !== true) throw new ModelError('this month’s model calls are used up', 'over_cap');
+      return client.complete(request);
     },
   };
 }

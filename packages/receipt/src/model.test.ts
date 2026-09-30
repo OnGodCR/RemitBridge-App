@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { answerSchema, askModel, buildRequest, DEFAULT_MODEL, ModelError, numberedText, readAnswer, SYSTEM_PROMPT } from './model.ts'
+import { answerSchema, askModel, buildRequest, DEFAULT_MODEL, ModelError, numberedText, OPENROUTER_URL, openRouterClient, readAnswer, replyJson, SYSTEM_PROMPT } from './model.ts'
 import { pageFromLines } from './ocr.ts'
 import { answer, fakeModel } from './test/fake-model.ts'
 
@@ -22,7 +22,7 @@ describe('the schema', () => {
   })
   it('types each value, and lets any of them be null', () => {
     expect(schema.properties.amount_sent.properties.value.anyOf).toEqual([{ type: 'number' }, { type: 'null' }])
-    expect(schema.properties.transfer_date.properties.value.anyOf[0]).toEqual({ type: 'string', format: 'date' })
+    expect(schema.properties.transfer_date.properties.value.anyOf[0]).toEqual({ type: 'string', description: 'YYYY-MM-DD' })
     expect(schema.properties.funding_method.properties.value.anyOf[0]).toEqual({
       type: 'string',
       enum: ['bank_account', 'debit_card', 'credit_card', 'cash', 'money_order', 'cashiers_check'],
@@ -31,29 +31,60 @@ describe('the schema', () => {
 })
 
 describe('the request', () => {
-  it('sends the redacted photo first, then the numbered text, with a strict schema and low effort', () => {
+  it('sends the redacted photo first, then the numbered text, with a strict schema', () => {
     const req = buildRequest({ fields: ['fee'], page, image: { mediaType: 'image/jpeg', base64: 'AAAA' }, today: TODAY })
     expect(req.model).toBe(DEFAULT_MODEL)
-    expect(req.system).toBe(SYSTEM_PROMPT)
-    expect(req.output_config?.effort).toBe('low')
-    expect(req.output_config?.format?.type).toBe('json_schema')
-    expect(req.betas).toEqual(['server-side-fallback-2026-07-01'])
-    expect(req.fallbacks).toBe('default')
-    const content = req.messages[0].content as { type: string; text?: string; source?: unknown }[]
-    expect(content[0]).toEqual({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: 'AAAA' } })
-    expect(content[1].text).toContain('Read these fields: fee.')
-    expect(content[1].text).toContain('[1] Sender: [hidden] [hidden]')
+    expect(req.models).toBeUndefined()
+    expect(req.messages[0]).toEqual({ role: 'system', content: SYSTEM_PROMPT })
+    expect(req.response_format.type).toBe('json_schema')
+    expect(req.response_format.json_schema.strict).toBe(true)
+    expect(req.response_format.json_schema.schema).toEqual(answerSchema(['fee']))
+    expect(req.temperature).toBe(0)
+    const content = req.messages[1].content
+    expect(content[0]).toEqual({ type: 'image_url', image_url: { url: 'data:image/jpeg;base64,AAAA' } })
+    expect(content[1]).toMatchObject({ type: 'text' })
+    const text = (content[1] as { text: string }).text
+    expect(text).toContain('Read these fields: fee.')
+    expect(text).toContain('[1] Sender: [hidden] [hidden]')
   })
 
-  it('sends text alone when the photo may not go', () => {
-    const req = buildRequest({ fields: ['fee'], page, today: TODAY, model: 'claude-sonnet-5-5' })
-    expect((req.messages[0].content as unknown[]).length).toBe(1)
-    expect(req.model).toBe('claude-sonnet-5-5')
+  it('asks OpenRouter only for providers that enforce the schema and keep nothing', () => {
+    expect(buildRequest({ fields: ['fee'], page, today: TODAY }).provider).toEqual({ require_parameters: true, data_collection: 'deny' })
+  })
+
+  it('sends text alone when the photo may not go, and lists fallbacks after the model', () => {
+    const req = buildRequest({ fields: ['fee'], page, today: TODAY, model: 'qwen/a', fallbacks: ['qwen/a', 'qwen/b', ''] })
+    expect(req.messages[1].content).toHaveLength(1)
+    expect(req.model).toBe('qwen/a')
+    expect(req.models).toEqual(['qwen/a', 'qwen/b'])
   })
 
   it('keeps the system prompt free of anything per request, so it caches', () => {
     expect(SYSTEM_PROMPT).not.toMatch(/\d{4}-\d{2}-\d{2}/)
     expect(numberedText(page).split('\n')[0]).toBe('[0] WESTERN UNION')
+  })
+})
+
+describe('the OpenRouter client', () => {
+  it('posts the request with the key, and returns the reply', async () => {
+    const calls: { url: string; init: RequestInit }[] = []
+    const fetchImpl = (async (url: string, init: RequestInit) => {
+      calls.push({ url, init })
+      return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: '{}' } }] }), { status: 200 })
+    }) as unknown as typeof fetch
+    const req = buildRequest({ fields: ['fee'], page, today: TODAY })
+    const reply = await openRouterClient('sk-or-test', fetchImpl).complete(req)
+    expect(reply.choices?.[0].message?.content).toBe('{}')
+    expect(calls[0].url).toBe(OPENROUTER_URL)
+    expect((calls[0].init.headers as Record<string, string>).Authorization).toBe('Bearer sk-or-test')
+    expect(JSON.parse(String(calls[0].init.body))).toEqual(req)
+  })
+
+  it('throws on a non-2xx reply, naming only the status', async () => {
+    const fetchImpl = (async () => new Response('{"error":{"message":"No endpoints found"}}', { status: 404 })) as unknown as typeof fetch
+    await expect(openRouterClient('k', fetchImpl).complete(buildRequest({ fields: ['fee'], page, today: TODAY }))).rejects.toThrow(
+      'openrouter: HTTP 404',
+    )
   })
 })
 
@@ -102,9 +133,18 @@ describe('askModel', () => {
     expect(requests).toHaveLength(0)
   })
 
+  it('reads an answer wrapped in a code fence', async () => {
+    const { client } = fakeModel([{ text: '```json\n' + answer({ fee: [4.99] }) + '\n```' }])
+    expect((await askModel(client, { fields: ['fee'], page, today: TODAY })).fields.fee?.value).toBe(4.99)
+    expect(() => replyJson('fee: 4.99')).toThrow()
+  })
+
   it.each([
-    [{ stop_reason: 'refusal', text: '' }, 'refusal'],
-    [{ stop_reason: 'max_tokens', text: '{"fee":' }, 'truncated'],
+    [{ text: '', refusal: 'I cannot help with that' }, 'refusal'],
+    [{ finish_reason: 'content_filter', text: '' }, 'refusal'],
+    [{ finish_reason: 'length', text: '{"fee":' }, 'truncated'],
+    [{ finish_reason: 'error', text: '' }, 'failed'],
+    [{ error: 'upstream error' }, 'failed'],
     [{ text: 'Here you go: fee is 4.99' }, 'unreadable'],
   ])('fails plainly on %o', async (reply, reason) => {
     const { client } = fakeModel([reply])
