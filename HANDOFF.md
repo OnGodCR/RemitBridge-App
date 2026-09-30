@@ -59,6 +59,12 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 - Every string moved into `mobile/src/i18n/en.ts`; drafts in Hindi, Spanish, Tagalog and
   Vietnamese; the reviewer gate; Hind for Devanagari (D69).
 - Mail links now show the address when the phone has no mail app, instead of doing nothing.
+- Flags for the nine request-only countries (Angad's yes); every country has one.
+- remitbridgelabs.org verified in Google Search Console on the RemitBridge Google account,
+  with a second google-site-verification TXT record at GoDaddy (the older one is untouched).
+- Partner outreach: Horn of Africa Services sent; East African Community Services in Drafts.
+- Wise answered the permission request: its Comparison API may be used (logged in
+  `docs/outreach/permission-request.md`).
 
 ## What changed on 2026-09-29
 
@@ -72,7 +78,10 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 
 ## What's next (Angad)
 
-1. **Push the migrations, then run the smoke test** from the repo root:
+1. **Turn ProtonVPN off, push the migrations, then run the smoke test** from the repo
+   root. With the VPN on, connections to Supabase's database port are reset. On
+   2026-09-30 the smoke test ran before the push: 26 passed, and the 11 that need the new
+   tables and functions failed with PGRST205/PGRST202, as expected.
    ```bash
    supabase db push
    ```
@@ -93,24 +102,26 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    `https://gmzljjdnwndvqciqicbx.supabase.co/functions/v1/whatsapp` as the webhook with
    your verify token, and subscribe to the `messages` field. Read the Hindi replies in
    `packages/bot/src/messages.ts` first.
-5. **Say yes or no** to: downloading nine more flags from flagcdn.com (Ukraine, Ecuador,
-   Nicaragua, Uganda, Somalia, Eritrea, Cuba, Afghanistan, Venezuela; about 30 small PNGs;
-   they show a plain tile until then); adding Google's verification TXT record at GoDaddy
-   for brand verification (D61).
+5. **Google brand verification** (D61): the domain is verified; say yes and Claude submits
+   the brand verification in Google Cloud (OAuth consent screen, Branding).
 6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
-   links open the app (D48). Claude couldn't read it without signing in.
+   links open the app (D48). It isn't anywhere on the Mac, and Chrome isn't signed in there.
 7. **Disk:** 5.3 GB free on 2026-09-30; native builds (and so real store screenshots)
    need 15–20 GB. Most of the space is app caches in `~/Library/Caches` (17 GB): Chrome
    6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers
    (`...ShipIt`) 1.6 GB. Clearing them from each app's own settings frees about 12 GB.
    The iOS 27 simulator runtime (7.5 GB) is needed; keep it.
-8. **Partners:** a shortlist of nine Seattle-area organizations and a draft email are in
-   `docs/outreach/partners.md` (not sent).
+8. **Partners:** Horn of Africa Services is sent. East African Community Services is ready
+   in the RemitBridge Gmail's Drafts; the other seven texts are in
+   `docs/outreach/partners.md` (El Centro de la Raza takes a web form).
 9. **Translation reviewers** (D69): one fluent speaker each for Hindi, Spanish, Tagalog
    and Vietnamese, Hindi first. They read the draft in a development build (Account →
    Language), send corrections, and agree in writing to stand behind it; then their name
    and the date go in `mobile/src/i18n/languages.ts` and the language ships. Partner
    organizations (item 8) are a natural place to ask.
+10. **Wise:** its Comparison API may be used (Simon Bruins, 2026-09-30). Decide whether to
+   reply and whether to build a Wise adapter on the API. Only Wise's own quote from it
+   would count; the same API returns other providers' prices as Wise reports them.
 
 ## The shape of the product
 

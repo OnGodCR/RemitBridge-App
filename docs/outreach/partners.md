@@ -1,14 +1,16 @@
 # Partner outreach: Seattle-area organizations
 
 A shortlist for D50 (no partners yet) and PRD 6.4 (the special-handling routes need a
-community partner before they can be done well). **Nothing here has been sent.** Angad
-reviews, personalizes and sends; log each send and reply in the table at the bottom.
+community partner before they can be done well). **One of nine has been sent** (Horn of
+Africa Services, 2026-09-30). Angad sends the rest; log each send and reply in the table
+at the bottom.
 
 Researched 2026-09-29. Every contact below was read on the organization's own site on that
 date. Use the organization's general address or form, never a staff member's personal email.
 
-One draft is waiting in the RemitBridge Gmail's Drafts folder, unsent: Horn of Africa
-Services. The permission system stopped Claude from creating the rest, so the other texts
+On 2026-09-30 Angad asked Claude to send them from the RemitBridge Gmail. The Horn of Africa
+Services email went out; the permission system then stopped the next send. East African
+Community Services is written and waiting in Drafts, ready to send as is. The other texts
 are below to paste.
 
 ## Who, and why
@@ -92,7 +94,7 @@ El Centro de la Raza takes messages through its web form, so paste the standard 
 
 | Organization | Sent | Reply |
 |---|---|---|
-| Horn of Africa Services | draft in Gmail, not sent | |
+| Horn of Africa Services | 2026-09-30, to info@hoas.org | |
 | Filipino Community of Seattle | not sent | |
 | Indian American Community Services | not sent | |
 | Casa Latina | not sent | |
@@ -100,4 +102,4 @@ El Centro de la Raza takes messages through its web form, so paste the standard 
 | Financial Empowerment Network of Washington | not sent | |
 | Seattle Office of Immigrant and Refugee Affairs | not sent | |
 | Kandelia | not sent | |
-| East African Community Services | not sent | |
+| East African Community Services | in Drafts, not sent | |
