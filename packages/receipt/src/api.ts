@@ -3,8 +3,9 @@
  * the two can't drift. parseRequest checks everything that arrives, since the function is
  * reachable with the app's public key.
  */
+import type { Gap } from './result.ts'
 import type { Check, Suspect } from './validate.ts'
-import type { ExtractedFields, FieldName, OcrPage } from './types.ts'
+import { FIELD_NAMES, type ExtractedFields, type FieldName, type OcrPage } from './types.ts'
 
 export interface ScanRequest {
   action: 'scan'
@@ -24,7 +25,49 @@ export interface ForgetRequest {
   id: string
 }
 
-export type ScanFunctionRequest = ScanRequest | ForgetRequest
+/**
+ * The person's answers from the confirmation screen: a value for each field they corrected
+ * or confirmed. Each becomes `user_corrected`. Values are checked on the server with
+ * checkValue like any other.
+ */
+export interface ConfirmRequest {
+  action: 'confirm'
+  id: string
+  corrections: Partial<Record<FieldName, unknown>>
+  today: string
+}
+
+export type ScanFunctionRequest = ScanRequest | ForgetRequest | ConfirmRequest
+
+/** The advertised price the receipt was compared with (D79), or why there's none. */
+export interface Comparison {
+  quote: {
+    id: number
+    provider_id: string
+    captured_at: string
+    offered_rate: number
+    send_amount: number
+    delivery_method: string
+    payment_method: string
+  } | null
+  gap: Gap | null
+  /** Why nothing was compared, when nothing was. */
+  reason: 'not_tracked' | 'no_route' | 'missing_values' | 'no_quote' | null
+}
+
+export interface ConfirmResponse {
+  id: string
+  fields: ExtractedFields
+  checks: Check[]
+  suspect: Suspect | null
+  missing: FieldName[]
+  to_confirm: FieldName[]
+  provider_id: string | null
+  route_id: string | null
+  /** The mid-market rate for the receipt's currencies and date, and where it's from. */
+  mid: { rate: number; date: string; source: string } | null
+  comparison: Comparison
+}
 
 export interface ScanResponse {
   id: string
@@ -66,6 +109,18 @@ export function parseRequest(body: unknown): Parsed {
   if (!b || typeof b !== 'object') return { ok: false, error: 'not an object' }
   if (b.action === 'forget') {
     return typeof b.id === 'string' && UUID.test(b.id) ? { ok: true, request: { action: 'forget', id: b.id } } : { ok: false, error: 'bad id' }
+  }
+  if (b.action === 'confirm') {
+    if (typeof b.id !== 'string' || !UUID.test(b.id)) return { ok: false, error: 'bad id' }
+    if (typeof b.today !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(b.today)) return { ok: false, error: 'today must be YYYY-MM-DD' }
+    const c = b.corrections
+    if (!c || typeof c !== 'object' || Array.isArray(c)) return { ok: false, error: 'corrections must be an object' }
+    for (const [k, v] of Object.entries(c)) {
+      if (!(FIELD_NAMES as readonly string[]).includes(k)) return { ok: false, error: `unknown field ${k}` }
+      if (typeof v !== 'string' && typeof v !== 'number') return { ok: false, error: `bad value for ${k}` }
+      if (typeof v === 'string' && v.length > 80) return { ok: false, error: `bad value for ${k}` }
+    }
+    return { ok: true, request: { action: 'confirm', id: b.id, corrections: c as ConfirmRequest['corrections'], today: b.today } }
   }
   if (b.action !== 'scan') return { ok: false, error: 'unknown action' }
   if (typeof b.research_consent !== 'boolean') return { ok: false, error: 'research_consent must be true or false' }

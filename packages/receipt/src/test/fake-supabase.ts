@@ -56,14 +56,35 @@ export function createClient(_url: string, _key: string) {
 }
 
 function query(table: string) {
-  const filters: [string, unknown][] = []
+  const filters: ((r: Row) => boolean)[] = []
   const rows = () => (tables[table] ??= [])
-  const matching = () => rows().filter((r) => filters.every(([c, v]) => r[c] === v))
+  const matching = () => rows().filter((r) => filters.every((f) => f(r)))
   const api = {
     select: () => api,
     eq: (col: string, val: unknown) => {
-      filters.push([col, val])
+      filters.push((r) => r[col] === val)
       return api
+    },
+    gte: (col: string, val: string) => {
+      filters.push((r) => String(r[col]) >= val)
+      return api
+    },
+    lte: (col: string, val: string) => {
+      filters.push((r) => String(r[col]) <= val)
+      return api
+    },
+    then: (resolve: (v: { data: Row[]; error: null }) => void) => resolve({ data: matching(), error: null }),
+    update: (patch: Row) => ({
+      eq: async (col: string, val: unknown) => {
+        for (const r of rows()) if (r[col] === val) Object.assign(r, patch)
+        return { error: null }
+      },
+    }),
+    upsert: async (row: Row) => {
+      const i = rows().findIndex((r) => r.receipt_id === row.receipt_id)
+      if (i >= 0) rows()[i] = { ...row }
+      else rows().push({ ...row })
+      return { error: null }
     },
     maybeSingle: async () => ({ data: matching()[0] ?? null, error: null }),
     insert: async (row: Row | Row[]) => {

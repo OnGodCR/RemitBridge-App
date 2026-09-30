@@ -53,10 +53,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       in Hindi (D68), pending Angad's read. Started 2026-09-30 (D72): `mobile/src/i18n/` holds
       English and Hindi for the new screens, Noto Sans Devanagari is loaded, and Account has a
       language setting; the Hindi there needs Angad's read too.
-- [ ] **CAC receipt scanner (D69), Phases 3–6.** Phase 1 (gap report) and Phase 2 (data
-      model, redaction, parser harness, Claude fallback, validation, scan screen) done
-      2026-09-30, on branch `claude/gallant-hopper-51zhhm` (D84). Waiting on Angad's review
-      before Phase 3. Internal deadline 2026-10-23.
+- [ ] **CAC receipt scanner (D69), Phases 4–6.** Phase 1 (gap report), Phase 2 (data
+      model, redaction, parser harness, Claude fallback, validation, scan screen) and Phase 3
+      (confirmation and result screens, funding method in TrueCost and Compare, D85–D87)
+      done 2026-09-30, on branch `claude/gallant-hopper-51zhhm` (D84). Waiting on Angad's
+      review before Phase 4. Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D83). Until then, the model reads every value.
 - [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D76).

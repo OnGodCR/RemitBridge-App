@@ -6,7 +6,7 @@
  * cap, and forgetting.
  */
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { ScanResponse } from './api.ts'
+import type { ConfirmResponse, ScanResponse } from './api.ts'
 import { loadFixtures } from './node/fixtures.ts'
 import { detectPii, redactPage } from './redact.ts'
 import { keys, replies, requests } from './test/fake-anthropic.ts'
@@ -193,5 +193,74 @@ describe('forgetting', () => {
     await scan()
     expect(tables.receipts.map((r) => r.id)).not.toContain('old')
     expect(rpcs[0].name).toBe('forget_expired_receipts')
+  })
+})
+
+describe('confirming', () => {
+  const publishedQuote = (over: Record<string, unknown> = {}) => ({
+    id: 77,
+    provider_id: 'western-union',
+    route_id: 'us-mx',
+    send_amount: 500,
+    delivery_method: 'cash_pickup',
+    payment_method: 'cash',
+    fee: '4.99',
+    offered_rate: '17.3',
+    mid_market_rate: '17.7',
+    pickup_charge: '0',
+    is_promotional: false,
+    validation_status: 'published',
+    captured_at: '2026-09-28T15:00:00.000Z',
+    ...over,
+  })
+
+  const confirmCall = async (id: string, corrections: Record<string, unknown>) => {
+    const res = await call({ action: 'confirm', id, corrections, today: TODAY })
+    return { status: res.status, body: (await res.json()) as ConfirmResponse & { error?: string } }
+  }
+
+  it('applies the person’s answers, checks again, and compares with the advertised price that day', async () => {
+    // The model misread the amount received; the person fixes it.
+    replies.push(answer(Object.fromEntries(Object.entries({ ...wu.expected, amount_received: 8650 }).map(([k, v]) => [k, [v, 0.9, null]])) as Record<string, [unknown]>))
+    const { body: scanned } = await scan()
+    expect(scanned.suspect?.field).toBe('amount_received')
+    tables.quotes = [publishedQuote(), publishedQuote({ id: 78, validation_status: 'quarantined', offered_rate: '16' })]
+
+    const { status, body } = await confirmCall(scanned.id, { amount_received: 8560 })
+    expect(status).toBe(200)
+    expect(body.fields.amount_received).toMatchObject({ value: 8560, path: 'user_corrected', validated: true })
+    expect(body.suspect).toBeNull()
+    expect(body.mid).toEqual({ rate: 17.7, date: '2026-09-28', source: 'Frankfurter' })
+    expect(body.comparison.quote?.id).toBe(77)
+    expect(body.comparison.gap).toEqual({ advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.82, gapCurrency: 'USD' })
+    expect(tables.receipt_fields.find((f) => f.field_name === 'amount_received')).toMatchObject({ value: '8560', extraction_path: 'user_corrected' })
+    expect(tables.receipt_comparisons[0]).toMatchObject({ receipt_id: scanned.id, matched_quote_id: 77, advertised_rate: 17.3, receipt_rate: 17.2, gap_amount: 2.82, gap_currency: 'USD', tax_expected: 5, tax_found: 5 })
+  })
+
+  it('says plainly when no advertised price matches', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    tables.quotes = [publishedQuote({ captured_at: '2026-09-20T12:00:00.000Z' })]
+    const { body } = await confirmCall(scanned.id, {})
+    expect(body.comparison).toEqual({ quote: null, gap: null, reason: 'no_quote' })
+    expect(tables.receipt_comparisons[0]).toMatchObject({ matched_quote_id: null, gap_amount: null, tax_expected: 5 })
+  })
+
+  it('says when the provider isn’t one we track', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    const { body } = await confirmCall(scanned.id, { provider: 'Corner Store Remit' })
+    expect(body.comparison.reason).toBe('not_tracked')
+    expect(tables.receipts[0]).toMatchObject({ provider_id: null, provider_name: 'Corner Store Remit' })
+  })
+
+  it('refuses an invalid answer, and an unknown or expired receipt', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    expect((await confirmCall(scanned.id, { transfer_date: '2099-01-01' })).status).toBe(400)
+    expect((await confirmCall('00000000-0000-4000-8000-000000000000', {})).status).toBe(404)
+    tables.receipts[0].expires_at = new Date(Date.now() - 1000).toISOString()
+    expect((await confirmCall(scanned.id, {})).status).toBe(404)
+    expect((await call({ action: 'confirm', id: scanned.id, corrections: { sender_name: 'x' }, today: TODAY })).status).toBe(400)
   })
 })

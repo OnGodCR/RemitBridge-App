@@ -1,18 +1,21 @@
-import { computeTransferCost } from '@remitbridge/formula';
+import { computeTransferCost, FUNDING_METHODS, remittanceTax, type FundingMethod } from '@remitbridge/formula';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { ChoiceList } from '@/components/choice-list';
 import { CurrencySelect } from '@/components/select-field';
 import { Answer, Breakdown, Field, Fields, Section, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { fill, useLanguage, useStrings } from '@/i18n';
 import { useAuth } from '@/lib/auth';
 import { money, pct } from '@/lib/format';
 import { formatDay, isoDay, today, useMidRate } from '@/lib/fx';
 import { openCompare } from '@/lib/open-compare';
+import { fundingWord } from '@/lib/receipt-format';
 import { ROUTES } from '@/lib/routes';
 import { saveCheck } from '@/lib/saved';
 import { track } from '@/lib/track';
@@ -46,6 +49,9 @@ export default function TrueCostScreen() {
   const [pickup, setPickup] = useState('');
   const [dateText, setDateText] = useState('');
   const [provider, setProvider] = useState('');
+  const [funding, setFunding] = useState<FundingMethod>('bank_account');
+  const strings = useStrings();
+  const language = useLanguage();
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -60,20 +66,26 @@ export default function TrueCostScreen() {
   const Q = Number(rate);
   const R = Number(pickup) || 0;
   const inputsOk = S > 0 && Q > 0 && F >= 0 && F < S;
+  // Paid in cash, by money order or by cashier's check: the 1% federal tax (D73, D75) is
+  // added to what was paid, on the transfer amount (what's sent less the fee), and comes
+  // off before conversion like the fee, so it lands in the total cost, not the amount received.
+  const T = inputsOk ? remittanceTax(S - F, funding, date ?? undefined) : 0;
   const cost =
     inputsOk && fx.state === 'ready'
-      ? computeTransferCost({ sent: S, fee: F, quotedRate: Q, midRate: fx.rate, pickupCharge: R })
+      ? computeTransferCost({ sent: S + T, fee: F, transferTax: T, quotedRate: Q, midRate: fx.rate, pickupCharge: R })
       : null;
 
   const save = async () => {
     if (!cost || fx.state !== 'ready') return;
     setSaving(true);
+    // saved_transfers has no tax column. The formula treats a tax exactly like a fee (both
+    // come off before conversion), so saving it inside the fee keeps the saved total cost right.
     const error = await saveCheck({
       provider_name: provider.trim() || 'Not named',
       send_currency: from,
       receive_currency: to,
-      sent: S,
-      fee: F,
+      sent: S + T,
+      fee: F + T,
       quoted_rate: Q,
       mid_rate: fx.rate,
       mid_rate_source: `${fx.source}, ${fx.date}`,
@@ -133,6 +145,15 @@ export default function TrueCostScreen() {
         ) : null}
       </Section>
 
+      <Section title={strings.trueCostFunding.label}>
+        <ChoiceList
+          label={strings.trueCostFunding.label}
+          options={FUNDING_METHODS.map((f) => ({ value: f, label: strings.funding[f] }))}
+          value={funding}
+          onChange={setFunding}
+        />
+      </Section>
+
       {inputsOk && fx.state === 'loading' ? <ActivityIndicator /> : null}
       {inputsOk && fx.state === 'error' ? (
         <AppText muted>Couldn’t get the mid-market rate for that day. Check your connection and try again.</AppText>
@@ -148,6 +169,7 @@ export default function TrueCostScreen() {
           <Breakdown
             rows={[
               { label: 'Fee you could see', value: money(cost.feeCost, from), tone: t.moneyFee },
+              ...(T > 0 ? [{ label: strings.result.tax, value: money(cost.taxCost, from), tone: t.moneyFee }] : []),
               {
                 label: `Hidden in the rate (${pct(cost.markupPct, 2)} markup)`,
                 value: money(cost.markupCost, from),
@@ -158,6 +180,11 @@ export default function TrueCostScreen() {
               { label: 'At mid-market, with no fee', value: money(cost.benchmarkReceived, to) },
             ]}
           />
+          {T > 0 ? (
+            <AppText variant="small" muted>
+              {fill(strings.trueCostFunding.taxLine, { funding: fundingWord(funding, strings, language), tax: money(T, from) })}
+            </AppText>
+          ) : null}
           {cost.markupPct < 0 ? (
             <AppText variant="small" muted>
               Your rate was better than mid-market. That usually means a first-transfer promotion.

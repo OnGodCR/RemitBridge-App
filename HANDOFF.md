@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-30 (CAC Phase 2)
+**Last updated:** 2026-09-30 (CAC Phase 3)
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -64,8 +64,21 @@ flood could use up the month's model calls (the cap stops the spending, not the 
 add junk rows that expire in 30 days. A per-install rate limit can come later if needed.
 
 **Phase 2 stubs, on purpose:** the parser finds nothing until Angad writes the extractors,
-so today every value comes from the model (or the person). The scan screen ends at a plain
-list of what was read; the confirmation and result screens are Phase 3.
+so today every value comes from the model (or the person).
+
+- **Phase 3, built (D85–D87):**
+  - **Confirmation screen:** the redacted photo with each value outlined where it was read;
+    values to check are listed first, in amber, and each needs an answer. Answers can be
+    typed, the suggestion, a choice from a list, or "This is right".
+  - **Result screen:** the true cost through TrueCost's own breakdown, advertised vs. paid
+    (or plainly why not), the tax check with the bank-funded equivalent, and "Compare this
+    route today".
+  - **Server:** the `confirm` action on `scan-receipt` re-checks the values, matches the
+    advertised price and stores `receipt_comparisons`.
+  - **Funding method:** in TrueCost and Compare, with the tax through the formula.
+  - **Engine:** `money_order` and `cashiers_check` added as payment methods.
+- **Tests:** 50 app tests (from 26), 149 in the receipt package (from 135), 70 engine and
+  formula tests in Python.
 
 ## What changed on 2026-09-29
 
@@ -79,8 +92,8 @@ list of what was read; the confirmation and result screens are Phase 3.
 
 ## What's next (Angad)
 
-0. **CAC: review Phase 2** (above and in `docs/AI_USAGE.md`), then say go for Phase 3
-   (confirmation screen, result screen, funding method in TrueCost and Compare). Meanwhile:
+0. **CAC: review Phases 2 and 3** (above and in `docs/AI_USAGE.md`), then say go for Phase 4
+   (the benchmark and synthetic receipt generator). Meanwhile:
    - **Write the extractors** in `packages/receipt/src/extract/fields.ts` (each TODO says its
      inputs, output and expected behavior). Check them with
      `npm run parser:report -w @remitbridge/receipt` and `npm test -w @remitbridge/receipt`
@@ -156,7 +169,7 @@ list of what was read; the confirmation and result screens are Phase 3.
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
 | `packages/formula/` | The one total-cost formula, TypeScript and Python, pinned to `vectors.json` |
-| `packages/receipt/` | The receipt pipeline: redaction, parser frame and templates (extractors are Angad's TODOs), the Claude fallback, merging, validation, fixtures and harness. 135 vitest tests, including the `scan-receipt` function against fakes |
+| `packages/receipt/` | The receipt pipeline: redaction, parser frame and templates (extractors are Angad's TODOs), the Claude fallback, merging, validation, the result (tax check, quote matching, gap), fixtures and harness. 149 vitest tests, including the `scan-receipt` function against fakes |
 | `packages/bot/` | The WhatsApp bot's logic: parser, planner, replies in English and Hindi. 58 vitest tests, including the real webhook run against a fake database |
 | `engine/` | Python engine: adapters, publish gate, raw archive, manual adapter, `rb-engine` CLI |
 | `supabase/migrations/` | Schema, RLS and seed. The last two (route requests and metrics; WhatsApp) are **not applied yet** |
