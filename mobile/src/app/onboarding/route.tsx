@@ -12,13 +12,15 @@ import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { RECEIVING } from '@/lib/countries';
 import { prefs } from '@/lib/prefs';
-import { DELIVERY_LABELS, ROUTES } from '@/lib/routes';
+import { currency } from '@/lib/currencies';
+import { ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 /**
  * Pick the route Compare opens on (DECISIONS.md D62), as the website's divided index
  * ("rather than a card grid... a list you scan down instead of panels you compare"):
- * hairline rows, the country in bold, one plain line, an arrow. One tap moves on.
+ * hairline rows, the country in bold, one plain line (the currency the family receives), an
+ * arrow. One tap moves on. The delivery methods wait for Compare, where they're a choice.
  *
  * The countries that aren't live yet are a plain line of text, following the site's rule
  * that tags are text and never pills.
@@ -49,13 +51,16 @@ export default function PickRoute() {
             key={r.id}
             onPress={() => pick(r.id)}
             accessibilityRole="button"
-            accessibilityLabel={`${r.country}. ${r.sendCurrency} to ${r.receiveCurrency}`}
+            accessibilityLabel={`${r.country}. Paid out in ${currency(r.receiveCurrency).name}`}
             style={({ pressed }) => [styles.row, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
-            <Flag code={r.id.split('-')[1]} height={22} />
+            {/* A fixed column, so the names line up whatever each flag's proportions. */}
+            <View style={styles.flag}>
+              <Flag code={r.id.split('-')[1]} height={22} />
+            </View>
             <View style={styles.rowText}>
               <AppText style={[styles.country, { color: t.text }]}>{r.country}</AppText>
-              <AppText variant="small" style={{ color: t.textSecondary }}>
-                {r.sendCurrency} to {r.receiveCurrency} · {r.deliveryMethods.map((m) => DELIVERY_LABELS[m]).join(', ')}
+              <AppText variant="small" numberOfLines={1} style={{ color: t.textSecondary }}>
+                {currency(r.receiveCurrency).name} · {r.receiveCurrency}
               </AppText>
             </View>
             <SymbolView pointerEvents="none" name="arrow.right" size={17} weight="semibold" tintColor={t.primary} fallback={null} />
@@ -84,6 +89,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingVertical: Spacing.three,
   },
+  // Wide enough for a 2:1 flag at 22pt, the widest of the live routes (the Philippines).
+  flag: { width: 44 },
   rowText: { flex: 1, gap: 3 },
   country: { fontFamily: Fonts.bold, fontSize: 20, letterSpacing: -0.4 },
 });
