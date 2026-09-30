@@ -84,7 +84,8 @@ export default function QuoteDetail() {
 
   const q = quote;
   const route = ROUTES.find((r) => r.id === q.route_id);
-  const markupCost = Math.max(0, q.total_cost - q.fee - q.pickup_charge / q.mid_market_rate);
+  // Signed, so the rows add up to the total. A live rate can beat the daily reference rate.
+  const markupCost = q.total_cost - q.fee - q.pickup_charge / q.mid_market_rate;
   const points = history?.id === id && history.value !== 'error' ? history.value : null;
 
   const report = () => {
@@ -148,11 +149,11 @@ export default function QuoteDetail() {
         <ListFact label={copy.quoteDetail.upfrontFee} value={money(q.fee, q.send_currency)} />
         <ListFact
           label={copy.quoteDetail.markup}
-          note={copy.quoteDetail.rateNote(
+          note={`${copy.quoteDetail.rateNote(
             rate(q.offered_rate),
             rate(q.mid_market_rate),
             copy.trueCost.perOne(q.receive_currency, q.send_currency),
-          )}
+          )}${markupCost < 0 ? `. ${copy.quoteDetail.betterThanMid}` : ''}`}
           value={`${money(markupCost, q.send_currency)} (${pct(q.markup_pct, 2)})`}
         />
         {q.pickup_charge > 0 ? (
