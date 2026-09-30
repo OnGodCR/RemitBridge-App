@@ -1,0 +1,104 @@
+{
+  "amount": 500.0,
+  "amountType": "SEND",
+  "providerCountry": null,
+  "providerTypes": [
+    "bank",
+    "moneyTransferProvider"
+  ],
+  "providers": [
+    {
+      "alias": "wells-fargo",
+      "id": 66,
+      "logos": {
+        "altText": "Wells Fargo",
+        "circle": {
+          "pngUrl": null,
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wells-fargo-mark.svg"
+        },
+        "inverse": {
+          "pngUrl": null,
+          "svgUrl": null
+        },
+        "normal": {
+          "pngUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wells-fargo.png",
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wells-fargo.svg"
+        },
+        "white": {
+          "pngUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wells-fargo--white.png",
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wells-fargo--white.svg"
+        }
+      },
+      "name": "Wells Fargo",
+      "partner": false,
+      "quotes": [
+        {
+          "dateCollected": "2026-09-29T16:02:40Z",
+          "deliveryEstimation": {
+            "duration": null,
+            "providerGivesEstimate": true
+          },
+          "fee": 0.0,
+          "isConsideredMidMarketRate": false,
+          "markup": 3.19705462,
+          "rate": 60.7842150542,
+          "receivedAmount": 30392.11,
+          "sendAmount": null,
+          "sourceCountry": "US",
+          "targetCountry": "PH"
+        }
+      ],
+      "type": "bank"
+    },
+    {
+      "alias": "wise",
+      "id": 39,
+      "logos": {
+        "altText": "Wise",
+        "circle": {
+          "pngUrl": null,
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wise-mark.svg"
+        },
+        "inverse": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_inverse.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_inverse.svg"
+        },
+        "normal": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo.svg"
+        },
+        "white": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_white.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_white.svg"
+        }
+      },
+      "name": "Wise",
+      "partner": false,
+      "quotes": [
+        {
+          "dateCollected": "2026-09-30T19:37:18Z",
+          "deliveryEstimation": {
+            "duration": {
+              "max": "PT42M42S",
+              "min": "PT42M42S"
+            },
+            "providerGivesEstimate": true
+          },
+          "fee": 9.43,
+          "isConsideredMidMarketRate": true,
+          "markup": 0.0,
+          "rate": 62.8032,
+          "receivedAmount": 30809.37,
+          "sendAmount": null,
+          "sourceCountry": null,
+          "targetCountry": null
+        }
+      ],
+      "type": "moneyTransferProvider"
+    }
+  ],
+  "sourceCountry": null,
+  "sourceCurrency": "USD",
+  "targetCountry": null,
+  "targetCurrency": "PHP"
+}

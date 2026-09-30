@@ -7,10 +7,9 @@ name: Scrape
 # Manual quotes run when a file lands in engine/manual/quotes/, not on the schedule.
 
 on:
-  # Off until the first scraping adapter is registered: there is nothing to run yet,
-  # and each run costs private-repo Actions minutes. Uncomment to enable.
-  # schedule:
-  #   - cron: "17 */6 * * *"
+  # On since the Wise adapter (DECISIONS.md D91), the first one that isn't manual.
+  schedule:
+    - cron: "17 */6 * * *"
   push:
     branches: [main]
     paths: ["engine/manual/quotes/**"]

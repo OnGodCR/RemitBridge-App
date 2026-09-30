@@ -19,9 +19,9 @@ speaker signs off on each (D69).
 
 What stands between this and a working product, in order:
 
-1. **No prices.** All eight Tier 1 providers' terms forbid automated access (D52), so
-   prices come from Add a price until one gives written permission. Wise said its
-   Comparison API may be used (2026-09-30); the rest, follow up on 2026-10-12.
+1. **Few prices.** Wise's come automatically from its Comparison API, with permission
+   (D91), every 6 hours once the Scrape schedule runs. The other seven providers forbid
+   automated access (D52): Add a price, or follow up on 2026-10-12.
 2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`. All six migrations applied (Angad pushed
@@ -74,8 +74,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
-2. **Enter the first prices** with Add a price (Account tab). Compare, the quote detail and
-   the bot all start working the moment one is published.
+2. **More prices** with Add a price (Account tab), for providers other than Wise. Also
+   push `20260930010000_wise_adapter.sql` (provider-row metadata; passes local checks).
 3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
    set it with `supabase secrets set RESEND_API_KEY=...` in your own terminal, then
    `supabase functions deploy notify-route-launch --use-api`.
@@ -86,8 +86,9 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    `https://gmzljjdnwndvqciqicbx.supabase.co/functions/v1/whatsapp` as the webhook with
    your verify token, and subscribe to the `messages` field. Read the Hindi replies in
    `packages/bot/src/messages.ts` first.
-5. **Google brand verification** (D61): the domain is verified; say yes and Claude submits
-   the brand verification in Google Cloud (OAuth consent screen, Branding).
+5. **Google brand verification** is done (verified and published 2026-09-30). The consent
+   screen's app name is "RemitBridge App"; rename it to "RemitBridge" in Google Cloud →
+   Google Auth Platform → Branding if you prefer (that may need a new check).
 6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
    links open the app (D48). It isn't anywhere on the Mac, and Chrome isn't signed in there.
 7. **Disk:** 5.3 GB free on 2026-09-30; native builds (and so real store screenshots)
@@ -103,9 +104,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    Language), send corrections, and agree in writing to stand behind it; then their name
    and the date go in `mobile/src/i18n/languages.ts` and the language ships. Partner
    organizations (item 8) are a natural place to ask.
-10. **Wise:** its Comparison API may be used (Simon Bruins, 2026-09-30). Decide whether to
-   reply and whether to build a Wise adapter on the API. Only Wise's own quote from it
-   would count; the same API returns other providers' prices as Wise reports them.
+10. **Wise:** the adapter is built and scheduled (D91). A short thank-you reply to Simon
+   Bruins is yours to send.
 
 ## The shape of the product
 
