@@ -39,7 +39,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   Function; the Scan a receipt screen with confirmation and result; the funding method and
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
-  and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
+  and `supabase/tests/local_migrations.sh` (69 checks, also in CI). The live smoke test has
+  51 checks; the 3 for the WhatsApp photo queue need its migration.
 - The model fallback is Qwen3 VL 32B through OpenRouter (D92), no longer Claude.
 - Phase 4 done (2026-09-30): the accuracy benchmark in `benchmark/` (D85, D93). 60 synthetic
   receipts, drawn in Chromium and read back with tesseract.js; `npm run benchmark -w
@@ -47,6 +48,13 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   Parser mode is 0% until Angad's extractors land; the model modes need `OPENROUTER_API_KEY`
   in the shell and haven't been run (the key isn't in the cloud sandbox). The generator
   found two redaction bugs, both fixed.
+- Phase 5 built (2026-09-30), off until Angad says yes (D94): receipt photos on WhatsApp. The
+  webhook queues a photo (`receipt_intake`, migration `20260930020000_whatsapp_receipts.sql`,
+  not pushed), `.github/workflows/receipt-intake.yml` reads and redacts it, `scan-receipt`
+  reads the redacted text, and the bot replies or checks unsure values one at a time. To turn
+  it on: push the migration; `supabase secrets set RECEIPT_INTAKE_SECRET=... GITHUB_DISPATCH_TOKEN=... WHATSAPP_RECEIPTS=on`;
+  the same `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` as GitHub Actions secrets;
+  redeploy `whatsapp` and `scan-receipt`.
 - Angad's next steps: review, write the extractors, set `OPENROUTER_API_KEY`
   (`supabase secrets set OPENROUTER_API_KEY=...` in his own terminal), make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).

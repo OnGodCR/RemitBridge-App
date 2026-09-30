@@ -241,7 +241,7 @@ select pg_temp.ok((select count(*) = 1 from storage.buckets where id = 'receipt-
   'receipts: the image bucket is private');
 
 -- ---------------------------------------------------------------------------------------
--- WhatsApp receipt photos (20260930010000_whatsapp_receipts.sql): a queue only the
+-- WhatsApp receipt photos (20260930020000_whatsapp_receipts.sql): a queue only the
 -- functions and the worker touch; the worker never gets the number
 -- ---------------------------------------------------------------------------------------
 set role service_role;
