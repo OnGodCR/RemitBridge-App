@@ -6,7 +6,7 @@ by hand. Add a row when you find one; don't build around it.
 
 | Provider | Site | What forbids it (quote the clause or robots rule) | Noted | Status |
 |---|---|---|---|---|
-| Wise | wise.com | US terms of use: "use any robot, spider, other automatic device, or manual process to monitor or copy our websites without our prior written permission". (robots.txt *allows* `*gateway*sourceCurrency=*`, but the terms win under D4.) | 2026-09-28 | Open. A partner API exists (Wise Platform Comparison API), but it needs credentials, and its figures for other providers are Wise's own estimates. |
+| Wise | wise.com | US terms of use: "use any robot, spider, other automatic device, or manual process to monitor or copy our websites without our prior written permission". | 2026-09-28 | **Resolved 2026-09-30: automated, with permission.** Simon Bruins (Wise) allowed the Comparison API in writing; the `wise` adapter uses it for Wise's own quote only (DECISIONS.md D91). wise.com's pages are still never fetched. |
 | Remitly | remitly.com | User agreement: "use any robot, spider, scraper, automatic device, or manual process to monitor or copy our website or app". | 2026-09-28 | Open |
 
 ## Not yet checked

@@ -239,6 +239,7 @@ export const tl: Copy = {
     upfrontFee: 'Fee na kita agad',
     markup: 'Markup sa exchange rate',
     rateNote: (theirs, mid, pair) => `Ang rate nila ${theirs} kumpara sa mid-market ${mid} ${pair}`,
+    betterThanMid: 'Mas maganda kaysa sa reference rate. Pang-araw-araw na rate iyon, at gumagalaw ang live na rate sa loob ng araw.',
     pickupCharge: 'Bayad sa pickup',
     pickupNote: 'Sinisingil sa pinagkukunan ng pera',
     totalCost: 'Kabuuang gastos',

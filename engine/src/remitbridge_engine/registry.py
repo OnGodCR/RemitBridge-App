@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .adapters.base import Adapter
 from .adapters.manual import ManualAdapter
+from .adapters.wise import WiseAdapter
 
 MANUAL_DIR = Path(__file__).resolve().parents[2] / "manual" / "quotes"
 
@@ -14,5 +15,7 @@ MANUAL_DIR = Path(__file__).resolve().parents[2] / "manual" / "quotes"
 def all_adapters() -> list[Adapter]:
     return [
         ManualAdapter(MANUAL_DIR),
-        # No scraping adapters yet: see docs/MANUAL_RESEARCH.md and HANDOFF.md.
+        # Wise's own Comparison API, with Wise's written permission (DECISIONS.md D91).
+        # Every other Tier 1 provider stays manual: see docs/MANUAL_RESEARCH.md.
+        WiseAdapter(),
     ]
