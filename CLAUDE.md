@@ -46,11 +46,11 @@ the work, not afterwards:
 
 These are deferred on purpose, not forgotten. Update this list as things land.
 
-- [ ] **More languages.** The app is English only, and its strings are still written
-      inline in the screens, so moving them into string files comes first; then Hindi,
-      Spanish, Tagalog, Vietnamese and others can be added without code changes. Hindi
-      also needs a matched Devanagari font (PRD 14.5). The WhatsApp bot already answers
-      in Hindi (D68), pending Angad's read.
+- [ ] **Translation reviewers** (D69). Hindi, Spanish, Tagalog and Vietnamese are
+      written (Claude's drafts) and show only in development builds until a fluent
+      speaker reads each one, agrees in writing, and is named with the date in
+      `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
+      read. Glossary definitions are still English in every language.
 - [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
       requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
       refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.
@@ -71,7 +71,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
-- [ ] **Disk space.** 5.6 GB free on 2026-09-29; native builds (and real store
+- [ ] **Disk space.** 5.3 GB free on 2026-09-30; native builds (and real store
       screenshots) need 15–20 GB.
 - [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
       the Supabase address (verify remitbridgelabs.org in Search Console, then submit) (D61).
@@ -81,7 +81,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       swap them into `site/screens/` (D59).
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
       change was sometimes dropped. It looked like Expo Go's dev overlay, but
-      that's unconfirmed.
+      that's unconfirmed. On 2026-09-30 at least some "dropped" taps had landed and the
+      simulator's screenshot was a step behind.
 - [ ] **Bank connections or receipt scanning** for past transfers. Manual
       entry only for now (D30).
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
@@ -94,6 +95,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       email are in `docs/outreach/partners.md` (2026-09-29). Not sent; Angad sends.
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Accessibility pass (D70): AA contrast, the largest text sizes (checked in English,
+      Hindi and Vietnamese), VoiceOver announcements and headings, 44pt targets, Bold
+      Text, offline prices, no press-and-hold-only actions. Done 2026-09-30.
+- [x] Every string in `mobile/src/i18n/`, with the reviewer gate, Hind for Hindi, and
+      drafts in Hindi, Spanish, Tagalog and Vietnamese (D69). Done 2026-09-30.
 - [x] Onboarding rebuilt from the website's own elements and checked in the simulator
       (D62); Tools, Learn and Account lists as the website's divided index (D63).
       Done 2026-09-29.
@@ -195,7 +201,8 @@ segmented controls over pill chips, and text labels over decoration. Color comes
 from the website's vocabulary: a brand-green header band, mint tints, and a green
 left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 
-- American English. English is the only language for now (see Open items).
+- American English is the source. Every string lives in `mobile/src/i18n/en.ts`, never
+  inline in a screen; each other language is a full copy, shipped only once reviewed (D69).
 - Use the terminology table in PRD 14.4: *mid-market rate*, *exchange-rate
   markup*, *total cost*, *amount received*, *provider*. Say *route* in the UI and
   *corridor* in docs and research.

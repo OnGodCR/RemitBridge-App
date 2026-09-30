@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-29 (evening)
+**Last updated:** 2026-09-30
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -11,6 +11,11 @@ The app has all the screens PRD 14.7 lists, in the website's own look (D62, D63)
 onboarding (four steps), Compare, quote detail, "not covered yet" with the request form,
 the route board, the tools, Learn, Account with saved comparisons and receipts, Add a price
 and the metrics screen for admins. The WhatsApp bot is built and tested, waiting on Meta.
+
+It meets the accessibility bar in D70 (AA contrast, the largest text sizes, VoiceOver,
+44pt targets, offline prices), and it speaks five languages: English, plus drafts in
+Hindi, Spanish, Tagalog and Vietnamese that only development builds show until a named
+speaker signs off on each (D69).
 
 What stands between this and a working product, in order:
 
@@ -28,6 +33,14 @@ What stands between this and a working product, in order:
 test: 26/26 passed on the applied schema; it now has 37 checks, 11 of which need the two
 new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
+
+## What changed on 2026-09-30
+
+- Accessibility pass (D70): contrast measured and fixed, layouts that stack at large text,
+  announcements, an adjustable rate chart, Bold Text, visible delete buttons, offline prices.
+- Every string moved into `mobile/src/i18n/en.ts`; drafts in Hindi, Spanish, Tagalog and
+  Vietnamese; the reviewer gate; Hind for Devanagari (D69).
+- Mail links now show the address when the phone has no mail app, instead of doing nothing.
 
 ## What changed on 2026-09-29
 
@@ -68,13 +81,18 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
    for brand verification (D61).
 6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
    links open the app (D48). Claude couldn't read it without signing in.
-7. **Disk:** 5.7 GB free on 2026-09-29; native builds (and so real store screenshots)
+7. **Disk:** 5.3 GB free on 2026-09-30; native builds (and so real store screenshots)
    need 15–20 GB. Most of the space is app caches in `~/Library/Caches` (17 GB): Chrome
    6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers
    (`...ShipIt`) 1.6 GB. Clearing them from each app's own settings frees about 12 GB.
    The iOS 27 simulator runtime (7.5 GB) is needed; keep it.
 8. **Partners:** a shortlist of nine Seattle-area organizations and a draft email are in
    `docs/outreach/partners.md` (not sent).
+9. **Translation reviewers** (D69): one fluent speaker each for Hindi, Spanish, Tagalog
+   and Vietnamese, Hindi first. They read the draft in a development build (Account →
+   Language), send corrections, and agree in writing to stand behind it; then their name
+   and the date go in `mobile/src/i18n/languages.ts` and the language ships. Partner
+   organizations (item 8) are a natural place to ask.
 
 ## The shape of the product
 
@@ -94,7 +112,7 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D68) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D70) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
@@ -105,6 +123,7 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
 | `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp` (not deployed) |
 | `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 37 checks |
 | `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
+| `mobile/src/i18n/` | Every string: `en.ts` is the source, `es`/`hi`/`tl`/`vi` are drafts; `languages.ts` holds the reviewer gate (D69) |
 | `mobile/src/lib/` | Data and helpers. `routes.ts`, `countries.ts` and `format.ts` have no imports on purpose: the bot imports them |
 | `mobile/scripts/` | `make-icons.py` (app icon, splash), `make-onboarding-art.py` (the website's ground and band) |
 | `site/` | app.remitbridgelabs.org on Vercel: landing page, privacy, support, partner links |
@@ -121,7 +140,12 @@ The remote is `https://github.com/OnGodCR/RemitBridge-App.git` (private). Branch
   loses Metro until it's reopened on the new address). `--localhost` doesn't work on this
   Mac: Metro binds to IPv6 `[::1]` only, while Expo Go asks for 127.0.0.1.
 - Replaying onboarding: Account → "Replay onboarding (dev only)".
-- Simulator quirk: the first tap after a screen change is often dropped; tap again.
+- Simulator quirk: the first tap after a screen change often seems dropped. At least some
+  of the time the tap landed and the simulator screenshot was a step behind (a mail alert
+  turned up once per tap, late). Wait about two seconds before judging.
+- Languages: Account → Language switches the app. Text size: `xcrun simctl ui booted
+  content_size accessibility-extra-extra-extra-large` (and `large` to reset); relaunch
+  the app after changing it, since the live change leaves a few frames half laid out.
 
 ### Local toolchain (checked 2026-09-29)
 
