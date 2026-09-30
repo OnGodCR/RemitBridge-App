@@ -14,6 +14,7 @@
 # It inserts events with the fixed install_id below. Migration 20260928000100 registers
 # that ID in internal_installs so it never counts in metrics, and deletes its events.
 set -uo pipefail
+shopt -s extglob  # for "@(201|23505)" patterns in check()
 : "${SUPABASE_URL:?}" "${SUPABASE_PUBLISHABLE_KEY:?}"
 REST="$SUPABASE_URL/rest/v1"
 H=(-H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: application/json")
@@ -62,6 +63,7 @@ check "saved transfers are not readable"          "0" "$(count "${H[@]}" "$REST/
 check "saved comparisons are not readable"        "0" "$(count "${H[@]}" "$REST/saved_comparisons?select=id")"
 check "internal installs are not readable"        "0" "$(count "${H[@]}" "$REST/internal_installs?select=install_id")"
 check "entered prices are not readable"           "0" "$(count "${H[@]}" "$REST/manual_observations?select=id")"
+check "route requests are not readable"           "0" "$(count "${H[@]}" "$REST/route_requests?select=id")"
 
 echo "--- writes a stranger must not make (each must fail with 42501)"
 check "can't insert a published quote" "42501" "$(post quotes "$(printf '{"dedupe_key":"rls","provider_id":"wise","route_id":"us-in","send_currency":"USD","receive_currency":"INR","send_amount":500,"delivery_method":"bank_deposit","payment_method":"bank_account","fee":0,"offered_rate":99,"mid_market_rate":95,"mid_market_source":"x","amount_received":49500,"computed_amount_received":49500,"markup_pct":-4,"total_cost":0,"total_cost_pct":0,"source":"scraper","strategy":"x","captured_at":"2026-09-28T00:00:00Z","validation_status":"published"}')")"
@@ -72,6 +74,11 @@ check "can't save a comparison" "42501" "$(post saved_comparisons "$(printf '{"u
 check "can't register an internal install" "42501" "$(post internal_installs "$(printf '{"install_id":"%s","label":"x"}' "$FAKE_USER")")"
 check "can't log an event as someone else" "42501" "$(post events "$(printf '{"install_id":"%s","user_id":"%s","name":"rls_test"}' "$TEST_INSTALL" "$FAKE_USER")")"
 check "can't enter a price" "42501" "$(post manual_observations "$(printf '{"provider_id":"wise","route_id":"us-in","send_amount":500,"delivery_method":"bank_deposit","fee":0,"offered_rate":99,"amount_received":49500,"source_url":"x","observed_by":"%s"}' "$FAKE_USER")")"
+check "can't ask for a route as someone else" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","user_id":"%s"}' "$TEST_INSTALL" "$FAKE_USER")")"
+check "can't file a request as WhatsApp" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","source":"whatsapp"}' "$TEST_INSTALL")")"
+check "request countries are validated (23514)" "23514" "$(post route_requests "$(printf '{"send_country":"USA","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
+check "request addresses are validated (23514)" "23514" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","notify_email":"not an address"}' "$TEST_INSTALL")")"
+check "metrics refuse anyone but admins" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/admin_metrics" -d '{"p_days":30}')"
 check "event names are validated (23514)" "23514" "$(post events "$(printf '{"install_id":"%s","name":"DROP TABLE"}' "$TEST_INSTALL")")"
 curl -s -m 20 -o /dev/null "${H[@]}" -X PATCH "$REST/routes?id=eq.us-in" -d '{"status":"not_feasible"}'
 check "can't change a route (still 'building')" "building" "$(curl -s -m 20 "${H[@]}" "$REST/routes?id=eq.us-in&select=status" | python3 -c 'import sys,json; print(json.load(sys.stdin)[0]["status"])')"
@@ -83,6 +90,11 @@ check "can't upload to the raw archive" "AccessDenied" "$(pg -H "apikey: $SUPABA
 
 echo "--- writes a stranger may make"
 check "anonymous event insert works" "201" "$(post events "$(printf '{"install_id":"%s","name":"rls_test","created_at":"2001-01-01T00:00:00Z"}' "$TEST_INSTALL")")"
+# The test install is internal, so its request never shows on the board. It can only ask
+# once: the first run gets 201 and every later run the unique-index refusal, 23505.
+check "anonymous route request works" "@(201|23505)" "$(post route_requests "$(printf '{"send_country":"us","receive_country":"np","install_id":"%s","delivery_method":"bank_deposit"}' "$TEST_INSTALL")")"
+check "the same install can't ask twice (23505)" "23505" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
+check "request counts are public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/route_request_counts" -d '{}')"
 
 echo; echo "$pass passed, $fail failed"
 [[ $fail -eq 0 ]]
