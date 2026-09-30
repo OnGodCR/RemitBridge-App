@@ -35,6 +35,8 @@ jobs:
       - run: npm test -w @remitbridge/formula
       - run: npm test -w @remitbridge/bot
       - run: npm test -w @remitbridge/receipt
+      # The benchmark's parser mode on the committed synthetic receipts (no model, no cost).
+      - run: npm run benchmark -w @remitbridge/receipt -- --modes parser --out "$RUNNER_TEMP/results.md"
       - run: npm test -w @remitbridge/mobile
       - run: npm run typecheck
       - run: npx expo lint

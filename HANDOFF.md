@@ -41,6 +41,12 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
   and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
 - The model fallback is Qwen3 VL 32B through OpenRouter (D92), no longer Claude.
+- Phase 4 done (2026-09-30): the accuracy benchmark in `benchmark/` (D85, D93). 60 synthetic
+  receipts, drawn in Chromium and read back with tesseract.js; `npm run benchmark -w
+  @remitbridge/receipt` scores parser, model and combined modes into `benchmark/results.md`.
+  Parser mode is 0% until Angad's extractors land; the model modes need `OPENROUTER_API_KEY`
+  in the shell and haven't been run (the key isn't in the cloud sandbox). The generator
+  found two redaction bugs, both fixed.
 - Angad's next steps: review, write the extractors, set `OPENROUTER_API_KEY`
   (`supabase secrets set OPENROUTER_API_KEY=...` in his own terminal), make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).
@@ -127,7 +133,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D91; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D92; D71 unused; D91 is the other session's) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

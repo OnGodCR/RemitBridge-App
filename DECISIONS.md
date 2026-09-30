@@ -664,7 +664,7 @@ regulations (Federal Register 2026-07085) couldn't be read from Claude's sandbox
 check says it's an assumption until the base is checked. *Answers:* 6.
 
 **D79. The model fallback runs only on the server, on Claude.** *Model and API superseded by
-D91 (Qwen through OpenRouter); the scope, schema and cap rules stand.* The `scan-receipt` Edge
+D92 (Qwen through OpenRouter); the scope, schema and cap rules stand.* The `scan-receipt` Edge
 Function calls the Anthropic API with the official SDK. The key is the `ANTHROPIC_API_KEY`
 Supabase secret, which Angad sets. Details:
 - **Model:** `claude-opus-5-5` at `low` effort by default; `RECEIPT_MODEL` overrides it.
@@ -760,7 +760,9 @@ mid-market rate when it loads, otherwise the quote's own.
 
 ## 2026-09-30: The receipt model
 
-**D91. Receipts are read by Qwen3 VL 32B through OpenRouter, not Claude** (replaces D79's
+*D91 is left to the other session (a Wise Comparison API adapter, if Angad says yes).*
+
+**D92. Receipts are read by Qwen3 VL 32B through OpenRouter, not Claude** (replaces D79's
 model and API). Angad chose cost first, and asked for a cheaper Chinese model through
 OpenRouter.
 - **Model:** `qwen/qwen3-vl-32b-instruct` (Alibaba's Qwen3 VL 32B Instruct). It reads photos,
@@ -785,3 +787,24 @@ OpenRouter.
   price.
 - **Unchanged:** the strict schema, our own check of every value, the 0.8 threshold, and
   that only the scan-receipt Edge Function calls the model.
+
+## 2026-09-30: Phase 4 defaults
+
+**D93. How the benchmark is built** (details under D85; defaults Claude picked under D10).
+- **Synthetic set:** 60 receipts, seeds 1–60, committed as JSON with tesseract.js's OCR of
+  each. They cover all eight Tier 1 providers, all six funding methods, and five receiving
+  currencies (MXN, INR, PHP, VND, GTQ). Numbers come from the one formula, so a correct
+  reading passes every receipt check. Wording is Regulation E's labels and common variants,
+  not any provider's real wording.
+- **Scores:** accuracy (of the values shown, the share read right) and precision (of the
+  values read, the share right), per field and overall, for each mode; plus the share read by
+  the rules, the share of wrong values the checks flagged for the person, the model's
+  failures, and redaction leaks.
+- **Model modes** run only by hand, with `OPENROUTER_API_KEY` in the shell. They're never in
+  CI. CI runs parser mode on the committed set.
+- **Real receipts** go in `benchmark/receipts/`. Their JSON names personal details (so the
+  redaction check has something to check), so it stays out of git unless every detail has been
+  swapped for a made-up one. Photos stay out unless redacted and checked (D85).
+- **Redaction fixes the generator found:** a heading ending in an ID word ("Transfer
+  confirmation") hid the year on the next line; and a masked card that OCR read as `**+*4118`
+  wasn't hidden. Both are fixed and tested.

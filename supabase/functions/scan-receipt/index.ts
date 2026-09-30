@@ -15,9 +15,9 @@
 //
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
 //   OPENROUTER_API_KEY          the model fallback, through OpenRouter; without it, the
-//                               rules alone (D91)
+//                               rules alone (D92)
 // Optional:
-//   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D91)
+//   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D92)
 //   RECEIPT_MODEL_FALLBACKS     comma-separated OpenRouter models to try if it fails
 //   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
 //

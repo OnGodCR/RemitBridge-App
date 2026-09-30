@@ -1,0 +1,764 @@
+{
+ "id": "synth-0029-moneygram-debit-card-usd-gtq",
+ "description": "MoneyGram, USD to GTQ, paid by debit card; no tax; tilted",
+ "source": "synthetic",
+ "seed": 29,
+ "expected": {
+  "provider": "MoneyGram",
+  "send_currency": "USD",
+  "receive_currency": "GTQ",
+  "amount_sent": 750,
+  "fee": 5.99,
+  "exchange_rate": 7.6157,
+  "amount_received": 5711.78,
+  "transfer_date": "2026-09-20",
+  "funding_method": "debit_card",
+  "total_paid": 755.99,
+  "delivery_method": "mobile_wallet"
+ },
+ "pii": [
+  "Daniel",
+  "Kim",
+  "Rosa",
+  "Morales",
+  "2878232188",
+  "4777"
+ ],
+ "keep": [
+  "09/20/2026",
+  "USD 750.00",
+  "USD 5.99",
+  "$755.99",
+  "7.6157",
+  "GTQ 5,711.78"
+ ],
+ "disclosures": [
+  "date_available",
+  "provider_contact"
+ ],
+ "mid_rate": 7.8941,
+ "printed": [
+  "MoneyGram",
+  "RECEIPT",
+  "Date Sent: 09/20/2026",
+  "Sender name: Daniel Kim",
+  "Receiver name: Rosa Morales",
+  "Reference number 2878232188",
+  "Paid By: Debit Card ****4777",
+  "Receive Method: Mobile Wallet",
+  "Amount Sent: USD 750.00",
+  "Fee: USD 5.99",
+  "Total Paid: $755.99",
+  "FX Rate: 1 USD = 7.6157 GTQ",
+  "Amount Received: GTQ 5,711.78",
+  "Date Available: 09/20/2026",
+  "For questions or complaints about MoneyGram, contact us at 1-800-555-0119."
+ ],
+ "style": {
+  "font": "DejaVu Sans",
+  "size": 18,
+  "width": 436,
+  "rotate": -0.07,
+  "blur": 0,
+  "paper": "#f4f2ea",
+  "layout": "same_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1112,
+  "height": 1054,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "MoneyGram",
+      "box": {
+       "x": 91,
+       "y": 94,
+       "width": 297,
+       "height": 45
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 94,
+     "width": 297,
+     "height": 45
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "RECEIPT",
+      "box": {
+       "x": 91,
+       "y": 163,
+       "width": 147,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 163,
+     "width": 147,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 91,
+       "y": 220,
+       "width": 81,
+       "height": 27
+      }
+     },
+     {
+      "text": "Sent:",
+      "box": {
+       "x": 187,
+       "y": 219,
+       "width": 89,
+       "height": 28
+      }
+     },
+     {
+      "text": "09/20/2026",
+      "box": {
+       "x": 293,
+       "y": 219,
+       "width": 203,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 219,
+     "width": 405,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Sender",
+      "box": {
+       "x": 90,
+       "y": 273,
+       "width": 126,
+       "height": 28
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 230,
+       "y": 280,
+       "width": 107,
+       "height": 21
+      }
+     },
+     {
+      "text": "Daniel",
+      "box": {
+       "x": 356,
+       "y": 272,
+       "width": 108,
+       "height": 29
+      }
+     },
+     {
+      "text": "Kim",
+      "box": {
+       "x": 482,
+       "y": 272,
+       "width": 63,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 272,
+     "width": 455,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receiver",
+      "box": {
+       "x": 91,
+       "y": 327,
+       "width": 153,
+       "height": 28
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 258,
+       "y": 334,
+       "width": 107,
+       "height": 21
+      }
+     },
+     {
+      "text": "Rosa",
+      "box": {
+       "x": 384,
+       "y": 328,
+       "width": 80,
+       "height": 27
+      }
+     },
+     {
+      "text": "Morales",
+      "box": {
+       "x": 482,
+       "y": 326,
+       "width": 136,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 326,
+     "width": 527,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Reference",
+      "box": {
+       "x": 91,
+       "y": 383,
+       "width": 177,
+       "height": 28
+      }
+     },
+     {
+      "text": "number",
+      "box": {
+       "x": 284,
+       "y": 383,
+       "width": 137,
+       "height": 28
+      }
+     },
+     {
+      "text": "2878232188",
+      "box": {
+       "x": 435,
+       "y": 383,
+       "width": 224,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 383,
+     "width": 568,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Paid",
+      "box": {
+       "x": 91,
+       "y": 437,
+       "width": 69,
+       "height": 28
+      }
+     },
+     {
+      "text": "By:",
+      "box": {
+       "x": 178,
+       "y": 438,
+       "width": 48,
+       "height": 34
+      }
+     },
+     {
+      "text": "Debit",
+      "box": {
+       "x": 245,
+       "y": 437,
+       "width": 93,
+       "height": 28
+      }
+     },
+     {
+      "text": "Card",
+      "box": {
+       "x": 351,
+       "y": 437,
+       "width": 80,
+       "height": 28
+      }
+     },
+     {
+      "text": "****4777",
+      "box": {
+       "x": 446,
+       "y": 437,
+       "width": 160,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 437,
+     "width": 515,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receive",
+      "box": {
+       "x": 91,
+       "y": 491,
+       "width": 136,
+       "height": 28
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 244,
+       "y": 491,
+       "width": 140,
+       "height": 28
+      }
+     },
+     {
+      "text": "Mobile",
+      "box": {
+       "x": 402,
+       "y": 490,
+       "width": 113,
+       "height": 29
+      }
+     },
+     {
+      "text": "Wallet",
+      "box": {
+       "x": 530,
+       "y": 490,
+       "width": 110,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 490,
+     "width": 549,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Amount",
+      "box": {
+       "x": 88,
+       "y": 546,
+       "width": 141,
+       "height": 27
+      }
+     },
+     {
+      "text": "Sent:",
+      "box": {
+       "x": 243,
+       "y": 545,
+       "width": 88,
+       "height": 28
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 349,
+       "y": 545,
+       "width": 72,
+       "height": 28
+      }
+     },
+     {
+      "text": "750.00",
+      "box": {
+       "x": 437,
+       "y": 545,
+       "width": 122,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 545,
+     "width": 471,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Fee:",
+      "box": {
+       "x": 91,
+       "y": 602,
+       "width": 68,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 177,
+       "y": 601,
+       "width": 73,
+       "height": 28
+      }
+     },
+     {
+      "text": "5.99",
+      "box": {
+       "x": 266,
+       "y": 601,
+       "width": 75,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 601,
+     "width": 250,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 88,
+       "y": 655,
+       "width": 81,
+       "height": 28
+      }
+     },
+     {
+      "text": "Paid:",
+      "box": {
+       "x": 187,
+       "y": 655,
+       "width": 80,
+       "height": 28
+      }
+     },
+     {
+      "text": "$755.99",
+      "box": {
+       "x": 285,
+       "y": 655,
+       "width": 144,
+       "height": 33
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 655,
+     "width": 341,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "FX",
+      "box": {
+       "x": 91,
+       "y": 710,
+       "width": 41,
+       "height": 27
+      }
+     },
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 148,
+       "y": 710,
+       "width": 88,
+       "height": 27
+      }
+     },
+     {
+      "text": "1",
+      "box": {
+       "x": 255,
+       "y": 710,
+       "width": 16,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 288,
+       "y": 709,
+       "width": 73,
+       "height": 28
+      }
+     },
+     {
+      "text": "=",
+      "box": {
+       "x": 377,
+       "y": 720,
+       "width": 24,
+       "height": 10
+      }
+     },
+     {
+      "text": "7.6157",
+      "box": {
+       "x": 418,
+       "y": 709,
+       "width": 121,
+       "height": 28
+      }
+     },
+     {
+      "text": "GTQ",
+      "box": {
+       "x": 555,
+       "y": 709,
+       "width": 73,
+       "height": 32
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 709,
+     "width": 537,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Amount",
+      "box": {
+       "x": 89,
+       "y": 766,
+       "width": 140,
+       "height": 27
+      }
+     },
+     {
+      "text": "Received:",
+      "box": {
+       "x": 244,
+       "y": 765,
+       "width": 169,
+       "height": 28
+      }
+     },
+     {
+      "text": "GTQ",
+      "box": {
+       "x": 430,
+       "y": 765,
+       "width": 74,
+       "height": 32
+      }
+     },
+     {
+      "text": "5,711.78",
+      "box": {
+       "x": 519,
+       "y": 765,
+       "width": 156,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 765,
+     "width": 586,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 91,
+       "y": 820,
+       "width": 82,
+       "height": 27
+      }
+     },
+     {
+      "text": "Available:",
+      "box": {
+       "x": 186,
+       "y": 818,
+       "width": 171,
+       "height": 29
+      }
+     },
+     {
+      "text": "09/20/2026",
+      "box": {
+       "x": 374,
+       "y": 819,
+       "width": 204,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 818,
+     "width": 487,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 91,
+       "y": 874,
+       "width": 54,
+       "height": 27
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 158,
+       "y": 873,
+       "width": 171,
+       "height": 35
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 343,
+       "y": 880,
+       "width": 36,
+       "height": 21
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 392,
+       "y": 872,
+       "width": 194,
+       "height": 36
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 601,
+       "y": 872,
+       "width": 102,
+       "height": 29
+      }
+     },
+     {
+      "text": "MoneyGram,",
+      "box": {
+       "x": 717,
+       "y": 872,
+       "width": 225,
+       "height": 36
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 872,
+     "width": 851,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "contact",
+      "box": {
+       "x": 90,
+       "y": 925,
+       "width": 133,
+       "height": 26
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 237,
+       "y": 930,
+       "width": 38,
+       "height": 21
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 290,
+       "y": 925,
+       "width": 34,
+       "height": 26
+      }
+     },
+     {
+      "text": "1-800-555-0119.",
+      "box": {
+       "x": 339,
+       "y": 923,
+       "width": 295,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 923,
+     "width": 544,
+     "height": 28
+    }
+   }
+  ]
+ }
+}

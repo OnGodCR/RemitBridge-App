@@ -1,0 +1,1293 @@
+{
+ "id": "synth-0008-xoom-cash-usd-mxn",
+ "description": "Xoom, USD to MXN, paid by cash; taxed; tilted",
+ "source": "synthetic",
+ "seed": 8,
+ "expected": {
+  "provider": "Xoom",
+  "send_currency": "USD",
+  "receive_currency": "MXN",
+  "amount_sent": 500,
+  "fee": 4.99,
+  "exchange_rate": 18.1327,
+  "amount_received": 9066.35,
+  "transfer_date": "2026-09-28",
+  "funding_method": "cash",
+  "tax": 5,
+  "total_paid": 509.99,
+  "delivery_method": "cash_pickup"
+ },
+ "pii": [
+  "Daniel",
+  "Kim",
+  "555-0125",
+  "Jose",
+  "Ramirez",
+  "7573560456"
+ ],
+ "keep": [
+  "9/28/2026",
+  "500.00 USD",
+  "USD 4.99",
+  "5.00 USD",
+  "$509.99",
+  "18.1327",
+  "MXN 9,066.35"
+ ],
+ "disclosures": [
+  "error_rights",
+  "cancellation",
+  "provider_contact",
+  "cfpb_contact"
+ ],
+ "mid_rate": 18.3689,
+ "printed": [
+  "Xoom, a PayPal service",
+  "Transfer details",
+  "Transfer Date: 9/28/2026",
+  "From: Daniel Kim",
+  "Phone: (206) 555-0125",
+  "Receiver: Jose Ramirez",
+  "Reference number 7573560456",
+  "Payment Type: Cash",
+  "Delivery Method: Cash Pickup",
+  "Send Amount 500.00 USD",
+  "Fee USD 4.99",
+  "Remittance Tax: 5.00 USD",
+  "Total: $509.99",
+  "Rate: 18.1327 MXN",
+  "Recipient Gets: MXN 9,066.35",
+  "You have a right to dispute errors in your transaction. If you think there is an error, contact us within 180 days.",
+  "You can cancel for a full refund within 30 minutes of payment, unless the funds have been picked up or deposited.",
+  "For questions or complaints about Xoom, contact us at 1-800-555-0171.",
+  "Consumer Financial Protection Bureau 855-411-2372 consumerfinance.gov/sending-money"
+ ],
+ "style": {
+  "font": "Liberation Sans",
+  "size": 15,
+  "width": 402,
+  "rotate": 0.02,
+  "blur": 0,
+  "paper": "#ffffff",
+  "layout": "same_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1044,
+  "height": 1270,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "Xoom,",
+      "box": {
+       "x": 89,
+       "y": 96,
+       "width": 112,
+       "height": 32
+      }
+     },
+     {
+      "text": "a",
+      "box": {
+       "x": 214,
+       "y": 101,
+       "width": 20,
+       "height": 21
+      }
+     },
+     {
+      "text": "PayPal",
+      "box": {
+       "x": 247,
+       "y": 95,
+       "width": 118,
+       "height": 35
+      }
+     },
+     {
+      "text": "service",
+      "box": {
+       "x": 379,
+       "y": 95,
+       "width": 127,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 95,
+     "width": 417,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 89,
+       "y": 152,
+       "width": 109,
+       "height": 22
+      }
+     },
+     {
+      "text": "details",
+      "box": {
+       "x": 208,
+       "y": 152,
+       "width": 85,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 152,
+     "width": 204,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 88,
+       "y": 200,
+       "width": 110,
+       "height": 22
+      }
+     },
+     {
+      "text": "Date:",
+      "box": {
+       "x": 209,
+       "y": 201,
+       "width": 67,
+       "height": 21
+      }
+     },
+     {
+      "text": "9/28/2026",
+      "box": {
+       "x": 288,
+       "y": 200,
+       "width": 131,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 200,
+     "width": 331,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "From:",
+      "box": {
+       "x": 90,
+       "y": 247,
+       "width": 74,
+       "height": 21
+      }
+     },
+     {
+      "text": "Daniel",
+      "box": {
+       "x": 177,
+       "y": 246,
+       "width": 81,
+       "height": 22
+      }
+     },
+     {
+      "text": "Kim",
+      "box": {
+       "x": 270,
+       "y": 246,
+       "width": 48,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 246,
+     "width": 228,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Phone:",
+      "box": {
+       "x": 90,
+       "y": 292,
+       "width": 91,
+       "height": 22
+      }
+     },
+     {
+      "text": "(206)",
+      "box": {
+       "x": 193,
+       "y": 292,
+       "width": 67,
+       "height": 28
+      }
+     },
+     {
+      "text": "555-0125",
+      "box": {
+       "x": 271,
+       "y": 293,
+       "width": 125,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 292,
+     "width": 306,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receiver:",
+      "box": {
+       "x": 90,
+       "y": 338,
+       "width": 122,
+       "height": 22
+      }
+     },
+     {
+      "text": "Jose",
+      "box": {
+       "x": 223,
+       "y": 339,
+       "width": 62,
+       "height": 21
+      }
+     },
+     {
+      "text": "Ramirez",
+      "box": {
+       "x": 297,
+       "y": 338,
+       "width": 108,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 338,
+     "width": 315,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Reference",
+      "box": {
+       "x": 90,
+       "y": 386,
+       "width": 135,
+       "height": 22
+      }
+     },
+     {
+      "text": "number",
+      "box": {
+       "x": 237,
+       "y": 386,
+       "width": 99,
+       "height": 22
+      }
+     },
+     {
+      "text": "7573560456",
+      "box": {
+       "x": 346,
+       "y": 387,
+       "width": 165,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 386,
+     "width": 421,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 90,
+       "y": 433,
+       "width": 116,
+       "height": 27
+      }
+     },
+     {
+      "text": "Type:",
+      "box": {
+       "x": 215,
+       "y": 433,
+       "width": 70,
+       "height": 27
+      }
+     },
+     {
+      "text": "Cash",
+      "box": {
+       "x": 297,
+       "y": 432,
+       "width": 67,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 432,
+     "width": 274,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Delivery",
+      "box": {
+       "x": 90,
+       "y": 478,
+       "width": 106,
+       "height": 28
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 207,
+       "y": 478,
+       "width": 104,
+       "height": 22
+      }
+     },
+     {
+      "text": "Cash",
+      "box": {
+       "x": 323,
+       "y": 478,
+       "width": 67,
+       "height": 22
+      }
+     },
+     {
+      "text": "Pickup",
+      "box": {
+       "x": 402,
+       "y": 478,
+       "width": 87,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 478,
+     "width": 399,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Send",
+      "box": {
+       "x": 89,
+       "y": 524,
+       "width": 67,
+       "height": 22
+      }
+     },
+     {
+      "text": "Amount",
+      "box": {
+       "x": 165,
+       "y": 525,
+       "width": 103,
+       "height": 21
+      }
+     },
+     {
+      "text": "500.00",
+      "box": {
+       "x": 278,
+       "y": 525,
+       "width": 89,
+       "height": 21
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 379,
+       "y": 525,
+       "width": 60,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 524,
+     "width": 350,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Fee",
+      "box": {
+       "x": 90,
+       "y": 573,
+       "width": 48,
+       "height": 21
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 150,
+       "y": 573,
+       "width": 60,
+       "height": 21
+      }
+     },
+     {
+      "text": "4.99",
+      "box": {
+       "x": 220,
+       "y": 573,
+       "width": 57,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 573,
+     "width": 187,
+     "height": 21
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Remittance",
+      "box": {
+       "x": 90,
+       "y": 618,
+       "width": 148,
+       "height": 22
+      }
+     },
+     {
+      "text": "Tax:",
+      "box": {
+       "x": 248,
+       "y": 619,
+       "width": 52,
+       "height": 21
+      }
+     },
+     {
+      "text": "5.00",
+      "box": {
+       "x": 312,
+       "y": 619,
+       "width": 56,
+       "height": 21
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 380,
+       "y": 619,
+       "width": 60,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 618,
+     "width": 350,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total:",
+      "box": {
+       "x": 88,
+       "y": 664,
+       "width": 69,
+       "height": 22
+      }
+     },
+     {
+      "text": "$509.99",
+      "box": {
+       "x": 168,
+       "y": 663,
+       "width": 107,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 663,
+     "width": 187,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 90,
+       "y": 711,
+       "width": 67,
+       "height": 21
+      }
+     },
+     {
+      "text": "18.1327",
+      "box": {
+       "x": 170,
+       "y": 711,
+       "width": 105,
+       "height": 21
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 287,
+       "y": 711,
+       "width": 62,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 711,
+     "width": 259,
+     "height": 21
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Recipient",
+      "box": {
+       "x": 90,
+       "y": 758,
+       "width": 123,
+       "height": 28
+      }
+     },
+     {
+      "text": "Gets:",
+      "box": {
+       "x": 223,
+       "y": 759,
+       "width": 68,
+       "height": 21
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 304,
+       "y": 759,
+       "width": 62,
+       "height": 21
+      }
+     },
+     {
+      "text": "9,066.35",
+      "box": {
+       "x": 378,
+       "y": 759,
+       "width": 114,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 758,
+     "width": 402,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "You",
+      "box": {
+       "x": 89,
+       "y": 805,
+       "width": 48,
+       "height": 21
+      }
+     },
+     {
+      "text": "have",
+      "box": {
+       "x": 149,
+       "y": 804,
+       "width": 62,
+       "height": 22
+      }
+     },
+     {
+      "text": "a",
+      "box": {
+       "x": 221,
+       "y": 809,
+       "width": 16,
+       "height": 17
+      }
+     },
+     {
+      "text": "right",
+      "box": {
+       "x": 247,
+       "y": 804,
+       "width": 57,
+       "height": 28
+      }
+     },
+     {
+      "text": "to",
+      "box": {
+       "x": 312,
+       "y": 806,
+       "width": 24,
+       "height": 20
+      }
+     },
+     {
+      "text": "dispute",
+      "box": {
+       "x": 347,
+       "y": 804,
+       "width": 94,
+       "height": 28
+      }
+     },
+     {
+      "text": "errors",
+      "box": {
+       "x": 452,
+       "y": 810,
+       "width": 76,
+       "height": 16
+      }
+     },
+     {
+      "text": "in",
+      "box": {
+       "x": 539,
+       "y": 804,
+       "width": 20,
+       "height": 22
+      }
+     },
+     {
+      "text": "your",
+      "box": {
+       "x": 569,
+       "y": 810,
+       "width": 58,
+       "height": 22
+      }
+     },
+     {
+      "text": "transaction.",
+      "box": {
+       "x": 636,
+       "y": 804,
+       "width": 152,
+       "height": 23
+      }
+     },
+     {
+      "text": "If",
+      "box": {
+       "x": 801,
+       "y": 804,
+       "width": 15,
+       "height": 22
+      }
+     },
+     {
+      "text": "you",
+      "box": {
+       "x": 824,
+       "y": 810,
+       "width": 47,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 804,
+     "width": 782,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "think",
+      "box": {
+       "x": 88,
+       "y": 844,
+       "width": 63,
+       "height": 22
+      }
+     },
+     {
+      "text": "there",
+      "box": {
+       "x": 160,
+       "y": 844,
+       "width": 67,
+       "height": 22
+      }
+     },
+     {
+      "text": "is",
+      "box": {
+       "x": 238,
+       "y": 844,
+       "width": 19,
+       "height": 22
+      }
+     },
+     {
+      "text": "an",
+      "box": {
+       "x": 268,
+       "y": 849,
+       "width": 30,
+       "height": 17
+      }
+     },
+     {
+      "text": "error,",
+      "box": {
+       "x": 309,
+       "y": 850,
+       "width": 67,
+       "height": 20
+      }
+     },
+     {
+      "text": "contact",
+      "box": {
+       "x": 388,
+       "y": 846,
+       "width": 95,
+       "height": 20
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 493,
+       "y": 850,
+       "width": 29,
+       "height": 16
+      }
+     },
+     {
+      "text": "within",
+      "box": {
+       "x": 531,
+       "y": 844,
+       "width": 75,
+       "height": 22
+      }
+     },
+     {
+      "text": "180",
+      "box": {
+       "x": 618,
+       "y": 845,
+       "width": 48,
+       "height": 22
+      }
+     },
+     {
+      "text": "days.",
+      "box": {
+       "x": 676,
+       "y": 844,
+       "width": 68,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 844,
+     "width": 656,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "You",
+      "box": {
+       "x": 89,
+       "y": 891,
+       "width": 48,
+       "height": 21
+      }
+     },
+     {
+      "text": "can",
+      "box": {
+       "x": 148,
+       "y": 895,
+       "width": 46,
+       "height": 17
+      }
+     },
+     {
+      "text": "cancel",
+      "box": {
+       "x": 205,
+       "y": 890,
+       "width": 84,
+       "height": 22
+      }
+     },
+     {
+      "text": "for",
+      "box": {
+       "x": 299,
+       "y": 890,
+       "width": 34,
+       "height": 22
+      }
+     },
+     {
+      "text": "a",
+      "box": {
+       "x": 343,
+       "y": 896,
+       "width": 16,
+       "height": 16
+      }
+     },
+     {
+      "text": "full",
+      "box": {
+       "x": 367,
+       "y": 890,
+       "width": 37,
+       "height": 22
+      }
+     },
+     {
+      "text": "refund",
+      "box": {
+       "x": 415,
+       "y": 890,
+       "width": 82,
+       "height": 22
+      }
+     },
+     {
+      "text": "within",
+      "box": {
+       "x": 507,
+       "y": 890,
+       "width": 75,
+       "height": 22
+      }
+     },
+     {
+      "text": "30",
+      "box": {
+       "x": 593,
+       "y": 891,
+       "width": 32,
+       "height": 21
+      }
+     },
+     {
+      "text": "minutes",
+      "box": {
+       "x": 636,
+       "y": 890,
+       "width": 102,
+       "height": 23
+      }
+     },
+     {
+      "text": "of",
+      "box": {
+       "x": 748,
+       "y": 890,
+       "width": 25,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 890,
+     "width": 684,
+     "height": 23
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "payment,",
+      "box": {
+       "x": 90,
+       "y": 934,
+       "width": 119,
+       "height": 26
+      }
+     },
+     {
+      "text": "unless",
+      "box": {
+       "x": 221,
+       "y": 932,
+       "width": 85,
+       "height": 22
+      }
+     },
+     {
+      "text": "the",
+      "box": {
+       "x": 315,
+       "y": 932,
+       "width": 40,
+       "height": 22
+      }
+     },
+     {
+      "text": "funds",
+      "box": {
+       "x": 365,
+       "y": 932,
+       "width": 72,
+       "height": 22
+      }
+     },
+     {
+      "text": "have",
+      "box": {
+       "x": 448,
+       "y": 932,
+       "width": 62,
+       "height": 22
+      }
+     },
+     {
+      "text": "been",
+      "box": {
+       "x": 522,
+       "y": 932,
+       "width": 63,
+       "height": 22
+      }
+     },
+     {
+      "text": "picked",
+      "box": {
+       "x": 597,
+       "y": 932,
+       "width": 83,
+       "height": 29
+      }
+     },
+     {
+      "text": "up",
+      "box": {
+       "x": 692,
+       "y": 938,
+       "width": 30,
+       "height": 23
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 733,
+       "y": 938,
+       "width": 25,
+       "height": 16
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 932,
+     "width": 668,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "deposited.",
+      "box": {
+       "x": 89,
+       "y": 972,
+       "width": 135,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 972,
+     "width": 135,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 90,
+       "y": 1019,
+       "width": 43,
+       "height": 21
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 142,
+       "y": 1018,
+       "width": 127,
+       "height": 28
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 279,
+       "y": 1024,
+       "width": 25,
+       "height": 16
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 314,
+       "y": 1018,
+       "width": 142,
+       "height": 28
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 466,
+       "y": 1018,
+       "width": 74,
+       "height": 22
+      }
+     },
+     {
+      "text": "Xoom,",
+      "box": {
+       "x": 549,
+       "y": 1019,
+       "width": 83,
+       "height": 25
+      }
+     },
+     {
+      "text": "contact",
+      "box": {
+       "x": 644,
+       "y": 1020,
+       "width": 96,
+       "height": 21
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 750,
+       "y": 1024,
+       "width": 29,
+       "height": 17
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 789,
+       "y": 1020,
+       "width": 24,
+       "height": 21
+      }
+     },
+     {
+      "text": "1-",
+      "box": {
+       "x": 824,
+       "y": 1019,
+       "width": 23,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1018,
+     "width": 757,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "800-555-0171.",
+      "box": {
+       "x": 89,
+       "y": 1059,
+       "width": 192,
+       "height": 21
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1059,
+     "width": 192,
+     "height": 21
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Consumer",
+      "box": {
+       "x": 89,
+       "y": 1107,
+       "width": 137,
+       "height": 21
+      }
+     },
+     {
+      "text": "Financial",
+      "box": {
+       "x": 237,
+       "y": 1106,
+       "width": 116,
+       "height": 22
+      }
+     },
+     {
+      "text": "Protection",
+      "box": {
+       "x": 365,
+       "y": 1106,
+       "width": 131,
+       "height": 22
+      }
+     },
+     {
+      "text": "Bureau",
+      "box": {
+       "x": 509,
+       "y": 1107,
+       "width": 92,
+       "height": 22
+      }
+     },
+     {
+      "text": "855-411-2372",
+      "box": {
+       "x": 612,
+       "y": 1107,
+       "width": 183,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1106,
+     "width": 706,
+     "height": 23
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "consumerfinance.gov/sending-money",
+      "box": {
+       "x": 89,
+       "y": 1146,
+       "width": 497,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1146,
+     "width": 497,
+     "height": 28
+    }
+   }
+  ]
+ }
+}
