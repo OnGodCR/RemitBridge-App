@@ -88,10 +88,12 @@ export default function SignInOptions() {
             icon={<Image source={require('../../../assets/images/google-g.svg')} style={styles.mark} contentFit="contain" />}
             onPress={() => run('google')}
           />
+          {/* Email is the one green button, like "Get started" on the first step: it works on
+              every phone, with no other account needed. Apple's stays black and Google's stays
+              white, as their own guidelines ask. */}
           <Button
             label="Continue with email"
-            variant="secondary"
-            icon={<SymbolView pointerEvents="none" name="envelope.fill" size={17} tintColor={t.text} fallback={null} />}
+            icon={<SymbolView pointerEvents="none" name="envelope.fill" size={17} tintColor={t.primaryForeground} fallback={null} />}
             onPress={() => router.push({ pathname: '/sign-in/email', params: { from } })}
           />
           {onboarding ? <Button label="Skip for now" variant="plain" onPress={skip} /> : null}

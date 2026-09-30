@@ -29,6 +29,7 @@ export default function Welcome() {
     <Step
       step={1}
       of={4}
+      back={false}
       actions={
         <Animated.View entering={rise(4)} style={styles.actions}>
           <Button label="Get started" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />

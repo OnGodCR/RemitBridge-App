@@ -23,6 +23,7 @@ export function Step({
   children,
   actions,
   tone = 'ground',
+  back = true,
 }: {
   step?: number;
   of?: number;
@@ -30,6 +31,8 @@ export function Step({
   actions: ReactNode;
   /** 'band' puts the step on the brand-green band, with light text. */
   tone?: 'ground' | 'band';
+  /** False on the first step, which has nothing to go back to even when replayed. */
+  back?: boolean;
 }) {
   const t = useTheme();
   const hero = tone === 'band';
@@ -38,7 +41,7 @@ export function Step({
       <Ground tone={tone} />
       <StatusBar style={hero ? 'light' : 'auto'} />
       <View style={styles.top}>
-        {router.canGoBack() ? <BackButton light={hero} /> : <View style={styles.backSpace} />}
+        {back && router.canGoBack() ? <BackButton light={hero} /> : <View style={styles.backSpace} />}
         {step && of ? <Dots step={step} of={of} light={hero} /> : null}
         <View style={styles.backSpace} />
       </View>
