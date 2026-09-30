@@ -13,6 +13,7 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
+import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
 import { signInWithApple, signInWithGoogle } from '@/lib/sign-in';
@@ -53,6 +54,7 @@ export default function SignInOptions() {
       leaveSignIn();
     } else if (result) {
       setError(result);
+      announce(result);
     }
   };
 

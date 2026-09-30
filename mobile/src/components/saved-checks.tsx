@@ -7,6 +7,7 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { money, pct } from '@/lib/format';
+import { announce } from '@/lib/announce';
 import { formatDay } from '@/lib/fx';
 import { costOf, deleteCheck, fetchChecks, type SavedCheck } from '@/lib/saved';
 
@@ -32,7 +33,10 @@ export function SavedChecks() {
         text: 'Delete',
         style: 'destructive',
         onPress: async () => {
-          if (await deleteCheck(c.id)) setChecks((all) => all?.filter((x) => x.id !== c.id) ?? null);
+          if (await deleteCheck(c.id)) {
+            setChecks((all) => all?.filter((x) => x.id !== c.id) ?? null);
+            announce('Check deleted.');
+          }
         },
       },
     ]);

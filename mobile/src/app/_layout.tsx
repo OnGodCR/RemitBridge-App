@@ -11,6 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
 
+import { AccessibilityProvider } from '@/components/accessibility';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { stackOptions } from '@/components/stack-options';
 import { useTheme } from '@/hooks/use-theme';
@@ -34,9 +35,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AuthProvider>
-        <Navigator />
-      </AuthProvider>
+      <AccessibilityProvider>
+        <AuthProvider>
+          <Navigator />
+        </AuthProvider>
+      </AccessibilityProvider>
     </ThemeProvider>
   );
 }
