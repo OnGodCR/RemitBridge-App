@@ -46,20 +46,33 @@ the work, not afterwards:
 
 These are deferred on purpose, not forgotten. Update this list as things land.
 
-- [ ] **More languages.** English only for now. The UI strings live in files
-      so Hindi (first), then Spanish, Tagalog, Vietnamese and others can be
-      added without code changes. Hindi also needs a matched Devanagari font
-      (PRD 14.5).
+- [ ] **More languages.** The app is English only, and its strings are still written
+      inline in the screens, so moving them into string files comes first; then Hindi,
+      Spanish, Tagalog, Vietnamese and others can be added without code changes. Hindi
+      also needs a matched Devanagari font (PRD 14.5). The WhatsApp bot already answers
+      in Hindi (D68), pending Angad's read.
+- [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
+      requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
+      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.
+- [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
+      detail or the bot until one is published.
+- [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
+      `notify-route-launch` (D67). Needed before any requested route goes live.
+- [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
+      token, five `WHATSAPP_*` secrets, deploy, register the webhook. Angad reads the
+      Hindi replies first.
+- [ ] **Nine request-only countries have no flag** (Ukraine, Ecuador, Nicaragua, Uganda,
+      Somalia, Eritrea, Cuba, Afghanistan, Venezuela). They show a plain tile. Downloading
+      them from flagcdn.com, like the rest (D55), needs Angad's yes.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
-      form), waiting on replies. Follow up on 2026-10-12 (calendar reminder set).
+      form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
+      26724746, checked 2026-09-29). Follow up on 2026-10-12 (calendar reminder set).
       Log replies in `docs/outreach/permission-request.md` (D52).
-- [ ] **Make remitbridgesystemlabs@gmail.com an admin** (Angad, Supabase SQL editor:
-      `update profiles set is_admin = true` for that user). The "Add a price" screen (D54)
-      is built and appears on the Account tab once this is set.
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
-- [ ] **Disk space.** Under 4 GB free again on 2026-09-28; native builds need 15–20 GB.
+- [ ] **Disk space.** 5.6 GB free on 2026-09-29; native builds (and real store
+      screenshots) need 15–20 GB.
 - [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
       the Supabase address (verify remitbridgelabs.org in Search Console, then submit) (D61).
 - [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
@@ -71,15 +84,29 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       that's unconfirmed.
 - [ ] **Bank connections or receipt scanning** for past transfers. Manual
       entry only for now (D30).
-- [ ] **Apple Developer and Google Play accounts.** Angad enrolls closer to
-      submission (D32).
+- [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
+      Apple's came through on 2026-09-29.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Universal links** (open the app straight from a link): need the Apple team ID,
-      so they wait for the developer account (D32).
+- [ ] **Universal links** (open the app straight from a link, D48): need the Apple Team
+      ID from developer.apple.com → Membership, which Claude can't read without signing in.
 - [ ] **Partner outreach** (D50): no partners yet; Seattle-area organizations, special
       corridors first.
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Onboarding rebuilt from the website's own elements and checked in the simulator
+      (D62); Tools, Learn and Account lists as the website's divided index (D63).
+      Done 2026-09-29.
+- [x] Quote detail, saved comparisons, and TrueCost's "compare what $X gets today" link
+      (D66). Done 2026-09-29.
+- [x] Route requests, the route board and "Ask for a route" (D64), with launch emails
+      (D67). Built 2026-09-29; the database half waits on the migration push above.
+- [x] Admin metrics screen with a definition under every number and CSV export, from one
+      database function (D65). Built 2026-09-29; waits on the migration push.
+- [x] WhatsApp bot built and tested: parser, replies in English and Hindi, webhook with
+      signature checks and a keyed hash in place of the number (D68). Built 2026-09-29;
+      going live is Meta setup.
+- [x] remitbridgesystemlabs@gmail.com made an admin (Angad, 2026-09-29), so Add a price
+      shows on its Account tab.
 - [x] Email sign-in through Resend on remitbridgelabs.org, code template live
       (D53). Done 2026-09-28.
 - [x] GitHub Actions secrets `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set
