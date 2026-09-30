@@ -506,3 +506,13 @@ explains what an account is for and offers sign-in. Tapping a quote opens its de
 promotions, source and check time, the provider's last 30 days of published prices for
 the same route and amount, a link to Fair rate with the quote filled in (PRD 5.7), and
 "This price looks wrong", which opens an email with the quote's details filled in.
+
+**D67. Launch emails for route requests go through Resend's API, started by an admin.**
+The `notify-route-launch` Edge Function sends the one email promised when someone asked
+to hear about a route (D64), then deletes their address in the same update that marks
+them notified. It refuses anyone who isn't an admin, and refuses a route that isn't
+`live`, so nobody hears about a launch that hasn't happened. Admins start it from the
+route board, which shows how many people each live route owes an email. Mail comes from
+RemitBridge@remitbridgelabs.org, the sender auth mail already uses (D53), with replies
+to the Gmail address. It needs a `RESEND_API_KEY` Supabase secret, which Angad sets;
+until then it sends nothing and says so.

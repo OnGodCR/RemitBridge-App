@@ -54,10 +54,10 @@ appears as the media contact on the company's own press releases.
 | Remitly | press@remitly.com | page: news.remitly.com, Contact | 2026-09-28 | waiting |
 | MoneyGram | media@moneygram.com | page: corporate.moneygram.com/contact, "Media inquiries" | 2026-09-28 | waiting |
 | Western Union | media@westernunion.com | page: corporate.westernunion.com/media-contacts.html (our fetch was blocked; confirmed through search of that page) | 2026-09-28 | waiting |
-| Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | 2026-09-28 | waiting |
+| Xoom (PayPal) | mediarelations@paypal.com | page: newsroom.paypal-corp.com/contact, "General and U.S. local media inquiries" (no Xoom-specific contact exists) | 2026-09-28 | waiting (2026-09-28: the media desk's standard auto-reply, no answer yet) |
 | WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | 2026-09-28 | waiting |
 | Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | 2026-09-28 | waiting |
-| Xe (Euronet) | Xe Help Centre request form (help.xe.com/hc/en-gb/requests/new); no press or partnerships email is published | Xe's contact page lists only chat (needs an account) and phone | 2026-09-28 | waiting |
+| Xe (Euronet) | Xe Help Centre request form (help.xe.com/hc/en-gb/requests/new); no press or partnerships email is published | Xe's contact page lists only chat (needs an account) and phone | 2026-09-28 | waiting (2026-09-28: request received, reference 26724746, no answer yet) |
 
 Follow-up reminder: 2026-10-12 (Angad's calendar). Ria and Xe are both Euronet companies. If neither answers, one
 follow-up to Euronet corporate communications covers both.
