@@ -3,132 +3,135 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-09-29 (evening)
 
-## Status: app has its tools; waiting on prices and Apple/Google sign-in
-The app is built and connected: onboarding, Compare with search and estimates, How it
-works, Account. What's missing:
+## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
-- **Prices.** All eight Tier 1 providers' terms forbid automated access, or in Western
-  Union's case aren't clear and its site blocks it (D52, `docs/MANUAL_RESEARCH.md`). So
-  prices come from manual entry until a provider gives written permission. Angad sends
-  the permission emails (all 8 sent 2026-09-28, follow-up 2026-10-12; `docs/outreach/permission-request.md`).
-  The admin "Add a price" screen is built (D54): Account tab → Add a price, visible to
-  admins only. Entries are checked by the "Manual prices" workflow and the outcome shows
-  under Recent on the same screen.
-- **Sign-in.** Email codes work: Resend is connected and the code template is live (D53).
-  Apple and Google still need credentials. **remitbridgesystemlabs@gmail.com's
-  profile still needs `is_admin = true`** (Angad sets it in the Supabase SQL editor; the
-  account already exists). Optional: `GITHUB_DISPATCH_TOKEN` in Supabase secrets so
-  entries are checked in minutes instead of within three hours.
-- **Web pages** (`site/`, D57) are live at https://app.remitbridgelabs.org: home,
-  /privacy, /support, and partner links /p/<partner-name>. Vercel redeploys on every push
-  to main. The Account tab links Privacy and Support (opened in an in-app browser sheet).
-- **App icon and flags** are in (D55, D56).
-- **Tabs are Compare · Tools · Learn · Account** (D58). Tools: Fair rate, Scam check,
-  TrueCost, Yearly cost, Rate history, each a root-stack screen at its own path
-  (/fair-rate etc.). Learn: How it works, Glossary, RemitBench, website links. Account:
-  "Your checks" (saved TrueCost receipts). All checked in the simulator against hand math.
-- **Landing page** (site/index.html) is a scroll story with a pinned phone (D59).
-- **GitHub Actions secrets** are set, and the Scrape workflow starts with a database
-  connection check (run 36531671087 read all 4 routes).
+The app has all the screens PRD 14.7 lists, in the website's own look (D62, D63):
+onboarding (four steps), Compare, quote detail, "not covered yet" with the request form,
+the route board, the tools, Learn, Account with saved comparisons and receipts, Add a price
+and the metrics screen for admins. The WhatsApp bot is built and tested, waiting on Meta.
 
-**Supabase:** project ref `gmzljjdnwndvqciqicbx`, owned by Angad's separate
-RemitBridge account (the CLI is logged into that account). All three migrations are
-applied. `supabase/tests/rls_smoke.sh` passes 26/26 with the publishable key: every
-denial returns Postgres's `42501`, not just any 4xx. The events trigger was proven
-to overwrite a backdated `created_at` (migration `20260928000100` asserts it).
+What stands between this and a working product, in order:
 
-## The shape of the product (as of D34)
+1. **Two migrations aren't applied** (`20260929010000_route_requests_and_metrics.sql`,
+   `20260929020000_whatsapp.sql`). The permission classifier refused `supabase db push`
+   from Claude as a production deploy, so Angad runs it (commands below). Until then, route
+   requests fail with "That didn't go through", the board says request counts didn't load,
+   and the metrics screen can't load.
+2. **No prices.** All eight Tier 1 providers' terms forbid automated access (D52), so
+   prices come from Add a price until one gives written permission. Only auto-replies so
+   far (Xoom's media desk, Xe ticket 26724746); follow up on 2026-10-12.
+3. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
-- **Mobile app** (Expo, iOS and Android) on the app stores. No web app. Screens: Compare, Results, Quote
-  detail, Route not covered, Route board, Methodology, and the rebuilt tools:
-  TrueCost, Fair rate, Yearly cost, Rate history, and Scam check.
-- **Optional accounts** (email code, Apple, Google) to save comparisons and
-  past transfers entered by hand. Comparing works without an account.
-- **Metrics:** broad, first-party, and honest (D31), with an admin metrics screen.
-- **Store-required pages** live on a remitbridgelabs.org subdomain served from this repo (D28).
-- **Engine:** Python, run by GitHub Actions on a schedule (every 6 hours for
-  digital providers, roughly hourly for health checks). Tier 1 adapters:
-  Remitly, Wise, Xoom, Western Union, MoneyGram, Xe, WorldRemit, and Ria.
-- **WhatsApp bot:** Meta Cloud API, with the webhook on Supabase Edge Functions.
-- **Supabase** (a new project): Postgres, storage (the raw archive), auth, and Edge Functions.
-- **Look:** same as the website (brand green `#14705A`, Plus Jakarta Sans, the semantic money colors).
-- **Maintainer alerts:** email to Angad.
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`. Three of five migrations applied. RLS smoke
+test: 26/26 passed on the applied schema; it now has 37 checks, 11 of which need the two
+new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+`notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
+
+## What changed on 2026-09-29
+
+- Onboarding rebuilt from the website's elements (D62) and checked in the simulator;
+  Tools, Learn and Account lists became the website's divided index (D63).
+- Route requests, the route board, "Ask for a route" (D64); launch emails (D67).
+- Quote detail, saved comparisons, TrueCost's "compare what $X gets today" link (D66).
+- Admin metrics screen and the `admin_metrics()` function, sessions via `app_opened` (D65).
+- The WhatsApp bot: `packages/bot` + `supabase/functions/whatsapp` (D68).
+- Google and Apple sign-in enabled (D60, D61); site and landing page live (D57, D59).
+
+## What's next (Angad)
+
+1. **Push the migrations, then run the smoke test** from the repo root:
+   ```bash
+   supabase db push
+   ```
+   ```bash
+   set -a; source mobile/.env.local; set +a; SUPABASE_URL=$EXPO_PUBLIC_SUPABASE_URL SUPABASE_PUBLISHABLE_KEY=$EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY supabase/tests/rls_smoke.sh
+   ```
+   Expect 37 passed. The migrations were checked with a Postgres parser, not against a
+   database, so if one fails, the error names the line.
+2. **Enter the first prices** with Add a price (Account tab). Compare, the quote detail and
+   the bot all start working the moment one is published.
+3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
+   set it with `supabase secrets set RESEND_API_KEY=...` in your own terminal, then
+   `supabase functions deploy notify-route-launch --use-api`.
+4. **WhatsApp** (D68), when ready: a Meta business account and app with the WhatsApp
+   product, a phone number, and a system-user token. Set the five `WHATSAPP_*` secrets
+   listed at the top of `supabase/functions/whatsapp/index.ts`, deploy with
+   `supabase functions deploy whatsapp --use-api`, register
+   `https://gmzljjdnwndvqciqicbx.supabase.co/functions/v1/whatsapp` as the webhook with
+   your verify token, and subscribe to the `messages` field. Read the Hindi replies in
+   `packages/bot/src/messages.ts` first.
+5. **Say yes or no** to: downloading nine more flags from flagcdn.com (Ukraine, Ecuador,
+   Nicaragua, Uganda, Somalia, Eritrea, Cuba, Afghanistan, Venezuela; about 30 small PNGs;
+   they show a plain tile until then); adding Google's verification TXT record at GoDaddy
+   for brand verification (D61).
+6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
+   links open the app (D48). Claude couldn't read it without signing in.
+7. **Disk:** 5.6 GB free on 2026-09-29. Native builds (and so real store screenshots)
+   need 15–20 GB.
+
+## The shape of the product
+
+- **Mobile app** (Expo SDK 57, iOS and Android) on the app stores. No web app (D14).
+- **Optional accounts** (email code, Apple, Google) to save comparisons and receipts.
+  Comparing works without one (D19).
+- **Metrics:** first-party events, an admin screen with a definition under every number,
+  CSV export (D31, D65).
+- **Engine:** Python on GitHub Actions. Every Tier 1 provider is manual for now (D52).
+- **WhatsApp bot:** Meta Cloud API, webhook on Supabase Edge Functions (D68).
+- **Supabase:** Postgres with RLS on every table, storage (raw archive), auth, Edge Functions.
+- **Look:** the website's (D18, D62): brand green `#14705A`, Plus Jakarta Sans, the tiled
+  bridge mark, eyebrows, two-tone titles, divided lists, the green left rule.
 
 ## What exists
 
 | Path | What it is |
 |---|---|
-| `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items, graphify |
-| `HANDOFF.md` | This file |
-| `README.md` | What the project is, with the planned layout (setup commands come later) |
-| `DECISIONS.md` | Decisions made on top of the PRD (D1–D52) |
-| `docs/PRD.md` | PRD v0.4, converted from the published artifact and kept as written |
-| `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted and the date checked |
-| `docs/outreach/permission-request.md` | The permission email draft and a send/reply log |
-| `packages/formula/` | The total-cost formula in TypeScript (`src/`) and Python (`python/`), both pinned to `vectors.json`, which was generated from the website's TrueCost code |
-| `engine/` | Python engine: adapter framework, polite client, FX cross-check, archive, publish gate, runner, `rb-engine` CLI, manual adapter. See `engine/README.md` |
-| `supabase/migrations/` | `…000000_init.sql`: the schema with RLS, the `latest_quotes` view, the raw-archive bucket, and the Tier 1 seed. `…000100_rls_test_install.sql`: asserts the events trigger, removes the smoke test's events, and marks its install as internal. **Both applied to the live project.** |
-| `supabase/tests/rls_smoke.sh` | curl-based RLS test run with the public key. Run it after every schema change |
-| `mobile/` | Expo SDK 57 app. Onboarding (`app/onboarding`), sign-in (`app/sign-in`: Apple, Google, email code), and tabs (`app/(tabs)`): Compare (a green header band with From/To dropdowns that have search, and a typed amount; a delivery segmented control), How it works, and Account (sign out, delete account). Session in expo-sqlite localStorage; metrics via `lib/track.ts`. Checked in the iOS Simulator against the live project |
-| `supabase/functions/delete-account/` | Deletes the caller's own account with the service-role key the platform injects. Deployed; refuses anonymous and forged-token calls |
-| `.github/workflows/` | `ci.yml` (engine lint and tests, formula tests, typecheck, expo lint); `scrape.yml` and `health.yml` with their schedules off until an adapter exists (D40) |
-| `.claude/settings.json` | graphify hooks that check the knowledge graph before searches and reads |
-| `.gitattributes` | graphify's merge driver for `graphify-out/graph.json` |
-| `.git/hooks/post-commit`, `post-checkout` | graphify graph rebuilds (not tracked by git) |
+| `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D68) |
+| `docs/PRD.md` | PRD v0.4, kept as written |
+| `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
+| `docs/outreach/permission-request.md` | The permission email and the send/reply log |
+| `packages/formula/` | The one total-cost formula, TypeScript and Python, pinned to `vectors.json` |
+| `packages/bot/` | The WhatsApp bot's logic: parser, planner, replies in English and Hindi. 58 vitest tests, including the real webhook run against a fake database |
+| `engine/` | Python engine: adapters, publish gate, raw archive, manual adapter, `rb-engine` CLI |
+| `supabase/migrations/` | Schema, RLS and seed. The last two (route requests and metrics; WhatsApp) are **not applied yet** |
+| `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp` (not deployed) |
+| `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 37 checks |
+| `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
+| `mobile/src/lib/` | Data and helpers. `routes.ts`, `countries.ts` and `format.ts` have no imports on purpose: the bot imports them |
+| `mobile/scripts/` | `make-icons.py` (app icon, splash), `make-onboarding-art.py` (the website's ground and band) |
+| `site/` | app.remitbridgelabs.org on Vercel: landing page, privacy, support, partner links |
+| `.github/workflows/` | `ci.yml` (engine, formula, bot, typecheck, lint), `scrape.yml`, `manual-prices.yml`, `health.yml` |
 
-The remote is `https://github.com/OnGodCR/RemitBridge-App.git`. The branch is
-`main`, and it's pushed. The repo is **public** and should be made private (D21).
-
-## What's next
-
-1. **GitHub Actions secrets** (Angad, in the repo's Settings → Secrets and variables
-   → Actions): `SUPABASE_URL` = `https://gmzljjdnwndvqciqicbx.supabase.co`, and
-   `SUPABASE_SERVICE_ROLE_KEY` = the **secret** key from the Supabase dashboard
-   (Project Settings → API keys). Never through the chat.
-2. **First real quotes.** Record a manual observation, push it, watch Scrape
-   publish it, and see it on the Compare screen.
-3. **Scraping, depending on Angad's decision:** check the six unread terms in a real
-   browser; draft permission emails; build adapters only for cleared providers.
-4. **Later slices:**
-   - accounts (email code, Apple, Google), saved comparisons and transfers, in-app
-     account deletion;
-   - metrics events and the admin metrics screen (D31);
-   - the rebuilt tools (TrueCost first);
-   - route requests and the route board;
-   - the WhatsApp bot;
-   - the store-required pages on the subdomain;
-   - engine hardening;
-   - an app icon.
+The remote is `https://github.com/OnGodCR/RemitBridge-App.git` (private). Branch `main`.
 
 ### How to run things
 
-- Engine: `cd engine && uv sync && uv run pytest -q` (see `engine/README.md`).
-- Formula (TypeScript): `npm test -w @remitbridge/formula`.
-- App: `cd mobile && npx expo start --lan`, then open `exp://<LAN IP>:8081` in Expo
-  Go (`ipconfig getifaddr en0` shows the current LAN IP; it changes between networks).
-  `mobile/.env.local` holds the project URL and publishable key (gitignored). On this Mac, `--localhost` didn't work: Metro bound to IPv6 `[::1]` only and
-  the simulator couldn't reach it. The LAN IP (192.168.1.25 at the time) did.
-- Disk: after the npm cache was cleared on 2026-09-28 the Mac had 7.7 GB free, but it
-  drifted back to 3.9 GB within hours. Native iOS builds will need 15–20 GB free.
-- RLS: `SUPABASE_URL=... SUPABASE_PUBLISHABLE_KEY=... supabase/tests/rls_smoke.sh`.
+- Tests: `npm test -w @remitbridge/formula`, `npm test -w @remitbridge/bot`,
+  `cd engine && uv run pytest -q`, and `npm run typecheck` for every workspace.
+- App: `cd mobile && npx expo start --lan`, then open `exp://<LAN IP>:8081` in Expo Go
+  (`ipconfig getifaddr en0` gives the IP; it changes between networks, and Expo Go then
+  loses Metro until it's reopened on the new address). `--localhost` doesn't work on this
+  Mac: Metro binds to IPv6 `[::1]` only, while Expo Go asks for 127.0.0.1.
+- Replaying onboarding: Account → "Replay onboarding (dev only)".
+- Simulator quirk: the first tap after a screen change is often dropped; tap again.
 
-### Local toolchain (checked 2026-09-28)
+### Local toolchain (checked 2026-09-29)
 
-Installed: Xcode, Homebrew, Node 25, uv 0.12 (Python 3.12.14 managed by uv), and the
-Supabase CLI 2.75 (2.118 is available). The system `python3` is 3.9; don't use it
-for the engine.
+Xcode, Homebrew, Node 25, uv 0.12 (Python 3.12 managed by uv), Supabase CLI 2.75 (2.118
+available). No Deno and no Docker: Edge Functions are typechecked with tsc against Deno
+stubs, and the bot's webhook is tested under vitest. The system `python3` is 3.9; don't
+use it for the engine.
 
 ## Known gaps between the PRD and the decisions
 
-- PRD 14.1 puts the app inside the website. D1 and D14 replace that with a
-  separate mobile app.
-- PRD 5.6 and 11 say no personal financial data. D19 allows opt-in accounts
-  with saved transfers, under RLS, with in-app deletion. D31 widens analytics
-  well beyond PRD 5.6, keeping it first-party and aggregate.
-- PRD 9.2 and 9.13 assume Redis and an always-on worker. D13 uses GitHub Actions
-  with state in Postgres.
-- PRD 14.11 assumes a design-system package shared with the website. Under D18
-  the tokens are copied here instead, since the repos share no code.
-- PRD Phase B's partner web widget has no web app to live in (open item).
+- PRD 14.1 puts the app inside the website. D1 and D14 make it a separate mobile app.
+- PRD 5.6 and 11 say no personal financial data. D19 allows opt-in accounts with saved
+  receipts under RLS and in-app deletion. D31 widens analytics, first-party and aggregate.
+- PRD 9.2 and 9.13 assume Redis and an always-on worker. D13 uses GitHub Actions and Postgres.
+- PRD 14.11 assumes a design system shared with the website. Under D18 the tokens are copied.
+- PRD 5.8 wants WHY to use "the user's last quote" but also no amounts tied to a number.
+  D68 keeps the privacy rule: WHY uses the $500 example on the last route.
+- PRD Phase B's partner web widget has no web app to live in (D48 uses plain links instead).
