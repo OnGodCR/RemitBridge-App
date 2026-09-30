@@ -1,3 +1,4 @@
+import { FUNDING_METHODS, type FundingMethod } from '@remitbridge/formula';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,6 +23,8 @@ const PAYMENT_LABELS: Record<string, string> = {
   debit_card: 'Debit card',
   credit_card: 'Credit card',
   cash: 'Cash',
+  money_order: 'Money order',
+  cashiers_check: 'Cashier’s check',
 };
 
 const LIMITS = [
@@ -39,7 +42,7 @@ const LIMITS = [
  */
 export default function QuoteDetail() {
   const t = useTheme();
-  const { id, amount } = useLocalSearchParams<{ id: string; amount?: string }>();
+  const { id, amount, funding } = useLocalSearchParams<{ id: string; amount?: string; funding?: string }>();
   const [raw, setRaw] = useState<{ id: string; value: LatestQuote | 'missing' | 'error' } | null>(null);
   const [history, setHistory] = useState<{ id: string; value: HistoryPoint[] | 'error' } | null>(null);
 
@@ -62,8 +65,9 @@ export default function QuoteDetail() {
   const quote = useMemo(() => {
     if (!loaded || typeof loaded !== 'object') return null;
     const typed = Number(amount);
-    return typed > 0 ? atAmount(loaded, typed) : { ...loaded, basedOn: null };
-  }, [loaded, amount]);
+    const pays = (FUNDING_METHODS as readonly string[]).includes(funding ?? '') ? (funding as FundingMethod) : undefined;
+    return typed > 0 ? atAmount(loaded, typed, pays) : { ...loaded, basedOn: null, tax: 0 };
+  }, [loaded, amount, funding]);
 
   if (loaded === null) {
     return (

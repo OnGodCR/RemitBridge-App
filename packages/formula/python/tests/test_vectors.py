@@ -71,3 +71,12 @@ def test_remittance_tax(case):
 
 def test_taxed_funding_is_the_physical_instruments():
     assert TAXED_FUNDING == {"cash", "money_order", "cashiers_check"}
+
+
+def test_funding_methods_match_the_engine():
+    """The engine's payment methods and the formula's funding methods are one list (D80)."""
+    from remitbridge_engine.models import PaymentMethod
+
+    from remitbridge_formula import FUNDING_METHODS
+
+    assert {m.value for m in PaymentMethod} == set(FUNDING_METHODS)

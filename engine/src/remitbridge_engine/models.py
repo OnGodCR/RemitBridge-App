@@ -21,6 +21,9 @@ class PaymentMethod(StrEnum):
     DEBIT_CARD = "debit_card"
     CREDIT_CARD = "credit_card"
     CASH = "cash"
+    # D80: the two other physical instruments the US remittance tax names.
+    MONEY_ORDER = "money_order"
+    CASHIERS_CHECK = "cashiers_check"
 
 
 class Source(StrEnum):

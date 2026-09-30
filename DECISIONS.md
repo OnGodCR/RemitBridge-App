@@ -670,3 +670,35 @@ including PII detection, validation and the disclosure check. *Answers:* 14.
 
 **D84. The CAC work stays on the branch `claude/gallant-hopper-51zhhm` until Angad merges
 it.** It's an exception to D11 and D24 for this work only. *Answers:* 15.
+
+## 2026-09-30: Phase 3 defaults
+
+Angad said "continue working" after Phase 2, so Phase 3 went ahead on the recommendations
+already agreed (D70–D84). These are the defaults Claude picked on his behalf (D10):
+
+**D85. Confirming a receipt.** Every value on the "to check" list must be answered before
+the result is shown. Those are the likeliest misread value, anything required that's
+missing, and anything below 0.8 confidence. The answer can be a correction, the suggested
+value, or "This is right". Each answer is stored as `user_corrected`. Anyone with the
+receipt's ID can confirm it, as they can read or delete it (D78). The server checks every
+value again, looks up the day's mid-market rate, and stores the comparison and tax check
+in `receipt_comparisons`.
+
+**D86. Matching the advertised price, in detail** (refines D79). Only published standing
+prices count; first-transfer promotions are one-time offers, not the advertised price. The
+window is the transfer day plus 24 hours either side, measured from its midday UTC. When
+the receipt shows a payment or delivery method, that method must match exactly, so a
+money-order receipt has no match until money-order prices exist. The gap uses the day's
+mid-market rate when it loads, otherwise the quote's own.
+
+**D87. Funding method in TrueCost and Compare.** Both default to a bank account.
+- **Tax:** for cash, money order and cashier's check, the 1% tax is added on top of what was
+  paid, on the transfer amount (what's sent less the fee). It comes off before conversion,
+  so it raises total cost and leaves the amount received, and the ranking, alone.
+- **Compare** shows only prices checked for the chosen payment method. If there are none,
+  it says so rather than showing another method's prices. This also ends the double listing
+  of a provider with two payment methods.
+- **A saved TrueCost check** folds the tax into the fee, since `saved_transfers` has no tax
+  column and the formula treats the two identically.
+- **The engine's payment methods** gain `money_order` and `cashiers_check`. A test pins
+  them to the formula's funding list.

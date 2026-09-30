@@ -1,4 +1,4 @@
-import type { ForgetRequest, ScanRequest, ScanResponse } from '@remitbridge/receipt';
+import type { ConfirmRequest, ConfirmResponse, ForgetRequest, ScanRequest, ScanResponse } from '@remitbridge/receipt';
 
 import { supabase } from '@/lib/supabase';
 
@@ -22,4 +22,18 @@ export async function forgetReceipt(id: string): Promise<boolean> {
   const body: ForgetRequest = { action: 'forget', id };
   const { error } = await supabase.functions.invoke('scan-receipt', { body });
   return !error;
+}
+
+export type ConfirmResult = { ok: true; confirmed: ConfirmResponse } | { ok: false; reason: 'not_connected' | 'expired' | 'failed' };
+
+/** The person's answers from the confirmation screen; the server checks and compares. */
+export async function confirmScan(id: string, corrections: ConfirmRequest['corrections'], today: string): Promise<ConfirmResult> {
+  if (!supabase) return { ok: false, reason: 'not_connected' };
+  const body: ConfirmRequest = { action: 'confirm', id, corrections, today };
+  const { data, error } = await supabase.functions.invoke<ConfirmResponse>('scan-receipt', { body });
+  if (error) {
+    const status = (error as { context?: { status?: number } }).context?.status;
+    return { ok: false, reason: status === 404 ? 'expired' : 'failed' };
+  }
+  return data?.id ? { ok: true, confirmed: data } : { ok: false, reason: 'failed' };
 }

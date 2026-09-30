@@ -27,20 +27,33 @@ import Anthropic from 'npm:@anthropic-ai/sdk@0.129.0';
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 
 import {
+  advertisedGap,
+  applyCorrection,
+  deserializeValue,
   detectPii,
+  matchQuote,
   ModelError,
   parseRequest,
   readReceipt,
   redactPage,
   serializeValue,
+  taxCheck,
+  templateFor,
   trustedToday,
+  validateReceipt,
+  valuesFrom,
+  type Comparison,
+  type ConfirmRequest,
+  type ConfirmResponse,
   type ExtractedField,
+  type ExtractedFields,
   type FieldName,
   type ModelClient,
+  type QuoteCandidate,
   type ScanRequest,
   type ScanResponse,
 } from '../../../packages/receipt/src/index.ts';
-import { ROUTES } from '../../../mobile/src/lib/routes.ts';
+import { checkedAmountFor, ROUTES } from '../../../mobile/src/lib/routes.ts';
 
 const DEFAULT_CAP = 300;
 const KEEP_DAYS = 30;
@@ -69,6 +82,10 @@ Deno.serve(async (req) => {
     if (parsed.request.action === 'forget') {
       await forget(db, parsed.request.id);
       return json({ ok: true });
+    }
+    if (parsed.request.action === 'confirm') {
+      const confirmed = await confirm(db, parsed.request);
+      return 'error' in confirmed ? json(confirmed, confirmed.status) : json(confirmed);
     }
     return json(await scan(db, parsed.request));
   } catch (e) {
@@ -125,14 +142,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   });
   if (receiptError) throw new Error('receipt insert failed');
 
-  const rows = (Object.entries(fields) as [FieldName, ExtractedField][]).map(([name, f]) => ({
-    receipt_id: id,
-    field_name: name,
-    value: serializeValue(f.value),
-    extraction_path: f.path,
-    confidence: Math.round(f.confidence * 1000) / 1000,
-    validated: f.validated,
-  }));
+  const rows = fieldRows(id, fields);
   if (rows.length) {
     const { error } = await db.from('receipt_fields').insert(rows);
     if (error) throw new Error('fields insert failed');
@@ -152,6 +162,135 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     model: { asked: result.askedModel, error: result.modelError },
     redaction: leftovers.length ? 'device_rechecked' : 'device',
   };
+}
+
+/**
+ * The person's answers from the confirmation screen (Phase 3). Their values replace what
+ * was read and become user_corrected; the receipt is checked again with the day's
+ * mid-market rate, compared with the provider's advertised price that day (D79), and the
+ * comparison and tax check are stored in receipt_comparisons.
+ */
+async function confirm(
+  db: SupabaseClient,
+  request: ConfirmRequest,
+): Promise<ConfirmResponse | { error: string; status: number }> {
+  const { data: receipt } = await db.from('receipts').select('id, expires_at').eq('id', request.id).maybeSingle();
+  if (!receipt || (receipt.expires_at && Date.parse(receipt.expires_at) <= Date.now())) return { error: 'not found', status: 404 };
+  const today = trustedToday(request.today, new Date());
+
+  // What's stored, then the person's answers on top.
+  const { data: rows } = await db.from('receipt_fields').select('*').eq('receipt_id', request.id);
+  let fields: ExtractedFields = {};
+  for (const r of (rows ?? []) as { field_name: FieldName; value: string; extraction_path: ExtractedField['path']; confidence: number; validated: boolean }[]) {
+    const v = deserializeValue(r.field_name, r.value, today);
+    if (v.ok) {
+      (fields as Record<FieldName, ExtractedField>)[r.field_name] = {
+        value: v.value,
+        path: r.extraction_path,
+        confidence: Number(r.confidence),
+        validated: r.validated,
+      };
+    }
+  }
+  for (const [name, value] of Object.entries(request.corrections) as [FieldName, unknown][]) {
+    const applied = applyCorrection(fields, name, value, today);
+    if (!applied.ok) return { error: applied.error, status: 400 };
+    fields = applied.fields;
+  }
+
+  const v = valuesFrom(fields);
+  const mid = v.send_currency && v.receive_currency ? await fetchMid(v.send_currency, v.receive_currency, v.transfer_date) : null;
+  const validation = validateReceipt(fields, { midRate: mid?.rate });
+  fields = validation.fields;
+
+  const providerId = templateFor(v.provider).providerId;
+  const routeId = ROUTES.find((r) => r.sendCurrency === v.send_currency && r.receiveCurrency === v.receive_currency)?.id ?? null;
+  const comparison = await compare(db, v, providerId, routeId, mid?.rate ?? null);
+  const tax = taxCheck(v, mid?.rate ?? null);
+
+  await db.from('receipt_fields').delete().eq('receipt_id', request.id);
+  const { error } = await db.from('receipt_fields').insert(fieldRows(request.id, fields));
+  if (error) throw new Error('fields insert failed');
+  await db.from('receipts').update({ provider_id: providerId, provider_name: providerId ? null : (v.provider ?? null), route_id: routeId }).eq('id', request.id);
+  await db.from('receipt_comparisons').upsert({
+    receipt_id: request.id,
+    matched_quote_id: comparison.quote?.id ?? null,
+    advertised_rate: comparison.gap?.advertisedRate ?? null,
+    receipt_rate: v.exchange_rate ?? null,
+    gap_amount: comparison.gap?.gapAmount ?? null,
+    gap_currency: comparison.gap?.gapCurrency ?? null,
+    tax_expected: tax.expected,
+    tax_found: tax.found,
+  });
+
+  return {
+    id: request.id,
+    fields,
+    checks: validation.checks,
+    suspect: validation.suspect,
+    missing: validation.missing,
+    to_confirm: validation.toConfirm,
+    provider_id: providerId,
+    route_id: routeId,
+    mid,
+    comparison,
+  };
+}
+
+/** The provider's published price that day for the same route and checked amount (D79). */
+async function compare(
+  db: SupabaseClient,
+  v: ReturnType<typeof valuesFrom>,
+  providerId: string | null,
+  routeId: string | null,
+  midRate: number | null,
+): Promise<Comparison> {
+  if (!providerId) return { quote: null, gap: null, reason: 'not_tracked' };
+  if (!routeId) return { quote: null, gap: null, reason: 'no_route' };
+  if (!v.transfer_date || v.amount_sent === undefined || v.exchange_rate === undefined) {
+    return { quote: null, gap: null, reason: 'missing_values' };
+  }
+  const day = Date.parse(`${v.transfer_date}T00:00:00Z`);
+  const { data } = await db
+    .from('quotes')
+    .select('id, provider_id, route_id, send_amount, delivery_method, payment_method, fee, offered_rate, mid_market_rate, pickup_charge, is_promotional, captured_at')
+    .eq('provider_id', providerId)
+    .eq('route_id', routeId)
+    .eq('send_amount', checkedAmountFor(v.amount_sent))
+    .eq('validation_status', 'published')
+    .gte('captured_at', new Date(day - 86_400_000).toISOString())
+    .lte('captured_at', new Date(day + 2 * 86_400_000).toISOString());
+  const candidates = ((data ?? []) as QuoteCandidate[]).map((q) => ({
+    ...q,
+    send_amount: Number(q.send_amount),
+    fee: Number(q.fee),
+    offered_rate: Number(q.offered_rate),
+    mid_market_rate: Number(q.mid_market_rate),
+    pickup_charge: Number(q.pickup_charge),
+  }));
+  const quote = matchQuote(candidates, {
+    transferDate: v.transfer_date,
+    deliveryMethod: v.delivery_method,
+    fundingMethod: v.funding_method,
+  });
+  if (!quote) return { quote: null, gap: null, reason: 'no_quote' };
+  const { id, provider_id, captured_at, offered_rate, send_amount, delivery_method, payment_method } = quote;
+  return {
+    quote: { id, provider_id, captured_at, offered_rate, send_amount, delivery_method, payment_method },
+    gap: advertisedGap(v, quote, midRate),
+    reason: null,
+  };
+}
+
+function fieldRows(id: string, fields: ExtractedFields) {
+  return (Object.entries(fields) as [FieldName, ExtractedField][]).map(([name, f]) => ({
+    receipt_id: id,
+    field_name: name,
+    value: serializeValue(f.value),
+    extraction_path: f.path,
+    confidence: Math.round(f.confidence * 1000) / 1000,
+    validated: f.validated,
+  }));
 }
 
 async function forget(db: SupabaseClient, id: string) {
@@ -178,18 +317,22 @@ function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClie
   };
 }
 
-/** The mid-market rate for the day from Frankfurter (D35), or null if it can't be had. */
-async function midRate(base: string, quote: string, date: string | undefined): Promise<number | null> {
+/** The mid-market rate for the day from Frankfurter (D35), with the date it's for, or null. */
+async function fetchMid(base: string, quote: string, date: string | undefined): Promise<{ rate: number; date: string; source: string } | null> {
   try {
     const params = new URLSearchParams({ base, quotes: quote, ...(date ? { date } : {}) });
     const res = await fetch(`https://api.frankfurter.dev/v2/rates?${params}`);
     if (!res.ok) return null;
-    const rows = (await res.json()) as { quote: string; rate: number }[];
+    const rows = (await res.json()) as { quote: string; rate: number; date: string }[];
     const row = Array.isArray(rows) ? rows.find((r) => r.quote === quote) : undefined;
-    return row && row.rate > 0 ? row.rate : null;
+    return row && row.rate > 0 ? { rate: row.rate, date: row.date, source: 'Frankfurter' } : null;
   } catch {
     return null;
   }
+}
+
+async function midRate(base: string, quote: string, date: string | undefined): Promise<number | null> {
+  return (await fetchMid(base, quote, date))?.rate ?? null;
 }
 
 function json(body: unknown, status = 200): Response {

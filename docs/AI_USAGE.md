@@ -197,3 +197,78 @@ extractors are his to write.
 - The Expo documentation site and the IRS regulations were blocked from the sandbox. APIs
   were checked against the installed packages' type definitions instead, and the tax base
   is marked as an assumption (D75).
+
+---
+
+## 2026-09-30: Phase 3, confirmation screen, result screen, funding method
+
+**What Claude did:** built the confirmation and result screens for a scanned receipt, the
+server step behind them, and the funding method in TrueCost and Compare, with tests. It
+recorded the defaults it picked as D85–D87. Angad's parser extractors are still his
+TODOs.
+
+### Files created
+
+- `packages/receipt/src/result.ts`: the result logic, shared by the app, the server and
+  later WhatsApp. It covers `formulaInputs()`/`receiptCost()` (a receipt's true cost
+  through the one formula, S = amount + fee + tax), `taxCheck()` (applies or not; matches,
+  not found or differs; bank-funded equivalent), `matchQuote()` (the published standing
+  price nearest the transfer day, within 24 hours either side, same methods) and
+  `advertisedGap()` (the rate gap in the sending currency, through the formula).
+- `packages/receipt/src/result.test.ts`: 10 tests for those.
+- `mobile/src/components/receipt-confirm.tsx`: the confirmation screen. The redacted photo
+  has each value outlined where it was read (amber for values to check). Values to check
+  are listed first, and there's an editor per field: typed numbers, codes and dates, a list
+  for methods, the suggestion, or "This is right". The result stays locked until every value
+  to check has an answer.
+- `mobile/src/components/receipt-result.tsx`: the result screen:
+  - true cost with TrueCost's `Answer` and `Breakdown` (a tax row when there is one) and
+    the mid-market source and date;
+  - advertised vs. paid, or the reason there's nothing to compare;
+  - the tax check in neutral words, with the bank-funded equivalent;
+  - "Compare this route today", which opens Compare with the route, amount and method.
+- `mobile/src/components/choice-list.tsx`: a divided radio list for choices too long for a
+  segmented control.
+- `mobile/src/lib/receipt-format.ts`: shows receipt values (amounts in the right currency,
+  dates, methods in the chosen language) and reads what the person types.
+- `mobile/src/__tests__/receipt-result.test.tsx` (11 tests),
+  `receipt-confirm.test.tsx` (4), and `funding.test.tsx` (7: Compare's estimate with tax,
+  TrueCost's tax line, the value helpers).
+
+### Files changed
+
+- `packages/receipt/src/api.ts`: the `confirm` request and response (`ConfirmRequest`,
+  `ConfirmResponse`, `Comparison`), checked by `parseRequest()`.
+- `packages/receipt/src/index.ts`: exports `result.ts`.
+- `packages/receipt/src/test/fake-supabase.ts`: `update`, `upsert`, `gte`, `lte`.
+- `packages/receipt/src/scan-function.test.ts`: 4 tests of `confirm`. They cover
+  correction, re-check, quote match and stored comparison; no match; an untracked
+  provider; and refusals.
+- `supabase/functions/scan-receipt/index.ts`: the `confirm` action. It loads the stored
+  values, applies the person's answers, re-validates with the day's mid-market rate
+  (`fetchMid`), matches the provider's published price (`compare`), and stores the fields
+  and `receipt_comparisons`.
+- `mobile/src/app/scan.tsx`: after sending, goes to the confirmation screen and then the
+  result. Phase 2's plain list is removed.
+- `mobile/src/lib/receipts.ts`: `confirmScan()`.
+- `mobile/src/app/true-cost.tsx`: "You paid with" (six methods). A cash-type method adds the
+  1% tax through the formula, shows a tax row and a one-line explanation, and folds the tax
+  into the fee when saving.
+- `mobile/src/app/(tabs)/index.tsx` (Compare): "You pay with". Only prices for that payment
+  method show, a cash-type method adds the tax to each total cost with a one-line
+  explanation, and there's an empty state when no prices exist for the method.
+- `mobile/src/lib/quotes.ts`: `atAmount()` takes the funding method and includes the tax.
+- `mobile/src/app/quote/[id].tsx`: takes the funding method from Compare; labels for the
+  two new payment methods.
+- `mobile/src/i18n/en.ts`, `hi.ts`: the confirmation, result and funding strings in English
+  and Hindi. The Hindi is Claude's, unreviewed.
+- `mobile/src/__tests__/scan-screen.test.tsx`: the flow now runs through confirmation and
+  result.
+- `engine/src/remitbridge_engine/models.py`: `MONEY_ORDER`, `CASHIERS_CHECK` payment methods.
+- `packages/formula/python/tests/test_vectors.py`: a test that the engine's payment methods
+  equal the formula's funding methods.
+- `DECISIONS.md` (D85–D87), `HANDOFF.md`, `CLAUDE.md` (open items), and this file.
+
+**Not done or not verifiable by Claude:** the same limits as Phase 2. There was no native
+build, no real phone or receipt, no real model call, and no live database. Compare's
+funding filter hasn't been seen against real prices, because none are entered yet.

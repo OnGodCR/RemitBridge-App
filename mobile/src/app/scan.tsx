@@ -5,27 +5,25 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, typ
 
 import {
   detectPii,
-  FIELD_NAMES,
-  FIELD_SPECS,
   redactionBoxes,
   redactPage,
   toggleWord,
-  type ExtractedField,
-  type FieldName,
+  type ConfirmResponse,
   type OcrPage,
   type Redaction,
   type ScanResponse,
 } from '@remitbridge/receipt';
 
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
+import { ReceiptConfirm, type Answers } from '@/components/receipt-confirm';
+import { ReceiptResult } from '@/components/receipt-result';
 import { AppText, Button, Card } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { fill, useStrings, type Strings } from '@/i18n';
-import { money } from '@/lib/format';
 import { isoDay } from '@/lib/fx';
 import { canScan, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
-import { forgetReceipt, sendScan } from '@/lib/receipts';
+import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { track } from '@/lib/track';
 
 /**
@@ -33,15 +31,25 @@ import { track } from '@/lib/track';
  * person sees exactly the redacted image that would be sent, can cover more, chooses
  * whether it may be kept for research, and only then is anything sent.
  *
- * Phase 2 ends at a plain list of what was read. The confirmation screen (tap a value on
- * the photo to correct it) and the result screen replace it in Phase 3.
+ * Then the confirmation screen (every value outlined where it was read, the unsure ones
+ * first, any of them correctable) and the result (true cost, advertised vs. paid, the tax
+ * check, next time).
  */
 
 type Step =
   | { kind: 'start'; message?: string }
   | { kind: 'reading' }
   | { kind: 'preview'; photo: PreparedPhoto; page: OcrPage; hidden: Redaction[]; redacted: string; sending: boolean; message?: string }
-  | { kind: 'done'; result: ScanResponse; deleted: boolean };
+  | {
+      kind: 'confirm';
+      photo: PreparedPhoto;
+      page: OcrPage;
+      redacted: string;
+      result: ScanResponse;
+      sending: boolean;
+      message?: string;
+    }
+  | { kind: 'result'; id: string; confirmed: ConfirmResponse; deleted: boolean };
 
 export default function ScanScreen() {
   const t = useTheme();
@@ -106,12 +114,27 @@ export default function ScanScreen() {
       checks_passed: sent.result.checks.every((c) => c.ok),
       research_consent: consent,
     });
-    setStep({ kind: 'done', result: sent.result, deleted: false });
+    setStep({ kind: 'confirm', photo: step.photo, page: redactPage(step.page, step.hidden), redacted: step.redacted, result: sent.result, sending: false });
+  };
+
+  const confirm = async (answers: Answers) => {
+    if (step.kind !== 'confirm') return;
+    setStep({ ...step, sending: true, message: undefined });
+    const done = await confirmScan(step.result.id, answers, isoDay(new Date()));
+    if (!done.ok) {
+      setStep({ ...step, sending: false, message: done.reason === 'expired' ? strings.confirm.expired : strings.confirm.failed });
+      return;
+    }
+    track('receipt_confirmed', {
+      corrected: Object.keys(answers).length,
+      compared: done.confirmed.comparison.quote !== null,
+    });
+    setStep({ kind: 'result', id: step.result.id, confirmed: done.confirmed, deleted: false });
   };
 
   const forget = async () => {
-    if (step.kind !== 'done') return;
-    if (await forgetReceipt(step.result.id)) setStep({ ...step, deleted: true });
+    if (step.kind !== 'result') return;
+    if (await forgetReceipt(step.id)) setStep({ ...step, deleted: true });
   };
 
   return (
@@ -179,7 +202,26 @@ export default function ScanScreen() {
         </>
       ) : null}
 
-      {step.kind === 'done' ? <ReadValues result={step.result} deleted={step.deleted} onForget={forget} onAgain={() => setStep({ kind: 'start' })} strings={strings} /> : null}
+      {step.kind === 'confirm' ? (
+        <ReceiptConfirm
+          photo={{ width: step.photo.width, height: step.photo.height, redacted: step.redacted }}
+          page={step.page}
+          result={step.result}
+          sending={step.sending}
+          message={step.message}
+          onConfirm={confirm}
+        />
+      ) : null}
+
+      {step.kind === 'result' ? (
+        <>
+          <ReceiptResult confirmed={step.confirmed} />
+          <View style={styles.buttons}>
+            {step.deleted ? <AppText muted>{s.deleted}</AppText> : <Button label={s.deleteNow} variant="secondary" onPress={forget} />}
+            <Button label={s.another} variant="plain" onPress={() => setStep({ kind: 'start' })} />
+          </View>
+        </>
+      ) : null}
 
       <DoesNotTellYou title={strings.limitsTitle} items={s.limits} />
     </ScrollView>
@@ -242,74 +284,6 @@ function RedactedPhoto({
         : null}
     </View>
   );
-}
-
-/** Phase 2's stand-in for the confirmation screen: what was read, and where it came from. */
-function ReadValues({
-  result,
-  deleted,
-  onForget,
-  onAgain,
-  strings,
-}: {
-  result: ScanResponse;
-  deleted: boolean;
-  onForget: () => void;
-  onAgain: () => void;
-  strings: Strings;
-}) {
-  const t = useTheme();
-  const s = strings.scan;
-  const read = FIELD_NAMES.filter((f) => result.fields[f]);
-  return (
-    <>
-      <AppText variant="heading">{s.readTitle}</AppText>
-      <AppText muted>{fill(s.readSummary, { read: read.length, total: FIELD_NAMES.length })}</AppText>
-      <Card>
-        {FIELD_NAMES.map((name, i) => {
-          const field = result.fields[name];
-          const check = result.to_confirm.includes(name);
-          return (
-            <View key={name} style={[styles.row, i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border }]}>
-              <View style={styles.flex}>
-                <AppText variant="label">{strings.fields[name]}</AppText>
-                {field ? (
-                  <AppText variant="small" muted>
-                    {strings.paths[field.path]}
-                  </AppText>
-                ) : null}
-                {check ? (
-                  <AppText variant="small" style={{ color: t.moneyMarkup }}>
-                    {s.toCheck}
-                  </AppText>
-                ) : null}
-              </View>
-              <AppText variant={field ? 'label' : 'small'} muted={!field}>
-                {field ? show(name, field, result, strings) : s.notFound}
-              </AppText>
-            </View>
-          );
-        })}
-      </Card>
-      <View style={styles.buttons}>
-        {deleted ? <AppText muted>{s.deleted}</AppText> : <Button label={s.deleteNow} variant="secondary" onPress={onForget} />}
-        <Button label={s.another} variant="plain" onPress={onAgain} />
-      </View>
-    </>
-  );
-}
-
-/** A value as the person would read it on the receipt. */
-function show(name: FieldName, field: ExtractedField, result: ScanResponse, strings: Strings): string {
-  const v = field.value;
-  if (name === 'funding_method') return strings.funding[v as keyof Strings['funding']];
-  if (name === 'delivery_method') return strings.delivery[v as keyof Strings['delivery']];
-  if (FIELD_SPECS[name].kind === 'money' && typeof v === 'number') {
-    const receiving = name === 'amount_received' || name === 'pickup_charge';
-    const currency = (receiving ? result.fields.receive_currency?.value : result.fields.send_currency?.value) as string | undefined;
-    return currency ? money(v, currency) : String(v);
-  }
-  return String(v);
 }
 
 const styles = StyleSheet.create({

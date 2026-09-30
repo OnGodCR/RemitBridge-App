@@ -6,12 +6,12 @@
  */
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
-import { detectPii, pageFromLines, redactionBoxes, type ScanResponse } from '@remitbridge/receipt';
+import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type ScanResponse } from '@remitbridge/receipt';
 
 import ScanScreen from '@/app/scan';
 import { setLanguage } from '@/i18n';
 import { canScan, recognize, renderRedacted } from '@/lib/receipt-scan';
-import { forgetReceipt, sendScan } from '@/lib/receipts';
+import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
 jest.mock('@/lib/prefs', () => ({ prefs: { language: () => null, setLanguage: () => undefined } }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
@@ -29,7 +29,8 @@ jest.mock('@/lib/receipt-scan', () => ({
   recognize: jest.fn(),
   renderRedacted: jest.fn(() => 'REDACTED'),
 }));
-jest.mock('@/lib/receipts', () => ({ sendScan: jest.fn(), forgetReceipt: jest.fn(async () => true) }));
+jest.mock('@/lib/receipts', () => ({ sendScan: jest.fn(), confirmScan: jest.fn(), forgetReceipt: jest.fn(async () => true) }));
+jest.mock('@/lib/open-compare', () => ({ openCompare: jest.fn() }));
 
 const PAGE = pageFromLines(['WESTERN UNION', 'Sender: Maria Lopez', 'Transfer Amount $500.00', 'Total to Recipient 8,560.00 MXN']);
 
@@ -54,11 +55,29 @@ const RESULT: ScanResponse = {
   redaction: 'device',
 };
 
+const CONFIRMED: ConfirmResponse = {
+  id: RESULT.id,
+  fields: {
+    ...RESULT.fields,
+    amount_received: { value: 8600, confidence: 1, path: 'user_corrected', validated: true },
+    exchange_rate: { value: 17.2, confidence: 0.95, path: 'model', validated: true },
+  },
+  checks: [],
+  suspect: null,
+  missing: [],
+  to_confirm: [],
+  provider_id: 'western-union',
+  route_id: 'us-mx',
+  mid: { rate: 17.7, date: '2026-09-28', source: 'Frankfurter' },
+  comparison: { quote: null, gap: null, reason: 'no_quote' },
+};
+
 beforeEach(() => {
   jest.mocked(canScan).mockReturnValue(true);
   jest.mocked(recognize).mockResolvedValue({ ok: true, page: PAGE });
   jest.mocked(renderRedacted).mockClear();
   jest.mocked(sendScan).mockReset();
+  jest.mocked(confirmScan).mockReset();
 });
 
 afterEach(() => act(() => setLanguage('en')));
@@ -97,13 +116,13 @@ it('lets the person cover another word and uncover it, redrawing each time', asy
   expect(jest.mocked(renderRedacted)).toHaveBeenCalledTimes(3);
 });
 
-it('sends the redacted text and image with the consent choice, then shows what was read', async () => {
+it('sends the redacted text and image with the consent choice, then asks the person to check', async () => {
   jest.mocked(sendScan).mockResolvedValue({ ok: true, result: RESULT });
   await toPreview();
   fireEvent.press(screen.getByLabelText('Word: WESTERN. Tap to cover it.'));
   fireEvent(screen.getByLabelText('Keep this receipt for research'), 'valueChange', true);
   fireEvent.press(screen.getByText('Read my receipt'));
-  await screen.findByText('What the app read');
+  await screen.findByText('Check each value');
 
   const sent = jest.mocked(sendScan).mock.calls[0][0];
   const text = JSON.stringify(sent.page);
@@ -113,22 +132,37 @@ it('sends the redacted text and image with the consent choice, then shows what w
   expect(sent.image).toEqual({ mediaType: 'image/jpeg', base64: 'REDACTED' });
   expect(sent.research_consent).toBe(true);
   expect(sent.today).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-
-  expect(screen.getByText('5 of 13 values read.')).toBeTruthy();
   expect(screen.getByText('$500.00')).toBeTruthy();
-  expect(screen.getByText('MX$8,560.00')).toBeTruthy();
-  expect(screen.getByText('Cash')).toBeTruthy();
-  expect(screen.getAllByText('Read by AI').length).toBeGreaterThan(0);
-  expect(screen.getByText('Please check')).toBeTruthy();
+  expect(screen.getByText('One to check')).toBeTruthy();
 });
 
-it('deletes the receipt on request', async () => {
+it('goes from the answers to the result, and deletes the receipt on request', async () => {
   jest.mocked(sendScan).mockResolvedValue({ ok: true, result: RESULT });
+  jest.mocked(confirmScan).mockResolvedValue({ ok: true, confirmed: CONFIRMED });
   await toPreview();
   fireEvent.press(screen.getByText('Read my receipt'));
-  fireEvent.press(await screen.findByText('Delete this receipt now'));
+  await screen.findByText('Check each value');
+  fireEvent.press(screen.getByText('Amount received'));
+  fireEvent.press(screen.getByText('Use MX$8,600.00'));
+  fireEvent.press(screen.getByText('See what it cost'));
+  await screen.findByText('What this transfer really cost');
+  expect(jest.mocked(confirmScan).mock.calls[0][1]).toEqual({ amount_received: 8600 });
+  fireEvent.press(screen.getByText('Delete this receipt now'));
   await screen.findByText('Deleted.');
   expect(forgetReceipt).toHaveBeenCalledWith(RESULT.id);
+});
+
+it('keeps the answers and says so when confirming fails', async () => {
+  jest.mocked(sendScan).mockResolvedValue({ ok: true, result: RESULT });
+  jest.mocked(confirmScan).mockResolvedValue({ ok: false, reason: 'expired' });
+  await toPreview();
+  fireEvent.press(screen.getByText('Read my receipt'));
+  await screen.findByText('Check each value');
+  fireEvent.press(screen.getByText('Amount received'));
+  fireEvent.press(screen.getByText('This is right'));
+  fireEvent.press(screen.getByText('See what it cost'));
+  await screen.findByText(/has been deleted/);
+  expect(screen.getByText('Check each value')).toBeTruthy();
 });
 
 it('keeps the preview and says so when sending fails', async () => {
