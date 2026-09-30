@@ -38,6 +38,7 @@ export const vi: Copy = {
     quote: 'Giá',
     routeBoard: 'Bảng tuyến chuyển tiền',
     askForRoute: 'Đề xuất tuyến mới',
+    observatory: 'Mọi người đã trả bao nhiêu',
   },
 
   delivery: {
@@ -388,6 +389,7 @@ export const vi: Copy = {
     glossarySub: (n) => `${n} thuật ngữ, giải thích dễ hiểu`,
     routeBoardSub: 'Những tuyến chúng tôi kiểm tra, và những tuyến mọi người muốn',
     remitbenchSub: 'Nền tảng thử nghiệm nghiên cứu của chúng tôi, vẫn đang xây dựng',
+    observatorySub: 'Kết quả ban đầu từ biên lai mọi người chia sẻ',
     website: 'Trên trang web',
     blog: 'Blog',
     blogSub: 'Câu chuyện và bài giải thích',
@@ -690,6 +692,59 @@ export const vi: Copy = {
     compare: 'So sánh tuyến này hôm nay',
     notCovered: 'Chúng tôi chưa kiểm tra tuyến này.',
     routeBoard: 'Xem các tuyến chúng tôi kiểm tra',
+    disclosuresTitle: 'Thông tin bắt buộc',
+    disclosuresAll: 'Đã tìm thấy mọi thông tin bắt buộc trên biên lai này.',
+    disclosuresMissing: (items: string) => `Không tìm thấy trên biên lai này: ${items}.`,
+    disclosuresNote:
+      'Ảnh có thể cắt mất một phần biên lai và chữ nhỏ có thể khó đọc, nên điều này không có nghĩa là nhà cung cấp đã bỏ sót.',
+    disclosureItems: {
+      transfer_amount: 'số tiền chuyển',
+      fees: 'phí',
+      taxes: 'thuế',
+      total: 'tổng cộng',
+      exchange_rate: 'tỷ giá',
+      amount_received: 'số tiền nhận được',
+      date_available: 'ngày có thể nhận tiền',
+      recipient: 'người nhận',
+      error_rights: 'quyền của bạn khi có sai sót',
+      cancellation: 'cách hủy',
+      provider_contact: 'thông tin liên hệ của nhà cung cấp',
+      cfpb_contact: 'thông tin liên hệ của CFPB',
+    } as Record<string, string>,
+    limits: [
+      'Mỗi giá trị có được đọc đúng không, trừ khi bạn đã kiểm tra.',
+      'Gia đình bạn bị tính phí gì ở bên kia, ngoài những gì biên lai ghi.',
+      'Tỷ giá vào đúng phút bạn gửi: tỷ giá trung bình thị trường là mốc tham chiếu theo ngày.',
+      'Một thông tin bị thiếu trên biên lai hay chỉ thiếu trong ảnh.',
+    ],
+  },
+
+  observatory: {
+    intro: 'Số tiền mọi người thực sự đã trả, từ các biên lai họ quét và chọn chia sẻ cho nghiên cứu.',
+    early: 'Kết quả ban đầu',
+    sample: (n: number, since: string | null) => `${n} biên lai được chia sẻ${since ? ` từ ${since}` : ''}`,
+    tooFew: (min: number) =>
+      `Chưa có đủ biên lai được chia sẻ. Số liệu chỉ hiện khi có ít nhất ${min}, để không thể nhận ra biên lai nào.`,
+    groupsTitle: 'Theo nhà cung cấp và tuyến',
+    noGroups: (min: number) => `Chưa có nhà cung cấp và tuyến nào có ${min} biên lai được chia sẻ.`,
+    receipts: (n: number) => `${n} biên lai`,
+    medianCost: 'Tổng chi phí điển hình',
+    medianMarkup: 'Mức chênh lệch tỷ giá điển hình',
+    paidMore: (k: number, of: number) => `${k} trên ${of} biên lai được so sánh nhận tỷ giá tệ hơn mức quảng cáo hôm đó`,
+    taxTitle: 'Thuế chuyển tiền liên bang',
+    taxLine: (taxed: number, matches: number, notFound: number) =>
+      `${taxed} được trả bằng tiền mặt hoặc tương tự. Thuế 1% khớp ở ${matches}; không tìm thấy dòng thuế ở ${notFound}.`,
+    disclosuresTitle: 'Thông tin bắt buộc không tìm thấy',
+    disclosureLine: (item: string, n: number, total: number) => `${item}: ${n} trên ${total}`,
+    noneMissing: 'Đã tìm thấy mọi thông tin bắt buộc trên mọi biên lai được chia sẻ.',
+    method: (min: number) =>
+      `Chỉ tính các biên lai mọi người chọn chia sẻ cho nghiên cứu. Một nhà cung cấp và tuyến chỉ hiện khi có ${min}. “Điển hình” là trung vị.`,
+    loadFailed: 'Không tải được kết quả.',
+    limits: [
+      'Phần lớn mọi người trả bao nhiêu: những người quét và chia sẻ biên lai không phải là mẫu ngẫu nhiên.',
+      'Bất cứ điều gì về một người hay một lần chuyển. Chỉ hiển thị số tổng.',
+      'Một thông tin bị thiếu trên biên lai hay chỉ thiếu trong ảnh.',
+    ],
   },
 
   receiptFields: {

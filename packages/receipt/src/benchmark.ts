@@ -103,6 +103,11 @@ export interface ResultsInput {
   redaction: RedactionSummary
   /** Modes that didn't run, and why. */
   skipped: { mode: Mode; why: string }[]
+  /**
+   * The disclosure check on receipts whose ground truth lists their disclosures (D95): per
+   * item, how often "found" or "not found" was right.
+   */
+  disclosures?: { receipts: number; byItem: Record<string, { right: number; total: number }> }
 }
 
 const pct = (x: number | null) => (x === null ? '–' : `${(x * 100).toFixed(1)}%`)
@@ -166,6 +171,13 @@ export function formatResults(input: ResultsInput): string {
     if (shown) out.push(`| ${f} | ${runs.map((s) => pct(accuracy(tallyOf(s, f)))).join(' | ')} |`)
   }
   out.push(`| **All fields** | ${runs.map((s) => pct(accuracy(tallyOf(s)))).join(' | ')} |`, '')
+
+  const d = input.disclosures
+  if (d && d.receipts) {
+    out.push('## Disclosure check', '', `On ${d.receipts} receipts with their disclosures listed: how often the check said rightly whether each item is there. The synthetic receipts use wording the check looks for, so on them this mostly tests OCR, not the check.`, '', '| Item | Right |', '|---|---:|')
+    for (const [item, t] of Object.entries(d.byItem)) out.push(`| ${item} | ${share(t.right, t.total)} |`)
+    out.push('')
+  }
 
   const r = input.redaction
   out.push(

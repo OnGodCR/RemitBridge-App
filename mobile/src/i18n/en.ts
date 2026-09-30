@@ -44,6 +44,7 @@ export const en = {
     quote: 'Quote',
     routeBoard: 'Route board',
     askForRoute: 'Ask for a route',
+    observatory: 'What people paid',
   },
 
   delivery: DELIVERY_LABELS,
@@ -373,6 +374,7 @@ export const en = {
     glossarySub: (n: number) => `${n} terms, in plain English`,
     routeBoardSub: 'Which routes we check, and which people want',
     remitbenchSub: 'Our research testbed, still being built',
+    observatorySub: 'Early results from receipts people shared',
     website: 'On the website',
     blog: 'Blog',
     blogSub: 'Stories and explainers',
@@ -673,6 +675,60 @@ export const en = {
     compare: 'Compare this route today',
     notCovered: 'We don’t check this route yet.',
     routeBoard: 'See which routes we check',
+    disclosuresTitle: 'Standard disclosures',
+    disclosuresAll: 'Every standard item was found on this receipt.',
+    disclosuresMissing: (items: string) => `Not found on this receipt: ${items}.`,
+    disclosuresNote:
+      'A photo can cut off part of a receipt, and small print can be hard to read, so this doesn’t mean the provider left anything out.',
+    disclosureItems: {
+      transfer_amount: 'transfer amount',
+      fees: 'fees',
+      taxes: 'taxes',
+      total: 'total',
+      exchange_rate: 'exchange rate',
+      amount_received: 'amount received',
+      date_available: 'date the money is available',
+      recipient: 'recipient',
+      error_rights: 'your rights if there’s an error',
+      cancellation: 'how to cancel',
+      provider_contact: 'the provider’s contact details',
+      cfpb_contact: 'the CFPB’s contact details',
+    } as Record<string, string>,
+    limits: [
+      'Whether each value was read right, unless you checked it.',
+      'What your family was charged at their end, beyond what the receipt shows.',
+      'The rate at the minute you sent: the mid-market rate is a daily reference.',
+      'Whether a disclosure was missing from the receipt, or only from the photo.',
+    ],
+  },
+
+  observatory: {
+    intro: 'What people really paid, from receipts they scanned and chose to share for research.',
+    early: 'Early results',
+    sample: (n: number, since: string | null) =>
+      `${n} shared receipt${n === 1 ? '' : 's'}${since ? ` since ${since}` : ''}`,
+    tooFew: (min: number) =>
+      `Not enough receipts have been shared yet. Numbers show once there are at least ${min}, so no single receipt can be picked out.`,
+    groupsTitle: 'By provider and route',
+    noGroups: (min: number) => `No provider and route has ${min} shared receipts yet.`,
+    receipts: (n: number) => `${n} receipts`,
+    medianCost: 'Typical total cost',
+    medianMarkup: 'Typical exchange-rate markup',
+    paidMore: (k: number, of: number) => `${k} of ${of} compared got a worse rate than advertised that day`,
+    taxTitle: 'Federal remittance tax',
+    taxLine: (taxed: number, matches: number, notFound: number) =>
+      `${taxed} were paid in cash or similar. The 1% tax matched on ${matches}; no tax line was found on ${notFound}.`,
+    disclosuresTitle: 'Standard disclosures not found',
+    disclosureLine: (item: string, n: number, total: number) => `${item}: ${n} of ${total}`,
+    noneMissing: 'Every standard item was found on every shared receipt.',
+    method: (min: number) =>
+      `Only receipts people chose to share for research count. A provider and route shows once it has ${min}. “Typical” is the median.`,
+    loadFailed: 'The results couldn’t load.',
+    limits: [
+      'What most people pay: people who scan and share receipts aren’t a random sample.',
+      'Anything about one person or one transfer. Only totals are shown.',
+      'Whether a disclosure was missing from the receipt, or only from the photo.',
+    ],
   },
 
   receiptFields: {

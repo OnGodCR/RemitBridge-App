@@ -46,6 +46,7 @@ export default function LearnScreen() {
           <ListGroup title={l.deeper}>
             <ListRow title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
             <ListRow title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
+            <ListRow title={copy.titles.observatory} subtitle={l.observatorySub} onPress={() => router.push('/observatory')} />
             <ListRow title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
           </ListGroup>
 

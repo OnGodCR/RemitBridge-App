@@ -110,6 +110,7 @@ check "anonymous event insert works" "201" "$(post events "$(printf '{"install_i
 check "anonymous route request works" "@(201|23505)" "$(post route_requests "$(printf '{"send_country":"us","receive_country":"np","install_id":"%s","delivery_method":"bank_deposit"}' "$TEST_INSTALL")")"
 check "the same install can't ask twice (23505)" "23505" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
 check "request counts are public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/route_request_counts" -d '{}')"
+check "the receipt observatory is public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/receipt_observatory" -d '{}')"
 check "a receipt result is read by its ID (none here)" "null" "$(curl -s -m 20 "${H[@]}" -X POST "$REST/rpc/receipt_result" -d '{"p_id":"00000000-0000-4000-8000-000000000000"}')"
 
 echo; echo "$pass passed, $fail failed"

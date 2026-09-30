@@ -1,6 +1,7 @@
 /**
- * The result screen's four parts: the true cost through the one formula, advertised vs.
- * paid (or why not), the tax check in neutral words, and "next time" into Compare.
+ * The result screen's parts: the true cost through the one formula, advertised vs. paid
+ * (or why not), the tax check in neutral words, the disclosures not found, and "next time"
+ * into Compare.
  */
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
@@ -49,6 +50,7 @@ const confirmed = (over: Partial<ConfirmResponse> = {}, values: Partial<FieldVal
     gap: { advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.82, gapCurrency: 'USD' },
     reason: null,
   },
+  disclosures_missing: [],
   ...over,
 });
 
@@ -122,3 +124,18 @@ describe('next time', () => {
     expect(screen.getByText('We don’t check this route yet.')).toBeTruthy();
   });
 });
+
+describe('standard disclosures', () => {
+  it('names what wasn’t found, and says that isn’t a finding', () => {
+    render(<ReceiptResult confirmed={confirmed({ disclosures_missing: ['error_rights', 'cfpb_contact'] })} />);
+    expect(screen.getByText('Not found on this receipt: your rights if there’s an error, the CFPB’s contact details.')).toBeTruthy();
+    expect(screen.getByText(/doesn’t mean the provider left anything out/)).toBeTruthy();
+  });
+
+  it('says so when everything was found', () => {
+    render(<ReceiptResult confirmed={confirmed()} />);
+    expect(screen.getByText('Every standard item was found on this receipt.')).toBeTruthy();
+    expect(screen.getByText('What this does not tell you')).toBeTruthy();
+  });
+});
+

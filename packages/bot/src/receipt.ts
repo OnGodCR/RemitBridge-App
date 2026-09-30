@@ -35,6 +35,21 @@ const LABELS: Record<FieldName, { en: string; hi: string }> = {
   delivery_method: { en: 'way it was delivered', hi: 'पहुँचाने का तरीका' },
 }
 
+const DISCLOSURE_WORDS: Record<string, { en: string; hi: string }> = {
+  transfer_amount: { en: 'transfer amount', hi: 'भेजी गई रकम' },
+  fees: { en: 'fees', hi: 'फ़ीस' },
+  taxes: { en: 'taxes', hi: 'टैक्स' },
+  total: { en: 'total', hi: 'कुल' },
+  exchange_rate: { en: 'exchange rate', hi: 'एक्सचेंज रेट' },
+  amount_received: { en: 'amount received', hi: 'मिली रकम' },
+  date_available: { en: 'date the money is available', hi: 'पैसा मिलने की तारीख' },
+  recipient: { en: 'recipient', hi: 'पाने वाला' },
+  error_rights: { en: 'your rights if there is an error', hi: 'गलती होने पर आपके अधिकार' },
+  cancellation: { en: 'how to cancel', hi: 'रद्द करने का तरीका' },
+  provider_contact: { en: "the company's contact details", hi: 'कंपनी से संपर्क की जानकारी' },
+  cfpb_contact: { en: 'the CFPB’s contact details', hi: 'CFPB से संपर्क की जानकारी' },
+}
+
 const FUNDING_WORDS: Record<(typeof FUNDING_METHODS)[number], { en: string; hi: string; match: RegExp }> = {
   bank_account: { en: 'bank account', hi: 'बैंक खाता', match: /\b(bank|ach|account)\b|बैंक/ },
   debit_card: { en: 'debit card', hi: 'डेबिट कार्ड', match: /\bdebit\b|डेबिट/ },
@@ -262,6 +277,15 @@ export function formatReceiptResult(lang: Language, r: ConfirmResponse, unconfir
 
   if (r.mid) {
     out.push(hi ? `मिड-मार्केट रेट ${r.mid.rate}, ${r.mid.source} से, ${usDate(r.mid.date)}।` : `Mid-market rate ${r.mid.rate}, from ${r.mid.source}, ${usDate(r.mid.date)}.`)
+  }
+  const missing = r.disclosures_missing ?? []
+  if (missing.length) {
+    const items = missing.map((d) => DISCLOSURE_WORDS[d]?.[lang] ?? d).join(', ')
+    out.push(
+      hi
+        ? `रसीद पर नहीं मिला: ${items}। हो सकता है फ़ोटो में छूट गया हो।`
+        : `Not found on this receipt: ${items}. The photo may have cut it off.`,
+    )
   }
   if (unconfirmed.length) {
     const names = unconfirmed.map((f) => LABELS[f][lang]).join(', ')

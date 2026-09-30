@@ -404,3 +404,36 @@ until Angad agrees to the sealed-number exception in D94.
 - `DECISIONS.md` (D94), `HANDOFF.md`, `CLAUDE.md`, `README.md`.
 - My migration was first named `20260930010000_…`, the same timestamp as the other
   session's Wise migration; it was renamed to `20260930020000_…` before either was pushed.
+
+## 2026-09-30: Phase 6, the disclosure check and the receipt observatory
+
+**What Angad asked:** build Phase 6 (a disclosure check listing standard items "not found on
+this receipt"; an observatory of anonymized totals from research-consented receipts, with
+the sample size prominent and labeled early results). **What Claude did:** wrote all of the
+files below. D86 assigns the disclosure check to Claude.
+
+**Created:**
+- `packages/receipt/src/disclosures.ts` and `src/disclosures.test.ts`: the check, tested on
+  the fixtures and on 120 synthetic receipts' ground truth.
+- `supabase/migrations/20260930030000_receipt_observatory.sql`: `disclosures_missing`, the
+  two cost columns, `receipt_result()` with disclosures, and `receipt_observatory()`.
+- `mobile/src/lib/observatory.ts`, `mobile/src/app/observatory.tsx`, and
+  `mobile/src/__tests__/observatory.test.tsx` (3 tests).
+
+**Changed:**
+- `supabase/functions/scan-receipt/index.ts`, `packages/receipt/src/api.ts`: disclosures
+  worked out at scan, stored and returned; total cost and markup stored at confirm. Test in
+  `packages/receipt/src/scan-function.test.ts`.
+- `packages/receipt/src/benchmark.ts`, `scripts/benchmark.ts`: a disclosure-check table.
+  `benchmark/results.md` regenerated.
+- `packages/bot/src/receipt.ts` and its test: a "not found on this receipt" line in the
+  WhatsApp result, in English and Hindi.
+- `mobile/src/components/receipt-result.tsx`: a disclosures section and a "What this does not
+  tell you" block. Tests in `mobile/src/__tests__/receipt-result.test.tsx`, fixtures in
+  three other app tests.
+- `mobile/src/i18n/en.ts`, `hi.ts`, `es.ts`, `tl.ts`, `vi.ts`: the new strings. English is the
+  source; the other four are Claude's drafts behind D69's reviewer gate.
+- `mobile/src/app/_layout.tsx`, `mobile/src/app/(tabs)/learn.tsx`: the screen and its entry.
+- `supabase/tests/local/checks.sql` (7 checks), `supabase/tests/rls_smoke.sh` (1 check).
+- `site/privacy.html`: the observatory's totals and the five-receipt minimum.
+- `DECISIONS.md` (D95, D96), `HANDOFF.md`, `CLAUDE.md`.

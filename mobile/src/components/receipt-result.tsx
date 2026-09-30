@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { receiptCost, taxCheck, valuesFrom, type ConfirmResponse } from '@remitbridge/receipt';
 
+import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { Answer, Breakdown, Section, SourceNote } from '@/components/tool';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
@@ -15,10 +16,11 @@ import { formatValue, fundingWord } from '@/lib/receipt-format';
 import { ROUTES, type DeliveryMethod } from '@/lib/routes';
 
 /**
- * The scan result (Phase 3, item 2), in four parts:
+ * The scan result (Phase 3, item 2; Phase 6), in five parts:
  *   - the true cost, with TrueCost's own Answer and Breakdown and the one formula;
  *   - advertised vs. paid: the provider's published rate that day, or plainly why not;
  *   - the federal remittance tax check, in neutral words;
+ *   - the standard disclosures not found on the receipt (D95), never as a finding;
  *   - next time: Compare, opened on the same route and amount.
  */
 export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
@@ -127,7 +129,21 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         ) : null}
       </Section>
 
-      {/* 4. Next time */}
+      {/* 4. Standard disclosures (D95): what wasn't found, and why that isn't a finding. */}
+      <Section title={s.disclosuresTitle}>
+        {confirmed.disclosures_missing.length ? (
+          <>
+            <AppText>{s.disclosuresMissing(confirmed.disclosures_missing.map((d) => s.disclosureItems[d] ?? d).join(', '))}</AppText>
+            <AppText variant="small" muted>
+              {s.disclosuresNote}
+            </AppText>
+          </>
+        ) : (
+          <AppText muted>{s.disclosuresAll}</AppText>
+        )}
+      </Section>
+
+      {/* 5. Next time */}
       <Section title={s.nextTitle}>
         {route ? (
           <Button
@@ -159,6 +175,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
           .filter(Boolean)
           .join(' · ')}
       </SourceNote>
+      <DoesNotTellYou items={s.limits} />
     </>
   );
 }
