@@ -841,3 +841,37 @@ OpenRouter.
 - **Redaction fixes the generator found:** a heading ending in an ID word ("Transfer
   confirmation") hid the year on the next line; and a masked card that OCR read as `**+*4118`
   wasn't hidden. Both are fixed and tested.
+
+## 2026-09-30: Phase 5, receipt photos on WhatsApp
+
+**D94. How a WhatsApp receipt photo is read** (builds on D80; defaults Claude picked under
+D10, with one privacy exception that needs Angad's yes before it's switched on).
+- **Flow:** the whatsapp function queues the photo in `receipt_intake` and replies "got it".
+  A GitHub Actions worker (`receipt-intake.yml`) downloads the photo from Meta, reads it with
+  tesseract.js, hides personal details with the phone's redaction code, and sends only the
+  redacted text through `scan-receipt` as channel `whatsapp`. It then reports back, and the
+  whatsapp function sends the reply.
+- **No photo leaves the worker.** WhatsApp receipts are read from the redacted text alone,
+  with no image to the model. The photo is held in memory and never written to disk or
+  stored. There's no research-consent question on WhatsApp, so no WhatsApp receipt is kept
+  past 30 days.
+- **The exception: the number is sealed for minutes.** The reply has to reach the person
+  after the worker finishes, so the queue row holds the number encrypted (AES-GCM, with a key
+  derived from `WHATSAPP_HASH_SECRET` that only the whatsapp function has). The worker never
+  sees it. The row is deleted when the reply goes out, and every row is deleted after an hour
+  regardless. This bends the rule "on WhatsApp, store only a hashed phone number", so photo
+  intake stays off (`WHATSAPP_RECEIPTS`) until Angad agrees.
+- **Checking values:** the bot asks about unsure values one at a time (at most four), each
+  answer confirmed through `scan-receipt`, and then sends the result. It names any values that
+  weren't confirmed. While it's asking, `whatsapp_users` holds the receipt's ID and the field
+  being asked. That's cleared when the checking ends, or when the person sends a new photo or
+  an ordinary message instead.
+- **Starting the worker:** a workflow dispatch per photo (`GITHUB_DISPATCH_TOKEN`), with no
+  schedule. Rows expire in an hour, and a schedule often enough to matter would use most of
+  the private repo's Actions minutes. Intake also needs `RECEIPT_INTAKE_SECRET`, shared by the
+  two functions and the worker.
+- **Language:** replies in the bot's language (English or Hindi). The Hindi needs the same
+  read as the rest of the bot's (D68).
+- **Limits:** photos up to 10 MB (JPEG, PNG or WebP). A photo with under four lines of text,
+  or no digits at all, gets "couldn't read a receipt". OCR is tesseract's, not ML Kit's, so
+  WhatsApp reads less well than the app. The benchmark's synthetic set measures that OCR.

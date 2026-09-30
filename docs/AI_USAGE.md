@@ -370,3 +370,37 @@ functions and were not touched; the benchmark measures them.
 - `.gitignore`: benchmark photos.
 - `DECISIONS.md` (D93; D92 renumbered from D91, which the other session is using),
   `README.md`, `HANDOFF.md`, `CLAUDE.md`.
+
+## 2026-09-30: Phase 5, receipt photos on WhatsApp
+
+**What Angad asked:** build Phase 5 (WhatsApp photo intake with server-side redaction, the
+same pipeline, a compact reply, confirming low-confidence values by text, in the user's
+language). **What Claude did:** wrote all of the files below. Photo intake is built but off
+until Angad agrees to the sealed-number exception in D94.
+
+**Created:**
+- `supabase/migrations/20260930020000_whatsapp_receipts.sql`: the `receipt_intake` queue,
+  pending-check columns on `whatsapp_users`, `claim_receipt_intake()` and
+  `forget_stale_receipt_intake()`.
+- `packages/bot/src/receipt.ts` and `src/receipt.test.ts`: the replies (acknowledgement,
+  can't read, failed, off, one question at a time, the compact result) in English and Hindi,
+  and reading a person's answer (yes, a number, a date, a code, a method by number or word).
+- `packages/receipt/src/node/intake.ts` and `src/intake.test.ts`: the worker's flow (claim,
+  download from Meta, OCR, redact, scan, confirm, report back), with network and OCR passed in.
+- `packages/receipt/scripts/intake-worker.ts`: runs the flow with tesseract.js.
+- `.github/workflows/receipt-intake.yml`: the worker, started by a dispatch per photo.
+
+**Changed:**
+- `supabase/functions/whatsapp/index.ts`: photo messages queued with the number sealed
+  (AES-GCM), the `?intake=done` report endpoint, the one-question-at-a-time checking, STOP
+  also clearing queued photos. `packages/bot/src/index.ts` exports the new replies.
+- `supabase/functions/scan-receipt/index.ts` and `packages/receipt/src/api.ts`: channel
+  `whatsapp`, accepted only with `RECEIPT_INTAKE_SECRET`; redaction status `server`.
+- Tests: `packages/bot/src/webhook.test.ts` (8 photo tests) with `src/test/fake-supabase.ts`
+  gaining `rpc` and `update`; `packages/receipt/src/scan-function.test.ts` (2 tests).
+- `packages/receipt/tsconfig.functions.json`: now typechecks the whatsapp function too.
+- `supabase/tests/local/checks.sql` (14 checks), `supabase/tests/rls_smoke.sh` (3 checks).
+- `site/privacy.html`: what happens to a receipt photo sent on WhatsApp.
+- `DECISIONS.md` (D94), `HANDOFF.md`, `CLAUDE.md`, `README.md`.
+- My migration was first named `20260930010000_…`, the same timestamp as the other
+  session's Wise migration; it was renamed to `20260930020000_…` before either was pushed.
