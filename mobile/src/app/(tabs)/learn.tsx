@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
@@ -8,7 +8,7 @@ import { Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
-import { CONTACT, openPage } from '@/lib/links';
+import { CONTACT, openPage, writeToUs } from '@/lib/links';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
@@ -37,7 +37,7 @@ export default function LearnScreen() {
               <AppText
                 style={{ color: t.primary }}
                 accessibilityRole="link"
-                onPress={() => Linking.openURL(`mailto:${CONTACT}`)}>
+                onPress={() => writeToUs(copy)}>
                 {CONTACT}
               </AppText>
             </ListPoint>

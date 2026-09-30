@@ -226,8 +226,8 @@ export function CountrySelect({
           value: c.code,
           flag: c.code,
           name,
-          // A translated name is shown whole; the English short forms ("UK") stay English.
-          short: name === c.name ? c.short : undefined,
+          // The field is narrow: each language's own short form ("EE. UU."), else English's ("US").
+          short: copy.countriesShort[c.code] ?? (name === c.name ? c.short : undefined),
           detail: c.currency,
           uncovered: !covered(c.code),
           // English names still match, so "mexico" finds México in any language.

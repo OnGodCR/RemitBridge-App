@@ -25,6 +25,8 @@ export const en = {
     theUS: 'the US',
     notConnected: 'Not connected.',
     stepOf: (step: number, of: number) => `Step ${step} of ${of}`,
+    noMailTitle: 'Email us',
+    noMailBody: (address: string) => `This phone has no email app set up. Write to us at ${address} from any email.`,
   },
 
   tabs: { compare: 'Compare', tools: 'Tools', learn: 'Learn', account: 'Account' },
@@ -54,6 +56,8 @@ export const en = {
 
   /** Country names by code, for languages that need them; English uses lib/countries.ts. */
   countries: {} as Record<string, string>,
+  /** Shorter names for the narrow From and To fields ("US", "EE. UU."). */
+  countriesShort: {} as Record<string, string>,
   /** Currency names by code; English uses lib/currencies.ts. */
   currencies: {} as Record<string, string>,
 
