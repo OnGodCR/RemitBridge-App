@@ -1,0 +1,40 @@
+name: WhatsApp receipt photos
+
+# Reads receipt photos sent to the WhatsApp bot (DECISIONS.md D80, D94). The whatsapp Edge
+# Function queues each photo and starts this workflow (GITHUB_DISPATCH_TOKEN). The worker
+# downloads the photo from Meta, reads it with OCR, hides personal details, sends only the
+# redacted text through scan-receipt, and reports back so the bot can reply. It never sees
+# the phone number, and the photo is never written to disk.
+#
+# No schedule: a queued photo is deleted after an hour, and a schedule frequent enough to
+# matter would use most of the private repo's Actions minutes. Photo intake stays off
+# (WHATSAPP_RECEIPTS) until the dispatch token is set.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: receipt-intake
+  cancel-in-progress: false
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      WHATSAPP_ACCESS_TOKEN: ${{ secrets.WHATSAPP_ACCESS_TOKEN }}
+      RECEIPT_INTAKE_SECRET: ${{ secrets.RECEIPT_INTAKE_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # Only the receipt package's dependencies, not the app's.
+      - run: npm ci --workspace @remitbridge/receipt --include-workspace-root
+      - run: node packages/receipt/scripts/intake-worker.ts

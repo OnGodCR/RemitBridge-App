@@ -240,4 +240,40 @@ select pg_temp.ok((select count(*) = 2 from public.receipts) and (select count(*
 select pg_temp.ok((select count(*) = 1 from storage.buckets where id = 'receipt-images' and not public),
   'receipts: the image bucket is private');
 
+-- ---------------------------------------------------------------------------------------
+-- WhatsApp receipt photos (20260930010000_whatsapp_receipts.sql): a queue only the
+-- functions and the worker touch; the worker never gets the number
+-- ---------------------------------------------------------------------------------------
+set role service_role;
+insert into public.receipt_intake (id, phone_hash, phone_sealed, media_id, language, created_at) values
+  ('60000000-0000-4000-8000-000000000001', repeat('a', 64), 'sealed-number-ciphertext', 'media_1', 'hi', now() - interval '2 minutes'),
+  ('60000000-0000-4000-8000-000000000002', repeat('b', 64), 'sealed-number-ciphertext', 'media_2', 'en', now() - interval '2 hours');
+select pg_temp.ok((select count(*) = 1 and bool_and(media_id = 'media_1' and language = 'hi')
+  from public.claim_receipt_intake(5)), 'intake: the worker takes the waiting photo, not the hour-old one');
+select pg_temp.ok((select count(*) = 0 from public.claim_receipt_intake(5)), 'intake: a photo being read isn''t taken twice');
+update public.receipt_intake set claimed_at = now() - interval '11 minutes' where id = '60000000-0000-4000-8000-000000000001';
+select pg_temp.ok((select count(*) = 1 from public.claim_receipt_intake(5)), 'intake: a photo a dead worker left is taken again');
+update public.receipt_intake set claimed_at = now() - interval '11 minutes', attempts = 3 where id = '60000000-0000-4000-8000-000000000001';
+select pg_temp.ok((select count(*) = 0 from public.claim_receipt_intake(5)), 'intake: at most three tries');
+select pg_temp.ok((select public.forget_stale_receipt_intake() = 1), 'intake: rows older than an hour are deleted');
+select pg_temp.expect($$insert into public.receipt_intake (phone_hash, phone_sealed, media_id) values ('+15551234567', 'sealed-number-ciphertext', 'm')$$,
+  '23514', 'intake: the hash column takes only a hash');
+select pg_temp.expect($$insert into public.receipt_intake (phone_hash, phone_sealed, media_id) values (repeat('c', 64), 'sealed-number-ciphertext', '../x')$$,
+  '23514', 'intake: media IDs are checked');
+select pg_temp.expect($$update public.whatsapp_users set pending_receipt = '50000000-0000-4000-8000-000000000001'$$,
+  '23514', 'intake: a receipt being checked needs the field being asked');
+select pg_temp.expect($$update public.whatsapp_users set pending_receipt = '50000000-0000-4000-8000-000000000001', pending_field = 'sender_name'$$,
+  '23514', 'intake: only receipt fields can be asked about');
+update public.whatsapp_users set pending_receipt = '50000000-0000-4000-8000-000000000001', pending_field = 'fee';
+select pg_temp.ok((select count(*) = 1 from public.whatsapp_users where pending_field = 'fee'), 'intake: the function can note the value being asked');
+reset role;
+
+set role anon;
+select pg_temp.ok((select count(*) = 0 from public.receipt_intake), 'anon: the photo queue is not readable');
+select pg_temp.expect($$select * from public.claim_receipt_intake(1)$$, '42501', 'anon: can''t take photos off the queue');
+select pg_temp.expect($$select public.forget_stale_receipt_intake()$$, '42501', 'anon: can''t clear the queue');
+select pg_temp.expect($$insert into public.receipt_intake (phone_hash, phone_sealed, media_id) values (repeat('d', 64), 'sealed-number-ciphertext', 'm')$$,
+  '42501', 'anon: can''t queue a photo');
+reset role;
+
 \echo 'all local checks passed'
