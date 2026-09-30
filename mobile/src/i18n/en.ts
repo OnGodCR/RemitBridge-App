@@ -223,6 +223,7 @@ export const en = {
     upfrontFee: 'Upfront fee',
     markup: 'Exchange-rate markup',
     rateNote: (theirs: string, mid: string, pair: string) => `Their rate ${theirs} vs. mid-market ${mid} ${pair}`,
+    betterThanMid: 'Better than the reference rate. That is a daily rate, and live rates move during the day.',
     pickupCharge: 'Pickup charge',
     pickupNote: 'Charged where the money is collected',
     totalCost: 'Total cost',

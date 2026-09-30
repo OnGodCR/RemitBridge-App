@@ -238,6 +238,7 @@ export const vi: Copy = {
     upfrontFee: 'Phí thấy rõ',
     markup: 'Phần chênh lệch tỷ giá',
     rateNote: (theirs, mid, pair) => `Tỷ giá của họ ${theirs} so với trung bình thị trường ${mid} ${pair}`,
+    betterThanMid: 'Tốt hơn tỷ giá tham khảo. Đó là tỷ giá theo ngày, còn tỷ giá thực tế thay đổi trong ngày.',
     pickupCharge: 'Phí nhận tiền',
     pickupNote: 'Thu tại nơi nhận tiền',
     totalCost: 'Tổng chi phí',

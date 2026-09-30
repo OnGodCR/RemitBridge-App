@@ -239,6 +239,7 @@ export const es: Copy = {
     upfrontFee: 'Comisión visible',
     markup: 'Margen en el tipo de cambio',
     rateNote: (theirs, mid, pair) => `Su tipo de cambio ${theirs} contra el de mercado ${mid} ${pair}`,
+    betterThanMid: 'Mejor que la tasa de referencia. Esa es una tasa diaria, y las tasas en vivo cambian durante el día.',
     pickupCharge: 'Cargo por retiro',
     pickupNote: 'Se cobra donde se recoge el dinero',
     totalCost: 'Costo total',

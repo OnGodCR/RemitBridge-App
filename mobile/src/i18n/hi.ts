@@ -239,6 +239,7 @@ export const hi: Copy = {
     upfrontFee: 'दिखने वाली फ़ीस',
     markup: 'एक्सचेंज रेट में मार्कअप',
     rateNote: (theirs, mid, pair) => `उनका रेट ${theirs}, मिड-मार्केट ${mid} ${pair}`,
+    betterThanMid: 'संदर्भ रेट से बेहतर। वह रोज़ का रेट है, और लाइव रेट दिन भर बदलते रहते हैं।',
     pickupCharge: 'पिकअप शुल्क',
     pickupNote: 'पैसा लेने की जगह पर लिया जाता है',
     totalCost: 'कुल लागत',

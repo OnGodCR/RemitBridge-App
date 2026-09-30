@@ -35,6 +35,15 @@ gitignored, so the whole pipeline runs with no database and no keys.
 
 Thresholds are in `config.py` and recorded in DECISIONS.md D36.
 
+## Adapters
+
+- `manual`: prices a person read from a provider's public calculator (below).
+- `wise`: Wise's own quote from its Comparison API, with Wise's written permission
+  (DECISIONS.md D91). Bank transfer in, bank deposit out. The Scrape workflow runs it every
+  6 hours; `uv run rb-engine run --adapter wise` runs it into the local store.
+
+Every other Tier 1 provider's terms forbid automated access: see `docs/MANUAL_RESEARCH.md`.
+
 ## Adding an adapter
 
 1. Read the provider's robots.txt **and** terms. If either forbids automated access,

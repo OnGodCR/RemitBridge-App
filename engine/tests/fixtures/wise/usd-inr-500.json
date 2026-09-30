@@ -1,0 +1,104 @@
+{
+  "amount": 500.0,
+  "amountType": "SEND",
+  "providerCountry": null,
+  "providerTypes": [
+    "bank",
+    "moneyTransferProvider"
+  ],
+  "providers": [
+    {
+      "alias": "ofx",
+      "id": 59,
+      "logos": {
+        "altText": "OFX",
+        "circle": {
+          "pngUrl": null,
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/ofx-mark.svg"
+        },
+        "inverse": {
+          "pngUrl": null,
+          "svgUrl": null
+        },
+        "normal": {
+          "pngUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/ofx.png",
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/ofx.svg"
+        },
+        "white": {
+          "pngUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/ofx--white.png",
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/ofx--white.svg"
+        }
+      },
+      "name": "OFX",
+      "partner": false,
+      "quotes": [
+        {
+          "dateCollected": "2026-09-30T18:41:57.393330Z",
+          "deliveryEstimation": {
+            "duration": null,
+            "providerGivesEstimate": true
+          },
+          "fee": 5.0,
+          "isConsideredMidMarketRate": false,
+          "markup": 3.36960249,
+          "rate": 92.7173495628,
+          "receivedAmount": 45895.09,
+          "sendAmount": null,
+          "sourceCountry": null,
+          "targetCountry": null
+        }
+      ],
+      "type": "moneyTransferProvider"
+    },
+    {
+      "alias": "wise",
+      "id": 39,
+      "logos": {
+        "altText": "Wise",
+        "circle": {
+          "pngUrl": null,
+          "svgUrl": "https://dq8dwmysp7hk1.cloudfront.net/logos/wise-mark.svg"
+        },
+        "inverse": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_inverse.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_inverse.svg"
+        },
+        "normal": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo.svg"
+        },
+        "white": {
+          "pngUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_white.png",
+          "svgUrl": "https://wise.com/public-resources/assets/logos/wise-personal/logo_white.svg"
+        }
+      },
+      "name": "Wise",
+      "partner": false,
+      "quotes": [
+        {
+          "dateCollected": "2026-09-30T19:35:33Z",
+          "deliveryEstimation": {
+            "duration": {
+              "max": "PT44M27S",
+              "min": "PT44M27S"
+            },
+            "providerGivesEstimate": true
+          },
+          "fee": 9.17,
+          "isConsideredMidMarketRate": true,
+          "markup": 0.0,
+          "rate": 95.9588,
+          "receivedAmount": 47099.46,
+          "sendAmount": null,
+          "sourceCountry": null,
+          "targetCountry": null
+        }
+      ],
+      "type": "moneyTransferProvider"
+    }
+  ],
+  "sourceCountry": null,
+  "sourceCurrency": "USD",
+  "targetCountry": null,
+  "targetCurrency": "INR"
+}

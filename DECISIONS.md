@@ -758,9 +758,42 @@ mid-market rate when it loads, otherwise the quote's own.
 - **The engine's payment methods** gain `money_order` and `cashiers_check`. A test pins
   them to the formula's funding list.
 
-## 2026-09-30: The receipt model
+## 2026-09-30: the first automated prices
 
-*D91 is left to the other session (a Wise Comparison API adapter, if Angad says yes).*
+**D91. Wise's own prices come from its Comparison API, with Wise's written permission.**
+Wise's website terms forbid automated access without prior written permission, so Wise
+was manual (D52). Angad's permission request asked whether the Comparison API was open to
+a small free project; on 2026-09-30 Simon Bruins of Wise answered that the current
+documentation "is correct and you can use it. If you are a considerate user it shouldn't
+be a problem." Angad then asked Claude to "just do everything", which included this.
+- **What's used:** `GET https://api.wise.com/v4/comparisons/` for each route and amount,
+  and from each answer only Wise's own quote (alias `wise`). The other providers in the
+  answer are Wise's estimates of its competitors, not prices those providers published, so
+  they are never stored in `quotes`, shown or used to rank (the raw response is archived
+  whole, as every response is). wise.com's pages are never fetched.
+- **What a quote means:** a bank transfer paid from a bank account, delivered to a bank
+  account. Wise's comparison data covers only that; card pay-in costs more and needs
+  another source. Source is `api`; the checked time is the `dateCollected` Wise gives,
+  which is the moment of the request, and a quote priced more than 6 hours earlier is
+  refused.
+- **Considerate:** one request at a time, 5 seconds apart, 20 a run (4 routes × 5 amounts),
+  4 runs a day on the Scrape schedule (every 6 hours at :17), with the honest user agent.
+  The engine's rules still apply: no retry on 403 or 429, the circuit breaker, every
+  response archived, the publish gate.
+- **Drift check:** fingerprints only the envelope and Wise's own quotes. The whole response
+  changes shape with whichever competitors Wise lists, which would hold every run.
+- **A live rate beats a daily reference.** Frankfurter's mid-market rate is a daily fix
+  while Wise's rate is live, so Wise's markup often comes out slightly below zero (−0.1% to
+  −0.3% on the first run) and its total cost a little under its fee. That's the formula
+  working, not an error. The quote detail now shows the markup with its sign, so the rows
+  add up, and says the reference is a daily rate; the cost bar splits the amount sent
+  exactly.
+- **Not done:** Wise also documents an unauthenticated quote endpoint that prices each
+  pay-in method. The permission was for the Comparison API, so that endpoint isn't used.
+  The docs say future API versions will need authentication; when that lands, the adapter
+  needs a Wise API token, which Angad would create.
+
+## 2026-09-30: The receipt model
 
 **D92. Receipts are read by Qwen3 VL 32B through OpenRouter, not Claude** (replaces D79's
 model and API). Angad chose cost first, and asked for a cheaper Chinese model through
