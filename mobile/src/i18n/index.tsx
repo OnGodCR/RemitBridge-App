@@ -2,6 +2,10 @@ import { getLocales } from 'expo-localization';
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 
 import { en, type Copy } from '@/i18n/en';
+import { es } from '@/i18n/es';
+import { hi } from '@/i18n/hi';
+import { tl } from '@/i18n/tl';
+import { vi } from '@/i18n/vi';
 import { LANGUAGES, offeredLanguages, type Language, type LanguageCode } from '@/i18n/languages';
 import { countryName } from '@/lib/countries';
 import { currency } from '@/lib/currencies';
@@ -13,7 +17,7 @@ import { prefs } from '@/lib/prefs';
  * count (i18n/languages.ts), so an unreviewed translation can't be reached in a release
  * build even if a phone asks for it.
  */
-const COPY: Partial<Record<LanguageCode, Copy>> = { en };
+const COPY: Record<LanguageCode, Copy> = { en, es, hi, tl, vi };
 
 function startingLanguage(): LanguageCode {
   const offered = offeredLanguages().map((l) => l.code);
@@ -40,7 +44,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const value = useMemo<LanguageState>(
     () => ({
       language: LANGUAGES.find((l) => l.code === code) ?? LANGUAGES[0],
-      copy: COPY[code] ?? en,
+      copy: COPY[code],
       setLanguage: (next) => {
         prefs.setLanguage(next);
         setCode(next);

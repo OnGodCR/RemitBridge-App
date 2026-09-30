@@ -99,10 +99,12 @@ export function LanguageSheet({ visible, onClose }: { visible: boolean; onClose:
                   <AppText accessibilityLanguage={l.locale} style={[styles.name, { color: t.text }]}>
                     {l.name}
                   </AppText>
-                  <AppText variant="small" style={{ color: t.textSecondary }}>
-                    {l.english}
-                    {draft ? ` · ${copy.language.draft}` : ''}
-                  </AppText>
+                  {l.code !== 'en' ? (
+                    <AppText variant="small" style={{ color: t.textSecondary }}>
+                      {l.english}
+                      {draft ? ` · ${copy.language.draft}` : ''}
+                    </AppText>
+                  ) : null}
                 </View>
                 {selected ? (
                   <SymbolView pointerEvents="none" name="checkmark" size={icon} weight="bold" tintColor={t.primary} fallback={null} />

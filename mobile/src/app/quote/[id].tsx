@@ -1,7 +1,7 @@
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 
 import { Eyebrow } from '@/components/brand';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
@@ -14,7 +14,7 @@ import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, useCopy } from '@/i18n';
 import { money, moneySpoken, pct } from '@/lib/format';
-import { CONTACT } from '@/lib/links';
+import { writeToUs } from '@/lib/links';
 import { atAmount, fetchQuote, fetchQuoteHistory, type HistoryPoint, type LatestQuote } from '@/lib/quotes';
 import { DELIVERY_LABELS, ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
@@ -94,9 +94,7 @@ export default function QuoteDetail() {
       '',
       'What looks wrong:',
     ].join('\n');
-    Linking.openURL(`mailto:${CONTACT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`).catch(
-      () => undefined,
-    );
+    writeToUs(copy, subject, body);
   };
 
   return (

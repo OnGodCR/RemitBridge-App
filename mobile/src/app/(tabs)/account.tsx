@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
@@ -14,7 +14,7 @@ import { useCopy, useLanguage } from '@/i18n';
 import { offeredLanguages } from '@/i18n/languages';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
-import { CONTACT, LINKS, openPage } from '@/lib/links';
+import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 
@@ -90,12 +90,14 @@ export default function AccountScreen() {
           {canChooseLanguage ? (
             <ListGroup title={copy.language.title}>
               <ListRow title={language.name} subtitle={copy.language.pick} onPress={() => setLanguageOpen(true)} />
-              <ListRow
-                external
-                title={copy.language.improve}
-                subtitle={CONTACT}
-                onPress={() => Linking.openURL(`mailto:${CONTACT}?subject=${encodeURIComponent(`Translation: ${language.english}`)}`)}
-              />
+              {language.code !== 'en' ? (
+                <ListRow
+                  external
+                  title={copy.language.improve}
+                  subtitle={CONTACT}
+                  onPress={() => writeToUs(copy, `Translation: ${language.english}`)}
+                />
+              ) : null}
             </ListGroup>
           ) : null}
           <LanguageSheet visible={languageOpen} onClose={() => setLanguageOpen(false)} />
