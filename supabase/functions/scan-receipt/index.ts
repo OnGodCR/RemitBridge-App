@@ -20,6 +20,7 @@
 //   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D92)
 //   RECEIPT_MODEL_FALLBACKS     comma-separated OpenRouter models to try if it fails
 //   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
+//   RECEIPT_INTAKE_SECRET       lets the WhatsApp worker send channel 'whatsapp' (D94)
 //
 // Called by the app, signed in or not. The publishable key isn't a JWT, so JWT verification
 // is off (supabase/config.toml); parseRequest checks everything that arrives, and the
@@ -89,6 +90,8 @@ Deno.serve(async (req) => {
       const confirmed = await confirm(db, parsed.request);
       return 'error' in confirmed ? json(confirmed, confirmed.status) : json(confirmed);
     }
+    // A WhatsApp scan comes only from the worker, which holds RECEIPT_INTAKE_SECRET (D94).
+    if (parsed.request.channel === 'whatsapp' && !fromWorker(req)) return json({ error: 'forbidden' }, 403);
     return json(await scan(db, parsed.request));
   } catch (e) {
     console.error('scan-receipt: failed', e instanceof Error ? e.name : 'unknown');
@@ -105,6 +108,8 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const page = leftovers.length ? redactPage(request.page, leftovers) : request.page;
   const image = leftovers.length ? undefined : request.image;
   const today = trustedToday(request.today, new Date());
+  const whatsapp = request.channel === 'whatsapp';
+  const redaction: ScanResponse['redaction'] = whatsapp ? 'server' : leftovers.length ? 'device_rechecked' : 'device';
 
   const key = Deno.env.get('OPENROUTER_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
@@ -133,11 +138,11 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
 
   const { error: receiptError } = await db.from('receipts').insert({
     id,
-    channel: 'app',
+    channel: whatsapp ? 'whatsapp' : 'app',
     provider_id: result.providerId,
     provider_name: result.providerId ? null : (fields.provider?.value ?? null),
     route_id: routeId,
-    redaction_status: leftovers.length ? 'device_rechecked' : 'device',
+    redaction_status: redaction,
     research_consent: request.research_consent,
     image_retained: imagePath !== null,
     image_path: imagePath,
@@ -163,7 +168,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     missing: result.validation.missing,
     to_confirm: result.validation.toConfirm,
     model: { asked: result.askedModel, error: result.modelError },
-    redaction: leftovers.length ? 'device_rechecked' : 'device',
+    redaction,
   };
 }
 
@@ -314,6 +319,15 @@ function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClie
       return client.complete(request);
     },
   };
+}
+
+function fromWorker(req: Request): boolean {
+  const secret = Deno.env.get('RECEIPT_INTAKE_SECRET');
+  const given = req.headers.get('x-intake-secret') ?? '';
+  if (!secret || given.length !== secret.length) return false;
+  let diff = 0;
+  for (let i = 0; i < secret.length; i++) diff |= secret.charCodeAt(i) ^ given.charCodeAt(i);
+  return diff === 0;
 }
 
 /** The mid-market rate for the day from Frankfurter (D35), with the date it's for, or null. */

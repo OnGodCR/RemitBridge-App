@@ -64,6 +64,7 @@ beforeEach(() => {
     SUPABASE_SERVICE_ROLE_KEY: 'service-key',
     OPENROUTER_API_KEY: 'test-key',
     RECEIPT_MODEL_FALLBACKS: undefined,
+    RECEIPT_INTAKE_SECRET: 'intake-secret',
     RECEIPT_MODEL: undefined,
     RECEIPT_MODEL_MONTHLY_CAP: undefined,
   })
@@ -173,6 +174,34 @@ describe('the server’s second redaction', () => {
     for (const p of wu.pii) expect(sent).not.toContain(p)
     expect(tables.receipts[0]).toMatchObject({ redaction_status: 'device_rechecked', image_retained: false })
     expect(storage).toEqual([])
+  })
+})
+
+describe('scans from the WhatsApp worker', () => {
+  const fromWorker = (secret?: string) =>
+    handler(
+      new Request('https://example.supabase.co/functions/v1/scan-receipt', {
+        method: 'POST',
+        headers: secret ? { 'x-intake-secret': secret } : {},
+        body: JSON.stringify({ action: 'scan', page: redacted, research_consent: false, today: TODAY, channel: 'whatsapp' }),
+      }),
+    )
+
+  it('are refused without the worker’s secret', async () => {
+    expect((await fromWorker()).status).toBe(403)
+    expect((await fromWorker('wrong-secret!')).status).toBe(403)
+    env.RECEIPT_INTAKE_SECRET = undefined
+    expect((await fromWorker('intake-secret')).status).toBe(403)
+    expect(tables.receipts ?? []).toHaveLength(0)
+  })
+
+  it('are stored as WhatsApp receipts, redacted on the server', async () => {
+    replies.push(goodAnswer())
+    const res = await fromWorker('intake-secret')
+    const body = (await res.json()) as ScanResponse
+    expect(res.status).toBe(200)
+    expect(body.redaction).toBe('server')
+    expect(tables.receipts[0]).toMatchObject({ channel: 'whatsapp', redaction_status: 'server', image_retained: false })
   })
 })
 
