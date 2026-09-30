@@ -1,0 +1,716 @@
+{
+ "id": "synth-0032-wise-credit-card-usd-mxn",
+ "description": "Wise, USD to MXN, paid by credit card; no tax",
+ "source": "synthetic",
+ "seed": 32,
+ "expected": {
+  "provider": "Wise",
+  "send_currency": "USD",
+  "receive_currency": "MXN",
+  "amount_sent": 1000,
+  "fee": 3.99,
+  "exchange_rate": 16.7932,
+  "amount_received": 16793.2,
+  "transfer_date": "2026-08-14",
+  "funding_method": "credit_card"
+ },
+ "pii": [
+  "Meera",
+  "Patel",
+  "555-0169",
+  "Jose",
+  "Ramirez",
+  "8968542730",
+  "3902"
+ ],
+ "keep": [
+  "08/14/2026",
+  "US$1,000.00",
+  "USD 3.99",
+  "16.7932",
+  "16,793.20 MXN"
+ ],
+ "disclosures": [
+  "provider_contact",
+  "cfpb_contact"
+ ],
+ "mid_rate": 17.3206,
+ "printed": [
+  "Wise",
+  "Transfer receipt",
+  "Date Sent: 08/14/2026",
+  "From: Meera Patel",
+  "Phone: (206) 555-0169",
+  "To: Jose Ramirez",
+  "Confirmation 8968542730",
+  "Payment Type: Mastercard Credit ****3902",
+  "Amount Sent: US$1,000.00",
+  "Transfer Fee: USD 3.99",
+  "Exchange Rate: 16.7932 MXN",
+  "Payout Amount 16,793.20 MXN",
+  "For questions or complaints about Wise, contact us at 1-800-555-0164.",
+  "Consumer Financial Protection Bureau 855-411-2372 consumerfinance.gov/sending-money"
+ ],
+ "style": {
+  "font": "Liberation Sans",
+  "size": 17,
+  "width": 381,
+  "rotate": 0,
+  "blur": 0,
+  "paper": "#f7f7f7",
+  "layout": "same_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1002,
+  "height": 1004,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "Wise",
+      "box": {
+       "x": 88,
+       "y": 95,
+       "width": 98,
+       "height": 32
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 95,
+     "width": 98,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 89,
+       "y": 161,
+       "width": 124,
+       "height": 25
+      }
+     },
+     {
+      "text": "receipt",
+      "box": {
+       "x": 225,
+       "y": 161,
+       "width": 100,
+       "height": 32
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 161,
+     "width": 236,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 91,
+       "y": 214,
+       "width": 68,
+       "height": 24
+      }
+     },
+     {
+      "text": "Sent:",
+      "box": {
+       "x": 171,
+       "y": 214,
+       "width": 75,
+       "height": 24
+      }
+     },
+     {
+      "text": "08/14/2026",
+      "box": {
+       "x": 259,
+       "y": 213,
+       "width": 168,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 213,
+     "width": 336,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "From:",
+      "box": {
+       "x": 91,
+       "y": 266,
+       "width": 83,
+       "height": 24
+      }
+     },
+     {
+      "text": "Meera",
+      "box": {
+       "x": 189,
+       "y": 266,
+       "width": 94,
+       "height": 24
+      }
+     },
+     {
+      "text": "Patel",
+      "box": {
+       "x": 295,
+       "y": 265,
+       "width": 73,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 265,
+     "width": 277,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Phone:",
+      "box": {
+       "x": 91,
+       "y": 317,
+       "width": 102,
+       "height": 25
+      }
+     },
+     {
+      "text": "(206)",
+      "box": {
+       "x": 207,
+       "y": 317,
+       "width": 76,
+       "height": 32
+      }
+     },
+     {
+      "text": "555-0169",
+      "box": {
+       "x": 295,
+       "y": 318,
+       "width": 141,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 317,
+     "width": 345,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "To:",
+      "box": {
+       "x": 89,
+       "y": 368,
+       "width": 42,
+       "height": 24
+      }
+     },
+     {
+      "text": "Jose",
+      "box": {
+       "x": 143,
+       "y": 368,
+       "width": 70,
+       "height": 24
+      }
+     },
+     {
+      "text": "Ramirez",
+      "box": {
+       "x": 227,
+       "y": 367,
+       "width": 122,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 367,
+     "width": 260,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Confirmation",
+      "box": {
+       "x": 90,
+       "y": 419,
+       "width": 189,
+       "height": 25
+      }
+     },
+     {
+      "text": "8968542730",
+      "box": {
+       "x": 292,
+       "y": 420,
+       "width": 186,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 419,
+     "width": 388,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 91,
+       "y": 472,
+       "width": 131,
+       "height": 31
+      }
+     },
+     {
+      "text": "Type:",
+      "box": {
+       "x": 232,
+       "y": 472,
+       "width": 79,
+       "height": 31
+      }
+     },
+     {
+      "text": "Mastercard",
+      "box": {
+       "x": 326,
+       "y": 471,
+       "width": 166,
+       "height": 25
+      }
+     },
+     {
+      "text": "Credit",
+      "box": {
+       "x": 505,
+       "y": 471,
+       "width": 89,
+       "height": 25
+      }
+     },
+     {
+      "text": "****3902",
+      "box": {
+       "x": 604,
+       "y": 472,
+       "width": 126,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 471,
+     "width": 639,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Amount",
+      "box": {
+       "x": 88,
+       "y": 524,
+       "width": 117,
+       "height": 24
+      }
+     },
+     {
+      "text": "Sent:",
+      "box": {
+       "x": 216,
+       "y": 524,
+       "width": 75,
+       "height": 24
+      }
+     },
+     {
+      "text": "US$1,000.00",
+      "box": {
+       "x": 306,
+       "y": 523,
+       "width": 195,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 523,
+     "width": 413,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 89,
+       "y": 575,
+       "width": 124,
+       "height": 25
+      }
+     },
+     {
+      "text": "Fee:",
+      "box": {
+       "x": 225,
+       "y": 576,
+       "width": 63,
+       "height": 24
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 303,
+       "y": 576,
+       "width": 68,
+       "height": 24
+      }
+     },
+     {
+      "text": "3.99",
+      "box": {
+       "x": 383,
+       "y": 576,
+       "width": 63,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 575,
+     "width": 357,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Exchange",
+      "box": {
+       "x": 91,
+       "y": 627,
+       "width": 147,
+       "height": 32
+      }
+     },
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 251,
+       "y": 628,
+       "width": 76,
+       "height": 24
+      }
+     },
+     {
+      "text": "16.7932",
+      "box": {
+       "x": 342,
+       "y": 628,
+       "width": 119,
+       "height": 24
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 474,
+       "y": 628,
+       "width": 71,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 627,
+     "width": 454,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payout",
+      "box": {
+       "x": 91,
+       "y": 680,
+       "width": 103,
+       "height": 31
+      }
+     },
+     {
+      "text": "Amount",
+      "box": {
+       "x": 202,
+       "y": 680,
+       "width": 117,
+       "height": 24
+      }
+     },
+     {
+      "text": "16,793.20",
+      "box": {
+       "x": 330,
+       "y": 680,
+       "width": 148,
+       "height": 28
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 491,
+       "y": 680,
+       "width": 71,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 680,
+     "width": 471,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 91,
+       "y": 732,
+       "width": 48,
+       "height": 24
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 150,
+       "y": 731,
+       "width": 143,
+       "height": 32
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 305,
+       "y": 738,
+       "width": 28,
+       "height": 18
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 344,
+       "y": 731,
+       "width": 161,
+       "height": 32
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 516,
+       "y": 731,
+       "width": 84,
+       "height": 25
+      }
+     },
+     {
+      "text": "Wise,",
+      "box": {
+       "x": 610,
+       "y": 731,
+       "width": 82,
+       "height": 29
+      }
+     },
+     {
+      "text": "contact",
+      "box": {
+       "x": 705,
+       "y": 734,
+       "width": 109,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 731,
+     "width": 723,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "us",
+      "box": {
+       "x": 90,
+       "y": 784,
+       "width": 33,
+       "height": 18
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 135,
+       "y": 780,
+       "width": 27,
+       "height": 22
+      }
+     },
+     {
+      "text": "1-800-555-0164.",
+      "box": {
+       "x": 174,
+       "y": 778,
+       "width": 246,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 778,
+     "width": 330,
+     "height": 24
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Consumer",
+      "box": {
+       "x": 90,
+       "y": 830,
+       "width": 155,
+       "height": 24
+      }
+     },
+     {
+      "text": "Financial",
+      "box": {
+       "x": 257,
+       "y": 829,
+       "width": 131,
+       "height": 25
+      }
+     },
+     {
+      "text": "Protection",
+      "box": {
+       "x": 402,
+       "y": 829,
+       "width": 149,
+       "height": 25
+      }
+     },
+     {
+      "text": "Bureau",
+      "box": {
+       "x": 565,
+       "y": 830,
+       "width": 105,
+       "height": 24
+      }
+     },
+     {
+      "text": "855-411-",
+      "box": {
+       "x": 683,
+       "y": 830,
+       "width": 131,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 829,
+     "width": 724,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "2372",
+      "box": {
+       "x": 89,
+       "y": 876,
+       "width": 73,
+       "height": 24
+      }
+     },
+     {
+      "text": "consumerfinance.gov/sending-money",
+      "box": {
+       "x": 174,
+       "y": 875,
+       "width": 564,
+       "height": 32
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 875,
+     "width": 649,
+     "height": 32
+    }
+   }
+  ]
+ }
+}

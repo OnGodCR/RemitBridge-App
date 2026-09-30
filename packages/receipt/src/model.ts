@@ -1,5 +1,5 @@
 /**
- * The model fallback (DECISIONS.md D79, D91): a vision model reads only the fields the
+ * The model fallback (DECISIONS.md D79, D92): a vision model reads only the fields the
  * parser left missing or unsure, from the redacted photo and the redacted OCR text, and
  * answers in a strict JSON schema. Its answer is then checked again here field by field
  * with checkValue, so nothing it returns reaches the formula unchecked.
@@ -14,7 +14,7 @@ import { lineText } from './ocr.ts'
 import type { FieldName, OcrPage, ParsedField, ParsedFields } from './types.ts'
 
 /**
- * Qwen3 VL 32B Instruct, on OpenRouter (D91): reads photos, supports a strict JSON schema,
+ * Qwen3 VL 32B Instruct, on OpenRouter (D92): reads photos, supports a strict JSON schema,
  * and costs about a tenth of a cent a receipt. Overridden by RECEIPT_MODEL.
  */
 export const DEFAULT_MODEL = 'qwen/qwen3-vl-32b-instruct'
@@ -223,17 +223,21 @@ export function readAnswer(json: unknown, fields: FieldName[], page: OcrPage, to
   return out
 }
 
+export type ModelErrorReason = 'refusal' | 'truncated' | 'unreadable' | 'failed' | 'over_cap'
+
 export class ModelError extends Error {
-  constructor(
-    message: string,
-    /**
-     * refusal: the model declined; truncated: cut off at max_tokens; unreadable: not JSON;
-     * failed: OpenRouter answered with an error; over_cap: this month's model calls are
-     * used up (thrown by the caller's gate).
-     */
-    readonly reason: 'refusal' | 'truncated' | 'unreadable' | 'failed' | 'over_cap',
-  ) {
+  /**
+   * refusal: the model declined; truncated: cut off at max_tokens; unreadable: not JSON;
+   * failed: OpenRouter answered with an error; over_cap: this month's model calls are used
+   * up (thrown by the caller's gate).
+   */
+  readonly reason: ModelErrorReason
+
+  // A plain field, not a constructor parameter property, so Node can run this file by
+  // stripping its types (the benchmark script).
+  constructor(message: string, reason: ModelErrorReason) {
     super(message)
+    this.reason = reason
   }
 }
 

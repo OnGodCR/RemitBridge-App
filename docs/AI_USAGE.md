@@ -311,7 +311,7 @@ its theme tokens, and the branch's language setting on Account.
 ## 2026-09-30: switching the model fallback to Qwen through OpenRouter
 
 **What Angad asked:** use a cheaper Chinese model through OpenRouter instead of Anthropic,
-putting cost first. **What Claude did:** chose Qwen3 VL 32B Instruct (D91) and rewrote the
+putting cost first. **What Claude did:** chose Qwen3 VL 32B Instruct (D92) and rewrote the
 model client. Angad chose the provider and the priority; the model choice and the code are
 Claude's.
 
@@ -334,4 +334,39 @@ Claude's.
   `RECEIPT_MODEL_FALLBACKS`; cap default 2,000. `supabase/functions/scan-receipt/deno.json`
   deleted (it only mapped the SDK).
 - `site/privacy.html`: OpenRouter and Qwen replace Anthropic as the processor.
-- `DECISIONS.md` (D91, and a note on D79), `README.md`, `HANDOFF.md`, `CLAUDE.md`.
+- `DECISIONS.md` (D92, and a note on D79), `README.md`, `HANDOFF.md`, `CLAUDE.md`.
+
+## 2026-09-30: Phase 4, the accuracy benchmark and synthetic receipts
+
+**What Angad asked:** build Phase 4 (benchmark and synthetic generator). **What Claude did:**
+wrote all of the files below. The rule-based extractors are still Angad's `TODO(angad)`
+functions and were not touched; the benchmark measures them.
+
+**Created:**
+- `packages/receipt/src/synth.ts`: seeded synthetic receipt generator (values from the
+  formula, Reg E labels and variants, layouts, fictional personal details, disclosures, the
+  HTML drawing). `src/synth.test.ts`: determinism, every receipt passes the checks, tax only
+  on cash-type funding, coverage, redaction on 200 generated receipts.
+- `packages/receipt/src/node/tesseract.ts`: tesseract.js output to an OcrPage.
+- `packages/receipt/src/benchmark.ts` and `src/benchmark.test.ts`: per-mode summaries and the
+  `results.md` format.
+- `packages/receipt/scripts/synthesize.ts`: draws each receipt in Chromium (Playwright), reads
+  it with tesseract.js, writes the JSON and a redacted picture.
+- `packages/receipt/scripts/benchmark.ts`: runs parser, model and combined modes and writes
+  `benchmark/results.md`.
+- `benchmark/README.md`, `benchmark/results.md` (parser mode only), and
+  `benchmark/synthetic/synth-0001…0060-*.json` (generated).
+
+**Changed:**
+- `packages/receipt/src/redact.ts`: two fixes the generator found (a field line under a
+  heading ending in an ID word; OCR-misread card masks). Tests added in `src/redact.test.ts`.
+- `packages/receipt/src/node/fixtures.ts`: optional `mid_rate` and `disclosures`.
+- `packages/receipt/src/model.ts`: `ModelError.reason` as a plain field, so Node can run the
+  file by stripping types.
+- `packages/receipt/package.json`, `package-lock.json`: dev dependencies tesseract.js,
+  playwright-core, @tesseract.js-data/eng (about 70 MB installed); `synthesize` and
+  `benchmark` scripts.
+- `.github/workflows/ci.yml`: runs parser mode on the committed set.
+- `.gitignore`: benchmark photos.
+- `DECISIONS.md` (D93; D92 renumbered from D91, which the other session is using),
+  `README.md`, `HANDOFF.md`, `CLAUDE.md`.
