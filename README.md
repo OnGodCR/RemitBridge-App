@@ -13,8 +13,9 @@ research built from the collected price data.
 
 **Every MVP screen is built, and the WhatsApp bot is ready for Meta.** Prices come from
 manual entry until a provider allows automated checks. A receipt scanner for the 2026
-Congressional App Challenge is being built in phases on a branch (D69): the data model,
-redaction, parser harness, model fallback and validation are in. See [`HANDOFF.md`](HANDOFF.md)
+Congressional App Challenge is being built in phases (D72): the data model, redaction,
+parser harness, model fallback, validation and the scan screen are in. The app speaks
+English, with drafts in Hindi, Spanish, Tagalog and Vietnamese waiting on reviewers (D69). See [`HANDOFF.md`](HANDOFF.md)
 for where things stand and what's next.
 
 ## Launch routes
@@ -57,7 +58,7 @@ cd engine && uv sync && uv run pytest -q   # engine + formula vectors (Python)
 cd mobile && cp .env.example .env.local && npx expo start --lan
 ```
 
-Receipt scanning needs a development build, because its OCR module isn't in Expo Go (D70).
+Receipt scanning needs a development build, because its OCR module isn't in Expo Go (D73).
 Builds run on EAS, in the cloud: `cd mobile && npx eas-cli@latest init` once, set
 `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` as EAS environment
 variables for the `development` environment, then
@@ -71,7 +72,7 @@ Database changes: `supabase db push`, then the RLS smoke test
 deploy with `supabase functions deploy <name> --use-api`; their secrets are listed at the
 top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
 reads `ANTHROPIC_API_KEY` (without it, receipts are read by the rules alone), and optionally
-`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D76).
+`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D79).
 
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 

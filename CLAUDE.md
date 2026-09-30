@@ -63,10 +63,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
       proposed regulations (D78).
-- [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
-      requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
-      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md. Turn
-      ProtonVPN off first: it resets connections to Supabase's database port (2026-09-30).
+- [ ] **Push the receipts migration** (`20260930000000_receipts.sql`, D72), then run the
+      smoke test (48 checks; today 38 pass and the 10 receipt checks wait on this). Angad
+      runs `supabase db push` with ProtonVPN off. It passed every local check (2026-09-30).
 - [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
       detail or the bot until one is published.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
@@ -111,6 +110,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       are Angad's to send (the permission system stopped Claude after the first).
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Route requests, metrics and WhatsApp migrations pushed by Angad; smoke test 37/37,
+      and the route board loads in the app. Done 2026-09-30.
 - [x] Flags for the nine request-only countries, from flagcdn.com with Angad's yes.
       Every country has one now. Done 2026-09-30.
 - [x] Accessibility pass (D70): AA contrast, the largest text sizes (checked in English,
