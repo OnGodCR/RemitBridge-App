@@ -20,7 +20,8 @@ speaker signs off on each (D69).
 What stands between this and a working product, in order:
 
 1. **Few prices.** Wise's come automatically from its Comparison API, with permission
-   (D91), every 6 hours once the Scrape schedule runs. The other seven providers forbid
+   (D91), every 6 hours. The first run (2026-09-30, Actions run 36767752853) published 20:
+   the app shows Wise on all four routes, e.g. $500 to India, ₹47,102, 1.7% total cost. The other seven providers forbid
    automated access (D52): Add a price, or follow up on 2026-10-12.
 2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
