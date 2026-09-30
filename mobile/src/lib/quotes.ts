@@ -1,4 +1,4 @@
-import { computeTransferCost } from '@remitbridge/formula';
+import { computeTransferCost, remittanceTax, type FundingMethod } from '@remitbridge/formula';
 
 import { isoDay } from '@/lib/fx';
 import { type DeliveryMethod } from '@/lib/routes';
@@ -40,6 +40,8 @@ export interface LatestQuote {
 export interface ShownQuote extends LatestQuote {
   /** The checked amount this was worked out from, or null when the amount was checked. */
   basedOn: number | null;
+  /** The 1% federal tax included in the total cost, when paying in cash or similar (D73). */
+  tax: number;
 }
 
 /**
@@ -47,11 +49,17 @@ export interface ShownQuote extends LatestQuote {
  * and rate run through the one formula (see checkedAmountFor in lib/routes.ts), and the
  * result is labelled as an estimate wherever it shows.
  */
-export function atAmount(q: LatestQuote, amount: number): ShownQuote | null {
-  if (amount === Number(q.send_amount)) return { ...q, basedOn: null };
+export function atAmount(q: LatestQuote, amount: number, funding: FundingMethod = 'bank_account'): ShownQuote | null {
+  // Paying in cash, by money order or by cashier's check adds the 1% federal tax on the
+  // transfer amount (what's sent less the fee), on top of what's paid. It comes off before
+  // conversion like the fee, so it raises the total cost and leaves the amount received,
+  // and so the ranking, unchanged.
+  const tax = remittanceTax(amount - Number(q.fee), funding);
+  if (amount === Number(q.send_amount) && tax === 0) return { ...q, basedOn: null, tax: 0 };
   const c = computeTransferCost({
-    sent: amount,
+    sent: amount + tax,
     fee: Number(q.fee),
+    transferTax: tax,
     quotedRate: Number(q.offered_rate),
     midRate: Number(q.mid_market_rate),
     pickupCharge: Number(q.pickup_charge),
@@ -64,7 +72,8 @@ export function atAmount(q: LatestQuote, amount: number): ShownQuote | null {
     markup_pct: c.markupPct,
     total_cost: c.totalCost,
     total_cost_pct: c.totalCostPct,
-    basedOn: Number(q.send_amount),
+    basedOn: amount === Number(q.send_amount) ? null : Number(q.send_amount),
+    tax,
   };
 }
 

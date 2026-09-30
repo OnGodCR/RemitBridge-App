@@ -1,0 +1,185 @@
+{
+  "_about": "Test cases for the remittance tax in the one formula (DECISIONS.md D76, D78). The website's TrueCost has no tax, so unlike vectors.json these were not generated from the website: expected values were computed on 2026-09-30 from the formula's definitions with exact rational arithmetic (Python fractions.Fraction) and decimal half-up rounding for the tax, not by running either implementation. Both implementations must pass them. Relative tolerance: 1e-9.",
+  "tax": [
+    {
+      "name": "cash, $500",
+      "input": {
+        "transferAmount": 500,
+        "funding": "cash"
+      },
+      "expected": 5.0
+    },
+    {
+      "name": "money order, $123.45 rounds down",
+      "input": {
+        "transferAmount": 123.45,
+        "funding": "money_order"
+      },
+      "expected": 1.23
+    },
+    {
+      "name": "cashier's check, $100.50 rounds half up",
+      "input": {
+        "transferAmount": 100.5,
+        "funding": "cashiers_check"
+      },
+      "expected": 1.01
+    },
+    {
+      "name": "cash, $0.49 rounds to nothing",
+      "input": {
+        "transferAmount": 0.49,
+        "funding": "cash"
+      },
+      "expected": 0.0
+    },
+    {
+      "name": "cash, $2,499.99",
+      "input": {
+        "transferAmount": 2499.99,
+        "funding": "cash"
+      },
+      "expected": 25.0
+    },
+    {
+      "name": "bank account is exempt",
+      "input": {
+        "transferAmount": 500,
+        "funding": "bank_account"
+      },
+      "expected": 0
+    },
+    {
+      "name": "debit card is exempt",
+      "input": {
+        "transferAmount": 500,
+        "funding": "debit_card"
+      },
+      "expected": 0
+    },
+    {
+      "name": "credit card is exempt",
+      "input": {
+        "transferAmount": 500,
+        "funding": "credit_card"
+      },
+      "expected": 0
+    },
+    {
+      "name": "cash before 2026 had no tax",
+      "input": {
+        "transferAmount": 500,
+        "funding": "cash",
+        "date": "2025-12-31"
+      },
+      "expected": 0
+    },
+    {
+      "name": "cash on the first taxed day",
+      "input": {
+        "transferAmount": 500,
+        "funding": "cash",
+        "date": "2026-01-01"
+      },
+      "expected": 5.0
+    }
+  ],
+  "cases": [
+    {
+      "name": "cash-funded USD to MXN with the 1% tax",
+      "input": {
+        "sent": 509.99,
+        "fee": 4.99,
+        "transferTax": 5.0,
+        "quotedRate": 17.2,
+        "midRate": 17.7,
+        "pickupCharge": 0
+      },
+      "expected": {
+        "converted": 500.0,
+        "amountReceived": 8600.0,
+        "benchmarkReceived": 9026.823,
+        "shortfall": 426.823,
+        "markupPct": 2.824858757062147,
+        "markupCost": 14.124293785310735,
+        "pickupCost": 0.0,
+        "feeCost": 4.99,
+        "taxCost": 5.0,
+        "totalCost": 24.114293785310736,
+        "totalCostPct": 4.728385612523919
+      }
+    },
+    {
+      "name": "money order, with a pickup charge",
+      "input": {
+        "sent": 207,
+        "fee": 5,
+        "transferTax": 2,
+        "quotedRate": 16.9,
+        "midRate": 17.35,
+        "pickupCharge": 40
+      },
+      "expected": {
+        "converted": 200.0,
+        "amountReceived": 3340.0,
+        "benchmarkReceived": 3591.45,
+        "shortfall": 251.45,
+        "markupPct": 2.5936599423631126,
+        "markupCost": 5.187319884726225,
+        "pickupCost": 2.3054755043227666,
+        "feeCost": 5.0,
+        "taxCost": 2.0,
+        "totalCost": 14.492795389048991,
+        "totalCostPct": 7.001350429492266
+      }
+    },
+    {
+      "name": "cashier's check, no fee",
+      "input": {
+        "sent": 1010,
+        "fee": 0,
+        "transferTax": 10,
+        "quotedRate": 86.1,
+        "midRate": 88.25,
+        "pickupCharge": 0
+      },
+      "expected": {
+        "converted": 1000.0,
+        "amountReceived": 86100.0,
+        "benchmarkReceived": 89132.5,
+        "shortfall": 3032.5,
+        "markupPct": 2.4362606232294617,
+        "markupCost": 24.362606232294617,
+        "pickupCost": 0.0,
+        "feeCost": 0.0,
+        "taxCost": 10.0,
+        "totalCost": 34.36260623229462,
+        "totalCostPct": 3.4022382408212493
+      }
+    },
+    {
+      "name": "zero tax is the untaxed formula",
+      "input": {
+        "sent": 200,
+        "fee": 8,
+        "transferTax": 0,
+        "quotedRate": 16.2,
+        "midRate": 17.05,
+        "pickupCharge": 0
+      },
+      "expected": {
+        "converted": 192.0,
+        "amountReceived": 3110.4,
+        "benchmarkReceived": 3410.0,
+        "shortfall": 299.6,
+        "markupPct": 4.9853372434017595,
+        "markupCost": 9.571847507331379,
+        "pickupCost": 0.0,
+        "feeCost": 8.0,
+        "taxCost": 0.0,
+        "totalCost": 17.571847507331377,
+        "totalCostPct": 8.785923753665688
+      }
+    }
+  ]
+}

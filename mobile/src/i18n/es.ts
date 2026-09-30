@@ -27,6 +27,7 @@ export const es: Copy = {
   tabs: { compare: 'Comparar', tools: 'Herramientas', learn: 'Aprender', account: 'Cuenta' },
 
   titles: {
+    scan: 'Escanear un recibo',
     fairRate: 'Tipo de cambio justo',
     scamCheck: 'Revisión de estafas',
     trueCost: 'TrueCost',
@@ -53,6 +54,8 @@ export const es: Copy = {
     debit_card: 'Tarjeta de débito',
     credit_card: 'Tarjeta de crédito',
     cash: 'Efectivo',
+    money_order: 'Giro postal (money order)',
+    cashiers_check: 'Cheque de caja',
   },
 
   countries: {
@@ -356,6 +359,8 @@ export const es: Copy = {
   },
 
   tools: {
+    scan: 'Escanear un recibo',
+    scanSub: 'Lee un recibo con tu cámara, tapando primero los datos personales',
     title: 'Herramientas',
     subtitle: 'Revisa un tipo de cambio, un recibo o una petición de dinero.',
     before: 'Antes de enviar',
@@ -583,5 +588,138 @@ export const es: Copy = {
     step3After: ', que recibe quejas sobre envíos de dinero.',
     note: 'Los números de riesgo son nuestra propia lectura de qué tan fuerte apunta cada señal a un fraude por sí sola, basada en guías de la FTC y la CFPB. No son una estadística publicada ni tus probabilidades de ser estafado. Esto es educación, no asesoría legal ni financiera, y no podemos recuperar dinero ni intervenir ante una empresa.',
     again: 'Empezar de nuevo',
+  },
+
+  scan: {
+    intro:
+      'Toma una foto de un recibo de envío. La app lo lee en tu teléfono y tapa nombres, direcciones y números de teléfono y de cuenta antes de enviar nada.',
+    takePhoto: 'Tomar una foto',
+    choosePhoto: 'Elegir una foto',
+    needsBuild: 'Para escanear hace falta la versión completa de la app. No funciona en Expo Go.',
+    cameraDenied: 'Para tomar una foto, permite el acceso a la cámara para RemitBridge en Configuración.',
+    photosDenied: 'Para elegir una foto, permite el acceso a las fotos para RemitBridge en Configuración.',
+    reading: 'Leyendo el recibo en tu teléfono…',
+    noText: 'No se encontró texto. Intenta de nuevo con todo el recibo plano y con buena luz.',
+    misaligned: 'El texto no coincidió con la foto, así que no se tapó nada. Toma la foto otra vez.',
+    failed: 'Algo salió mal al leer la foto. Intenta de nuevo.',
+    previewTitle: 'Revisa lo que se tapó',
+    previewHelp: 'Los recuadros negros tapan los datos personales. Toca cualquier otra palabra para taparla también, y tócala otra vez para mostrarla.',
+    covered: (n: number) => (n === 1 ? 'Un dato tapado' : `${n} datos tapados`),
+    tapWord: (text: string) => `Palabra: ${text}. Toca para taparla.`,
+    tapCovered: 'La tapaste tú. Toca para mostrarla otra vez.',
+    consentLabel: 'Guardar este recibo para investigación',
+    consentHelp:
+      'Apagado a menos que lo actives. Activado: guardamos la foto tapada y las cifras, sin nada que diga quién eres, para estudiar cuánto paga la gente en realidad. Apagado: la foto nunca se guarda y las cifras se borran a los 30 días.',
+    send: 'Leer mi recibo',
+    sendFailed: 'No se pudo enviar. Revisa tu conexión e intenta de nuevo.',
+    notConnected: 'La app aún no está conectada.',
+    retake: 'Usar otra foto',
+    toCheck: 'Revisa esto',
+    notFound: 'No encontrado',
+    deleteNow: 'Borrar este recibo ahora',
+    deleted: 'Borrado.',
+    another: 'Escanear otro recibo',
+    limits: [
+      'Si cada cifra se leyó bien. Compara cada una con tu recibo.',
+      'Lo que solo aparece al reverso del recibo o está escrito a mano.',
+      'Las comisiones que pagó tu familia al recibir el dinero, a menos que el recibo las muestre.',
+    ],
+  },
+
+  confirm: {
+    title: 'Revisa cada cifra',
+    help: 'Toca una cifra, en la foto o en la lista, para cambiarla. Las marcadas con “Revisa esto” necesitan tu respuesta.',
+    left: (n: number) => (n === 1 ? 'Falta revisar una' : `Faltan revisar ${n}`),
+    ready: 'Ver cuánto costó',
+    failed: 'No se pudo enviar. Revisa tu conexión e intenta de nuevo.',
+    expired: 'Este recibo se borró, así que no se puede revisar. Escanéalo otra vez.',
+    looksRight: 'Esto está bien',
+    save: 'Guardar',
+    useSuggestion: (value: string) => `Usar ${value}`,
+    suggestion: (value: string) => `Las otras cifras indican ${value}.`,
+    invalid: (field: string) => `Eso no parece correcto para ${field}. Revísalo e intenta de nuevo.`,
+    datePlaceholder: 'MM/DD/AAAA',
+    currencyPlaceholder: 'p. ej. USD',
+    editing: (field: string) => `Cambiar: ${field}`,
+  },
+
+  result: {
+    title: 'Lo que realmente costó este envío',
+    costNote: (pct: string, world: number, target: number) =>
+      `${pct} de lo que enviaste. El promedio mundial es ${world}%; la meta de la ONU es ${target}%.`,
+    fee: 'Comisión visible',
+    tax: 'Impuesto federal a las remesas',
+    markup: (pct: string) => `Escondido en el tipo de cambio (margen de ${pct})`,
+    pickup: 'Cobrado al recoger',
+    received: 'Recibieron',
+    benchmark: 'Al tipo de cambio medio, sin comisión',
+    betterThanMid: 'El tipo de cambio fue mejor que el medio del mercado. Eso suele indicar una promoción de primer envío.',
+    source: (source: string, rate: string, day: string) =>
+      `Tipo de cambio medio del mercado de ${source}: ${rate}, del ${day}. Es una referencia diaria, así que el tipo pudo cambiar ese día.`,
+    noMid: 'No se pudo cargar el tipo de cambio medio de ese día, así que no se puede calcular el costo escondido en el tipo.',
+    missing: 'Faltan algunas cifras, así que no se puede calcular el costo total.',
+    advertisedTitle: 'Anunciado vs. pagado',
+    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
+      `El ${day}, ${provider} mostraba ${rate} para esta ruta con ${amount}, revisado ${time}.`,
+    yourRate: (rate: string) => `Tu recibo: ${rate}.`,
+    gapMore: (gap: string) => `El tipo que te dieron costó ${gap} más que el anunciado.`,
+    gapLess: (gap: string) => `El tipo que te dieron fue mejor que el anunciado, por ${gap}.`,
+    gapSame: 'El tipo que te dieron coincide con el anunciado.',
+    notTracked: 'No revisamos los precios de este proveedor, así que no hay un precio anunciado para comparar.',
+    noRoute: 'Aún no revisamos precios en esta ruta, así que no hay un precio anunciado para comparar.',
+    noQuote: 'No tenemos un precio de este proveedor revisado dentro de un día de este envío, así que no hay nada que comparar.',
+    missingValues: 'Falta la fecha, el monto o el tipo de cambio del recibo, así que no se puede comparar.',
+    taxTitle: 'Impuesto federal a las remesas',
+    taxRule:
+      'Desde el 1 de enero de 2026, los envíos pagados en efectivo, con giro postal o con cheque de caja tienen un impuesto federal del 1%. Los pagados desde una cuenta bancaria o con tarjeta, no.',
+    taxMatches: (funding: string, amount: string, expected: string, found: string) =>
+      `Este se pagó con ${funding}. El 1% de ${amount} es ${expected}, y el recibo muestra ${found}.`,
+    taxNotFound: (funding: string, amount: string, expected: string) =>
+      `Este se pagó con ${funding}. El 1% de ${amount} es ${expected}. No se encontró una línea de impuesto en este recibo.`,
+    taxDiffers: (funding: string, amount: string, expected: string, found: string) =>
+      `Este se pagó con ${funding}. El 1% de ${amount} es ${expected}. El recibo muestra ${found}.`,
+    taxNotTaxed: (funding: string) => `Este se pagó con ${funding}, así que el impuesto no aplica.`,
+    taxBefore: 'Este envío se hizo antes de que empezara el impuesto.',
+    taxUnknown: 'El recibo no dice cómo se pagó, así que no se puede revisar el impuesto.',
+    taxBank: (total: string, tax: string) =>
+      `Pagado desde una cuenta bancaria, el mismo envío habría costado ${total} en total, ${tax} menos.`,
+    taxAssumption:
+      'Tomamos el 1% del monto del envío, antes de comisiones. Es nuestra lectura de la regla, aún sin comparar con el reglamento final del IRS.',
+    nextTitle: 'La próxima vez',
+    compare: 'Compara esta ruta hoy',
+    notCovered: 'Aún no revisamos esta ruta.',
+    routeBoard: 'Ver qué rutas revisamos',
+  },
+
+  receiptFields: {
+    provider: 'Proveedor',
+    send_currency: 'Enviado en',
+    receive_currency: 'Recibido en',
+    amount_sent: 'Monto enviado',
+    fee: 'Comisión',
+    tax: 'Impuesto del envío',
+    total_paid: 'Total pagado',
+    exchange_rate: 'Tipo de cambio',
+    amount_received: 'Monto recibido',
+    pickup_charge: 'Cargo al recoger',
+    transfer_date: 'Fecha de envío',
+    funding_method: 'Pagado con',
+    delivery_method: 'Entrega',
+  },
+
+  receiptPaths: {
+    parser: 'Leído del texto',
+    model: 'Leído por IA',
+    user_corrected: 'Lo escribiste tú',
+  },
+
+  funding: {
+    compareLabel: 'Pagas con',
+    compareTaxLine: (funding: string, tax: string) =>
+      `Pagar con ${funding} suma el impuesto federal del 1%, ${tax} aquí. Está en el costo total.`,
+    compareNone: 'Aún no hay precios revisados para pagar así.',
+    trueCostLabel: 'Pagaste con',
+    trueCostTaxLine: (funding: string, tax: string) =>
+      `Pagado con ${funding}, así que se suma un impuesto federal del 1% de ${tax}. Está en el costo total.`,
   },
 };

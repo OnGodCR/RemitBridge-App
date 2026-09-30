@@ -33,6 +33,7 @@ export const en = {
 
   /** Native header titles of the pushed screens. */
   titles: {
+    scan: 'Scan a receipt',
     fairRate: 'Fair rate',
     scamCheck: 'Scam check',
     trueCost: 'TrueCost',
@@ -52,6 +53,8 @@ export const en = {
     debit_card: 'Debit card',
     credit_card: 'Credit card',
     cash: 'Cash',
+    money_order: 'Money order',
+    cashiers_check: 'Cashier’s check',
   } as Record<string, string>,
 
   /** Country names by code, for languages that need them; English uses lib/countries.ts. */
@@ -340,6 +343,8 @@ export const en = {
   },
 
   tools: {
+    scan: 'Scan a receipt',
+    scanSub: 'Read a receipt with your camera, with personal details covered first',
     title: 'Tools',
     subtitle: 'Check a rate, a receipt, or a request.',
     before: 'Before you send',
@@ -565,6 +570,140 @@ export const en = {
     step3After: ', which takes money-transfer complaints.',
     note: 'The risk numbers are our own reading of how strongly each sign points to fraud on its own, drawn from FTC and CFPB guidance. They aren’t a published statistic or your odds of being defrauded. This is education, not legal or financial advice, and we can’t recover money or step in with a company.',
     again: 'Start again',
+  },
+
+  /** Scanning a receipt (DECISIONS.md D72-D90). */
+  scan: {
+    intro:
+      'Take a photo of a transfer receipt. The app reads it on your phone and covers names, addresses, and phone and account numbers before anything is sent.',
+    takePhoto: 'Take a photo',
+    choosePhoto: 'Choose a photo',
+    needsBuild: 'Scanning needs the full build of the app. It doesn’t work in Expo Go.',
+    cameraDenied: 'To take a photo, allow camera access for RemitBridge in Settings.',
+    photosDenied: 'To choose a photo, allow photo access for RemitBridge in Settings.',
+    reading: 'Reading the receipt on your phone…',
+    noText: 'No text found. Try again with the whole receipt flat, in good light.',
+    misaligned: 'The text didn’t line up with the photo, so nothing was covered. Take the photo again.',
+    failed: 'Something went wrong reading the photo. Try again.',
+    previewTitle: 'Check what’s covered',
+    previewHelp: 'Black boxes cover personal details. Tap any other word to cover it too, and tap it again to show it.',
+    covered: (n: number) => (n === 1 ? 'One item covered' : `${n} items covered`),
+    tapWord: (text: string) => `Word: ${text}. Tap to cover it.`,
+    tapCovered: 'Covered by you. Tap to show it again.',
+    consentLabel: 'Keep this receipt for research',
+    consentHelp:
+      'Off unless you turn it on. On: we keep the covered photo and the values, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days.',
+    send: 'Read my receipt',
+    sendFailed: 'That didn’t go through. Check your connection and try again.',
+    notConnected: 'The app isn’t connected yet.',
+    retake: 'Use a different photo',
+    toCheck: 'Please check',
+    notFound: 'Not found',
+    deleteNow: 'Delete this receipt now',
+    deleted: 'Deleted.',
+    another: 'Scan another receipt',
+    limits: [
+      'Whether every value was read right. Check each one against your receipt.',
+      'Anything printed only on the back of the receipt, or written by hand.',
+      'Fees your family paid when the money arrived, unless the receipt shows them.',
+    ],
+  },
+
+  confirm: {
+    title: 'Check each value',
+    help: 'Tap a value, on the photo or in the list, to change it. Values marked “Please check” need your answer.',
+    left: (n: number) => (n === 1 ? 'One to check' : `${n} to check`),
+    ready: 'See what it cost',
+    failed: 'That didn’t go through. Check your connection and try again.',
+    expired: 'This receipt has been deleted, so it can’t be checked. Scan it again.',
+    looksRight: 'This is right',
+    save: 'Save',
+    useSuggestion: (value: string) => `Use ${value}`,
+    suggestion: (value: string) => `The other numbers suggest ${value}.`,
+    invalid: (field: string) => `That doesn’t look right for ${field}. Check it and try again.`,
+    datePlaceholder: 'MM/DD/YYYY',
+    currencyPlaceholder: 'e.g. USD',
+    editing: (field: string) => `Change: ${field}`,
+  },
+
+  result: {
+    title: 'What this transfer really cost',
+    costNote: (pct: string, world: number, target: number) =>
+      `${pct} of what you sent. The world average is ${world}%; the UN target is ${target}%.`,
+    fee: 'Fee you could see',
+    tax: 'Federal remittance tax',
+    markup: (pct: string) => `Hidden in the rate (${pct} markup)`,
+    pickup: 'Charged at pickup',
+    received: 'They received',
+    benchmark: 'At mid-market, with no fee',
+    betterThanMid: 'The rate was better than mid-market. That usually means a first-transfer promotion.',
+    source: (source: string, rate: string, day: string) =>
+      `Mid-market rate from ${source}: ${rate}, for ${day}. It’s a daily reference, so rates on the day may have moved.`,
+    noMid: 'The mid-market rate for that day couldn’t be loaded, so the cost hidden in the rate can’t be worked out.',
+    missing: 'Some values are missing, so the total cost can’t be worked out.',
+    advertisedTitle: 'Advertised vs. paid',
+    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
+      `On ${day}, ${provider} showed ${rate} for this route at ${amount}, checked ${time}.`,
+    yourRate: (rate: string) => `Your receipt: ${rate}.`,
+    gapMore: (gap: string) => `The rate you got cost ${gap} more than the advertised one.`,
+    gapLess: (gap: string) => `The rate you got was better than the advertised one, by ${gap}.`,
+    gapSame: 'The rate you got matches the advertised one.',
+    notTracked: 'We don’t check this provider’s prices, so there’s no advertised price to compare with.',
+    noRoute: 'We don’t check prices on this route yet, so there’s no advertised price to compare with.',
+    noQuote: 'We have no price from this provider checked within a day of this transfer, so there’s nothing to compare with.',
+    missingValues: 'The receipt’s date, amount or rate is missing, so it can’t be compared.',
+    taxTitle: 'Federal remittance tax',
+    taxRule:
+      'Since January 1, 2026, transfers paid in cash, by money order or by cashier’s check carry a 1% federal tax. Transfers paid from a bank account or by card don’t.',
+    taxMatches: (funding: string, amount: string, expected: string, found: string) =>
+      `This one was paid by ${funding}. 1% of ${amount} is ${expected}, and the receipt shows ${found}.`,
+    taxNotFound: (funding: string, amount: string, expected: string) =>
+      `This one was paid by ${funding}. 1% of ${amount} is ${expected}. No tax line was found on this receipt.`,
+    taxDiffers: (funding: string, amount: string, expected: string, found: string) =>
+      `This one was paid by ${funding}. 1% of ${amount} is ${expected}. The receipt shows ${found}.`,
+    taxNotTaxed: (funding: string) => `This one was paid by ${funding}, so the tax doesn’t apply.`,
+    taxBefore: 'This transfer was made before the tax started.',
+    taxUnknown: 'The receipt doesn’t say how it was paid for, so the tax can’t be checked.',
+    taxBank: (total: string, tax: string) =>
+      `Paid from a bank account instead, the same transfer would have cost ${total} in total, ${tax} less.`,
+    taxAssumption:
+      'We take 1% of the transfer amount, before fees. That is our reading of the rule, not yet checked against the IRS’s final regulations.',
+    nextTitle: 'Next time',
+    compare: 'Compare this route today',
+    notCovered: 'We don’t check this route yet.',
+    routeBoard: 'See which routes we check',
+  },
+
+  receiptFields: {
+    provider: 'Provider',
+    send_currency: 'Sent in',
+    receive_currency: 'Received in',
+    amount_sent: 'Amount sent',
+    fee: 'Fee',
+    tax: 'Transfer tax',
+    total_paid: 'Total paid',
+    exchange_rate: 'Exchange rate',
+    amount_received: 'Amount received',
+    pickup_charge: 'Pickup charge',
+    transfer_date: 'Date sent',
+    funding_method: 'Paid with',
+    delivery_method: 'Delivery',
+  },
+
+  receiptPaths: {
+    parser: 'Read from the text',
+    model: 'Read by AI',
+    user_corrected: 'You entered',
+  },
+
+  funding: {
+    compareLabel: 'You pay with',
+    compareTaxLine: (funding: string, tax: string) =>
+      `Paying by ${funding} adds the 1% federal tax, ${tax} here. It’s in the total cost.`,
+    compareNone: 'No prices checked yet for paying this way.',
+    trueCostLabel: 'You paid with',
+    trueCostTaxLine: (funding: string, tax: string) =>
+      `Paid by ${funding}, so a 1% federal tax of ${tax} is added. It’s in the total cost.`,
   },
 };
 

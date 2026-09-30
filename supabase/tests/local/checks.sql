@@ -183,4 +183,61 @@ delete from auth.users where id = '00000000-0000-4000-8000-0000000000b2';
 select pg_temp.ok((select count(*) = 0 from public.route_requests where user_id = '00000000-0000-4000-8000-0000000000b2')
   and (select count(*) = 0 from public.saved_comparisons), 'deleting an account deletes its requests and comparisons');
 
+-- ---------------------------------------------------------------------------------------
+-- Receipts (20260930000000_receipts.sql): only the function writes; the ID reads a result
+-- ---------------------------------------------------------------------------------------
+set role service_role;
+insert into public.receipts (id, channel, provider_id, route_id, redaction_status, expires_at) values
+  ('50000000-0000-4000-8000-000000000001', 'app', 'western-union', 'us-mx', 'device', now() + interval '30 days'),
+  ('50000000-0000-4000-8000-000000000002', 'app', null, null, 'device_rechecked', now() - interval '1 minute');
+insert into public.receipts (id, channel, provider_name, redaction_status, research_consent, image_retained, image_path) values
+  ('50000000-0000-4000-8000-000000000003', 'whatsapp', 'Corner Store Remit', 'server', true, true, 'r/3.jpg');
+insert into public.receipt_fields (receipt_id, field_name, value, extraction_path, confidence, validated) values
+  ('50000000-0000-4000-8000-000000000001', 'amount_sent', '500', 'parser', 0.95, true),
+  ('50000000-0000-4000-8000-000000000001', 'fee', '4.99', 'model', 0.9, false),
+  ('50000000-0000-4000-8000-000000000002', 'fee', '1', 'user_corrected', 1, true);
+insert into public.receipt_comparisons (receipt_id, advertised_rate, receipt_rate, gap_amount, gap_currency, tax_expected, tax_found)
+  values ('50000000-0000-4000-8000-000000000001', 17.3, 17.2, 2.89, 'USD', 5, 5);
+select pg_temp.expect($$insert into public.receipts (channel, redaction_status, image_retained, image_path, expires_at)
+  values ('app', 'device', true, 'x.jpg', now())$$, '23514', 'receipts: no image kept without research consent');
+select pg_temp.expect($$insert into public.receipts (channel, redaction_status) values ('app', 'device')$$,
+  '23514', 'receipts: without research consent, a receipt must expire');
+select pg_temp.expect($$insert into public.receipts (channel, redaction_status, expires_at) values ('web', 'device', now())$$,
+  '23514', 'receipts: channel is app or whatsapp');
+select pg_temp.expect($$insert into public.receipt_fields (receipt_id, field_name, value, extraction_path, confidence)
+  values ('50000000-0000-4000-8000-000000000001', 'sender_name', 'x', 'parser', 0.5)$$, '23514', 'receipts: only the listed fields');
+select pg_temp.expect($$insert into public.receipt_fields (receipt_id, field_name, value, extraction_path, confidence)
+  values ('50000000-0000-4000-8000-000000000001', 'tax', '5', 'guess', 0.5)$$, '23514', 'receipts: extraction path is parser, model or user_corrected');
+select pg_temp.expect($$insert into public.receipt_fields (receipt_id, field_name, value, extraction_path, confidence)
+  values ('50000000-0000-4000-8000-000000000001', 'tax', '5', 'parser', 1.5)$$, '23514', 'receipts: confidence is 0 to 1');
+select pg_temp.ok((select public.take_receipt_model_call(2)) and (select public.take_receipt_model_call(2))
+  and not (select public.take_receipt_model_call(2)), 'receipts: the monthly model cap stops at the cap');
+select pg_temp.ok(not (select public.take_receipt_model_call(0)), 'receipts: a cap of zero allows no calls');
+reset role;
+
+set role anon;
+select pg_temp.as_user(null);
+select pg_temp.ok((select count(*) = 0 from public.receipts) and (select count(*) = 0 from public.receipt_fields)
+  and (select count(*) = 0 from public.receipt_comparisons) and (select count(*) = 0 from public.receipt_model_calls),
+  'anon: receipt tables are not readable');
+select pg_temp.expect($$insert into public.receipts (channel, redaction_status, expires_at) values ('app', 'device', now())$$,
+  '42501', 'anon: can''t write a receipt');
+select pg_temp.expect($$select public.take_receipt_model_call(100)$$, '42501', 'anon: can''t spend model calls');
+select pg_temp.expect($$select public.forget_expired_receipts()$$, '42501', 'anon: can''t delete receipts');
+select pg_temp.ok((select public.receipt_result('50000000-0000-4000-8000-000000000001') -> 'fields' -> 'fee' ->> 'path' = 'model'),
+  'anon: the ID reads its result, with each field''s path');
+select pg_temp.ok((select public.receipt_result('50000000-0000-4000-8000-000000000001') -> 'comparison' ->> 'gap_currency' = 'USD'),
+  'anon: the result carries the comparison');
+select pg_temp.ok((select public.receipt_result('50000000-0000-4000-8000-000000000002') is null), 'anon: an expired receipt reads as nothing');
+select pg_temp.ok((select public.receipt_result('50000000-0000-4000-8000-0000000000ff') is null), 'anon: an unknown ID reads as nothing');
+reset role;
+
+set role service_role;
+select pg_temp.ok((select public.forget_expired_receipts() = 1), 'receipts: the expired one is deleted');
+reset role;
+select pg_temp.ok((select count(*) = 2 from public.receipts) and (select count(*) = 2 from public.receipt_fields),
+  'receipts: its fields go with it; the others and the consented one stay');
+select pg_temp.ok((select count(*) = 1 from storage.buckets where id = 'receipt-images' and not public),
+  'receipts: the image bucket is private');
+
 \echo 'all local checks passed'

@@ -27,6 +27,7 @@ export const vi: Copy = {
   tabs: { compare: 'So sánh', tools: 'Công cụ', learn: 'Tìm hiểu', account: 'Tài khoản' },
 
   titles: {
+    scan: 'Quét biên lai',
     fairRate: 'Tỷ giá công bằng',
     scamCheck: 'Kiểm tra lừa đảo',
     trueCost: 'TrueCost',
@@ -53,6 +54,8 @@ export const vi: Copy = {
     debit_card: 'Thẻ ghi nợ',
     credit_card: 'Thẻ tín dụng',
     cash: 'Tiền mặt',
+    money_order: 'Lệnh chuyển tiền (money order)',
+    cashiers_check: 'Séc thủ quỹ',
   },
 
   countries: {
@@ -355,6 +358,8 @@ export const vi: Copy = {
   },
 
   tools: {
+    scan: 'Quét biên lai',
+    scanSub: 'Đọc biên lai bằng camera, che thông tin cá nhân trước',
     title: 'Công cụ',
     subtitle: 'Kiểm tra tỷ giá, biên lai, hoặc một yêu cầu gửi tiền.',
     before: 'Trước khi gửi',
@@ -583,5 +588,138 @@ export const vi: Copy = {
     step3After: ', nơi tiếp nhận khiếu nại về chuyển tiền.',
     note: 'Các con số rủi ro là đánh giá của riêng chúng tôi về mức độ mỗi dấu hiệu, đứng riêng, cho thấy khả năng lừa đảo, dựa trên hướng dẫn của FTC và CFPB. Đó không phải là thống kê được công bố hay khả năng bạn bị lừa. Đây là thông tin giáo dục, không phải tư vấn pháp lý hay tài chính, và chúng tôi không thể lấy lại tiền hoặc can thiệp với một công ty.',
     again: 'Bắt đầu lại',
+  },
+
+  scan: {
+    intro:
+      'Chụp ảnh biên lai chuyển tiền. Ứng dụng đọc nó ngay trên điện thoại của bạn và che tên, địa chỉ, số điện thoại và số tài khoản trước khi gửi bất cứ thứ gì.',
+    takePhoto: 'Chụp ảnh',
+    choosePhoto: 'Chọn ảnh',
+    needsBuild: 'Cần bản đầy đủ của ứng dụng để quét. Tính năng này không chạy trên Expo Go.',
+    cameraDenied: 'Để chụp ảnh, hãy cho phép RemitBridge dùng camera trong Cài đặt.',
+    photosDenied: 'Để chọn ảnh, hãy cho phép RemitBridge truy cập ảnh trong Cài đặt.',
+    reading: 'Đang đọc biên lai trên điện thoại của bạn…',
+    noText: 'Không tìm thấy chữ. Hãy thử lại với cả biên lai đặt phẳng, đủ sáng.',
+    misaligned: 'Chữ không khớp với ảnh, nên chưa che gì cả. Hãy chụp lại.',
+    failed: 'Có lỗi khi đọc ảnh. Hãy thử lại.',
+    previewTitle: 'Kiểm tra phần đã che',
+    previewHelp: 'Ô đen che thông tin cá nhân. Chạm vào từ khác để che thêm, chạm lại để hiện ra.',
+    covered: (n: number) => (n === 1 ? 'Đã che một mục' : `Đã che ${n} mục`),
+    tapWord: (text: string) => `Từ: ${text}. Chạm để che.`,
+    tapCovered: 'Do bạn che. Chạm để hiện lại.',
+    consentLabel: 'Giữ biên lai này để nghiên cứu',
+    consentHelp:
+      'Tắt trừ khi bạn bật. Bật: chúng tôi giữ ảnh đã che và các con số, không có gì cho biết bạn là ai, để nghiên cứu người ta thực sự trả bao nhiêu. Tắt: ảnh không bao giờ được lưu, và các con số bị xóa sau 30 ngày.',
+    send: 'Đọc biên lai của tôi',
+    sendFailed: 'Không gửi được. Hãy kiểm tra kết nối và thử lại.',
+    notConnected: 'Ứng dụng chưa được kết nối.',
+    retake: 'Dùng ảnh khác',
+    toCheck: 'Vui lòng kiểm tra',
+    notFound: 'Không tìm thấy',
+    deleteNow: 'Xóa biên lai này ngay',
+    deleted: 'Đã xóa.',
+    another: 'Quét biên lai khác',
+    limits: [
+      'Mỗi con số có được đọc đúng không. Hãy so từng con số với biên lai.',
+      'Những gì chỉ in ở mặt sau biên lai, hoặc viết tay.',
+      'Phí gia đình bạn trả khi nhận tiền, trừ khi biên lai có ghi.',
+    ],
+  },
+
+  confirm: {
+    title: 'Kiểm tra từng con số',
+    help: 'Chạm vào một con số, trên ảnh hoặc trong danh sách, để sửa. Những mục có “Vui lòng kiểm tra” cần bạn trả lời.',
+    left: (n: number) => (n === 1 ? 'Còn một mục cần kiểm tra' : `Còn ${n} mục cần kiểm tra`),
+    ready: 'Xem chi phí thực',
+    failed: 'Không gửi được. Hãy kiểm tra kết nối và thử lại.',
+    expired: 'Biên lai này đã bị xóa nên không thể kiểm tra. Hãy quét lại.',
+    looksRight: 'Đúng rồi',
+    save: 'Lưu',
+    useSuggestion: (value: string) => `Dùng ${value}`,
+    suggestion: (value: string) => `Các con số khác cho thấy là ${value}.`,
+    invalid: (field: string) => `Giá trị này có vẻ không đúng cho ${field}. Hãy kiểm tra và thử lại.`,
+    datePlaceholder: 'MM/DD/YYYY',
+    currencyPlaceholder: 'vd. USD',
+    editing: (field: string) => `Sửa: ${field}`,
+  },
+
+  result: {
+    title: 'Chi phí thực của lần chuyển này',
+    costNote: (pct: string, world: number, target: number) =>
+      `${pct} số tiền bạn gửi. Trung bình thế giới là ${world}%; mục tiêu của Liên Hợp Quốc là ${target}%.`,
+    fee: 'Phí bạn thấy được',
+    tax: 'Thuế chuyển tiền liên bang',
+    markup: (pct: string) => `Ẩn trong tỷ giá (chênh lệch ${pct})`,
+    pickup: 'Phí khi nhận tiền mặt',
+    received: 'Người nhận nhận được',
+    benchmark: 'Theo tỷ giá trung bình thị trường, không phí',
+    betterThanMid: 'Tỷ giá tốt hơn tỷ giá trung bình thị trường. Thường đó là khuyến mãi cho lần chuyển đầu.',
+    source: (source: string, rate: string, day: string) =>
+      `Tỷ giá trung bình thị trường từ ${source}: ${rate}, ngày ${day}. Đây là mức tham chiếu theo ngày, nên tỷ giá trong ngày có thể đã thay đổi.`,
+    noMid: 'Không tải được tỷ giá trung bình thị trường của ngày đó, nên không tính được chi phí ẩn trong tỷ giá.',
+    missing: 'Thiếu một số con số, nên không tính được tổng chi phí.',
+    advertisedTitle: 'Quảng cáo và thực trả',
+    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
+      `Ngày ${day}, ${provider} hiển thị ${rate} cho tuyến này với ${amount}, kiểm tra ${time}.`,
+    yourRate: (rate: string) => `Biên lai của bạn: ${rate}.`,
+    gapMore: (gap: string) => `Tỷ giá bạn nhận khiến bạn tốn hơn mức quảng cáo ${gap}.`,
+    gapLess: (gap: string) => `Tỷ giá bạn nhận tốt hơn mức quảng cáo ${gap}.`,
+    gapSame: 'Tỷ giá bạn nhận khớp với mức quảng cáo.',
+    notTracked: 'Chúng tôi không kiểm tra giá của nhà cung cấp này, nên không có giá quảng cáo để so sánh.',
+    noRoute: 'Chúng tôi chưa kiểm tra giá trên tuyến này, nên không có giá quảng cáo để so sánh.',
+    noQuote: 'Chúng tôi không có giá nào của nhà cung cấp này được kiểm tra trong vòng một ngày của lần chuyển này, nên không có gì để so sánh.',
+    missingValues: 'Biên lai thiếu ngày, số tiền hoặc tỷ giá, nên không thể so sánh.',
+    taxTitle: 'Thuế chuyển tiền liên bang',
+    taxRule:
+      'Từ ngày 1 tháng 1 năm 2026, các lần chuyển trả bằng tiền mặt, lệnh chuyển tiền hoặc séc thủ quỹ chịu thuế liên bang 1%. Chuyển từ tài khoản ngân hàng hoặc bằng thẻ thì không.',
+    taxMatches: (funding: string, amount: string, expected: string, found: string) =>
+      `Lần này trả bằng ${funding}. 1% của ${amount} là ${expected}, và biên lai ghi ${found}.`,
+    taxNotFound: (funding: string, amount: string, expected: string) =>
+      `Lần này trả bằng ${funding}. 1% của ${amount} là ${expected}. Không tìm thấy dòng thuế nào trên biên lai này.`,
+    taxDiffers: (funding: string, amount: string, expected: string, found: string) =>
+      `Lần này trả bằng ${funding}. 1% của ${amount} là ${expected}. Biên lai ghi ${found}.`,
+    taxNotTaxed: (funding: string) => `Lần này trả bằng ${funding}, nên không áp dụng thuế.`,
+    taxBefore: 'Lần chuyển này diễn ra trước khi có thuế.',
+    taxUnknown: 'Biên lai không ghi cách thanh toán, nên không kiểm tra được thuế.',
+    taxBank: (total: string, tax: string) =>
+      `Nếu trả từ tài khoản ngân hàng, cùng lần chuyển này sẽ tốn tổng cộng ${total}, ít hơn ${tax}.`,
+    taxAssumption:
+      'Chúng tôi lấy 1% của số tiền chuyển, trước phí. Đó là cách chúng tôi hiểu quy định, chưa đối chiếu với quy định cuối cùng của IRS.',
+    nextTitle: 'Lần sau',
+    compare: 'So sánh tuyến này hôm nay',
+    notCovered: 'Chúng tôi chưa kiểm tra tuyến này.',
+    routeBoard: 'Xem các tuyến chúng tôi kiểm tra',
+  },
+
+  receiptFields: {
+    provider: 'Nhà cung cấp',
+    send_currency: 'Gửi bằng',
+    receive_currency: 'Nhận bằng',
+    amount_sent: 'Số tiền gửi',
+    fee: 'Phí',
+    tax: 'Thuế chuyển tiền',
+    total_paid: 'Tổng đã trả',
+    exchange_rate: 'Tỷ giá',
+    amount_received: 'Số tiền nhận',
+    pickup_charge: 'Phí nhận tiền mặt',
+    transfer_date: 'Ngày gửi',
+    funding_method: 'Trả bằng',
+    delivery_method: 'Cách nhận',
+  },
+
+  receiptPaths: {
+    parser: 'Đọc từ chữ',
+    model: 'AI đọc',
+    user_corrected: 'Bạn nhập',
+  },
+
+  funding: {
+    compareLabel: 'Bạn trả bằng',
+    compareTaxLine: (funding: string, tax: string) =>
+      `Trả bằng ${funding} sẽ cộng thêm thuế liên bang 1%, ở đây là ${tax}. Đã tính trong tổng chi phí.`,
+    compareNone: 'Chưa có giá nào được kiểm tra cho cách trả này.',
+    trueCostLabel: 'Bạn đã trả bằng',
+    trueCostTaxLine: (funding: string, tax: string) =>
+      `Trả bằng ${funding}, nên cộng thêm thuế liên bang 1% là ${tax}. Đã tính trong tổng chi phí.`,
   },
 };
