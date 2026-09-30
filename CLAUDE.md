@@ -63,8 +63,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
       proposed regulations (D78).
-- [ ] **More prices.** Wise's now come in automatically (D91), once the Scrape schedule
-      runs. The other seven providers still need Add a price or their permission.
+- [ ] **More prices.** Wise's are live (D91): the first Scrape run published 20 on
+      2026-09-30, and it repeats every 6 hours. The other seven providers still need Add a
+      price or their permission.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
       `notify-route-launch` (D67). Needed before any requested route goes live.
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
@@ -79,8 +80,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
-- [ ] **Disk space.** 5.3 GB free on 2026-09-30; native builds (and real store
-      screenshots) need 15–20 GB.
+- [ ] **Disk space and memory.** 5.8 GB free on 2026-09-30 after the merge's packages
+      (about 1.8 GB); native builds (and real store screenshots) need 15–20 GB. With 8 GB of
+      RAM and swap nearly full, the simulator took 90 seconds to boot.
 - [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
 - [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also
