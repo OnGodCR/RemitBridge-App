@@ -1,5 +1,6 @@
 import { computeTransferCost } from '@remitbridge/formula';
 
+import { isoDay } from '@/lib/fx';
 import { AMOUNTS, type DeliveryMethod } from '@/lib/routes';
 import { supabase } from '@/lib/supabase';
 
@@ -105,4 +106,86 @@ export function rank(quotes: LatestQuote[]): { standing: LatestQuote[]; promotio
     standing: quotes.filter((q) => !q.is_promotional).sort(byReceived),
     promotional: quotes.filter((q) => q.is_promotional).sort(byReceived),
   };
+}
+
+/**
+ * One quote for the detail screen, by id. From `latest_quotes` first, which is what Compare
+ * listed; if it has aged out of that 48-hour window since, from `quotes`, where the public
+ * policy still shows it because it was published (PRD 9.7). 'missing' when neither has it.
+ */
+export async function fetchQuote(id: number): Promise<LatestQuote | 'missing' | 'error'> {
+  if (!supabase) return 'error';
+  const latest = await supabase.from('latest_quotes').select('*').eq('id', id).maybeSingle();
+  if (latest.error) return 'error';
+  if (latest.data) return numeric(latest.data as LatestQuote);
+  const old = await supabase
+    .from('quotes')
+    .select(
+      'id, provider_id, providers(name), route_id, send_currency, receive_currency, send_amount, delivery_method, payment_method, fee, offered_rate, mid_market_rate, mid_market_source, pickup_charge, amount_received, markup_pct, total_cost, total_cost_pct, delivery_time, is_promotional, source, captured_at',
+    )
+    .eq('id', id)
+    .maybeSingle();
+  if (old.error) return 'error';
+  if (!old.data) return 'missing';
+  const { providers, ...row } = old.data as unknown as LatestQuote & { providers: { name: string } | null };
+  return numeric({ ...row, provider_name: providers?.name ?? row.provider_id, is_stale: true });
+}
+
+/** PostgREST returns numeric columns as strings when they don't fit a double exactly. */
+function numeric(q: LatestQuote): LatestQuote {
+  return {
+    ...q,
+    send_amount: Number(q.send_amount),
+    fee: Number(q.fee),
+    offered_rate: Number(q.offered_rate),
+    mid_market_rate: Number(q.mid_market_rate),
+    pickup_charge: Number(q.pickup_charge),
+    amount_received: Number(q.amount_received),
+    markup_pct: Number(q.markup_pct),
+    total_cost: Number(q.total_cost),
+    total_cost_pct: Number(q.total_cost_pct),
+  };
+}
+
+export interface HistoryPoint {
+  date: string;
+  amountReceived: number;
+  offeredRate: number;
+  fee: number;
+}
+
+/**
+ * The provider's recent published prices for the same route, amount and method, one point
+ * per day (the last check that day), for the detail screen's "recent prices" (PRD 14.7).
+ * Promotional prices are left out, so a one-time offer doesn't read as the usual price.
+ */
+export async function fetchQuoteHistory(q: LatestQuote, days = 30): Promise<HistoryPoint[] | 'error'> {
+  if (!supabase) return 'error';
+  const since = new Date(Date.now() - days * 86_400_000).toISOString();
+  const { data, error } = await supabase
+    .from('quotes')
+    .select('captured_at, amount_received, offered_rate, fee')
+    .eq('provider_id', q.provider_id)
+    .eq('route_id', q.route_id)
+    .eq('delivery_method', q.delivery_method)
+    .eq('payment_method', q.payment_method)
+    .eq('send_amount', q.send_amount)
+    .eq('is_promotional', false)
+    .eq('validation_status', 'published')
+    .gte('captured_at', since)
+    .order('captured_at', { ascending: true })
+    .limit(500);
+  if (error) return 'error';
+  const byDay = new Map<string, HistoryPoint>();
+  for (const r of data ?? []) {
+    // The phone's own day, like the rest of the app: a check at 9pm Pacific is that day's.
+    const date = isoDay(new Date(r.captured_at));
+    byDay.set(date, {
+      date,
+      amountReceived: Number(r.amount_received),
+      offeredRate: Number(r.offered_rate),
+      fee: Number(r.fee),
+    });
+  }
+  return [...byDay.values()];
 }

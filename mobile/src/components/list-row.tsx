@@ -1,6 +1,6 @@
 import { SymbolView } from 'expo-symbols';
 import type { ReactNode } from 'react';
-import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Eyebrow } from '@/components/brand';
 import { AppText } from '@/components/ui';
@@ -71,6 +71,33 @@ export function ListPoint({ title, children }: { title: string; children: ReactN
 }
 
 /**
+ * A figure in a list: what it is on the left, the value on the right in tabular figures,
+ * and an optional line under the label (a source, a rate). `strong` is the total.
+ */
+export function ListFact({
+  label,
+  value,
+  note,
+  strong,
+}: {
+  label: string;
+  value: string;
+  note?: string;
+  strong?: boolean;
+}) {
+  const t = useTheme();
+  return (
+    <ListItem style={styles.fact}>
+      <View style={styles.text}>
+        <AppText style={[strong ? styles.factStrong : styles.factLabel, { color: t.text }]}>{label}</AppText>
+        {note ? <AppText variant="small" style={{ color: t.textSecondary }}>{note}</AppText> : null}
+      </View>
+      <AppText style={[strong ? styles.factStrong : styles.factValue, { color: t.text }]}>{value}</AppText>
+    </ListItem>
+  );
+}
+
+/**
  * The row itself, for lists whose rows carry their own content (saved checks, saved
  * comparisons): the hairline under it, the height, and the pressed state.
  */
@@ -78,23 +105,27 @@ export function ListItem({
   children,
   onPress,
   style,
-  ...a11y
+  ...rest
 }: {
   children: ReactNode;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  accessibilityRole?: 'button' | 'link';
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}) {
+} & Pick<
+  PressableProps,
+  | 'onLongPress'
+  | 'accessibilityRole'
+  | 'accessibilityLabel'
+  | 'accessibilityHint'
+  | 'accessibilityActions'
+  | 'onAccessibilityAction'
+>) {
   const t = useTheme();
   if (!onPress) return <View style={[styles.row, { borderBottomColor: t.border }, style]}>{children}</View>;
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole={a11y.accessibilityRole ?? 'button'}
-      accessibilityLabel={a11y.accessibilityLabel}
-      accessibilityHint={a11y.accessibilityHint}
+      {...rest}
+      accessibilityRole={rest.accessibilityRole ?? 'button'}
       style={({ pressed }) => [styles.row, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }, style]}>
       {children}
     </Pressable>
@@ -131,4 +162,8 @@ const styles = StyleSheet.create({
   // The site's index title is text-2xl bold; 19 keeps a long tool name on one line here.
   title: { fontFamily: Fonts.bold, fontSize: 19, lineHeight: 24, letterSpacing: -0.3 },
   subtitle: { fontSize: 15, lineHeight: 21 },
+  fact: { minHeight: MinTapTarget + 8, paddingVertical: Spacing.two + 4 },
+  factLabel: { fontSize: 16, lineHeight: 22 },
+  factValue: { fontFamily: Fonts.semibold, fontSize: 16, lineHeight: 22, fontVariant: ['tabular-nums'] },
+  factStrong: { fontFamily: Fonts.bold, fontSize: 17, lineHeight: 22, fontVariant: ['tabular-nums'] },
 });

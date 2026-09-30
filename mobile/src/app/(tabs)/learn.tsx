@@ -47,6 +47,11 @@ export default function LearnScreen() {
           <ListGroup title="Go deeper">
             <ListRow title="Glossary" subtitle="80 terms, in plain English" onPress={() => router.push('/glossary')} />
             <ListRow
+              title="Route board"
+              subtitle="Which routes we check, and which people want"
+              onPress={() => router.push('/routes')}
+            />
+            <ListRow
               title="RemitBench"
               subtitle="Our research testbed, still being built"
               onPress={() => router.push('/remitbench')}

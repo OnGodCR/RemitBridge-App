@@ -49,7 +49,15 @@ const FLAGS: Record<string, ImageSourcePropType> = {
 export function Flag({ code, height = 18, dim }: { code: string; height?: number; dim?: boolean }) {
   const t = useTheme();
   const source = FLAGS[code.toUpperCase()];
-  if (!source) return <View style={{ width: height * 1.5, height }} />;
+  // No bundled flag yet (some request-only countries): a plain 3:2 tile in the flag's place,
+  // so the row keeps its shape. The name beside it says which country it is.
+  if (!source) {
+    return (
+      <View
+        style={[styles.flag, { width: height * 1.5, height, borderColor: t.border, backgroundColor: t.muted }]}
+      />
+    );
+  }
   const { width: w, height: h } = Image.resolveAssetSource(source);
   return (
     <Image
