@@ -5,12 +5,14 @@ import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View } from 
 
 import { Eyebrow } from '@/components/brand';
 import { FlagSlot } from '@/components/flag';
-import { ListGroup, ListItem } from '@/components/list-row';
+import { Arrow, ListGroup, ListItem } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { countryName } from '@/lib/countries';
+import { openCompare } from '@/lib/open-compare';
 import { fetchBoard, type BoardEntry, type RouteStatus } from '@/lib/requests';
+import { routeFor } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 /**
@@ -119,8 +121,13 @@ export default function RouteBoard() {
 function BoardRow({ entry: e }: { entry: BoardEntry }) {
   const t = useTheme();
   const asked = e.requests === 1 ? '1 request' : `${e.requests.toLocaleString()} requests`;
+  // A route the app can compare opens there; the rest are information only.
+  const route = routeFor(e.from, e.to);
   return (
-    <ListItem>
+    <ListItem
+      onPress={route ? () => openCompare({ routeId: route.id }) : undefined}
+      accessibilityLabel={`${countryName(e.to)}, from ${countryName(e.from)}${e.requests > 0 ? `, ${asked}` : ''}`}
+      accessibilityHint={route ? 'Opens Compare on this route' : undefined}>
       <FlagSlot code={e.to} />
       <View style={styles.rowText}>
         <AppText style={[styles.country, { color: t.text }]}>{countryName(e.to)}</AppText>
@@ -134,6 +141,7 @@ function BoardRow({ entry: e }: { entry: BoardEntry }) {
           </AppText>
         ) : null}
       </View>
+      {route ? <Arrow /> : null}
     </ListItem>
   );
 }
