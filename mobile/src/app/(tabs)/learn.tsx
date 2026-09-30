@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
@@ -75,6 +75,7 @@ export default function LearnScreen() {
           </ListGroup>
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }

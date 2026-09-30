@@ -12,11 +12,11 @@ import {
 } from 'react-native';
 
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { QuoteCard } from '@/components/quote-card';
 import { RouteNotCovered } from '@/components/route-request';
 import { CountrySelect } from '@/components/select-field';
-import { AppText, Button, Segmented, TextLink } from '@/components/ui';
+import { AppText, Button, Segmented, TextLink, useLargeText } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { saveComparison } from '@/lib/comparisons';
@@ -71,6 +71,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
   const activeMethod = route && !route.deliveryMethods.includes(method) ? route.deliveryMethods[0] : method;
   const checked = checkedAmountFor(amount);
   const quotes = useQuotes(route, checked, activeMethod);
+  const large = useLargeText();
 
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
@@ -85,7 +86,8 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           ) : undefined
         }>
         <HeroHeader title="Compare">
-          <View style={styles.countries}>
+          {/* Side by side, the names cut off at large text sizes ("In…"), so they stack. */}
+          <View style={[styles.countries, large && styles.stacked]}>
             <CountrySelect
               label="From"
               title="Send from"
@@ -118,6 +120,9 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
                 returnKeyType="done"
                 onSubmitEditing={Keyboard.dismiss}
                 maxLength={8}
+                // Grows with the text setting, but only so far: at full size the number
+                // itself was cut to "5…", which is the one thing this field must show.
+                maxFontSizeMultiplier={1.5}
                 placeholder="0"
                 placeholderTextColor={t.textSecondary}
                 accessibilityLabel="Amount you send, in US dollars"
@@ -153,6 +158,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           )}
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }
@@ -353,6 +359,7 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
   countries: { flexDirection: 'row', gap: Spacing.two },
+  stacked: { flexDirection: 'column' },
   amount: {
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.three,

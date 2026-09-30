@@ -1,7 +1,7 @@
 import { router, type Href } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
@@ -81,6 +81,7 @@ export default function ToolsScreen() {
           ))}
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }

@@ -143,6 +143,7 @@ export function RouteRequestForm({
           autoCapitalize="none"
           autoCorrect={false}
           accessibilityLabel="Email address, optional"
+          maxFontSizeMultiplier={2}
           style={[styles.input, { color: t.text, backgroundColor: t.card, borderColor: emailError ? t.destructive : t.border }]}
         />
         <AppText variant="small" style={{ color: emailError ? t.destructive : t.textSecondary }}>

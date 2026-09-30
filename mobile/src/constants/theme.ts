@@ -26,16 +26,18 @@ const light = {
   // header and the onboarding welcome.
   hero: '#14705a',
   heroText: '#ffffff',
-  heroMuted: 'rgba(255,255,255,0.74)',
+  // 90% white: 5.2:1 on the green, the website's measured value. 74% was 4.1:1 and failed AA.
+  heroMuted: 'rgba(255,255,255,0.9)',
   heroField: '#ffffff',
 
   // Semantic money colours (PRD 14.5), identical in every chart and breakdown.
   moneyReceived: '#14705a', // brand green: the part that reaches family
   moneyFee: '#8d97a3', // neutral grey: visible, expected cost
   moneyMarkup: '#c47f17', // warm amber: the hidden cost, eye-catching but not an error
+  moneyMarkupText: '#9a6212', // the same amber, deep enough for text (4.9:1); bars and dots keep the bright one
   moneyPickup: '#e3b867', // muted amber: secondary hidden cost
   targetLine: '#5b6470', // the dashed 3% UN target
-  stale: '#9aa3ae', // desaturated grey, always with a text label
+  stale: '#646d78', // desaturated grey, always with the word "Stale"; 5.0:1 (the old #9aa3ae was 2.4:1)
 };
 
 const dark: typeof light = {
@@ -59,9 +61,10 @@ const dark: typeof light = {
   moneyReceived: '#3fae8e',
   moneyFee: '#7b858f',
   moneyMarkup: '#e0a33a',
+  moneyMarkupText: '#e0a33a',
   moneyPickup: '#b98d4a',
   targetLine: '#9aa3ae',
-  stale: '#6b747e',
+  stale: '#9aa3ae', // 7.2:1 on the dark background (the old #6b747e was 3.9:1)
 };
 
 export const Colors = { light, dark } as const;

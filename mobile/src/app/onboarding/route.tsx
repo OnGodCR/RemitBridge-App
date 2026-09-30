@@ -57,7 +57,7 @@ export default function PickRoute() {
             </View>
             <View style={styles.rowText}>
               <AppText style={[styles.country, { color: t.text }]}>{r.country}</AppText>
-              <AppText variant="small" numberOfLines={1} style={{ color: t.textSecondary }}>
+              <AppText variant="small" style={{ color: t.textSecondary }}>
                 {currency(r.receiveCurrency).name} · {r.receiveCurrency}
               </AppText>
             </View>

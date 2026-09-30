@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
@@ -97,6 +97,7 @@ export default function AccountScreen() {
           ) : null}
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }
