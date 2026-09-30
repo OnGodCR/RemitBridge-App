@@ -1,6 +1,7 @@
 /**
  * Number and time formatting. American English (DECISIONS.md D8). Amounts always carry a
- * currency symbol or code (PRD 14.5).
+ * currency symbol or code (PRD 14.5). No imports, on purpose: the WhatsApp bot
+ * (packages/bot) formats its replies with this same file, so the numbers match the app's.
  */
 
 const WHOLE_UNIT_CURRENCIES = new Set(['VND', 'INR', 'PHP', 'JPY', 'KRW']);

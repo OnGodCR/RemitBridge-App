@@ -23,7 +23,7 @@ jobs:
       - run: uv run pytest -q
 
   app:
-    name: TypeScript formula and mobile app
+    name: TypeScript formula, WhatsApp bot and mobile app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +33,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test -w @remitbridge/formula
+      - run: npm test -w @remitbridge/bot
       - run: npm run typecheck
       - run: npx expo lint
         working-directory: mobile
