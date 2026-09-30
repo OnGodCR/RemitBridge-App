@@ -65,6 +65,10 @@ check "internal installs are not readable"        "0" "$(count "${H[@]}" "$REST/
 check "entered prices are not readable"           "0" "$(count "${H[@]}" "$REST/manual_observations?select=id")"
 check "route requests are not readable"           "0" "$(count "${H[@]}" "$REST/route_requests?select=id")"
 check "WhatsApp users are not readable"           "0" "$(count "${H[@]}" "$REST/whatsapp_users?select=phone_hash")"
+check "receipts are not readable"                 "0" "$(count "${H[@]}" "$REST/receipts?select=id")"
+check "receipt fields are not readable"           "0" "$(count "${H[@]}" "$REST/receipt_fields?select=receipt_id")"
+check "receipt comparisons are not readable"      "0" "$(count "${H[@]}" "$REST/receipt_comparisons?select=receipt_id")"
+check "model call counts are not readable"        "0" "$(count "${H[@]}" "$REST/receipt_model_calls?select=month")"
 
 echo "--- writes a stranger must not make (each must fail with 42501)"
 check "can't insert a published quote" "42501" "$(post quotes "$(printf '{"dedupe_key":"rls","provider_id":"wise","route_id":"us-in","send_currency":"USD","receive_currency":"INR","send_amount":500,"delivery_method":"bank_deposit","payment_method":"bank_account","fee":0,"offered_rate":99,"mid_market_rate":95,"mid_market_source":"x","amount_received":49500,"computed_amount_received":49500,"markup_pct":-4,"total_cost":0,"total_cost_pct":0,"source":"scraper","strategy":"x","captured_at":"2026-09-28T00:00:00Z","validation_status":"published"}')")"
@@ -80,6 +84,10 @@ check "can't file a request as WhatsApp" "42501" "$(post route_requests "$(print
 check "request countries are validated (23514)" "23514" "$(post route_requests "$(printf '{"send_country":"USA","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
 check "request addresses are validated (23514)" "23514" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","notify_email":"not an address"}' "$TEST_INSTALL")")"
 check "can't write a WhatsApp user" "42501" "$(post whatsapp_users "$(printf '{"phone_hash":"%s"}' "$(printf 'a%.0s' {1..64})")")"
+check "can't write a receipt" "42501" "$(post receipts '{"channel":"app","redaction_status":"device","expires_at":"2030-01-01T00:00:00Z"}')"
+check "can't write a receipt field" "42501" "$(post receipt_fields '{"receipt_id":"00000000-0000-4000-8000-000000000000","field_name":"fee","value":"1","extraction_path":"parser","confidence":1}')"
+check "can't spend model calls" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_receipt_model_call" -d '{"p_cap":1000}')"
+check "can't delete receipts" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/forget_expired_receipts" -d '{}')"
 check "metrics refuse anyone but admins" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/admin_metrics" -d '{"p_days":30}')"
 check "event names are validated (23514)" "23514" "$(post events "$(printf '{"install_id":"%s","name":"DROP TABLE"}' "$TEST_INSTALL")")"
 curl -s -m 20 -o /dev/null "${H[@]}" -X PATCH "$REST/routes?id=eq.us-in" -d '{"status":"not_feasible"}'
@@ -89,6 +97,8 @@ check "can't delete a provider (still 8)" "8" "$(count "${H[@]}" "$REST/provider
 # A private bucket answers a list with [] rather than an error, so check both sides.
 check "raw archive lists as empty" "[]" "$(curl -s -m 20 -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: application/json" -X POST "$SUPABASE_URL/storage/v1/object/list/raw-archive" -d '{"prefix":""}')"
 check "can't upload to the raw archive" "AccessDenied" "$(pg -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Authorization: Bearer $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: text/plain" -X POST "$SUPABASE_URL/storage/v1/object/raw-archive/rls-test.txt" --data-binary "x")"
+check "receipt images list as empty" "[]" "$(curl -s -m 20 -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: application/json" -X POST "$SUPABASE_URL/storage/v1/object/list/receipt-images" -d '{"prefix":""}')"
+check "can't upload a receipt image" "AccessDenied" "$(pg -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Authorization: Bearer $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: image/jpeg" -X POST "$SUPABASE_URL/storage/v1/object/receipt-images/rls-test.jpg" --data-binary "x")"
 
 echo "--- writes a stranger may make"
 check "anonymous event insert works" "201" "$(post events "$(printf '{"install_id":"%s","name":"rls_test","created_at":"2001-01-01T00:00:00Z"}' "$TEST_INSTALL")")"
@@ -97,6 +107,7 @@ check "anonymous event insert works" "201" "$(post events "$(printf '{"install_i
 check "anonymous route request works" "@(201|23505)" "$(post route_requests "$(printf '{"send_country":"us","receive_country":"np","install_id":"%s","delivery_method":"bank_deposit"}' "$TEST_INSTALL")")"
 check "the same install can't ask twice (23505)" "23505" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
 check "request counts are public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/route_request_counts" -d '{}')"
+check "a receipt result is read by its ID (none here)" "null" "$(curl -s -m 20 "${H[@]}" -X POST "$REST/rpc/receipt_result" -d '{"p_id":"00000000-0000-4000-8000-000000000000"}')"
 
 echo; echo "$pass passed, $fail failed"
 [[ $fail -eq 0 ]]

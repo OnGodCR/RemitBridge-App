@@ -35,7 +35,15 @@
       ],
       "expo-sqlite",
       "expo-apple-authentication",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "RemitBridge reads a transfer receipt you choose, on your phone, to show what the transfer really cost.",
+          "cameraPermission": "RemitBridge uses the camera to photograph a transfer receipt, which it reads on your phone.",
+          "microphonePermission": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

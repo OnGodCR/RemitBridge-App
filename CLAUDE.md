@@ -51,6 +51,18 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       speaker reads each one, agrees in writing, and is named with the date in
       `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
       read. Glossary definitions are still English in every language.
+- [ ] **CAC receipt scanner (D72), Phases 4–6.** Phases 1–3 (gap report; data model,
+      redaction, parser harness, Claude fallback, validation, scan screen; confirmation and
+      result screens, funding method in TrueCost and Compare) done 2026-09-30 on branch
+      `claude/gallant-hopper-51zhhm` (D87), merged with `main` the same day. Waiting on
+      Angad's review before Phase 4. Internal deadline 2026-10-23.
+- [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
+      `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
+- [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D79). Also
+      push the receipts migration (`20260930000000_receipts.sql`, 11 more smoke checks).
+- [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
+- [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
+      proposed regulations (D78).
 - [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
       requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
       refused as a production deploy, so Angad runs it. Commands in HANDOFF.md. Turn
@@ -229,6 +241,9 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - **Engine:** Python, run by GitHub Actions scheduled workflows. No Redis;
   state lives in Postgres (D13).
 - **WhatsApp:** Meta Cloud API directly, not Twilio.
+- **Receipt scanning:** OCR and redaction on the phone (ML Kit, Skia); the pipeline in
+  `packages/receipt`; Claude through the Anthropic API, only from the `scan-receipt` Edge
+  Function (D73–D79).
 - **Maintainer alerts:** email to Angad.
 - Use whichever language fits each part. Every part must use the same total-cost formula.
 - **Look:** same as the website (D18). The website repo

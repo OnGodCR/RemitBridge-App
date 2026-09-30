@@ -26,6 +26,8 @@ export default function ToolsScreen() {
     {
       title: copy.tools.after,
       tools: [
+        // The receipt scanner (D72-D90) leads "After you send".
+        { href: '/scan', title: copy.tools.scan, subtitle: copy.tools.scanSub },
         { href: '/true-cost', title: copy.titles.trueCost, subtitle: copy.tools.trueCostSub },
         { href: '/yearly-cost', title: copy.titles.yearlyCost, subtitle: copy.tools.yearlyCostSub },
       ],

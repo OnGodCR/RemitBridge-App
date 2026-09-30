@@ -28,6 +28,7 @@ export const tl: Copy = {
   tabs: { compare: 'Ikumpara', tools: 'Tools', learn: 'Matuto', account: 'Account' },
 
   titles: {
+    scan: 'I-scan ang resibo',
     fairRate: 'Patas na rate',
     scamCheck: 'Suriin kung scam',
     trueCost: 'TrueCost',
@@ -54,6 +55,8 @@ export const tl: Copy = {
     debit_card: 'Debit card',
     credit_card: 'Credit card',
     cash: 'Cash',
+    money_order: 'Money order',
+    cashiers_check: 'Cashier’s check',
   },
 
   countries: {
@@ -356,6 +359,8 @@ export const tl: Copy = {
   },
 
   tools: {
+    scan: 'I-scan ang resibo',
+    scanSub: 'Basahin ang resibo gamit ang camera, tinatakpan muna ang personal na detalye',
     title: 'Tools',
     subtitle: 'Suriin ang rate, resibo, o hiling na magpadala ng pera.',
     before: 'Bago magpadala',
@@ -585,5 +590,138 @@ export const tl: Copy = {
     step3After: ', na humahawak ng mga reklamo tungkol sa money transfer.',
     note: 'Ang mga numero ng panganib ay sarili naming pagtantiya kung gaano kalakas na palatandaan ng scam ang bawat isa, kung mag-isa, batay sa gabay ng FTC at CFPB. Hindi ito nailathalang estadistika o ang tsansa na ikaw ay ini-scam. Pang-edukasyon ito, hindi legal o pinansyal na payo, at hindi namin kayang bawiin ang pera o makipag-usap sa isang kumpanya para sa iyo.',
     again: 'Magsimula ulit',
+  },
+
+  scan: {
+    intro:
+      'Kunan ng litrato ang resibo ng padala. Binabasa ito ng app sa phone mo at tinatakpan ang mga pangalan, address, at phone at account number bago may maipadala.',
+    takePhoto: 'Kumuha ng litrato',
+    choosePhoto: 'Pumili ng litrato',
+    needsBuild: 'Kailangan ng buong bersyon ng app para mag-scan. Hindi ito gumagana sa Expo Go.',
+    cameraDenied: 'Para kumuha ng litrato, payagan ang camera para sa RemitBridge sa Settings.',
+    photosDenied: 'Para pumili ng litrato, payagan ang photos para sa RemitBridge sa Settings.',
+    reading: 'Binabasa ang resibo sa phone mo…',
+    noText: 'Walang nakitang text. Subukan ulit na nakalatag ang buong resibo, sa maliwanag.',
+    misaligned: 'Hindi tumugma ang text sa litrato, kaya walang natakpan. Kunan ulit ang litrato.',
+    failed: 'May nagkamali sa pagbasa ng litrato. Subukan ulit.',
+    previewTitle: 'Tingnan kung ano ang natakpan',
+    previewHelp: 'Tinatakpan ng itim na kahon ang personal na detalye. I-tap ang ibang salita para takpan din, at i-tap ulit para ipakita.',
+    covered: (n: number) => (n === 1 ? 'Isang bagay ang natakpan' : `${n} bagay ang natakpan`),
+    tapWord: (text: string) => `Salita: ${text}. I-tap para takpan.`,
+    tapCovered: 'Ikaw ang nagtakip. I-tap para ipakita ulit.',
+    consentLabel: 'Itabi ang resibong ito para sa research',
+    consentHelp:
+      'Naka-off maliban kung i-on mo. Naka-on: itatabi namin ang natakpang litrato at ang mga halaga, walang anumang nagsasabi kung sino ka, para pag-aralan kung magkano talaga ang binabayaran ng mga tao. Naka-off: hindi kailanman itatabi ang litrato, at buburahin ang mga halaga pagkalipas ng 30 araw.',
+    send: 'Basahin ang resibo ko',
+    sendFailed: 'Hindi ito natuloy. Tingnan ang connection mo at subukan ulit.',
+    notConnected: 'Hindi pa naka-connect ang app.',
+    retake: 'Gumamit ng ibang litrato',
+    toCheck: 'Pakitingnan',
+    notFound: 'Hindi nakita',
+    deleteNow: 'Burahin na ang resibong ito',
+    deleted: 'Nabura na.',
+    another: 'Mag-scan ng ibang resibo',
+    limits: [
+      'Kung tama ang pagbasa sa bawat halaga. Ikumpara ang bawat isa sa resibo mo.',
+      'Anumang nakasulat lang sa likod ng resibo, o sulat-kamay.',
+      'Mga fee na binayaran ng pamilya mo pagdating ng pera, maliban kung nasa resibo.',
+    ],
+  },
+
+  confirm: {
+    title: 'Tingnan ang bawat halaga',
+    help: 'I-tap ang isang halaga, sa litrato o sa listahan, para palitan. Kailangan ng sagot mo ang mga may “Pakitingnan”.',
+    left: (n: number) => (n === 1 ? 'Isa pa ang titingnan' : `${n} pa ang titingnan`),
+    ready: 'Tingnan kung magkano ang nagastos',
+    failed: 'Hindi ito natuloy. Tingnan ang connection mo at subukan ulit.',
+    expired: 'Nabura na ang resibong ito, kaya hindi na ito matitingnan. I-scan ulit.',
+    looksRight: 'Tama ito',
+    save: 'I-save',
+    useSuggestion: (value: string) => `Gamitin ang ${value}`,
+    suggestion: (value: string) => `Ayon sa ibang halaga, ${value} dapat ito.`,
+    invalid: (field: string) => `Mukhang hindi tama iyan para sa ${field}. Tingnan at subukan ulit.`,
+    datePlaceholder: 'MM/DD/YYYY',
+    currencyPlaceholder: 'hal. USD',
+    editing: (field: string) => `Palitan: ${field}`,
+  },
+
+  result: {
+    title: 'Magkano talaga ang nagastos sa padalang ito',
+    costNote: (pct: string, world: number, target: number) =>
+      `${pct} ng ipinadala mo. Ang average sa buong mundo ay ${world}%; ang target ng UN ay ${target}%.`,
+    fee: 'Fee na nakikita',
+    tax: 'Federal na remittance tax',
+    markup: (pct: string) => `Nakatago sa rate (${pct} markup)`,
+    pickup: 'Singil sa pag-pickup',
+    received: 'Natanggap nila',
+    benchmark: 'Sa mid-market rate, walang fee',
+    betterThanMid: 'Mas maganda ang rate kaysa sa mid-market. Kadalasan, promo ito para sa unang padala.',
+    source: (source: string, rate: string, day: string) =>
+      `Mid-market rate mula sa ${source}: ${rate}, para sa ${day}. Pang-araw-araw na reference ito, kaya maaaring gumalaw ang rate noong araw na iyon.`,
+    noMid: 'Hindi ma-load ang mid-market rate noong araw na iyon, kaya hindi makalkula ang gastos na nakatago sa rate.',
+    missing: 'May kulang na halaga, kaya hindi makalkula ang kabuuang gastos.',
+    advertisedTitle: 'Ipinakita vs. binayaran',
+    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
+      `Noong ${day}, ipinakita ng ${provider} ang ${rate} para sa route na ito sa ${amount}, na-check ${time}.`,
+    yourRate: (rate: string) => `Ang resibo mo: ${rate}.`,
+    gapMore: (gap: string) => `Mas mahal nang ${gap} ang rate na nakuha mo kaysa sa ipinakita.`,
+    gapLess: (gap: string) => `Mas maganda nang ${gap} ang rate na nakuha mo kaysa sa ipinakita.`,
+    gapSame: 'Pareho ang rate na nakuha mo at ang ipinakita.',
+    notTracked: 'Hindi namin tinitingnan ang presyo ng provider na ito, kaya walang ipinakitang presyo na maikukumpara.',
+    noRoute: 'Hindi pa namin tinitingnan ang presyo sa route na ito, kaya walang ipinakitang presyo na maikukumpara.',
+    noQuote: 'Wala kaming presyo mula sa provider na ito na na-check sa loob ng isang araw ng padalang ito, kaya walang maikukumpara.',
+    missingValues: 'Kulang ang petsa, halaga o rate sa resibo, kaya hindi ito maikukumpara.',
+    taxTitle: 'Federal na remittance tax',
+    taxRule:
+      'Mula Enero 1, 2026, may 1% federal tax ang mga padalang binayaran ng cash, money order o cashier’s check. Wala ito sa mga binayaran mula sa bank account o gamit ang card.',
+    taxMatches: (funding: string, amount: string, expected: string, found: string) =>
+      `Binayaran ito gamit ang ${funding}. Ang 1% ng ${amount} ay ${expected}, at ${found} ang nasa resibo.`,
+    taxNotFound: (funding: string, amount: string, expected: string) =>
+      `Binayaran ito gamit ang ${funding}. Ang 1% ng ${amount} ay ${expected}. Walang nakitang linya ng tax sa resibong ito.`,
+    taxDiffers: (funding: string, amount: string, expected: string, found: string) =>
+      `Binayaran ito gamit ang ${funding}. Ang 1% ng ${amount} ay ${expected}. ${found} ang nasa resibo.`,
+    taxNotTaxed: (funding: string) => `Binayaran ito gamit ang ${funding}, kaya hindi kasama ang tax.`,
+    taxBefore: 'Ginawa ang padalang ito bago nagsimula ang tax.',
+    taxUnknown: 'Hindi sinasabi ng resibo kung paano ito binayaran, kaya hindi matitingnan ang tax.',
+    taxBank: (total: string, tax: string) =>
+      `Kung mula sa bank account ito binayaran, ${total} sana ang kabuuang gastos, mas mababa nang ${tax}.`,
+    taxAssumption:
+      'Kinukuha namin ang 1% ng halaga ng padala, bago ang fee. Ito ang pagkaintindi namin sa patakaran, na hindi pa naikukumpara sa huling regulasyon ng IRS.',
+    nextTitle: 'Sa susunod',
+    compare: 'Ikumpara ang route na ito ngayon',
+    notCovered: 'Hindi pa namin tinitingnan ang route na ito.',
+    routeBoard: 'Tingnan kung aling route ang tinitingnan namin',
+  },
+
+  receiptFields: {
+    provider: 'Provider',
+    send_currency: 'Ipinadala sa',
+    receive_currency: 'Natanggap sa',
+    amount_sent: 'Halagang ipinadala',
+    fee: 'Fee',
+    tax: 'Tax sa padala',
+    total_paid: 'Kabuuang binayaran',
+    exchange_rate: 'Exchange rate',
+    amount_received: 'Halagang natanggap',
+    pickup_charge: 'Singil sa pickup',
+    transfer_date: 'Petsa ng padala',
+    funding_method: 'Ibinayad gamit ang',
+    delivery_method: 'Paano natanggap',
+  },
+
+  receiptPaths: {
+    parser: 'Binasa mula sa text',
+    model: 'Binasa ng AI',
+    user_corrected: 'Ikaw ang naglagay',
+  },
+
+  funding: {
+    compareLabel: 'Ibabayad mo gamit ang',
+    compareTaxLine: (funding: string, tax: string) =>
+      `Kapag ${funding} ang ibinayad, may dagdag na 1% federal tax, ${tax} dito. Kasama ito sa kabuuang gastos.`,
+    compareNone: 'Wala pang na-check na presyo para sa ganitong bayad.',
+    trueCostLabel: 'Ibinayad mo gamit ang',
+    trueCostTaxLine: (funding: string, tax: string) =>
+      `Binayaran gamit ang ${funding}, kaya may dagdag na 1% federal tax na ${tax}. Kasama ito sa kabuuang gastos.`,
   },
 };

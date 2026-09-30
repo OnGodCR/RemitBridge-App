@@ -1,8 +1,9 @@
-import { computeTransferCost } from '@remitbridge/formula';
+import { computeTransferCost, FUNDING_METHODS, remittanceTax, type FundingMethod } from '@remitbridge/formula';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { ChoiceList } from '@/components/choice-list';
 import { CurrencySelect } from '@/components/select-field';
 import { Answer, Breakdown, Field, Fields, Section, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText, Button, TextLink } from '@/components/ui';
@@ -15,6 +16,7 @@ import { useAuth } from '@/lib/auth';
 import { money, pct } from '@/lib/format';
 import { isoDay, today, useMidRate } from '@/lib/fx';
 import { openCompare } from '@/lib/open-compare';
+import { fundingWord } from '@/lib/receipt-format';
 import { ROUTES } from '@/lib/routes';
 import { saveCheck } from '@/lib/saved';
 import { track } from '@/lib/track';
@@ -51,6 +53,7 @@ export default function TrueCostScreen() {
   const [pickup, setPickup] = useState('');
   const [dateText, setDateText] = useState('');
   const [provider, setProvider] = useState('');
+  const [funding, setFunding] = useState<FundingMethod>('bank_account');
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -65,9 +68,13 @@ export default function TrueCostScreen() {
   const Q = Number(rate);
   const R = Number(pickup) || 0;
   const inputsOk = S > 0 && Q > 0 && F >= 0 && F < S;
+  // Paid in cash, by money order or by cashier's check: the 1% federal tax is added to
+  // what was paid, on the transfer amount (what's sent less the fee), and comes off before
+  // conversion like the fee, so it lands in the total cost, not the amount received.
+  const T = inputsOk ? remittanceTax(S - F, funding, date ?? undefined) : 0;
   const cost =
     inputsOk && fx.state === 'ready'
-      ? computeTransferCost({ sent: S, fee: F, quotedRate: Q, midRate: fx.rate, pickupCharge: R })
+      ? computeTransferCost({ sent: S + T, fee: F, transferTax: T, quotedRate: Q, midRate: fx.rate, pickupCharge: R })
       : null;
 
   const save = async () => {
@@ -77,8 +84,10 @@ export default function TrueCostScreen() {
       provider_name: provider.trim() || c.notNamed,
       send_currency: from,
       receive_currency: to,
-      sent: S,
-      fee: F,
+      // saved_transfers has no tax column. The formula treats a tax exactly like a fee (both
+      // come off before conversion), so saving it inside the fee keeps the saved total right.
+      sent: S + T,
+      fee: F + T,
       quoted_rate: Q,
       mid_rate: fx.rate,
       mid_rate_source: `${fx.source}, ${fx.date}`,
@@ -140,6 +149,15 @@ export default function TrueCostScreen() {
         ) : null}
       </Section>
 
+      <Section title={copy.funding.trueCostLabel}>
+        <ChoiceList
+          label={copy.funding.trueCostLabel}
+          options={FUNDING_METHODS.map((f) => ({ value: f, label: copy.payment[f] }))}
+          value={funding}
+          onChange={setFunding}
+        />
+      </Section>
+
       {inputsOk && fx.state === 'loading' ? <ActivityIndicator /> : null}
       {inputsOk && fx.state === 'error' ? (
         <AppText muted>{c.rateFailed}</AppText>
@@ -155,6 +173,7 @@ export default function TrueCostScreen() {
           <Breakdown
             rows={[
               { label: c.feeSeen, value: money(cost.feeCost, from), tone: t.moneyFee },
+              ...(T > 0 ? [{ label: copy.result.tax, value: money(cost.taxCost, from), tone: t.moneyFee }] : []),
               {
                 label: c.hidden(pct(cost.markupPct, 2)),
                 value: money(cost.markupCost, from),
@@ -165,6 +184,11 @@ export default function TrueCostScreen() {
               { label: c.atMid, value: money(cost.benchmarkReceived, to) },
             ]}
           />
+          {T > 0 ? (
+            <AppText variant="small" muted>
+              {copy.funding.trueCostTaxLine(fundingWord(funding, copy, language), money(T, from))}
+            </AppText>
+          ) : null}
           {cost.markupPct < 0 ? (
             <AppText variant="small" muted>
               {c.better}

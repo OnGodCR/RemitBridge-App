@@ -12,8 +12,10 @@ research built from the collected price data.
 ## Status
 
 **Every MVP screen is built, and the WhatsApp bot is ready for Meta.** Prices come from
-manual entry until a provider allows automated checks. See [`HANDOFF.md`](HANDOFF.md) for
-where things stand and what's next.
+manual entry until a provider allows automated checks. A receipt scanner for the 2026
+Congressional App Challenge is being built in phases on a branch (D69): the data model,
+redaction, parser harness, model fallback and validation are in. See [`HANDOFF.md`](HANDOFF.md)
+for where things stand and what's next.
 
 ## Launch routes
 
@@ -30,8 +32,10 @@ mobile/src/i18n/     Every string the app shows: English source, drafts in Hindi
                      Tagalog and Vietnamese, and the reviewer gate that keeps drafts out of releases
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 packages/bot/        The WhatsApp bot's logic (parser, replies in English and Hindi), tested with vitest
+packages/receipt/    The receipt pipeline: redaction, the rule-based parser (its extractors are Angad's
+                     TODOs), provider templates, the Claude fallback, validation; fixtures and harness
 supabase/            Migrations, row-level security, Edge Functions (delete-account, process-prices,
-                     notify-route-launch, whatsapp)
+                     notify-route-launch, whatsapp, scan-receipt)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks
 site/                app.remitbridgelabs.org: privacy policy, support, partner links (Vercel, root "site")
 docs/                PRD, manual-research list
@@ -45,14 +49,29 @@ You need Node 22+ (npm workspaces) and [uv](https://docs.astral.sh/uv/) for Pyth
 npm install                          # formula, bot and mobile
 npm test -w @remitbridge/formula     # formula vectors (TypeScript)
 npm test -w @remitbridge/bot         # WhatsApp bot, including its webhook against a fake database
+npm test -w @remitbridge/receipt     # receipt pipeline, including the scan-receipt function against fakes
+npm run parser:report -w @remitbridge/receipt   # how the rule-based parser scores on the fixtures
+npm test -w @remitbridge/mobile      # the app's screens and helpers (jest-expo)
+npm run typecheck                    # every workspace, and the scan-receipt Edge Function
 cd engine && uv sync && uv run pytest -q   # engine + formula vectors (Python)
 cd mobile && cp .env.example .env.local && npx expo start --lan
 ```
 
+Receipt scanning needs a development build, because its OCR module isn't in Expo Go (D70).
+Builds run on EAS, in the cloud: `cd mobile && npx eas-cli@latest init` once, set
+`EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` as EAS environment
+variables for the `development` environment, then
+`npx eas-cli@latest build --profile development --platform ios`.
+
+Migrations can be tested on a throwaway Postgres before they're pushed:
+`supabase/tests/local_migrations.sh` (set `PG_BIN` to your Postgres `bin` folder).
+
 Database changes: `supabase db push`, then the RLS smoke test
 (`SUPABASE_URL=... SUPABASE_PUBLISHABLE_KEY=... supabase/tests/rls_smoke.sh`). Edge Functions
 deploy with `supabase functions deploy <name> --use-api`; their secrets are listed at the
-top of each function and are set with `supabase secrets set`, never committed.
+top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
+reads `ANTHROPIC_API_KEY` (without it, receipts are read by the rules alone), and optionally
+`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D76).
 
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 
@@ -65,3 +84,5 @@ More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`
 | [`HANDOFF.md`](HANDOFF.md) | Current state, what's next, open questions |
 | [`CLAUDE.md`](CLAUDE.md) | Rules for working on this repo, and the open items |
 | [`docs/MANUAL_RESEARCH.md`](docs/MANUAL_RESEARCH.md) | Providers blocked from scraping, left for manual research |
+| [`docs/cac-gap-report.md`](docs/cac-gap-report.md) | Congressional App Challenge features: what exists, what's missing, decisions needed |
+| [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Per-session log of files Claude created or changed, for the CAC's AI-use disclosure |

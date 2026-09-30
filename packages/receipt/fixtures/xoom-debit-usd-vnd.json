@@ -1,0 +1,48 @@
+{
+  "id": "xoom-debit-usd-vnd",
+  "description": "Debit card (no tax), home delivery, a rate with a thousands comma, and an amount received printed without commas.",
+  "source": "synthetic",
+  "lines": [
+    "Xoom, a PayPal service",
+    "Transfer details",
+    "Date: 9/20/2026",
+    "Recipient: Nguyen Van An",
+    "Delivery method: Home delivery",
+    "Funding: Visa Debit ****4821",
+    "Transfer amount: $250.00",
+    "Transfer fee: $2.99",
+    "Total: $252.99",
+    "Exchange rate: 1 USD = 25,310 VND",
+    "Total to recipient: 6327500 VND",
+    "Contact: nguyen.an@example.com"
+  ],
+  "expected": {
+    "provider": "Xoom",
+    "send_currency": "USD",
+    "receive_currency": "VND",
+    "amount_sent": 250,
+    "fee": 2.99,
+    "total_paid": 252.99,
+    "exchange_rate": 25310,
+    "amount_received": 6327500,
+    "transfer_date": "2026-09-20",
+    "funding_method": "debit_card",
+    "delivery_method": "home_delivery"
+  },
+  "pii": [
+    "Nguyen",
+    "Van An",
+    "4821",
+    "nguyen.an@example.com"
+  ],
+  "keep": [
+    "Xoom",
+    "9/20/2026",
+    "Visa Debit",
+    "$250.00",
+    "$2.99",
+    "$252.99",
+    "25,310",
+    "6327500 VND"
+  ]
+}
