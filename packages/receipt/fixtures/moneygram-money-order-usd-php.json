@@ -1,0 +1,52 @@
+{
+  "id": "moneygram-money-order-usd-php",
+  "description": "Paid by money order, so taxed; the provider's own labels (Send amount, Service fee, Receive amount); ISO date.",
+  "source": "synthetic",
+  "lines": [
+    "MoneyGram",
+    "RECEIPT",
+    "Transaction date 2026-09-25",
+    "Sender name: Rosa Santos",
+    "Receiver name: Ana Santos",
+    "Receive option: Cash Pickup",
+    "Payment: Money Order",
+    "Send amount 300.00 USD",
+    "Service fee 7.99 USD",
+    "Federal remittance tax 3.00 USD",
+    "Total 310.99 USD",
+    "Rate 1 USD = 57.8500 PHP",
+    "Receive amount 17,355.00 PHP",
+    "Reference # 55219034"
+  ],
+  "expected": {
+    "provider": "MoneyGram",
+    "send_currency": "USD",
+    "receive_currency": "PHP",
+    "amount_sent": 300,
+    "fee": 7.99,
+    "tax": 3,
+    "total_paid": 310.99,
+    "exchange_rate": 57.85,
+    "amount_received": 17355,
+    "transfer_date": "2026-09-25",
+    "funding_method": "money_order",
+    "delivery_method": "cash_pickup"
+  },
+  "pii": [
+    "Rosa",
+    "Ana",
+    "Santos",
+    "55219034"
+  ],
+  "keep": [
+    "MoneyGram",
+    "2026-09-25",
+    "Money Order",
+    "300.00",
+    "7.99",
+    "3.00",
+    "310.99",
+    "57.8500",
+    "17,355.00"
+  ]
+}

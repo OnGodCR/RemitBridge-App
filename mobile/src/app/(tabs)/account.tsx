@@ -6,9 +6,10 @@ import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
-import { AppText, Button } from '@/components/ui';
+import { AppText, Button, Segmented } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { setLanguage, useLanguage, useStrings } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
 import { LINKS, openPage } from '@/lib/links';
@@ -25,6 +26,8 @@ export default function AccountScreen() {
   const { session, signOut, resetOnboarding } = useAuth();
   const [busy, setBusy] = useState(false);
   const isAdmin = useIsAdmin();
+  const strings = useStrings();
+  const language = useLanguage();
 
   const confirmDelete = () =>
     Alert.alert('Delete your account?', 'Your saved comparisons and receipts go with it.', [
@@ -79,6 +82,21 @@ export default function AccountScreen() {
             </View>
           )}
 
+          <View style={styles.language}>
+            <AppText variant="label">{strings.language.label}</AppText>
+            <Segmented
+              options={[
+                { value: 'en' as const, label: strings.language.english },
+                { value: 'hi' as const, label: strings.language.hindi },
+              ]}
+              value={language}
+              onChange={setLanguage}
+            />
+            <AppText variant="small" muted>
+              {strings.language.help}
+            </AppText>
+          </View>
+
           <ListGroup title="About">
             <ListRow title="Route board" subtitle="Which routes we check, and which people want" onPress={() => router.push('/routes')} />
             <ListRow external title="Privacy policy" subtitle="What we keep, and what we never do" onPress={() => openPage(LINKS.privacy)} />
@@ -106,4 +124,5 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six },
   actions: { gap: Spacing.three },
+  language: { gap: Spacing.two },
 });

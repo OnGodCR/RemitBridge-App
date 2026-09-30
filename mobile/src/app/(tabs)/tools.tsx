@@ -6,6 +6,7 @@ import { ListGroup, ListRow } from '@/components/list-row';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useStrings } from '@/i18n';
 
 /**
  * The tools, rebuilt from the website (DECISIONS.md D58), grouped by when you'd reach for
@@ -59,6 +60,13 @@ const GROUPS: {
 
 export default function ToolsScreen() {
   const t = useTheme();
+  const strings = useStrings();
+  // The receipt scanner (D69) leads "After you send"; its strings are translated (D72).
+  const groups = GROUPS.map((g) =>
+    g.title === 'After you send'
+      ? { ...g, tools: [{ href: '/scan' as Href, title: strings.tools.scanTitle, subtitle: strings.tools.scanSubtitle }, ...g.tools] }
+      : g,
+  );
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
@@ -67,7 +75,7 @@ export default function ToolsScreen() {
           <AppText style={{ color: t.heroMuted }}>Check a rate, a receipt, or a request.</AppText>
         </HeroHeader>
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          {GROUPS.map((g) => (
+          {groups.map((g) => (
             <ListGroup key={g.title} title={g.title}>
               {g.tools.map((tool) => (
                 <ListRow

@@ -414,3 +414,10 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 # verification is off for this one function; it checks Meta's X-Hub-Signature-256 instead.
 [functions.whatsapp]
 verify_jwt = false
+
+# Receipt scanning (DECISIONS.md D76, D78). Scanning works without an account, and the app's
+# publishable key isn't a JWT, so the gateway can't verify one: JWT verification is off. The
+# function checks every request itself, stores nothing that identifies anyone, and the
+# monthly cap bounds what a flood of requests could spend on the model.
+[functions.scan-receipt]
+verify_jwt = false

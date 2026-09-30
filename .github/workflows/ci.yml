@@ -23,7 +23,7 @@ jobs:
       - run: uv run pytest -q
 
   app:
-    name: TypeScript formula, WhatsApp bot and mobile app
+    name: TypeScript formula, WhatsApp bot, receipt pipeline and mobile app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +34,16 @@ jobs:
       - run: npm ci
       - run: npm test -w @remitbridge/formula
       - run: npm test -w @remitbridge/bot
+      - run: npm test -w @remitbridge/receipt
+      - run: npm test -w @remitbridge/mobile
       - run: npm run typecheck
       - run: npx expo lint
         working-directory: mobile
+
+  migrations:
+    name: Migrations and RLS checks on a throwaway Postgres
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The runner image ships PostgreSQL; the script starts its own temporary cluster.
+      - run: PG_BIN="$(ls -d /usr/lib/postgresql/*/bin | sort -V | tail -1)" LC_ALL=C.UTF-8 supabase/tests/local_migrations.sh
