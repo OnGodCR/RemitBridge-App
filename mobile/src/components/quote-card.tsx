@@ -92,7 +92,9 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
   const copy = useCopy();
   const markupCost = Math.max(0, q.total_cost - q.fee - q.pickup_charge / q.mid_market_rate);
   const pickupCost = q.pickup_charge / q.mid_market_rate;
-  const received = Math.max(0, q.send_amount - q.total_cost);
+  // What's left of the amount sent, so the segments always add up to it, even when a live
+  // rate beats the daily reference rate and the markup is below zero.
+  const received = Math.max(0, q.send_amount - q.fee - markupCost - pickupCost);
   // `amount`, not `value`: Reanimated's Babel plugin warns about any `x.value` inside an
   // inline style, taking it for a shared value, and this bar renders once per quote.
   const parts = [
