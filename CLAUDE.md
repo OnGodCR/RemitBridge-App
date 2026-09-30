@@ -63,8 +63,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
       proposed regulations (D78).
-- [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
-      detail or the bot until one is published.
+- [ ] **More prices.** Wise's now come in automatically (D91), once the Scrape schedule
+      runs. The other seven providers still need Add a price or their permission.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
       `notify-route-launch` (D67). Needed before any requested route goes live.
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
@@ -72,19 +72,15 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       Hindi replies first.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
       form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
-      26724746, checked 2026-09-29). **Wise replied 2026-09-30:** its Comparison API may be
-      used; whether to build that adapter is Angad's call. Follow up with the rest on
-      2026-10-12 (calendar reminder set).
+      26724746, checked 2026-09-29). **Wise said yes 2026-09-30** and is automated (D91);
+      a thank-you reply is Angad's to send. Follow up with the rest on 2026-10-12
+      (calendar reminder set).
       Log replies in `docs/outreach/permission-request.md` (D52).
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
 - [ ] **Disk space.** 5.3 GB free on 2026-09-30; native builds (and real store
       screenshots) need 15–20 GB.
-- [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
-      the Supabase address (D61). remitbridgelabs.org is verified in Search Console on the
-      RemitBridge Google account (TXT record at GoDaddy, 2026-09-30). Left: submit brand
-      verification in Google Cloud, once Angad says yes.
 - [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
 - [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also
@@ -105,10 +101,15 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       texts are in `docs/outreach/partners.md`. Horn of Africa Services sent 2026-09-30;
       East African Community Services is in the RemitBridge Gmail's Drafts; the other seven
       are Angad's to send (the permission system stopped Claude after the first).
-- [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
-      See `docs/MANUAL_RESEARCH.md`.
+- [ ] **Seven of the eight Tier 1 providers are manual** (terms checked 2026-09-28); Wise is
+      automated with permission (D91). See `docs/MANUAL_RESEARCH.md`.
+- [ ] **Push the Wise provider-row migration** (`20260930010000_wise_adapter.sql`,
+      metadata only; passes every local check). Angad: `supabase db push`, VPN off.
 - [x] All six migrations pushed by Angad (route requests, metrics, WhatsApp, receipts);
       smoke test 48/48, and the route board loads in the app. Done 2026-09-30.
+- [x] Wise adapter on its Comparison API (D91): 20 live quotes passed the gate on the first
+      local run; Scrape schedule on. Google brand verified and published: the sign-in page
+      now says "RemitBridge App". Done 2026-09-30.
 - [x] Flags for the nine request-only countries, from flagcdn.com with Angad's yes.
       Every country has one now. Done 2026-09-30.
 - [x] Accessibility pass (D70): AA contrast, the largest text sizes (checked in English,
