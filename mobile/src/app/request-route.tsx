@@ -7,7 +7,7 @@ import { CountrySelect } from '@/components/select-field';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { countryName, RECEIVING, SENDING } from '@/lib/countries';
+import { RECEIVING, SENDING } from '@/lib/countries';
 import { openCompare } from '@/lib/open-compare';
 import { ROUTES, routeFor } from '@/lib/routes';
 
@@ -55,9 +55,7 @@ export default function RequestRoute() {
         </View>
         {covered ? (
           <View style={styles.covered}>
-            <AppText style={[styles.title, { color: t.text }]}>
-              We already check {countryName(from)} to {countryName(to)}.
-            </AppText>
+            <AppText style={[styles.title, { color: t.text }]}>We already check this route.</AppText>
             <Button
               label="Compare it"
               trailingIcon="arrow.right"

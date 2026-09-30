@@ -5,13 +5,15 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { CurrencySelect } from '@/components/select-field';
 import { Answer, Breakdown, Field, Fields, Section, SourceNote, ToolScreen } from '@/components/tool';
-import { AppText, Button } from '@/components/ui';
+import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useAuth } from '@/lib/auth';
 import { money, pct } from '@/lib/format';
 import { formatDay, isoDay, today, useMidRate } from '@/lib/fx';
+import { openCompare } from '@/lib/open-compare';
+import { ROUTES } from '@/lib/routes';
 import { saveCheck } from '@/lib/saved';
 import { track } from '@/lib/track';
 
@@ -53,6 +55,7 @@ export default function TrueCostScreen() {
   const fx = useMidRate(from, to, date ?? undefined);
 
   const S = Number(sent);
+  const compareRoute = ROUTES.find((r) => r.sendCurrency === from && r.receiveCurrency === to);
   const F = Number(fee) || 0;
   const Q = Number(rate);
   const R = Number(pickup) || 0;
@@ -164,6 +167,15 @@ export default function TrueCostScreen() {
             Mid-market rate from {fx.source}: 1 {from} = {fx.rate.toLocaleString('en-US', { maximumFractionDigits: 4 })}{' '}
             {to}, for {formatDay(fx.date)}. It’s a daily reference, so rates on the day may have moved.
           </SourceNote>
+
+          {/* PRD 5.7: from a past transfer to what the same one would get today. Only for
+              currency pairs Compare covers, so the link never lands on an empty route. */}
+          {compareRoute ? (
+            <TextLink
+              label={`Compare what ${money(S, from).replace('.00', '')} gets today`}
+              onPress={() => openCompare({ routeId: compareRoute.id, amount: S })}
+            />
+          ) : null}
 
           <Section title="Keep this check">
             {session ? (
