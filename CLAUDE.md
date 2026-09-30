@@ -51,6 +51,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       Spanish, Tagalog, Vietnamese and others can be added without code changes. Hindi
       also needs a matched Devanagari font (PRD 14.5). The WhatsApp bot already answers
       in Hindi (D68), pending Angad's read.
+- [ ] **CAC receipt scanner (D69), Phases 2–6.** Phase 1 (the gap report,
+      `docs/cac-gap-report.md`) done 2026-09-30. Waiting on Angad's answers to its 15
+      decisions before any feature code. Internal deadline 2026-10-23.
 - [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
       requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
       refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.

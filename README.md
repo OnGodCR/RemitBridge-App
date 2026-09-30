@@ -63,3 +63,5 @@ More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`
 | [`HANDOFF.md`](HANDOFF.md) | Current state, what's next, open questions |
 | [`CLAUDE.md`](CLAUDE.md) | Rules for working on this repo, and the open items |
 | [`docs/MANUAL_RESEARCH.md`](docs/MANUAL_RESEARCH.md) | Providers blocked from scraping, left for manual research |
+| [`docs/cac-gap-report.md`](docs/cac-gap-report.md) | Congressional App Challenge features: what exists, what's missing, decisions needed |
+| [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Per-session log of files Claude created or changed, for the CAC's AI-use disclosure |
