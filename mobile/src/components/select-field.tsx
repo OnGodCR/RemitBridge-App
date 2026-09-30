@@ -4,8 +4,9 @@ import { FlatList, Modal, Pressable, StyleSheet, TextInput, View } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Flag, FLAG_SLOT, FlagSlot } from '@/components/flag';
-import { AppText } from '@/components/ui';
+import { AppText, useLargeText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
 import type { Country } from '@/lib/countries';
 import { CURRENCIES } from '@/lib/currencies';
@@ -53,6 +54,8 @@ export function SelectField({
   tone?: 'hero' | 'plain';
 }) {
   const t = useTheme();
+  const large = useLargeText();
+  const icon = useIconSize(13);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const current = options.find((o) => o.value === value) ?? options[0];
@@ -81,13 +84,13 @@ export function SelectField({
         </AppText>
         <View style={styles.fieldRow}>
           <Flag code={current.flag} height={16} />
-          <AppText variant="label" style={styles.fieldName} numberOfLines={1}>
+          <AppText variant="label" style={styles.fieldName} numberOfLines={large ? 2 : 1}>
             {current.short ?? current.name}
           </AppText>
           <SymbolView
             pointerEvents="none"
             name="chevron.down"
-            size={13}
+            size={icon}
             weight="semibold"
             tintColor={t.textSecondary}
             fallback={<AppText muted>›</AppText>}
@@ -108,7 +111,7 @@ export function SelectField({
               <SymbolView
                 pointerEvents="none"
                 name="xmark"
-                size={17}
+                size={icon + 4}
                 weight="semibold"
                 tintColor={t.text}
                 fallback={<AppText variant="label">Close</AppText>}
@@ -120,7 +123,7 @@ export function SelectField({
             <SymbolView
               pointerEvents="none"
               name="magnifyingglass"
-              size={15}
+              size={icon + 2}
               weight="medium"
               tintColor={t.textSecondary}
               fallback={<AppText muted>⌕</AppText>}
@@ -135,6 +138,7 @@ export function SelectField({
               returnKeyType="search"
               clearButtonMode="while-editing"
               accessibilityLabel={`Search ${title.toLowerCase()}`}
+              maxFontSizeMultiplier={2}
               style={[styles.searchInput, { color: t.text }]}
             />
           </View>

@@ -60,7 +60,8 @@ export default function Why() {
           <Stat key={s.label} stat={s} step={i + 1} />
         ))}
       </View>
-      <AppText variant="small" style={{ color: t.heroText, opacity: 0.75 }}>
+      {/* 90% white, like the notes: 75% measured about 3.8:1 on the band, under AA. */}
+      <AppText variant="small" style={{ color: t.heroText, opacity: 0.9 }}>
         Sources: {FIGURES.flowsSource}; {FIGURES.globalCostSource}; {FIGURES.targetSource}.
       </AppText>
     </Step>

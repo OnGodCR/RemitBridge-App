@@ -103,6 +103,7 @@ export function Field({
         autoCapitalize="none"
         autoCorrect={false}
         accessibilityLabel={unit ? `${label}, in ${unit}` : label}
+        maxFontSizeMultiplier={2}
         style={[styles.fieldInput, { color: t.text }]}
       />
       {unit ? (

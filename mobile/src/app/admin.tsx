@@ -383,7 +383,7 @@ function RecentRow({ entry, name, first }: { entry: SavedEntry; name: string; fi
       : entry.status === 'rejected'
         ? t.destructive
         : entry.status === 'quarantined'
-          ? t.moneyMarkup
+          ? t.moneyMarkupText
           : t.textSecondary;
   return (
     <View

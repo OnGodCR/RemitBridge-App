@@ -68,7 +68,7 @@ export function SavedChecks() {
             </View>
             {cost ? (
               <View style={styles.cost}>
-                <AppText style={[styles.title, { color: t.moneyMarkup }]}>
+                <AppText style={[styles.title, { color: t.moneyMarkupText }]}>
                   {money(cost.totalCost, c.send_currency)}
                 </AppText>
                 <AppText variant="small" muted>

@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type 
 import { Eyebrow } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
+import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
 
 /**
@@ -20,7 +21,7 @@ export function ListGroup({ title, children }: { title?: string; children: React
   const t = useTheme();
   return (
     <View style={styles.group}>
-      {title ? <Eyebrow>{title}</Eyebrow> : null}
+      {title ? <Eyebrow header>{title}</Eyebrow> : null}
       <View style={[styles.index, { borderTopColor: t.border }]}>{children}</View>
     </View>
   );
@@ -135,11 +136,12 @@ export function ListItem({
 /** The website's ArrowRight, in the brand green. */
 export function Arrow({ external }: { external?: boolean }) {
   const t = useTheme();
+  const size = useIconSize(17);
   return (
     <SymbolView
       pointerEvents="none"
       name={external ? 'arrow.up.right' : 'arrow.right'}
-      size={17}
+      size={size}
       weight="semibold"
       tintColor={t.primary}
       fallback={<AppText style={{ color: t.primary }}>{external ? '↗' : '→'}</AppText>}

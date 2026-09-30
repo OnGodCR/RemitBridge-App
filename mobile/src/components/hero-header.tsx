@@ -17,12 +17,23 @@ export function HeroHeader({ title, children }: { title: string; children?: Reac
   return (
     <View style={[styles.band, { backgroundColor: t.hero, paddingTop: insets.top + Spacing.three }]}>
       <StatusBar style="light" />
-      <AppText variant="title" style={{ color: t.heroText }}>
+      <AppText variant="title" accessibilityRole="header" style={{ color: t.heroText }}>
         {title}
       </AppText>
       {children}
     </View>
   );
+}
+
+/**
+ * The green strip behind the status bar, fixed while the page scrolls. The header turns
+ * the status bar's text white; without this, scrolling slid white page content under
+ * white clock and battery icons and they vanished.
+ */
+export function StatusBarShield() {
+  const t = useTheme();
+  const insets = useSafeAreaInsets();
+  return <View pointerEvents="none" style={[styles.shield, { height: insets.top, backgroundColor: t.hero }]} />;
 }
 
 /**
@@ -41,4 +52,5 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
   },
   backdrop: { position: 'absolute', top: 0, left: 0, right: 0, height: 420 },
+  shield: { position: 'absolute', top: 0, left: 0, right: 0 },
 });
