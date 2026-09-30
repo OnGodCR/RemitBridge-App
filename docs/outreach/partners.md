@@ -5,8 +5,11 @@ community partner before they can be done well). **Nothing here has been sent.**
 reviews, personalizes and sends; log each send and reply in the table at the bottom.
 
 Researched 2026-09-29. Every contact below was read on the organization's own site on that
-date, except the two marked "check first". Use the organization's general address or form,
-never a staff member's personal email.
+date. Use the organization's general address or form, never a staff member's personal email.
+
+One draft is waiting in the RemitBridge Gmail's Drafts folder, unsent: Horn of Africa
+Services. The permission system stopped Claude from creating the rest, so the other texts
+are below to paste.
 
 ## Who, and why
 
@@ -19,11 +22,12 @@ never a staff member's personal email.
 | **El Centro de la Raza** (elcentrodelaraza.org) | Latino community; runs financial empowerment programs | Mexico, plus Guatemala, Honduras and El Salvador (Tier 2) | Form at elcentrodelaraza.org/contact-us; (206) 957-4634 |
 | **Financial Empowerment Network of Washington** (fenwa.org) | A network of financial coaches and educators across King County | One conversation reaches many coaches who meet senders every week | hello@fenwa.org; 360-830-6190 |
 | **Seattle Office of Immigrant and Refugee Affairs** (seattle.gov/iandraffairs) | The City's office for immigrant and refugee communities | Lists community resources; a way to reach many groups at once | OIRA@seattle.gov; (206) 727-8515 |
-| **Kandelia** (kandelia.org, formerly Vietnamese Friendship Association) | Vietnamese and other immigrant and refugee families | Vietnam is a launch route | **Check first:** kandelia.org refused the connection on 2026-09-29. Directories list info@kandelia.org |
-| **East African Community Services** (eastafricancs.org) | Somali, Oromo, Ethiopian and other East African families in South King County | Somalia and Ethiopia | **Check first:** the site didn't render for us; no contact confirmed |
+| **Kandelia** (kandelia.org, formerly Vietnamese Friendship Association) | Vietnamese and other immigrant and refugee families, Columbia City | Vietnam is a launch route | info@kandelia.org; 206-760-1573; form at kandelia.org/contact |
+| **East African Community Services** (eastafricancs.org) | The East African diaspora in Washington: Somali, Ethiopian, Eritrean, Djiboutian, Sudanese and Kenyan families; Seattle and SeaTac | Somalia and Eritrea (PRD 6.4), Ethiopia and Kenya (Tier 2) | info@eastafricancs.org; (206) 721-1119 |
 
-Suggested order: Horn of Africa Services first (the routes that most need a partner), then
-the four launch-route communities, then the Financial Empowerment Network.
+Suggested order: Horn of Africa Services and East African Community Services first (the
+routes that most need a partner), then the four launch-route communities, then the
+Financial Empowerment Network and the City's office.
 
 ## What to ask for
 
@@ -60,17 +64,35 @@ remitbridgesystemlabs@gmail.com
 https://app.remitbridgelabs.org
 ```
 
-For Horn of Africa Services, replace the second paragraph with:
+The {community} word for each: Filipino (Filipino Community of Seattle), Indian American
+(IACS), Latino (Casa Latina, El Centro de la Raza), Vietnamese (Kandelia).
+
+For Horn of Africa Services and East African Community Services, replace the second
+paragraph with:
 
 ```
 I'm writing because Somalia and Eritrea are routes we can't handle like the others. Very few providers publish their prices online, so the only honest way to show them is with help from people who know how families actually send money there. I'd like to learn how the families you work with send today, so that if we cover these routes, the prices we show are the ones people really pay.
 ```
 
+For the Financial Empowerment Network:
+
+```
+I'm writing because the coaches in your network meet people who send money to family abroad, and the cost of those transfers is easy to miss, since much of it hides in the exchange rate. If it would help, I'd be glad to walk your coaches through the app or share a simple link they can pass on.
+```
+
+For the Office of Immigrant and Refugee Affairs:
+
+```
+I'm writing because your office connects immigrant and refugee communities with resources, and sending money home is part of life for many of them. If a free tool like this belongs on your resource list, I'd be glad to share anything you need to check it first.
+```
+
+El Centro de la Raza takes messages through its web form, so paste the standard text there.
+
 ## Log
 
 | Organization | Sent | Reply |
 |---|---|---|
-| Horn of Africa Services | not sent | |
+| Horn of Africa Services | draft in Gmail, not sent | |
 | Filipino Community of Seattle | not sent | |
 | Indian American Community Services | not sent | |
 | Casa Latina | not sent | |
