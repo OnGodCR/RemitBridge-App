@@ -89,8 +89,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
 - [ ] **Universal links** (open the app straight from a link, D48): need the Apple Team
       ID from developer.apple.com → Membership, which Claude can't read without signing in.
-- [ ] **Partner outreach** (D50): no partners yet; Seattle-area organizations, special
-      corridors first.
+- [ ] **Partner outreach** (D50): no partners yet. A shortlist of nine Seattle-area
+      organizations (Horn of Africa Services first, for Somalia and Eritrea) and a draft
+      email are in `docs/outreach/partners.md` (2026-09-29). Not sent; Angad sends.
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
 - [x] Onboarding rebuilt from the website's own elements and checked in the simulator
