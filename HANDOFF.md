@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-30 (CAC Phase 3)
+**Last updated:** 2026-09-30
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -11,6 +11,11 @@ The app has all the screens PRD 14.7 lists, in the website's own look (D62, D63)
 onboarding (four steps), Compare, quote detail, "not covered yet" with the request form,
 the route board, the tools, Learn, Account with saved comparisons and receipts, Add a price
 and the metrics screen for admins. The WhatsApp bot is built and tested, waiting on Meta.
+
+It meets the accessibility bar in D70 (AA contrast, the largest text sizes, VoiceOver,
+44pt targets, offline prices), and it speaks five languages: English, plus drafts in
+Hindi, Spanish, Tagalog and Vietnamese that only development builds show until a named
+speaker signs off on each (D69).
 
 What stands between this and a working product, in order:
 
@@ -29,56 +34,31 @@ test: 26/26 passed on the applied schema; it now has 37 checks, 11 of which need
 new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
+## CAC receipt scanner (branch `claude/gallant-hopper-51zhhm`, 2026-09-30)
+
+Built by the cloud session for the Congressional App Challenge (D72–D90), on its own branch
+until Angad merges it (D87). `main` (languages D69, accessibility D70, flags) was merged into
+the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
+- Phases 1–3 done: gap report (`docs/cac-gap-report.md`); `packages/receipt` (redaction,
+  parser frame with Angad's 13 `TODO(angad)` extractors, Claude fallback, validation,
+  result logic); `supabase/migrations/20260930000000_receipts.sql`; the `scan-receipt` Edge
+  Function; the Scan a receipt screen with confirmation and result; the funding method and
+  1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
+- Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
+  and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
+- Angad's next steps: review, write the extractors, set `ANTHROPIC_API_KEY`, push the receipts
+  migration with the others, make an EAS development build (scanning needs ML Kit, not in
+  Expo Go), check the tax base (D78).
+- Known limit: `scan-receipt` runs without JWT verification (scanning works signed out); the
+  monthly model cap bounds spend.
+
 ## What changed on 2026-09-30
 
-Angad is entering the app in the 2026 Congressional App Challenge (internal deadline
-2026-10-23) with a receipt scanner and the features around it (D69). The work is on branch
-`claude/gallant-hopper-51zhhm` until he merges it (D84).
-
-- **Phase 1:** the gap report, `docs/cac-gap-report.md`. Angad accepted all 15
-  recommendations; they're D70–D84.
-- **Phase 2, built:**
-  - **Formula:** the 1% remittance tax is in the one formula, both languages (D73, D75), with
-    hand-derived test cases in `packages/formula/vectors.tax.json`.
-  - **`packages/receipt`:** the pipeline, pure TypeScript. PII detection and redaction; the
-    rule-based parser's frame, provider templates, fixtures and scoring harness, with the
-    13 field extractors left as `TODO(angad)` stubs (D83); the Claude fallback with a strict
-    JSON schema; merging with an extraction path per field; validation with the formula and
-    the most likely misread value.
-  - **Database:** `20260930000000_receipts.sql` adds `receipts`, `receipt_fields`,
-    `receipt_comparisons`, the monthly model cap, `receipt_result()` and the private
-    `receipt-images` bucket. Checked on a local Postgres (55 checks); the smoke test now has
-    48 checks.
-  - **`scan-receipt` Edge Function:** a second redaction pass, then reading, storing and
-    forgetting, tested under vitest against fakes.
-  - **App:** the Scan a receipt screen (Tools), which covers details on the phone and shows
-    the preview; the English and Hindi string catalogue with a language setting on Account
-    and Noto Sans Devanagari (D72); the app's first test runner (jest-expo, 26 tests);
-    `eas.json` and `expo-dev-client` for development builds.
-- `docs/AI_USAGE.md`: every session's files, for the CAC's AI-use disclosure.
-- The privacy policy has a "Scanning a receipt" section and lists Anthropic (live once merged).
-
-**Known limit:** `scan-receipt` runs without JWT verification (scanning works signed out,
-and the publishable key isn't a JWT). Anyone with the app's public key can call it, so a
-flood could use up the month's model calls (the cap stops the spending, not the calls) and
-add junk rows that expire in 30 days. A per-install rate limit can come later if needed.
-
-**Phase 2 stubs, on purpose:** the parser finds nothing until Angad writes the extractors,
-so today every value comes from the model (or the person).
-
-- **Phase 3, built (D85–D87):**
-  - **Confirmation screen:** the redacted photo with each value outlined where it was read;
-    values to check are listed first, in amber, and each needs an answer. Answers can be
-    typed, the suggestion, a choice from a list, or "This is right".
-  - **Result screen:** the true cost through TrueCost's own breakdown, advertised vs. paid
-    (or plainly why not), the tax check with the bank-funded equivalent, and "Compare this
-    route today".
-  - **Server:** the `confirm` action on `scan-receipt` re-checks the values, matches the
-    advertised price and stores `receipt_comparisons`.
-  - **Funding method:** in TrueCost and Compare, with the tax through the formula.
-  - **Engine:** `money_order` and `cashiers_check` added as payment methods.
-- **Tests:** 50 app tests (from 26), 149 in the receipt package (from 135), 70 engine and
-  formula tests in Python.
+- Accessibility pass (D70): contrast measured and fixed, layouts that stack at large text,
+  announcements, an adjustable rate chart, Bold Text, visible delete buttons, offline prices.
+- Every string moved into `mobile/src/i18n/en.ts`; drafts in Hindi, Spanish, Tagalog and
+  Vietnamese; the reviewer gate; Hind for Devanagari (D69).
+- Mail links now show the address when the phone has no mail app, instead of doing nothing.
 
 ## What changed on 2026-09-29
 
@@ -92,24 +72,6 @@ so today every value comes from the model (or the person).
 
 ## What's next (Angad)
 
-0. **CAC: review Phases 2 and 3** (above and in `docs/AI_USAGE.md`), then say go for Phase 4
-   (the benchmark and synthetic receipt generator). Meanwhile:
-   - **Write the extractors** in `packages/receipt/src/extract/fields.ts` (each TODO says its
-     inputs, output and expected behavior). Check them with
-     `npm run parser:report -w @remitbridge/receipt` and `npm test -w @remitbridge/receipt`
-     (`RECEIPT_STRICT=1` to fail on values not read yet).
-   - **Model key:** create an Anthropic API key, set it with
-     `supabase secrets set ANTHROPIC_API_KEY=...` in your own terminal, then
-     `supabase functions deploy scan-receipt --use-api`. Without the key, receipts are read by
-     the rules alone. The cap is 300 model calls a month (`RECEIPT_MODEL_MONTHLY_CAP`).
-   - **Development build**, to scan on your iPhone: `cd mobile && npx eas-cli@latest init`,
-     add the two `EXPO_PUBLIC_*` values as EAS environment variables for `development`, then
-     `npx eas-cli@latest build --profile development --platform ios`. The OCR module
-     (`@infinitered/react-native-mlkit-text-recognition` 5.0.1) hasn't been through a native
-     build yet; this is the first one.
-   - **The tax base (D75):** check in the IRS proposed regulations (Federal Register
-     2026-07085) whether fees count toward the 1%. Claude's sandbox couldn't open them.
-   - **Read the Hindi** in `mobile/src/i18n/hi.ts`, as well as the bot's.
 1. **Push the migrations, then run the smoke test** from the repo root:
    ```bash
    supabase db push
@@ -117,9 +79,8 @@ so today every value comes from the model (or the person).
    ```bash
    set -a; source mobile/.env.local; set +a; SUPABASE_URL=$EXPO_PUBLIC_SUPABASE_URL SUPABASE_PUBLISHABLE_KEY=$EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY supabase/tests/rls_smoke.sh
    ```
-   Expect 48 passed. There are three unapplied migrations now (the receipts one too); all
-   were applied to a throwaway Postgres 16 with `supabase/tests/local_migrations.sh`, and its
-   55 checks passed.
+   Expect 37 passed. The migrations were checked with a Postgres parser, not against a
+   database, so if one fails, the error names the line.
 2. **Enter the first prices** with Add a price (Account tab). Compare, the quote detail and
    the bot all start working the moment one is published.
 3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
@@ -138,13 +99,18 @@ so today every value comes from the model (or the person).
    for brand verification (D61).
 6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
    links open the app (D48). Claude couldn't read it without signing in.
-7. **Disk:** 5.7 GB free on 2026-09-29; native builds (and so real store screenshots)
+7. **Disk:** 5.3 GB free on 2026-09-30; native builds (and so real store screenshots)
    need 15–20 GB. Most of the space is app caches in `~/Library/Caches` (17 GB): Chrome
    6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers
    (`...ShipIt`) 1.6 GB. Clearing them from each app's own settings frees about 12 GB.
    The iOS 27 simulator runtime (7.5 GB) is needed; keep it.
 8. **Partners:** a shortlist of nine Seattle-area organizations and a draft email are in
    `docs/outreach/partners.md` (not sent).
+9. **Translation reviewers** (D69): one fluent speaker each for Hindi, Spanish, Tagalog
+   and Vietnamese, Hindi first. They read the draft in a development build (Account →
+   Language), send corrections, and agree in writing to stand behind it; then their name
+   and the date go in `mobile/src/i18n/languages.ts` and the language ships. Partner
+   organizations (item 8) are a natural place to ask.
 
 ## The shape of the product
 
@@ -164,21 +130,18 @@ so today every value comes from the model (or the person).
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D68) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D70) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
 | `packages/formula/` | The one total-cost formula, TypeScript and Python, pinned to `vectors.json` |
-| `packages/receipt/` | The receipt pipeline: redaction, parser frame and templates (extractors are Angad's TODOs), the Claude fallback, merging, validation, the result (tax check, quote matching, gap), fixtures and harness. 149 vitest tests, including the `scan-receipt` function against fakes |
 | `packages/bot/` | The WhatsApp bot's logic: parser, planner, replies in English and Hindi. 58 vitest tests, including the real webhook run against a fake database |
 | `engine/` | Python engine: adapters, publish gate, raw archive, manual adapter, `rb-engine` CLI |
 | `supabase/migrations/` | Schema, RLS and seed. The last two (route requests and metrics; WhatsApp) are **not applied yet** |
-| `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp`, `scan-receipt` (not deployed) |
-| `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 48 checks |
-| `supabase/tests/local_migrations.sh` | Every migration on a throwaway Postgres, then `local/checks.sql` (55 checks); also in CI |
-| `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `scan`, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
-| `mobile/src/i18n/` | The English and Hindi string catalogue for new screens (D72) |
-| `mobile/src/__tests__/` | The app's jest tests (catalogue, Hindi font, scan helpers, the scan screen's flow) |
+| `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp` (not deployed) |
+| `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 37 checks |
+| `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
+| `mobile/src/i18n/` | Every string: `en.ts` is the source, `es`/`hi`/`tl`/`vi` are drafts; `languages.ts` holds the reviewer gate (D69) |
 | `mobile/src/lib/` | Data and helpers. `routes.ts`, `countries.ts` and `format.ts` have no imports on purpose: the bot imports them |
 | `mobile/scripts/` | `make-icons.py` (app icon, splash), `make-onboarding-art.py` (the website's ground and band) |
 | `site/` | app.remitbridgelabs.org on Vercel: landing page, privacy, support, partner links |
@@ -189,14 +152,18 @@ The remote is `https://github.com/OnGodCR/RemitBridge-App.git` (private). Branch
 ### How to run things
 
 - Tests: `npm test -w @remitbridge/formula`, `npm test -w @remitbridge/bot`,
-  `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile`,
   `cd engine && uv run pytest -q`, and `npm run typecheck` for every workspace.
 - App: `cd mobile && npx expo start --lan`, then open `exp://<LAN IP>:8081` in Expo Go
   (`ipconfig getifaddr en0` gives the IP; it changes between networks, and Expo Go then
   loses Metro until it's reopened on the new address). `--localhost` doesn't work on this
   Mac: Metro binds to IPv6 `[::1]` only, while Expo Go asks for 127.0.0.1.
 - Replaying onboarding: Account → "Replay onboarding (dev only)".
-- Simulator quirk: the first tap after a screen change is often dropped; tap again.
+- Simulator quirk: the first tap after a screen change often seems dropped. At least some
+  of the time the tap landed and the simulator screenshot was a step behind (a mail alert
+  turned up once per tap, late). Wait about two seconds before judging.
+- Languages: Account → Language switches the app. Text size: `xcrun simctl ui booted
+  content_size accessibility-extra-extra-extra-large` (and `large` to reset); relaunch
+  the app after changing it, since the live change leaves a few frames half laid out.
 
 ### Local toolchain (checked 2026-09-29)
 

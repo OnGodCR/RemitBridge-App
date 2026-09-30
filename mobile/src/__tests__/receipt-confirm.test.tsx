@@ -74,7 +74,7 @@ it('refuses a date that isn’t real or is in the future', () => {
   const input = screen.getByLabelText('Date sent');
   fireEvent.changeText(input, '13/45/2026');
   fireEvent.press(screen.getByText('Save'));
-  expect(screen.getByText('That doesn’t look like a date sent. Check it and try again.')).toBeTruthy();
+  expect(screen.getByText('That doesn’t look right for Date sent. Check it and try again.')).toBeTruthy();
   fireEvent.changeText(input, '9/27/2026');
   fireEvent.press(screen.getByText('Save'));
   expect(screen.getByText('Sep 27, 2026')).toBeTruthy();

@@ -1,5 +1,5 @@
 /**
- * Finding and hiding personal details on a receipt (DECISIONS.md D71). Runs on the phone
+ * Finding and hiding personal details on a receipt (DECISIONS.md D74). Runs on the phone
  * before anything leaves it, and again on the server over the text that arrived, as a
  * second line of defense.
  *

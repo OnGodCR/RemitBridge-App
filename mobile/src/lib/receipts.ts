@@ -3,7 +3,7 @@ import type { ConfirmRequest, ConfirmResponse, ForgetRequest, ScanRequest, ScanR
 import { supabase } from '@/lib/supabase';
 
 /**
- * Talking to the scan-receipt Edge Function (DECISIONS.md D76, D78). What goes up is the
+ * Talking to the scan-receipt Edge Function (DECISIONS.md D79, D81). What goes up is the
  * redacted text and, if the person continues, the redacted photo: never the original.
  */
 export type SendResult = { ok: true; result: ScanResponse } | { ok: false; reason: 'not_connected' | 'failed' };

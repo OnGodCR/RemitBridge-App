@@ -1,8 +1,9 @@
 import { FIELD_SPECS, type FieldName, type FieldValues } from '@remitbridge/receipt';
 
-import type { Language, Strings } from '@/i18n';
+import { dayIn } from '@/i18n';
+import type { Copy } from '@/i18n/en';
+import type { Language } from '@/i18n/languages';
 import { money } from '@/lib/format';
-import { formatDay } from '@/lib/fx';
 
 /**
  * Showing and typing receipt values (Phase 3): amounts with their currency, dates as the
@@ -17,10 +18,10 @@ export function currencyOf(name: FieldName, v: Values): string | undefined {
   return name === 'amount_received' || name === 'pickup_charge' ? v.receive_currency : v.send_currency;
 }
 
-export function formatValue(name: FieldName, value: unknown, v: Values, strings: Strings): string {
-  if (name === 'funding_method') return strings.funding[value as keyof Strings['funding']] ?? String(value);
-  if (name === 'delivery_method') return strings.delivery[value as keyof Strings['delivery']] ?? String(value);
-  if (name === 'transfer_date' && typeof value === 'string') return formatDay(value);
+export function formatValue(name: FieldName, value: unknown, v: Values, copy: Copy, language: Language): string {
+  if (name === 'funding_method') return copy.payment[String(value)] ?? String(value);
+  if (name === 'delivery_method') return copy.delivery[value as keyof Copy['delivery']] ?? String(value);
+  if (name === 'transfer_date' && typeof value === 'string') return dayIn(language, value);
   if (name === 'exchange_rate' && typeof value === 'number') return value.toLocaleString('en-US', { maximumFractionDigits: 6 });
   if (FIELD_SPECS[name].kind === 'money' && typeof value === 'number') {
     const currency = currencyOf(name, v);
@@ -30,9 +31,10 @@ export function formatValue(name: FieldName, value: unknown, v: Values, strings:
 }
 
 /** A funding method inside a sentence: "paid by cash", "paid by money order". */
-export function fundingWord(funding: string, strings: Strings, language: Language): string {
-  const label = strings.funding[funding as keyof Strings['funding']] ?? funding;
-  return language === 'en' ? label.toLowerCase() : label;
+export function fundingWord(funding: string, copy: Copy, language: Language): string {
+  const label = copy.payment[funding] ?? funding;
+  // English and Spanish nouns go lower-case mid-sentence; the others keep the label as is.
+  return language.code === 'en' || language.code === 'es' ? label.toLowerCase() : label;
 }
 
 /** What the person typed, as the value checkValue expects; undefined if it can't be read. */

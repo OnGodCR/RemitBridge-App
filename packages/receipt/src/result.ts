@@ -1,5 +1,5 @@
 /**
- * What a checked receipt means (DECISIONS.md D73-D75, D79): its true cost through the one
+ * What a checked receipt means (DECISIONS.md D76-D78, D82): its true cost through the one
  * formula, the federal remittance tax check, and the gap between the rate the provider
  * advertised that day and the rate on the receipt. Pure, so the app, the Edge Function
  * and the WhatsApp reply compute the same numbers.
@@ -24,7 +24,7 @@ export function valuesFrom(fields: ExtractedFields): Values {
 }
 
 /**
- * The formula's inputs from a receipt (D74): S is everything paid, amount_sent + fee + tax;
+ * The formula's inputs from a receipt (D77): S is everything paid, amount_sent + fee + tax;
  * the fee and the tax come off before conversion. Null without the amount sent and rate.
  */
 export function formulaInputs(v: Values): { sent: number; fee: number; transferTax: number; quotedRate: number; pickupCharge: number } | null {
@@ -86,7 +86,7 @@ export function taxCheck(v: Values, midRate: number | null): TaxCheck {
 }
 
 // ---------------------------------------------------------------------------------------
-// Advertised vs. paid (D79)
+// Advertised vs. paid (D82)
 // ---------------------------------------------------------------------------------------
 
 /** A published quote, as much of it as matching needs. */

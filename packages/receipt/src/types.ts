@@ -1,5 +1,5 @@
 /**
- * Shapes that move through the receipt pipeline (DECISIONS.md D69-D83): OCR output from
+ * Shapes that move through the receipt pipeline (DECISIONS.md D72-D86): OCR output from
  * the phone, the fields read from it, and where each value came from.
  *
  * No imports beyond types, and relative paths with .ts extensions, so this package runs
@@ -33,7 +33,7 @@ export const FIELD_NAMES = [
 export type FieldName = (typeof FIELD_NAMES)[number]
 
 /**
- * The type of each field's value, once read. Meanings are fixed by DECISIONS.md D74:
+ * The type of each field's value, once read. Meanings are fixed by DECISIONS.md D77:
  * `amount_sent` is the transfer amount as printed, before the fee and the tax; `total_paid`
  * is the printed total; the formula's S is amount_sent + fee + tax.
  */
@@ -120,5 +120,5 @@ export interface ExtractedField<K extends FieldName = FieldName> extends ParsedF
 
 export type ExtractedFields = { [K in FieldName]?: ExtractedField<K> }
 
-/** Below this, a parsed value goes to the model as well (DECISIONS.md D76). */
+/** Below this, a parsed value goes to the model as well (DECISIONS.md D79). */
 export const LOW_CONFIDENCE = 0.8

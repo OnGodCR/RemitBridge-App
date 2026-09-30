@@ -5,7 +5,7 @@ For the Congressional App Challenge's AI-use disclosure. Each working session wi
 Claude created or changed and what that file does or what changed in it. It also says what
 Angad wrote himself and what Claude didn't do.
 
-The log starts with the CAC work (D69, 2026-09-30). Earlier work on this repo was also done
+The log starts with the CAC work (D72, 2026-09-30). Earlier work on this repo was also done
 with Claude. `git log` shows every commit, and commits Claude wrote carry a
 `Co-Authored-By: Claude` line.
 
@@ -30,9 +30,9 @@ feature code was written.
 
 **Files changed**
 
-- `DECISIONS.md`: added D69 (receipt scanning is in scope for the CAC, replacing D30's "no
+- `DECISIONS.md`: added D72 (receipt scanning is in scope for the CAC, replacing D30's "no
   receipt scanning for now"; Angad writes the parser's extraction heuristics himself).
-- `CLAUDE.md`: added the open item "CAC receipt scanner (D69), Phases 2–6".
+- `CLAUDE.md`: added the open item "CAC receipt scanner (D72), Phases 2–6".
 - `HANDOFF.md`: added a "What changed on 2026-09-30" section and updated the "Last updated"
   date.
 - `README.md`: added the gap report and this log to the Docs table.
@@ -47,11 +47,11 @@ tax from its sandbox (network blocked). The tax base in the report is marked unv
 
 ## 2026-09-30: Phase 2, data model, redaction, parser harness, model fallback, validation
 
-**What Claude did:** recorded Angad's answers to the gap report as decisions D70–D84. Added
+**What Claude did:** recorded Angad's answers to the gap report as decisions D73–D87. Added
 the remittance tax to the shared formula. Built the receipt pipeline package, the database
 tables, the `scan-receipt` Edge Function, the app's scan screen with on-device redaction, a
 string catalogue for English and Hindi, and tests for each. The field-extraction heuristics
-were **not** written: they're stubs for Angad (D83).
+were **not** written: they're stubs for Angad (D86).
 
 ### Files created
 
@@ -183,7 +183,7 @@ were **not** written: they're stubs for Angad (D83).
   signed out and the publishable key isn't a JWT; the reason is in the comment.
 - `site/privacy.html`: a "Scanning a receipt" section, Anthropic and Frankfurter as
   processors, and the effective date.
-- `DECISIONS.md` (D70–D84), `CLAUDE.md` (open items and stack), `HANDOFF.md`, `README.md`,
+- `DECISIONS.md` (D73–D87), `CLAUDE.md` (open items and stack), `HANDOFF.md`, `README.md`,
   and this file.
 
 **Written by Angad, not Claude:** the decisions (he accepted the recommendations). The field
@@ -196,7 +196,7 @@ extractors are his to write.
 - No live database was changed; the migration was run only on a throwaway local Postgres.
 - The Expo documentation site and the IRS regulations were blocked from the sandbox. APIs
   were checked against the installed packages' type definitions instead, and the tax base
-  is marked as an assumption (D75).
+  is marked as an assumption (D78).
 
 ---
 
@@ -204,7 +204,7 @@ extractors are his to write.
 
 **What Claude did:** built the confirmation and result screens for a scanned receipt, the
 server step behind them, and the funding method in TrueCost and Compare, with tests. It
-recorded the defaults it picked as D85–D87. Angad's parser extractors are still his
+recorded the defaults it picked as D88–D90. Angad's parser extractors are still his
 TODOs.
 
 ### Files created
@@ -267,8 +267,43 @@ TODOs.
 - `engine/src/remitbridge_engine/models.py`: `MONEY_ORDER`, `CASHIERS_CHECK` payment methods.
 - `packages/formula/python/tests/test_vectors.py`: a test that the engine's payment methods
   equal the formula's funding methods.
-- `DECISIONS.md` (D85–D87), `HANDOFF.md`, `CLAUDE.md` (open items), and this file.
+- `DECISIONS.md` (D88–D90), `HANDOFF.md`, `CLAUDE.md` (open items), and this file.
 
 **Not done or not verifiable by Claude:** the same limits as Phase 2. There was no native
 build, no real phone or receipt, no real model call, and no live database. Compare's
 funding filter hasn't been seen against real prices, because none are entered yet.
+
+---
+
+## 2026-09-30: merging `main` (the other session's languages and accessibility work)
+
+**What Claude did:** Angad asked to merge `main` into the CAC branch. Another Claude session,
+on Angad's Mac, had pushed an app-wide language system (D69), accessibility work (D70) and
+flags to `main`, which conflicted in 17 files. Claude took `main`'s version of every shared
+screen and re-applied the CAC changes on top. No history was rewritten and nothing was
+pushed to `main`.
+
+**Removed (duplicates of `main`'s work):** `mobile/src/i18n/index.ts` (the branch's own
+string store), `mobile/src/__tests__/app-text.test.tsx`, the Noto Sans Devanagari font and
+its theme tokens, and the branch's language setting on Account.
+
+**Changed:**
+- `mobile/src/i18n/en.ts`, `hi.ts`, `es.ts`, `tl.ts`, `vi.ts`: added the scanner's strings
+  (`scan`, `confirm`, `result`, `receiptFields`, `receiptPaths`, `funding`, a `titles` entry
+  and a `tools` entry) and two payment labels. English and Hindi were carried over from the
+  branch. Spanish, Tagalog and Vietnamese are new Claude drafts, which D69's reviewer rule
+  keeps out of release builds.
+- `mobile/src/app/scan.tsx`, `components/receipt-confirm.tsx`,
+  `components/receipt-result.tsx`, `lib/receipt-format.ts`: ported to `main`'s `useCopy()`
+  / `useLanguage()` API. Dates now go through `dayIn`.
+- `mobile/src/app/(tabs)/index.tsx`, `true-cost.tsx`, `quote/[id].tsx`, `(tabs)/tools.tsx`,
+  `_layout.tsx`: `main`'s versions, with the funding method, tax and scan entry re-applied.
+- `mobile/app.json`, `mobile/package.json`, `package-lock.json`: both sides' plugins and
+  packages. The lockfile was regenerated with npm.
+- `mobile/src/__tests__/i18n.test.tsx` (rewritten: every language has every scanner key),
+  `scan-screen.test.tsx`, `receipt-confirm.test.tsx`, `funding.test.tsx`: ported. The app
+  has 79 tests.
+- Decision numbers: the branch's D69–D87 became D72–D90 in `DECISIONS.md` and in every
+  reference in code and docs (24 files). D71 was left to the other session.
+- `CLAUDE.md`, `HANDOFF.md`: short CAC additions on top of `main`'s text.
+- `docs/cac-gap-report.md`: one em dash replaced (house rule).

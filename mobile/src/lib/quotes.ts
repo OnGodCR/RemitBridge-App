@@ -80,7 +80,13 @@ export function atAmount(q: LatestQuote, amount: number, funding: FundingMethod 
 export type QuotesResult =
   | { kind: 'not_connected' }
   | { kind: 'error'; message: string }
-  | { kind: 'ok'; standing: LatestQuote[]; promotional: LatestQuote[] };
+  | {
+      kind: 'ok';
+      standing: LatestQuote[];
+      promotional: LatestQuote[];
+      /** Set when the network failed and these are the prices kept from the last visit. */
+      savedAt?: string;
+    };
 
 export async function fetchQuotes(
   routeId: string,
@@ -88,14 +94,46 @@ export async function fetchQuotes(
   method: DeliveryMethod,
 ): Promise<QuotesResult> {
   if (!supabase) return { kind: 'not_connected' };
+  const key = `rb.quotes.${routeId}.${amount}.${method}`;
   const { data, error } = await supabase
     .from('latest_quotes')
     .select('*')
     .eq('route_id', routeId)
     .eq('send_amount', amount)
     .eq('delivery_method', method);
-  if (error) return { kind: 'error', message: error.message };
+  if (error) return fromCache(key) ?? { kind: 'error', message: error.message };
+  remember(key, (data ?? []) as LatestQuote[]);
   return { kind: 'ok', ...rank((data ?? []) as LatestQuote[]) };
+}
+
+/**
+ * The last prices loaded for each route, amount and method, kept on the phone (PRD 14.10:
+ * senders are often on older phones and slow connections). When the network fails,
+ * Compare shows these, labelled with when they were loaded, instead of nothing. The same
+ * rules as the view apply on the way out: nothing older than 48 hours, and "stale" is
+ * worked out again from the check time, since it was computed when they were loaded.
+ */
+function remember(key: string, rows: LatestQuote[]) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ at: new Date().toISOString(), rows }));
+  } catch {
+    // A full or unavailable store only means no offline copy.
+  }
+}
+
+function fromCache(key: string): QuotesResult | null {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const { at, rows } = JSON.parse(raw) as { at: string; rows: LatestQuote[] };
+    const now = Date.now();
+    const fresh = rows
+      .filter((q) => now - new Date(q.captured_at).getTime() < 48 * 3600 * 1000)
+      .map((q) => ({ ...q, is_stale: now - new Date(q.captured_at).getTime() > 24 * 3600 * 1000 }));
+    return { kind: 'ok', ...rank(fresh), savedAt: at };
+  } catch {
+    return null;
+  }
 }
 
 /**

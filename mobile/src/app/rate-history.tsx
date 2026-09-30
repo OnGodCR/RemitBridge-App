@@ -6,7 +6,8 @@ import { CurrencySelect } from '@/components/select-field';
 import { Breakdown, Section, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText, Segmented } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
-import { daysAgo, FX_SOURCE, fetchRateSeries, formatDay, today, type RatePoint } from '@/lib/fx';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
+import { daysAgo, FX_SOURCE, fetchRateSeries, today, type RatePoint } from '@/lib/fx';
 import { track } from '@/lib/track';
 
 /**
@@ -26,6 +27,10 @@ const PERIODS = [
 const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: n >= 100 ? 2 : 4 });
 
 export default function RateHistoryScreen() {
+  const copy = useCopy();
+  const r = copy.rateHistory;
+  const { language } = useLanguage();
+  const day = (d: string) => dayIn(language, d);
   const [from, setFrom] = useState('USD');
   const [to, setTo] = useState('MXN');
   const [days, setDays] = useState('90');
@@ -52,36 +57,35 @@ export default function RateHistoryScreen() {
   const change = first && last ? ((last.rate - first.rate) / first.rate) * 100 : 0;
 
   return (
-    <ToolScreen intro="The mid-market rate, day by day. A rising line means each dollar buys more.">
-      <Section title="Pair">
+    <ToolScreen intro={r.intro}>
+      <Section title={r.pair}>
         <View style={styles.pair}>
-          <CurrencySelect label="From" value={from} onChange={setFrom} />
-          <CurrencySelect label="To" value={to} onChange={setTo} />
+          <CurrencySelect label={copy.common.from} value={from} onChange={setFrom} />
+          <CurrencySelect label={copy.common.to} value={to} onChange={setTo} />
         </View>
         <Segmented options={PERIODS} value={days} onChange={setDays} />
       </Section>
 
       {!points && !failed ? <ActivityIndicator /> : null}
-      {failed ? <AppText muted>Couldn’t load the history. Check your connection and try again.</AppText> : null}
-      {points && points.length < 2 ? <AppText muted>Not enough days published for this pair yet.</AppText> : null}
+      {failed ? <AppText muted>{r.failed}</AppText> : null}
+      {points && points.length < 2 ? <AppText muted>{r.notEnough}</AppText> : null}
 
       {points && points.length >= 2 && first && last ? (
         <>
-          <LineChart points={points.map((p) => ({ date: p.date, value: p.rate }))} unit={`${to} per 1 ${from}`} format={fmt} />
+          <LineChart points={points.map((p) => ({ date: p.date, value: p.rate }))} unit={r.perOne(to, from)} format={fmt} />
           <Breakdown
             rows={[
-              { label: `Latest (${formatDay(last.date)})`, value: fmt(last.rate), strong: true },
+              { label: r.latest(day(last.date)), value: fmt(last.rate), strong: true },
               {
-                label: `Change since ${formatDay(first.date)}`,
+                label: r.change(day(first.date)),
                 value: `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`,
               },
-              { label: 'Highest', value: fmt(Math.max(...points.map((p) => p.rate))) },
-              { label: 'Lowest', value: fmt(Math.min(...points.map((p) => p.rate))) },
+              { label: r.highest, value: fmt(Math.max(...points.map((p) => p.rate))) },
+              { label: r.lowest, value: fmt(Math.min(...points.map((p) => p.rate))) },
             ]}
           />
           <SourceNote>
-            {points.length} daily reference rates from {FX_SOURCE}, which aggregates central bank publications.
-            Providers’ rates sit below these by their markup.
+            {r.source(points.length, FX_SOURCE)}
           </SourceNote>
         </>
       ) : null}

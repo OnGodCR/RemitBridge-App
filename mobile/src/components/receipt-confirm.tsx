@@ -19,7 +19,7 @@ import { ChoiceList } from '@/components/choice-list';
 import { AppText, Button, Card } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { fill, useStrings } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
 import { today } from '@/lib/fx';
 import { editText, formatValue, parseTyped } from '@/lib/receipt-format';
 
@@ -48,8 +48,9 @@ export function ReceiptConfirm({
   onConfirm: (answers: Answers) => void;
 }) {
   const t = useTheme();
-  const strings = useStrings();
-  const s = strings.confirm;
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const s = copy.confirm;
   const [answers, setAnswers] = useState<Answers>({});
   const [editing, setEditing] = useState<FieldName | null>(null);
   const [width, setWidth] = useState(0);
@@ -86,7 +87,7 @@ export function ReceiptConfirm({
                   key={name}
                   onPress={() => setEditing(name)}
                   accessibilityRole="button"
-                  accessibilityLabel={`${strings.fields[name]}: ${formatValue(name, valueOf(name), values, strings)}${warn ? `. ${strings.scan.toCheck}` : ''}`}
+                  accessibilityLabel={`${copy.receiptFields[name]}: ${formatValue(name, valueOf(name), values, copy, language)}${warn ? `. ${copy.scan.toCheck}` : ''}`}
                   style={[
                     styles.mark,
                     {
@@ -134,18 +135,18 @@ export function ReceiptConfirm({
                 { opacity: pressed ? 0.7 : 1 },
               ]}>
               <View style={styles.flex}>
-                <AppText variant="label">{strings.fields[name]}</AppText>
+                <AppText variant="label">{copy.receiptFields[name]}</AppText>
                 <AppText variant="small" muted>
-                  {name in answers ? strings.paths.user_corrected : result.fields[name] ? strings.paths[result.fields[name]!.path] : strings.scan.notFound}
+                  {name in answers ? copy.receiptPaths.user_corrected : result.fields[name] ? copy.receiptPaths[result.fields[name]!.path] : copy.scan.notFound}
                 </AppText>
                 {warn ? (
                   <AppText variant="small" style={{ color: t.moneyMarkup }}>
-                    {strings.scan.toCheck}
+                    {copy.scan.toCheck}
                   </AppText>
                 ) : null}
               </View>
               <AppText variant={value !== undefined ? 'label' : 'small'} muted={value === undefined}>
-                {value !== undefined ? formatValue(name, value, values, strings) : '–'}
+                {value !== undefined ? formatValue(name, value, values, copy, language) : '–'}
               </AppText>
             </Pressable>
           );
@@ -154,7 +155,7 @@ export function ReceiptConfirm({
 
       {message ? <AppText style={{ color: t.destructive }}>{message}</AppText> : null}
       <Button
-        label={left.length === 0 ? s.ready : left.length === 1 ? s.leftOne : fill(s.left, { count: left.length })}
+        label={left.length === 0 ? s.ready : s.left(left.length)}
         disabled={left.length > 0}
         loading={sending}
         onPress={() => onConfirm(answers)}
@@ -182,8 +183,9 @@ function Editor({
   onCancel: () => void;
 }) {
   const t = useTheme();
-  const strings = useStrings();
-  const s = strings.confirm;
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const s = copy.confirm;
   const spec = FIELD_SPECS[name];
   const [text, setText] = useState(editText(name, value));
   const [error, setError] = useState(false);
@@ -199,16 +201,16 @@ function Editor({
 
   const options =
     name === 'funding_method'
-      ? FUNDING_METHODS.map((f) => ({ value: f as string, label: strings.funding[f] }))
+      ? FUNDING_METHODS.map((f) => ({ value: f as string, label: copy.payment[f] }))
       : name === 'delivery_method'
-        ? DELIVERY_METHODS.map((d) => ({ value: d as string, label: strings.delivery[d] }))
+        ? DELIVERY_METHODS.map((d) => ({ value: d as string, label: copy.delivery[d] }))
         : null;
 
   return (
     <Card style={{ borderColor: t.primary }}>
-      <AppText variant="label">{fill(s.editing, { field: strings.fields[name] })}</AppText>
+      <AppText variant="label">{s.editing(copy.receiptFields[name])}</AppText>
       {options ? (
-        <ChoiceList label={strings.fields[name]} options={options} value={typeof value === 'string' ? value : null} onChange={(v) => save(v)} />
+        <ChoiceList label={copy.receiptFields[name]} options={options} value={typeof value === 'string' ? value : null} onChange={(v) => save(v)} />
       ) : (
         <TextInput
           value={text}
@@ -217,7 +219,7 @@ function Editor({
             setError(false);
           }}
           autoFocus
-          accessibilityLabel={strings.fields[name]}
+          accessibilityLabel={copy.receiptFields[name]}
           placeholder={spec.kind === 'date' ? s.datePlaceholder : spec.kind === 'currency' ? s.currencyPlaceholder : undefined}
           placeholderTextColor={t.textSecondary}
           keyboardType={spec.kind === 'money' || spec.kind === 'rate' ? 'decimal-pad' : spec.kind === 'date' ? 'numbers-and-punctuation' : 'default'}
@@ -226,14 +228,14 @@ function Editor({
           style={[styles.input, { color: t.text, borderColor: error ? t.destructive : t.border, backgroundColor: t.background }]}
         />
       )}
-      {error ? <AppText style={{ color: t.destructive }}>{fill(s.invalid, { field: strings.fields[name].toLowerCase() })}</AppText> : null}
+      {error ? <AppText style={{ color: t.destructive }}>{s.invalid(copy.receiptFields[name])}</AppText> : null}
       {suggestion !== undefined ? (
         <>
           <AppText variant="small" muted>
-            {fill(s.suggestion, { value: formatValue(name, suggestion, values, strings) })}
+            {s.suggestion(formatValue(name, suggestion, values, copy, language))}
           </AppText>
           <Button
-            label={fill(s.useSuggestion, { value: formatValue(name, suggestion, values, strings) })}
+            label={s.useSuggestion(formatValue(name, suggestion, values, copy, language))}
             variant="secondary"
             onPress={() => save(suggestion)}
           />
@@ -242,7 +244,7 @@ function Editor({
       <View style={styles.buttons}>
         {!options ? <Button label={s.save} onPress={() => save(parseTyped(name, text))} /> : null}
         {flagged && value !== undefined ? <Button label={s.looksRight} variant="secondary" onPress={() => save(value)} /> : null}
-        <Button label={s.cancel} variant="plain" onPress={onCancel} />
+        <Button label={copy.common.cancel} variant="plain" onPress={onCancel} />
       </View>
     </Card>
   );

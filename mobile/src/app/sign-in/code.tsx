@@ -6,9 +6,11 @@ import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
+import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
-import { sendEmailCode, verifyEmailCode } from '@/lib/sign-in';
+import { sendEmailCode, verifyEmailCode, type SignInError } from '@/lib/sign-in';
 import { track } from '@/lib/track';
 
 const RESEND_AFTER_S = 60; // matches auth.email.max_frequency in supabase/config.toml
@@ -19,7 +21,9 @@ export default function CodeStep() {
   const { email = '' } = useLocalSearchParams<{ email: string }>();
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<SignInError | null>(null);
+  const copy = useCopy();
+  const si = copy.signIn;
   const [wait, setWait] = useState(RESEND_AFTER_S);
 
   useEffect(() => {
@@ -33,8 +37,9 @@ export default function CodeStep() {
     setError(null);
     const result = await verifyEmailCode(email, value);
     setBusy(false);
-    if (result) {
+    if (result && result !== 'closed') {
       setError(result);
+      announce(si.errors[result]);
       setCode('');
       return;
     }
@@ -53,7 +58,7 @@ export default function CodeStep() {
     setError(null);
     setWait(RESEND_AFTER_S);
     const result = await sendEmailCode(email);
-    if (result) setError(result);
+    if (result && result !== 'closed') setError(result);
   };
 
   return (
@@ -61,14 +66,16 @@ export default function CodeStep() {
       <Step
         actions={
           <Button
-            label={wait > 0 ? `Resend in ${wait}s` : 'Resend code'}
+            label={wait > 0 ? si.resendIn(wait) : si.resend}
             variant="plain"
             disabled={wait > 0}
             onPress={resend}
           />
         }>
-        <AppText variant="title">Enter the code</AppText>
-        <AppText muted>Sent to {email}</AppText>
+        <AppText variant="title" accessibilityRole="header">
+          {si.codeTitle}
+        </AppText>
+        <AppText muted>{si.sentTo(email)}</AppText>
         <TextInput
           value={code}
           onChangeText={onChange}
@@ -78,12 +85,13 @@ export default function CodeStep() {
           textContentType="oneTimeCode"
           autoComplete="one-time-code"
           maxLength={6}
-          accessibilityLabel="6-digit code"
+          accessibilityLabel={si.codeLabel}
+          maxFontSizeMultiplier={1.5}
           style={[styles.input, { color: t.text, backgroundColor: t.card, borderColor: t.border }]}
         />
         {error ? (
           <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
-            {error}
+            {si.errors[error]}
           </AppText>
         ) : null}
       </Step>

@@ -31,10 +31,15 @@ export function LogoMark({ width = 96, color }: { width?: number; color?: string
  * The website's eyebrow: small, bold, uppercase, widely tracked, in the brand green. It
  * names the section so the heading underneath doesn't have to.
  */
-export function Eyebrow({ children, onDark }: { children: string; onDark?: boolean }) {
+export function Eyebrow({ children, onDark, header }: { children: string; onDark?: boolean; header?: boolean }) {
   const t = useTheme();
   return (
-    <AppText style={[brandStyles.eyebrow, { color: onDark ? t.heroText : t.primary, opacity: onDark ? 0.85 : 1 }]}>
+    <AppText
+      // Titling a list, it's a heading, so VoiceOver's rotor can jump between sections.
+      // Screen readers get the words as written, not spelled-out capitals.
+      accessibilityRole={header ? 'header' : undefined}
+      accessibilityLabel={children}
+      style={[brandStyles.eyebrow, { color: onDark ? t.heroText : t.primary, opacity: onDark ? 0.9 : 1 }]}>
       {children.toUpperCase()}
     </AppText>
   );

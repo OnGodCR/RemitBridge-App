@@ -46,29 +46,26 @@ the work, not afterwards:
 
 These are deferred on purpose, not forgotten. Update this list as things land.
 
-- [ ] **More languages.** The app is English only, and its strings are still written
-      inline in the screens, so moving them into string files comes first; then Hindi,
-      Spanish, Tagalog, Vietnamese and others can be added without code changes. Hindi
-      also needs a matched Devanagari font (PRD 14.5). The WhatsApp bot already answers
-      in Hindi (D68), pending Angad's read. Started 2026-09-30 (D72): `mobile/src/i18n/` holds
-      English and Hindi for the new screens, Noto Sans Devanagari is loaded, and Account has a
-      language setting; the Hindi there needs Angad's read too.
-- [ ] **CAC receipt scanner (D69), Phases 4–6.** Phase 1 (gap report), Phase 2 (data
-      model, redaction, parser harness, Claude fallback, validation, scan screen) and Phase 3
-      (confirmation and result screens, funding method in TrueCost and Compare, D85–D87)
-      done 2026-09-30, on branch `claude/gallant-hopper-51zhhm` (D84). Waiting on Angad's
-      review before Phase 4. Internal deadline 2026-10-23.
+- [ ] **Translation reviewers** (D69). Hindi, Spanish, Tagalog and Vietnamese are
+      written (Claude's drafts) and show only in development builds until a fluent
+      speaker reads each one, agrees in writing, and is named with the date in
+      `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
+      read. Glossary definitions are still English in every language.
+- [ ] **CAC receipt scanner (D72), Phases 4–6.** Phases 1–3 (gap report; data model,
+      redaction, parser harness, Claude fallback, validation, scan screen; confirmation and
+      result screens, funding method in TrueCost and Compare) done 2026-09-30 on branch
+      `claude/gallant-hopper-51zhhm` (D87), merged with `main` the same day. Waiting on
+      Angad's review before Phase 4. Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
-      `packages/receipt/src/extract/fields.ts` (D83). Until then, the model reads every value.
-- [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D76).
-- [ ] **First development build on EAS** (`eas init`, the two `EXPO_PUBLIC_*` EAS variables,
-      `eas build --profile development`), then scan a real receipt on the iPhone (D70).
+      `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
+- [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D79). Also
+      push the receipts migration (`20260930000000_receipts.sql`, 11 more smoke checks).
+- [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
-      proposed regulations (D75); the app says it's an assumption until then.
-- [ ] **Push the three new migrations, then run the smoke test (48 checks).** Route
-      requests and metrics (D64, D65), WhatsApp (D68), and receipts (D78). Claude's
-      `supabase db push` was refused as a production deploy, so Angad runs it. Commands in
-      HANDOFF.md. All three pass on a throwaway Postgres (55 checks, 2026-09-30).
+      proposed regulations (D78).
+- [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
+      requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
+      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.
 - [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
       detail or the bot until one is published.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
@@ -86,7 +83,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
-- [ ] **Disk space.** 5.6 GB free on 2026-09-29; native builds (and real store
+- [ ] **Disk space.** 5.3 GB free on 2026-09-30; native builds (and real store
       screenshots) need 15–20 GB.
 - [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
       the Supabase address (verify remitbridgelabs.org in Search Console, then submit) (D61).
@@ -96,9 +93,10 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       swap them into `site/screens/` (D59).
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
       change was sometimes dropped. It looked like Expo Go's dev overlay, but
-      that's unconfirmed.
-- [ ] **Bank connections** for past transfers. Manual entry only (D30); receipt scanning is
-      being built (D69).
+      that's unconfirmed. On 2026-09-30 at least some "dropped" taps had landed and the
+      simulator's screenshot was a step behind.
+- [ ] **Bank connections or receipt scanning** for past transfers. Manual
+      entry only for now (D30).
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
       Apple's came through on 2026-09-29.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
@@ -109,6 +107,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       email are in `docs/outreach/partners.md` (2026-09-29). Not sent; Angad sends.
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Accessibility pass (D70): AA contrast, the largest text sizes (checked in English,
+      Hindi and Vietnamese), VoiceOver announcements and headings, 44pt targets, Bold
+      Text, offline prices, no press-and-hold-only actions. Done 2026-09-30.
+- [x] Every string in `mobile/src/i18n/`, with the reviewer gate, Hind for Hindi, and
+      drafts in Hindi, Spanish, Tagalog and Vietnamese (D69). Done 2026-09-30.
 - [x] Onboarding rebuilt from the website's own elements and checked in the simulator
       (D62); Tools, Learn and Account lists as the website's divided index (D63).
       Done 2026-09-29.
@@ -210,7 +213,8 @@ segmented controls over pill chips, and text labels over decoration. Color comes
 from the website's vocabulary: a brand-green header band, mint tints, and a green
 left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 
-- American English. English is the only language for now (see Open items).
+- American English is the source. Every string lives in `mobile/src/i18n/en.ts`, never
+  inline in a screen; each other language is a full copy, shipped only once reviewed (D69).
 - Use the terminology table in PRD 14.4: *mid-market rate*, *exchange-rate
   markup*, *total cost*, *amount received*, *provider*. Say *route* in the UI and
   *corridor* in docs and research.
@@ -233,7 +237,7 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - **WhatsApp:** Meta Cloud API directly, not Twilio.
 - **Receipt scanning:** OCR and redaction on the phone (ML Kit, Skia); the pipeline in
   `packages/receipt`; Claude through the Anthropic API, only from the `scan-receipt` Edge
-  Function (D70–D76).
+  Function (D73–D79).
 - **Maintainer alerts:** email to Angad.
 - Use whichever language fits each part. Every part must use the same total-cost formula.
 - **Look:** same as the website (D18). The website repo

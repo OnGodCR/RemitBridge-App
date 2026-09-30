@@ -74,7 +74,7 @@ def test_taxed_funding_is_the_physical_instruments():
 
 
 def test_funding_methods_match_the_engine():
-    """The engine's payment methods and the formula's funding methods are one list (D80)."""
+    """The engine's payment methods and the formula's funding methods are one list (D83)."""
     from remitbridge_engine.models import PaymentMethod
 
     from remitbridge_formula import FUNDING_METHODS

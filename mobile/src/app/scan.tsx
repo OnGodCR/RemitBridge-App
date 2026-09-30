@@ -20,14 +20,15 @@ import { ReceiptResult } from '@/components/receipt-result';
 import { AppText, Button, Card } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { fill, useStrings, type Strings } from '@/i18n';
+import { useCopy } from '@/i18n';
+import type { Copy } from '@/i18n/en';
 import { isoDay } from '@/lib/fx';
 import { canScan, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { track } from '@/lib/track';
 
 /**
- * Scan a receipt (DECISIONS.md D69-D72). The photo is read and redacted on the phone; the
+ * Scan a receipt (DECISIONS.md D72-D75). The photo is read and redacted on the phone; the
  * person sees exactly the redacted image that would be sent, can cover more, chooses
  * whether it may be kept for research, and only then is anything sent.
  *
@@ -53,8 +54,8 @@ type Step =
 
 export default function ScanScreen() {
   const t = useTheme();
-  const strings = useStrings();
-  const s = strings.scan;
+  const copy = useCopy();
+  const s = copy.scan;
   const [step, setStep] = useState<Step>({ kind: 'start' });
   const [consent, setConsent] = useState(false);
 
@@ -122,7 +123,7 @@ export default function ScanScreen() {
     setStep({ ...step, sending: true, message: undefined });
     const done = await confirmScan(step.result.id, answers, isoDay(new Date()));
     if (!done.ok) {
-      setStep({ ...step, sending: false, message: done.reason === 'expired' ? strings.confirm.expired : strings.confirm.failed });
+      setStep({ ...step, sending: false, message: done.reason === 'expired' ? copy.confirm.expired : copy.confirm.failed });
       return;
     }
     track('receipt_confirmed', {
@@ -172,9 +173,7 @@ export default function ScanScreen() {
           <AppText muted>{s.previewHelp}</AppText>
           <RedactedPhoto photo={step.photo} page={step.page} hidden={step.hidden} redacted={step.redacted} onTap={tap} strings={s} />
           <AppText variant="small" muted>
-            {redactionBoxes(step.page, step.hidden).length === 1
-              ? s.coveredOne
-              : fill(s.coveredMany, { count: redactionBoxes(step.page, step.hidden).length })}
+            {s.covered(redactionBoxes(step.page, step.hidden).length)}
           </AppText>
 
           <Card>
@@ -223,7 +222,7 @@ export default function ScanScreen() {
         </>
       ) : null}
 
-      <DoesNotTellYou title={strings.limitsTitle} items={s.limits} />
+      <DoesNotTellYou items={s.limits} />
     </ScrollView>
   );
 }
@@ -245,7 +244,7 @@ function RedactedPhoto({
   hidden: Redaction[];
   redacted: string;
   onTap: (line: number, word: number) => void;
-  strings: Strings['scan'];
+  strings: Copy['scan'];
 }) {
   const t = useTheme();
   const [width, setWidth] = useState(0);
@@ -268,7 +267,7 @@ function RedactedPhoto({
                   key={`${i}:${j}`}
                   onPress={() => onTap(i, j)}
                   accessibilityRole="button"
-                  accessibilityLabel={kind === 'manual' ? s.tapCovered : fill(s.tapWord, { text: w.text })}
+                  accessibilityLabel={kind === 'manual' ? s.tapCovered : s.tapWord(w.text)}
                   hitSlop={4}
                   style={{
                     position: 'absolute',

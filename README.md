@@ -28,6 +28,8 @@ Philippines (PHP), and Vietnam (VND). More follow in tiers (see
 ```
 engine/              Python scraping engine: adapters, publish gate, raw archive, rb-engine CLI
 mobile/              Expo app (iOS and Android): Compare, Tools, Learn, Account
+mobile/src/i18n/     Every string the app shows: English source, drafts in Hindi, Spanish,
+                     Tagalog and Vietnamese, and the reviewer gate that keeps drafts out of releases
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 packages/bot/        The WhatsApp bot's logic (parser, replies in English and Hindi), tested with vitest
 packages/receipt/    The receipt pipeline: redaction, the rule-based parser (its extractors are Angad's

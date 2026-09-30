@@ -5,7 +5,9 @@ import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type 
 import { Eyebrow } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
+import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * The website's divided index (its home page's "Start here" list), for the Tools, Learn and
@@ -20,7 +22,7 @@ export function ListGroup({ title, children }: { title?: string; children: React
   const t = useTheme();
   return (
     <View style={styles.group}>
-      {title ? <Eyebrow>{title}</Eyebrow> : null}
+      {title ? <Eyebrow header>{title}</Eyebrow> : null}
       <View style={[styles.index, { borderTopColor: t.border }]}>{children}</View>
     </View>
   );
@@ -42,12 +44,13 @@ export function ListRow({
   external?: boolean;
 }) {
   const t = useTheme();
+  const copy = useCopy();
   return (
     <ListItem
       onPress={onPress}
       accessibilityRole={external ? 'link' : 'button'}
       accessibilityLabel={`${title}. ${subtitle}`}
-      accessibilityHint={external ? 'Opens on the website' : undefined}>
+      accessibilityHint={external ? copy.learn.opensWebsite : undefined}>
       <View style={styles.text}>
         <AppText style={[styles.title, { color: t.text }]}>{title}</AppText>
         <AppText style={[styles.subtitle, { color: t.textSecondary }]}>{subtitle}</AppText>
@@ -135,11 +138,12 @@ export function ListItem({
 /** The website's ArrowRight, in the brand green. */
 export function Arrow({ external }: { external?: boolean }) {
   const t = useTheme();
+  const size = useIconSize(17);
   return (
     <SymbolView
       pointerEvents="none"
       name={external ? 'arrow.up.right' : 'arrow.right'}
-      size={17}
+      size={size}
       weight="semibold"
       tintColor={t.primary}
       fallback={<AppText style={{ color: t.primary }}>{external ? '↗' : '→'}</AppText>}

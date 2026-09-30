@@ -2,13 +2,15 @@ import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SymbolView } from 'expo-symbols';
 import type { ReactNode } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Ground } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * Full-screen onboarding and sign-in step: a back button (when there's somewhere to go
@@ -45,7 +47,10 @@ export function Step({
         {step && of ? <Dots step={step} of={of} light={hero} /> : null}
         <View style={styles.backSpace} />
       </View>
-      <View style={styles.body}>{children}</View>
+      {/* Scrolls, so the largest text sizes push content down rather than off the screen. */}
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+        {children}
+      </ScrollView>
       <View style={styles.actions}>{actions}</View>
     </SafeAreaView>
   );
@@ -53,11 +58,13 @@ export function Step({
 
 function BackButton({ light }: { light?: boolean }) {
   const t = useTheme();
+  const copy = useCopy();
+  const size = useIconSize(22);
   return (
     <Pressable
       onPress={() => router.back()}
       accessibilityRole="button"
-      accessibilityLabel="Back"
+      accessibilityLabel={copy.common.back}
       hitSlop={8}
       style={styles.back}>
       {/* The native symbol view would swallow the touch; let the Pressable have it. */}
@@ -65,7 +72,7 @@ function BackButton({ light }: { light?: boolean }) {
         pointerEvents="none"
         name="chevron.left"
         tintColor={light ? t.heroText : t.text}
-        size={22}
+        size={size}
         weight="semibold"
         fallback={<AppText variant="heading">‹</AppText>}
       />
@@ -75,10 +82,11 @@ function BackButton({ light }: { light?: boolean }) {
 
 function Dots({ step, of, light }: { step: number; of: number; light?: boolean }) {
   const t = useTheme();
+  const copy = useCopy();
   const on = light ? t.heroText : t.primary;
   const off = light ? t.heroMuted : t.border;
   return (
-    <View style={styles.dots} accessible accessibilityLabel={`Step ${step} of ${of}`}>
+    <View style={styles.dots} accessible accessibilityLabel={copy.common.stepOf(step, of)}>
       {Array.from({ length: of }, (_, i) => (
         <View
           key={i}
@@ -102,6 +110,7 @@ const styles = StyleSheet.create({
   backSpace: { width: MinTapTarget },
   dots: { flex: 1, flexDirection: 'row', gap: 4, marginHorizontal: Spacing.three },
   dot: { flex: 1, height: 3, borderRadius: Radius.pill },
-  body: { flex: 1, justifyContent: 'center', gap: Spacing.three },
+  scroll: { flex: 1 },
+  body: { flexGrow: 1, justifyContent: 'center', gap: Spacing.three, paddingVertical: Spacing.three },
   actions: { gap: Spacing.two, paddingBottom: Spacing.three },
 });

@@ -1,5 +1,5 @@
 /**
- * Checking a receipt's numbers against each other with the one formula (DECISIONS.md D74),
+ * Checking a receipt's numbers against each other with the one formula (DECISIONS.md D77),
  * scoring how far to trust each value, and, when a check fails, working out which value
  * was most likely misread so the person is asked about that one first.
  *

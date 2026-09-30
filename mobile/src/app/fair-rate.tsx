@@ -8,9 +8,10 @@ import { Answer, Breakdown, cleanNumber, Field, Fields, Section, Slider, SourceN
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
 import { CURRENCIES } from '@/lib/currencies';
 import { money, pct } from '@/lib/format';
-import { formatDay, useMidRate } from '@/lib/fx';
+import { useMidRate } from '@/lib/fx';
 import { track } from '@/lib/track';
 
 /**
@@ -22,6 +23,9 @@ import { track } from '@/lib/track';
 
 export default function FairRateScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const f = copy.fairRate;
+  const { language } = useLanguage();
   // Opened from a quote's detail, it starts on that quote (PRD 5.7: "linked from quote
   // detail"); otherwise on the website's example.
   const p = useLocalSearchParams<{ amount?: string; from?: string; to?: string; markup?: string }>();
@@ -44,62 +48,61 @@ export default function FairRateScreen() {
     : null;
 
   return (
-    <ToolScreen intro="The mid-market rate is the honest yardstick. Every point a quote sits below it comes out of your transfer.">
-      <Section title="Your transfer">
+    <ToolScreen intro={f.intro}>
+      <Section title={f.yourTransfer}>
         <Fields>
-          <Field label="Amount to send" unit={from} value={amount} onChange={setAmount} last />
+          <Field label={f.amountToSend} unit={from} value={amount} onChange={setAmount} last />
         </Fields>
         <View style={styles.pair}>
-          <CurrencySelect label="From" value={from} onChange={setFrom} />
-          <CurrencySelect label="To" value={to} onChange={setTo} />
+          <CurrencySelect label={copy.common.from} value={from} onChange={setFrom} />
+          <CurrencySelect label={copy.common.to} value={to} onChange={setTo} />
         </View>
       </Section>
 
-      <Section title="Exchange-rate markup">
+      <Section title={f.markup}>
         <View style={[styles.sliderCard, { backgroundColor: t.card, borderColor: t.border }]}>
           <View style={styles.sliderHead}>
             <AppText muted variant="small" style={styles.flex}>
-              Drag to see what each point costs. Fees come on top.
+              {f.drag}
             </AppText>
             <AppText variant="heading" style={{ color: t.primary }}>
               {pct(markup)}
             </AppText>
           </View>
           <Slider
-            label="Exchange-rate markup"
+            label={f.markup}
             value={markup}
             min={0}
             max={10}
             step={0.1}
             onChange={setMarkup}
-            format={(v) => `${v.toFixed(1)} percent`}
+            format={(v) => copy.tool.sliderValue(v.toFixed(1))}
           />
         </View>
       </Section>
 
       {fx.state === 'loading' ? <ActivityIndicator /> : null}
       {fx.state === 'error' ? (
-        <AppText muted>Couldn’t get the mid-market rate. Check your connection and try again.</AppText>
+        <AppText muted>{f.rateFailed}</AppText>
       ) : null}
 
       {ready && cost ? (
         <>
           <Answer
-            label={`With a ${pct(markup)} markup, they’d receive`}
+            label={f.theyReceive(pct(markup))}
             value={money(cost.amountReceived, to)}
-            note={`At the mid-market rate: ${money(atMid, to)}`}
+            note={f.atMid(money(atMid, to))}
           />
           <Breakdown
             rows={[
-              { label: 'Mid-market rate', value: `1 ${from} = ${fx.rate.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${to}` },
-              { label: 'Rate with this markup', value: `${(fx.rate * (1 - markup / 100)).toLocaleString('en-US', { maximumFractionDigits: 4 })} ${to}` },
-              { label: 'Lost to the markup', value: money(cost.shortfall, to), tone: t.moneyMarkup },
-              { label: 'Worth, in what you sent', value: money(cost.markupCost, from), strong: true },
+              { label: f.midRate, value: `1 ${from} = ${fx.rate.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${to}` },
+              { label: f.withMarkup, value: `${(fx.rate * (1 - markup / 100)).toLocaleString('en-US', { maximumFractionDigits: 4 })} ${to}` },
+              { label: f.lost, value: money(cost.shortfall, to), tone: t.moneyMarkup },
+              { label: f.worth, value: money(cost.markupCost, from), strong: true },
             ]}
           />
           <SourceNote>
-            Mid-market rate from {fx.source}, for {formatDay(fx.date)}. It’s a daily reference, not a live
-            rate, and no provider offers it exactly.
+            {f.source(fx.source, dayIn(language, fx.date))}
           </SourceNote>
         </>
       ) : null}

@@ -1,5 +1,5 @@
 {
-  "_about": "Test cases for the remittance tax in the one formula (DECISIONS.md D73, D75). The website's TrueCost has no tax, so unlike vectors.json these were not generated from the website: expected values were computed on 2026-09-30 from the formula's definitions with exact rational arithmetic (Python fractions.Fraction) and decimal half-up rounding for the tax, not by running either implementation. Both implementations must pass them. Relative tolerance: 1e-9.",
+  "_about": "Test cases for the remittance tax in the one formula (DECISIONS.md D76, D78). The website's TrueCost has no tax, so unlike vectors.json these were not generated from the website: expected values were computed on 2026-09-30 from the formula's definitions with exact rational arithmetic (Python fractions.Fraction) and decimal half-up rounding for the tax, not by running either implementation. Both implementations must pass them. Relative tolerance: 1e-9.",
   "tax": [
     {
       "name": "cash, $500",

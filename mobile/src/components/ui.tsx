@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
   type StyleProp,
   type TextProps,
@@ -13,6 +14,9 @@ import {
 } from 'react-native';
 
 import { DevanagariFonts, Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useBoldText } from '@/components/accessibility';
+import { useIconSize } from '@/hooks/use-icon-size';
+import { useTextLanguage } from '@/i18n';
 import { useTheme } from '@/hooks/use-theme';
 
 type Variant = 'title' | 'heading' | 'body' | 'label' | 'small' | 'figure';
@@ -34,36 +38,67 @@ const variants: Record<Variant, TextStyle> = {
   },
 };
 
-const DEVANAGARI = /[\u0900-\u097F]/;
-
-/** Whether any string in the children is written in Devanagari (Hindi). */
-export function hasDevanagari(node: ReactNode): boolean {
-  if (typeof node === 'string') return DEVANAGARI.test(node);
-  if (Array.isArray(node)) return node.some(hasDevanagari);
-  return false;
-}
-
 export function AppText({
   variant = 'body',
   muted,
   style,
+  maxFontSizeMultiplier,
   ...rest
 }: TextProps & { variant?: Variant; muted?: boolean }) {
   const t = useTheme();
-  // Hindi gets Noto Sans Devanagari at the same weight, with room for its taller marks.
-  const base = variants[variant];
-  const hindi = hasDevanagari(rest.children)
-    ? {
-        fontFamily: DevanagariFonts[(StyleSheet.flatten(style)?.fontFamily ?? base.fontFamily) as keyof typeof DevanagariFonts] ?? DevanagariFonts[Fonts.regular],
-        lineHeight: base.lineHeight ? Math.round(base.lineHeight * 1.3) : undefined,
-      }
-    : null;
+  const bold = useBoldText();
+  const language = useTextLanguage();
+  const flat = StyleSheet.flatten([variants[variant], style]);
+  const size = flat?.fontSize ?? 15;
+  const base = typeof flat?.fontFamily === 'string' ? flat.fontFamily : Fonts.regular;
+  const family = bold ? (BOLDER[base] ?? base) : base;
   return (
     <Text
       {...rest}
-      style={[base, { color: muted ? t.textSecondary : t.text }, style, hindi]}
+      // So VoiceOver reads Hindi, Spanish or Vietnamese with the right voice.
+      accessibilityLanguage={rest.accessibilityLanguage ?? language.locale}
+      maxFontSizeMultiplier={maxFontSizeMultiplier ?? scaleCap(size)}
+      style={[
+        variants[variant],
+        { color: muted ? t.textSecondary : t.text },
+        style,
+        { fontFamily: family },
+        // Devanagari: the matched font, taller lines for the marks above and below, and no
+        // negative tracking, which pushes those marks into each other.
+        language.code === 'hi' && {
+          fontFamily: DevanagariFonts[family] ?? DevanagariFonts[Fonts.regular],
+          letterSpacing: 0,
+          ...(flat?.lineHeight ? { lineHeight: Math.round(flat.lineHeight * 1.25) } : null),
+        },
+      ]}
     />
   );
+}
+
+/** One weight up, for the phone's Bold Text setting (components/accessibility.tsx). */
+const BOLDER: Record<string, string> = {
+  [Fonts.regular]: Fonts.semibold,
+  [Fonts.medium]: Fonts.bold,
+  [Fonts.semibold]: Fonts.bold,
+  [Fonts.bold]: Fonts.extrabold,
+};
+
+/**
+ * How far text may grow with the phone's text-size setting. WCAG 1.4.4 asks for 200%, so
+ * reading text gets that in full; text that starts big needs less and would otherwise push
+ * the screen apart (a 26pt title at the largest iOS size is 78pt, and "Compare" broke
+ * mid-word). The same curve Apple's own Dynamic Type styles follow, roughly.
+ */
+export function scaleCap(fontSize: number): number {
+  return fontSize >= 28 ? 1.4 : fontSize >= 20 ? 1.6 : 2;
+}
+
+/**
+ * True when the phone's text size is large enough that side-by-side layouts stop fitting.
+ * Screens use it to stack instead of truncate.
+ */
+export function useLargeText(): boolean {
+  return useWindowDimensions().fontScale >= 1.35;
 }
 
 export function Card({ children, style }: { children: ReactNode; style?: StyleProp<ViewStyle> }) {
@@ -89,10 +124,13 @@ export function Segmented<T extends string>({
   onChange: (value: T) => void;
 }) {
   const t = useTheme();
+  // With large text, three labels side by side get cut off ("Bank dep…"), so the choices
+  // stack into full-width rows instead.
+  const stacked = useLargeText();
   return (
     <View
       accessibilityRole="radiogroup"
-      style={[styles.segmented, { backgroundColor: t.muted, borderColor: t.border }]}>
+      style={[styles.segmented, stacked && styles.segmentedStacked, { backgroundColor: t.muted, borderColor: t.border }]}>
       {options.map((o) => {
         const selected = o.value === value;
         return (
@@ -103,12 +141,13 @@ export function Segmented<T extends string>({
             accessibilityState={{ selected }}
             style={[
               styles.segment,
+              stacked && styles.segmentStacked,
               selected && [styles.segmentSelected, { backgroundColor: t.primary, borderColor: t.primary }],
             ]}>
             <AppText
               variant="label"
-              numberOfLines={1}
-              style={{ color: selected ? t.primaryForeground : t.textSecondary }}>
+              numberOfLines={stacked ? undefined : 1}
+              style={[styles.segmentLabel, { color: selected ? t.primaryForeground : t.textSecondary }]}>
               {o.label}
             </AppText>
           </Pressable>
@@ -142,6 +181,7 @@ export function Button({
   trailingIcon?: SFSymbol;
 }) {
   const t = useTheme();
+  const iconSize = useIconSize(15);
   const bg =
     variant === 'primary'
       ? t.primary
@@ -183,7 +223,7 @@ export function Button({
             {label}
           </AppText>
           {trailingIcon ? (
-            <SymbolView pointerEvents="none" name={trailingIcon} size={15} weight="bold" tintColor={fg} fallback={null} />
+            <SymbolView pointerEvents="none" name={trailingIcon} size={iconSize} weight="bold" tintColor={fg} fallback={null} />
           ) : null}
         </View>
       )}
@@ -212,6 +252,7 @@ export function TextLink({
   busy?: boolean;
 }) {
   const t = useTheme();
+  const iconSize = useIconSize(15);
   return (
     <Pressable
       onPress={onPress}
@@ -220,13 +261,13 @@ export function TextLink({
       accessibilityState={{ busy }}
       hitSlop={6}
       style={({ pressed }) => [styles.link, { opacity: pressed || busy ? 0.6 : 1 }]}>
-      {icon ? <SymbolView pointerEvents="none" name={icon} size={15} weight="semibold" tintColor={t.primary} fallback={null} /> : null}
+      {icon ? <SymbolView pointerEvents="none" name={icon} size={iconSize} weight="semibold" tintColor={t.primary} fallback={null} /> : null}
       <AppText style={[styles.linkLabel, { color: t.primary }]}>{label}</AppText>
       {arrow ? (
         <SymbolView
           pointerEvents="none"
           name={external ? 'arrow.up.right' : 'arrow.right'}
-          size={14}
+          size={iconSize - 1}
           weight="bold"
           tintColor={t.primary}
           fallback={null}
@@ -238,7 +279,8 @@ export function TextLink({
 
 const styles = StyleSheet.create({
   link: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one + 2, minHeight: MinTapTarget, alignSelf: 'flex-start' },
-  linkLabel: { fontFamily: Fonts.semibold, fontSize: 16 },
+  // Wraps rather than running off the screen at large text sizes.
+  linkLabel: { fontFamily: Fonts.semibold, fontSize: 16, flexShrink: 1 },
   card: {
     borderRadius: Radius.lg,
     borderWidth: StyleSheet.hairlineWidth,
@@ -252,9 +294,15 @@ const styles = StyleSheet.create({
     padding: 3,
     gap: 3,
   },
+  segmentedStacked: { flexDirection: 'column' },
+  // In a column, flex: 1 would share out a height the container doesn't have; size to the text.
+  segmentStacked: { flex: 0, flexBasis: 'auto', paddingVertical: Spacing.two },
+  segmentLabel: { textAlign: 'center' },
   segment: {
     flex: 1,
-    minHeight: MinTapTarget - 6,
+    // A full 44pt: the old 38 was under Apple's minimum tap target (PRD 14.10).
+    minHeight: MinTapTarget,
+    paddingVertical: Spacing.one,
     borderRadius: Radius.md - 3,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'transparent',
@@ -275,7 +323,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacing.four,
+    // Room above and below when a large-text label wraps to two lines.
+    paddingVertical: Spacing.two + 2,
   },
-  buttonInner: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
-  buttonLabel: { fontSize: 16, fontFamily: Fonts.bold },
+  buttonInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.two, flexShrink: 1 },
+  buttonLabel: { fontSize: 16, fontFamily: Fonts.bold, textAlign: 'center', flexShrink: 1 },
 });

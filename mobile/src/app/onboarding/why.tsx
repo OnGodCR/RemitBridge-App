@@ -9,6 +9,7 @@ import { AppText, Button } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * Why it matters (DECISIONS.md D62): the website's green figures band, as its own step.
@@ -17,30 +18,15 @@ import { useTheme } from '@/hooks/use-theme';
  * "illustrative" example: the same numbers, words and sources as remitbridgelabs.org.
  */
 const STATS = [
-  {
-    value: FIGURES.flowsUsdBn,
-    prefix: '$',
-    suffix: 'B',
-    label: 'Sent home each year',
-    note: 'Money migrant workers send to family in other countries.',
-  },
-  {
-    value: FIGURES.globalCostPct,
-    decimals: 2,
-    suffix: '%',
-    label: 'Average cost to send',
-    note: 'The global average on a $200 transfer.',
-  },
-  {
-    value: FIGURES.targetPct,
-    suffix: '%',
-    label: 'What it should be',
-    note: 'The UN target the world agreed to hit by 2030.',
-  },
-];
+  { value: FIGURES.flowsUsdBn, prefix: '$', suffix: 'B', key: 'flows' },
+  { value: FIGURES.globalCostPct, decimals: 2, suffix: '%', key: 'cost' },
+  { value: FIGURES.targetPct, suffix: '%', key: 'target' },
+] as const;
 
 export default function Why() {
   const t = useTheme();
+  const copy = useCopy();
+  const w = copy.onboarding.why;
   return (
     <Step
       step={2}
@@ -48,20 +34,23 @@ export default function Why() {
       tone="band"
       actions={
         <Animated.View entering={rise(4)}>
-          <Button label="Continue" variant="inverse" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/route')} />
+          <Button label={w.continue} variant="inverse" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/route')} />
         </Animated.View>
       }>
       <Animated.View entering={rise(0)} style={styles.head}>
-        <Eyebrow onDark>Why it matters</Eyebrow>
-        <AppText style={[styles.heading, { color: t.heroText }]}>The world takes a cut of every dollar sent home.</AppText>
+        <Eyebrow onDark>{w.eyebrow}</Eyebrow>
+        <AppText accessibilityRole="header" style={[styles.heading, { color: t.heroText }]}>
+          {w.heading}
+        </AppText>
       </Animated.View>
       <View style={styles.stats}>
         {STATS.map((s, i) => (
-          <Stat key={s.label} stat={s} step={i + 1} />
+          <Stat key={s.key} stat={s} step={i + 1} />
         ))}
       </View>
-      <AppText variant="small" style={{ color: t.heroText, opacity: 0.75 }}>
-        Sources: {FIGURES.flowsSource}; {FIGURES.globalCostSource}; {FIGURES.targetSource}.
+      {/* 90% white, like the notes: 75% measured about 3.8:1 on the band, under AA. */}
+      <AppText variant="small" style={{ color: t.heroText, opacity: 0.9 }}>
+        {w.sources([FIGURES.flowsSource, FIGURES.globalCostSource, FIGURES.targetSource].join('; '))}
       </AppText>
     </Step>
   );
@@ -70,19 +59,23 @@ export default function Why() {
 /** One figure: counts up like the website's, from just after its row rises in. */
 function Stat({ stat: s, step }: { stat: (typeof STATS)[number]; step: number }) {
   const t = useTheme();
-  const decimals = s.decimals ?? 0;
+  const w = useCopy().onboarding.why;
+  const label = w[`${s.key}Label`];
+  const note = w[`${s.key}Note`];
+  const decimals = 'decimals' in s ? s.decimals : 0;
   const shown = useCountUp(s.value, { decimals, delay: 150 + step * 80 });
-  const final = `${s.prefix ?? ''}${s.value.toFixed(decimals)}${s.suffix}`;
+  const prefix = 'prefix' in s ? s.prefix : '';
+  const final = `${prefix}${s.value.toFixed(decimals)}${s.suffix}`;
   return (
-    <Animated.View entering={rise(step)} accessible accessibilityLabel={`${final}. ${s.label}. ${s.note}`}>
+    <Animated.View entering={rise(step)} accessible accessibilityLabel={`${final}. ${label}. ${note}`}>
       <AppText style={[styles.value, { color: t.heroText }]}>
-        {s.prefix ?? ''}
+        {prefix}
         {shown}
         {s.suffix}
       </AppText>
-      <AppText style={[styles.label, { color: t.heroText }]}>{s.label}</AppText>
+      <AppText style={[styles.label, { color: t.heroText }]}>{label}</AppText>
       {/* The website measured its muted grey at 1.1:1 on this green; 90% white is 5.2:1. */}
-      <AppText style={[styles.note, { color: t.heroText, opacity: 0.9 }]}>{s.note}</AppText>
+      <AppText style={[styles.note, { color: t.heroText, opacity: 0.9 }]}>{note}</AppText>
     </Animated.View>
   );
 }

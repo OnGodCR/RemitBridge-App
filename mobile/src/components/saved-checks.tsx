@@ -6,13 +6,18 @@ import { ListGroup, ListItem } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
 import { Fonts } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
 import { money, pct } from '@/lib/format';
-import { formatDay } from '@/lib/fx';
+import { announce } from '@/lib/announce';
+
 import { costOf, deleteCheck, fetchChecks, type SavedCheck } from '@/lib/saved';
 
 /** Receipts saved from TrueCost, newest first, on the Account tab (DECISIONS.md D58). */
 export function SavedChecks() {
   const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const sv = copy.saved;
   const [checks, setChecks] = useState<SavedCheck[] | null>(null);
 
   useFocusEffect(
@@ -26,13 +31,16 @@ export function SavedChecks() {
   );
 
   const confirmDelete = (c: SavedCheck) =>
-    Alert.alert('Delete this check?', `${c.provider_name}, ${formatDay(c.sent_on)}`, [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(sv.deleteCheckTitle, `${c.provider_name}, ${dayIn(language, c.sent_on)}`, [
+      { text: copy.common.cancel, style: 'cancel' },
       {
-        text: 'Delete',
+        text: copy.common.delete,
         style: 'destructive',
         onPress: async () => {
-          if (await deleteCheck(c.id)) setChecks((all) => all?.filter((x) => x.id !== c.id) ?? null);
+          if (await deleteCheck(c.id)) {
+            setChecks((all) => all?.filter((x) => x.id !== c.id) ?? null);
+            announce(sv.checkDeleted);
+          }
         },
       },
     ]);
@@ -40,35 +48,35 @@ export function SavedChecks() {
   if (checks === null) return null;
   if (checks.length === 0) {
     return (
-      <ListGroup title="Your checks">
+      <ListGroup title={sv.checks}>
         <ListItem style={styles.empty}>
-          <AppText muted>Receipts you check with TrueCost and save show up here.</AppText>
-          <Button label="Check a receipt" variant="secondary" onPress={() => router.push('/true-cost')} />
+          <AppText muted>{sv.checksEmpty}</AppText>
+          <Button label={sv.checkReceipt} variant="secondary" onPress={() => router.push('/true-cost')} />
         </ListItem>
       </ListGroup>
     );
   }
 
   return (
-    <ListGroup title="Your checks">
+    <ListGroup title={sv.checks}>
       {checks.map((c) => {
         const cost = costOf(c);
         return (
           <ListItem
             key={c.id}
             onPress={() => confirmDelete(c)}
-            accessibilityHint="Offers to delete this check">
+            accessibilityHint={sv.offersDelete}>
             <View style={styles.text}>
               <AppText style={[styles.title, { color: t.text }]}>
-                {c.provider_name} · {money(c.sent, c.send_currency)} to {c.receive_currency}
+                {sv.checkTitle(c.provider_name, money(c.sent, c.send_currency), c.receive_currency)}
               </AppText>
               <AppText variant="small" muted>
-                {formatDay(c.sent_on)}
+                {dayIn(language, c.sent_on)}
               </AppText>
             </View>
             {cost ? (
               <View style={styles.cost}>
-                <AppText style={[styles.title, { color: t.moneyMarkup }]}>
+                <AppText style={[styles.title, { color: t.moneyMarkupText }]}>
                   {money(cost.totalCost, c.send_currency)}
                 </AppText>
                 <AppText variant="small" muted>

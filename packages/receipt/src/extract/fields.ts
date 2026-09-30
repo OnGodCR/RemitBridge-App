@@ -1,5 +1,5 @@
 /**
- * The rule-based field extractors. ANGAD WRITES THESE (DECISIONS.md D83).
+ * The rule-based field extractors. ANGAD WRITES THESE (DECISIONS.md D86).
  *
  * Everything around them is built: parser.ts calls them in FIELD_NAMES order, checks what
  * they return with checkValue (a wrong type is dropped and reported, never passed on), and
@@ -98,7 +98,7 @@ export function extractReceiveCurrency(ctx: ExtractionContext): ParsedField<'rec
 
 /**
  * amount_sent: the transfer amount in the sending currency, BEFORE the fee and the tax
- * (DECISIONS.md D74). Reg E's label is "Transfer Amount"; it appears twice on a Reg E
+ * (DECISIONS.md D77). Reg E's label is "Transfer Amount"; it appears twice on a Reg E
  * receipt, once in each currency, and this is the sending-currency one.
  *
  * Input: ctx.page, ctx.template (labelsFor(template, 'amount_sent'), numberFormat),
