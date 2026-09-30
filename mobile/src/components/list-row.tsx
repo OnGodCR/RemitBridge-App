@@ -7,6 +7,7 @@ import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * The website's divided index (its home page's "Start here" list), for the Tools, Learn and
@@ -43,12 +44,13 @@ export function ListRow({
   external?: boolean;
 }) {
   const t = useTheme();
+  const copy = useCopy();
   return (
     <ListItem
       onPress={onPress}
       accessibilityRole={external ? 'link' : 'button'}
       accessibilityLabel={`${title}. ${subtitle}`}
-      accessibilityHint={external ? 'Opens on the website' : undefined}>
+      accessibilityHint={external ? copy.learn.opensWebsite : undefined}>
       <View style={styles.text}>
         <AppText style={[styles.title, { color: t.text }]}>{title}</AppText>
         <AppText style={[styles.subtitle, { color: t.textSecondary }]}>{subtitle}</AppText>

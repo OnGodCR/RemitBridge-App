@@ -12,25 +12,14 @@ import { AppText, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { countryIn, useCopy } from '@/i18n';
 import { money, moneySpoken, pct } from '@/lib/format';
 import { CONTACT } from '@/lib/links';
 import { atAmount, fetchQuote, fetchQuoteHistory, type HistoryPoint, type LatestQuote } from '@/lib/quotes';
 import { DELIVERY_LABELS, ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
 
-const PAYMENT_LABELS: Record<string, string> = {
-  bank_account: 'Bank account',
-  debit_card: 'Debit card',
-  credit_card: 'Credit card',
-  cash: 'Cash',
-};
 
-const LIMITS = [
-  'Whether this provider is available where you live',
-  'Fees for paying by card, if you do',
-  'What the provider charges at other amounts',
-  'How the rate moves before you send',
-];
 
 /**
  * Quote detail (PRD 14.7 screen 3): one provider's price in full. The breakdown bar, every
@@ -40,6 +29,7 @@ const LIMITS = [
  */
 export default function QuoteDetail() {
   const t = useTheme();
+  const copy = useCopy();
   const { id, amount } = useLocalSearchParams<{ id: string; amount?: string }>();
   const [raw, setRaw] = useState<{ id: string; value: LatestQuote | 'missing' | 'error' } | null>(null);
   const [history, setHistory] = useState<{ id: string; value: HistoryPoint[] | 'error' } | null>(null);
@@ -78,12 +68,12 @@ export default function QuoteDetail() {
     return (
       <View style={[styles.fill, { backgroundColor: t.background }]}>
         <StatusBar style="auto" />
-        <Stack.Screen options={{ title: 'Quote' }} />
+        <Stack.Screen options={{ title: copy.titles.quote }} />
         <View style={styles.content}>
           <AppText style={[styles.lede, { color: t.text }]}>
             {loaded === 'error'
-              ? 'This price didn’t load. Check your connection and try again.'
-              : 'This price is no longer published.'}
+              ? copy.quoteDetail.loadFailed
+              : copy.quoteDetail.gone}
           </AppText>
         </View>
       </View>
@@ -119,16 +109,20 @@ export default function QuoteDetail() {
 
       <View style={styles.head}>
         <Eyebrow>
-          {`${money(q.send_amount, q.send_currency).replace('.00', '')} to ${route?.country ?? q.receive_currency} · ${DELIVERY_LABELS[q.delivery_method]}`}
+          {copy.quoteDetail.heading(
+            money(q.send_amount, q.send_currency).replace('.00', ''),
+            countryIn(copy, q.route_id.split('-')[1] ?? q.receive_currency),
+            copy.delivery[q.delivery_method],
+          )}
         </Eyebrow>
         <View
           accessible
-          accessibilityLabel={`${moneySpoken(q.amount_received, q.receive_currency)} arrive. ${q.total_cost_pct.toFixed(1)} percent total cost.`}>
+          accessibilityLabel={copy.quote.spokenArrive(moneySpoken(q.amount_received, q.receive_currency), q.total_cost_pct.toFixed(1))}>
           <AppText style={[styles.figure, { color: t.moneyReceived }]}>
             {money(q.amount_received, q.receive_currency)}
           </AppText>
           <AppText style={[styles.lede, { color: t.textSecondary }]}>
-            arrives · {money(q.total_cost, q.send_currency)} total cost ({pct(q.total_cost_pct)})
+            {copy.quoteDetail.totalLine(money(q.total_cost, q.send_currency), pct(q.total_cost_pct))}
           </AppText>
         </View>
         <CostBreakdownBar quote={q} />
@@ -136,8 +130,7 @@ export default function QuoteDetail() {
           <FreshnessBadge quote={q} />
           {q.basedOn !== null ? (
             <AppText variant="small" muted>
-              Estimated from the {money(q.basedOn, q.send_currency).replace('.00', '')} check, with the same fee and
-              rate.
+              {copy.quoteDetail.estimatedFull(money(q.basedOn, q.send_currency).replace('.00', ''))}
             </AppText>
           ) : null}
         </View>
@@ -146,75 +139,82 @@ export default function QuoteDetail() {
       {q.is_promotional ? (
         <View style={[styles.callout, { borderLeftColor: t.primary }]}>
           <AppText style={[styles.calloutText, { color: t.text }]}>
-            A first-transfer offer. Later transfers usually cost more, so it’s ranked apart from standing prices.
+            {copy.quoteDetail.promo}
           </AppText>
         </View>
       ) : null}
 
-      <ListGroup title="Where the money goes">
-        <ListFact label="Upfront fee" value={money(q.fee, q.send_currency)} />
+      <ListGroup title={copy.quoteDetail.whereMoneyGoes}>
+        <ListFact label={copy.quoteDetail.upfrontFee} value={money(q.fee, q.send_currency)} />
         <ListFact
-          label="Exchange-rate markup"
-          note={`Their rate ${rate(q.offered_rate)} vs. mid-market ${rate(q.mid_market_rate)} ${q.receive_currency} per ${q.send_currency}`}
+          label={copy.quoteDetail.markup}
+          note={copy.quoteDetail.rateNote(
+            rate(q.offered_rate),
+            rate(q.mid_market_rate),
+            copy.trueCost.perOne(q.receive_currency, q.send_currency),
+          )}
           value={`${money(markupCost, q.send_currency)} (${pct(q.markup_pct, 2)})`}
         />
         {q.pickup_charge > 0 ? (
           <ListFact
-            label="Pickup charge"
-            note="Charged where the money is collected"
+            label={copy.quoteDetail.pickupCharge}
+            note={copy.quoteDetail.pickupNote}
             value={money(q.pickup_charge / q.mid_market_rate, q.send_currency)}
           />
         ) : null}
         <ListFact
           strong
-          label="Total cost"
+          label={copy.quoteDetail.totalCost}
           // The yardstick the website uses everywhere: the UN's 3% goal (SDG 10.c).
           note={
             q.total_cost_pct <= FIGURES.targetPct
-              ? `Within the UN’s ${FIGURES.targetPct}% target for 2030`
-              : `Over the UN’s ${FIGURES.targetPct}% target for 2030`
+              ? copy.quoteDetail.withinTarget(FIGURES.targetPct)
+              : copy.quoteDetail.overTarget(FIGURES.targetPct)
           }
           value={`${money(q.total_cost, q.send_currency)} (${pct(q.total_cost_pct, 2)})`}
         />
       </ListGroup>
       <TextLink
-        label="What’s an exchange-rate markup?"
+        label={copy.quoteDetail.whatsMarkup}
         onPress={() => router.push({ pathname: '/glossary', params: { term: 'exchange-rate-markup' } })}
       />
 
-      <ListGroup title="Delivery">
-        <ListFact label="Arrives" value={q.delivery_time ?? 'Not stated'} />
-        <ListFact label="How it arrives" value={DELIVERY_LABELS[q.delivery_method]} />
-        <ListFact label="How you pay" value={PAYMENT_LABELS[q.payment_method] ?? q.payment_method} />
-        <ListFact label="Mid-market rate from" value={q.mid_market_source} />
+      <ListGroup title={copy.quoteDetail.delivery}>
+        <ListFact label={copy.quoteDetail.arrivesIn} value={q.delivery_time ?? copy.quoteDetail.notStated} />
+        <ListFact label={copy.quoteDetail.howArrives} value={copy.delivery[q.delivery_method]} />
+        <ListFact label={copy.quoteDetail.howPay} value={copy.payment[q.payment_method] ?? q.payment_method} />
+        <ListFact label={copy.quoteDetail.midFrom} value={q.mid_market_source} />
       </ListGroup>
 
-      <ListGroup title="Recent prices">
+      <ListGroup title={copy.quoteDetail.recent}>
         {points === null && history?.id !== id ? <ActivityIndicator style={styles.loading} /> : null}
         {points && points.length >= 2 ? (
           <View style={styles.chart}>
             <LineChart
               height={120}
               points={points.map((p) => ({ date: p.date, value: p.amountReceived }))}
-              unit={`${q.receive_currency} arriving from ${money(q.basedOn ?? q.send_amount, q.send_currency).replace('.00', '')}`}
+              unit={copy.quoteDetail.arrivingFrom(
+                q.receive_currency,
+                money(q.basedOn ?? q.send_amount, q.send_currency).replace('.00', ''),
+              )}
               format={(n) => money(n, q.receive_currency)}
             />
           </View>
         ) : null}
         {points && points.length < 2 ? (
           <AppText style={[styles.note, { color: t.textSecondary }]}>
-            One check so far. The line fills in as {q.provider_name} is checked on more days.
+            {copy.quoteDetail.oneCheck(q.provider_name)}
           </AppText>
         ) : null}
         {history?.id === id && history.value === 'error' ? (
-          <AppText style={[styles.note, { color: t.textSecondary }]}>Recent prices didn’t load.</AppText>
+          <AppText style={[styles.note, { color: t.textSecondary }]}>{copy.quoteDetail.recentFailed}</AppText>
         ) : null}
       </ListGroup>
 
       <ListGroup>
         <ListRow
-          title="Is this rate fair?"
-          subtitle="See what the mid-market rate would give you"
+          title={copy.quoteDetail.isFair}
+          subtitle={copy.quoteDetail.isFairSub}
           onPress={() =>
             router.push({
               pathname: '/fair-rate',
@@ -227,10 +227,10 @@ export default function QuoteDetail() {
             })
           }
         />
-        <ListRow title="This price looks wrong" subtitle={`Tell us, and we’ll check it again`} onPress={report} />
+        <ListRow title={copy.quoteDetail.looksWrong} subtitle={copy.quoteDetail.looksWrongSub} onPress={report} />
       </ListGroup>
 
-      <DoesNotTellYou items={LIMITS} />
+      <DoesNotTellYou items={copy.quoteDetail.limits} />
     </ScrollView>
   );
 }

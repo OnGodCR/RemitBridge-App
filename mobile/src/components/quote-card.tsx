@@ -4,15 +4,11 @@ import { Arrow } from '@/components/list-row';
 import { AppText, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { checkedAgo, money, moneySpoken, pct } from '@/lib/format';
+import { agoIn, useCopy } from '@/i18n';
+import { money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
 
-export const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
-  scraper: 'Public calculator',
-  api: 'Official API',
-  manual: 'Checked by hand',
-  partner: 'Partner',
-};
+
 
 /**
  * One provider's quote (PRD 14.6): the amount received is the largest text, then total
@@ -32,7 +28,9 @@ export function QuoteCard({
   onPress?: () => void;
 }) {
   const t = useTheme();
+  const copy = useCopy();
   const q = quote;
+  const spoken = copy.quote.spokenArrive(moneySpoken(q.amount_received, q.receive_currency), q.total_cost_pct.toFixed(1));
   const card = (
     <Card style={featured ? [styles.featured, { borderLeftColor: t.primary }] : undefined}>
       <View style={styles.header}>
@@ -46,12 +44,13 @@ export function QuoteCard({
 
       <View
         accessible
-        accessibilityLabel={`${moneySpoken(q.amount_received, q.receive_currency)} arrive, ${q.total_cost_pct.toFixed(1)} percent total cost`}>
+        accessibilityLabel={spoken}>
         <AppText variant="figure" style={{ color: t.moneyReceived }}>
           {money(q.amount_received, q.receive_currency)}
         </AppText>
         <AppText muted>
-          arrives · {pct(q.total_cost_pct)} cost{q.delivery_time ? ` · ${q.delivery_time}` : ''}
+          {copy.quote.arrives} · {pct(q.total_cost_pct)} {copy.quote.cost}
+          {q.delivery_time ? ` · ${q.delivery_time}` : ''}
         </AppText>
       </View>
 
@@ -62,7 +61,7 @@ export function QuoteCard({
           <FreshnessBadge quote={q} />
           {q.basedOn !== null ? (
             <AppText variant="small" muted>
-              Estimated from the {money(q.basedOn, q.send_currency).replace('.00', '')} check
+              {copy.quote.estimatedFrom(money(q.basedOn, q.send_currency).replace('.00', ''))}
             </AppText>
           ) : null}
         </View>
@@ -75,8 +74,8 @@ export function QuoteCard({
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`${q.provider_name}. ${moneySpoken(q.amount_received, q.receive_currency)} arrive, ${q.total_cost_pct.toFixed(1)} percent total cost.${highlight ? ` ${highlight}.` : ''}`}
-      accessibilityHint="Opens the full breakdown"
+      accessibilityLabel={`${q.provider_name}. ${spoken}.${highlight ? ` ${highlight}.` : ''}`}
+      accessibilityHint={copy.quote.opensDetail}
       style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}>
       {card}
     </Pressable>
@@ -90,25 +89,25 @@ export function QuoteCard({
  */
 export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
   const t = useTheme();
+  const copy = useCopy();
   const markupCost = Math.max(0, q.total_cost - q.fee - q.pickup_charge / q.mid_market_rate);
   const pickupCost = q.pickup_charge / q.mid_market_rate;
   const received = Math.max(0, q.send_amount - q.total_cost);
   // `amount`, not `value`: Reanimated's Babel plugin warns about any `x.value` inside an
   // inline style, taking it for a shared value, and this bar renders once per quote.
   const parts = [
-    { key: 'received', label: 'Arrived', amount: received, color: t.moneyReceived },
-    { key: 'fee', label: 'Fee', amount: q.fee, color: t.moneyFee },
-    { key: 'markup', label: 'Markup', amount: markupCost, color: t.moneyMarkup },
-    { key: 'pickup', label: 'Pickup', amount: pickupCost, color: t.moneyPickup },
+    { key: 'received', label: copy.quote.arrived, amount: received, color: t.moneyReceived },
+    { key: 'fee', label: copy.quote.fee, amount: q.fee, color: t.moneyFee },
+    { key: 'markup', label: copy.quote.markup, amount: markupCost, color: t.moneyMarkup },
+    { key: 'pickup', label: copy.quote.pickup, amount: pickupCost, color: t.moneyPickup },
   ].filter((p) => p.amount > 0);
 
   return (
     <View
       accessible
-      accessibilityLabel={
-        'Where the money went: ' +
-        parts.map((p) => `${p.label} ${moneySpoken(p.amount, q.send_currency)}`).join(', ')
-      }>
+      accessibilityLabel={copy.quote.whereMoneyWent(
+        parts.map((p) => `${p.label} ${moneySpoken(p.amount, q.send_currency)}`).join(', '),
+      )}>
       <View style={[styles.bar, { backgroundColor: t.muted }]}>
         {parts.map((p) => (
           <View key={p.key} style={{ flex: p.amount, backgroundColor: p.color }} />
@@ -135,13 +134,16 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
  */
 export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
   const t = useTheme();
+  const copy = useCopy();
+  const checked = copy.time.checked(agoIn(copy, quote.captured_at));
+  const source = copy.quote.sources[quote.source] ?? quote.source;
   return (
     <AppText
       variant="small"
       style={{ color: quote.is_stale ? t.stale : t.textSecondary }}
-      accessibilityLabel={`${quote.is_stale ? 'Stale. ' : ''}${checkedAgo(quote.captured_at)}. Source: ${SOURCE_LABEL[quote.source]}. Mid-market rate from ${quote.mid_market_source}.`}>
-      {quote.is_stale ? 'Stale · ' : ''}
-      {checkedAgo(quote.captured_at)} · {SOURCE_LABEL[quote.source]}
+      accessibilityLabel={copy.quote.spokenFreshness(quote.is_stale, checked, source, quote.mid_market_source)}>
+      {quote.is_stale ? `${copy.quote.stale} · ` : ''}
+      {checked} · {source}
     </AppText>
   );
 }

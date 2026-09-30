@@ -4,11 +4,13 @@ import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { LogoMark } from '@/components/brand';
+import { LanguageButton } from '@/components/language-picker';
 import { rise } from '@/components/motion';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 import { track } from '@/lib/track';
 
 /**
@@ -23,6 +25,8 @@ import { track } from '@/lib/track';
  */
 export default function Welcome() {
   const t = useTheme();
+  const copy = useCopy();
+  const w = copy.onboarding.welcome;
   useEffect(() => track('onboarding_started'), []);
 
   return (
@@ -32,26 +36,30 @@ export default function Welcome() {
       back={false}
       actions={
         <Animated.View entering={rise(4)} style={styles.actions}>
-          <Button label="Get started" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />
+          <Button label={w.getStarted} trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />
           <Button
-            label="I already have an account"
+            label={w.haveAccount}
             variant="secondary"
             onPress={() => router.push({ pathname: '/sign-in', params: { from: 'onboarding' } })}
           />
         </Animated.View>
       }>
       <View style={styles.hero}>
+        {/* First thing on the first screen, so nobody has to get through English to find it. */}
+        <Animated.View entering={rise(0)}>
+          <LanguageButton />
+        </Animated.View>
         <Animated.View entering={rise(0)}>
           <LogoMark width={88} />
         </Animated.View>
-        <Animated.View entering={rise(1)}>
-          <AppText style={[styles.display, { color: t.text }]}>Sending money home</AppText>
+        <Animated.View entering={rise(1)} accessible accessibilityRole="header" accessibilityLabel={`${w.lead} ${w.accent.replace('\n', ' ')}`}>
+          <AppText style={[styles.display, { color: t.text }]}>{w.lead}</AppText>
           {/* Broken by hand: left to wrap, the green line strands "much" on its own. */}
-          <AppText style={[styles.display, { color: t.primary }]}>{'shouldn’t cost\nthis much'}</AppText>
+          <AppText style={[styles.display, { color: t.primary }]}>{w.accent}</AppText>
         </Animated.View>
         <Animated.View entering={rise(2)}>
           <AppText style={[styles.intro, { color: t.textSecondary }]}>
-            RemitBridge shows what a transfer really costs, and which provider leaves your family the most.
+            {w.intro}
           </AppText>
         </Animated.View>
       </View>

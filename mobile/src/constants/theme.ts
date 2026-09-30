@@ -70,6 +70,20 @@ const dark: typeof light = {
 export const Colors = { light, dark } as const;
 export type ThemeColors = typeof light;
 
+/**
+ * Hind, for Hindi: Plus Jakarta Sans has no Devanagari, and a phone's fallback font doesn't
+ * match it (PRD 14.5 asks for a matched one). Hind was drawn to sit with Latin text, and
+ * carries Latin too, so numbers and names in a Hindi sentence match the words around them.
+ * AppText swaps it in weight for weight. Loaded in app/_layout.tsx.
+ */
+export const DevanagariFonts: Record<string, string> = {
+  PlusJakartaSans_400Regular: 'Hind_400Regular',
+  PlusJakartaSans_500Medium: 'Hind_500Medium',
+  PlusJakartaSans_600SemiBold: 'Hind_600SemiBold',
+  PlusJakartaSans_700Bold: 'Hind_700Bold',
+  PlusJakartaSans_800ExtraBold: 'Hind_700Bold',
+};
+
 /** Plus Jakarta Sans, the website's typeface. Loaded in app/_layout.tsx. */
 export const Fonts = {
   regular: 'PlusJakartaSans_400Regular',

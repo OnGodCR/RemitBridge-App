@@ -25,13 +25,16 @@ export interface SavedCheck {
 
 export type NewCheck = Omit<SavedCheck, 'id' | 'created_at'>;
 
-export async function saveCheck(check: NewCheck): Promise<string | null> {
-  if (!supabase) return 'Not connected.';
+/** Null when saved; otherwise why not, as a key the screen turns into words. */
+export type SaveCheckError = 'notConnected' | 'signedOut' | 'failed';
+
+export async function saveCheck(check: NewCheck): Promise<SaveCheckError | null> {
+  if (!supabase) return 'notConnected';
   const { data } = await supabase.auth.getSession();
   const userId = data.session?.user.id;
-  if (!userId) return 'Sign in to save checks.';
+  if (!userId) return 'signedOut';
   const { error } = await supabase.from('saved_transfers').insert({ ...check, user_id: userId });
-  return error ? 'Couldn’t save. Try again.' : null;
+  return error ? 'failed' : null;
 }
 
 export async function fetchChecks(): Promise<SavedCheck[]> {
