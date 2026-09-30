@@ -538,11 +538,64 @@ business account and app, a WhatsApp number, a system-user token, five secrets (
 the top of the function), the migrations pushed, the function deployed, and the webhook
 registered in Meta.
 
+## 2026-09-30: accessibility and languages
+
+Angad asked for UI and UX that works for as many people as possible, and for the features
+already discussed. These are the defaults Claude picked on his behalf; each can be changed.
+
+**D69. Five languages, and a translation ships only once a named speaker stands behind
+it.** PRD 5.5. Every word the app shows or reads aloud lives in `mobile/src/i18n/en.ts`,
+and each language is a full copy of it (`es.ts`, `hi.ts`, `tl.ts`, `vi.ts`), checked by
+the type system. The website's rule carries over and is enforced in code: a language is
+offered in a release build only when `i18n/languages.ts` names its reviewer and the date
+they agreed in writing. Until then it's a draft: it shows only in development builds,
+marked Draft, so the reviewer can read it in the app. Today all four are Claude's drafts
+with no reviewer, so a release build offers English alone and shows no language button.
+- The language is the one picked in the app, else the phone's own if the app offers it,
+  else English. Onboarding's first screen has a globe button; Account has a Language
+  section and, in any language but English, a "wrong translation? tell us" link.
+- Register, picked for Angad: Latin American Spanish with "tú", worded to avoid gendered
+  adjectives about the reader; Hindi with आप and the money words people use (फ़ीस,
+  मिड-मार्केट रेट); Filipino in the "mo/ka" register of Filipino money apps, keeping
+  English where people say it (fee, bank, e-wallet, rate); Vietnamese with "bạn".
+- Hindi uses Hind, a Devanagari face drawn to sit with Latin text (PRD 14.5), with
+  taller lines and no negative letter spacing. Every piece of text declares its language,
+  so VoiceOver reads it in the right voice.
+- Money keeps US formatting ($1,234.56) in every language, to match provider sites and
+  the bot; dates use the language's own format.
+- Stays English: the admin screens and metrics, RemitBench's research write-up (which
+  says so in the reader's language), and glossary definitions until translated. The
+  English term shows under a translated one, since that's the word on receipts.
+- To publish a language: a fluent speaker reads it in a development build, agrees in
+  writing, and their name and the date go in `languages.ts`. Hindi first (PRD order).
+
+**D70. The accessibility bar.** Checked in the simulator, not just written:
+- Contrast: every text color passes WCAG AA (4.5:1) on the backgrounds it sits on, light
+  and dark. Amber stays for bars and dots; text uses a darker amber token.
+- Text size: the app works at the largest iOS accessibility size. Reading text scales in
+  full; big figures and titles scale less (2x under 20pt, 1.6x from 20pt, 1.4x from 28pt)
+  so they don't break mid-word. From 135% text, side-by-side fields and choices stack
+  instead of truncating. Checked in English, Hindi and Vietnamese.
+- Touch: 44pt minimum targets, and no action that needs press-and-hold (saved items
+  have a visible delete button).
+- Screen readers: headings are marked, outcomes are announced (saved, deleted, asked,
+  errors), the rate chart is adjustable (swipe up and down to hear each day), and iOS
+  Bold Text thickens the bundled font too.
+- Slow or no connection: Compare keeps the last prices it loaded for 48 hours and shows
+  them under "You're offline" with when they were loaded, rather than an error.
+- Nothing fails silently: a mail link on a phone with no mail app shows the address to
+  write to instead of doing nothing.
+
 ---
+
+*Numbering note:* the Congressional App Challenge decisions below were first written as
+D69–D87 on the branch `claude/gallant-hopper-51zhhm`, in parallel with D69–D70 on `main`.
+When `main` was merged into the branch (2026-09-30), they were renumbered to D72–D90
+(D71 was left to the other session), and every reference in code and docs was updated.
 
 ## 2026-09-30: the Congressional App Challenge build
 
-**D69. Receipt scanning is in scope, for the 2026 Congressional App Challenge (internal
+**D72. Receipt scanning is in scope, for the 2026 Congressional App Challenge (internal
 deadline 2026-10-23).** Angad asked for a receipt scanner (on-device OCR and redaction, a
 rule-based parser, an LLM fallback for missing or low-confidence fields, validation with the
 one formula, a confirmation screen), a scan result screen (true cost, advertised vs. paid,
@@ -558,11 +611,11 @@ fixture loading, and leaves the heuristics as marked TODO stubs. The gap report
 (`docs/cac-gap-report.md`) lists the decisions this needs before Phase 2.
 *Supersedes:* D30's "no receipt scanning for now" (bank connections stay out).
 
-**D70–D84: Angad's answers to the gap report (2026-09-30).** He said "go ahead with your
+**D73–D87: Angad's answers to the gap report (2026-09-30).** He said "go ahead with your
 recommendations" to all fifteen decisions in `docs/cac-gap-report.md`. Where a
 recommendation left a number open, Claude picked a default under D10, noted below.
 
-**D70. OCR runs on the phone.** It uses Google ML Kit text recognition, through
+**D73. OCR runs on the phone.** It uses Google ML Kit text recognition, through
 `@infinitered/react-native-mlkit-text-recognition` (an Expo module, so it runs natively on
 React Native's New Architecture; `@react-native-ml-kit/text-recognition` was tried first
 and dropped because it only works through the old bridge's compatibility layer). It returns
@@ -572,7 +625,7 @@ ML Kit isn't in Expo Go, so scanning needs a development build, made with EAS in
 (local native builds need disk space this Mac doesn't have). In Expo Go the scan screen says
 so and does nothing else. *Answers:* gap report 1.
 
-**D71. Redaction uses solid boxes, not blur, and hides too much rather than too little.** It
+**D74. Redaction uses solid boxes, not blur, and hides too much rather than too little.** It
 hides any line labeled as a sender, recipient or address; phone numbers; emails; card numbers
 (Luhn); account, routing, CLABE, IFSC and UPI details; confirmation and tracking numbers; and
 any run of seven or more digits that isn't formatted as money. The preview lets the person
@@ -580,13 +633,14 @@ tap any word to hide it or show it again. The text that leaves the phone has eve
 word replaced, and the server runs the same detection again as a second line of defense.
 *Answers:* 2.
 
-**D72. New app strings live in a typed catalogue, in English and Hindi.** The catalogue is
-`mobile/src/i18n/`, with no library. Account gets a language setting, and Devanagari text is
-set in Noto Sans Devanagari (PRD 14.5). The Hindi is Claude's and needs Angad's read, as with
-the bot (D68). Existing screens keep their inline English until the open item moves them.
-*Answers:* 3.
+**D75. Superseded by D69.** The CAC branch first had its own English/Hindi string
+catalogue, a language setting on Account and Noto Sans Devanagari. When `main` was merged
+on 2026-09-30, those were dropped for the app-wide system in D69: the receipt scanner's
+strings now live in `mobile/src/i18n/en.ts` like every other screen's, with drafts in
+Hindi, Spanish, Tagalog and Vietnamese under D69's reviewer rule, and Hindi uses Hind.
+*Answers:* gap report 3.
 
-**D73. The 1% remittance tax is part of the one formula.** `computeTransferCost` and its
+**D76. The 1% remittance tax is part of the one formula.** `computeTransferCost` and its
 Python twin take an optional `transferTax` (T, sending currency). It comes off before
 conversion, like the fee, because S is everything the sender paid, and total cost is
 F + T + markup + pickup. With T = 0, nothing changes. `remittanceTax()` and the list of taxed
@@ -594,22 +648,22 @@ funding methods live in the same package, so the rule exists once. The tax test 
 `vectors.tax.json`: they're derived by hand, because the website has no tax, and both
 languages must pass them. *Answers:* 4.
 
-**D74. What each receipt field means.** `amount_sent` is the transfer amount as printed,
+**D77. What each receipt field means.** `amount_sent` is the transfer amount as printed,
 before the fee and the tax. `total_paid` (new, optional) is the printed total. The formula's
 S is amount_sent + fee + tax. Validation checks that received ≈ amount_sent × rate − pickup,
 and that total_paid ≈ amount_sent + fee + tax when a total is printed. Both checks use the
 engine's tolerance: the larger of 0.2% or one unit of the currency (D36), and 2 cents for the
-total. `delivery_method` is also a new optional field, for matching prices (D79). *Answers:*
+total. `delivery_method` is also a new optional field, for matching prices (D82). *Answers:*
 5, and part of 10.
 
-**D75. Default tax base, unverified.** 1% of the transfer amount (the fee and the tax
+**D78. Default tax base, unverified.** 1% of the transfer amount (the fee and the tax
 itself excluded), rounded half up to the cent. It applies to transfers on or after
 2026-01-01 funded by cash, money order or cashier's check. Bank accounts and cards are
 exempt. This matches the "$500, $5 tax" examples in public guides, but the IRS proposed
 regulations (Federal Register 2026-07085) couldn't be read from Claude's sandbox. So the tax
 check says it's an assumption until the base is checked. *Answers:* 6.
 
-**D76. The model fallback runs only on the server, on Claude.** The `scan-receipt` Edge
+**D79. The model fallback runs only on the server, on Claude.** The `scan-receipt` Edge
 Function calls the Anthropic API with the official SDK. The key is the `ANTHROPIC_API_KEY`
 Supabase secret, which Angad sets. Details:
 - **Model:** `claude-opus-5-5` at `low` effort by default; `RECEIPT_MODEL` overrides it.
@@ -622,11 +676,11 @@ Supabase secret, which Angad sets. Details:
 
 At roughly 2–5 cents a call, the cap keeps it under about $15 a month. *Answers:* 7.
 
-**D77. WhatsApp receipt photos are read by a GitHub Actions worker** (Phase 5). The webhook
+**D80. WhatsApp receipt photos are read by a GitHub Actions worker** (Phase 5). The webhook
 acknowledges the photo, and a workflow downloads it from Meta, runs OCR and redaction, then
 the same pipeline, and replies 1–3 minutes later. No new host. *Answers:* 8.
 
-**D78. Receipts are anonymous and short-lived.**
+**D81. Receipts are anonymous and short-lived.**
 - **No person attached:** receipts carry no user ID and no install ID. `channel` is `app` or
   `whatsapp`.
 - **Reading a result:** anyone holding a receipt's unguessable ID can read its result
@@ -640,7 +694,7 @@ the same pipeline, and replies 1–3 minutes later. No new host. *Answers:* 8.
 
 *Answers:* 9.
 
-**D79. How a receipt is matched to an advertised price** (built in Phase 3). The match is:
+**D82. How a receipt is matched to an advertised price** (built in Phase 3). The match is:
 - same provider and route;
 - the checked amount from `checkedAmountFor`;
 - the same payment method, and the same delivery method, when the receipt shows them;
@@ -650,48 +704,48 @@ The gap comes from the formula: markup cost at the receipt's rate minus markup c
 advertised rate, on the same converted amount, in the sending currency. When nothing matches,
 the section says so. *Answers:* 10.
 
-**D80. Funding methods are `bank_account`, `debit_card`, `credit_card`, `cash`,
+**D83. Funding methods are `bank_account`, `debit_card`, `credit_card`, `cash`,
 `money_order` and `cashiers_check`.** They're the existing payment-method names plus two. Compare gets a funding input
 that filters prices to that method (which also stops a provider showing twice), and a
 cash-type method adds the tax through the formula. *Answers:* 11.
 
-**D81. The app gets a test runner: `jest-expo` with `@testing-library/react-native`.** Logic
+**D84. The app gets a test runner: `jest-expo` with `@testing-library/react-native`.** Logic
 lives in plain TypeScript packages tested with vitest. *Answers:* 12.
 
-**D82. Benchmark images of real receipts stay out of git** unless they've been through the
+**D85. Benchmark images of real receipts stay out of git** unless they've been through the
 redactor and Angad has checked them. Their ground-truth JSON is committed. Synthetic
 receipts are rendered from HTML with Playwright and read with tesseract.js in Node. That's a
 different OCR from the phone's, so benchmark accuracy is a proxy. The model-only mode runs on
 demand, never in CI. *Answers:* 13.
 
-**D83. Who writes what.** Angad writes the field-extraction heuristics: the `TODO(angad)`
+**D86. Who writes what.** Angad writes the field-extraction heuristics: the `TODO(angad)`
 functions in `packages/receipt/src/extract/`. Claude writes everything around them,
 including PII detection, validation and the disclosure check. *Answers:* 14.
 
-**D84. The CAC work stays on the branch `claude/gallant-hopper-51zhhm` until Angad merges
+**D87. The CAC work stays on the branch `claude/gallant-hopper-51zhhm` until Angad merges
 it.** It's an exception to D11 and D24 for this work only. *Answers:* 15.
 
 ## 2026-09-30: Phase 3 defaults
 
 Angad said "continue working" after Phase 2, so Phase 3 went ahead on the recommendations
-already agreed (D70–D84). These are the defaults Claude picked on his behalf (D10):
+already agreed (D73–D87). These are the defaults Claude picked on his behalf (D10):
 
-**D85. Confirming a receipt.** Every value on the "to check" list must be answered before
+**D88. Confirming a receipt.** Every value on the "to check" list must be answered before
 the result is shown. Those are the likeliest misread value, anything required that's
 missing, and anything below 0.8 confidence. The answer can be a correction, the suggested
 value, or "This is right". Each answer is stored as `user_corrected`. Anyone with the
-receipt's ID can confirm it, as they can read or delete it (D78). The server checks every
+receipt's ID can confirm it, as they can read or delete it (D81). The server checks every
 value again, looks up the day's mid-market rate, and stores the comparison and tax check
 in `receipt_comparisons`.
 
-**D86. Matching the advertised price, in detail** (refines D79). Only published standing
+**D89. Matching the advertised price, in detail** (refines D82). Only published standing
 prices count; first-transfer promotions are one-time offers, not the advertised price. The
 window is the transfer day plus 24 hours either side, measured from its midday UTC. When
 the receipt shows a payment or delivery method, that method must match exactly, so a
 money-order receipt has no match until money-order prices exist. The gap uses the day's
 mid-market rate when it loads, otherwise the quote's own.
 
-**D87. Funding method in TrueCost and Compare.** Both default to a bank account.
+**D90. Funding method in TrueCost and Compare.** Both default to a bank account.
 - **Tax:** for cash, money order and cashier's check, the 1% tax is added on top of what was
   paid, on the transfer amount (what's sent less the fee). It comes off before conversion,
   so it raises total cost and leaves the amount received, and the ranking, alone.

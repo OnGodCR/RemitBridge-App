@@ -1,4 +1,4 @@
-// Reads a scanned receipt (DECISIONS.md D69-D78).
+// Reads a scanned receipt (DECISIONS.md D72-D81).
 //
 // The phone has already run OCR and hidden personal details, on the text and on the
 // image. This function:
@@ -16,7 +16,7 @@
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
 //   ANTHROPIC_API_KEY           the model fallback; without it, the rules alone
 // Optional:
-//   RECEIPT_MODEL               default claude-opus-5-5 (D76)
+//   RECEIPT_MODEL               default claude-opus-5-5 (D79)
 //   RECEIPT_MODEL_MONTHLY_CAP   default 300 model calls a month
 //
 // Called by the app, signed in or not. The publishable key isn't a JWT, so JWT verification
@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
 async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanResponse> {
   await db.rpc('forget_expired_receipts');
 
-  // The second line of defense (D71): anything the phone let through is hidden here, and
+  // The second line of defense (D74): anything the phone let through is hidden here, and
   // then the image, which can't be redacted here, is not used at all.
   const leftovers = detectPii(request.page);
   const page = leftovers.length ? redactPage(request.page, leftovers) : request.page;
@@ -119,7 +119,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const id = crypto.randomUUID();
   const expiresAt = request.research_consent ? null : new Date(Date.now() + KEEP_DAYS * 86_400_000).toISOString();
 
-  // The redacted image is stored only with research consent (D78).
+  // The redacted image is stored only with research consent (D81).
   let imagePath: string | null = null;
   if (request.research_consent && image) {
     const path = `${id}.${image.mediaType === 'image/png' ? 'png' : 'jpg'}`;
@@ -167,7 +167,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
 /**
  * The person's answers from the confirmation screen (Phase 3). Their values replace what
  * was read and become user_corrected; the receipt is checked again with the day's
- * mid-market rate, compared with the provider's advertised price that day (D79), and the
+ * mid-market rate, compared with the provider's advertised price that day (D82), and the
  * comparison and tax check are stored in receipt_comparisons.
  */
 async function confirm(
@@ -237,7 +237,7 @@ async function confirm(
   };
 }
 
-/** The provider's published price that day for the same route and checked amount (D79). */
+/** The provider's published price that day for the same route and checked amount (D82). */
 async function compare(
   db: SupabaseClient,
   v: ReturnType<typeof valuesFrom>,

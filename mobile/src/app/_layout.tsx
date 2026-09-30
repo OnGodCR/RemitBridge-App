@@ -6,22 +6,17 @@ import {
   PlusJakartaSans_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/plus-jakarta-sans';
-import {
-  NotoSansDevanagari_400Regular,
-  NotoSansDevanagari_500Medium,
-  NotoSansDevanagari_600SemiBold,
-  NotoSansDevanagari_700Bold,
-  NotoSansDevanagari_800ExtraBold,
-} from '@expo-google-fonts/noto-sans-devanagari';
+import { Hind_400Regular, Hind_500Medium, Hind_600SemiBold, Hind_700Bold } from '@expo-google-fonts/hind';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
 
+import { AccessibilityProvider } from '@/components/accessibility';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { stackOptions } from '@/components/stack-options';
 import { useTheme } from '@/hooks/use-theme';
-import { stringsFor, useLanguage } from '@/i18n';
+import { LanguageProvider, useCopy } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { track } from '@/lib/track';
@@ -36,21 +31,24 @@ export default function RootLayout() {
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
     PlusJakartaSans_800ExtraBold,
-    // Hindi (D72): AppText switches to these for Devanagari text.
-    NotoSansDevanagari_400Regular,
-    NotoSansDevanagari_500Medium,
-    NotoSansDevanagari_600SemiBold,
-    NotoSansDevanagari_700Bold,
-    NotoSansDevanagari_800ExtraBold,
+    // Hindi's matched Devanagari face (constants/theme.ts, DevanagariFonts).
+    Hind_400Regular,
+    Hind_500Medium,
+    Hind_600SemiBold,
+    Hind_700Bold,
   });
 
   if (!fontsLoaded && !fontError) return null;
 
   return (
     <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AuthProvider>
-        <Navigator />
-      </AuthProvider>
+      <AccessibilityProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <Navigator />
+          </AuthProvider>
+        </LanguageProvider>
+      </AccessibilityProvider>
     </ThemeProvider>
   );
 }
@@ -59,7 +57,7 @@ function Navigator() {
   const { ready, onboarded } = useAuth();
   const isAdmin = useIsAdmin();
   const t = useTheme();
-  const language = useLanguage();
+  const { titles } = useCopy();
   // Pushed screens (tools, learn, admin) sit on this root stack with a native header, so
   // each gets a back button to the tab it came from. Nested stacks gave their first screen
   // no back button, because nothing came before it inside that stack.
@@ -82,17 +80,17 @@ function Navigator() {
       </Stack.Protected>
       <Stack.Protected guard={onboarded}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="fair-rate" options={{ ...pushed, title: 'Fair rate' }} />
-        <Stack.Screen name="scam-check" options={{ ...pushed, title: 'Scam check' }} />
-        <Stack.Screen name="true-cost" options={{ ...pushed, title: 'TrueCost' }} />
-        <Stack.Screen name="yearly-cost" options={{ ...pushed, title: 'Yearly cost' }} />
-        <Stack.Screen name="rate-history" options={{ ...pushed, title: 'Rate history' }} />
-        <Stack.Screen name="glossary" options={{ ...pushed, title: 'Glossary' }} />
-        <Stack.Screen name="remitbench" options={{ ...pushed, title: 'RemitBench' }} />
-        <Stack.Screen name="quote/[id]" options={{ ...pushed, title: 'Quote' }} />
-        <Stack.Screen name="routes" options={{ ...pushed, title: 'Route board' }} />
-        <Stack.Screen name="request-route" options={{ ...pushed, title: 'Ask for a route' }} />
-        <Stack.Screen name="scan" options={{ ...pushed, title: stringsFor(language).scan.title }} />
+        <Stack.Screen name="fair-rate" options={{ ...pushed, title: titles.fairRate }} />
+        <Stack.Screen name="scam-check" options={{ ...pushed, title: titles.scamCheck }} />
+        <Stack.Screen name="true-cost" options={{ ...pushed, title: titles.trueCost }} />
+        <Stack.Screen name="scan" options={{ ...pushed, title: titles.scan }} />
+        <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
+        <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
+        <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
+        <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
+        <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />
+        <Stack.Screen name="routes" options={{ ...pushed, title: titles.routeBoard }} />
+        <Stack.Screen name="request-route" options={{ ...pushed, title: titles.askForRoute }} />
       </Stack.Protected>
       {/* Reachable from onboarding and from the Account tab. */}
       <Stack.Screen name="sign-in" />

@@ -15,29 +15,25 @@ import { FUNDING_METHODS, type FundingMethod } from '@remitbridge/formula';
 
 import { ChoiceList } from '@/components/choice-list';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { QuoteCard } from '@/components/quote-card';
 import { RouteNotCovered } from '@/components/route-request';
 import { CountrySelect } from '@/components/select-field';
-import { AppText, Button, Segmented, TextLink } from '@/components/ui';
+import { AppText, Button, Segmented, TextLink, useLargeText } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { fill, useLanguage, useStrings } from '@/i18n';
+import { announce } from '@/lib/announce';
 import { saveComparison } from '@/lib/comparisons';
 import { RECEIVING, SENDING } from '@/lib/countries';
+import { agoIn, useCopy, useLanguage } from '@/i18n';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
 import { fundingWord } from '@/lib/receipt-format';
 import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib/quotes';
-import { checkedAmountFor, DELIVERY_LABELS, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
+import { checkedAmountFor, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
 import { track } from '@/lib/track';
 
-const LIMITS = [
-  'Agent fees charged in person',
-  'Taxes where the money arrives',
-  'Rate moves since the last check',
-  'Exact fees between checked amounts',
-];
+
 
 const MAX_AMOUNT = 50000;
 
@@ -63,6 +59,7 @@ const sendsFrom = (code: string) => ROUTES.some((r) => r.id.startsWith(`${code.t
 
 function Compare(initial: { routeId?: string; amount?: string; method?: string }) {
   const t = useTheme();
+  const copy = useCopy();
   const start =
     ROUTES.find((r) => r.id === initial.routeId) ?? ROUTES.find((r) => r.id === prefs.homeRoute()) ?? ROUTES[0];
   const [from, setFrom] = useState(() => start.id.split('-')[0].toUpperCase());
@@ -74,11 +71,12 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
     start.deliveryMethods.find((m) => m === initial.method) ?? start.deliveryMethods[0],
   );
   const activeMethod = route && !route.deliveryMethods.includes(method) ? route.deliveryMethods[0] : method;
-  // How the sender pays (D80): prices are checked per payment method, so only that
-  // method's show, and a cash-type method adds the 1% federal tax to the total cost.
+  // How the sender pays (D90): prices are checked per payment method, so
+  // only that method's show, and a cash-type method adds the 1% federal tax to the total cost.
   const [funding, setFunding] = useState<FundingMethod>('bank_account');
   const checked = checkedAmountFor(amount);
   const quotes = useQuotes(route, checked, activeMethod);
+  const large = useLargeText();
 
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
@@ -92,19 +90,20 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
             <RefreshControl refreshing={quotes.refreshing} onRefresh={quotes.refresh} tintColor={t.heroText} />
           ) : undefined
         }>
-        <HeroHeader title="Compare">
-          <View style={styles.countries}>
+        <HeroHeader title={copy.compare.title}>
+          {/* Side by side, the names cut off at large text sizes ("In…"), so they stack. */}
+          <View style={[styles.countries, large && styles.stacked]}>
             <CountrySelect
-              label="From"
-              title="Send from"
+              label={copy.common.from}
+              title={copy.compare.sendFrom}
               value={from}
               options={SENDING}
               covered={sendsFrom}
               onChange={setFrom}
             />
             <CountrySelect
-              label="To"
-              title="Send to"
+              label={copy.common.to}
+              title={copy.compare.sendTo}
               value={to}
               options={RECEIVING}
               covered={(code) => !!routeFor(from, code)}
@@ -114,7 +113,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
 
           <View style={[styles.amount, { backgroundColor: t.heroField }]}>
             <AppText variant="small" muted>
-              You send
+              {copy.compare.youSend}
             </AppText>
             <View style={styles.amountRow}>
               <AppText style={[styles.amountSymbol, { color: t.textSecondary }]}>$</AppText>
@@ -126,9 +125,12 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
                 returnKeyType="done"
                 onSubmitEditing={Keyboard.dismiss}
                 maxLength={8}
+                // Grows with the text setting, but only so far: at full size the number
+                // itself was cut to "5…", which is the one thing this field must show.
+                maxFontSizeMultiplier={1.5}
                 placeholder="0"
                 placeholderTextColor={t.textSecondary}
-                accessibilityLabel="Amount you send, in US dollars"
+                accessibilityLabel={copy.compare.amountLabel}
                 style={[styles.amountInput, { color: t.text }]}
               />
               <AppText variant="label" muted>
@@ -142,7 +144,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           {route ? (
             <>
               <Segmented
-                options={route.deliveryMethods.map((m) => ({ value: m, label: DELIVERY_LABELS[m] }))}
+                options={route.deliveryMethods.map((m) => ({ value: m, label: copy.delivery[m] }))}
                 value={activeMethod}
                 onChange={setMethod}
               />
@@ -159,15 +161,16 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
                   <SaveComparison routeId={route.id} amount={amount} method={activeMethod} />
                 </>
               ) : (
-                <AppText muted>Enter an amount.</AppText>
+                <AppText muted>{copy.compare.enterAmount}</AppText>
               )}
-              <DoesNotTellYou items={LIMITS} />
+              <DoesNotTellYou items={copy.compare.limits} />
             </>
           ) : (
             <RouteNotCovered from={from} to={to} />
           )}
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }
@@ -217,20 +220,20 @@ function useQuotes(route: Route | undefined, checked: number, method: DeliveryMe
  */
 function FundingPicker({ value, onChange }: { value: FundingMethod; onChange: (f: FundingMethod) => void }) {
   const t = useTheme();
-  const strings = useStrings();
+  const copy = useCopy();
   const [open, setOpen] = useState(false);
   return (
     <View style={styles.funding}>
       <TextLink
         arrow={false}
         icon={open ? 'chevron.up' : 'chevron.down'}
-        label={`${strings.compareFunding.label}: ${strings.funding[value]}`}
+        label={`${copy.funding.compareLabel}: ${copy.payment[value]}`}
         onPress={() => setOpen((o) => !o)}
       />
       {open ? (
         <ChoiceList
-          label={strings.compareFunding.label}
-          options={FUNDING_METHODS.map((f) => ({ value: f, label: strings.funding[f] }))}
+          label={copy.funding.compareLabel}
+          options={FUNDING_METHODS.map((f) => ({ value: f, label: copy.payment[f] }))}
           value={value}
           onChange={(f) => {
             onChange(f);
@@ -257,8 +260,8 @@ function Results({
   retrying: boolean;
 }) {
   const t = useTheme();
-  const strings = useStrings();
-  const language = useLanguage();
+  const copy = useCopy();
+  const { language } = useLanguage();
   const shown = useMemo(() => {
     if (!result || result.kind !== 'ok') return null;
     const at = (list: typeof result.standing) =>
@@ -277,32 +280,41 @@ function Results({
   if (!result) return <ActivityIndicator style={styles.loading} />;
 
   if (result.kind === 'not_connected') {
-    return <Notice title="Not connected" body="Set the Supabase env in mobile/.env.local." />;
+    return <Notice title={copy.compare.notConnectedTitle} body={copy.compare.notConnectedBody} />;
   }
 
   if (result.kind === 'error') {
     return (
       <View style={styles.results}>
-        <Notice title="Prices didn’t load" body="Check your connection and try again." />
-        <Button label="Try again" variant="secondary" loading={retrying} onPress={onRetry} />
+        <Notice title={copy.compare.errorTitle} body={copy.compare.errorBody} />
+        <Button label={copy.common.tryAgain} variant="secondary" loading={retrying} onPress={onRetry} />
       </View>
     );
   }
 
   const { standing, promotional, otherMethods } = shown!;
   if (standing.length === 0 && promotional.length === 0 && otherMethods) {
-    return <Notice title={strings.funding[funding]} body={strings.compareFunding.none} />;
+    return <Notice title={copy.payment[funding]} body={copy.funding.compareNone} />;
   }
   if (standing.length === 0 && promotional.length === 0) {
+    if (result.savedAt) {
+      return <Notice title={copy.compare.errorTitle} body={copy.compare.offlineNothing} />;
+    }
     return (
       <Notice
-        title="No checked prices yet"
-        body="This route is still being set up. Prices show here once they pass our checks, and never before."
-        action={{ label: 'See where each route stands', onPress: () => router.push('/routes') }}
+        title={copy.compare.noPricesTitle}
+        body={copy.compare.noPricesBody}
+        action={{ label: copy.compare.whereRoutesStand, onPress: () => router.push('/routes') }}
       />
     );
   }
 
+  const offline = result.savedAt ? (
+    <Notice
+      title={copy.compare.offlineTitle}
+      body={copy.compare.offlineBody(agoIn(copy, result.savedAt))}
+    />
+  ) : null;
   const open = (q: ShownQuote) =>
     router.push({ pathname: '/quote/[id]', params: { id: String(q.id), amount: String(amount), funding } });
   const tax = (standing[0] ?? promotional[0]).tax;
@@ -310,18 +322,15 @@ function Results({
   const received = standing.map((q) => q.amount_received);
   return (
     <View style={styles.results}>
+      {offline}
       {standing.length > 1 ? (
         <AppText style={[styles.summary, { color: t.text }]}>
-          {money(Math.min(...received), receive)} to {money(Math.max(...received), receive)} arrives, depending
-          on the provider.
+          {copy.compare.summary(money(Math.min(...received), receive), money(Math.max(...received), receive))}
         </AppText>
       ) : null}
       {tax > 0 ? (
         <AppText variant="small" muted>
-          {fill(strings.compareFunding.taxLine, {
-            funding: fundingWord(funding, strings, language),
-            tax: money(tax, (standing[0] ?? promotional[0]).send_currency),
-          })}
+          {copy.funding.compareTaxLine(fundingWord(funding, copy, language), money(tax, (standing[0] ?? promotional[0]).send_currency))}
         </AppText>
       ) : null}
       {standing.map((q, i) => (
@@ -329,17 +338,17 @@ function Results({
           key={q.id}
           quote={q}
           featured={i === 0 && standing.length > 1}
-          highlight={i === 0 && standing.length > 1 ? 'Most to your family' : undefined}
+          highlight={i === 0 && standing.length > 1 ? copy.compare.mostToFamily : undefined}
           onPress={() => open(q)}
         />
       ))}
       {promotional.length > 0 ? (
         <>
           <AppText variant="heading" style={styles.promoHeading}>
-            First-transfer offers
+            {copy.compare.firstTransferOffers}
           </AppText>
           {promotional.map((q) => (
-            <QuoteCard key={q.id} quote={q} highlight="Promotion" onPress={() => open(q)} />
+            <QuoteCard key={q.id} quote={q} highlight={copy.compare.promotion} onPress={() => open(q)} />
           ))}
         </>
       ) : null}
@@ -377,6 +386,7 @@ function Notice({
  * rather than hiding the option, since that's the reason to have an account at all.
  */
 function SaveComparison({ routeId, amount, method }: { routeId: string; amount: number; method: DeliveryMethod }) {
+  const copy = useCopy();
   const key = `${routeId}|${amount}|${method}`;
   const [state, setState] = useState<{ key: string; value: 'busy' | 'saved' | 'already' | 'error' } | null>(null);
   const current = state?.key === key ? state.value : null;
@@ -386,13 +396,16 @@ function SaveComparison({ routeId, amount, method }: { routeId: string; amount: 
     const result = await saveComparison({ routeId, amount, method });
     if (result === 'signed_out') {
       setState(null);
-      Alert.alert('Sign in to save comparisons', 'Saved comparisons open in one tap, on any phone you sign in on.', [
-        { text: 'Not now', style: 'cancel' },
-        { text: 'Sign in', onPress: () => router.push('/sign-in') },
+      Alert.alert(copy.compare.signInToSaveTitle, copy.compare.signInToSaveBody, [
+        { text: copy.common.notNow, style: 'cancel' },
+        { text: copy.common.signIn, onPress: () => router.push('/sign-in') },
       ]);
       return;
     }
     setState({ key, value: result });
+    announce(
+      result === 'saved' ? copy.compare.savedSpoken : result === 'already' ? copy.compare.alreadySpoken : copy.compare.saveFailed,
+    );
     if (result === 'saved') track('comparison_saved', { route: routeId, method });
   };
 
@@ -400,7 +413,7 @@ function SaveComparison({ routeId, amount, method }: { routeId: string; amount: 
     return (
       <TextLink
         icon="bookmark.fill"
-        label={current === 'saved' ? 'Saved. Find it on Account' : 'Already saved. Find it on Account'}
+        label={current === 'saved' ? copy.compare.saved : copy.compare.alreadySaved}
         onPress={() => router.navigate('/account')}
       />
     );
@@ -410,7 +423,7 @@ function SaveComparison({ routeId, amount, method }: { routeId: string; amount: 
       icon="bookmark"
       arrow={false}
       busy={current === 'busy'}
-      label={current === 'error' ? 'Couldn’t save. Try again' : 'Save this comparison'}
+      label={current === 'error' ? copy.compare.saveFailed : copy.compare.save}
       onPress={save}
     />
   );
@@ -421,6 +434,7 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
   countries: { flexDirection: 'row', gap: Spacing.two },
+  stacked: { flexDirection: 'column' },
   amount: {
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.three,

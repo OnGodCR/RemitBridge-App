@@ -35,7 +35,7 @@ hasn't been started. The decisions needed before Phase 2 come after the table.
   mobile app has no test runner**, only typecheck and lint.
 - **LLM:** nothing calls a model anywhere. The engine names an `ai_extraction` strategy but
   doesn't use it.
-- **D30 says "no receipt scanning for now."** This brief reverses that. It's recorded as D69.
+- **D30 says "no receipt scanning for now."** This brief reverses that. It's recorded as D72.
 
 ## Item by item
 
@@ -51,7 +51,7 @@ hasn't been started. The decisions needed before Phase 2 come after the table.
 | 2 | Result: tax check | Not started | Nothing knows about the 1% tax. |
 | 2 | Result: next time | Exists | `openCompare({ routeId, amount, method })` already pre-fills Compare (TrueCost uses it). |
 | 3 | Funding method in TrueCost and Compare | Partly exists | Quotes carry `payment_method` (`bank_account`, `debit_card`, `credit_card`, `cash`), and the quote detail shows it as "How you pay". Missing: money order and cashier's check; any input in TrueCost or Compare; the tax in the formula. Compare doesn't filter on payment method today, so a provider with two payment methods shows twice. |
-| 4 | Disclosure check | Not started | — |
+| 4 | Disclosure check | Not started | Nothing to build on. |
 | 5 | WhatsApp photo intake | Partly exists | Signature check, hashed numbers, language choice, English and Hindi replies, rate limits. Missing: media download from Meta, server-side OCR and redaction, the pipeline call, the reply, and "confirm this value" follow-ups. |
 | 6 | Receipt, ReceiptField, ReceiptComparison | Not started | The migration system, RLS patterns and both test harnesses are ready to extend. |
 | 7 | Receipt observatory | Not started | The aggregate-only pattern exists (`route_request_counts()`, `admin_metrics()`). |

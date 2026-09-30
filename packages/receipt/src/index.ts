@@ -1,5 +1,5 @@
 /**
- * The receipt pipeline (DECISIONS.md D69-D83): OCR helpers, redaction, the rule-based
+ * The receipt pipeline (DECISIONS.md D72-D86): OCR helpers, redaction, the rule-based
  * parser and its templates, the model fallback, merging and validation. Pure TypeScript
  * with no Deno, React Native or network code, so it runs in the app, in the scan-receipt
  * Edge Function and under Node (tests, benchmark) unchanged. Node-only helpers (fixture

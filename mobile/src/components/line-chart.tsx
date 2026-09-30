@@ -4,7 +4,7 @@ import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { AppText } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { formatDay } from '@/lib/fx';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
 
 /**
  * A line over days, for Rate history and the quote detail's recent prices. Plain views, each
@@ -29,6 +29,9 @@ export function LineChart({
   height?: number;
 }) {
   const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const day = (d: string) => dayIn(language, d);
   const [width, setWidth] = useState(0);
   const [active, setActive] = useState<number | null>(null);
   const H = height;
@@ -59,7 +62,7 @@ export function LineChart({
           {format(shown.value)}
         </AppText>
         <AppText variant="small" muted>
-          {unit} · {formatDay(shown.date)}
+          {unit} · {day(shown.date)}
         </AppText>
       </View>
       <View
@@ -72,9 +75,24 @@ export function LineChart({
         onResponderMove={(e) => pick(e.nativeEvent.locationX)}
         onResponderRelease={() => setActive(null)}
         accessible
-        accessibilityLabel={`${unit}, ${points.length} days from ${formatDay(points[0].date)} to ${formatDay(
-          points[points.length - 1].date,
-        )}. Low ${format(Math.min(...points.map((p) => p.value)))}, high ${format(Math.max(...points.map((p) => p.value)))}.`}>
+        // Adjustable: VoiceOver users swipe up and down to step through the days and hear
+        // each value, which is what everyone else does by dragging a finger along the line.
+        accessibilityRole="adjustable"
+        accessibilityLabel={copy.chart.label(
+          unit,
+          points.length,
+          day(points[0].date),
+          day(points[points.length - 1].date),
+          format(Math.min(...points.map((p) => p.value))),
+          format(Math.max(...points.map((p) => p.value))),
+        )}
+        accessibilityValue={{ text: `${format(shown.value)}, ${day(shown.date)}` }}
+        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+        onAccessibilityAction={(e) => {
+          const at = active ?? points.length - 1;
+          const next = e.nativeEvent.actionName === 'increment' ? at + 1 : at - 1;
+          setActive(Math.max(0, Math.min(points.length - 1, next)));
+        }}>
         {width > 0
           ? points.slice(1).map((_, k) => {
               const a = xy(k);
@@ -115,10 +133,10 @@ export function LineChart({
       </View>
       <View style={styles.axis}>
         <AppText variant="small" muted>
-          {formatDay(points[0].date)}
+          {day(points[0].date)}
         </AppText>
         <AppText variant="small" muted>
-          {formatDay(points[points.length - 1].date)}
+          {day(points[points.length - 1].date)}
         </AppText>
       </View>
     </View>

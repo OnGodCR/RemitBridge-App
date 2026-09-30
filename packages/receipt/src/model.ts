@@ -1,5 +1,5 @@
 /**
- * The model fallback (DECISIONS.md D76): Claude reads only the fields the parser left
+ * The model fallback (DECISIONS.md D79): Claude reads only the fields the parser left
  * missing or unsure, from the redacted photo and the redacted OCR text, and answers in a
  * strict JSON schema. Its answer is then checked again here field by field with
  * checkValue, so nothing it returns reaches the formula unchecked.

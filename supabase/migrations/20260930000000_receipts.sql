@@ -1,11 +1,11 @@
--- Scanned receipts (DECISIONS.md D69-D78).
+-- Scanned receipts (DECISIONS.md D72-D81).
 --
 -- A receipt is read on the phone (or, for WhatsApp, by a worker), with personal details
 -- hidden before anything leaves it. What's stored is what the brief asks for and nothing
 -- that identifies a person:
 --   receipts             one row per scan: when, which channel, which provider and route,
 --                        how it was redacted, and the two consent flags. No user ID, no
---                        install ID, no phone number (D78).
+--                        install ID, no phone number (D81).
 --   receipt_fields       each value read: the field, the value as text, where it came
 --                        from (parser / model / user_corrected), confidence, validated.
 --   receipt_comparisons  advertised vs. paid and the tax check, filled in by Phase 3.
@@ -59,7 +59,7 @@ create table public.receipt_fields (
 
 create table public.receipt_comparisons (
   receipt_id uuid primary key references public.receipts (id) on delete cascade,
-  -- The published quote the receipt was compared with, if one matched (D79).
+  -- The published quote the receipt was compared with, if one matched (D82).
   matched_quote_id bigint references public.quotes (id) on delete set null,
   advertised_rate numeric check (advertised_rate > 0),
   receipt_rate numeric check (receipt_rate > 0),
@@ -70,7 +70,7 @@ create table public.receipt_comparisons (
   created_at timestamptz not null default now()
 );
 
--- Model calls this month, for the spend cap (D76).
+-- Model calls this month, for the spend cap (D79).
 create table public.receipt_model_calls (
   month date primary key check (month = date_trunc('month', month)::date),
   calls int not null default 0 check (calls >= 0)

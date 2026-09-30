@@ -6,7 +6,9 @@ import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { sendEmailCode } from '@/lib/sign-in';
+import { useCopy } from '@/i18n';
+import { announce } from '@/lib/announce';
+import { sendEmailCode, type SignInError } from '@/lib/sign-in';
 import { track } from '@/lib/track';
 
 const looksLikeEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -16,7 +18,9 @@ export default function EmailStep() {
   const { from } = useLocalSearchParams<{ from?: string }>();
   const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<SignInError | null>(null);
+  const copy = useCopy();
+  const si = copy.signIn;
 
   const submit = async () => {
     if (!looksLikeEmail(email)) return;
@@ -25,18 +29,22 @@ export default function EmailStep() {
     track('sign_in_started', { method: 'email' });
     const result = await sendEmailCode(email);
     setBusy(false);
-    if (result) setError(result);
-    else router.push({ pathname: '/sign-in/code', params: { email: email.trim(), from } });
+    if (result && result !== 'closed') {
+      setError(result);
+      announce(si.errors[result]);
+    } else router.push({ pathname: '/sign-in/code', params: { email: email.trim(), from } });
   };
 
   return (
     <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Step
         actions={
-          <Button label="Send code" onPress={submit} loading={busy} disabled={!looksLikeEmail(email)} />
+          <Button label={si.sendCode} onPress={submit} loading={busy} disabled={!looksLikeEmail(email)} />
         }>
-        <AppText variant="title">Your email</AppText>
-        <AppText muted>We’ll send a 6-digit code.</AppText>
+        <AppText variant="title" accessibilityRole="header">
+          {si.emailTitle}
+        </AppText>
+        <AppText muted>{si.emailIntro}</AppText>
         <TextInput
           value={email}
           onChangeText={setEmail}
@@ -49,12 +57,13 @@ export default function EmailStep() {
           returnKeyType="send"
           placeholder="you@example.com"
           placeholderTextColor={t.textSecondary}
-          accessibilityLabel="Email address"
+          accessibilityLabel={si.emailLabel}
+          maxFontSizeMultiplier={2}
           style={[styles.input, { color: t.text, backgroundColor: t.card, borderColor: t.border }]}
         />
         {error ? (
           <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
-            {error}
+            {si.errors[error]}
           </AppText>
         ) : null}
       </Step>

@@ -10,6 +10,7 @@ import { AppText, Button, TextLink } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useIsAdmin } from '@/lib/admin';
+import { countryIn, useCopy } from '@/i18n';
 import { countryName } from '@/lib/countries';
 import { openCompare } from '@/lib/open-compare';
 import { countWaiting, fetchBoard, sendLaunchEmails, type BoardEntry, type RouteStatus } from '@/lib/requests';
@@ -25,16 +26,17 @@ import { track } from '@/lib/track';
  * Status follows the website's rule: small caps and a dot, filled once work has started,
  * hollow before. Never a pill.
  */
-const STAGES: { status: RouteStatus; title: string; about: string; filled: boolean }[] = [
-  { status: 'live', title: 'Live', about: 'Prices checked and published.', filled: true },
-  { status: 'building', title: 'Being built', about: 'We’re setting up price checks.', filled: true },
-  { status: 'under_review', title: 'Under review', about: 'We’re checking whether we can cover it.', filled: false },
-  { status: 'requested', title: 'Requested', about: 'Asked for by people using RemitBridge.', filled: false },
-  { status: 'not_feasible', title: 'Not feasible', about: 'We looked, and can’t cover it for now.', filled: false },
+const STAGES: { status: RouteStatus; filled: boolean }[] = [
+  { status: 'live', filled: true },
+  { status: 'building', filled: true },
+  { status: 'under_review', filled: false },
+  { status: 'requested', filled: false },
+  { status: 'not_feasible', filled: false },
 ];
 
 export default function RouteBoard() {
   const t = useTheme();
+  const copy = useCopy();
   const isAdmin = useIsAdmin();
   const [board, setBoard] = useState<{ entries: BoardEntry[]; counted: boolean } | 'error' | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -70,23 +72,23 @@ export default function RouteBoard() {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} />}>
       <StatusBar style="auto" />
       <AppText style={[styles.lede, { color: t.textSecondary }]}>
-        Where RemitBridge checks prices, and where people have asked us to. Requests decide what we add next.
+        {copy.board.lede}
       </AppText>
 
       {board === null ? <ActivityIndicator style={styles.loading} /> : null}
       {board === 'error' ? (
-        <AppText style={{ color: t.textSecondary }}>The board didn’t load. Pull down to try again.</AppText>
+        <AppText style={{ color: t.textSecondary }}>{copy.board.failed}</AppText>
       ) : null}
 
       {board && board !== 'error' && !board.counted ? (
-        <AppText style={{ color: t.textSecondary }}>Request counts didn’t load, so requested routes aren’t shown.</AppText>
+        <AppText style={{ color: t.textSecondary }}>{copy.board.countsFailed}</AppText>
       ) : null}
 
       {board && board !== 'error'
         ? STAGES.map((stage) => {
             const rows = board.entries
               .filter((e) => e.status === stage.status)
-              .sort((a, b) => b.requests - a.requests || countryName(a.to).localeCompare(countryName(b.to)));
+              .sort((a, b) => b.requests - a.requests || countryIn(copy, a.to).localeCompare(countryIn(copy, b.to)));
             if (rows.length === 0 && (stage.status !== 'requested' || !board.counted)) return null;
             return (
               <View key={stage.status} style={styles.stage}>
@@ -98,17 +100,17 @@ export default function RouteBoard() {
                         { borderColor: t.primary, backgroundColor: stage.filled ? t.primary : 'transparent' },
                       ]}
                     />
-                    <Eyebrow>{stage.title}</Eyebrow>
+                    <Eyebrow header>{copy.board.stages[stage.status].title}</Eyebrow>
                   </View>
                   <AppText variant="small" style={{ color: t.textSecondary }}>
-                    {stage.about}
+                    {copy.board.stages[stage.status].about}
                   </AppText>
                 </View>
                 <ListGroup>
                   {rows.length === 0 ? (
                     <ListItem>
                       <AppText style={{ color: t.textSecondary }}>
-                        No requests yet. Pick any country on Compare to ask for it.
+                        {copy.board.noRequests}
                       </AppText>
                     </ListItem>
                   ) : (
@@ -120,7 +122,7 @@ export default function RouteBoard() {
           })
         : null}
 
-      <Button label="Ask for a route" onPress={() => router.push('/request-route')} />
+      <Button label={copy.board.ask} onPress={() => router.push('/request-route')} />
 
       {isAdmin && live.length > 0 ? <LaunchEmails live={live} /> : null}
     </ScrollView>
@@ -183,19 +185,22 @@ function LaunchEmails({ live }: { live: BoardEntry[] }) {
 
 function BoardRow({ entry: e }: { entry: BoardEntry }) {
   const t = useTheme();
-  const asked = e.requests === 1 ? '1 request' : `${e.requests.toLocaleString()} requests`;
+  const copy = useCopy();
+  const asked = copy.board.requests(e.requests);
+  const toName = countryIn(copy, e.to);
+  const fromName = e.from === 'US' ? copy.common.theUS : countryIn(copy, e.from);
   // A route the app can compare opens there; the rest are information only.
   const route = routeFor(e.from, e.to);
   return (
     <ListItem
       onPress={route ? () => openCompare({ routeId: route.id }) : undefined}
-      accessibilityLabel={`${countryName(e.to)}, from ${countryName(e.from)}${e.requests > 0 ? `, ${asked}` : ''}`}
-      accessibilityHint={route ? 'Opens Compare on this route' : undefined}>
+      accessibilityLabel={`${toName}. ${copy.board.fromCountry(fromName)}${e.requests > 0 ? `. ${asked}` : ''}`}
+      accessibilityHint={route ? copy.board.opensCompare : undefined}>
       <FlagSlot code={e.to} />
       <View style={styles.rowText}>
-        <AppText style={[styles.country, { color: t.text }]}>{countryName(e.to)}</AppText>
+        <AppText style={[styles.country, { color: t.text }]}>{toName}</AppText>
         <AppText variant="small" style={{ color: t.textSecondary }}>
-          From {e.from === 'US' ? 'the US' : countryName(e.from)}
+          {copy.board.fromCountry(fromName)}
           {e.requests > 0 ? ` · ${asked}` : ''}
         </AppText>
         {e.status === 'not_feasible' && e.reason ? (

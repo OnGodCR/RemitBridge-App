@@ -9,6 +9,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { money } from '@/lib/format';
 import { DEFINITIONS, fetchMetrics, toCsv, type MetricDef, type Metrics } from '@/lib/metrics';
 import { ROUTES } from '@/lib/routes';
+import { EnglishOnly } from '@/i18n';
 
 /**
  * The admin metrics screen (D31, D65). Admins only: the screen is behind a guard, and the
@@ -30,7 +31,7 @@ const TOOL_LABELS: Record<string, string> = {
   rate_history: 'Rate history',
 };
 
-export default function MetricsScreen() {
+function MetricsScreen() {
   const t = useTheme();
   const [days, setDays] = useState('30');
   const [data, setData] = useState<{ days: string; value: Metrics | 'forbidden' | 'error' } | null>(null);
@@ -196,3 +197,12 @@ const styles = StyleSheet.create({
   loading: { marginVertical: Spacing.four },
   none: { paddingVertical: Spacing.three },
 });
+
+/** Admin-only, so English whatever the app's language (DECISIONS.md D69). */
+export default function MetricsScreenRoute() {
+  return (
+    <EnglishOnly>
+      <MetricsScreen />
+    </EnglishOnly>
+  );
+}

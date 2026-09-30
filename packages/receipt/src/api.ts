@@ -13,7 +13,7 @@ export interface ScanRequest {
   page: OcrPage
   /** The redacted photo, JPEG or PNG, base64. */
   image?: { mediaType: 'image/jpeg' | 'image/png'; base64: string }
-  /** Keep this receipt (and its redacted image) for research (D78). */
+  /** Keep this receipt (and its redacted image) for research (D81). */
   research_consent: boolean
   /** The phone's date, YYYY-MM-DD, so "today" means the person's today. */
   today: string
@@ -39,7 +39,7 @@ export interface ConfirmRequest {
 
 export type ScanFunctionRequest = ScanRequest | ForgetRequest | ConfirmRequest
 
-/** The advertised price the receipt was compared with (D79), or why there's none. */
+/** The advertised price the receipt was compared with (D82), or why there's none. */
 export interface Comparison {
   quote: {
     id: number

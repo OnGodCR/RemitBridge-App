@@ -5,7 +5,7 @@ import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 import { boxesInside, fromMlKit, type Box, type MlKitResult, type OcrPage } from '@remitbridge/receipt';
 
 /**
- * The phone's half of reading a receipt (DECISIONS.md D70, D71): prepare the photo, run OCR
+ * The phone's half of reading a receipt (DECISIONS.md D73, D74): prepare the photo, run OCR
  * on it, and draw the redaction onto it. Nothing here touches the network; the redacted
  * photo and text leave the phone only through lib/receipts.ts, after the person has seen
  * the preview.
@@ -80,7 +80,7 @@ export async function recognize(photo: PreparedPhoto): Promise<OcrOutcome> {
 
 /**
  * The photo with solid black boxes painted over `boxes`, as base64 JPEG. Solid, not
- * blurred: blurred text can sometimes be read back (D71). The preview shows exactly these
+ * blurred: blurred text can sometimes be read back (D74). The preview shows exactly these
  * bytes, and exactly these bytes are what's sent.
  */
 export function renderRedacted(photo: PreparedPhoto, boxes: Box[]): string {

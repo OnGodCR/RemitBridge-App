@@ -2,17 +2,19 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
+import { LanguageSheet } from '@/components/language-picker';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
-import { AppText, Button, Segmented } from '@/components/ui';
+import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { setLanguage, useLanguage, useStrings } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
+import { offeredLanguages } from '@/i18n/languages';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
-import { LINKS, openPage } from '@/lib/links';
+import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 
@@ -23,16 +25,19 @@ import { track } from '@/lib/track';
  */
 export default function AccountScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const a = copy.account;
+  const { language } = useLanguage();
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const canChooseLanguage = offeredLanguages().length > 1;
   const { session, signOut, resetOnboarding } = useAuth();
   const [busy, setBusy] = useState(false);
   const isAdmin = useIsAdmin();
-  const strings = useStrings();
-  const language = useLanguage();
 
   const confirmDelete = () =>
-    Alert.alert('Delete your account?', 'Your saved comparisons and receipts go with it.', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Delete', style: 'destructive', onPress: deleteAccount },
+    Alert.alert(a.deleteTitle, a.deleteBody, [
+      { text: copy.common.cancel, style: 'cancel' },
+      { text: copy.common.delete, style: 'destructive', onPress: deleteAccount },
     ]);
 
   const deleteAccount = async () => {
@@ -41,7 +46,7 @@ export default function AccountScreen() {
     const { error } = await supabase.functions.invoke('delete-account', { method: 'POST' });
     setBusy(false);
     if (error) {
-      Alert.alert('Couldn’t delete your account', 'Try again in a moment.');
+      Alert.alert(a.deleteFailedTitle, a.deleteFailedBody);
       return;
     }
     track('account_deleted');
@@ -52,9 +57,9 @@ export default function AccountScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <HeroHeader title="Account">
+        <HeroHeader title={a.title}>
           <AppText style={{ color: t.heroMuted }}>
-            {session ? (session.user.email ?? 'Signed in with Apple') : 'Save comparisons and the receipts you check.'}
+            {session ? (session.user.email ?? a.signedInApple) : a.signedOutLine}
           </AppText>
         </HeroHeader>
         <View style={[styles.content, { backgroundColor: t.background }]}>
@@ -63,49 +68,49 @@ export default function AccountScreen() {
               <SavedComparisons />
               <SavedChecks />
               {isAdmin ? (
-                <ListGroup title="Admin">
-                  <ListRow title="Add a price" subtitle="Enter a price read from a provider’s site" onPress={() => router.push('/admin')} />
-                  <ListRow title="Metrics" subtitle="Usage, funnel and impact, with definitions" onPress={() => router.push('/metrics')} />
+                <ListGroup title={a.admin}>
+                  <ListRow title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
+                  <ListRow title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
                 </ListGroup>
               ) : null}
               <View style={styles.actions}>
-                <Button label="Sign out" variant="secondary" onPress={signOut} />
-                <Button label="Delete account" variant="plain" loading={busy} onPress={confirmDelete} />
+                <Button label={a.signOut} variant="secondary" onPress={signOut} />
+                <Button label={a.deleteAccount} variant="plain" loading={busy} onPress={confirmDelete} />
               </View>
             </>
           ) : (
             <View style={styles.actions}>
               <AppText style={{ color: t.textSecondary }}>
-                An account is optional. It keeps what you save, on any phone you use.
+                {a.optional}
               </AppText>
-              <Button label="Create account or sign in" onPress={() => router.push('/sign-in')} />
+              <Button label={a.createOrSignIn} onPress={() => router.push('/sign-in')} />
             </View>
           )}
 
-          <View style={styles.language}>
-            <AppText variant="label">{strings.language.label}</AppText>
-            <Segmented
-              options={[
-                { value: 'en' as const, label: strings.language.english },
-                { value: 'hi' as const, label: strings.language.hindi },
-              ]}
-              value={language}
-              onChange={setLanguage}
-            />
-            <AppText variant="small" muted>
-              {strings.language.help}
-            </AppText>
-          </View>
+          {canChooseLanguage ? (
+            <ListGroup title={copy.language.title}>
+              <ListRow title={language.name} subtitle={copy.language.pick} onPress={() => setLanguageOpen(true)} />
+              {language.code !== 'en' ? (
+                <ListRow
+                  external
+                  title={copy.language.improve}
+                  subtitle={CONTACT}
+                  onPress={() => writeToUs(copy, `Translation: ${language.english}`)}
+                />
+              ) : null}
+            </ListGroup>
+          ) : null}
+          <LanguageSheet visible={languageOpen} onClose={() => setLanguageOpen(false)} />
 
-          <ListGroup title="About">
-            <ListRow title="Route board" subtitle="Which routes we check, and which people want" onPress={() => router.push('/routes')} />
-            <ListRow external title="Privacy policy" subtitle="What we keep, and what we never do" onPress={() => openPage(LINKS.privacy)} />
-            <ListRow external title="Support" subtitle="Questions, and how to reach us" onPress={() => openPage(LINKS.support)} />
+          <ListGroup title={a.about}>
+            <ListRow title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
+            <ListRow external title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
+            <ListRow external title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
           </ListGroup>
 
           {__DEV__ ? (
             <Button
-              label="Replay onboarding (dev only)"
+              label={a.replay}
               variant="plain"
               onPress={async () => {
                 await signOut();
@@ -115,6 +120,7 @@ export default function AccountScreen() {
           ) : null}
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }
@@ -124,5 +130,4 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six },
   actions: { gap: Spacing.three },
-  language: { gap: Spacing.two },
 });

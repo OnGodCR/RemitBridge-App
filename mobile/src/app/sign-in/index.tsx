@@ -13,9 +13,11 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
+import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
-import { signInWithApple, signInWithGoogle } from '@/lib/sign-in';
+import { signInWithApple, signInWithGoogle, type SignInError } from '@/lib/sign-in';
 import { track } from '@/lib/track';
 
 /**
@@ -35,7 +37,9 @@ export default function SignInOptions() {
   const onboarding = from === 'onboarding';
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [busy, setBusy] = useState<'apple' | 'google' | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<SignInError | null>(null);
+  const copy = useCopy();
+  const si = copy.signIn;
 
   useEffect(() => {
     if (Platform.OS === 'ios') AppleAuthentication.isAvailableAsync().then(setAppleAvailable);
@@ -51,8 +55,9 @@ export default function SignInOptions() {
       track('signed_in', { method });
       finishOnboarding();
       leaveSignIn();
-    } else if (result) {
+    } else if (result !== 'closed') {
       setError(result);
+      announce(si.errors[result]);
     }
   };
 
@@ -82,7 +87,7 @@ export default function SignInOptions() {
             />
           ) : null}
           <Button
-            label="Continue with Google"
+            label={si.google}
             variant="secondary"
             loading={busy === 'google'}
             icon={<Image source={require('../../../assets/images/google-g.svg')} style={styles.mark} contentFit="contain" />}
@@ -92,24 +97,24 @@ export default function SignInOptions() {
               every phone, with no other account needed. Apple's stays black and Google's stays
               white, as their own guidelines ask. */}
           <Button
-            label="Continue with email"
+            label={si.email}
             icon={<SymbolView pointerEvents="none" name="envelope.fill" size={17} tintColor={t.primaryForeground} fallback={null} />}
             onPress={() => router.push({ pathname: '/sign-in/email', params: { from } })}
           />
-          {onboarding ? <Button label="Skip for now" variant="plain" onPress={skip} /> : null}
+          {onboarding ? <Button label={si.skip} variant="plain" onPress={skip} /> : null}
         </Animated.View>
       }>
       <Animated.View entering={rise(0)} style={styles.head}>
-        <Eyebrow>{onboarding ? 'Optional' : 'Your account'}</Eyebrow>
+        <Eyebrow>{onboarding ? si.eyebrowOnboarding : si.eyebrowAccount}</Eyebrow>
         <DisplayTitle
-          lead={onboarding ? 'Keep what you check.' : 'Sign in'}
-          accent={onboarding ? 'Or skip it for now.' : 'to keep your checks.'}
+          lead={onboarding ? si.leadOnboarding : si.leadAccount}
+          accent={onboarding ? si.accentOnboarding : si.accentAccount}
         />
       </Animated.View>
 
       {/* A divided list, the website's way: hairline rows, bold label, one plain line. */}
       <Animated.View entering={rise(1)} style={[styles.list, { borderTopColor: t.border }]}>
-        {BENEFITS.map((b) => (
+        {si.benefits.map((b) => (
           <View key={b.title} style={[styles.row, { borderBottomColor: t.border }]}>
             <AppText style={[styles.rowTitle, { color: t.text }]}>{b.title}</AppText>
             <AppText style={{ color: t.textSecondary }}>{b.body}</AppText>
@@ -120,24 +125,20 @@ export default function SignInOptions() {
       {/* The website's callout: a saturated green left edge, on the plain ground. */}
       <Animated.View entering={rise(2)} style={[styles.callout, { borderLeftColor: t.primary }]}>
         <AppText style={[styles.calloutText, { color: t.text }]}>
-          We never sell data, show ads, or touch your money.
+          {si.promise}
         </AppText>
       </Animated.View>
 
       {error ? (
         <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
-          {error}
+          {si.errors[error]}
         </AppText>
       ) : null}
     </Step>
   );
 }
 
-/** Why sign in (DECISIONS.md D62). Each line is something the app actually does (D19). */
-const BENEFITS: { title: string; body: string }[] = [
-  { title: 'Your comparisons, saved', body: 'Reopen a route and amount in one tap, or a receipt you checked.' },
-  { title: 'Private, and yours to delete', body: 'Nobody else can read them. One tap in Account removes everything.' },
-];
+
 
 const BUTTON_HEIGHT = 54;
 

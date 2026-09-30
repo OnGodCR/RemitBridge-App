@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -5,6 +6,7 @@ import { Breakdown, Section } from '@/components/tool';
 import { AppText } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { EnglishOnly, useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
 
 /**
@@ -106,81 +108,93 @@ const TESTS = [
 
 export default function RemitBenchScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
   const [test, setTest] = useState(TESTS[0].id);
   const current = TESTS.find((x) => x.id === test) ?? TESTS[0];
   useEffect(() => track('learn_opened', { page: 'remitbench' }), []);
 
   return (
-    <ScrollView
-      style={{ backgroundColor: t.background }}
-      contentContainerStyle={styles.content}
-      contentInsetAdjustmentBehavior="automatic">
-      <AppText muted>
-        An open testbed for comparing blockchain scaling setups against an ordinary bank transfer, using synthetic
-        traffic that behaves like real remittance traffic.
-      </AppText>
-
-      <View style={[styles.notice, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>
-        <AppText variant="label" style={{ color: t.accentForeground }}>
-          Still being built
+    <>
+      <StatusBar style="auto" />
+      <ScrollView
+        style={{ backgroundColor: t.background }}
+        contentContainerStyle={styles.content}
+        contentInsetAdjustmentBehavior="automatic">
+        {language.code !== 'en' ? (
+          <AppText accessibilityLanguage={language.locale} style={{ color: t.text }}>
+            {copy.remitbench.englishOnly}
+          </AppText>
+        ) : null}
+        <EnglishOnly>
+        <AppText muted>
+          An open testbed for comparing blockchain scaling setups against an ordinary bank transfer, using synthetic
+          traffic that behaves like real remittance traffic.
         </AppText>
-        <AppText variant="small" style={{ color: t.text }}>
-          RemitBench hasn’t produced results we’re willing to publish. This is the design: the question, the setups,
-          and the six tests. When there are real numbers, they’ll appear with the code and runs behind them.
-        </AppText>
-      </View>
 
-      <AppText>
-        The question: which setup (sharding, sidechains, or off-chain channels) moves more transfers for less money,
-        and can any of them talk to the bank rails that already exist? A fast system that can’t hand off to SWIFT or
-        RTGS isn’t much use to a family whose bank is the only place to pick up cash. Everything runs on synthetic
-        traffic, so no real family’s transfers are involved.
-      </AppText>
+        <View style={[styles.notice, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>
+          <AppText variant="label" style={{ color: t.accentForeground }}>
+            Still being built
+          </AppText>
+          <AppText variant="small" style={{ color: t.text }}>
+            RemitBench hasn’t produced results we’re willing to publish. This is the design: the question, the setups,
+            and the six tests. When there are real numbers, they’ll appear with the code and runs behind them.
+          </AppText>
+        </View>
 
-      <Section title="How the setups compare">
-        <AppText variant="small" muted>
-          From each system’s published specifications, not our measurements. Don’t quote these as results.
+        <AppText>
+          The question: which setup (sharding, sidechains, or off-chain channels) moves more transfers for less money,
+          and can any of them talk to the bank rails that already exist? A fast system that can’t hand off to SWIFT or
+          RTGS isn’t much use to a family whose bank is the only place to pick up cash. Everything runs on synthetic
+          traffic, so no real family’s transfers are involved.
         </AppText>
-        {SETUPS.map((s) => (
-          <View key={s.name} style={styles.setup}>
-            <AppText variant="heading">{s.name}</AppText>
-            <AppText variant="small" muted>
-              {s.strengths}
-            </AppText>
-            <Breakdown rows={s.rows.map(([label, value]) => ({ label, value }))} />
-          </View>
-        ))}
-      </Section>
 
-      <Section title="The six tests">
-        <AppText variant="small" muted>
-          Each is a different kind of bad day. None has been run yet.
-        </AppText>
-        <View style={styles.chips}>
-          {TESTS.map((x) => (
-            <AppText
-              key={x.id}
-              variant="label"
-              accessibilityRole="button"
-              accessibilityState={{ selected: x.id === test }}
-              onPress={() => setTest(x.id)}
-              style={[
-                styles.chip,
-                x.id === test
-                  ? { backgroundColor: t.primary, color: t.primaryForeground, borderColor: t.primary }
-                  : { backgroundColor: t.card, color: t.textSecondary, borderColor: t.border },
-              ]}>
-              {x.tab}
-            </AppText>
+        <Section title="How the setups compare">
+          <AppText variant="small" muted>
+            From each system’s published specifications, not our measurements. Don’t quote these as results.
+          </AppText>
+          {SETUPS.map((s) => (
+            <View key={s.name} style={styles.setup}>
+              <AppText variant="heading">{s.name}</AppText>
+              <AppText variant="small" muted>
+                {s.strengths}
+              </AppText>
+              <Breakdown rows={s.rows.map(([label, value]) => ({ label, value }))} />
+            </View>
           ))}
-        </View>
-        <View style={styles.setup}>
-          <AppText variant="heading">{current.title}</AppText>
-          <AppText muted>{current.text}</AppText>
-          <Breakdown rows={current.metrics.map(([label, value]) => ({ label, value }))} />
-        </View>
-      </Section>
-    </ScrollView>
+        </Section>
+
+        <Section title="The six tests">
+          <AppText variant="small" muted>
+            Each is a different kind of bad day. None has been run yet.
+          </AppText>
+          <View style={styles.chips}>
+            {TESTS.map((x) => (
+              <AppText
+                key={x.id}
+                variant="label"
+                accessibilityRole="button"
+                accessibilityState={{ selected: x.id === test }}
+                onPress={() => setTest(x.id)}
+                style={[
+                  styles.chip,
+                  x.id === test
+                    ? { backgroundColor: t.primary, color: t.primaryForeground, borderColor: t.primary }
+                    : { backgroundColor: t.card, color: t.textSecondary, borderColor: t.border },
+                ]}>
+                {x.tab}
+              </AppText>
+            ))}
+          </View>
+          <View style={styles.setup}>
+            <AppText variant="heading">{current.title}</AppText>
+            <AppText muted>{current.text}</AppText>
+            <Breakdown rows={current.metrics.map(([label, value]) => ({ label, value }))} />
+          </View>
+        </Section>
+        </EnglishOnly>
+      </ScrollView>
+    </>
   );
 }
 
@@ -193,7 +207,8 @@ const styles = StyleSheet.create({
     borderRadius: Radius.sm,
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
+    // 13 above and below an 18pt line: a 44pt target. It was 34, under the minimum.
+    paddingVertical: 13,
     overflow: 'hidden',
   },
 });

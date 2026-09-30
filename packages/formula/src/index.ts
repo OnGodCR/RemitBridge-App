@@ -12,7 +12,7 @@
  *   Q  the provider's exchange rate, receiving per 1 sending
  *   M  the mid-market rate, receiving per 1 sending
  *   R  charge at pickup, in the receiving currency
- *   T  transfer tax the provider collects, in the sending currency (DECISIONS.md D73)
+ *   T  transfer tax the provider collects, in the sending currency (DECISIONS.md D76)
  *
  * The fee comes off first and never reaches the exchange, so the markup applies
  * to S - F, not to S. Charging the markup on the gross amount counts the fee's
@@ -107,7 +107,7 @@ export function yearlyCost(cost: TransferCost): { totalCost: number; shortfall: 
 
 /**
  * How a transfer was paid for, using the engine's payment-method names plus the two
- * physical instruments the remittance tax names (DECISIONS.md D80).
+ * physical instruments the remittance tax names (DECISIONS.md D83).
  */
 export type FundingMethod =
   | 'bank_account'
@@ -145,7 +145,7 @@ export const REMITTANCE_TAX_FROM = '2026-01-01'
  * The 1% federal remittance tax on a transfer, in the sending currency, rounded half up
  * to the cent. The base is the transfer amount: what gets converted, without the fee or
  * the tax itself. That base is Claude's default and not yet checked against the IRS
- * regulations (DECISIONS.md D75), so anything showing it says so.
+ * regulations (DECISIONS.md D78), so anything showing it says so.
  *
  * @param transferAmount the transfer amount, sending currency
  * @param funding how the sender paid

@@ -1,14 +1,15 @@
 import { router } from 'expo-router';
-import { Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { HeroBackdrop, HeroHeader } from '@/components/hero-header';
+import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
+import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
-import { openPage } from '@/lib/links';
+import { useCopy } from '@/i18n';
+import { CONTACT, openPage, writeToUs } from '@/lib/links';
 
-const CONTACT = 'remitbridgesystemlabs@gmail.com';
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
 /**
@@ -18,63 +19,44 @@ const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects 
  */
 export default function LearnScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const l = copy.learn;
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <HeroHeader title="Learn">
-          <AppText style={{ color: t.heroMuted }}>How it works, and the words behind it.</AppText>
+        <HeroHeader title={l.title}>
+          <AppText style={{ color: t.heroMuted }}>{l.subtitle}</AppText>
         </HeroHeader>
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          <ListGroup title="How it works">
-            <ListPoint title="Fee + hidden markup">
-              Total cost is the fee plus the markup hidden in the exchange rate.
-            </ListPoint>
-            <ListPoint title="Checked prices only">
-              Every price passes our checks, or it isn’t shown. Mid-market rates from Frankfurter.
-            </ListPoint>
-            <ListPoint title="No affiliate deals">Nobody pays to rank. We never touch your money.</ListPoint>
-            <ListPoint title="Wrong price?">
+          <ListGroup title={l.howItWorks}>
+            <ListPoint title={l.feeMarkup}>{l.feeMarkupBody}</ListPoint>
+            <ListPoint title={l.checkedOnly}>{l.checkedOnlyBody}</ListPoint>
+            <ListPoint title={l.noAffiliate}>{l.noAffiliateBody}</ListPoint>
+            <ListPoint title={l.wrongPrice}>
               <AppText
                 style={{ color: t.primary }}
                 accessibilityRole="link"
-                onPress={() => Linking.openURL(`mailto:${CONTACT}`)}>
+                onPress={() => writeToUs(copy)}>
                 {CONTACT}
               </AppText>
             </ListPoint>
           </ListGroup>
 
-          <ListGroup title="Go deeper">
-            <ListRow title="Glossary" subtitle="80 terms, in plain English" onPress={() => router.push('/glossary')} />
-            <ListRow
-              title="Route board"
-              subtitle="Which routes we check, and which people want"
-              onPress={() => router.push('/routes')}
-            />
-            <ListRow
-              title="RemitBench"
-              subtitle="Our research testbed, still being built"
-              onPress={() => router.push('/remitbench')}
-            />
+          <ListGroup title={l.deeper}>
+            <ListRow title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
+            <ListRow title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
+            <ListRow title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
           </ListGroup>
 
-          <ListGroup title="On the website">
-            <ListRow external title="Blog" subtitle="Stories and explainers" onPress={() => openPage(`${WEBSITE}/blog`)} />
-            <ListRow
-              external
-              title="Research papers"
-              subtitle="The lab’s published work"
-              onPress={() => openPage(`${WEBSITE}/papers`)}
-            />
-            <ListRow
-              external
-              title="Workshops"
-              subtitle="Sessions for communities and schools"
-              onPress={() => openPage(`${WEBSITE}/workshops`)}
-            />
+          <ListGroup title={l.website}>
+            <ListRow external title={l.blog} subtitle={l.blogSub} onPress={() => openPage(`${WEBSITE}/blog`)} />
+            <ListRow external title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
+            <ListRow external title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
           </ListGroup>
         </View>
       </ScrollView>
+      <StatusBarShield />
     </View>
   );
 }

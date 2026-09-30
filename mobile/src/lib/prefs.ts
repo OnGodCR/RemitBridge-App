@@ -36,9 +36,9 @@ export const prefs = {
   setOnboarded: (done: boolean) => set(KEYS.onboarded, done ? '1' : null),
   homeRoute: () => get(KEYS.homeRoute),
   setHomeRoute: (routeId: string) => set(KEYS.homeRoute, routeId),
-  /** The language for translated screens (D72): 'en' or 'hi'. */
+  /** The language picked in the app, if any; otherwise the phone's language decides. */
   language: () => get(KEYS.language),
-  setLanguage: (language: string) => set(KEYS.language, language),
+  setLanguage: (code: string) => set(KEYS.language, code),
   installId: (): string => {
     let id = get(KEYS.installId);
     if (!id) {

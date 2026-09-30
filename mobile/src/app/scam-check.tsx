@@ -5,6 +5,7 @@ import { Section, ToolScreen } from '@/components/tool';
 import { AppText, Button } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 import { track } from '@/lib/track';
 
 /**
@@ -19,76 +20,36 @@ import { track } from '@/lib/track';
  * risk numbers are the lab's own reading of how diagnostic each sign is, not a published
  * statistic, and the result says so. Answers stay on the phone: only "finished" is counted.
  */
+/** The questions' words live in i18n (copy.scamCheck.questions), by id; the scores stay here. */
 const QUESTIONS = [
-  {
-    id: 'payment-method',
-    risk: 10,
-    ask: 'Have you been asked to pay with a gift card, cryptocurrency, a crypto ATM, or a wire to someone you have never met in person?',
-    why: 'These are hard to reverse and hard to trace, which is exactly why scammers ask for them. No legitimate business or government agency demands payment this way.',
-  },
-  {
-    id: 'urgency',
-    risk: 5,
-    ask: 'Are you being rushed, or told to keep this transfer to yourself?',
-    why: 'Pressure and secrecy exist to stop you asking someone you trust. Real institutions give you time and put things in writing.',
-  },
-  {
-    id: 'prize',
-    risk: 10,
-    ask: 'Do you have to send money first in order to receive a prize, a lottery win, or an inheritance?',
-    why: 'A real prize never costs money to collect. The fee is the scam.',
-  },
-  {
-    id: 'romance',
-    risk: 6,
-    ask: 'Is the person asking for money someone you have only ever met online?',
-    why: 'Someone you have never met in person asking for a transfer is among the most common patterns the FTC records, however long you have been talking and however well you feel you know them.',
-  },
-  {
-    id: 'imposter',
-    risk: 8,
-    ask: 'Did someone contact you saying they are from the government, your bank, or a company, and that money has to move right now?',
-    why: 'Agencies do not demand transfers by phone. Hang up and call the organization back on a number you looked up yourself, not one they gave you.',
-  },
-  {
-    id: 'overpayment',
-    risk: 9,
-    ask: 'Did someone pay you too much and ask you to send the difference back?',
-    why: 'The original payment reverses later and the money you sent back is gone. This is classic overpayment fraud.',
-  },
-  {
-    id: 'emergency',
-    risk: 7,
-    ask: 'Did you get a sudden message that a relative is in trouble somewhere and needs money quickly and quietly?',
-    why: 'The family emergency is scripted, and the "tell nobody" is part of the script. Verify with the person directly, or with other family, before anything moves.',
-  },
-  {
-    id: 'mule',
-    risk: 9,
-    ask: 'Does a job, a prize, or a new friend involve you receiving money and passing it on to someone else?',
-    why: 'Moving money for someone else is how money mules are recruited. It can make you part of laundering somebody else’s fraud, with real legal consequences, even if you did not know.',
-  },
+  { id: 'payment-method', risk: 10 },
+  { id: 'urgency', risk: 5 },
+  { id: 'prize', risk: 10 },
+  { id: 'romance', risk: 6 },
+  { id: 'imposter', risk: 8 },
+  { id: 'overpayment', risk: 9 },
+  { id: 'emergency', risk: 7 },
+  { id: 'mule', risk: 9 },
 ] as const;
 
 type Answer = 'yes' | 'unsure' | 'no';
-const ANSWERS: { value: Answer; label: string }[] = [
-  { value: 'yes', label: 'Yes' },
-  { value: 'unsure', label: 'I’m not sure' },
-  { value: 'no', label: 'No' },
-];
+const ANSWERS: Answer[] = ['yes', 'unsure', 'no'];
 
 /** Anything at or above this, answered yes, stops the transfer on its own. */
 const STOP_AT = 8;
 
-function riskLabel(risk: number) {
-  if (risk >= 9) return 'Very high risk';
-  if (risk >= 8) return 'High risk';
-  if (risk >= 6) return 'Moderate risk';
-  return 'Lower risk on its own';
+function riskLabel(risk: number, words: { veryHigh: string; high: string; moderate: string; lower: string }) {
+  if (risk >= 9) return words.veryHigh;
+  if (risk >= 8) return words.high;
+  if (risk >= 6) return words.moderate;
+  return words.lower;
 }
 
 export default function ScamCheckScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const sc = copy.scamCheck;
+  const words = (id: string) => sc.questions[id];
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
@@ -109,10 +70,13 @@ export default function ScamCheckScreen() {
   const top = flagged.length ? flagged[0].risk : 0;
 
   return (
-    <ToolScreen intro="Eight questions about your situation, one at a time. Nothing you answer leaves your phone.">
-      <View style={styles.progress} accessible accessibilityLabel={done ? 'All eight answered' : `Question ${step + 1} of 8`}>
+    <ToolScreen intro={sc.intro}>
+      <View
+        style={styles.progress}
+        accessible
+        accessibilityLabel={done ? sc.allAnswered : sc.questionOf(step + 1, QUESTIONS.length)}>
         <AppText variant="small" muted>
-          {done ? 'All eight answered' : `Question ${step + 1} of ${QUESTIONS.length}`}
+          {done ? sc.allAnswered : sc.questionOf(step + 1, QUESTIONS.length)}
         </AppText>
         <View style={styles.bars}>
           {QUESTIONS.map((q, i) => (
@@ -124,22 +88,22 @@ export default function ScamCheckScreen() {
       {!done ? (
         <View style={[styles.card, { backgroundColor: t.card, borderColor: t.border }]}>
           <AppText variant="label" style={{ color: t.primary }}>
-            {riskLabel(current.risk)} · {current.risk}/10
+            {riskLabel(current.risk, sc.risk)} · {current.risk}/10
           </AppText>
           <AppText variant="heading" style={styles.question} accessibilityLiveRegion="polite">
-            {current.ask}
+            {words(current.id).ask}
           </AppText>
           <View style={styles.answers}>
             {ANSWERS.map((a) => (
               <Button
-                key={a.value}
-                label={a.label}
-                variant={answers[current.id] === a.value ? 'primary' : 'secondary'}
-                onPress={() => answer(a.value)}
+                key={a}
+                label={sc[a]}
+                variant={answers[current.id] === a ? 'primary' : 'secondary'}
+                onPress={() => answer(a)}
               />
             ))}
           </View>
-          {step > 0 ? <Button label="Back" variant="plain" onPress={() => setStep((s) => s - 1)} /> : null}
+          {step > 0 ? <Button label={sc.back} variant="plain" onPress={() => setStep((s) => s - 1)} /> : null}
         </View>
       ) : (
         <>
@@ -154,64 +118,58 @@ export default function ScamCheckScreen() {
             <AppText variant="title" style={{ color: flagged.length ? t.heroText : t.text }}>
               {flagged.length
                 ? top >= STOP_AT
-                  ? 'Stop. Don’t send anything yet.'
-                  : 'Slow down and check this properly.'
+                  ? sc.stop
+                  : sc.slowDown
                 : unsure.length
-                  ? 'Worth checking before you send'
-                  : 'None of the common warning signs'}
+                  ? sc.worthChecking
+                  : sc.noSigns}
             </AppText>
             <AppText style={{ color: flagged.length ? t.heroMuted : t.textSecondary }}>
               {flagged.length
-                ? `The most serious thing you said yes to scores ${top}/10. ${
-                    top >= STOP_AT
-                      ? 'A sign that serious is close to proof on its own, and money sent this way is rarely recoverable.'
-                      : 'On its own it’s a warning rather than proof, but it’s a good reason to check before anything moves.'
-                  } Talk to someone you trust first.`
+                ? sc.flaggedBody(top, top >= STOP_AT)
                 : unsure.length
-                  ? `Nothing here is a definite warning sign, but you weren’t sure about ${unsure.length}. Being unsure is a reason to slow down. Find out for certain first.`
-                  : 'You said no to all eight. That’s not a guarantee: this list isn’t everything, and new scams appear all the time. If something still feels wrong, wait a day and ask someone you trust.'}
+                  ? sc.unsureBody(unsure.length)
+                  : sc.clearBody}
             </AppText>
           </View>
 
           {[...flagged, ...unsure].map((q) => (
             <View key={q.id} style={[styles.card, { backgroundColor: t.card, borderColor: t.border }]}>
               <AppText variant="small" style={{ color: answers[q.id] === 'yes' ? t.primary : t.textSecondary }}>
-                {answers[q.id] === 'yes' ? 'You said yes' : 'You weren’t sure'} · {riskLabel(q.risk)} · {q.risk}/10
+                {answers[q.id] === 'yes' ? sc.saidYes : sc.wasUnsure} · {riskLabel(q.risk, sc.risk)} · {q.risk}/10
               </AppText>
-              <AppText variant="label">{q.ask}</AppText>
-              <AppText muted>{q.why}</AppText>
+              <AppText variant="label">{words(q.id).ask}</AppText>
+              <AppText muted>{words(q.id).why}</AppText>
             </View>
           ))}
 
-          <Section title="If money already went">
+          <Section title={sc.ifSent}>
             <View style={[styles.card, { backgroundColor: t.card, borderColor: t.border }]}>
-              <AppText>1. Contact your transfer provider now and ask them to stop or reverse it.</AppText>
+              <AppText>{sc.step1}</AppText>
               <AppText>
-                2. Report it to the FTC at{' '}
+                {sc.step2Before}
                 <AppText style={{ color: t.primary }} onPress={() => Linking.openURL('https://reportfraud.ftc.gov')}>
                   reportfraud.ftc.gov
                 </AppText>
-                .
+                {sc.step2After}
               </AppText>
               <AppText>
-                3. File a complaint with the{' '}
+                {sc.step3Before}
                 <AppText
                   style={{ color: t.primary }}
                   onPress={() => Linking.openURL('https://www.consumerfinance.gov/complaint/')}>
                   CFPB
                 </AppText>
-                , which takes money-transfer complaints.
+                {sc.step3After}
               </AppText>
             </View>
           </Section>
 
           <AppText variant="small" muted>
-            The risk numbers are our own reading of how strongly each sign points to fraud on its own, drawn from FTC
-            and CFPB guidance. They aren’t a published statistic or your odds of being defrauded. This is education,
-            not legal or financial advice, and we can’t recover money or step in with a company.
+            {sc.note}
           </AppText>
           <Button
-            label="Start again"
+            label={sc.again}
             variant="secondary"
             onPress={() => {
               setAnswers({});

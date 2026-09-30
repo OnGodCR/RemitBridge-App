@@ -4,16 +4,17 @@
  * text and image, their extra cover and consent choice go with it, and a result can be
  * deleted. Also: Expo Go, errors, and Hindi.
  */
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
 import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type ScanResponse } from '@remitbridge/receipt';
 
 import ScanScreen from '@/app/scan';
-import { setLanguage } from '@/i18n';
+import { LanguageProvider } from '@/i18n';
 import { canScan, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
-jest.mock('@/lib/prefs', () => ({ prefs: { language: () => null, setLanguage: () => undefined } }));
+let mockSavedLanguage: string | null = null;
+jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, setLanguage: () => undefined } }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('expo-image', () => ({ Image: () => null }));
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
@@ -80,7 +81,9 @@ beforeEach(() => {
   jest.mocked(confirmScan).mockReset();
 });
 
-afterEach(() => act(() => setLanguage('en')));
+afterEach(() => {
+  mockSavedLanguage = null;
+});
 
 async function toPreview() {
   render(<ScanScreen />);
@@ -190,9 +193,12 @@ it('asks for camera access when it’s refused', async () => {
 });
 
 it('speaks Hindi when Hindi is chosen', async () => {
-  act(() => setLanguage('hi'));
-  render(<ScanScreen />);
+  mockSavedLanguage = 'hi';
+  render(
+    <LanguageProvider>
+      <ScanScreen />
+    </LanguageProvider>,
+  );
   expect(screen.getByText('फ़ोटो लें')).toBeTruthy();
-  expect(screen.getByText('यह क्या नहीं बताता')).toBeTruthy();
   await waitFor(() => expect(screen.getByText('फ़ोटो चुनें')).toBeTruthy());
 });

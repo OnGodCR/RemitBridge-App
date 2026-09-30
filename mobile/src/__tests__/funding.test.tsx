@@ -1,5 +1,5 @@
 /**
- * The funding method in Compare and TrueCost (D80): a cash-type method adds the 1% federal
+ * The funding method in Compare and TrueCost (D83): a cash-type method adds the 1% federal
  * tax through the one formula, raising the total cost and leaving the amount received
  * (and so the ranking) alone; other methods change nothing.
  */
@@ -12,6 +12,7 @@ import { money } from '@/lib/format';
 import { atAmount, type LatestQuote } from '@/lib/quotes';
 import { editText, formatValue, parseTyped, usDate } from '@/lib/receipt-format';
 import { en } from '@/i18n/en';
+import { LANGUAGES } from '@/i18n/languages';
 
 jest.mock('@/lib/supabase', () => ({ supabase: null }));
 jest.mock('@/lib/prefs', () => ({ prefs: { language: () => null, setLanguage: () => undefined } }));
@@ -107,9 +108,9 @@ describe('typing and showing receipt values', () => {
 
   it('shows amounts in the right currency and methods in words', () => {
     const v = { send_currency: 'USD', receive_currency: 'MXN' };
-    expect(formatValue('fee', 4.99, v, en)).toBe('$4.99');
-    expect(formatValue('amount_received', 8560, v, en)).toBe('MX$8,560.00');
-    expect(formatValue('funding_method', 'cashiers_check', v, en)).toBe('Cashier’s check');
-    expect(formatValue('transfer_date', '2026-09-28', v, en)).toBe('Sep 28, 2026');
+    expect(formatValue('fee', 4.99, v, en, LANGUAGES[0])).toBe('$4.99');
+    expect(formatValue('amount_received', 8560, v, en, LANGUAGES[0])).toBe('MX$8,560.00');
+    expect(formatValue('funding_method', 'cashiers_check', v, en, LANGUAGES[0])).toBe('Cashier’s check');
+    expect(formatValue('transfer_date', '2026-09-28', v, en, LANGUAGES[0])).toBe('Sep 28, 2026');
   });
 });

@@ -6,7 +6,7 @@ so the engine, the app and the bot can never disagree about the same transfer.
 
 The fee comes off first and never reaches the exchange, so the markup applies
 to S - F, not to S. A transfer tax T collected with the transfer comes off the same
-way (DECISIONS.md D73), so the markup applies to S - F - T. With T = 0 every result
+way (DECISIONS.md D76), so the markup applies to S - F - T. With T = 0 every result
 is the website's TrueCost; ``vectors.tax.json`` pins the tax.
 """
 
@@ -85,7 +85,7 @@ def yearly_cost(cost: TransferCost) -> dict[str, float]:
     return {"total_cost": cost.total_cost * 12, "shortfall": cost.shortfall * 12}
 
 
-# How a transfer was paid for (DECISIONS.md D80), and the ones the US federal remittance
+# How a transfer was paid for (DECISIONS.md D83), and the ones the US federal remittance
 # tax (IRC 4475) applies to: cash, a money order, a cashier's check.
 FUNDING_METHODS = (
     "bank_account",
@@ -102,7 +102,7 @@ REMITTANCE_TAX_FROM = "2026-01-01"
 
 def remittance_tax(transfer_amount: float, funding: str, date: str | None = None) -> float:
     """The 1% federal remittance tax, rounded half up to the cent. The base is the
-    transfer amount, without the fee or the tax (Claude's default, unverified: D75).
+    transfer amount, without the fee or the tax (Claude's default, unverified: D78).
     ``date`` is YYYY-MM-DD; before 2026-01-01 there was no tax."""
     if funding not in TAXED_FUNDING:
         return 0.0

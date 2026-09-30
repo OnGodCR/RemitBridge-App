@@ -8,9 +8,8 @@ import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { fill, useLanguage, useStrings } from '@/i18n';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
 import { money, pct } from '@/lib/format';
-import { formatDay } from '@/lib/fx';
 import { openCompare } from '@/lib/open-compare';
 import { formatValue, fundingWord } from '@/lib/receipt-format';
 import { ROUTES, type DeliveryMethod } from '@/lib/routes';
@@ -24,9 +23,9 @@ import { ROUTES, type DeliveryMethod } from '@/lib/routes';
  */
 export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
   const t = useTheme();
-  const strings = useStrings();
-  const language = useLanguage();
-  const s = strings.result;
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const s = copy.result;
   const v = valuesFrom(confirmed.fields);
   const from = v.send_currency ?? 'USD';
   const to = v.receive_currency ?? '';
@@ -34,23 +33,45 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
   const cost = mid ? receiptCost(v, mid.rate) : null;
   const tax = taxCheck(v, mid?.rate ?? null);
   const route = ROUTES.find((r) => r.id === confirmed.route_id);
-  const rate = (x: number) => x.toLocaleString('en-US', { maximumFractionDigits: 6 });
+  /** "1 USD = 17.3 MXN": money keeps US formatting in every language (D72). */
+  const rate = (x: number) => `1 ${from} = ${x.toLocaleString('en-US', { maximumFractionDigits: 6 })} ${to}`;
+  const gap = confirmed.comparison.gap;
+  const quote = confirmed.comparison.quote;
+
+  const taxText = () => {
+    const funding = v.funding_method ? fundingWord(v.funding_method, copy, language) : '';
+    const amount = v.amount_sent !== undefined ? money(v.amount_sent, from) : '';
+    const expected = tax.expected !== null ? money(tax.expected, from) : '';
+    const found = tax.found !== null ? money(tax.found, from) : '';
+    switch (tax.status) {
+      case 'matches':
+        return s.taxMatches(funding, amount, expected, found);
+      case 'not_found':
+        return s.taxNotFound(funding, amount, expected);
+      case 'differs':
+        return s.taxDiffers(funding, amount, expected, found);
+      case 'not_taxed':
+        return s.taxNotTaxed(funding);
+      case 'before_tax':
+        return s.taxBefore;
+      default:
+        return s.taxUnknown;
+    }
+  };
+
+  const reason = confirmed.comparison.reason;
 
   return (
     <>
       {/* 1. True cost */}
       {cost ? (
         <>
-          <Answer
-            label={s.title}
-            value={money(cost.totalCost, from)}
-            note={fill(s.costNote, { pct: pct(cost.totalCostPct, 2), world: FIGURES.globalCostPct, target: FIGURES.targetPct })}
-          />
+          <Answer label={s.title} value={money(cost.totalCost, from)} note={s.costNote(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)} />
           <Breakdown
             rows={[
               { label: s.fee, value: money(cost.feeCost, from), tone: t.moneyFee },
               ...(cost.taxCost > 0 ? [{ label: s.tax, value: money(cost.taxCost, from), tone: t.moneyFee }] : []),
-              { label: fill(s.markup, { pct: pct(cost.markupPct, 2) }), value: money(cost.markupCost, from), tone: t.moneyMarkup },
+              { label: s.markup(pct(cost.markupPct, 2)), value: money(cost.markupCost, from), tone: t.moneyMarkup },
               ...(cost.pickupCost > 0 ? [{ label: s.pickup, value: money(cost.pickupCost, from), tone: t.moneyPickup }] : []),
               { label: s.received, value: money(cost.amountReceived, to), strong: true },
               { label: s.benchmark, value: money(cost.benchmarkReceived, to) },
@@ -61,9 +82,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
               {s.betterThanMid}
             </AppText>
           ) : null}
-          <SourceNote>
-            {fill(s.source, { source: mid!.source, from, rate: rate(mid!.rate), to, date: formatDay(mid!.date) })}
-          </SourceNote>
+          <SourceNote>{s.source(mid!.source, rate(mid!.rate), dayIn(language, mid!.date))}</SourceNote>
         </>
       ) : (
         <AppText muted>{mid ? s.missing : s.noMid}</AppText>
@@ -71,42 +90,25 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
 
       {/* 2. Advertised vs. paid */}
       <Section title={s.advertisedTitle}>
-        {confirmed.comparison.quote && confirmed.comparison.gap ? (
+        {quote && gap ? (
           <View style={[styles.rule, { borderLeftColor: t.primary }]}>
             <AppText>
-              {fill(s.advertised, {
-                date: formatDay(v.transfer_date!),
-                provider: v.provider ?? '',
-                from,
-                rate: rate(confirmed.comparison.gap.advertisedRate),
-                to,
-                amount: money(confirmed.comparison.quote.send_amount, from).replace('.00', ''),
-                time: new Date(confirmed.comparison.quote.captured_at).toLocaleString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: '2-digit',
-                }),
-              })}
+              {s.advertised(
+                dayIn(language, v.transfer_date!),
+                v.provider ?? '',
+                rate(gap.advertisedRate),
+                money(quote.send_amount, from).replace('.00', ''),
+                new Date(quote.captured_at).toLocaleString(language.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }),
+              )}
             </AppText>
-            <AppText>{fill(s.yourRate, { from, rate: rate(confirmed.comparison.gap.receiptRate), to })}</AppText>
+            <AppText>{s.yourRate(rate(gap.receiptRate))}</AppText>
             <AppText variant="label">
-              {confirmed.comparison.gap.gapAmount > 0
-                ? fill(s.gapMore, { gap: money(confirmed.comparison.gap.gapAmount, from) })
-                : confirmed.comparison.gap.gapAmount < 0
-                  ? fill(s.gapLess, { gap: money(-confirmed.comparison.gap.gapAmount, from) })
-                  : s.gapSame}
+              {gap.gapAmount > 0 ? s.gapMore(money(gap.gapAmount, from)) : gap.gapAmount < 0 ? s.gapLess(money(-gap.gapAmount, from)) : s.gapSame}
             </AppText>
           </View>
         ) : (
           <AppText muted>
-            {confirmed.comparison.reason === 'not_tracked'
-              ? s.notTracked
-              : confirmed.comparison.reason === 'no_route'
-                ? s.noRoute
-                : confirmed.comparison.reason === 'missing_values'
-                  ? s.missingValues
-                  : s.noQuote}
+            {reason === 'not_tracked' ? s.notTracked : reason === 'no_route' ? s.noRoute : reason === 'missing_values' ? s.missingValues : s.noQuote}
           </AppText>
         )}
       </Section>
@@ -114,39 +116,9 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
       {/* 3. The tax check */}
       <Section title={s.taxTitle}>
         <AppText muted>{s.taxRule}</AppText>
-        <AppText>
-          {(() => {
-            const funding = v.funding_method ? fundingWord(v.funding_method, strings, language) : '';
-            const amount = v.amount_sent !== undefined ? money(v.amount_sent, from) : '';
-            const values = {
-              funding,
-              amount,
-              expected: tax.expected !== null ? money(tax.expected, from) : '',
-              found: tax.found !== null ? money(tax.found, from) : '',
-            };
-            switch (tax.status) {
-              case 'matches':
-                return fill(s.taxMatches, values);
-              case 'not_found':
-                return fill(s.taxNotFound, values);
-              case 'differs':
-                return fill(s.taxDiffers, values);
-              case 'not_taxed':
-                return fill(s.taxNotTaxed, values);
-              case 'before_tax':
-                return s.taxBefore;
-              default:
-                return s.taxUnknown;
-            }
-          })()}
-        </AppText>
+        <AppText>{taxText()}</AppText>
         {tax.bankEquivalent && cost ? (
-          <AppText>
-            {fill(s.taxBank, {
-              total: money(tax.bankEquivalent.totalCost, from),
-              tax: money(cost.totalCost - tax.bankEquivalent.totalCost, from),
-            })}
-          </AppText>
+          <AppText>{s.taxBank(money(tax.bankEquivalent.totalCost, from), money(cost.totalCost - tax.bankEquivalent.totalCost, from))}</AppText>
         ) : null}
         {tax.expected !== null ? (
           <AppText variant="small" muted>
@@ -181,8 +153,8 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
       <SourceNote>
         {[
           v.provider,
-          v.transfer_date ? formatDay(v.transfer_date) : null,
-          v.amount_sent !== undefined ? formatValue('amount_sent', v.amount_sent, v, strings) : null,
+          v.transfer_date ? dayIn(language, v.transfer_date) : null,
+          v.amount_sent !== undefined ? formatValue('amount_sent', v.amount_sent, v, copy, language) : null,
         ]
           .filter(Boolean)
           .join(' · ')}
