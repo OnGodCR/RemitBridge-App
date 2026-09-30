@@ -68,8 +68,13 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
    for brand verification (D61).
 6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
    links open the app (D48). Claude couldn't read it without signing in.
-7. **Disk:** 5.6 GB free on 2026-09-29. Native builds (and so real store screenshots)
-   need 15–20 GB.
+7. **Disk:** 5.7 GB free on 2026-09-29; native builds (and so real store screenshots)
+   need 15–20 GB. Most of the space is app caches in `~/Library/Caches` (17 GB): Chrome
+   6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers
+   (`...ShipIt`) 1.6 GB. Clearing them from each app's own settings frees about 12 GB.
+   The iOS 27 simulator runtime (7.5 GB) is needed; keep it.
+8. **Partners:** a shortlist of nine Seattle-area organizations and a draft email are in
+   `docs/outreach/partners.md` (not sent).
 
 ## The shape of the product
 
