@@ -3,6 +3,7 @@
  * the two can't drift. parseRequest checks everything that arrives, since the function is
  * reachable with the app's public key.
  */
+import type { DisclosureItem } from './disclosures.ts'
 import type { Gap } from './result.ts'
 import type { Check, Suspect } from './validate.ts'
 import { FIELD_NAMES, type ExtractedFields, type FieldName, type OcrPage } from './types.ts'
@@ -72,6 +73,8 @@ export interface ConfirmResponse {
   /** The mid-market rate for the receipt's currencies and date, and where it's from. */
   mid: { rate: number; date: string; source: string } | null
   comparison: Comparison
+  /** Standard disclosures not found on the receipt when it was scanned (D95). */
+  disclosures_missing: DisclosureItem[]
 }
 
 export interface ScanResponse {
@@ -86,6 +89,8 @@ export interface ScanResponse {
   suspect: Suspect | null
   missing: FieldName[]
   to_confirm: FieldName[]
+  /** Standard disclosures not found on the receipt (D95). */
+  disclosures_missing: DisclosureItem[]
   /** What the model was asked, and why it gave nothing if it didn't answer. */
   model: { asked: FieldName[]; error: string | null }
   /**

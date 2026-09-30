@@ -875,3 +875,36 @@ D10, with one privacy exception that needs Angad's yes before it's switched on).
 - **Limits:** photos up to 10 MB (JPEG, PNG or WebP). A photo with under four lines of text,
   or no digits at all, gets "couldn't read a receipt". OCR is tesseract's, not ML Kit's, so
   WhatsApp reads less well than the app. The benchmark's synthetic set measures that OCR.
+
+## 2026-09-30: Phase 6, the disclosure check and the observatory
+
+**D95. The disclosure check** (defaults Claude picked under D10).
+- **Items:** the receipt items in Regulation E (12 CFR 1005.31(b)(2)): transfer amount, fees,
+  taxes (only for a cash-type transfer), total, exchange rate, amount received, date
+  available, recipient, error-resolution rights, cancellation, the provider's contact
+  details, and the CFPB's.
+- **How:** the amounts count as found when a value was read for them. The rest count as found
+  when their usual words appear in the redacted text. The recipient's name is hidden, but its
+  label stays.
+- **When:** it's worked out once, at scan time, from what the parser and the model read. A
+  value the person typed in wasn't on the receipt, so it doesn't count as found. It's stored
+  in `receipts.disclosures_missing`.
+- **Wording:** the only claim is "not found on this receipt", always with the note that a
+  photo can cut part of it off. It never says a provider broke a rule. On the synthetic set
+  it's right on every item. Those receipts use the wording the check looks for, which the
+  benchmark says.
+
+**D96. The receipt observatory.**
+- **Which receipts:** only research-consented receipts that went through the result (a
+  `receipt_comparisons` row), through one database function, `receipt_observatory()`, that
+  anyone can read.
+- **What it shows:** per provider and route, the median total cost and exchange-rate markup,
+  and how many got a worse rate than advertised. Overall, the tax totals and how often each
+  disclosure wasn't found.
+- **Privacy:** no group smaller than **five** receipts is shown, and no breakdown at all
+  while there are fewer than five receipts in all. The start date is given to the month only.
+- **The screen:** Learn → "What people paid", labeled "Early results", with the sample size
+  first. The method line says "typical" means the median. There's a "What this does not tell
+  you" block: people who share receipts aren't a random sample.
+- **Stored for it:** `receipt_comparisons` gains `total_cost_pct` and `markup_pct`, from
+  the one formula at the day's mid-market rate, written when a receipt is confirmed.

@@ -34,10 +34,12 @@ import {
   deserializeValue,
   detectPii,
   matchQuote,
+  missingDisclosures,
   ModelError,
   openRouterClient,
   parseRequest,
   readReceipt,
+  receiptCost,
   redactPage,
   serializeValue,
   taxCheck,
@@ -136,7 +138,12 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     if (!error) imagePath = path;
   }
 
+  // Read from the redacted text and the values the parser and model read, before the
+  // person corrects anything: a value typed in wasn't on the receipt (D95).
+  const disclosures = missingDisclosures(page, valuesFrom(fields));
+
   const { error: receiptError } = await db.from('receipts').insert({
+    disclosures_missing: disclosures,
     id,
     channel: whatsapp ? 'whatsapp' : 'app',
     provider_id: result.providerId,
@@ -169,6 +176,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     to_confirm: result.validation.toConfirm,
     model: { asked: result.askedModel, error: result.modelError },
     redaction,
+    disclosures_missing: disclosures,
   };
 }
 
@@ -182,7 +190,7 @@ async function confirm(
   db: SupabaseClient,
   request: ConfirmRequest,
 ): Promise<ConfirmResponse | { error: string; status: number }> {
-  const { data: receipt } = await db.from('receipts').select('id, expires_at').eq('id', request.id).maybeSingle();
+  const { data: receipt } = await db.from('receipts').select('id, expires_at, disclosures_missing').eq('id', request.id).maybeSingle();
   if (!receipt || (receipt.expires_at && Date.parse(receipt.expires_at) <= Date.now())) return { error: 'not found', status: 404 };
   const today = trustedToday(request.today, new Date());
 
@@ -215,6 +223,7 @@ async function confirm(
   const routeId = ROUTES.find((r) => r.sendCurrency === v.send_currency && r.receiveCurrency === v.receive_currency)?.id ?? null;
   const comparison = await compare(db, v, providerId, routeId, mid?.rate ?? null);
   const tax = taxCheck(v, mid?.rate ?? null);
+  const cost = mid ? receiptCost(v, mid.rate) : null;
 
   await db.from('receipt_fields').delete().eq('receipt_id', request.id);
   const { error } = await db.from('receipt_fields').insert(fieldRows(request.id, fields));
@@ -229,6 +238,9 @@ async function confirm(
     gap_currency: comparison.gap?.gapCurrency ?? null,
     tax_expected: tax.expected,
     tax_found: tax.found,
+    // For the observatory (D96): the receipt's cost at the day's mid-market rate.
+    total_cost_pct: cost ? Math.round(cost.totalCostPct * 100) / 100 : null,
+    markup_pct: cost ? Math.round(cost.markupPct * 100) / 100 : null,
   });
 
   return {
@@ -242,6 +254,7 @@ async function confirm(
     route_id: routeId,
     mid,
     comparison,
+    disclosures_missing: (receipt.disclosures_missing ?? []) as ConfirmResponse['disclosures_missing'],
   };
 }
 

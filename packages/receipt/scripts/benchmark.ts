@@ -20,6 +20,7 @@ import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 
 import { formatResults, MODES, showsWord, summarize, type Mode, type ReceiptRun } from '../src/benchmark.ts'
+import { checkDisclosures } from '../src/disclosures.ts'
 import { scoreFields, valuesOf } from '../src/harness.ts'
 import { DEFAULT_MODEL, openRouterClient } from '../src/model.ts'
 import { loadFixtures, type Fixture } from '../src/node/fixtures.ts'
@@ -158,6 +159,21 @@ for (const mode of modes) {
   summaries.push(summarize(mode, await readAll(mode)))
 }
 
+// The disclosure check against each receipt's listed disclosures (synthetic ones list them).
+const TEXT_ITEMS = ['date_available', 'error_rights', 'cancellation', 'provider_contact', 'cfpb_contact'] as const
+const byItem: Record<string, { right: number; total: number }> = Object.fromEntries(TEXT_ITEMS.map((i) => [i, { right: 0, total: 0 }]))
+let disclosureReceipts = 0
+for (const f of receipts) {
+  if (!f.disclosures) continue
+  disclosureReceipts++
+  const results = checkDisclosures(pages.get(f.id)!, f.expected)
+  for (const item of TEXT_ITEMS) {
+    const found = results.find((d) => d.item === item)?.found ?? false
+    byItem[item].total++
+    if (found === f.disclosures.includes(item)) byItem[item].right++
+  }
+}
+
 const md = formatResults({
   date: today,
   sets: { real: real.length, synthetic: synthetic.length },
@@ -166,6 +182,7 @@ const md = formatResults({
   summaries,
   redaction: { receipts: receipts.length, leaks, lost },
   skipped,
+  disclosures: { receipts: disclosureReceipts, byItem },
 })
 writeFileSync(OUT, md)
 console.log(md)

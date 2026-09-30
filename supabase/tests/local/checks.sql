@@ -276,4 +276,44 @@ select pg_temp.expect($$insert into public.receipt_intake (phone_hash, phone_sea
   '42501', 'anon: can''t queue a photo');
 reset role;
 
+
+-- ---------------------------------------------------------------------------------------
+-- The observatory (20260930030000_receipt_observatory.sql): totals only, research consent
+-- only, no group under five
+-- ---------------------------------------------------------------------------------------
+set role anon;
+select pg_temp.ok((select public.receipt_observatory() ->> 'receipts' = '0')
+  and (select public.receipt_observatory() -> 'groups' = '[]'::jsonb),
+  'observatory: receipts without research consent never count');
+reset role;
+
+set role service_role;
+insert into public.receipts (id, channel, provider_id, route_id, redaction_status, research_consent, disclosures_missing)
+select ('70000000-0000-4000-8000-00000000000' || i)::uuid, 'app', 'western-union', 'us-mx', 'device', true,
+       case when i <= 2 then array['cfpb_contact'] else '{}'::text[] end
+  from generate_series(1, 5) i;
+insert into public.receipts (id, channel, provider_id, route_id, redaction_status, research_consent)
+  values ('70000000-0000-4000-8000-000000000009', 'app', 'ria', 'us-mx', 'device', true);
+insert into public.receipt_comparisons (receipt_id, receipt_rate, gap_amount, gap_currency, tax_expected, tax_found, total_cost_pct, markup_pct)
+select ('70000000-0000-4000-8000-00000000000' || i)::uuid, 17.2, case when i = 1 then null else i - 3 end, 'USD',
+       5, case when i = 5 then null else 5 end, i, i / 2.0
+  from generate_series(1, 5) i;
+insert into public.receipt_comparisons (receipt_id, receipt_rate, total_cost_pct, markup_pct)
+  values ('70000000-0000-4000-8000-000000000009', 17.1, 9, 4);
+select pg_temp.expect($$update public.receipts set disclosures_missing = array['sender_name'] where id = '70000000-0000-4000-8000-000000000001'$$,
+  '23514', 'observatory: only the listed disclosure items');
+reset role;
+
+set role anon;
+select pg_temp.ok((select public.receipt_observatory() ->> 'receipts' = '6'), 'observatory: counts every consented, checked receipt');
+select pg_temp.ok((select jsonb_array_length(public.receipt_observatory() -> 'groups') = 1), 'observatory: a group under five is left out');
+select pg_temp.ok((select public.receipt_observatory() -> 'groups' -> 0 @>
+  '{"provider_id":"western-union","route_id":"us-mx","receipts":5,"median_total_cost_pct":3,"median_markup_pct":1.5,"compared":4,"paid_more_than_advertised":2}'::jsonb),
+  'observatory: medians and counts per provider and route');
+select pg_temp.ok((select public.receipt_observatory() -> 'tax' = '{"taxed":5,"matches":4,"not_found":1}'::jsonb), 'observatory: the tax totals');
+select pg_temp.ok((select public.receipt_observatory() -> 'disclosures_missing' = '{"cfpb_contact":2}'::jsonb), 'observatory: missing disclosures, counted');
+select pg_temp.ok((select public.receipt_result('70000000-0000-4000-8000-000000000001') -> 'disclosures_missing' = '["cfpb_contact"]'::jsonb),
+  'receipts: the result carries the missing disclosures');
+reset role;
+
 \echo 'all local checks passed'

@@ -43,6 +43,7 @@ const result = (over: Partial<ConfirmResponse> = {}): ConfirmResponse => ({
     gap: { advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.83, gapCurrency: 'USD' },
     reason: null,
   },
+  disclosures_missing: [],
   ...over,
 })
 
@@ -109,6 +110,12 @@ describe('the result', () => {
     expect(r).toContain('Mid-market rate 17.7, from Frankfurter, 9/28/2026.')
     expect(r).not.toContain('Not confirmed')
     expect(r.split('\n').length).toBeLessThanOrEqual(9)
+  })
+
+  it('names disclosures not found, without blaming anyone', () => {
+    const r = formatReceiptResult('en', result({ disclosures_missing: ['error_rights', 'cfpb_contact'] }), [])
+    expect(r).toContain('Not found on this receipt: your rights if there is an error, the CFPB’s contact details. The photo may have cut it off.')
+    expect(formatReceiptResult('hi', result({ disclosures_missing: ['cfpb_contact'] }), [])).toContain('रसीद पर नहीं मिला')
   })
 
   it('says plainly when nothing could be compared, and names unconfirmed values', () => {

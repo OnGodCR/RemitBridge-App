@@ -88,6 +88,7 @@ function Navigator() {
         <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
         <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
         <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
+        <Stack.Screen name="observatory" options={{ ...pushed, title: titles.observatory }} />
         <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />
         <Stack.Screen name="routes" options={{ ...pushed, title: titles.routeBoard }} />
         <Stack.Screen name="request-route" options={{ ...pushed, title: titles.askForRoute }} />

@@ -39,8 +39,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   Function; the Scan a receipt screen with confirmation and result; the funding method and
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
-  and `supabase/tests/local_migrations.sh` (69 checks, also in CI). The live smoke test has
-  51 checks; the 3 for the WhatsApp photo queue need its migration.
+  and `supabase/tests/local_migrations.sh` (76 checks, also in CI). The live smoke test has
+  52 checks; the 4 for the photo queue and the observatory need their migrations.
 - The model fallback is Qwen3 VL 32B through OpenRouter (D92), no longer Claude.
 - Phase 4 done (2026-09-30): the accuracy benchmark in `benchmark/` (D85, D93). 60 synthetic
   receipts, drawn in Chromium and read back with tesseract.js; `npm run benchmark -w
@@ -55,6 +55,11 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   it on: push the migration; `supabase secrets set RECEIPT_INTAKE_SECRET=... GITHUB_DISPATCH_TOKEN=... WHATSAPP_RECEIPTS=on`;
   the same `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` as GitHub Actions secrets;
   redeploy `whatsapp` and `scan-receipt`.
+- Phase 6 built (2026-09-30): the disclosure check (D95), on the result screen and in the
+  WhatsApp reply, scored in the benchmark; and the receipt observatory (D96), Learn → "What
+  people paid", from `receipt_observatory()`. Migration `20260930030000_receipt_observatory.sql`,
+  not pushed. All six CAC phases are built; Angad's extractors and the live setup are what's
+  left.
 - Angad's next steps: review, write the extractors, set `OPENROUTER_API_KEY`
   (`supabase secrets set OPENROUTER_API_KEY=...` in his own terminal), make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).

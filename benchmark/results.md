@@ -38,6 +38,18 @@ enough real receipts to score.
 | delivery_method | 0.0% |
 | **All fields** | 0.0% |
 
+## Disclosure check
+
+On 60 receipts with their disclosures listed: how often the check said rightly whether each item is there. The synthetic receipts use wording the check looks for, so on them this mostly tests OCR, not the check.
+
+| Item | Right |
+|---|---:|
+| date_available | 60 of 60 (100.0%) |
+| error_rights | 60 of 60 (100.0%) |
+| cancellation | 60 of 60 (100.0%) |
+| provider_contact | 60 of 60 (100.0%) |
+| cfpb_contact | 60 of 60 (100.0%) |
+
 ## Redaction
 
 On 60 receipts: 0 personal details left readable, 0 values hidden by mistake.

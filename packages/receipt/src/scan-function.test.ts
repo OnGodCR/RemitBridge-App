@@ -295,6 +295,19 @@ describe('confirming', () => {
     expect(tables.receipt_comparisons[0]).toMatchObject({ receipt_id: scanned.id, matched_quote_id: 77, advertised_rate: 17.3, receipt_rate: 17.2, gap_amount: 2.82, gap_currency: 'USD', tax_expected: 5, tax_found: 5 })
   })
 
+  it('stores the missing disclosures at scan time and the cost for the observatory at confirm', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    // The Western Union fixture has no error-rights notice, provider contact or CFPB line.
+    expect(scanned.disclosures_missing).toEqual(['error_rights', 'provider_contact', 'cfpb_contact'])
+    expect(tables.receipts[0].disclosures_missing).toEqual(scanned.disclosures_missing)
+    const { body } = await confirmCall(scanned.id, {})
+    expect(body.disclosures_missing).toEqual(scanned.disclosures_missing)
+    const c = tables.receipt_comparisons[0]
+    expect(Number(c.total_cost_pct)).toBeGreaterThan(3)
+    expect(Number(c.markup_pct)).toBeCloseTo(((17.7 - 17.2) / 17.7) * 100, 1)
+  })
+
   it('says plainly when no advertised price matches', async () => {
     replies.push(goodAnswer())
     const { body: scanned } = await scan()

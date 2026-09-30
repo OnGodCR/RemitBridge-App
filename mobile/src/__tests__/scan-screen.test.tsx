@@ -54,6 +54,7 @@ const RESULT: ScanResponse = {
   to_confirm: ['amount_received'],
   model: { asked: ['amount_received'], error: null },
   redaction: 'device',
+  disclosures_missing: [],
 };
 
 const CONFIRMED: ConfirmResponse = {
@@ -71,6 +72,7 @@ const CONFIRMED: ConfirmResponse = {
   route_id: 'us-mx',
   mid: { rate: 17.7, date: '2026-09-28', source: 'Frankfurter' },
   comparison: { quote: null, gap: null, reason: 'no_quote' },
+  disclosures_missing: [],
 };
 
 beforeEach(() => {

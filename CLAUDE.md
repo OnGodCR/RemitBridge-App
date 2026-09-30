@@ -51,11 +51,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       speaker reads each one, agrees in writing, and is named with the date in
       `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
       read. Glossary definitions are still English in every language.
-- [ ] **CAC receipt scanner (D72), Phases 4–6.** Phases 1–3 (gap report; data model,
-      redaction, parser harness, model fallback, validation, scan screen; confirmation and
-      result screens, funding method in TrueCost and Compare) done 2026-09-30 on branch
-      `claude/gallant-hopper-51zhhm` (D87), merged to `main` by PR the same day. Phases 4–6
-      under way on the same branch (Angad said go, 2026-09-30). Internal deadline 2026-10-23.
+- [ ] **CAC receipt scanner (D72): Angad's review of Phases 4–6, then the live setup.**
+      All six phases built on `claude/gallant-hopper-51zhhm` (Phases 1–3 merged 2026-09-30;
+      4–6 done the same day: benchmark D93, WhatsApp photos D94, disclosure check D95,
+      observatory D96). Two migrations to push: `20260930020000_whatsapp_receipts.sql` and
+      `20260930030000_receipt_observatory.sql`. Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
