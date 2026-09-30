@@ -537,3 +537,51 @@ The Hindi is Claude's and needs Angad's read before launch. To go live Angad nee
 business account and app, a WhatsApp number, a system-user token, five secrets (listed at
 the top of the function), the migrations pushed, the function deployed, and the webhook
 registered in Meta.
+
+## 2026-09-30: accessibility and languages
+
+Angad asked for UI and UX that works for as many people as possible, and for the features
+already discussed. These are the defaults Claude picked on his behalf; each can be changed.
+
+**D69. Five languages, and a translation ships only once a named speaker stands behind
+it.** PRD 5.5. Every word the app shows or reads aloud lives in `mobile/src/i18n/en.ts`,
+and each language is a full copy of it (`es.ts`, `hi.ts`, `tl.ts`, `vi.ts`), checked by
+the type system. The website's rule carries over and is enforced in code: a language is
+offered in a release build only when `i18n/languages.ts` names its reviewer and the date
+they agreed in writing. Until then it's a draft: it shows only in development builds,
+marked Draft, so the reviewer can read it in the app. Today all four are Claude's drafts
+with no reviewer, so a release build offers English alone and shows no language button.
+- The language is the one picked in the app, else the phone's own if the app offers it,
+  else English. Onboarding's first screen has a globe button; Account has a Language
+  section and, in any language but English, a "wrong translation? tell us" link.
+- Register, picked for Angad: Latin American Spanish with "tú", worded to avoid gendered
+  adjectives about the reader; Hindi with आप and the money words people use (फ़ीस,
+  मिड-मार्केट रेट); Filipino in the "mo/ka" register of Filipino money apps, keeping
+  English where people say it (fee, bank, e-wallet, rate); Vietnamese with "bạn".
+- Hindi uses Hind, a Devanagari face drawn to sit with Latin text (PRD 14.5), with
+  taller lines and no negative letter spacing. Every piece of text declares its language,
+  so VoiceOver reads it in the right voice.
+- Money keeps US formatting ($1,234.56) in every language, to match provider sites and
+  the bot; dates use the language's own format.
+- Stays English: the admin screens and metrics, RemitBench's research write-up (which
+  says so in the reader's language), and glossary definitions until translated. The
+  English term shows under a translated one, since that's the word on receipts.
+- To publish a language: a fluent speaker reads it in a development build, agrees in
+  writing, and their name and the date go in `languages.ts`. Hindi first (PRD order).
+
+**D70. The accessibility bar.** Checked in the simulator, not just written:
+- Contrast: every text color passes WCAG AA (4.5:1) on the backgrounds it sits on, light
+  and dark. Amber stays for bars and dots; text uses a darker amber token.
+- Text size: the app works at the largest iOS accessibility size. Reading text scales in
+  full; big figures and titles scale less (2x under 20pt, 1.6x from 20pt, 1.4x from 28pt)
+  so they don't break mid-word. From 135% text, side-by-side fields and choices stack
+  instead of truncating. Checked in English, Hindi and Vietnamese.
+- Touch: 44pt minimum targets, and no action that needs press-and-hold (saved items
+  have a visible delete button).
+- Screen readers: headings are marked, outcomes are announced (saved, deleted, asked,
+  errors), the rate chart is adjustable (swipe up and down to hear each day), and iOS
+  Bold Text thickens the bundled font too.
+- Slow or no connection: Compare keeps the last prices it loaded for 48 hours and shows
+  them under "You're offline" with when they were loaded, rather than an error.
+- Nothing fails silently: a mail link on a phone with no mail app shows the address to
+  write to instead of doing nothing.
