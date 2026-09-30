@@ -1,12 +1,14 @@
 import { computeTransferCost } from '@remitbridge/formula';
+import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { CurrencySelect } from '@/components/select-field';
-import { Answer, Breakdown, Field, Fields, Section, Slider, SourceNote, ToolScreen } from '@/components/tool';
+import { Answer, Breakdown, cleanNumber, Field, Fields, Section, Slider, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { CURRENCIES } from '@/lib/currencies';
 import { money, pct } from '@/lib/format';
 import { formatDay, useMidRate } from '@/lib/fx';
 import { track } from '@/lib/track';
@@ -20,10 +22,16 @@ import { track } from '@/lib/track';
 
 export default function FairRateScreen() {
   const t = useTheme();
-  const [amount, setAmount] = useState('200');
-  const [from, setFrom] = useState('USD');
-  const [to, setTo] = useState('MXN');
-  const [markup, setMarkup] = useState(3);
+  // Opened from a quote's detail, it starts on that quote (PRD 5.7: "linked from quote
+  // detail"); otherwise on the website's example.
+  const p = useLocalSearchParams<{ amount?: string; from?: string; to?: string; markup?: string }>();
+  const [amount, setAmount] = useState(() => cleanNumber(p.amount ?? '') || '200');
+  const [from, setFrom] = useState(() => knownCurrency(p.from) ?? 'USD');
+  const [to, setTo] = useState(() => knownCurrency(p.to) ?? 'MXN');
+  const [markup, setMarkup] = useState(() => {
+    const m = Number(p.markup);
+    return Number.isFinite(m) && m >= 0 && m <= 10 ? m : 3;
+  });
   const fx = useMidRate(from, to);
 
   useEffect(() => track('tool_opened', { tool: 'fair_rate' }), []);
@@ -105,3 +113,7 @@ const styles = StyleSheet.create({
   sliderCard: { borderRadius: 12, borderWidth: StyleSheet.hairlineWidth, padding: Spacing.three, gap: Spacing.two },
   sliderHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
 });
+
+function knownCurrency(code?: string): string | undefined {
+  return CURRENCIES.find((c) => c.code === code)?.code;
+}

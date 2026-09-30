@@ -135,7 +135,7 @@ export default function SignInOptions() {
 
 /** Why sign in (DECISIONS.md D62). Each line is something the app actually does (D19). */
 const BENEFITS: { title: string; body: string }[] = [
-  { title: 'Your checks, saved', body: 'Receipts you check with TrueCost stay on your account.' },
+  { title: 'Your comparisons, saved', body: 'Reopen a route and amount in one tap, or a receipt you checked.' },
   { title: 'Private, and yours to delete', body: 'Nobody else can read them. One tap in Account removes everything.' },
 ];
 

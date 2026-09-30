@@ -174,7 +174,54 @@ export function Button({
   );
 }
 
+/**
+ * The website's text link: green, semibold, with its arrow ("See the research →"). For a
+ * next step inside a notice or under a form, where a full button would shout.
+ */
+export function TextLink({
+  label,
+  onPress,
+  external,
+  icon,
+  arrow = true,
+  busy,
+}: {
+  label: string;
+  onPress: () => void;
+  external?: boolean;
+  /** A symbol before the label, for actions (save) rather than places. */
+  icon?: SFSymbol;
+  arrow?: boolean;
+  busy?: boolean;
+}) {
+  const t = useTheme();
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={busy}
+      accessibilityRole={external ? 'link' : 'button'}
+      accessibilityState={{ busy }}
+      hitSlop={6}
+      style={({ pressed }) => [styles.link, { opacity: pressed || busy ? 0.6 : 1 }]}>
+      {icon ? <SymbolView pointerEvents="none" name={icon} size={15} weight="semibold" tintColor={t.primary} fallback={null} /> : null}
+      <AppText style={[styles.linkLabel, { color: t.primary }]}>{label}</AppText>
+      {arrow ? (
+        <SymbolView
+          pointerEvents="none"
+          name={external ? 'arrow.up.right' : 'arrow.right'}
+          size={14}
+          weight="bold"
+          tintColor={t.primary}
+          fallback={null}
+        />
+      ) : null}
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
+  link: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one + 2, minHeight: MinTapTarget, alignSelf: 'flex-start' },
+  linkLabel: { fontFamily: Fonts.semibold, fontSize: 16 },
   card: {
     borderRadius: Radius.lg,
     borderWidth: StyleSheet.hairlineWidth,

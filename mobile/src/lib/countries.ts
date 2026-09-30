@@ -1,7 +1,7 @@
 /**
- * Countries for the From and To pickers. Only `live` ones can be chosen; the rest show as
- * "Soon" so people can see what's coming (PRD 6.2 and 6.5). A live To country must have a
- * matching route in lib/routes.ts.
+ * Countries for the From and To pickers. Every one can be picked. A pair with a route in
+ * lib/routes.ts shows prices; any other pair shows "not covered yet" with the request form
+ * (PRD 6.7). `live` marks the countries that have a route from the US.
  */
 export interface Country {
   code: string;
@@ -22,7 +22,9 @@ export const SENDING: Country[] = [
   { code: 'AU', name: 'Australia', currency: 'AUD', live: false },
 ];
 
-// PRD 6.1 (live) and 6.2 (Tier 2, next).
+// PRD 6.1 (live), 6.2 (Tier 2, next), 6.3 (Tier 3) and 6.4 (special handling). Only the
+// live ones have prices; picking any other shows "not covered yet" and the request form
+// (PRD 6.7), so the list is also what people can ask for.
 export const RECEIVING: Country[] = [
   { code: 'IN', name: 'India', currency: 'INR', live: true },
   { code: 'MX', name: 'Mexico', currency: 'MXN', live: true },
@@ -38,4 +40,28 @@ export const RECEIVING: Country[] = [
   { code: 'NG', name: 'Nigeria', currency: 'NGN', live: false },
   { code: 'PK', name: 'Pakistan', currency: 'PKR', live: false },
   { code: 'BD', name: 'Bangladesh', currency: 'BDT', live: false },
+  { code: 'KR', name: 'South Korea', currency: 'KRW', live: false },
+  { code: 'UA', name: 'Ukraine', currency: 'UAH', live: false },
+  { code: 'CO', name: 'Colombia', currency: 'COP', live: false },
+  { code: 'EC', name: 'Ecuador', currency: 'USD', live: false },
+  { code: 'PE', name: 'Peru', currency: 'PEN', live: false },
+  { code: 'NI', name: 'Nicaragua', currency: 'NIO', live: false },
+  { code: 'JM', name: 'Jamaica', currency: 'JMD', live: false },
+  { code: 'HT', name: 'Haiti', currency: 'HTG', live: false },
+  { code: 'BR', name: 'Brazil', currency: 'BRL', live: false },
+  { code: 'GH', name: 'Ghana', currency: 'GHS', live: false },
+  { code: 'NP', name: 'Nepal', currency: 'NPR', live: false },
+  { code: 'LK', name: 'Sri Lanka', currency: 'LKR', live: false },
+  { code: 'EG', name: 'Egypt', currency: 'EGP', live: false },
+  { code: 'UG', name: 'Uganda', currency: 'UGX', live: false },
+  { code: 'SO', name: 'Somalia', currency: 'SOS', live: false },
+  { code: 'ER', name: 'Eritrea', currency: 'ERN', live: false },
+  { code: 'CU', name: 'Cuba', currency: 'CUP', live: false },
+  { code: 'AF', name: 'Afghanistan', currency: 'AFN', live: false },
+  { code: 'VE', name: 'Venezuela', currency: 'VES', live: false },
 ];
+
+/** Any country in either list, by code. */
+export function countryName(code: string): string {
+  return [...SENDING, ...RECEIVING].find((c) => c.code === code.toUpperCase())?.name ?? code;
+}

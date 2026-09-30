@@ -1,12 +1,13 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
+import { Arrow } from '@/components/list-row';
 import { AppText, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { checkedAgo, money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
 
-const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
+export const SOURCE_LABEL: Record<LatestQuote['source'], string> = {
   scraper: 'Public calculator',
   api: 'Official API',
   manual: 'Checked by hand',
@@ -21,15 +22,18 @@ export function QuoteCard({
   quote,
   highlight,
   featured,
+  onPress,
 }: {
   quote: ShownQuote;
   highlight?: string;
   /** The top-ranked card: a saturated left edge, the website's mark for "this one counts". */
   featured?: boolean;
+  /** Opens the quote's detail (PRD 14.7 screen 3). */
+  onPress?: () => void;
 }) {
   const t = useTheme();
   const q = quote;
-  return (
+  const card = (
     <Card style={featured ? [styles.featured, { borderLeftColor: t.primary }] : undefined}>
       <View style={styles.header}>
         <AppText variant="heading">{q.provider_name}</AppText>
@@ -53,13 +57,29 @@ export function QuoteCard({
 
       <CostBreakdownBar quote={q} />
 
-      <FreshnessBadge quote={q} />
-      {q.basedOn !== null ? (
-        <AppText variant="small" muted>
-          Estimated from the {money(q.basedOn, q.send_currency).replace('.00', '')} check
-        </AppText>
-      ) : null}
+      <View style={styles.footer}>
+        <View style={styles.flex}>
+          <FreshnessBadge quote={q} />
+          {q.basedOn !== null ? (
+            <AppText variant="small" muted>
+              Estimated from the {money(q.basedOn, q.send_currency).replace('.00', '')} check
+            </AppText>
+          ) : null}
+        </View>
+        {onPress ? <Arrow /> : null}
+      </View>
     </Card>
+  );
+  if (!onPress) return card;
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${q.provider_name}. ${moneySpoken(q.amount_received, q.receive_currency)} arrive, ${q.total_cost_pct.toFixed(1)} percent total cost.${highlight ? ` ${highlight}.` : ''}`}
+      accessibilityHint="Opens the full breakdown"
+      style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}>
+      {card}
+    </Pressable>
   );
 }
 
@@ -126,6 +146,8 @@ export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
 
 const styles = StyleSheet.create({
   featured: { borderLeftWidth: 4 },
+  footer: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  flex: { flex: 1, gap: 2 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   tag: { fontFamily: Fonts.semibold },
   bar: { height: 8, borderRadius: Radius.sm, overflow: 'hidden', flexDirection: 'row', gap: 1 },

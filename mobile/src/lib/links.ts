@@ -8,6 +8,9 @@ export const LINKS = {
   support: `${SITE}/support`,
 } as const;
 
+/** Where people and providers write to us (D22), including "this price looks wrong". */
+export const CONTACT = 'remitbridgesystemlabs@gmail.com';
+
 /** Opens a page in an in-app browser sheet, so people stay in the app. */
 export function openPage(url: string) {
   WebBrowser.openBrowserAsync(url).catch(() => undefined);

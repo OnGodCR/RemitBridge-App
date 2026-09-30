@@ -10,7 +10,6 @@ import { Step } from '@/components/onboarding';
 import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { RECEIVING } from '@/lib/countries';
 import { prefs } from '@/lib/prefs';
 import { currency } from '@/lib/currencies';
 import { ROUTES } from '@/lib/routes';
@@ -22,12 +21,11 @@ import { track } from '@/lib/track';
  * hairline rows, the country in bold, one plain line (the currency the family receives), an
  * arrow. One tap moves on. The delivery methods wait for Compare, where they're a choice.
  *
- * The countries that aren't live yet are a plain line of text, following the site's rule
- * that tags are text and never pills.
+ * Everywhere else is one plain line pointing at the request form on Compare (PRD 6.7),
+ * following the site's rule that tags are text and never pills.
  */
 export default function PickRoute() {
   const t = useTheme();
-  const soon = RECEIVING.filter((c) => !c.live).map((c) => c.short ?? c.name);
 
   const pick = (routeId: string) => {
     prefs.setHomeRoute(routeId);
@@ -70,7 +68,7 @@ export default function PickRoute() {
 
       <Animated.View entering={rise(2)}>
         <AppText variant="small" style={{ color: t.textSecondary }}>
-          Coming next: {soon.join(', ')}.
+          Sending somewhere else? Pick any country on Compare to ask us to add it.
         </AppText>
       </Animated.View>
     </Step>

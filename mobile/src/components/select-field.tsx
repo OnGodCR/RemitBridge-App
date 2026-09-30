@@ -31,6 +31,8 @@ export interface SelectOption {
   /** Right-hand detail in the list, e.g. the currency code. */
   detail: string;
   disabled?: boolean;
+  /** Can be picked, but has no prices: the detail says "Not yet" (PRD 6.7). */
+  uncovered?: boolean;
   search: string[];
 }
 
@@ -157,7 +159,7 @@ export function SelectField({
                   }}
                   accessibilityRole="button"
                   accessibilityState={{ selected, disabled: !!item.disabled }}
-                  accessibilityLabel={`${item.name}${item.disabled ? ', coming soon' : ''}`}
+                  accessibilityLabel={`${item.name}${item.disabled ? ', coming soon' : item.uncovered ? ', not covered yet' : ''}`}
                   style={({ pressed }) => [styles.row, { backgroundColor: pressed ? t.muted : 'transparent' }]}>
                   <FlagSlot code={item.flag} dim={item.disabled} />
                   <AppText
@@ -166,7 +168,7 @@ export function SelectField({
                     {item.name}
                   </AppText>
                   <AppText variant="small" muted>
-                    {item.disabled ? 'Coming soon' : item.detail}
+                    {item.disabled ? 'Coming soon' : item.uncovered ? 'Not yet' : item.detail}
                   </AppText>
                   <View style={styles.check}>
                     {selected ? (
@@ -190,16 +192,23 @@ export function SelectField({
   );
 }
 
-/** Countries for Compare. Countries that aren't live yet are listed but can't be picked. */
+/**
+ * Countries for Compare and route requests. Every country can be picked; `covered` says
+ * which have prices (from the other field's country), and the rest read "Not yet". Picking
+ * one of those shows the request form instead of results (PRD 6.7).
+ */
 export function CountrySelect({
   options,
+  covered,
   ...rest
 }: {
   label: string;
   title: string;
   value: string;
   options: Country[];
+  covered: (code: string) => boolean;
   onChange: (code: string) => void;
+  tone?: 'hero' | 'plain';
 }) {
   return (
     <SelectField
@@ -210,7 +219,7 @@ export function CountrySelect({
         name: c.name,
         short: c.short,
         detail: c.currency,
-        disabled: !c.live,
+        uncovered: !covered(c.code),
         search: [c.name, c.short ?? '', c.code, c.currency],
       }))}
     />

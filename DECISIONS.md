@@ -472,3 +472,37 @@ template. They now follow the website's home-page index: hairline rules above an
 a bold title, one plain line, the green arrow (up-right for pages that open on the website),
 and the group's name as an uppercase eyebrow. No icons and no card. Decided 2026-09-29 under
 Angad's "follow the anti-vibe coding practices" (D62).
+
+**D64. Route requests and the route board (PRD 6.7).** Every country in the pickers can now
+be chosen. A pair we don't check shows "Not covered yet", how many people have asked, and a
+request form: how the money should arrive (optional) and an email to hear back at
+(optional, never pre-filled, since storing it is opt-in). Requests go in `route_requests`,
+which nobody but admins can read. The public route board shows every route with its
+status (live, being built, under review, requested, not feasible) and a count per route
+from `route_request_counts()`, which returns aggregates only and counts each account or
+install once, leaving out internal installs. The same install can't ask for a route twice
+(a unique index). An address is deleted when the launch email goes out (a check makes
+keeping both impossible), or at once if the route is marked not feasible (a trigger).
+Tier 3 and the special-handling countries (PRD 6.3, 6.4) joined the To list, so people can
+ask for them; nine of them have no bundled flag yet and show a plain tile. Sending the
+launch emails is not built yet: it has to exist before any requested route goes live.
+
+**D65. The admin metrics screen reads one database function.** `admin_metrics(p_days)`
+refuses anyone who isn't an admin (42501) and computes every figure on the screen, so each
+is reproducible from raw rows and defined once; the app shows each definition under its
+number, and Export shares them as CSV. Internal installs are those in `internal_installs`
+plus every install ever signed in to an admin account. Savings are worked out in the
+database from published quotes, never trusted from the app: per install, route, amount and
+day compared, the most minus the median amount received among 3+ standing prices, in
+dollars at the mid-market rate. Sessions come from a new `app_opened` event (launch, or a
+return after 30 minutes away); `comparison_run` now also records how many prices came
+back, for the "saw prices" step of the funnel.
+
+**D66. Saved comparisons and the quote detail.** Signed-in people can save a comparison
+(route, amount, delivery method) from Compare; Account lists them, a tap reopens Compare
+on them with today's prices, and pressing and holding deletes one. Signed out, Save
+explains what an account is for and offers sign-in. Tapping a quote opens its detail (PRD
+14.7 screen 3): the breakdown bar, every figure in the total, delivery and payment,
+promotions, source and check time, the provider's last 30 days of published prices for
+the same route and amount, a link to Fair rate with the quote filled in (PRD 5.7), and
+"This price looks wrong", which opens an email with the quote's details filled in.
