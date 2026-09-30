@@ -1,31 +1,27 @@
-/** A stand-in for the Anthropic client: records each request and answers from a script. */
-import type { ModelClient } from '../model.ts'
+/** A stand-in for the OpenRouter client: records each request and answers from a script. */
+import type { ChatRequest, ChatResponse, ModelClient } from '../model.ts'
 
-type Reply = { stop_reason?: string; text: string } | Error
+type Reply = { finish_reason?: string; text: string; refusal?: string } | { error: string } | Error
 
 export function fakeModel(replies: Reply[]) {
-  const requests: Parameters<ModelClient['beta']['messages']['create']>[0][] = []
+  const requests: ChatRequest[] = []
   const client: ModelClient = {
-    beta: {
-      messages: {
-        create: async (params) => {
-          requests.push(params)
-          const reply = replies.shift()
-          if (!reply) throw new Error('fake model: no reply scripted')
-          if (reply instanceof Error) throw reply
-          return {
-            id: 'msg_fake',
-            type: 'message',
-            role: 'assistant',
-            model: params.model,
-            stop_reason: reply.stop_reason ?? 'end_turn',
-            content: [{ type: 'text', text: reply.text }],
-          } as unknown as Awaited<ReturnType<ModelClient['beta']['messages']['create']>>
-        },
-      },
+    complete: async (request) => {
+      requests.push(request)
+      const reply = replies.shift()
+      if (!reply) throw new Error('fake model: no reply scripted')
+      if (reply instanceof Error) throw reply
+      return chatReply(reply)
     },
   }
   return { client, requests }
+}
+
+export function chatReply(reply: Exclude<Reply, Error>): ChatResponse {
+  if ('error' in reply) return { error: { message: reply.error, code: 502 } }
+  return {
+    choices: [{ finish_reason: reply.finish_reason ?? 'stop', message: { content: reply.text, refusal: reply.refusal ?? null } }],
+  }
 }
 
 /** An answer in the schema's shape: { field: { value, confidence, line } }. */

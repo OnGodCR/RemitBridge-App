@@ -34,19 +34,21 @@ test: 26/26 passed on the applied schema; it now has 37 checks, 11 of which need
 new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
-## CAC receipt scanner (branch `claude/gallant-hopper-51zhhm`, 2026-09-30)
+## CAC receipt scanner (2026-09-30)
 
-Built by the cloud session for the Congressional App Challenge (D72–D90), on its own branch
-until Angad merges it (D87). `main` (languages D69, accessibility D70, flags) was merged into
+Built by the cloud session for the Congressional App Challenge (D72–D91). Phases 1–3 were
+merged into `main` through PR #1; later phases go the same way (D87). `main` (languages D69, accessibility D70, flags) was merged into
 the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 - Phases 1–3 done: gap report (`docs/cac-gap-report.md`); `packages/receipt` (redaction,
-  parser frame with Angad's 13 `TODO(angad)` extractors, Claude fallback, validation,
+  parser frame with Angad's 13 `TODO(angad)` extractors, model fallback, validation,
   result logic); `supabase/migrations/20260930000000_receipts.sql`; the `scan-receipt` Edge
   Function; the Scan a receipt screen with confirmation and result; the funding method and
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
   and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
-- Angad's next steps: review, write the extractors, set `ANTHROPIC_API_KEY`, push the receipts
+- The model fallback is Qwen3 VL 32B through OpenRouter (D91), no longer Claude.
+- Angad's next steps: review, write the extractors, set `OPENROUTER_API_KEY`
+  (`supabase secrets set OPENROUTER_API_KEY=...` in his own terminal), push the receipts
   migration with the others, make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).
 - Known limit: `scan-receipt` runs without JWT verification (scanning works signed out); the

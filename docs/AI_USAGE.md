@@ -307,3 +307,31 @@ its theme tokens, and the branch's language setting on Account.
   reference in code and docs (24 files). D71 was left to the other session.
 - `CLAUDE.md`, `HANDOFF.md`: short CAC additions on top of `main`'s text.
 - `docs/cac-gap-report.md`: one em dash replaced (house rule).
+
+## 2026-09-30: switching the model fallback to Qwen through OpenRouter
+
+**What Angad asked:** use a cheaper Chinese model through OpenRouter instead of Anthropic,
+putting cost first. **What Claude did:** chose Qwen3 VL 32B Instruct (D91) and rewrote the
+model client. Angad chose the provider and the priority; the model choice and the code are
+Claude's.
+
+**Changed:**
+- `packages/receipt/src/model.ts`: the request is now OpenRouter's chat completions shape
+  (system and user messages, the photo as a data URL, `response_format` with a strict JSON
+  schema, `provider` routing that asks for hosts that keep nothing and honor every
+  parameter, optional fallback models). New `openRouterClient()` over plain `fetch`,
+  `replyJson()` (accepts one Markdown fence), and a `failed` ModelError reason. The date
+  schema uses a description in place of `format: "date"`.
+- `packages/receipt/src/pipeline.ts`: passes the fallback models through.
+- `packages/receipt/src/test/fake-model.ts`: fakes the new client. `fake-anthropic.ts`
+  deleted.
+- `packages/receipt/src/model.test.ts`, `pipeline.test.ts`, `scan-function.test.ts`: tests for
+  the new request, the client, fences, refusals, errors, `RECEIPT_MODEL_FALLBACKS`, and
+  reading with the rules alone when OpenRouter fails. 158 receipt tests pass.
+- `packages/receipt/package.json`, `vitest.config.ts`, `package-lock.json`: the Anthropic SDK
+  removed.
+- `supabase/functions/scan-receipt/index.ts`: reads `OPENROUTER_API_KEY`,
+  `RECEIPT_MODEL_FALLBACKS`; cap default 2,000. `supabase/functions/scan-receipt/deno.json`
+  deleted (it only mapped the SDK).
+- `site/privacy.html`: OpenRouter and Qwen replace Anthropic as the processor.
+- `DECISIONS.md` (D91, and a note on D79), `README.md`, `HANDOFF.md`, `CLAUDE.md`.

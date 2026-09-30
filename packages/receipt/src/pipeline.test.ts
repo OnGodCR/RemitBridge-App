@@ -64,7 +64,7 @@ describe('readReceipt', () => {
   })
 
   it('carries on without the model when it fails', async () => {
-    const { client } = fakeModel([{ stop_reason: 'refusal', text: '' }])
+    const { client } = fakeModel([{ refusal: 'no', text: '' }])
     const r = await readReceipt({ page, today: TODAY, model: { client }, extractors: rules })
     expect(r.modelError).toBe('refusal')
     expect(r.fields.amount_sent?.value).toBe(500)

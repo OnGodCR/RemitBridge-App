@@ -1,7 +1,7 @@
 /**
  * The scan-receipt Edge Function itself (supabase/functions/scan-receipt), run under
- * vitest: Deno's globals stubbed, supabase-js and the Anthropic SDK swapped for in-memory
- * fakes (vitest.config.ts), Frankfurter's answer stubbed. Checks what the package tests
+ * vitest: Deno's globals stubbed, supabase-js swapped for an in-memory fake
+ * (vitest.config.ts), and fetch stubbed to answer for Frankfurter and OpenRouter. Checks what the package tests
  * can't: the server's second redaction, what's stored and what isn't, consent, the monthly
  * cap, and forgetting.
  */
@@ -9,13 +9,17 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import type { ConfirmResponse, ScanResponse } from './api.ts'
 import { loadFixtures } from './node/fixtures.ts'
 import { detectPii, redactPage } from './redact.ts'
-import { keys, replies, requests } from './test/fake-anthropic.ts'
-import { answer } from './test/fake-model.ts'
+import { OPENROUTER_URL, type ChatRequest } from './model.ts'
+import { answer, chatReply } from './test/fake-model.ts'
 import { reset, rpcs, storage, tables } from './test/fake-supabase.ts'
 
 const env: Record<string, string | undefined> = {}
 let handler: (req: Request) => Promise<Response>
 const fx: string[] = []
+/** What OpenRouter was sent, the replies it gives, and the keys it was called with. */
+const requests: ChatRequest[] = []
+const replies: string[] = []
+const keys: string[] = []
 
 const wu = loadFixtures().find((f) => f.id === 'western-union-cash-usd-mxn')!
 const redacted = redactPage(wu.page, detectPii(wu.page))
@@ -33,7 +37,14 @@ beforeAll(async () => {
       handler = h
     },
   })
-  vi.stubGlobal('fetch', async (url: string) => {
+  vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
+    if (String(url) === OPENROUTER_URL) {
+      requests.push(JSON.parse(String(init?.body)) as ChatRequest)
+      keys.push(String((init?.headers as Record<string, string>).Authorization).replace('Bearer ', ''))
+      const text = replies.shift()
+      if (text === undefined) return new Response('{"error":{"message":"no reply scripted"}}', { status: 500 })
+      return new Response(JSON.stringify(chatReply({ text })), { status: 200 })
+    }
     fx.push(String(url))
     return new Response(JSON.stringify([{ date: '2026-09-28', base: 'USD', quote: 'MXN', rate: 17.7 }]), { status: 200 })
   })
@@ -51,7 +62,8 @@ beforeEach(() => {
   Object.assign(env, {
     SUPABASE_URL: 'https://example.supabase.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-key',
-    ANTHROPIC_API_KEY: 'test-key',
+    OPENROUTER_API_KEY: 'test-key',
+    RECEIPT_MODEL_FALLBACKS: undefined,
     RECEIPT_MODEL: undefined,
     RECEIPT_MODEL_MONTHLY_CAP: undefined,
   })
@@ -118,7 +130,7 @@ describe('a scan', () => {
   })
 
   it('reads with the rules alone when no key is set', async () => {
-    env.ANTHROPIC_API_KEY = undefined
+    env.OPENROUTER_API_KEY = undefined
     const { body } = await scan()
     expect(requests).toHaveLength(0)
     expect(body.model).toEqual({ asked: [], error: null })
@@ -126,11 +138,28 @@ describe('a scan', () => {
     expect(tables.receipts).toHaveLength(1)
   })
 
-  it('uses RECEIPT_MODEL when set', async () => {
-    env.RECEIPT_MODEL = 'claude-sonnet-5-5'
+  it('uses RECEIPT_MODEL and RECEIPT_MODEL_FALLBACKS when set', async () => {
+    env.RECEIPT_MODEL = 'qwen/qwen3.5-397b-a17b'
+    env.RECEIPT_MODEL_FALLBACKS = ' qwen/qwen3-vl-32b-instruct , '
     replies.push(goodAnswer())
     await scan()
-    expect(requests[0].model).toBe('claude-sonnet-5-5')
+    expect(requests[0].model).toBe('qwen/qwen3.5-397b-a17b')
+    expect(requests[0].models).toEqual(['qwen/qwen3.5-397b-a17b', 'qwen/qwen3-vl-32b-instruct'])
+  })
+
+  it('asks OpenRouter only for providers that enforce the schema and keep nothing', async () => {
+    replies.push(goodAnswer())
+    await scan()
+    expect(requests[0].model).toBe('qwen/qwen3-vl-32b-instruct')
+    expect(requests[0].provider).toEqual({ require_parameters: true, data_collection: 'deny' })
+    expect(requests[0].response_format.json_schema.strict).toBe(true)
+  })
+
+  it('reads with the rules alone when OpenRouter fails', async () => {
+    const { status, body } = await scan()
+    expect(status).toBe(200)
+    expect(body.model.error).toBe('unavailable')
+    expect(tables.receipts).toHaveLength(1)
   })
 })
 
