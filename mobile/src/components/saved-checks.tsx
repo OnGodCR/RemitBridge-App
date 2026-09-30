@@ -1,10 +1,10 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 
-import { ListGroup } from '@/components/list-row';
+import { ListGroup, ListItem } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
-import { MinTapTarget, Spacing } from '@/constants/theme';
+import { Fonts } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { money, pct } from '@/lib/format';
 import { formatDay } from '@/lib/fx';
@@ -41,31 +41,25 @@ export function SavedChecks() {
   if (checks.length === 0) {
     return (
       <ListGroup title="Your checks">
-        <View style={styles.empty}>
+        <ListItem style={styles.empty}>
           <AppText muted>Receipts you check with TrueCost and save show up here.</AppText>
           <Button label="Check a receipt" variant="secondary" onPress={() => router.push('/true-cost')} />
-        </View>
+        </ListItem>
       </ListGroup>
     );
   }
 
   return (
     <ListGroup title="Your checks">
-      {checks.map((c, i) => {
+      {checks.map((c) => {
         const cost = costOf(c);
         return (
-          <Pressable
+          <ListItem
             key={c.id}
             onPress={() => confirmDelete(c)}
-            accessibilityRole="button"
-            accessibilityHint="Offers to delete this check"
-            style={({ pressed }) => [
-              styles.row,
-              i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border },
-              { backgroundColor: pressed ? t.muted : 'transparent' },
-            ]}>
+            accessibilityHint="Offers to delete this check">
             <View style={styles.text}>
-              <AppText variant="label" style={styles.title}>
+              <AppText style={[styles.title, { color: t.text }]}>
                 {c.provider_name} · {money(c.sent, c.send_currency)} to {c.receive_currency}
               </AppText>
               <AppText variant="small" muted>
@@ -74,7 +68,7 @@ export function SavedChecks() {
             </View>
             {cost ? (
               <View style={styles.cost}>
-                <AppText variant="label" style={{ color: t.moneyMarkup }}>
+                <AppText style={[styles.title, { color: t.moneyMarkup }]}>
                   {money(cost.totalCost, c.send_currency)}
                 </AppText>
                 <AppText variant="small" muted>
@@ -82,7 +76,7 @@ export function SavedChecks() {
                 </AppText>
               </View>
             ) : null}
-          </Pressable>
+          </ListItem>
         );
       })}
     </ListGroup>
@@ -90,16 +84,8 @@ export function SavedChecks() {
 }
 
 const styles = StyleSheet.create({
-  empty: { padding: Spacing.three, gap: Spacing.three },
-  row: {
-    minHeight: MinTapTarget + 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
-  },
+  empty: { flexDirection: 'column', alignItems: 'stretch' },
   text: { flex: 1, gap: 2 },
-  title: { fontSize: 15 },
+  title: { fontFamily: Fonts.bold, fontSize: 16, lineHeight: 21 },
   cost: { alignItems: 'flex-end', gap: 2 },
 });

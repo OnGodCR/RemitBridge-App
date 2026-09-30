@@ -13,20 +13,18 @@ import { useTheme } from '@/hooks/use-theme';
  */
 const GROUPS: {
   title: string;
-  tools: { href: Href; icon: Parameters<typeof ListRow>[0]['icon']; title: string; subtitle: string }[];
+  tools: { href: Href; title: string; subtitle: string }[];
 }[] = [
   {
     title: 'Before you send',
     tools: [
       {
         href: '/fair-rate',
-        icon: 'scalemass',
         title: 'Fair rate',
         subtitle: 'What the mid-market rate would give you',
       },
       {
         href: '/scam-check',
-        icon: 'exclamationmark.shield',
         title: 'Scam check',
         subtitle: 'Eight questions before you send to a stranger',
       },
@@ -37,13 +35,11 @@ const GROUPS: {
     tools: [
       {
         href: '/true-cost',
-        icon: 'doc.text.magnifyingglass',
         title: 'TrueCost',
         subtitle: 'Check a receipt for the cost you didn’t see',
       },
       {
         href: '/yearly-cost',
-        icon: 'calendar',
         title: 'Yearly cost',
         subtitle: 'What a year of sending adds up to',
       },
@@ -54,7 +50,6 @@ const GROUPS: {
     tools: [
       {
         href: '/rate-history',
-        icon: 'chart.xyaxis.line',
         title: 'Rate history',
         subtitle: 'The mid-market rate, day by day',
       },
@@ -74,11 +69,9 @@ export default function ToolsScreen() {
         <View style={[styles.body, { backgroundColor: t.background }]}>
           {GROUPS.map((g) => (
             <ListGroup key={g.title} title={g.title}>
-              {g.tools.map((tool, i) => (
+              {g.tools.map((tool) => (
                 <ListRow
                   key={tool.title}
-                  first={i === 0}
-                  icon={tool.icon}
                   title={tool.title}
                   subtitle={tool.subtitle}
                   onPress={() => router.push(tool.href)}
@@ -95,5 +88,5 @@ export default function ToolsScreen() {
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
-  body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.four, paddingBottom: Spacing.six },
+  body: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six },
 });
