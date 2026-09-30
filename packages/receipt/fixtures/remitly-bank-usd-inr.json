@@ -1,0 +1,52 @@
+{
+  "id": "remitly-bank-usd-inr",
+  "description": "Bank-funded (no tax line), UPI delivery, labels that aren't Reg E's exact words, a rupee sign.",
+  "source": "synthetic",
+  "lines": [
+    "Remitly",
+    "Transfer receipt",
+    "Sent on Sep 27, 2026",
+    "From: Arjun Mehta",
+    "To: Priya Mehta",
+    "UPI ID: priya.m@okaxis",
+    "Paid with: Bank Account (ACH) ending 6613",
+    "Delivery: UPI",
+    "Amount sent 1,000.00 USD",
+    "Fee 0.00 USD",
+    "Total paid 1,000.00 USD",
+    "Exchange rate 1 USD = 88.1500 INR",
+    "Recipient gets ₹88,150.00",
+    "Reference number R4839201756",
+    "Questions? Call 1-888-736-4859"
+  ],
+  "expected": {
+    "provider": "Remitly",
+    "send_currency": "USD",
+    "receive_currency": "INR",
+    "amount_sent": 1000,
+    "fee": 0,
+    "total_paid": 1000,
+    "exchange_rate": 88.15,
+    "amount_received": 88150,
+    "transfer_date": "2026-09-27",
+    "funding_method": "bank_account",
+    "delivery_method": "upi"
+  },
+  "pii": [
+    "Arjun",
+    "Priya",
+    "Mehta",
+    "priya.m@okaxis",
+    "6613",
+    "R4839201756"
+  ],
+  "keep": [
+    "Remitly",
+    "Sep 27, 2026",
+    "1,000.00",
+    "0.00",
+    "88.1500",
+    "₹88,150.00",
+    "UPI"
+  ]
+}

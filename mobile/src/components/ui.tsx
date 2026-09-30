@@ -12,7 +12,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { DevanagariFonts, Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 type Variant = 'title' | 'heading' | 'body' | 'label' | 'small' | 'figure';
@@ -34,6 +34,15 @@ const variants: Record<Variant, TextStyle> = {
   },
 };
 
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+/** Whether any string in the children is written in Devanagari (Hindi). */
+export function hasDevanagari(node: ReactNode): boolean {
+  if (typeof node === 'string') return DEVANAGARI.test(node);
+  if (Array.isArray(node)) return node.some(hasDevanagari);
+  return false;
+}
+
 export function AppText({
   variant = 'body',
   muted,
@@ -41,10 +50,18 @@ export function AppText({
   ...rest
 }: TextProps & { variant?: Variant; muted?: boolean }) {
   const t = useTheme();
+  // Hindi gets Noto Sans Devanagari at the same weight, with room for its taller marks.
+  const base = variants[variant];
+  const hindi = hasDevanagari(rest.children)
+    ? {
+        fontFamily: DevanagariFonts[(StyleSheet.flatten(style)?.fontFamily ?? base.fontFamily) as keyof typeof DevanagariFonts] ?? DevanagariFonts[Fonts.regular],
+        lineHeight: base.lineHeight ? Math.round(base.lineHeight * 1.3) : undefined,
+      }
+    : null;
   return (
     <Text
       {...rest}
-      style={[variants[variant], { color: muted ? t.textSecondary : t.text }, style]}
+      style={[base, { color: muted ? t.textSecondary : t.text }, style, hindi]}
     />
   );
 }

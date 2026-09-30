@@ -6,6 +6,13 @@ import {
   PlusJakartaSans_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/plus-jakarta-sans';
+import {
+  NotoSansDevanagari_400Regular,
+  NotoSansDevanagari_500Medium,
+  NotoSansDevanagari_600SemiBold,
+  NotoSansDevanagari_700Bold,
+  NotoSansDevanagari_800ExtraBold,
+} from '@expo-google-fonts/noto-sans-devanagari';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
@@ -14,6 +21,7 @@ import { AppState } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { stackOptions } from '@/components/stack-options';
 import { useTheme } from '@/hooks/use-theme';
+import { stringsFor, useLanguage } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { track } from '@/lib/track';
@@ -28,6 +36,12 @@ export default function RootLayout() {
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
     PlusJakartaSans_800ExtraBold,
+    // Hindi (D72): AppText switches to these for Devanagari text.
+    NotoSansDevanagari_400Regular,
+    NotoSansDevanagari_500Medium,
+    NotoSansDevanagari_600SemiBold,
+    NotoSansDevanagari_700Bold,
+    NotoSansDevanagari_800ExtraBold,
   });
 
   if (!fontsLoaded && !fontError) return null;
@@ -45,6 +59,7 @@ function Navigator() {
   const { ready, onboarded } = useAuth();
   const isAdmin = useIsAdmin();
   const t = useTheme();
+  const language = useLanguage();
   // Pushed screens (tools, learn, admin) sit on this root stack with a native header, so
   // each gets a back button to the tab it came from. Nested stacks gave their first screen
   // no back button, because nothing came before it inside that stack.
@@ -77,6 +92,7 @@ function Navigator() {
         <Stack.Screen name="quote/[id]" options={{ ...pushed, title: 'Quote' }} />
         <Stack.Screen name="routes" options={{ ...pushed, title: 'Route board' }} />
         <Stack.Screen name="request-route" options={{ ...pushed, title: 'Ask for a route' }} />
+        <Stack.Screen name="scan" options={{ ...pushed, title: stringsFor(language).scan.title }} />
       </Stack.Protected>
       {/* Reachable from onboarding and from the Account tab. */}
       <Stack.Screen name="sign-in" />

@@ -76,6 +76,18 @@ export const Fonts = {
   extrabold: 'PlusJakartaSans_800ExtraBold',
 } as const;
 
+/**
+ * Noto Sans Devanagari, for Hindi (PRD 14.5, DECISIONS.md D72), at the same weights. Plus
+ * Jakarta Sans has no Devanagari; AppText switches to these for any text that has it.
+ */
+export const DevanagariFonts: Record<(typeof Fonts)[keyof typeof Fonts], string> = {
+  PlusJakartaSans_400Regular: 'NotoSansDevanagari_400Regular',
+  PlusJakartaSans_500Medium: 'NotoSansDevanagari_500Medium',
+  PlusJakartaSans_600SemiBold: 'NotoSansDevanagari_600SemiBold',
+  PlusJakartaSans_700Bold: 'NotoSansDevanagari_700Bold',
+  PlusJakartaSans_800ExtraBold: 'NotoSansDevanagari_800ExtraBold',
+};
+
 export const Spacing = {
   half: 2,
   one: 4,

@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-30
+**Last updated:** 2026-09-30 (CAC Phase 2)
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -31,12 +31,41 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
 
 ## What changed on 2026-09-30
 
-- Angad is entering the app in the 2026 Congressional App Challenge (internal deadline
-  2026-10-23) with a receipt scanner and the features around it (D69). Phase 1, the gap
-  report, is in `docs/cac-gap-report.md`. **Next: Angad answers its 15 decisions**, then
-  Phase 2 (data model, redaction, parser harness with his TODOs, LLM fallback, validation).
-- `docs/AI_USAGE.md` started: every session's files, for the CAC's AI-use disclosure.
-- This work is on branch `claude/gallant-hopper-51zhhm`, not `main`, until Angad merges it.
+Angad is entering the app in the 2026 Congressional App Challenge (internal deadline
+2026-10-23) with a receipt scanner and the features around it (D69). The work is on branch
+`claude/gallant-hopper-51zhhm` until he merges it (D84).
+
+- **Phase 1:** the gap report, `docs/cac-gap-report.md`. Angad accepted all 15
+  recommendations; they're D70–D84.
+- **Phase 2, built:**
+  - **Formula:** the 1% remittance tax is in the one formula, both languages (D73, D75), with
+    hand-derived test cases in `packages/formula/vectors.tax.json`.
+  - **`packages/receipt`:** the pipeline, pure TypeScript. PII detection and redaction; the
+    rule-based parser's frame, provider templates, fixtures and scoring harness, with the
+    13 field extractors left as `TODO(angad)` stubs (D83); the Claude fallback with a strict
+    JSON schema; merging with an extraction path per field; validation with the formula and
+    the most likely misread value.
+  - **Database:** `20260930000000_receipts.sql` adds `receipts`, `receipt_fields`,
+    `receipt_comparisons`, the monthly model cap, `receipt_result()` and the private
+    `receipt-images` bucket. Checked on a local Postgres (55 checks); the smoke test now has
+    48 checks.
+  - **`scan-receipt` Edge Function:** a second redaction pass, then reading, storing and
+    forgetting, tested under vitest against fakes.
+  - **App:** the Scan a receipt screen (Tools), which covers details on the phone and shows
+    the preview; the English and Hindi string catalogue with a language setting on Account
+    and Noto Sans Devanagari (D72); the app's first test runner (jest-expo, 26 tests);
+    `eas.json` and `expo-dev-client` for development builds.
+- `docs/AI_USAGE.md`: every session's files, for the CAC's AI-use disclosure.
+- The privacy policy has a "Scanning a receipt" section and lists Anthropic (live once merged).
+
+**Known limit:** `scan-receipt` runs without JWT verification (scanning works signed out,
+and the publishable key isn't a JWT). Anyone with the app's public key can call it, so a
+flood could use up the month's model calls (the cap stops the spending, not the calls) and
+add junk rows that expire in 30 days. A per-install rate limit can come later if needed.
+
+**Phase 2 stubs, on purpose:** the parser finds nothing until Angad writes the extractors,
+so today every value comes from the model (or the person). The scan screen ends at a plain
+list of what was read; the confirmation and result screens are Phase 3.
 
 ## What changed on 2026-09-29
 
@@ -50,6 +79,24 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
 
 ## What's next (Angad)
 
+0. **CAC: review Phase 2** (above and in `docs/AI_USAGE.md`), then say go for Phase 3
+   (confirmation screen, result screen, funding method in TrueCost and Compare). Meanwhile:
+   - **Write the extractors** in `packages/receipt/src/extract/fields.ts` (each TODO says its
+     inputs, output and expected behavior). Check them with
+     `npm run parser:report -w @remitbridge/receipt` and `npm test -w @remitbridge/receipt`
+     (`RECEIPT_STRICT=1` to fail on values not read yet).
+   - **Model key:** create an Anthropic API key, set it with
+     `supabase secrets set ANTHROPIC_API_KEY=...` in your own terminal, then
+     `supabase functions deploy scan-receipt --use-api`. Without the key, receipts are read by
+     the rules alone. The cap is 300 model calls a month (`RECEIPT_MODEL_MONTHLY_CAP`).
+   - **Development build**, to scan on your iPhone: `cd mobile && npx eas-cli@latest init`,
+     add the two `EXPO_PUBLIC_*` values as EAS environment variables for `development`, then
+     `npx eas-cli@latest build --profile development --platform ios`. The OCR module
+     (`@infinitered/react-native-mlkit-text-recognition` 5.0.1) hasn't been through a native
+     build yet; this is the first one.
+   - **The tax base (D75):** check in the IRS proposed regulations (Federal Register
+     2026-07085) whether fees count toward the 1%. Claude's sandbox couldn't open them.
+   - **Read the Hindi** in `mobile/src/i18n/hi.ts`, as well as the bot's.
 1. **Push the migrations, then run the smoke test** from the repo root:
    ```bash
    supabase db push
@@ -57,8 +104,9 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
    ```bash
    set -a; source mobile/.env.local; set +a; SUPABASE_URL=$EXPO_PUBLIC_SUPABASE_URL SUPABASE_PUBLISHABLE_KEY=$EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY supabase/tests/rls_smoke.sh
    ```
-   Expect 37 passed. The migrations were checked with a Postgres parser, not against a
-   database, so if one fails, the error names the line.
+   Expect 48 passed. There are three unapplied migrations now (the receipts one too); all
+   were applied to a throwaway Postgres 16 with `supabase/tests/local_migrations.sh`, and its
+   55 checks passed.
 2. **Enter the first prices** with Add a price (Account tab). Compare, the quote detail and
    the bot all start working the moment one is published.
 3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
@@ -108,12 +156,16 @@ new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
 | `packages/formula/` | The one total-cost formula, TypeScript and Python, pinned to `vectors.json` |
+| `packages/receipt/` | The receipt pipeline: redaction, parser frame and templates (extractors are Angad's TODOs), the Claude fallback, merging, validation, fixtures and harness. 135 vitest tests, including the `scan-receipt` function against fakes |
 | `packages/bot/` | The WhatsApp bot's logic: parser, planner, replies in English and Hindi. 58 vitest tests, including the real webhook run against a fake database |
 | `engine/` | Python engine: adapters, publish gate, raw archive, manual adapter, `rb-engine` CLI |
 | `supabase/migrations/` | Schema, RLS and seed. The last two (route requests and metrics; WhatsApp) are **not applied yet** |
-| `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp` (not deployed) |
-| `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 37 checks |
-| `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
+| `supabase/functions/` | `delete-account`, `process-prices` (deployed); `notify-route-launch`, `whatsapp`, `scan-receipt` (not deployed) |
+| `supabase/tests/rls_smoke.sh` | curl-based RLS test with the public key, 48 checks |
+| `supabase/tests/local_migrations.sh` | Every migration on a throwaway Postgres, then `local/checks.sql` (55 checks); also in CI |
+| `mobile/src/app/` | Screens: `onboarding/`, `sign-in/`, `(tabs)/` (Compare, Tools, Learn, Account), the tools, `scan`, `quote/[id]`, `routes`, `request-route`, `admin`, `metrics` |
+| `mobile/src/i18n/` | The English and Hindi string catalogue for new screens (D72) |
+| `mobile/src/__tests__/` | The app's jest tests (catalogue, Hindi font, scan helpers, the scan screen's flow) |
 | `mobile/src/lib/` | Data and helpers. `routes.ts`, `countries.ts` and `format.ts` have no imports on purpose: the bot imports them |
 | `mobile/scripts/` | `make-icons.py` (app icon, splash), `make-onboarding-art.py` (the website's ground and band) |
 | `site/` | app.remitbridgelabs.org on Vercel: landing page, privacy, support, partner links |
@@ -124,6 +176,7 @@ The remote is `https://github.com/OnGodCR/RemitBridge-App.git` (private). Branch
 ### How to run things
 
 - Tests: `npm test -w @remitbridge/formula`, `npm test -w @remitbridge/bot`,
+  `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile`,
   `cd engine && uv run pytest -q`, and `npm run typecheck` for every workspace.
 - App: `cd mobile && npx expo start --lan`, then open `exp://<LAN IP>:8081` in Expo Go
   (`ipconfig getifaddr en0` gives the IP; it changes between networks, and Expo Go then

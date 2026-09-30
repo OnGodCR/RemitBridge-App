@@ -10,7 +10,14 @@ import { useTheme } from '@/hooks/use-theme';
  * The standard "What this does not tell you" block (PRD 14.3 rule 4, 14.6). Every tool
  * gets one. Limitations are part of the method, not an apology.
  */
-export function DoesNotTellYou({ items }: { items: string[] }) {
+export function DoesNotTellYou({
+  items,
+  title = 'What this does not tell you',
+}: {
+  items: readonly string[];
+  /** For translated screens (D72); English by default. */
+  title?: string;
+}) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
   return (
@@ -21,7 +28,7 @@ export function DoesNotTellYou({ items }: { items: string[] }) {
         accessibilityState={{ expanded: open }}
         style={styles.toggle}>
         <AppText variant="heading" style={{ color: t.accentForeground }}>
-          What this does not tell you
+          {title}
         </AppText>
         <SymbolView
           pointerEvents="none"

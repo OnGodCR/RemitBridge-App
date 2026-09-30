@@ -11,6 +11,7 @@ const KEYS = {
   onboarded: 'rb.onboarded',
   homeRoute: 'rb.homeRoute',
   installId: 'rb.installId',
+  language: 'rb.language',
 } as const;
 
 function get(key: string): string | null {
@@ -35,6 +36,9 @@ export const prefs = {
   setOnboarded: (done: boolean) => set(KEYS.onboarded, done ? '1' : null),
   homeRoute: () => get(KEYS.homeRoute),
   setHomeRoute: (routeId: string) => set(KEYS.homeRoute, routeId),
+  /** The language for translated screens (D72): 'en' or 'hi'. */
+  language: () => get(KEYS.language),
+  setLanguage: (language: string) => set(KEYS.language, language),
   installId: (): string => {
     let id = get(KEYS.installId);
     if (!id) {

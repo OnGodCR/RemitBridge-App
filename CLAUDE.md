@@ -50,13 +50,24 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       inline in the screens, so moving them into string files comes first; then Hindi,
       Spanish, Tagalog, Vietnamese and others can be added without code changes. Hindi
       also needs a matched Devanagari font (PRD 14.5). The WhatsApp bot already answers
-      in Hindi (D68), pending Angad's read.
-- [ ] **CAC receipt scanner (D69), Phases 2–6.** Phase 1 (the gap report,
-      `docs/cac-gap-report.md`) done 2026-09-30. Waiting on Angad's answers to its 15
-      decisions before any feature code. Internal deadline 2026-10-23.
-- [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
-      requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
-      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.
+      in Hindi (D68), pending Angad's read. Started 2026-09-30 (D72): `mobile/src/i18n/` holds
+      English and Hindi for the new screens, Noto Sans Devanagari is loaded, and Account has a
+      language setting; the Hindi there needs Angad's read too.
+- [ ] **CAC receipt scanner (D69), Phases 3–6.** Phase 1 (gap report) and Phase 2 (data
+      model, redaction, parser harness, Claude fallback, validation, scan screen) done
+      2026-09-30, on branch `claude/gallant-hopper-51zhhm` (D84). Waiting on Angad's review
+      before Phase 3. Internal deadline 2026-10-23.
+- [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
+      `packages/receipt/src/extract/fields.ts` (D83). Until then, the model reads every value.
+- [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D76).
+- [ ] **First development build on EAS** (`eas init`, the two `EXPO_PUBLIC_*` EAS variables,
+      `eas build --profile development`), then scan a real receipt on the iPhone (D70).
+- [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
+      proposed regulations (D75); the app says it's an assumption until then.
+- [ ] **Push the three new migrations, then run the smoke test (48 checks).** Route
+      requests and metrics (D64, D65), WhatsApp (D68), and receipts (D78). Claude's
+      `supabase db push` was refused as a production deploy, so Angad runs it. Commands in
+      HANDOFF.md. All three pass on a throwaway Postgres (55 checks, 2026-09-30).
 - [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
       detail or the bot until one is published.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
@@ -85,8 +96,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Check on a real phone:** in the simulator, the first tap after a screen
       change was sometimes dropped. It looked like Expo Go's dev overlay, but
       that's unconfirmed.
-- [ ] **Bank connections or receipt scanning** for past transfers. Manual
-      entry only for now (D30).
+- [ ] **Bank connections** for past transfers. Manual entry only (D30); receipt scanning is
+      being built (D69).
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
       Apple's came through on 2026-09-29.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
@@ -219,6 +230,9 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - **Engine:** Python, run by GitHub Actions scheduled workflows. No Redis;
   state lives in Postgres (D13).
 - **WhatsApp:** Meta Cloud API directly, not Twilio.
+- **Receipt scanning:** OCR and redaction on the phone (ML Kit, Skia); the pipeline in
+  `packages/receipt`; Claude through the Anthropic API, only from the `scan-receipt` Edge
+  Function (D70–D76).
 - **Maintainer alerts:** email to Angad.
 - Use whichever language fits each part. Every part must use the same total-cost formula.
 - **Look:** same as the website (D18). The website repo
