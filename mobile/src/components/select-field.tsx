@@ -8,6 +8,7 @@ import { AppText, useLargeText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { countryIn, currencyIn, useCopy } from '@/i18n';
 import type { Country } from '@/lib/countries';
 import { CURRENCIES } from '@/lib/currencies';
 
@@ -54,6 +55,7 @@ export function SelectField({
   tone?: 'hero' | 'plain';
 }) {
   const t = useTheme();
+  const copy = useCopy();
   const large = useLargeText();
   const icon = useIconSize(13);
   const [open, setOpen] = useState(false);
@@ -71,7 +73,7 @@ export function SelectField({
       <Pressable
         onPress={() => setOpen(true)}
         accessibilityRole="button"
-        accessibilityLabel={`${label}: ${current.name}. Change`}
+        accessibilityLabel={copy.select.change(label, current.name)}
         style={({ pressed }) => [
           styles.field,
           tone === 'hero'
@@ -105,7 +107,7 @@ export function SelectField({
             <Pressable
               onPress={close}
               accessibilityRole="button"
-              accessibilityLabel="Close"
+              accessibilityLabel={copy.common.close}
               hitSlop={8}
               style={styles.close}>
               <SymbolView
@@ -114,7 +116,7 @@ export function SelectField({
                 size={icon + 4}
                 weight="semibold"
                 tintColor={t.text}
-                fallback={<AppText variant="label">Close</AppText>}
+                fallback={<AppText variant="label">{copy.common.close}</AppText>}
               />
             </Pressable>
             <AppText variant="heading">{title}</AppText>
@@ -131,13 +133,13 @@ export function SelectField({
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search"
+              placeholder={copy.common.search}
               placeholderTextColor={t.textSecondary}
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
               clearButtonMode="while-editing"
-              accessibilityLabel={`Search ${title.toLowerCase()}`}
+              accessibilityLabel={copy.select.searchLabel(title)}
               maxFontSizeMultiplier={2}
               style={[styles.searchInput, { color: t.text }]}
             />
@@ -147,7 +149,7 @@ export function SelectField({
             keyboardShouldPersistTaps="handled"
             ListEmptyComponent={
               <AppText muted style={styles.empty}>
-                Nothing matches “{query.trim()}”.
+                {copy.select.nothingMatches(query.trim())}
               </AppText>
             }
             keyExtractor={(o) => o.value}
@@ -163,7 +165,7 @@ export function SelectField({
                   }}
                   accessibilityRole="button"
                   accessibilityState={{ selected, disabled: !!item.disabled }}
-                  accessibilityLabel={`${item.name}${item.disabled ? ', coming soon' : item.uncovered ? ', not covered yet' : ''}`}
+                  accessibilityLabel={`${item.name}${item.disabled ? `, ${copy.select.comingSoon}` : item.uncovered ? `, ${copy.select.notCovered}` : ''}`}
                   style={({ pressed }) => [styles.row, { backgroundColor: pressed ? t.muted : 'transparent' }]}>
                   <FlagSlot code={item.flag} dim={item.disabled} />
                   <AppText
@@ -172,7 +174,7 @@ export function SelectField({
                     {item.name}
                   </AppText>
                   <AppText variant="small" muted>
-                    {item.disabled ? 'Coming soon' : item.uncovered ? 'Not yet' : item.detail}
+                    {item.disabled ? copy.select.comingSoon : item.uncovered ? copy.select.notYet : item.detail}
                   </AppText>
                   <View style={styles.check}>
                     {selected ? (
@@ -214,18 +216,24 @@ export function CountrySelect({
   onChange: (code: string) => void;
   tone?: 'hero' | 'plain';
 }) {
+  const copy = useCopy();
   return (
     <SelectField
       {...rest}
-      options={options.map((c) => ({
-        value: c.code,
-        flag: c.code,
-        name: c.name,
-        short: c.short,
-        detail: c.currency,
-        uncovered: !covered(c.code),
-        search: [c.name, c.short ?? '', c.code, c.currency],
-      }))}
+      options={options.map((c) => {
+        const name = countryIn(copy, c.code);
+        return {
+          value: c.code,
+          flag: c.code,
+          name,
+          // A translated name is shown whole; the English short forms ("UK") stay English.
+          short: name === c.name ? c.short : undefined,
+          detail: c.currency,
+          uncovered: !covered(c.code),
+          // English names still match, so "mexico" finds México in any language.
+          search: [name, c.name, c.short ?? '', c.code, c.currency],
+        };
+      })}
     />
   );
 }
@@ -239,9 +247,14 @@ const CURRENCY_OPTIONS: SelectOption[] = CURRENCIES.map((c) => ({
   search: [c.name, c.code, c.flag],
 }));
 
-/** Currencies for the tools, on the page background. */
+/** Currencies for the tools, on the page background, named in the app's language. */
 export function CurrencySelect(props: { label: string; value: string; onChange: (code: string) => void }) {
-  return <SelectField {...props} title="Currency" options={CURRENCY_OPTIONS} tone="plain" />;
+  const copy = useCopy();
+  const options = CURRENCY_OPTIONS.map((o) => {
+    const name = currencyIn(copy, o.value);
+    return { ...o, name, search: [...o.search, name] };
+  });
+  return <SelectField {...props} title={props.label} options={options} tone="plain" />;
 }
 
 function normalize(s: string): string {

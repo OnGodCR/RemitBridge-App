@@ -14,6 +14,7 @@ import {
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * The frame every tool screen shares (DECISIONS.md D58): a native header from the tools
@@ -81,6 +82,7 @@ export function Field({
   last?: boolean;
 }) {
   const t = useTheme();
+  const copy = useCopy();
   const numeric = keyboardType === 'decimal-pad' || keyboardType === 'number-pad';
   return (
     <View
@@ -102,7 +104,7 @@ export function Field({
         selectTextOnFocus
         autoCapitalize="none"
         autoCorrect={false}
-        accessibilityLabel={unit ? `${label}, in ${unit}` : label}
+        accessibilityLabel={unit ? copy.tool.inUnit(label, unit) : label}
         maxFontSizeMultiplier={2}
         style={[styles.fieldInput, { color: t.text }]}
       />

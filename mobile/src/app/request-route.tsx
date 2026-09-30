@@ -7,6 +7,7 @@ import { CountrySelect } from '@/components/select-field';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { openCompare } from '@/lib/open-compare';
 import { ROUTES, routeFor } from '@/lib/routes';
@@ -18,6 +19,7 @@ import { ROUTES, routeFor } from '@/lib/routes';
  */
 export default function RequestRoute() {
   const t = useTheme();
+  const copy = useCopy();
   const [from, setFrom] = useState('US');
   const [to, setTo] = useState('NP');
   const covered = routeFor(from, to);
@@ -35,8 +37,8 @@ export default function RequestRoute() {
         <StatusBar style="auto" />
         <View style={styles.pair}>
           <CountrySelect
-            label="From"
-            title="Send from"
+            label={copy.common.from}
+            title={copy.compare.sendFrom}
             tone="plain"
             value={from}
             options={SENDING}
@@ -44,8 +46,8 @@ export default function RequestRoute() {
             onChange={setFrom}
           />
           <CountrySelect
-            label="To"
-            title="Send to"
+            label={copy.common.to}
+            title={copy.compare.sendTo}
             tone="plain"
             value={to}
             options={RECEIVING}
@@ -55,9 +57,9 @@ export default function RequestRoute() {
         </View>
         {covered ? (
           <View style={styles.covered}>
-            <AppText style={[styles.title, { color: t.text }]}>We already check this route.</AppText>
+            <AppText style={[styles.title, { color: t.text }]}>{copy.request.alreadyChecked}</AppText>
             <Button
-              label="Compare it"
+              label={copy.request.compareIt}
               trailingIcon="arrow.right"
               onPress={() => openCompare({ routeId: covered.id })}
             />

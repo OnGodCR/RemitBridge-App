@@ -9,9 +9,11 @@ import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { dayIn, useCopy, useLanguage } from '@/i18n';
+import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { money, pct } from '@/lib/format';
-import { formatDay, isoDay, today, useMidRate } from '@/lib/fx';
+import { isoDay, today, useMidRate } from '@/lib/fx';
 import { openCompare } from '@/lib/open-compare';
 import { ROUTES } from '@/lib/routes';
 import { saveCheck } from '@/lib/saved';
@@ -37,6 +39,9 @@ function parseDate(text: string): string | null {
 
 export default function TrueCostScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const c = copy.trueCost;
+  const { language } = useLanguage();
   const { session } = useAuth();
   const [from, setFrom] = useState('USD');
   const [to, setTo] = useState('MXN');
@@ -69,7 +74,7 @@ export default function TrueCostScreen() {
     if (!cost || fx.state !== 'ready') return;
     setSaving(true);
     const error = await saveCheck({
-      provider_name: provider.trim() || 'Not named',
+      provider_name: provider.trim() || c.notNamed,
       send_currency: from,
       receive_currency: to,
       sent: S,
@@ -82,111 +87,116 @@ export default function TrueCostScreen() {
     });
     setSaving(false);
     if (error) {
-      setMessage({ ok: false, text: error });
+      setMessage({ ok: false, text: c.errors[error] });
+      announce(c.errors[error]);
       return;
     }
     track('check_saved', { from, to });
-    setMessage({ ok: true, text: 'Saved to your account.' });
+    setMessage({ ok: true, text: c.savedToAccount });
+    announce(c.savedToAccount);
   };
 
   return (
-    <ToolScreen intro="Enter what’s on your receipt. See the cost hidden in the exchange rate, not just the fee.">
-      <Section title="Currencies">
+    <ToolScreen intro={c.intro}>
+      <Section title={c.currencies}>
         <View style={styles.pair}>
-          <CurrencySelect label="Sent" value={from} onChange={setFrom} />
-          <CurrencySelect label="Received" value={to} onChange={setTo} />
+          <CurrencySelect label={c.sent} value={from} onChange={setFrom} />
+          <CurrencySelect label={c.received} value={to} onChange={setTo} />
         </View>
       </Section>
 
-      <Section title="From your receipt">
+      <Section title={c.fromReceipt}>
         <Fields>
-          <Field label="Amount sent" hint="Before any fee" unit={from} value={sent} onChange={setSent} />
-          <Field label="Fee" hint="0 if there was none" unit={from} value={fee} onChange={setFee} />
+          <Field label={c.amountSent} hint={c.beforeFee} unit={from} value={sent} onChange={setSent} />
+          <Field label={c.fee} hint={c.feeHint} unit={from} value={fee} onChange={setFee} />
           <Field
-            label="Rate you got"
-            hint={`${to} per 1 ${from}`}
+            label={c.rateYouGot}
+            hint={c.perOne(to, from)}
             unit={to}
             value={rate}
             onChange={setRate}
             decimals={6}
           />
-          <Field label="Pickup charge" hint="Only for cash pickup" unit={to} value={pickup} onChange={setPickup} />
+          <Field label={c.pickup} hint={c.pickupHint} unit={to} value={pickup} onChange={setPickup} />
           <Field
-            label="Date sent"
-            hint="Optional. Blank means today."
+            label={c.dateSent}
+            hint={c.dateHint}
             value={dateText}
             onChange={setDateText}
-            placeholder="MM/DD/YYYY"
+            placeholder={c.datePlaceholder}
             keyboardType="numbers-and-punctuation"
             last
           />
         </Fields>
         {dateText.trim() && !date ? (
           <AppText variant="small" style={{ color: t.destructive }}>
-            Enter a date like 9/28/2026, not in the future.
+            {c.badDate}
           </AppText>
         ) : null}
         {F >= S && S > 0 ? (
           <AppText variant="small" style={{ color: t.destructive }}>
-            The fee can’t be more than the amount sent.
+            {c.feeTooBig}
           </AppText>
         ) : null}
       </Section>
 
       {inputsOk && fx.state === 'loading' ? <ActivityIndicator /> : null}
       {inputsOk && fx.state === 'error' ? (
-        <AppText muted>Couldn’t get the mid-market rate for that day. Check your connection and try again.</AppText>
+        <AppText muted>{c.rateFailed}</AppText>
       ) : null}
 
       {cost && fx.state === 'ready' ? (
         <>
           <Answer
-            label="This transfer really cost"
+            label={c.reallyCost}
             value={money(cost.totalCost, from)}
-            note={`${pct(cost.totalCostPct, 2)} of what you sent. The world average is ${FIGURES.globalCostPct}%; the UN target is ${FIGURES.targetPct}%.`}
+            note={c.costNote(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)}
           />
           <Breakdown
             rows={[
-              { label: 'Fee you could see', value: money(cost.feeCost, from), tone: t.moneyFee },
+              { label: c.feeSeen, value: money(cost.feeCost, from), tone: t.moneyFee },
               {
-                label: `Hidden in the rate (${pct(cost.markupPct, 2)} markup)`,
+                label: c.hidden(pct(cost.markupPct, 2)),
                 value: money(cost.markupCost, from),
                 tone: t.moneyMarkup,
               },
-              ...(R > 0 ? [{ label: 'Charged at pickup', value: money(cost.pickupCost, from), tone: t.moneyPickup }] : []),
-              { label: 'They received', value: money(cost.amountReceived, to), strong: true },
-              { label: 'At mid-market, with no fee', value: money(cost.benchmarkReceived, to) },
+              ...(R > 0 ? [{ label: c.atPickup, value: money(cost.pickupCost, from), tone: t.moneyPickup }] : []),
+              { label: c.theyReceived, value: money(cost.amountReceived, to), strong: true },
+              { label: c.atMid, value: money(cost.benchmarkReceived, to) },
             ]}
           />
           {cost.markupPct < 0 ? (
             <AppText variant="small" muted>
-              Your rate was better than mid-market. That usually means a first-transfer promotion.
+              {c.better}
             </AppText>
           ) : null}
           <SourceNote>
-            Mid-market rate from {fx.source}: 1 {from} = {fx.rate.toLocaleString('en-US', { maximumFractionDigits: 4 })}{' '}
-            {to}, for {formatDay(fx.date)}. It’s a daily reference, so rates on the day may have moved.
+            {c.source(
+              fx.source,
+              `1 ${from} = ${fx.rate.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${to}`,
+              dayIn(language, fx.date),
+            )}
           </SourceNote>
 
           {/* PRD 5.7: from a past transfer to what the same one would get today. Only for
               currency pairs Compare covers, so the link never lands on an empty route. */}
           {compareRoute ? (
             <TextLink
-              label={`Compare what ${money(S, from).replace('.00', '')} gets today`}
+              label={c.compareToday(money(S, from).replace('.00', ''))}
               onPress={() => openCompare({ routeId: compareRoute.id, amount: S })}
             />
           ) : null}
 
-          <Section title="Keep this check">
+          <Section title={c.keep}>
             {session ? (
               <>
                 <Fields>
                   <Field
-                    label="Provider"
-                    hint="Optional"
+                    label={c.provider}
+                    hint={c.optional}
                     value={provider}
                     onChange={setProvider}
-                    placeholder="e.g. Remitly"
+                    placeholder={c.providerPlaceholder}
                     keyboardType="default"
                     last
                   />
@@ -196,10 +206,10 @@ export default function TrueCostScreen() {
                     {message.text}
                   </AppText>
                 ) : null}
-                <Button label="Save to my account" onPress={save} loading={saving} disabled={message?.ok} />
+                <Button label={c.saveToAccount} onPress={save} loading={saving} disabled={message?.ok} />
               </>
             ) : (
-              <Button label="Create an account to save checks" variant="secondary" onPress={() => router.push('/sign-in')} />
+              <Button label={c.createToSave} variant="secondary" onPress={() => router.push('/sign-in')} />
             )}
           </Section>
         </>

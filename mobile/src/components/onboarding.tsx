@@ -10,6 +10,7 @@ import { AppText } from '@/components/ui';
 import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * Full-screen onboarding and sign-in step: a back button (when there's somewhere to go
@@ -57,12 +58,13 @@ export function Step({
 
 function BackButton({ light }: { light?: boolean }) {
   const t = useTheme();
+  const copy = useCopy();
   const size = useIconSize(22);
   return (
     <Pressable
       onPress={() => router.back()}
       accessibilityRole="button"
-      accessibilityLabel="Back"
+      accessibilityLabel={copy.common.back}
       hitSlop={8}
       style={styles.back}>
       {/* The native symbol view would swallow the touch; let the Pressable have it. */}
@@ -80,10 +82,11 @@ function BackButton({ light }: { light?: boolean }) {
 
 function Dots({ step, of, light }: { step: number; of: number; light?: boolean }) {
   const t = useTheme();
+  const copy = useCopy();
   const on = light ? t.heroText : t.primary;
   const off = light ? t.heroMuted : t.border;
   return (
-    <View style={styles.dots} accessible accessibilityLabel={`Step ${step} of ${of}`}>
+    <View style={styles.dots} accessible accessibilityLabel={copy.common.stepOf(step, of)}>
       {Array.from({ length: of }, (_, i) => (
         <View
           key={i}

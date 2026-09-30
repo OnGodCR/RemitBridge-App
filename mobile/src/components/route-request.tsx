@@ -7,7 +7,7 @@ import { AppText, Button, Segmented, TextLink } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { announce } from '@/lib/announce';
-import { countryName } from '@/lib/countries';
+import { countryIn, useCopy } from '@/i18n';
 import { fetchRequestCounts, looksLikeEmail, pairKey, requestRoute, type RequestResult } from '@/lib/requests';
 import type { DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
@@ -19,6 +19,7 @@ import { track } from '@/lib/track';
  */
 export function RouteNotCovered({ from, to, boardLink = true }: { from: string; to: string; boardLink?: boolean }) {
   const t = useTheme();
+  const copy = useCopy();
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
@@ -32,35 +33,28 @@ export function RouteNotCovered({ from, to, boardLink = true }: { from: string; 
   return (
     <View style={styles.panel}>
       <View style={styles.head}>
-        <Eyebrow>Not covered yet</Eyebrow>
+        <Eyebrow>{copy.request.eyebrow}</Eyebrow>
         <DisplayTitle
           size={26}
-          lead={`${countryName(from)} to ${countryName(to)}`}
-          accent="isn’t a route we check yet."
+          lead={copy.request.lead(countryIn(copy, from), countryIn(copy, to))}
+          accent={copy.request.accent}
         />
         <AppText style={[styles.lede, { color: t.textSecondary }]}>
-          We only show prices we’ve checked ourselves. Requests decide which routes we add next.
+          {copy.request.lede}
         </AppText>
         {count !== null ? (
           <AppText style={[styles.count, { color: t.text }]}>
-            {count === 0
-              ? 'Nobody has asked for it yet.'
-              : `${count.toLocaleString()} ${count === 1 ? 'person has' : 'people have'} asked for it.`}
+            {count === 0 ? copy.request.nobody : copy.request.asked(count)}
           </AppText>
         ) : null}
       </View>
       <RouteRequestForm from={from} to={to} onCounted={() => setCount((c) => (c === null ? c : c + 1))} />
-      {boardLink ? <TextLink label="See every requested route" onPress={() => router.push('/routes')} /> : null}
+      {boardLink ? <TextLink label={copy.request.seeAll} onPress={() => router.push('/routes')} /> : null}
     </View>
   );
 }
 
-const METHODS: { value: DeliveryMethod | 'any'; label: string }[] = [
-  { value: 'any', label: 'Any way' },
-  { value: 'bank_deposit', label: 'Bank' },
-  { value: 'cash_pickup', label: 'Cash pickup' },
-  { value: 'mobile_wallet', label: 'Wallet' },
-];
+
 
 /**
  * The request itself: how the money should arrive (optional) and an address to hear back
@@ -78,6 +72,13 @@ export function RouteRequestForm({
   onCounted?: () => void;
 }) {
   const t = useTheme();
+  const copy = useCopy();
+  const methods: { value: DeliveryMethod | 'any'; label: string }[] = [
+    { value: 'any', label: copy.request.anyWay },
+    { value: 'bank_deposit', label: copy.request.bank },
+    { value: 'cash_pickup', label: copy.request.cashPickup },
+    { value: 'mobile_wallet', label: copy.request.wallet },
+  ];
   const [method, setMethod] = useState<DeliveryMethod | 'any'>('any');
   // Never pre-filled from the account: storing an address is opt-in (D19), so it's typed.
   const [email, setEmail] = useState('');
@@ -92,7 +93,7 @@ export function RouteRequestForm({
     const address = email.trim();
     if (address && !looksLikeEmail(address)) {
       setEmailError(true);
-      announce('That doesn’t look like an email address.');
+      announce(copy.request.emailBad);
       return;
     }
     setEmailError(false);
@@ -100,13 +101,7 @@ export function RouteRequestForm({
     const value = await requestRoute({ from, to, method: method === 'any' ? null : method, email: address || null });
     setBusy(false);
     setResult({ key, value });
-    announce(
-      value === 'ok'
-        ? 'Thanks. Your request is counted.'
-        : value === 'already'
-          ? 'You’ve asked for this route already. It’s counted.'
-          : 'That didn’t go through. Try again in a moment.',
-    );
+    announce(value === 'ok' ? copy.request.counted : value === 'already' ? copy.request.already : copy.request.failed);
     if (value === 'ok') {
       track('route_requested', { route: key.toLowerCase(), method, with_email: !!address });
       onCounted?.();
@@ -117,10 +112,10 @@ export function RouteRequestForm({
     return (
       <View style={[styles.callout, { borderLeftColor: t.primary }]} accessibilityLiveRegion="polite">
         <AppText style={[styles.calloutText, { color: t.text }]}>
-          {done === 'ok' ? 'Thanks. Your request is counted.' : 'You’ve asked for this route already. It’s counted.'}
+          {done === 'ok' ? copy.request.counted : copy.request.already}
         </AppText>
         {done === 'ok' && email.trim() ? (
-          <AppText style={{ color: t.textSecondary }}>We’ll email you once when it’s live.</AppText>
+          <AppText style={{ color: t.textSecondary }}>{copy.request.willEmail}</AppText>
         ) : null}
       </View>
     );
@@ -130,13 +125,13 @@ export function RouteRequestForm({
     <View style={styles.form}>
       <View style={styles.field}>
         <AppText variant="label" muted>
-          How should the money arrive?
+          {copy.request.howArrive}
         </AppText>
-        <Segmented options={METHODS} value={method} onChange={setMethod} />
+        <Segmented options={methods} value={method} onChange={setMethod} />
       </View>
       <View style={styles.field}>
         <AppText variant="label" muted>
-          Email me when it’s live (optional)
+          {copy.request.emailMe}
         </AppText>
         <TextInput
           value={email}
@@ -151,22 +146,20 @@ export function RouteRequestForm({
           autoComplete="email"
           autoCapitalize="none"
           autoCorrect={false}
-          accessibilityLabel="Email address, optional"
+          accessibilityLabel={copy.request.emailLabel}
           maxFontSizeMultiplier={2}
           style={[styles.input, { color: t.text, backgroundColor: t.card, borderColor: emailError ? t.destructive : t.border }]}
         />
         <AppText variant="small" style={{ color: emailError ? t.destructive : t.textSecondary }}>
-          {emailError
-            ? 'That doesn’t look like an email address.'
-            : 'One email when the route launches. Then we delete your address.'}
+          {emailError ? copy.request.emailBad : copy.request.emailHelp}
         </AppText>
       </View>
       {done === 'error' ? (
         <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
-          That didn’t go through. Try again in a moment.
+          {copy.request.failed}
         </AppText>
       ) : null}
-      <Button label="Ask for this route" loading={busy} onPress={send} />
+      <Button label={copy.request.ask} loading={busy} onPress={send} />
     </View>
   );
 }

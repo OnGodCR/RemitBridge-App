@@ -13,9 +13,10 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { DevanagariFonts, Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useBoldText } from '@/components/accessibility';
 import { useIconSize } from '@/hooks/use-icon-size';
+import { useTextLanguage } from '@/i18n';
 import { useTheme } from '@/hooks/use-theme';
 
 type Variant = 'title' | 'heading' | 'body' | 'label' | 'small' | 'figure';
@@ -46,18 +47,29 @@ export function AppText({
 }: TextProps & { variant?: Variant; muted?: boolean }) {
   const t = useTheme();
   const bold = useBoldText();
+  const language = useTextLanguage();
   const flat = StyleSheet.flatten([variants[variant], style]);
   const size = flat?.fontSize ?? 15;
-  const family = typeof flat?.fontFamily === 'string' ? flat.fontFamily : Fonts.regular;
+  const base = typeof flat?.fontFamily === 'string' ? flat.fontFamily : Fonts.regular;
+  const family = bold ? (BOLDER[base] ?? base) : base;
   return (
     <Text
       {...rest}
+      // So VoiceOver reads Hindi, Spanish or Vietnamese with the right voice.
+      accessibilityLanguage={rest.accessibilityLanguage ?? language.locale}
       maxFontSizeMultiplier={maxFontSizeMultiplier ?? scaleCap(size)}
       style={[
         variants[variant],
         { color: muted ? t.textSecondary : t.text },
         style,
-        bold && { fontFamily: BOLDER[family] ?? family },
+        { fontFamily: family },
+        // Devanagari: the matched font, taller lines for the marks above and below, and no
+        // negative tracking, which pushes those marks into each other.
+        language.code === 'hi' && {
+          fontFamily: DevanagariFonts[family] ?? DevanagariFonts[Fonts.regular],
+          letterSpacing: 0,
+          ...(flat?.lineHeight ? { lineHeight: Math.round(flat.lineHeight * 1.25) } : null),
+        },
       ]}
     />
   );

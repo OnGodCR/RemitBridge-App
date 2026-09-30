@@ -6,6 +6,7 @@ import { Breakdown, Section } from '@/components/tool';
 import { AppText } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { EnglishOnly, useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
 
 /**
@@ -107,6 +108,8 @@ const TESTS = [
 
 export default function RemitBenchScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
   const [test, setTest] = useState(TESTS[0].id);
   const current = TESTS.find((x) => x.id === test) ?? TESTS[0];
   useEffect(() => track('learn_opened', { page: 'remitbench' }), []);
@@ -118,6 +121,12 @@ export default function RemitBenchScreen() {
         style={{ backgroundColor: t.background }}
         contentContainerStyle={styles.content}
         contentInsetAdjustmentBehavior="automatic">
+        {language.code !== 'en' ? (
+          <AppText accessibilityLanguage={language.locale} style={{ color: t.text }}>
+            {copy.remitbench.englishOnly}
+          </AppText>
+        ) : null}
+        <EnglishOnly>
         <AppText muted>
           An open testbed for comparing blockchain scaling setups against an ordinary bank transfer, using synthetic
           traffic that behaves like real remittance traffic.
@@ -183,6 +192,7 @@ export default function RemitBenchScreen() {
             <Breakdown rows={current.metrics.map(([label, value]) => ({ label, value }))} />
           </View>
         </Section>
+        </EnglishOnly>
       </ScrollView>
     </>
   );
@@ -197,7 +207,8 @@ const styles = StyleSheet.create({
     borderRadius: Radius.sm,
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
+    // 13 above and below an 18pt line: a 44pt target. It was 34, under the minimum.
+    paddingVertical: 13,
     overflow: 'hidden',
   },
 });

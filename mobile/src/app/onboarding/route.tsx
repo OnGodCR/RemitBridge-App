@@ -1,17 +1,17 @@
 import { router } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { DisplayTitle, Eyebrow } from '@/components/brand';
 import { Flag } from '@/components/flag';
+import { Arrow } from '@/components/list-row';
 import { rise } from '@/components/motion';
 import { Step } from '@/components/onboarding';
 import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { countryIn, currencyIn, useCopy } from '@/i18n';
 import { prefs } from '@/lib/prefs';
-import { currency } from '@/lib/currencies';
 import { ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
 
@@ -26,6 +26,8 @@ import { track } from '@/lib/track';
  */
 export default function PickRoute() {
   const t = useTheme();
+  const copy = useCopy();
+  const o = copy.onboarding.route;
 
   const pick = (routeId: string) => {
     prefs.setHomeRoute(routeId);
@@ -36,39 +38,44 @@ export default function PickRoute() {
   return (
     <Step step={3} of={4} actions={null}>
       <Animated.View entering={rise(0)} style={styles.head}>
-        <Eyebrow>Your route</Eyebrow>
-        <DisplayTitle lead="Where do you" accent="send money?" />
+        <Eyebrow>{o.eyebrow}</Eyebrow>
+        <DisplayTitle lead={o.lead} accent={o.accent} />
         <AppText style={[styles.intro, { color: t.textSecondary }]}>
-          Compare opens on this route. You can change it anytime.
+          {o.intro}
         </AppText>
       </Animated.View>
 
       <Animated.View entering={rise(1)} style={[styles.index, { borderTopColor: t.border }]}>
-        {ROUTES.map((r) => (
-          <Pressable
-            key={r.id}
-            onPress={() => pick(r.id)}
-            accessibilityRole="button"
-            accessibilityLabel={`${r.country}. Paid out in ${currency(r.receiveCurrency).name}`}
-            style={({ pressed }) => [styles.row, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
-            {/* A fixed column, so the names line up whatever each flag's proportions. */}
-            <View style={styles.flag}>
-              <Flag code={r.id.split('-')[1]} height={22} />
-            </View>
-            <View style={styles.rowText}>
-              <AppText style={[styles.country, { color: t.text }]}>{r.country}</AppText>
-              <AppText variant="small" style={{ color: t.textSecondary }}>
-                {currency(r.receiveCurrency).name} · {r.receiveCurrency}
-              </AppText>
-            </View>
-            <SymbolView pointerEvents="none" name="arrow.right" size={17} weight="semibold" tintColor={t.primary} fallback={null} />
-          </Pressable>
-        ))}
+        {ROUTES.map((route) => {
+          const code = route.id.split('-')[1];
+          const country = countryIn(copy, code);
+          const money = currencyIn(copy, route.receiveCurrency);
+          return (
+            <Pressable
+              key={route.id}
+              onPress={() => pick(route.id)}
+              accessibilityRole="button"
+              accessibilityLabel={o.paidIn(country, money)}
+              style={({ pressed }) => [styles.row, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
+              {/* A fixed column, so the names line up whatever each flag's proportions. */}
+              <View style={styles.flag}>
+                <Flag code={code} height={22} />
+              </View>
+              <View style={styles.rowText}>
+                <AppText style={[styles.country, { color: t.text }]}>{country}</AppText>
+                <AppText variant="small" style={{ color: t.textSecondary }}>
+                  {money} · {route.receiveCurrency}
+                </AppText>
+              </View>
+              <Arrow />
+            </Pressable>
+          );
+        })}
       </Animated.View>
 
       <Animated.View entering={rise(2)}>
         <AppText variant="small" style={{ color: t.textSecondary }}>
-          Sending somewhere else? Pick any country on Compare to ask us to add it.
+          {o.elsewhere}
         </AppText>
       </Animated.View>
     </Step>

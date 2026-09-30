@@ -7,8 +7,10 @@ import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
+import { TERM_TRANSLATIONS } from '@/data/glossary-translations';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
 
 /**
@@ -18,17 +20,29 @@ import { track } from '@/lib/track';
  */
 export default function GlossaryScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
   const { term } = useLocalSearchParams<{ term?: string }>();
+  // English, so a link from another screen finds its term whatever the language.
   const [query, setQuery] = useState(() => TERMS.find((x) => x.id === term)?.term ?? '');
   const iconSize = useIconSize(15);
   useEffect(() => track('learn_opened', { page: 'glossary' }), []);
 
+  // In another language, each entry shows the translated term with the English one under it,
+  // because the English word is what's printed on receipts and provider sites.
+  const translations = language.code === 'en' ? undefined : TERM_TRANSLATIONS[language.code];
+  const entries = TERMS.map((x) => {
+    const tr = translations?.[x.id];
+    return { id: x.id, term: tr?.term ?? x.term, english: tr ? x.term : null, plain: tr?.plain ?? x.plain };
+  });
   const q = query.trim().toLowerCase();
+  const matchesTerm = (x: (typeof entries)[number]) =>
+    x.term.toLowerCase().includes(q) || !!x.english?.toLowerCase().includes(q);
   const shown = q
-    ? TERMS.filter((x) => x.term.toLowerCase().includes(q) || x.plain.toLowerCase().includes(q)).sort(
-        (a, b) => Number(!a.term.toLowerCase().includes(q)) - Number(!b.term.toLowerCase().includes(q)),
-      )
-    : TERMS;
+    ? entries
+        .filter((x) => matchesTerm(x) || x.plain.toLowerCase().includes(q))
+        .sort((a, b) => Number(!matchesTerm(a)) - Number(!matchesTerm(b)))
+    : entries;
 
   return (
     <>
@@ -55,23 +69,35 @@ export default function GlossaryScreen() {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder={`Search ${TERMS.length} terms`}
+              placeholder={copy.glossary.searchPlaceholder(TERMS.length)}
               placeholderTextColor={t.textSecondary}
               autoCorrect={false}
               autoCapitalize="none"
               clearButtonMode="while-editing"
-              accessibilityLabel="Search the glossary"
+              accessibilityLabel={copy.glossary.searchLabel}
               maxFontSizeMultiplier={2}
               style={[styles.searchInput, { color: t.text }]}
             />
           </View>
         }
-        ListEmptyComponent={<AppText muted>No term matches “{query.trim()}”.</AppText>}
+        ListEmptyComponent={<AppText muted>{copy.glossary.noMatch(query.trim())}</AppText>}
+        ListFooterComponent={
+          language.code !== 'en' && !translations ? (
+            <AppText variant="small" muted style={styles.footer}>
+              {copy.glossary.englishOnly}
+            </AppText>
+          ) : null
+        }
         renderItem={({ item }) => (
           <View style={[styles.term, { borderBottomColor: t.border }]}>
             <AppText accessibilityRole="header" style={[styles.termName, { color: t.text }]}>
-              {item.term}
+            {item.term}
+          </AppText>
+          {item.english ? (
+            <AppText variant="small" accessibilityLanguage="en-US" style={{ color: t.textSecondary }}>
+              {item.english}
             </AppText>
+          ) : null}
             <AppText style={[styles.plain, { color: t.textSecondary }]}>{item.plain}</AppText>
           </View>
         )}
@@ -96,4 +122,5 @@ const styles = StyleSheet.create({
   term: { borderBottomWidth: StyleSheet.hairlineWidth, paddingVertical: Spacing.three, gap: Spacing.one },
   termName: { fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23 },
   plain: { fontSize: 16, lineHeight: 23 },
+  footer: { paddingTop: Spacing.three },
 });

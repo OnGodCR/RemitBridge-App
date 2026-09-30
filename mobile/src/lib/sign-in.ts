@@ -6,31 +6,31 @@ import { supabase } from '@/lib/supabase';
 
 /**
  * The three sign-in methods (DECISIONS.md D29), all through Supabase Auth. Each returns
- * null on success or a short, plain message to show the person.
+ * null on success, 'closed' when the person backed out (nothing to say), or the kind of
+ * problem as a key; the screen turns the key into words in the app's language
+ * (copy.signIn.errors).
  *
  * Apple and Google need provider credentials in the Supabase dashboard, and email codes
- * need a custom SMTP sender (D42). Until those exist, these return a friendly
- * "not set up yet" rather than a raw error.
+ * need a custom SMTP sender (D42). Until those exist, these say "not set up yet" rather
+ * than show a raw error.
  */
+export type SignInError = 'notReady' | 'notOpen' | 'rateLimit' | 'badCode' | 'offline' | 'notConnected' | 'generic';
+type Result = SignInError | 'closed' | null;
 
-type Result = string | null;
-
-const NOT_READY = 'This sign-in option isn’t set up yet. Try another, or skip for now.';
-
-function friendly(message: string): string {
+function friendly(message: string): SignInError {
   const m = message.toLowerCase();
-  if (m.includes('provider is not enabled') || m.includes('unsupported provider')) return NOT_READY;
+  if (m.includes('provider is not enabled') || m.includes('unsupported provider')) return 'notReady';
   // Supabase's built-in sender only mails the project's own team until custom SMTP is
   // set up (DECISIONS.md D42).
-  if (m.includes('not authorized') || (m.includes('email address') && m.includes('invalid'))) return 'Email sign-in isn’t open yet. Try another option, or skip for now.';
-  if (m.includes('rate limit') || m.includes('security purposes')) return 'Too many tries. Wait a minute and try again.';
-  if (m.includes('expired') || m.includes('invalid')) return 'That code didn’t work. Check it or send a new one.';
-  if (m.includes('network') || m.includes('fetch')) return 'No connection. Check your internet and try again.';
-  return 'Something went wrong. Try again.';
+  if (m.includes('not authorized') || (m.includes('email address') && m.includes('invalid'))) return 'notOpen';
+  if (m.includes('rate limit') || m.includes('security purposes')) return 'rateLimit';
+  if (m.includes('expired') || m.includes('invalid')) return 'badCode';
+  if (m.includes('network') || m.includes('fetch')) return 'offline';
+  return 'generic';
 }
 
 export async function sendEmailCode(email: string): Promise<Result> {
-  if (!supabase) return 'Not connected.';
+  if (!supabase) return 'notConnected';
   const { error } = await supabase.auth.signInWithOtp({
     email: email.trim().toLowerCase(),
     options: { shouldCreateUser: true },
@@ -39,7 +39,7 @@ export async function sendEmailCode(email: string): Promise<Result> {
 }
 
 export async function verifyEmailCode(email: string, code: string): Promise<Result> {
-  if (!supabase) return 'Not connected.';
+  if (!supabase) return 'notConnected';
   const { error } = await supabase.auth.verifyOtp({
     email: email.trim().toLowerCase(),
     token: code,
@@ -49,8 +49,8 @@ export async function verifyEmailCode(email: string, code: string): Promise<Resu
 }
 
 export async function signInWithApple(): Promise<Result> {
-  if (!supabase) return 'Not connected.';
-  if (!(await providerEnabled('apple'))) return NOT_READY;
+  if (!supabase) return 'notConnected';
+  if (!(await providerEnabled('apple'))) return 'notReady';
   try {
     const credential = await AppleAuthentication.signInAsync({
       requestedScopes: [
@@ -65,16 +65,16 @@ export async function signInWithApple(): Promise<Result> {
     });
     return error ? friendly(error.message) : null;
   } catch (e) {
-    if ((e as { code?: string }).code === 'ERR_REQUEST_CANCELED') return ''; // they closed it
+    if ((e as { code?: string }).code === 'ERR_REQUEST_CANCELED') return 'closed';
     return friendly(String(e));
   }
 }
 
 export async function signInWithGoogle(): Promise<Result> {
-  if (!supabase) return 'Not connected.';
+  if (!supabase) return 'notConnected';
   // Supabase hands back a URL even when Google isn't enabled; ask first so the person
   // sees a plain message instead of a JSON error page in the browser.
-  if (!(await providerEnabled('google'))) return NOT_READY;
+  if (!(await providerEnabled('google'))) return 'notReady';
   const redirectTo = Linking.createURL('sign-in/callback');
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -83,7 +83,7 @@ export async function signInWithGoogle(): Promise<Result> {
   if (error || !data.url) return friendly(error?.message ?? '');
 
   const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
-  if (result.type !== 'success') return ''; // closed or cancelled
+  if (result.type !== 'success') return 'closed';
   const code = new URL(result.url).searchParams.get('code');
   if (!code) return friendly('');
   const exchange = await supabase.auth.exchangeCodeForSession(code);

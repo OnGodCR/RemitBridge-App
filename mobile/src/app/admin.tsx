@@ -28,6 +28,7 @@ import {
 import { checkedAgo, money } from '@/lib/format';
 import { AMOUNTS, DELIVERY_LABELS, ROUTES, type DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
+import { EnglishOnly } from '@/i18n';
 
 /**
  * Add a price (DECISIONS.md D52, D54). Read one quote off a provider's public calculator
@@ -49,7 +50,7 @@ function cleanNumber(text: string, decimals: number): string {
   return rest.length ? `${trimmed}.${rest.join('').slice(0, decimals)}` : trimmed;
 }
 
-export default function AddPriceScreen() {
+function AddPriceScreen() {
   const t = useTheme();
   const [providers, setProviders] = useState<Provider[]>([]);
   const [providerId, setProviderId] = useState<string | null>(null);
@@ -451,3 +452,12 @@ const styles = StyleSheet.create({
   recent: { padding: Spacing.three, gap: Spacing.one },
   recentTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
 });
+
+/** Admin-only, so English whatever the app's language (DECISIONS.md D69). */
+export default function AddPriceScreenRoute() {
+  return (
+    <EnglishOnly>
+      <AddPriceScreen />
+    </EnglishOnly>
+  );
+}

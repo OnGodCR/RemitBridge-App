@@ -6,76 +6,47 @@ import { ListGroup, ListRow } from '@/components/list-row';
 import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
 
 /**
  * The tools, rebuilt from the website (DECISIONS.md D58), grouped by when you'd reach for
  * them: before a transfer, after one, and to watch rates over time.
  */
-const GROUPS: {
-  title: string;
-  tools: { href: Href; title: string; subtitle: string }[];
-}[] = [
-  {
-    title: 'Before you send',
-    tools: [
-      {
-        href: '/fair-rate',
-        title: 'Fair rate',
-        subtitle: 'What the mid-market rate would give you',
-      },
-      {
-        href: '/scam-check',
-        title: 'Scam check',
-        subtitle: 'Eight questions before you send to a stranger',
-      },
-    ],
-  },
-  {
-    title: 'After you send',
-    tools: [
-      {
-        href: '/true-cost',
-        title: 'TrueCost',
-        subtitle: 'Check a receipt for the cost you didn’t see',
-      },
-      {
-        href: '/yearly-cost',
-        title: 'Yearly cost',
-        subtitle: 'What a year of sending adds up to',
-      },
-    ],
-  },
-  {
-    title: 'Rates',
-    tools: [
-      {
-        href: '/rate-history',
-        title: 'Rate history',
-        subtitle: 'The mid-market rate, day by day',
-      },
-    ],
-  },
-];
-
 export default function ToolsScreen() {
   const t = useTheme();
+  const copy = useCopy();
+  const groups: { title: string; tools: { href: Href; title: string; subtitle: string }[] }[] = [
+    {
+      title: copy.tools.before,
+      tools: [
+        { href: '/fair-rate', title: copy.titles.fairRate, subtitle: copy.tools.fairRateSub },
+        { href: '/scam-check', title: copy.titles.scamCheck, subtitle: copy.tools.scamCheckSub },
+      ],
+    },
+    {
+      title: copy.tools.after,
+      tools: [
+        { href: '/true-cost', title: copy.titles.trueCost, subtitle: copy.tools.trueCostSub },
+        { href: '/yearly-cost', title: copy.titles.yearlyCost, subtitle: copy.tools.yearlyCostSub },
+      ],
+    },
+    {
+      title: copy.tools.rates,
+      tools: [{ href: '/rate-history', title: copy.titles.rateHistory, subtitle: copy.tools.rateHistorySub }],
+    },
+  ];
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <HeroHeader title="Tools">
-          <AppText style={{ color: t.heroMuted }}>Check a rate, a receipt, or a request.</AppText>
+        <HeroHeader title={copy.tools.title}>
+          <AppText style={{ color: t.heroMuted }}>{copy.tools.subtitle}</AppText>
         </HeroHeader>
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          {GROUPS.map((g) => (
+          {groups.map((g) => (
             <ListGroup key={g.title} title={g.title}>
               {g.tools.map((tool) => (
-                <ListRow
-                  key={tool.title}
-                  title={tool.title}
-                  subtitle={tool.subtitle}
-                  onPress={() => router.push(tool.href)}
-                />
+                <ListRow key={tool.title} title={tool.title} subtitle={tool.subtitle} onPress={() => router.push(tool.href)} />
               ))}
             </ListGroup>
           ))}
