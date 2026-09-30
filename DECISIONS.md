@@ -465,3 +465,10 @@ green left-rule callout; its sourced figures ($905B, 6.36%, 3%) on a new "Why it
 step; its 0.55s, 12pt "rise" entrance; and fully rounded bold buttons, app-wide. Sign-in
 buttons carry the providers' own marks (Apple's official button, Google's "G" per its
 guidelines, an envelope for email). Onboarding is now four steps.
+
+**D63. Lists everywhere are the website's divided index.** The Tools, Learn and Account
+lists were grouped cards with an icon on a mint tile in every row: the settings-screen
+template. They now follow the website's home-page index: hairline rules above and between,
+a bold title, one plain line, the green arrow (up-right for pages that open on the website),
+and the group's name as an uppercase eyebrow. No icons and no card. Decided 2026-09-29 under
+Angad's "follow the anti-vibe coding practices" (D62).
