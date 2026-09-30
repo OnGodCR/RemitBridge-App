@@ -65,7 +65,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       proposed regulations (D78).
 - [ ] **Push the two new migrations, then run the smoke test (37 checks).** Route
       requests and metrics (D64, D65) and WhatsApp (D68). Claude's `supabase db push` was
-      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md.
+      refused as a production deploy, so Angad runs it. Commands in HANDOFF.md. Turn
+      ProtonVPN off first: it resets connections to Supabase's database port (2026-09-30).
 - [ ] **Enter the first prices** with Add a price. Nothing shows on Compare, the quote
       detail or the bot until one is published.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
@@ -73,12 +74,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
       token, five `WHATSAPP_*` secrets, deploy, register the webhook. Angad reads the
       Hindi replies first.
-- [ ] **Nine request-only countries have no flag** (Ukraine, Ecuador, Nicaragua, Uganda,
-      Somalia, Eritrea, Cuba, Afghanistan, Venezuela). They show a plain tile. Downloading
-      them from flagcdn.com, like the rest (D55), needs Angad's yes.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
       form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
-      26724746, checked 2026-09-29). Follow up on 2026-10-12 (calendar reminder set).
+      26724746, checked 2026-09-29). **Wise replied 2026-09-30:** its Comparison API may be
+      used; whether to build that adapter is Angad's call. Follow up with the rest on
+      2026-10-12 (calendar reminder set).
       Log replies in `docs/outreach/permission-request.md` (D52).
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
@@ -86,7 +86,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Disk space.** 5.3 GB free on 2026-09-30; native builds (and real store
       screenshots) need 15–20 GB.
 - [ ] **Google brand verification** so Google's sign-in page says "RemitBridge" instead of
-      the Supabase address (verify remitbridgelabs.org in Search Console, then submit) (D61).
+      the Supabase address (D61). remitbridgelabs.org is verified in Search Console on the
+      RemitBridge Google account (TXT record at GoDaddy, 2026-09-30). Left: submit brand
+      verification in Google Cloud, once Angad says yes.
 - [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
 - [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also
@@ -101,12 +103,16 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       Apple's came through on 2026-09-29.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
 - [ ] **Universal links** (open the app straight from a link, D48): need the Apple Team
-      ID from developer.apple.com → Membership, which Claude can't read without signing in.
-- [ ] **Partner outreach** (D50): no partners yet. A shortlist of nine Seattle-area
-      organizations (Horn of Africa Services first, for Somalia and Eritrea) and a draft
-      email are in `docs/outreach/partners.md` (2026-09-29). Not sent; Angad sends.
+      ID from developer.apple.com → Membership. It isn't on the Mac (Xcode has no account
+      signed in) and Chrome isn't signed in to developer.apple.com (checked 2026-09-30).
+- [ ] **Partner outreach** (D50): no partners yet. Nine Seattle-area organizations and the
+      texts are in `docs/outreach/partners.md`. Horn of Africa Services sent 2026-09-30;
+      East African Community Services is in the RemitBridge Gmail's Drafts; the other seven
+      are Angad's to send (the permission system stopped Claude after the first).
 - [ ] **All eight Tier 1 providers are manual for now** (terms checked 2026-09-28).
       See `docs/MANUAL_RESEARCH.md`.
+- [x] Flags for the nine request-only countries, from flagcdn.com with Angad's yes.
+      Every country has one now. Done 2026-09-30.
 - [x] Accessibility pass (D70): AA contrast, the largest text sizes (checked in English,
       Hindi and Vietnamese), VoiceOver announcements and headings, 44pt targets, Bold
       Text, offline prices, no press-and-hold-only actions. Done 2026-09-30.
