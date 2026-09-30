@@ -72,9 +72,19 @@ export function LineChart({
         onResponderMove={(e) => pick(e.nativeEvent.locationX)}
         onResponderRelease={() => setActive(null)}
         accessible
+        // Adjustable: VoiceOver users swipe up and down to step through the days and hear
+        // each value, which is what everyone else does by dragging a finger along the line.
+        accessibilityRole="adjustable"
         accessibilityLabel={`${unit}, ${points.length} days from ${formatDay(points[0].date)} to ${formatDay(
           points[points.length - 1].date,
-        )}. Low ${format(Math.min(...points.map((p) => p.value)))}, high ${format(Math.max(...points.map((p) => p.value)))}.`}>
+        )}. Low ${format(Math.min(...points.map((p) => p.value)))}, high ${format(Math.max(...points.map((p) => p.value)))}.`}
+        accessibilityValue={{ text: `${format(shown.value)}, ${formatDay(shown.date)}` }}
+        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+        onAccessibilityAction={(e) => {
+          const at = active ?? points.length - 1;
+          const next = e.nativeEvent.actionName === 'increment' ? at + 1 : at - 1;
+          setActive(Math.max(0, Math.min(points.length - 1, next)));
+        }}>
         {width > 0
           ? points.slice(1).map((_, k) => {
               const a = xy(k);

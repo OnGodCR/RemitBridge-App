@@ -8,7 +8,8 @@ import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { LineChart } from '@/components/line-chart';
 import { ListFact, ListGroup, ListRow } from '@/components/list-row';
 import { CostBreakdownBar, FreshnessBadge } from '@/components/quote-card';
-import { AppText } from '@/components/ui';
+import { AppText, TextLink } from '@/components/ui';
+import { FIGURES } from '@/constants/figures';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { money, moneySpoken, pct } from '@/lib/format';
@@ -164,8 +165,22 @@ export default function QuoteDetail() {
             value={money(q.pickup_charge / q.mid_market_rate, q.send_currency)}
           />
         ) : null}
-        <ListFact strong label="Total cost" value={`${money(q.total_cost, q.send_currency)} (${pct(q.total_cost_pct, 2)})`} />
+        <ListFact
+          strong
+          label="Total cost"
+          // The yardstick the website uses everywhere: the UN's 3% goal (SDG 10.c).
+          note={
+            q.total_cost_pct <= FIGURES.targetPct
+              ? `Within the UN’s ${FIGURES.targetPct}% target for 2030`
+              : `Over the UN’s ${FIGURES.targetPct}% target for 2030`
+          }
+          value={`${money(q.total_cost, q.send_currency)} (${pct(q.total_cost_pct, 2)})`}
+        />
       </ListGroup>
+      <TextLink
+        label="What’s an exchange-rate markup?"
+        onPress={() => router.push({ pathname: '/glossary', params: { term: 'exchange-rate-markup' } })}
+      />
 
       <ListGroup title="Delivery">
         <ListFact label="Arrives" value={q.delivery_time ?? 'Not stated'} />

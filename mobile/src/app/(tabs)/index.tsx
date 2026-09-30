@@ -19,9 +19,10 @@ import { CountrySelect } from '@/components/select-field';
 import { AppText, Button, Segmented, TextLink, useLargeText } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { announce } from '@/lib/announce';
 import { saveComparison } from '@/lib/comparisons';
 import { RECEIVING, SENDING } from '@/lib/countries';
-import { money } from '@/lib/format';
+import { checkedAgo, money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
 import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib/quotes';
 import { checkedAmountFor, DELIVERY_LABELS, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
@@ -241,6 +242,9 @@ function Results({
 
   const { standing, promotional } = shown!;
   if (standing.length === 0 && promotional.length === 0) {
+    if (result.savedAt) {
+      return <Notice title="Prices didn’t load" body="You seem to be offline, and there are no saved prices for this choice yet." />;
+    }
     return (
       <Notice
         title="No checked prices yet"
@@ -250,12 +254,19 @@ function Results({
     );
   }
 
+  const offline = result.savedAt ? (
+    <Notice
+      title="You’re offline"
+      body={`These are the prices from your last visit, loaded ${checkedAgo(result.savedAt).replace('Checked ', '')}. Pull down to try again.`}
+    />
+  ) : null;
   const open = (q: ShownQuote) =>
     router.push({ pathname: '/quote/[id]', params: { id: String(q.id), amount: String(amount) } });
   const receive = (standing[0] ?? promotional[0]).receive_currency;
   const received = standing.map((q) => q.amount_received);
   return (
     <View style={styles.results}>
+      {offline}
       {standing.length > 1 ? (
         <AppText style={[styles.summary, { color: t.text }]}>
           {money(Math.min(...received), receive)} to {money(Math.max(...received), receive)} arrives, depending
@@ -331,6 +342,7 @@ function SaveComparison({ routeId, amount, method }: { routeId: string; amount: 
       return;
     }
     setState({ key, value: result });
+    announce(result === 'saved' ? 'Saved to your account.' : result === 'already' ? 'Already saved.' : 'Couldn’t save. Try again.');
     if (result === 'saved') track('comparison_saved', { route: routeId, method });
   };
 

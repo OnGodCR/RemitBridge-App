@@ -6,6 +6,7 @@ import { DisplayTitle, Eyebrow } from '@/components/brand';
 import { AppText, Button, Segmented, TextLink } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { announce } from '@/lib/announce';
 import { countryName } from '@/lib/countries';
 import { fetchRequestCounts, looksLikeEmail, pairKey, requestRoute, type RequestResult } from '@/lib/requests';
 import type { DeliveryMethod } from '@/lib/routes';
@@ -91,6 +92,7 @@ export function RouteRequestForm({
     const address = email.trim();
     if (address && !looksLikeEmail(address)) {
       setEmailError(true);
+      announce('That doesn’t look like an email address.');
       return;
     }
     setEmailError(false);
@@ -98,6 +100,13 @@ export function RouteRequestForm({
     const value = await requestRoute({ from, to, method: method === 'any' ? null : method, email: address || null });
     setBusy(false);
     setResult({ key, value });
+    announce(
+      value === 'ok'
+        ? 'Thanks. Your request is counted.'
+        : value === 'already'
+          ? 'You’ve asked for this route already. It’s counted.'
+          : 'That didn’t go through. Try again in a moment.',
+    );
     if (value === 'ok') {
       track('route_requested', { route: key.toLowerCase(), method, with_email: !!address });
       onCounted?.();

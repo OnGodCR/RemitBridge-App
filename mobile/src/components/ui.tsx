@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useBoldText } from '@/components/accessibility';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -44,15 +45,31 @@ export function AppText({
   ...rest
 }: TextProps & { variant?: Variant; muted?: boolean }) {
   const t = useTheme();
-  const size = StyleSheet.flatten([variants[variant], style])?.fontSize ?? 15;
+  const bold = useBoldText();
+  const flat = StyleSheet.flatten([variants[variant], style]);
+  const size = flat?.fontSize ?? 15;
+  const family = typeof flat?.fontFamily === 'string' ? flat.fontFamily : Fonts.regular;
   return (
     <Text
       {...rest}
       maxFontSizeMultiplier={maxFontSizeMultiplier ?? scaleCap(size)}
-      style={[variants[variant], { color: muted ? t.textSecondary : t.text }, style]}
+      style={[
+        variants[variant],
+        { color: muted ? t.textSecondary : t.text },
+        style,
+        bold && { fontFamily: BOLDER[family] ?? family },
+      ]}
     />
   );
 }
+
+/** One weight up, for the phone's Bold Text setting (components/accessibility.tsx). */
+const BOLDER: Record<string, string> = {
+  [Fonts.regular]: Fonts.semibold,
+  [Fonts.medium]: Fonts.bold,
+  [Fonts.semibold]: Fonts.bold,
+  [Fonts.bold]: Fonts.extrabold,
+};
 
 /**
  * How far text may grow with the phone's text-size setting. WCAG 1.4.4 asks for 200%, so

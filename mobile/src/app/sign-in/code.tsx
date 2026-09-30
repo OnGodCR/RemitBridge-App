@@ -6,6 +6,7 @@ import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
 import { sendEmailCode, verifyEmailCode } from '@/lib/sign-in';
@@ -35,6 +36,7 @@ export default function CodeStep() {
     setBusy(false);
     if (result) {
       setError(result);
+      announce(result);
       setCode('');
       return;
     }
