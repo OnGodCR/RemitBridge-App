@@ -1,4 +1,6 @@
 /**
+ * No imports, on purpose: the WhatsApp bot (packages/bot) imports this file directly.
+ *
  * Countries for the From and To pickers. Every one can be picked. A pair with a route in
  * lib/routes.ts shows prices; any other pair shows "not covered yet" with the request form
  * (PRD 6.7). `live` marks the countries that have a route from the US.

@@ -516,3 +516,24 @@ route board, which shows how many people each live route owes an email. Mail com
 RemitBridge@remitbridgelabs.org, the sender auth mail already uses (D53), with replies
 to the Gmail address. It needs a `RESEND_API_KEY` Supabase secret, which Angad sets;
 until then it sends nothing and says so.
+
+**D68. The WhatsApp bot is built; it waits on Meta.** Meta's Cloud API directly, as the
+stack says. The logic (reading messy messages, deciding what to do, every reply in
+English and Hindi) is `packages/bot`, with no Deno or network code, so it's tested with
+vitest; the webhook is `supabase/functions/whatsapp`, which checks Meta's signature on
+every delivery, looks up prices and sends the reply. It uses the app's own country, route
+and number-formatting files and the one formula, and reads prices with the public key, so
+RLS decides what it can show exactly as it does for the app. Commands per PRD 5.8: an
+amount and a country in almost any form, UPI/cash/bank/wallet filters, WHY, HINDI and
+ENGLISH, HELP, plus REQUEST, SCAM, CHECK and STOP. A route we don't cover gets "Reply YES
+and we'll count your request", which files a route request with source `whatsapp` and no
+contact (launch messages on WhatsApp need approved templates, so they're post-MVP).
+What's kept per number, in `whatsapp_users`: an HMAC of the number with a secret, the
+language, the last route and method, a route waiting for YES, and a rate-limit counter
+(30 messages an hour). Never the number, a name or an amount; STOP deletes the row. That
+resolves a tension in PRD 5.8 between "the user's last quote as the example" for WHY and
+"no amounts tied to identities": WHY uses the $500 example on the person's last route.
+The Hindi is Claude's and needs Angad's read before launch. To go live Angad needs a Meta
+business account and app, a WhatsApp number, a system-user token, five secrets (listed at
+the top of the function), the migrations pushed, the function deployed, and the webhook
+registered in Meta.

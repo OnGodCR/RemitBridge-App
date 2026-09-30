@@ -23,14 +23,8 @@ import { saveComparison } from '@/lib/comparisons';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
-import {
-  atAmount,
-  checkedAmountFor,
-  fetchQuotes,
-  type QuotesResult,
-  type ShownQuote,
-} from '@/lib/quotes';
-import { DELIVERY_LABELS, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
+import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib/quotes';
+import { checkedAmountFor, DELIVERY_LABELS, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 const LIMITS = [

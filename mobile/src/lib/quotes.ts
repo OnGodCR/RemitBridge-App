@@ -1,7 +1,7 @@
 import { computeTransferCost } from '@remitbridge/formula';
 
 import { isoDay } from '@/lib/fx';
-import { AMOUNTS, type DeliveryMethod } from '@/lib/routes';
+import { type DeliveryMethod } from '@/lib/routes';
 import { supabase } from '@/lib/supabase';
 
 /**
@@ -43,16 +43,10 @@ export interface ShownQuote extends LatestQuote {
 }
 
 /**
- * Prices are checked at the grid amounts only (PRD 9.11). For any other amount, use the
- * largest checked amount at or below it (the smallest one if it's below the grid): same
- * fee and same rate, run through the one formula. Fees often change at tier breaks, so
- * these are labelled as estimates wherever they show.
+ * A quote at the amount typed. For an amount that wasn't checked, the checked amount's fee
+ * and rate run through the one formula (see checkedAmountFor in lib/routes.ts), and the
+ * result is labelled as an estimate wherever it shows.
  */
-export function checkedAmountFor(amount: number): number {
-  const below = AMOUNTS.filter((a) => a <= amount);
-  return below.length ? below[below.length - 1] : AMOUNTS[0];
-}
-
 export function atAmount(q: LatestQuote, amount: number): ShownQuote | null {
   if (amount === Number(q.send_amount)) return { ...q, basedOn: null };
   const c = computeTransferCost({
