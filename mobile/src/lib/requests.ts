@@ -102,3 +102,27 @@ export async function fetchBoard(): Promise<{ entries: BoardEntry[]; counted: bo
 export function pairKey(from: string, to: string): string {
   return `${from}-${to}`.toUpperCase();
 }
+
+/**
+ * Admins only: how many people asked to hear when a route launches and haven't been told.
+ * RLS returns no rows to anyone else, so for them this is always 0.
+ */
+export async function countWaiting(from: string, to: string): Promise<number> {
+  if (!supabase) return 0;
+  const { count } = await supabase
+    .from('route_requests')
+    .select('id', { count: 'exact', head: true })
+    .eq('send_country', from)
+    .eq('receive_country', to)
+    .not('notify_email', 'is', null)
+    .is('notified_at', null);
+  return count ?? 0;
+}
+
+/** Admins only: send the launch emails for a live route (supabase/functions/notify-route-launch). */
+export async function sendLaunchEmails(routeId: string): Promise<{ sent: number; failed: number; reason?: string } | string> {
+  if (!supabase) return 'Not connected.';
+  const { data, error } = await supabase.functions.invoke('notify-route-launch', { body: { route_id: routeId } });
+  if (error) return 'The emails didn’t go out. Try again in a moment.';
+  return data as { sent: number; failed: number; reason?: string };
+}

@@ -1,17 +1,18 @@
 import { router, useFocusEffect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useState } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 
 import { Eyebrow } from '@/components/brand';
 import { FlagSlot } from '@/components/flag';
 import { Arrow, ListGroup, ListItem } from '@/components/list-row';
-import { AppText, Button } from '@/components/ui';
+import { AppText, Button, TextLink } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useIsAdmin } from '@/lib/admin';
 import { countryName } from '@/lib/countries';
 import { openCompare } from '@/lib/open-compare';
-import { fetchBoard, type BoardEntry, type RouteStatus } from '@/lib/requests';
+import { countWaiting, fetchBoard, sendLaunchEmails, type BoardEntry, type RouteStatus } from '@/lib/requests';
 import { routeFor } from '@/lib/routes';
 import { track } from '@/lib/track';
 
@@ -34,8 +35,14 @@ const STAGES: { status: RouteStatus; title: string; about: string; filled: boole
 
 export default function RouteBoard() {
   const t = useTheme();
+  const isAdmin = useIsAdmin();
   const [board, setBoard] = useState<{ entries: BoardEntry[]; counted: boolean } | 'error' | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  // Memoized so the admin section below only recounts when the board itself reloads.
+  const live = useMemo(
+    () => (board && board !== 'error' ? board.entries.filter((e) => e.status === 'live') : []),
+    [board],
+  );
 
   const load = useCallback(async () => {
     const b = await fetchBoard();
@@ -114,7 +121,63 @@ export default function RouteBoard() {
         : null}
 
       <Button label="Ask for a route" onPress={() => router.push('/request-route')} />
+
+      {isAdmin && live.length > 0 ? <LaunchEmails live={live} /> : null}
     </ScrollView>
+  );
+}
+
+/**
+ * Admins only: the launch emails owed for live routes (D67). Each route shows how many
+ * people are waiting to hear, and sends their one email on request.
+ */
+function LaunchEmails({ live }: { live: BoardEntry[] }) {
+  const t = useTheme();
+  const [waiting, setWaiting] = useState<Record<string, number> | null>(null);
+
+  useEffect(() => {
+    let on = true;
+    Promise.all(live.map(async (e) => [`${e.from}-${e.to}`, await countWaiting(e.from, e.to)] as const)).then(
+      (pairs) => on && setWaiting(Object.fromEntries(pairs.filter(([, n]) => n > 0))),
+    );
+    return () => {
+      on = false;
+    };
+  }, [live]);
+
+  if (!waiting || Object.keys(waiting).length === 0) return null;
+
+  const send = (key: string, n: number) =>
+    Alert.alert(`Email ${n} ${n === 1 ? 'person' : 'people'}?`, 'Each gets one email saying the route is live, and their address is deleted.', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Send',
+        onPress: async () => {
+          const result = await sendLaunchEmails(key.toLowerCase());
+          if (typeof result === 'string') return Alert.alert('Not sent', result);
+          Alert.alert(
+            result.reason ? 'Not sent' : 'Sent',
+            result.reason ?? `${result.sent} sent${result.failed ? `, ${result.failed} failed` : ''}.`,
+          );
+          setWaiting((w) => (w ? { ...w, [key]: result.failed } : w));
+        },
+      },
+    ]);
+
+  return (
+    <ListGroup title="Launch emails (admin)">
+      {Object.entries(waiting).map(([key, n]) => (
+        <ListItem key={key}>
+          <View style={styles.rowText}>
+            <AppText style={[styles.country, { color: t.text }]}>{countryName(key.split('-')[1])}</AppText>
+            <AppText variant="small" style={{ color: t.textSecondary }}>
+              {n} waiting to hear it’s live
+            </AppText>
+          </View>
+          <TextLink label="Send" arrow={false} onPress={() => send(key, n)} />
+        </ListItem>
+      ))}
+    </ListGroup>
   );
 }
 
