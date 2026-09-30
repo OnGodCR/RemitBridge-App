@@ -19,19 +19,13 @@ speaker signs off on each (D69).
 
 What stands between this and a working product, in order:
 
-1. **The receipts migration isn't applied** (`20260930000000_receipts.sql`, from the CAC
-   merge). Angad runs `supabase db push` with ProtonVPN off (Claude's is refused as a
-   production deploy). It applies cleanly to a local Postgres with all local checks passing
-   (2026-09-30). Until then, scanning a receipt can't save anything.
-2. **No prices.** All eight Tier 1 providers' terms forbid automated access (D52), so
+1. **No prices.** All eight Tier 1 providers' terms forbid automated access (D52), so
    prices come from Add a price until one gives written permission. Wise said its
    Comparison API may be used (2026-09-30); the rest, follow up on 2026-10-12.
-3. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
+2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
-**Supabase:** project ref `gmzljjdnwndvqciqicbx`. Five of six migrations applied (route
-requests, metrics and WhatsApp went in on 2026-09-30; Angad pushed them). RLS smoke test:
-48 checks; 38 pass, and the 10 that fail are exactly the receipt tables and functions that
-the unapplied migration creates. Before the receipt merge it was 37 of 37. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`. All six migrations applied (Angad pushed
+the last three on 2026-09-30). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
 ## CAC receipt scanner (merged to `main` on 2026-09-30, PR #1)
@@ -46,8 +40,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
   and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
-- Angad's next steps: review, write the extractors, set `ANTHROPIC_API_KEY`, push the receipts
-  migration (the other two are in), make an EAS development build (scanning needs ML Kit, not in
+- Angad's next steps: review, write the extractors, set `ANTHROPIC_API_KEY`, make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).
 - Known limit: `scan-receipt` runs without JWT verification (scanning works signed out); the
   monthly model cap bounds spend.
@@ -78,17 +71,9 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 
 ## What's next (Angad)
 
-1. **Turn ProtonVPN off, push the receipts migration, then run the smoke test** from the
-   repo root. With the VPN on, connections to Supabase's database port are reset. The
-   first two pushed cleanly on 2026-09-30 (37/37). A dry run shows only
-   `20260930000000_receipts.sql` left, and it passed every local check.
-   ```bash
-   supabase db push
-   ```
-   ```bash
-   set -a; source mobile/.env.local; set +a; SUPABASE_URL=$EXPO_PUBLIC_SUPABASE_URL SUPABASE_PUBLISHABLE_KEY=$EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY supabase/tests/rls_smoke.sh
-   ```
-   Expect 48 passed. If one fails, the error names the check.
+1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
+   database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
+   and the smoke test (commands in README).
 2. **Enter the first prices** with Add a price (Account tab). Compare, the quote detail and
    the bot all start working the moment one is published.
 3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
