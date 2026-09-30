@@ -33,7 +33,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
   const cost = mid ? receiptCost(v, mid.rate) : null;
   const tax = taxCheck(v, mid?.rate ?? null);
   const route = ROUTES.find((r) => r.id === confirmed.route_id);
-  /** "1 USD = 17.3 MXN": money keeps US formatting in every language (D72). */
+  /** "1 USD = 17.3 MXN": money keeps US formatting in every language (D69). */
   const rate = (x: number) => `1 ${from} = ${x.toLocaleString('en-US', { maximumFractionDigits: 6 })} ${to}`;
   const gap = confirmed.comparison.gap;
   const quote = confirmed.comparison.quote;
