@@ -105,10 +105,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       are Angad's to send (the permission system stopped Claude after the first).
 - [ ] **Seven of the eight Tier 1 providers are manual** (terms checked 2026-09-28); Wise is
       automated with permission (D91). See `docs/MANUAL_RESEARCH.md`.
-- [ ] **Push the Wise provider-row migration** (`20260930010000_wise_adapter.sql`,
-      metadata only; passes every local check). Angad: `supabase db push`, VPN off.
-- [x] All six migrations pushed by Angad (route requests, metrics, WhatsApp, receipts);
-      smoke test 48/48, and the route board loads in the app. Done 2026-09-30.
+- [x] All seven migrations on `main` pushed by Angad (route requests, metrics, WhatsApp,
+      receipts, the Wise provider row); smoke test 48/48, and the route board loads in the
+      app. Done 2026-09-30. The cloud branch's two newer ones wait on its merge.
 - [x] Wise adapter on its Comparison API (D91): 20 live quotes passed the gate on the first
       local run; Scrape schedule on. Google brand verified and published: the sign-in page
       now says "RemitBridge App". Done 2026-09-30.
