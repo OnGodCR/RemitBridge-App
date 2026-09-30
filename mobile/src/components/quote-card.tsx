@@ -93,23 +93,25 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
   const markupCost = Math.max(0, q.total_cost - q.fee - q.pickup_charge / q.mid_market_rate);
   const pickupCost = q.pickup_charge / q.mid_market_rate;
   const received = Math.max(0, q.send_amount - q.total_cost);
+  // `amount`, not `value`: Reanimated's Babel plugin warns about any `x.value` inside an
+  // inline style, taking it for a shared value, and this bar renders once per quote.
   const parts = [
-    { key: 'received', label: 'Arrived', value: received, color: t.moneyReceived },
-    { key: 'fee', label: 'Fee', value: q.fee, color: t.moneyFee },
-    { key: 'markup', label: 'Markup', value: markupCost, color: t.moneyMarkup },
-    { key: 'pickup', label: 'Pickup', value: pickupCost, color: t.moneyPickup },
-  ].filter((p) => p.value > 0);
+    { key: 'received', label: 'Arrived', amount: received, color: t.moneyReceived },
+    { key: 'fee', label: 'Fee', amount: q.fee, color: t.moneyFee },
+    { key: 'markup', label: 'Markup', amount: markupCost, color: t.moneyMarkup },
+    { key: 'pickup', label: 'Pickup', amount: pickupCost, color: t.moneyPickup },
+  ].filter((p) => p.amount > 0);
 
   return (
     <View
       accessible
       accessibilityLabel={
         'Where the money went: ' +
-        parts.map((p) => `${p.label} ${moneySpoken(p.value, q.send_currency)}`).join(', ')
+        parts.map((p) => `${p.label} ${moneySpoken(p.amount, q.send_currency)}`).join(', ')
       }>
       <View style={[styles.bar, { backgroundColor: t.muted }]}>
         {parts.map((p) => (
-          <View key={p.key} style={{ flex: p.value, backgroundColor: p.color }} />
+          <View key={p.key} style={{ flex: p.amount, backgroundColor: p.color }} />
         ))}
       </View>
       <View style={styles.legend}>
@@ -117,7 +119,7 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
           <View key={p.key} style={styles.legendItem}>
             <View style={[styles.dot, { backgroundColor: p.color }]} />
             <AppText variant="small" muted>
-              {p.label} {money(p.value, q.send_currency)}
+              {p.label} {money(p.amount, q.send_currency)}
             </AppText>
           </View>
         ))}
