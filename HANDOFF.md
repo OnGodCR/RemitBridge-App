@@ -39,7 +39,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   Function; the Scan a receipt screen with confirmation and result; the funding method and
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
-  and `supabase/tests/local_migrations.sh` (76 checks, also in CI). The live smoke test has
+  and `supabase/tests/local_migrations.sh` (77 checks, also in CI). The live smoke test has
   52 checks; the 4 for the photo queue and the observatory need their migrations.
 - The model fallback is Qwen3 VL 32B through OpenRouter (D92), no longer Claude.
 - Phase 4 done (2026-09-30): the accuracy benchmark in `benchmark/` (D85, D93). 60 synthetic
