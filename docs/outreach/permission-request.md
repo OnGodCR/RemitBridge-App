@@ -50,7 +50,7 @@ appears as the media contact on the company's own press releases.
 
 | Provider | Send to | Where it's published | Sent | Reply |
 |---|---|---|---|---|
-| Wise | comparison@wise.com | Wise Platform Comparison API docs (the address for comparison sites) | 2026-09-28 | waiting |
+| Wise | comparison@wise.com | Wise Platform Comparison API docs (the address for comparison sites) | 2026-09-28 | **Replied 2026-09-30** (Simon Bruins, simon.bruins@wise.com): the current Comparison API documentation is correct and we can use it, "if you are a considerate user it shouldn't be a problem". Later API versions will require authentication, so keep up with the docs. He also suggested partnerwise@wise.com for API questions and their affiliate program; the affiliate part doesn't apply (we never use affiliate links). Not answered yet; whether to build a Wise API adapter is Angad's call. |
 | Remitly | press@remitly.com | page: news.remitly.com, Contact | 2026-09-28 | waiting |
 | MoneyGram | media@moneygram.com | page: corporate.moneygram.com/contact, "Media inquiries" | 2026-09-28 | waiting |
 | Western Union | media@westernunion.com | page: corporate.westernunion.com/media-contacts.html (our fetch was blocked; confirmed through search of that page) | 2026-09-28 | waiting |
