@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-29 (evening)
+**Last updated:** 2026-09-30
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -28,6 +28,15 @@ What stands between this and a working product, in order:
 test: 26/26 passed on the applied schema; it now has 37 checks, 11 of which need the two
 new migrations. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
+
+## What changed on 2026-09-30
+
+- Angad is entering the app in the 2026 Congressional App Challenge (internal deadline
+  2026-10-23) with a receipt scanner and the features around it (D69). Phase 1, the gap
+  report, is in `docs/cac-gap-report.md`. **Next: Angad answers its 15 decisions**, then
+  Phase 2 (data model, redaction, parser harness with his TODOs, LLM fallback, validation).
+- `docs/AI_USAGE.md` started: every session's files, for the CAC's AI-use disclosure.
+- This work is on branch `claude/gallant-hopper-51zhhm`, not `main`, until Angad merges it.
 
 ## What changed on 2026-09-29
 

@@ -537,3 +537,23 @@ The Hindi is Claude's and needs Angad's read before launch. To go live Angad nee
 business account and app, a WhatsApp number, a system-user token, five secrets (listed at
 the top of the function), the migrations pushed, the function deployed, and the webhook
 registered in Meta.
+
+---
+
+## 2026-09-30: the Congressional App Challenge build
+
+**D69. Receipt scanning is in scope, for the 2026 Congressional App Challenge (internal
+deadline 2026-10-23).** Angad asked for a receipt scanner (on-device OCR and redaction, a
+rule-based parser, an LLM fallback for missing or low-confidence fields, validation with the
+one formula, a confirmation screen), a scan result screen (true cost, advertised vs. paid,
+the 1% federal remittance tax check, "next time" into Compare), a funding-method input in
+TrueCost and Compare, a disclosure check, WhatsApp photo intake, receipt tables, a receipt
+observatory, and an accuracy benchmark. It's built in phases, and each one stops for his
+review. Rules that come with it: only the listed features; the one formula everywhere, never
+a second version; new strings in English and Hindi; no names, addresses, phone numbers or
+account numbers stored or logged; tests for everything; a running log in `docs/AI_USAGE.md`
+for the CAC's AI-use disclosure. **Angad writes the parser's field-extraction heuristics
+himself.** Claude builds only the interface, types, provider templates, test harness and
+fixture loading, and leaves the heuristics as marked TODO stubs. The gap report
+(`docs/cac-gap-report.md`) lists the decisions this needs before Phase 2.
+*Supersedes:* D30's "no receipt scanning for now" (bank connections stay out).
