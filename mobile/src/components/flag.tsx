@@ -44,13 +44,22 @@ const FLAGS: Record<string, ImageSourcePropType> = {
   BR: require('../../assets/flags/br.png'),
   PE: require('../../assets/flags/pe.png'),
   KR: require('../../assets/flags/kr.png'),
+  UA: require('../../assets/flags/ua.png'),
+  EC: require('../../assets/flags/ec.png'),
+  NI: require('../../assets/flags/ni.png'),
+  UG: require('../../assets/flags/ug.png'),
+  SO: require('../../assets/flags/so.png'),
+  ER: require('../../assets/flags/er.png'),
+  CU: require('../../assets/flags/cu.png'),
+  AF: require('../../assets/flags/af.png'),
+  VE: require('../../assets/flags/ve.png'),
 };
 
 export function Flag({ code, height = 18, dim }: { code: string; height?: number; dim?: boolean }) {
   const t = useTheme();
   const source = FLAGS[code.toUpperCase()];
-  // No bundled flag yet (some request-only countries): a plain 3:2 tile in the flag's place,
-  // so the row keeps its shape. The name beside it says which country it is.
+  // A country added to lib/countries.ts before its flag: a plain 3:2 tile in the flag's
+  // place, so the row keeps its shape. The name beside it says which country it is.
   if (!source) {
     return (
       <View
