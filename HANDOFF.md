@@ -25,8 +25,9 @@ What stands between this and a working product, in order:
    automated access (D52): Add a price, or follow up on 2026-10-12.
 2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
-**Supabase:** project ref `gmzljjdnwndvqciqicbx`. All six migrations applied (Angad pushed
-the last three on 2026-09-30). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`. All seven migrations on `main` applied
+(Angad pushed the last four on 2026-09-30). The cloud branch's two (`20260930020000`,
+`20260930030000`) wait on its merge. RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
 ## CAC receipt scanner (merged to `main` on 2026-09-30, PR #1)
@@ -75,8 +76,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
-2. **More prices** with Add a price (Account tab), for providers other than Wise. Also
-   push `20260930010000_wise_adapter.sql` (provider-row metadata; passes local checks).
+2. **More prices** with Add a price (Account tab), for providers other than Wise.
 3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
    set it with `supabase secrets set RESEND_API_KEY=...` in your own terminal, then
    `supabase functions deploy notify-route-launch --use-api`.
