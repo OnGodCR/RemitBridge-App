@@ -4,6 +4,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { TEMPLATES } from '@remitbridge/receipt';
 
+import { ObservatoryArt } from '@/components/illustrations';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { Answer, Breakdown, Section, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText, TextLink } from '@/components/ui';
@@ -47,7 +48,7 @@ export default function ObservatoryScreen() {
     new Date(`${ym}-01T12:00:00Z`).toLocaleString(language.locale, { month: 'long', year: 'numeric', timeZone: 'UTC' });
 
   return (
-    <ToolScreen intro={o.intro}>
+    <ToolScreen intro={o.intro} art={<ObservatoryArt />}>
       {data === null ? (
         <ActivityIndicator accessibilityLabel={o.early} />
       ) : data === 'error' ? (

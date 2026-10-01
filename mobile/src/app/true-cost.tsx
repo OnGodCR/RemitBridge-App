@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { TrueCostArt } from '@/components/illustrations';
 import { ChoiceList } from '@/components/choice-list';
 import { CurrencySelect } from '@/components/select-field';
 import { Answer, Breakdown, Field, Fields, Section, SourceNote, ToolScreen } from '@/components/tool';
@@ -106,7 +107,7 @@ export default function TrueCostScreen() {
   };
 
   return (
-    <ToolScreen intro={c.intro}>
+    <ToolScreen intro={c.intro} art={<TrueCostArt />}>
       <Section title={c.currencies}>
         <View style={styles.pair}>
           <CurrencySelect label={c.sent} value={from} onChange={setFrom} />

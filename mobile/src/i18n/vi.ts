@@ -414,7 +414,7 @@ export const vi: Copy = {
   },
 
   fairRate: {
-    intro: 'Tỷ giá trung bình thị trường là thước đo trung thực. Mỗi điểm mà một mức giá thấp hơn đều bị trừ vào tiền bạn gửi.',
+    intro: 'Mỗi điểm thấp hơn tỷ giá trung bình thị trường đều bị trừ vào tiền bạn gửi.',
     yourTransfer: 'Lần chuyển tiền của bạn',
     amountToSend: 'Số tiền gửi',
     markup: 'Phần chênh lệch tỷ giá',
@@ -431,7 +431,7 @@ export const vi: Copy = {
   },
 
   trueCost: {
-    intro: 'Nhập thông tin trên biên lai của bạn. Xem chi phí ẩn trong tỷ giá, không chỉ khoản phí.',
+    intro: 'Nhập thông tin biên lai. Xem chi phí ẩn trong tỷ giá.',
     currencies: 'Tiền tệ',
     sent: 'Đã gửi',
     received: 'Đã nhận',
@@ -478,7 +478,7 @@ export const vi: Copy = {
   },
 
   yearlyCost: {
-    intro: 'Cùng một lần gửi, lặp lại cả năm. Xem tổng cộng là bao nhiêu với chi phí của bạn và với các mức tham chiếu.',
+    intro: 'Cùng một lần gửi, cả năm. Tổng cộng là bao nhiêu?',
     yourTransfers: 'Các lần gửi của bạn',
     amountEach: 'Số tiền mỗi lần',
     yourCost: 'Tổng chi phí của bạn',
@@ -502,7 +502,7 @@ export const vi: Copy = {
   },
 
   rateHistory: {
-    intro: 'Tỷ giá trung bình thị trường, theo từng ngày. Đường đi lên nghĩa là mỗi đô la đổi được nhiều hơn.',
+    intro: 'Tỷ giá trung bình thị trường, theo từng ngày. Đi lên là mỗi đô la đổi được nhiều hơn.',
     pair: 'Cặp tiền tệ',
     failed: 'Chưa tải được lịch sử. Hãy kiểm tra kết nối rồi thử lại.',
     notEnough: 'Chưa có đủ số ngày được công bố cho cặp tiền tệ này.',
@@ -520,7 +520,7 @@ export const vi: Copy = {
   },
 
   scamCheck: {
-    intro: 'Tám câu hỏi về hoàn cảnh của bạn, lần lượt từng câu. Câu trả lời của bạn không rời khỏi điện thoại.',
+    intro: 'Tám câu hỏi nhanh. Câu trả lời của bạn ở lại trên điện thoại.',
     questions: {
       'payment-method': {
         ask: 'Bạn có bị yêu cầu trả bằng thẻ quà tặng, tiền mã hóa, máy ATM tiền mã hóa, hoặc chuyển khoản cho một người bạn chưa từng gặp mặt không?',
@@ -718,7 +718,7 @@ export const vi: Copy = {
   },
 
   observatory: {
-    intro: 'Số tiền mọi người thực sự đã trả, từ các biên lai họ quét và chọn chia sẻ cho nghiên cứu.',
+    intro: 'Số tiền mọi người thực sự đã trả, từ các biên lai họ chọn chia sẻ.',
     early: 'Kết quả ban đầu',
     sample: (n: number, since: string | null) => `${n} biên lai được chia sẻ${since ? ` từ ${since}` : ''}`,
     tooFew: (min: number) =>

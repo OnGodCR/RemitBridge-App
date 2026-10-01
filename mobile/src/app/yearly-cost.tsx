@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { YearlyCostArt } from '@/components/illustrations';
 import { Answer, Breakdown, Field, Fields, Section, SourceNote, ToolScreen } from '@/components/tool';
 import { Segmented } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
@@ -41,7 +42,7 @@ export default function YearlyCostScreen() {
   const overTarget = hasYours && yours > FIGURES.targetPct ? at(yours - FIGURES.targetPct) : 0;
 
   return (
-    <ToolScreen intro={y.intro}>
+    <ToolScreen intro={y.intro} art={<YearlyCostArt />}>
       <Section title={y.yourTransfers}>
         <Fields>
           <Field label={y.amountEach} unit="USD" value={amount} onChange={setAmount} />

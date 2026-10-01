@@ -415,7 +415,7 @@ export const es: Copy = {
   },
 
   fairRate: {
-    intro: 'El tipo de cambio de mercado es la medida honesta. Cada punto que una oferta está por debajo sale de tu envío.',
+    intro: 'Cada punto por debajo del tipo de cambio de mercado sale de tu envío.',
     yourTransfer: 'Tu envío',
     amountToSend: 'Monto a enviar',
     markup: 'Margen en el tipo de cambio',
@@ -432,7 +432,7 @@ export const es: Copy = {
   },
 
   trueCost: {
-    intro: 'Escribe lo que dice tu recibo. Mira el costo escondido en el tipo de cambio, no solo la comisión.',
+    intro: 'Escribe lo de tu recibo. Mira el costo escondido en el tipo de cambio.',
     currencies: 'Monedas',
     sent: 'Enviaste',
     received: 'Recibieron',
@@ -478,7 +478,7 @@ export const es: Copy = {
   },
 
   yearlyCost: {
-    intro: 'El mismo envío, todo el año. Mira cuánto suma con tu costo y con las cifras de referencia.',
+    intro: 'El mismo envío, todo el año. ¿Cuánto suma?',
     yourTransfers: 'Tus envíos',
     amountEach: 'Monto de cada envío',
     yourCost: 'Tu costo total',
@@ -502,7 +502,7 @@ export const es: Copy = {
   },
 
   rateHistory: {
-    intro: 'El tipo de cambio de mercado, día a día. Si la línea sube, cada dólar compra más.',
+    intro: 'El tipo de cambio de mercado, día a día. Si sube, cada dólar compra más.',
     pair: 'Monedas',
     failed: 'No se pudo cargar el historial. Revisa tu conexión y vuelve a intentar.',
     notEnough: 'Todavía no hay suficientes días publicados para estas monedas.',
@@ -520,7 +520,7 @@ export const es: Copy = {
   },
 
   scamCheck: {
-    intro: 'Ocho preguntas sobre tu situación, una por una. Nada de lo que respondas sale de tu teléfono.',
+    intro: 'Ocho preguntas rápidas. Tus respuestas no salen de tu teléfono.',
     questions: {
       'payment-method': {
         ask: '¿Te pidieron pagar con una tarjeta de regalo, con criptomonedas, en un cajero de criptomonedas, o con una transferencia a alguien que nunca has visto en persona?',
@@ -718,7 +718,7 @@ export const es: Copy = {
   },
 
   observatory: {
-    intro: 'Lo que la gente pagó de verdad, según recibos que escanearon y decidieron compartir para investigación.',
+    intro: 'Lo que la gente pagó de verdad, según recibos que decidieron compartir.',
     early: 'Primeros resultados',
     sample: (n: number, since: string | null) =>
       `${n} recibo${n === 1 ? '' : 's'} compartido${n === 1 ? '' : 's'}${since ? ` desde ${since}` : ''}`,

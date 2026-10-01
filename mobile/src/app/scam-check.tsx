@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 
+import { ScamCheckArt } from '@/components/illustrations';
 import { Section, ToolScreen } from '@/components/tool';
 import { AppText, Button } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
@@ -70,7 +71,7 @@ export default function ScamCheckScreen() {
   const top = flagged.length ? flagged[0].risk : 0;
 
   return (
-    <ToolScreen intro={sc.intro}>
+    <ToolScreen intro={sc.intro} art={<ScamCheckArt />}>
       <View
         style={styles.progress}
         accessible
