@@ -1238,3 +1238,12 @@ ease-out, and off when the phone asks for reduced motion. In `components/motion-
 - **Segmented choices** (delivery method, Modules | Library): one green thumb slides to the
   choice. When stacked for large text, the chosen row is filled as before.
 Tests run with the stand-ins Reanimated ships (`mobile/jest.setup.js`).
+
+**D122. Learn's path climbs a mountain** (Angad, 2026-10-01: "add a background to the learn",
+then "make the learn icons more centered"). Behind the modules, a broad mint mountain with
+its shaded side drawn the way the app's drawings show depth (D109), rolling hills at its
+foot where module 1 sits, and a few dots in the sky; mint tokens only, so dark mode
+follows, and it scrolls with the path (`LearnBackdrop` in `components/learn-path.tsx`).
+The dashed line is green at low opacity so it reads on the mint, and each module's name
+sits on a small card so it reads on the scene. The path's sideways swing is halved (at most
+52pt either side of the middle), so the modules zigzag gently near the centre.
