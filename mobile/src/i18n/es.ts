@@ -378,6 +378,7 @@ export const es: Copy = {
 
   learn: {
     title: 'Aprender',
+    library: 'Biblioteca',
     modulesTitle: 'Módulos',
     terms: (n: number) => (n === 1 ? '1 término' : `${n} términos`),
     tryIt: (tool: string) => `Pruébalo: ${tool}`,

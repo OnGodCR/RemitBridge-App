@@ -313,6 +313,7 @@ with your name and the date.
 | tools.yearlyCostSub | A year of sending | साल भर का खर्च | |
 | tools.rateHistorySub | The rate, day by day | रेट, दिन-ब-दिन | |
 | learn.title | Learn | जानें | |
+| learn.library | Library | लाइब्रेरी | |
 | learn.modulesTitle | Modules | मॉड्यूल | |
 | learn.terms | {n} terms | {n} शब्द | |
 | learn.tryIt | Try it: {tool} | आज़माएँ: {tool} | |

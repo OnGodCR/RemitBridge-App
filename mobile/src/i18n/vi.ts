@@ -377,6 +377,7 @@ export const vi: Copy = {
 
   learn: {
     title: 'Tìm hiểu',
+    library: 'Thư viện',
     modulesTitle: 'Học phần',
     terms: (n: number) => (n === 1 ? '1 thuật ngữ' : `${n} thuật ngữ`),
     tryIt: (tool: string) => `Thử ngay: ${tool}`,

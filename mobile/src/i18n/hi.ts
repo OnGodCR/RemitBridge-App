@@ -378,6 +378,7 @@ export const hi: Copy = {
 
   learn: {
     title: 'जानें',
+    library: 'लाइब्रेरी',
     modulesTitle: 'मॉड्यूल',
     terms: (n: number) => (n === 1 ? '1 शब्द' : `${n} शब्द`),
     tryIt: (tool: string) => `आज़माएँ: ${tool}`,

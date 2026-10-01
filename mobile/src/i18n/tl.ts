@@ -378,6 +378,7 @@ export const tl: Copy = {
 
   learn: {
     title: 'Matuto',
+    library: 'Aklatan',
     modulesTitle: 'Mga module',
     terms: (n: number) => (n === 1 ? '1 termino' : `${n} termino`),
     tryIt: (tool: string) => `Subukan: ${tool}`,

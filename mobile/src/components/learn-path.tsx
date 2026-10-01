@@ -1,5 +1,5 @@
 import { SymbolView } from 'expo-symbols';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 
@@ -12,15 +12,16 @@ import { useCopy } from '@/i18n';
 import { moduleProgress } from '@/lib/learn-progress';
 
 /**
- * Learn's modules as a path (DECISIONS.md D107), after Duolingo's: one node per module,
- * winding down the screen, joined by a dashed line. Each node's ring fills as its lessons
+ * Learn's modules as a path (DECISIONS.md D107, D111), after Duolingo's: one node per
+ * module, starting at the bottom and winding up the screen, joined by a dashed line. Each node's ring fills as its lessons
  * are read; a finished module gets a tick; the next one carries an "Up next" tag. Nothing
  * is locked: any module opens any time.
  */
 const NODE = 92;
 /** How far the rim shows below a node. */
 const RIM = 6;
-const ROW = 176;
+// Room for a node, its label below and the next tag above without touching.
+const ROW = 200;
 /** Sideways swing for each node, as a share of the room either side. */
 const SWING = [0, 0.7, 1, 0.7, 0, -0.7, -1, -0.7];
 
@@ -29,17 +30,29 @@ export function LearnPath({
   learned,
   next,
   onOpen,
+  onNextAt,
 }: {
   modules: Module[];
   learned: Set<string>;
   next: ModuleId | null;
   onOpen: (m: Module) => void;
+  /** Where the next module sits, from the top of the path, so the screen can scroll to it. */
+  onNextAt?: (y: number) => void;
 }) {
   const t = useTheme();
   const [width, setWidth] = useState(0);
   const amp = Math.max(0, Math.min(96, width / 2 - NODE / 2 - Spacing.three));
-  const centers = modules.map((_, i) => ({ x: width / 2 + SWING[i % SWING.length] * amp, y: i * ROW + 40 + NODE / 2 }));
+  // The first module at the bottom, climbing up (D111).
+  const centers = modules.map((_, i) => ({
+    x: width / 2 + SWING[i % SWING.length] * amp,
+    y: (modules.length - 1 - i) * ROW + 48 + NODE / 2,
+  }));
   const height = modules.length * ROW + 24;
+  const nextIndex = modules.findIndex((m) => m.id === next);
+  const nextY = width > 0 ? centers[nextIndex >= 0 ? nextIndex : 0].y : null;
+  useEffect(() => {
+    if (nextY !== null) onNextAt?.(nextY);
+  }, [nextY, onNextAt]);
 
   return (
     <View style={{ height }} onLayout={(e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width)}>
@@ -51,7 +64,7 @@ export function LearnPath({
               return (
                 <Path
                   key={i}
-                  d={`M${a.x} ${a.y} C${a.x} ${a.y + ROW / 2} ${c.x} ${c.y - ROW / 2} ${c.x} ${c.y}`}
+                  d={`M${a.x} ${a.y} C${a.x} ${a.y - ROW / 2} ${c.x} ${c.y + ROW / 2} ${c.x} ${c.y}`}
                   stroke={t.border}
                   strokeWidth={4}
                   strokeDasharray="2 10"
