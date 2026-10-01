@@ -18,6 +18,7 @@ import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
 import { fullName, saveName } from '@/lib/name';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
+import { useTabFocus } from '@/lib/current-tab';
 
 /**
  * Account: what's saved (comparisons, then receipts), the admin tools for admins, the
@@ -25,6 +26,7 @@ import { track } from '@/lib/track';
  * (D63); actions that change the account stay buttons, because they aren't places to go.
  */
 export default function AccountScreen() {
+  useTabFocus('/account');
   const t = useTheme();
   const copy = useCopy();
   const a = copy.account;

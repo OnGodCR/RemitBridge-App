@@ -12,6 +12,7 @@ import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AccessibilityProvider } from '@/components/accessibility';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -44,15 +45,18 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) return null;
 
   return (
-    <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AccessibilityProvider>
-        <LanguageProvider>
-          <AuthProvider>
-            <Navigator />
-          </AuthProvider>
-        </LanguageProvider>
-      </AccessibilityProvider>
-    </ThemeProvider>
+    // Gestures (the swipe between tabs) need one root for the whole app.
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <AccessibilityProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <Navigator />
+            </AuthProvider>
+          </LanguageProvider>
+        </AccessibilityProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 

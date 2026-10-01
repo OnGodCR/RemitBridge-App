@@ -15,6 +15,7 @@ import { ListGroup, ListRow } from '@/components/list-row';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
+import { useTabFocus } from '@/lib/current-tab';
 
 /**
  * The tools, rebuilt from the website (DECISIONS.md D58), grouped by when you'd reach for
@@ -23,6 +24,7 @@ import { useCopy } from '@/i18n';
  * (D101).
  */
 export default function ToolsScreen() {
+  useTabFocus('/tools');
   const t = useTheme();
   const copy = useCopy();
   const groups: { title: string; tools: { href: Href; title: string; subtitle: string; art: ReactNode }[] }[] = [

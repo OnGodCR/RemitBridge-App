@@ -14,6 +14,7 @@ import { canScan, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
 let mockSavedLanguage: string | null = null;
+jest.mock('@/lib/current-tab', () => ({ useTabFocus: () => undefined, currentTab: () => '/' }));
 jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, setLanguage: () => undefined } }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('@/lib/auth', () => ({ useAuth: () => ({ session: null }) }));
