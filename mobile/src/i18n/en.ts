@@ -29,7 +29,7 @@ export const en = {
     noMailBody: (address: string) => `This phone has no email app set up. Write to us at ${address} from any email.`,
   },
 
-  tabs: { compare: 'Compare', tools: 'Tools', learn: 'Learn', account: 'Account' },
+  tabs: { scan: 'Scan', compare: 'Compare', tools: 'Tools', learn: 'Learn', account: 'Account' },
 
   /** Native header titles of the pushed screens. */
   titles: {
@@ -345,23 +345,19 @@ export const en = {
   },
 
   tools: {
-    scan: 'Scan a receipt',
-    scanSub: 'Read a receipt with your camera, with personal details covered first',
     title: 'Tools',
-    subtitle: 'Check a rate, a receipt, or a request.',
     before: 'Before you send',
     after: 'After you send',
     rates: 'Rates',
-    fairRateSub: 'What the mid-market rate would give you',
-    scamCheckSub: 'Eight questions before you send to a stranger',
-    trueCostSub: 'Check a receipt for the cost you didn’t see',
-    yearlyCostSub: 'What a year of sending adds up to',
-    rateHistorySub: 'The mid-market rate, day by day',
+    fairRateSub: 'Is your rate fair?',
+    scamCheckSub: 'Before you pay a stranger',
+    trueCostSub: 'Check a receipt by hand',
+    yearlyCostSub: 'A year of sending',
+    rateHistorySub: 'The rate, day by day',
   },
 
   learn: {
     title: 'Learn',
-    subtitle: 'How it works, and the words behind it.',
     howItWorks: 'How it works',
     feeMarkup: 'Fee + hidden markup',
     feeMarkupBody: 'Total cost is the fee plus the markup hidden in the exchange rate.',
@@ -577,8 +573,10 @@ export const en = {
 
   /** Scanning a receipt (DECISIONS.md D72-D90). */
   scan: {
-    intro:
-      'Take a photo of a transfer receipt. The app reads it on your phone and covers names, addresses, and phone and account numbers before anything is sent.',
+    heroTitle: 'What did your transfer really cost?',
+    heroSub: 'Scan the receipt. See the fee and the hidden markup.',
+    steps: ['Snap the receipt', 'Your details get covered', 'See the real cost'],
+    privacy: 'Read on your phone. Names and numbers are covered before anything is sent.',
     takePhoto: 'Take a photo',
     choosePhoto: 'Choose a photo',
     needsBuild: 'Scanning needs the full build of the app. It doesn’t work in Expo Go.',

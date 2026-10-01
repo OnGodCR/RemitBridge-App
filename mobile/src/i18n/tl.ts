@@ -25,7 +25,7 @@ export const tl: Copy = {
     noMailBody: (address) => `Walang naka-set up na email app sa phone na ito. Sumulat sa ${address} gamit ang kahit anong email.`,
   },
 
-  tabs: { compare: 'Ikumpara', tools: 'Tools', learn: 'Matuto', account: 'Account' },
+  tabs: { scan: 'I-scan', compare: 'Ikumpara', tools: 'Tools', learn: 'Matuto', account: 'Account' },
 
   titles: {
     scan: 'I-scan ang resibo',
@@ -361,23 +361,19 @@ export const tl: Copy = {
   },
 
   tools: {
-    scan: 'I-scan ang resibo',
-    scanSub: 'Basahin ang resibo gamit ang camera, tinatakpan muna ang personal na detalye',
     title: 'Tools',
-    subtitle: 'Suriin ang rate, resibo, o hiling na magpadala ng pera.',
     before: 'Bago magpadala',
     after: 'Pagkatapos magpadala',
     rates: 'Mga rate',
-    fairRateSub: 'Magkano ang ibibigay ng mid-market rate',
-    scamCheckSub: 'Walong tanong bago magpadala sa taong hindi mo kilala',
-    trueCostSub: 'Suriin ang resibo para makita ang nakatagong gastos',
-    yearlyCostSub: 'Magkano ang gastos sa pagpapadala sa loob ng isang taon',
-    rateHistorySub: 'Ang mid-market rate, araw-araw',
+    fairRateSub: 'Patas ba ang rate mo?',
+    scamCheckSub: 'Bago magbayad sa estranghero',
+    trueCostSub: 'Suriin ang resibo nang mano-mano',
+    yearlyCostSub: 'Isang taon ng padala',
+    rateHistorySub: 'Ang rate, araw-araw',
   },
 
   learn: {
     title: 'Matuto',
-    subtitle: 'Paano ito gumagana, at ano ang ibig sabihin ng mga termino.',
     howItWorks: 'Paano ito gumagana',
     feeMarkup: 'Fee + nakatagong markup',
     feeMarkupBody: 'Ang kabuuang gastos ay ang fee at ang markup na nakatago sa rate.',
@@ -596,8 +592,10 @@ export const tl: Copy = {
   },
 
   scan: {
-    intro:
-      'Kunan ng litrato ang resibo ng padala. Binabasa ito ng app sa phone mo at tinatakpan ang mga pangalan, address, at phone at account number bago may maipadala.',
+    heroTitle: 'Magkano talaga ang nagastos sa padala mo?',
+    heroSub: 'I-scan ang resibo. Tingnan ang fee at ang nakatagong markup.',
+    steps: ['Kunan ang resibo', 'Tinatakpan ang detalye mo', 'Tingnan ang tunay na gastos'],
+    privacy: 'Binabasa sa phone mo. Tinatakpan ang mga pangalan at number bago may maipadala.',
     takePhoto: 'Kumuha ng litrato',
     choosePhoto: 'Pumili ng litrato',
     needsBuild: 'Kailangan ng buong bersyon ng app para mag-scan. Hindi ito gumagana sa Expo Go.',

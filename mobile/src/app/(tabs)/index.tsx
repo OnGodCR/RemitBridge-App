@@ -1,173 +1,267 @@
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { Image } from 'expo-image';
+import { SymbolView, type SFSymbol } from 'expo-symbols';
+import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
+
 import {
-  ActivityIndicator,
-  Alert,
-  Keyboard,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+  detectPii,
+  redactionBoxes,
+  redactPage,
+  toggleWord,
+  type ConfirmResponse,
+  type OcrPage,
+  type Redaction,
+  type ScanResponse,
+} from '@remitbridge/receipt';
 
-import { FUNDING_METHODS, type FundingMethod } from '@remitbridge/formula';
-
-import { ChoiceList } from '@/components/choice-list';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
-import { QuoteCard } from '@/components/quote-card';
-import { RouteNotCovered } from '@/components/route-request';
-import { CountrySelect } from '@/components/select-field';
-import { AppText, Button, Segmented, TextLink, useLargeText } from '@/components/ui';
+import { IconTile } from '@/components/list-row';
+import { ReceiptConfirm, type Answers } from '@/components/receipt-confirm';
+import { ReceiptResult } from '@/components/receipt-result';
+import { AppText, Button, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { announce } from '@/lib/announce';
-import { saveComparison } from '@/lib/comparisons';
-import { RECEIVING, SENDING } from '@/lib/countries';
-import { agoIn, useCopy, useLanguage } from '@/i18n';
-import { money } from '@/lib/format';
-import { prefs } from '@/lib/prefs';
-import { fundingWord } from '@/lib/receipt-format';
-import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib/quotes';
-import { checkedAmountFor, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
+import { useCopy } from '@/i18n';
+import type { Copy } from '@/i18n/en';
+import { isoDay } from '@/lib/fx';
+import { canScan, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
+import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { track } from '@/lib/track';
 
-
-
-const MAX_AMOUNT = 50000;
-
-/** Digits and at most one decimal point with two places: "1250.5" yes, "12.345" no. */
-function cleanAmount(text: string): string {
-  const [whole, ...rest] = text.replace(/[^\d.]/g, '').split('.');
-  const trimmed = whole.replace(/^0+(?=\d)/, '');
-  return rest.length ? `${trimmed}.${rest.join('').slice(0, 2)}` : trimmed;
-}
-
 /**
- * Compare. It can be opened on a route, amount and method (a saved comparison, TrueCost's
- * "compare today"), passed as params with a fresh `at` each time: the key remounts the
- * screen, so a second open of the same saved comparison still resets anything changed since.
+ * Scan a receipt (DECISIONS.md D72-D75), the app's first tab since D101. The photo is read and redacted on the phone; the
+ * person sees exactly the redacted image that would be sent, can cover more, chooses
+ * whether it may be kept for research, and only then is anything sent.
+ *
+ * Then the confirmation screen (every value outlined where it was read, the unsure ones
+ * first, any of them correctable) and the result (true cost, advertised vs. paid, the tax
+ * check, next time).
  */
-export default function CompareScreen() {
-  const p = useLocalSearchParams<{ route?: string; amount?: string; method?: string; at?: string }>();
-  return <Compare key={p.at ?? 'home'} routeId={p.route} amount={p.amount} method={p.method} />;
-}
 
-/** Any route that starts in this country. Only the US for now (PRD 6.5). */
-const sendsFrom = (code: string) => ROUTES.some((r) => r.id.startsWith(`${code.toLowerCase()}-`));
+type Step =
+  | { kind: 'start'; message?: string }
+  | { kind: 'reading' }
+  | { kind: 'preview'; photo: PreparedPhoto; page: OcrPage; hidden: Redaction[]; redacted: string; sending: boolean; message?: string }
+  | {
+      kind: 'confirm';
+      photo: PreparedPhoto;
+      page: OcrPage;
+      redacted: string;
+      result: ScanResponse;
+      sending: boolean;
+      message?: string;
+    }
+  | { kind: 'result'; id: string; confirmed: ConfirmResponse; deleted: boolean };
 
-function Compare(initial: { routeId?: string; amount?: string; method?: string }) {
+export default function ScanScreen() {
   const t = useTheme();
   const copy = useCopy();
-  const start =
-    ROUTES.find((r) => r.id === initial.routeId) ?? ROUTES.find((r) => r.id === prefs.homeRoute()) ?? ROUTES[0];
-  const [from, setFrom] = useState(() => start.id.split('-')[0].toUpperCase());
-  const [to, setTo] = useState(() => start.id.split('-')[1].toUpperCase());
-  const route = routeFor(from, to);
-  const [amountText, setAmountText] = useState(() => cleanAmount(initial.amount ?? '') || '500');
-  const amount = Math.min(Number(amountText) || 0, MAX_AMOUNT);
-  const [method, setMethod] = useState<DeliveryMethod>(() =>
-    start.deliveryMethods.find((m) => m === initial.method) ?? start.deliveryMethods[0],
-  );
-  const activeMethod = route && !route.deliveryMethods.includes(method) ? route.deliveryMethods[0] : method;
-  // How the sender pays (D90): prices are checked per payment method, so
-  // only that method's show, and a cash-type method adds the 1% federal tax to the total cost.
-  const [funding, setFunding] = useState<FundingMethod>('bank_account');
-  const checked = checkedAmountFor(amount);
-  const quotes = useQuotes(route, checked, activeMethod);
-  const large = useLargeText();
+  const s = copy.scan;
+  const [step, setStep] = useState<Step>({ kind: 'start' });
+  const [consent, setConsent] = useState(false);
+
+  useEffect(() => track('tool_opened', { tool: 'receipt_scan' }), []);
+
+  const pick = async (source: 'camera' | 'library') => {
+    // Expo Go has no ML Kit: the card still shows, so the screen can be seen as it is,
+    // and a press says why nothing happens.
+    if (!canScan()) {
+      setStep({ kind: 'start', message: s.needsBuild });
+      return;
+    }
+    const permission =
+      source === 'camera' ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      setStep({ kind: 'start', message: source === 'camera' ? s.cameraDenied : s.photosDenied });
+      return;
+    }
+    const options: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], quality: 1, exif: false };
+    const picked = source === 'camera' ? await ImagePicker.launchCameraAsync(options) : await ImagePicker.launchImageLibraryAsync(options);
+    const asset = picked.canceled ? null : picked.assets[0];
+    if (!asset) return;
+
+    setStep({ kind: 'reading' });
+    try {
+      const photo = await preparePhoto(asset.uri, asset.width, asset.height);
+      const ocr = await recognize(photo);
+      if (!ocr.ok) {
+        setStep({ kind: 'start', message: ocr.reason === 'no_text' ? s.noText : ocr.reason === 'misaligned' ? s.misaligned : s.needsBuild });
+        return;
+      }
+      const hidden = detectPii(ocr.page);
+      setStep({ kind: 'preview', photo, page: ocr.page, hidden, redacted: renderRedacted(photo, redactionBoxes(ocr.page, hidden)), sending: false });
+    } catch {
+      setStep({ kind: 'start', message: s.failed });
+    }
+  };
+
+  const tap = (line: number, word: number) => {
+    if (step.kind !== 'preview' || step.sending) return;
+    const hidden = toggleWord(step.hidden, line, word);
+    if (hidden === step.hidden) return;
+    setStep({ ...step, hidden, redacted: renderRedacted(step.photo, redactionBoxes(step.page, hidden)) });
+  };
+
+  const send = async () => {
+    if (step.kind !== 'preview') return;
+    setStep({ ...step, sending: true, message: undefined });
+    const sent = await sendScan({
+      page: redactPage(step.page, step.hidden),
+      image: { mediaType: 'image/jpeg', base64: step.redacted },
+      research_consent: consent,
+      today: isoDay(new Date()),
+    });
+    if (!sent.ok) {
+      setStep({ ...step, sending: false, message: sent.reason === 'not_connected' ? s.notConnected : s.sendFailed });
+      return;
+    }
+    // Counts only (D31): how much was read and whether it added up, never a value.
+    track('receipt_scanned', {
+      fields_read: Object.keys(sent.result.fields).length,
+      model_asked: sent.result.model.asked.length,
+      checks_passed: sent.result.checks.every((c) => c.ok),
+      research_consent: consent,
+    });
+    setStep({ kind: 'confirm', photo: step.photo, page: redactPage(step.page, step.hidden), redacted: step.redacted, result: sent.result, sending: false });
+  };
+
+  const confirm = async (answers: Answers) => {
+    if (step.kind !== 'confirm') return;
+    setStep({ ...step, sending: true, message: undefined });
+    const done = await confirmScan(step.result.id, answers, isoDay(new Date()));
+    if (!done.ok) {
+      setStep({ ...step, sending: false, message: done.reason === 'expired' ? copy.confirm.expired : copy.confirm.failed });
+      return;
+    }
+    track('receipt_confirmed', {
+      corrected: Object.keys(answers).length,
+      compared: done.confirmed.comparison.quote !== null,
+    });
+    setStep({ kind: 'result', id: step.result.id, confirmed: done.confirmed, deleted: false });
+  };
+
+  const forget = async () => {
+    if (step.kind !== 'result') return;
+    if (await forgetReceipt(step.id)) setStep({ ...step, deleted: true });
+  };
+
+  const steps: SFSymbol[] = ['camera.viewfinder', 'eye.slash', 'chart.bar.xaxis'];
 
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        contentContainerStyle={styles.scroll}
-        refreshControl={
-          route ? (
-            <RefreshControl refreshing={quotes.refreshing} onRefresh={quotes.refresh} tintColor={t.heroText} />
-          ) : undefined
-        }>
-        <HeroHeader title={copy.compare.title}>
-          {/* Side by side, the names cut off at large text sizes ("In…"), so they stack. */}
-          <View style={[styles.countries, large && styles.stacked]}>
-            <CountrySelect
-              label={copy.common.from}
-              title={copy.compare.sendFrom}
-              value={from}
-              options={SENDING}
-              covered={sendsFrom}
-              onChange={setFrom}
-            />
-            <CountrySelect
-              label={copy.common.to}
-              title={copy.compare.sendTo}
-              value={to}
-              options={RECEIVING}
-              covered={(code) => !!routeFor(from, code)}
-              onChange={setTo}
-            />
-          </View>
-
-          <View style={[styles.amount, { backgroundColor: t.heroField }]}>
-            <AppText variant="small" muted>
-              {copy.compare.youSend}
-            </AppText>
-            <View style={styles.amountRow}>
-              <AppText style={[styles.amountSymbol, { color: t.textSecondary }]}>$</AppText>
-              <TextInput
-                value={amountText}
-                onChangeText={(v) => setAmountText(cleanAmount(v))}
-                keyboardType="decimal-pad"
-                selectTextOnFocus
-                returnKeyType="done"
-                onSubmitEditing={Keyboard.dismiss}
-                maxLength={8}
-                // Grows with the text setting, but only so far: at full size the number
-                // itself was cut to "5…", which is the one thing this field must show.
-                maxFontSizeMultiplier={1.5}
-                placeholder="0"
-                placeholderTextColor={t.textSecondary}
-                accessibilityLabel={copy.compare.amountLabel}
-                style={[styles.amountInput, { color: t.text }]}
-              />
-              <AppText variant="label" muted>
-                {route?.sendCurrency ?? 'USD'}
-              </AppText>
-            </View>
-          </View>
+      <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <HeroHeader title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}>
+          {step.kind === 'start' ? <AppText style={{ color: t.heroMuted }}>{s.heroSub}</AppText> : null}
         </HeroHeader>
-
-        <View style={[styles.body, { backgroundColor: t.background }]}>
-          {route ? (
-            <>
-              <Segmented
-                options={route.deliveryMethods.map((m) => ({ value: m, label: copy.delivery[m] }))}
-                value={activeMethod}
-                onChange={setMethod}
+        <View style={[styles.content, { backgroundColor: t.background }]}>
+      {step.kind === 'start' ? (
+        <>
+          <Card style={styles.capture}>
+            <View style={[styles.lens, { backgroundColor: t.accent }]}>
+              <SymbolView name="doc.text.viewfinder" size={56} weight="medium" tintColor={t.accentForeground} fallback={null} />
+            </View>
+            <View style={styles.buttons}>
+              <Button
+                label={s.takePhoto}
+                icon={<SymbolView pointerEvents="none" name="camera.fill" size={18} tintColor={t.primaryForeground} fallback={null} />}
+                onPress={() => pick('camera')}
               />
-              <FundingPicker value={funding} onChange={setFunding} />
-              {amount > 0 ? (
-                <>
-                  <Results
-                    result={quotes.result}
-                    amount={amount}
-                    funding={funding}
-                    onRetry={quotes.refresh}
-                    retrying={quotes.refreshing}
-                  />
-                  <SaveComparison routeId={route.id} amount={amount} method={activeMethod} />
-                </>
-              ) : (
-                <AppText muted>{copy.compare.enterAmount}</AppText>
-              )}
-              <DoesNotTellYou items={copy.compare.limits} />
-            </>
-          ) : (
-            <RouteNotCovered from={from} to={to} />
-          )}
+              <Button
+                label={s.choosePhoto}
+                variant="secondary"
+                icon={<SymbolView pointerEvents="none" name="photo.on.rectangle" size={18} tintColor={t.text} fallback={null} />}
+                onPress={() => pick('library')}
+              />
+            </View>
+          </Card>
+          {step.message ? <AppText style={{ color: t.destructive }}>{step.message}</AppText> : null}
+
+          <View style={styles.steps}>
+            {s.steps.map((label, i) => (
+              <View key={label} style={styles.step}>
+                <IconTile name={steps[i]} size={52} />
+                <AppText variant="small" style={[styles.stepLabel, { color: t.text }]}>
+                  {label}
+                </AppText>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.privacy}>
+            <SymbolView name="lock.shield" size={18} tintColor={t.primary} fallback={null} />
+            <AppText variant="small" muted style={styles.flex}>
+              {s.privacy}
+            </AppText>
+          </View>
+        </>
+      ) : null}
+
+      {step.kind === 'reading' ? (
+        <View style={styles.center}>
+          <ActivityIndicator />
+          <AppText muted>{s.reading}</AppText>
+        </View>
+      ) : null}
+
+      {step.kind === 'preview' ? (
+        <>
+          <AppText variant="heading">{s.previewTitle}</AppText>
+          <AppText muted>{s.previewHelp}</AppText>
+          <RedactedPhoto photo={step.photo} page={step.page} hidden={step.hidden} redacted={step.redacted} onTap={tap} strings={s} />
+          <AppText variant="small" muted>
+            {s.covered(redactionBoxes(step.page, step.hidden).length)}
+          </AppText>
+
+          <Card>
+            <View style={styles.consent}>
+              <AppText variant="label" style={styles.flex}>
+                {s.consentLabel}
+              </AppText>
+              <Switch
+                value={consent}
+                onValueChange={setConsent}
+                trackColor={{ true: t.primary, false: t.border }}
+                accessibilityLabel={s.consentLabel}
+              />
+            </View>
+            <AppText variant="small" muted>
+              {s.consentHelp}
+            </AppText>
+          </Card>
+
+          {step.message ? <AppText style={{ color: t.destructive }}>{step.message}</AppText> : null}
+          <View style={styles.buttons}>
+            <Button label={s.send} onPress={send} loading={step.sending} />
+            <Button label={s.retake} variant="plain" disabled={step.sending} onPress={() => setStep({ kind: 'start' })} />
+          </View>
+        </>
+      ) : null}
+
+      {step.kind === 'confirm' ? (
+        <ReceiptConfirm
+          photo={{ width: step.photo.width, height: step.photo.height, redacted: step.redacted }}
+          page={step.page}
+          result={step.result}
+          sending={step.sending}
+          message={step.message}
+          onConfirm={confirm}
+        />
+      ) : null}
+
+      {step.kind === 'result' ? (
+        <>
+          <ReceiptResult confirmed={step.confirmed} />
+          <View style={styles.buttons}>
+            {step.deleted ? <AppText muted>{s.deleted}</AppText> : <Button label={s.deleteNow} variant="secondary" onPress={forget} />}
+            <Button label={s.another} variant="plain" onPress={() => setStep({ kind: 'start' })} />
+          </View>
+        </>
+      ) : null}
+
+      {step.kind === 'start' || step.kind === 'result' ? <DoesNotTellYou items={s.limits} /> : null}
         </View>
       </ScrollView>
       <StatusBarShield />
@@ -176,285 +270,77 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
 }
 
 /**
- * The prices for a route, amount and method. Fetched for the checked amount at or below
- * what was typed, so typing only refetches when it crosses into another checked amount.
- * Nothing is fetched for a route we don't cover.
+ * The redacted photo as it will be sent, with an invisible tap target over every word the
+ * rules didn't already cover, so the person can cover more (or uncover what they covered).
  */
-function useQuotes(route: Route | undefined, checked: number, method: DeliveryMethod) {
-  const [loaded, setLoaded] = useState<{ key: string; result: QuotesResult } | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
-  const key = route ? `${route.id}|${checked}|${method}` : null;
-
-  useEffect(() => {
-    if (!route) return;
-    let live = true;
-    fetchQuotes(route.id, checked, method).then((r) => {
-      if (!live) return;
-      setLoaded({ key: `${route.id}|${checked}|${method}`, result: r });
-      // Metrics (D31): the choice and how many prices came back, never the amount typed.
-      track('comparison_run', {
-        route: route.id,
-        checked_amount: checked,
-        method,
-        quotes: r.kind === 'ok' ? r.standing.length : 0,
-      });
-    });
-    return () => {
-      live = false;
-    };
-  }, [route, checked, method]);
-
-  const refresh = async () => {
-    if (!route || !key) return;
-    setRefreshing(true);
-    setLoaded({ key, result: await fetchQuotes(route.id, checked, method) });
-    setRefreshing(false);
-  };
-
-  return { result: key && loaded?.key === key ? loaded.result : null, refresh, refreshing };
-}
-
-/**
- * "You pay with": one line showing the choice, which opens the list. It stays out of the
- * way for the usual answer (a bank account) and is one tap away for the rest.
- */
-function FundingPicker({ value, onChange }: { value: FundingMethod; onChange: (f: FundingMethod) => void }) {
-  const t = useTheme();
-  const copy = useCopy();
-  const [open, setOpen] = useState(false);
-  return (
-    <View style={styles.funding}>
-      <TextLink
-        arrow={false}
-        icon={open ? 'chevron.up' : 'chevron.down'}
-        label={`${copy.funding.compareLabel}: ${copy.payment[value]}`}
-        onPress={() => setOpen((o) => !o)}
-      />
-      {open ? (
-        <ChoiceList
-          label={copy.funding.compareLabel}
-          options={FUNDING_METHODS.map((f) => ({ value: f, label: copy.payment[f] }))}
-          value={value}
-          onChange={(f) => {
-            onChange(f);
-            setOpen(false);
-          }}
-        />
-      ) : null}
-      <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: t.border }} />
-    </View>
-  );
-}
-
-function Results({
-  result,
-  amount,
-  funding,
-  onRetry,
-  retrying,
+function RedactedPhoto({
+  photo,
+  page,
+  hidden,
+  redacted,
+  onTap,
+  strings: s,
 }: {
-  result: QuotesResult | null;
-  amount: number;
-  funding: FundingMethod;
-  onRetry: () => void;
-  retrying: boolean;
+  photo: PreparedPhoto;
+  page: OcrPage;
+  hidden: Redaction[];
+  redacted: string;
+  onTap: (line: number, word: number) => void;
+  strings: Copy['scan'];
 }) {
   const t = useTheme();
-  const copy = useCopy();
-  const { language } = useLanguage();
-  const shown = useMemo(() => {
-    if (!result || result.kind !== 'ok') return null;
-    const at = (list: typeof result.standing) =>
-      list
-        .filter((q) => q.payment_method === funding)
-        .map((q) => atAmount(q, amount, funding))
-        .filter((q): q is ShownQuote => q !== null)
-        .sort((a, b) => b.amount_received - a.amount_received);
-    return {
-      standing: at(result.standing),
-      promotional: at(result.promotional),
-      otherMethods: result.standing.length + result.promotional.length > 0,
-    };
-  }, [result, amount, funding]);
+  const [width, setWidth] = useState(0);
+  const scale = width / photo.width;
+  const byWord = new Map(hidden.map((r) => [`${r.line}:${r.word}`, r.kind]));
 
-  if (!result) return <ActivityIndicator style={styles.loading} />;
-
-  if (result.kind === 'not_connected') {
-    return <Notice title={copy.compare.notConnectedTitle} body={copy.compare.notConnectedBody} />;
-  }
-
-  if (result.kind === 'error') {
-    return (
-      <View style={styles.results}>
-        <Notice title={copy.compare.errorTitle} body={copy.compare.errorBody} />
-        <Button label={copy.common.tryAgain} variant="secondary" loading={retrying} onPress={onRetry} />
-      </View>
-    );
-  }
-
-  const { standing, promotional, otherMethods } = shown!;
-  if (standing.length === 0 && promotional.length === 0 && otherMethods) {
-    return <Notice title={copy.payment[funding]} body={copy.funding.compareNone} />;
-  }
-  if (standing.length === 0 && promotional.length === 0) {
-    if (result.savedAt) {
-      return <Notice title={copy.compare.errorTitle} body={copy.compare.offlineNothing} />;
-    }
-    return (
-      <Notice
-        title={copy.compare.noPricesTitle}
-        body={copy.compare.noPricesBody}
-        action={{ label: copy.compare.whereRoutesStand, onPress: () => router.push('/routes') }}
-      />
-    );
-  }
-
-  const offline = result.savedAt ? (
-    <Notice
-      title={copy.compare.offlineTitle}
-      body={copy.compare.offlineBody(agoIn(copy, result.savedAt))}
-    />
-  ) : null;
-  const open = (q: ShownQuote) =>
-    router.push({ pathname: '/quote/[id]', params: { id: String(q.id), amount: String(amount), funding } });
-  const tax = (standing[0] ?? promotional[0]).tax;
-  const receive = (standing[0] ?? promotional[0]).receive_currency;
-  const received = standing.map((q) => q.amount_received);
   return (
-    <View style={styles.results}>
-      {offline}
-      {standing.length > 1 ? (
-        <AppText style={[styles.summary, { color: t.text }]}>
-          {copy.compare.summary(money(Math.min(...received), receive), money(Math.max(...received), receive))}
-        </AppText>
-      ) : null}
-      {tax > 0 ? (
-        <AppText variant="small" muted>
-          {copy.funding.compareTaxLine(fundingWord(funding, copy, language), money(tax, (standing[0] ?? promotional[0]).send_currency))}
-        </AppText>
-      ) : null}
-      {standing.map((q, i) => (
-        <QuoteCard
-          key={q.id}
-          quote={q}
-          featured={i === 0 && standing.length > 1}
-          highlight={i === 0 && standing.length > 1 ? copy.compare.mostToFamily : undefined}
-          onPress={() => open(q)}
-        />
-      ))}
-      {promotional.length > 0 ? (
-        <>
-          <AppText variant="heading" style={styles.promoHeading}>
-            {copy.compare.firstTransferOffers}
-          </AppText>
-          {promotional.map((q) => (
-            <QuoteCard key={q.id} quote={q} highlight={copy.compare.promotion} onPress={() => open(q)} />
-          ))}
-        </>
-      ) : null}
+    <View
+      testID="receipt-photo"
+      onLayout={(e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width)}
+      style={[styles.photo, { aspectRatio: photo.width / photo.height, borderColor: t.border }]}>
+      <Image source={{ uri: `data:image/jpeg;base64,${redacted}` }} style={StyleSheet.absoluteFill} contentFit="fill" />
+      {width > 0
+        ? page.lines.flatMap((line, i) =>
+            line.words.map((w, j) => {
+              const kind = byWord.get(`${i}:${j}`);
+              if (kind && kind !== 'manual') return null;
+              return (
+                <Pressable
+                  key={`${i}:${j}`}
+                  onPress={() => onTap(i, j)}
+                  accessibilityRole="button"
+                  accessibilityLabel={kind === 'manual' ? s.tapCovered : s.tapWord(w.text)}
+                  hitSlop={4}
+                  style={{
+                    position: 'absolute',
+                    left: w.box.x * scale,
+                    top: w.box.y * scale,
+                    width: Math.max(w.box.width * scale, 12),
+                    height: Math.max(w.box.height * scale, 12),
+                  }}
+                />
+              );
+            }),
+          )
+        : null}
     </View>
-  );
-}
-
-/**
- * An empty or error state, as the website's callout: a green left rule, plain words, and
- * the next step as a link when there is one (PRD 14.6: always offer the next step).
- */
-function Notice({
-  title,
-  body,
-  action,
-}: {
-  title: string;
-  body: string;
-  action?: { label: string; onPress: () => void };
-}) {
-  const t = useTheme();
-  return (
-    <View style={[styles.notice, { borderLeftColor: t.primary }]}>
-      <View accessible>
-        <AppText style={[styles.noticeTitle, { color: t.text }]}>{title}</AppText>
-        <AppText style={{ color: t.textSecondary }}>{body}</AppText>
-      </View>
-      {action ? <TextLink label={action.label} onPress={action.onPress} /> : null}
-    </View>
-  );
-}
-
-/**
- * Save this comparison to the account (D66). Signed out, it says what signing in is for
- * rather than hiding the option, since that's the reason to have an account at all.
- */
-function SaveComparison({ routeId, amount, method }: { routeId: string; amount: number; method: DeliveryMethod }) {
-  const copy = useCopy();
-  const key = `${routeId}|${amount}|${method}`;
-  const [state, setState] = useState<{ key: string; value: 'busy' | 'saved' | 'already' | 'error' } | null>(null);
-  const current = state?.key === key ? state.value : null;
-
-  const save = async () => {
-    setState({ key, value: 'busy' });
-    const result = await saveComparison({ routeId, amount, method });
-    if (result === 'signed_out') {
-      setState(null);
-      Alert.alert(copy.compare.signInToSaveTitle, copy.compare.signInToSaveBody, [
-        { text: copy.common.notNow, style: 'cancel' },
-        { text: copy.common.signIn, onPress: () => router.push('/sign-in') },
-      ]);
-      return;
-    }
-    setState({ key, value: result });
-    announce(
-      result === 'saved' ? copy.compare.savedSpoken : result === 'already' ? copy.compare.alreadySpoken : copy.compare.saveFailed,
-    );
-    if (result === 'saved') track('comparison_saved', { route: routeId, method });
-  };
-
-  if (current === 'saved' || current === 'already') {
-    return (
-      <TextLink
-        icon="bookmark.fill"
-        label={current === 'saved' ? copy.compare.saved : copy.compare.alreadySaved}
-        onPress={() => router.navigate('/account')}
-      />
-    );
-  }
-  return (
-    <TextLink
-      icon="bookmark"
-      arrow={false}
-      busy={current === 'busy'}
-      label={current === 'error' ? copy.compare.saveFailed : copy.compare.save}
-      onPress={save}
-    />
   );
 }
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
-  body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
-  countries: { flexDirection: 'row', gap: Spacing.two },
-  stacked: { flexDirection: 'column' },
-  amount: {
-    borderRadius: Radius.md,
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
-  },
-  amountRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  amountSymbol: { fontFamily: Fonts.medium, fontSize: 26, lineHeight: 40 },
-  amountInput: {
-    flex: 1,
-    fontFamily: Fonts.bold,
-    fontSize: 32,
-    letterSpacing: -0.6,
-    paddingVertical: Spacing.one,
-    fontVariant: ['tabular-nums'],
-  },
-  results: { gap: Spacing.three },
-  summary: { fontFamily: Fonts.semibold, fontSize: 15, lineHeight: 21 },
-  loading: { marginVertical: Spacing.four },
-  promoHeading: { marginTop: Spacing.two },
-  funding: { gap: Spacing.two },
-  notice: { borderLeftWidth: 3, paddingLeft: Spacing.three, paddingVertical: Spacing.one, gap: Spacing.one },
-  noticeTitle: { fontFamily: Fonts.bold, fontSize: 17 },
+  content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.four, paddingBottom: Spacing.six },
+  capture: { alignItems: 'center', gap: Spacing.four, paddingVertical: Spacing.five },
+  lens: { width: 112, height: 112, borderRadius: 56, alignItems: 'center', justifyContent: 'center' },
+  steps: { flexDirection: 'row', justifyContent: 'space-between', gap: Spacing.two },
+  step: { flex: 1, alignItems: 'center', gap: Spacing.two },
+  stepLabel: { fontFamily: Fonts.semibold, textAlign: 'center' },
+  privacy: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.two },
+  buttons: { gap: Spacing.two, alignSelf: 'stretch' },
+  center: { alignItems: 'center', gap: Spacing.two, paddingVertical: Spacing.five },
+  photo: { width: '100%', borderRadius: Radius.md, overflow: 'hidden', borderWidth: StyleSheet.hairlineWidth },
+  consent: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  flex: { flex: 1 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two, paddingVertical: Spacing.two },
 });

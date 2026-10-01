@@ -12,7 +12,13 @@ export default function AppTabs() {
       indicatorColor={t.accent}
       tintColor={t.primary}
       labelStyle={{ selected: { color: t.primary } }}>
+      {/* Scan opens the app (D101): a real receipt is a better first step than a sum. */}
       <NativeTabs.Trigger name="index">
+        <NativeTabs.Trigger.Label>{copy.tabs.scan}</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="doc.text.viewfinder" md="document_scanner" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="compare">
         <NativeTabs.Trigger.Label>{copy.tabs.compare}</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="arrow.left.arrow.right" md="compare_arrows" />
       </NativeTabs.Trigger>

@@ -69,8 +69,8 @@ export default function AccountScreen() {
               <SavedChecks />
               {isAdmin ? (
                 <ListGroup title={a.admin}>
-                  <ListRow title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
-                  <ListRow title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
+                  <ListRow icon="plus.circle" title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
+                  <ListRow icon="chart.bar" title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
                 </ListGroup>
               ) : null}
               <View style={styles.actions}>
@@ -89,10 +89,11 @@ export default function AccountScreen() {
 
           {canChooseLanguage ? (
             <ListGroup title={copy.language.title}>
-              <ListRow title={language.name} subtitle={copy.language.pick} onPress={() => setLanguageOpen(true)} />
+              <ListRow icon="globe" title={language.name} subtitle={copy.language.pick} onPress={() => setLanguageOpen(true)} />
               {language.code !== 'en' ? (
                 <ListRow
                   external
+                  icon="pencil"
                   title={copy.language.improve}
                   subtitle={CONTACT}
                   onPress={() => writeToUs(copy, `Translation: ${language.english}`)}
@@ -103,9 +104,9 @@ export default function AccountScreen() {
           <LanguageSheet visible={languageOpen} onClose={() => setLanguageOpen(false)} />
 
           <ListGroup title={a.about}>
-            <ListRow title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
-            <ListRow external title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
-            <ListRow external title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
+            <ListRow icon="map" title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
+            <ListRow external icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
+            <ListRow external icon="questionmark.circle" title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
           </ListGroup>
 
           {__DEV__ ? (

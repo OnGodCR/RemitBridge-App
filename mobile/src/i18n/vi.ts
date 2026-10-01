@@ -24,7 +24,7 @@ export const vi: Copy = {
     noMailBody: (address) => `Điện thoại này chưa cài ứng dụng email. Hãy viết cho chúng tôi tại ${address} từ bất kỳ email nào.`,
   },
 
-  tabs: { compare: 'So sánh', tools: 'Công cụ', learn: 'Tìm hiểu', account: 'Tài khoản' },
+  tabs: { scan: 'Quét', compare: 'So sánh', tools: 'Công cụ', learn: 'Tìm hiểu', account: 'Tài khoản' },
 
   titles: {
     scan: 'Quét biên lai',
@@ -360,23 +360,19 @@ export const vi: Copy = {
   },
 
   tools: {
-    scan: 'Quét biên lai',
-    scanSub: 'Đọc biên lai bằng camera, che thông tin cá nhân trước',
     title: 'Công cụ',
-    subtitle: 'Kiểm tra tỷ giá, biên lai, hoặc một yêu cầu gửi tiền.',
     before: 'Trước khi gửi',
     after: 'Sau khi gửi',
     rates: 'Tỷ giá',
-    fairRateSub: 'Tỷ giá trung bình thị trường sẽ cho bạn bao nhiêu',
-    scamCheckSub: 'Tám câu hỏi trước khi gửi tiền cho người lạ',
-    trueCostSub: 'Kiểm tra biên lai để thấy chi phí bị che giấu',
-    yearlyCostSub: 'Gửi tiền cả năm tốn tổng cộng bao nhiêu',
-    rateHistorySub: 'Tỷ giá trung bình thị trường, theo từng ngày',
+    fairRateSub: 'Tỷ giá của bạn có hợp lý?',
+    scamCheckSub: 'Trước khi trả tiền cho người lạ',
+    trueCostSub: 'Tự nhập biên lai để kiểm tra',
+    yearlyCostSub: 'Một năm chuyển tiền',
+    rateHistorySub: 'Tỷ giá theo từng ngày',
   },
 
   learn: {
     title: 'Tìm hiểu',
-    subtitle: 'Cách hoạt động, và ý nghĩa của các thuật ngữ.',
     howItWorks: 'Cách hoạt động',
     feeMarkup: 'Phí + chênh lệch bị che giấu',
     feeMarkupBody: 'Tổng chi phí là phí cộng với phần chênh lệch ẩn trong tỷ giá.',
@@ -594,8 +590,10 @@ export const vi: Copy = {
   },
 
   scan: {
-    intro:
-      'Chụp ảnh biên lai chuyển tiền. Ứng dụng đọc nó ngay trên điện thoại của bạn và che tên, địa chỉ, số điện thoại và số tài khoản trước khi gửi bất cứ thứ gì.',
+    heroTitle: 'Lần chuyển tiền của bạn thực sự tốn bao nhiêu?',
+    heroSub: 'Quét biên lai. Xem phí và phần chênh lệch ẩn trong tỷ giá.',
+    steps: ['Chụp biên lai', 'Thông tin của bạn được che', 'Xem chi phí thực'],
+    privacy: 'Đọc ngay trên điện thoại. Tên và số được che trước khi gửi bất cứ thứ gì.',
     takePhoto: 'Chụp ảnh',
     choosePhoto: 'Chọn ảnh',
     needsBuild: 'Cần bản đầy đủ của ứng dụng để quét. Tính năng này không chạy trên Expo Go.',

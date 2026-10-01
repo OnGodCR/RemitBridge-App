@@ -49,7 +49,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Features to set up
 
-- [ ] **WhatsApp: the first real messages** (D68, D94). Set up 2026-10-01: Meta app
+- [ ] **WhatsApp: parked (D100).** The first real messages wait on Meta (D68, D94). Set up 2026-10-01: Meta app
       "RemitBridge" with a business portfolio (unverified), Meta's free test number
       +1 555 184 5383 (Phone number ID 1399186246604217) with Angad's phone as the one
       allowed recipient; all five `WHATSAPP_*` secrets plus `WHATSAPP_RECEIPTS=on`,
@@ -254,8 +254,9 @@ a style choice.
 
 ## Words and voice
 
-Visual register (D44, D47): no emoji, modest corners, hairlines over shadows,
-segmented controls over pill chips, and text labels over decoration. Color comes
+Visual register (D44, D47, D102): no emoji, modest corners, hairlines over shadows,
+segmented controls over pill chips. Few words: every row and card leads with an SF Symbol on
+a mint tile, next to a short label, never instead of one. Color comes
 from the website's vocabulary: a brand-green header band, mint tints, and a green
 left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 
