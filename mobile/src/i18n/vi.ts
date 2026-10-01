@@ -34,6 +34,7 @@ export const vi: Copy = {
     yearlyCost: 'Chi phí cả năm',
     rateHistory: 'Lịch sử tỷ giá',
     glossary: 'Từ điển thuật ngữ',
+    blog: 'Blog',
     remitbench: 'RemitBench',
     quote: 'Giá',
     routeBoard: 'Bảng tuyến chuyển tiền',
@@ -406,6 +407,23 @@ export const vi: Copy = {
     workshops: 'Hội thảo',
     workshopsSub: 'Các buổi dành cho cộng đồng và trường học',
     opensWebsite: 'Mở trên trang web',
+  },
+
+  blog: {
+    written: (n: number, total: number) => `Đã viết đầy đủ ${n} trên ${total} bài`,
+    shown: (n: number, total: number) => `${n} trên ${total} bài`,
+    all: 'Tất cả',
+    series: {
+      series1: 'Vì sao người ta gửi tiền',
+      series2: 'Ngân hàng chuyển tiền thế nào',
+      series3: 'Mở rộng blockchain',
+      series4: 'Chi phí, tốc độ, sự cố',
+      series5: 'Kết nối mọi thứ',
+    },
+    summaryOnly: 'Chỉ có tóm tắt',
+    notYet: 'Bài đầy đủ đang được viết. Đây là phần tóm tắt.',
+    keepReading: 'Đọc tiếp',
+    englishOnly: 'Các bài viết bằng tiếng Anh.',
   },
 
   glossary: {

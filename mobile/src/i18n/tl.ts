@@ -35,6 +35,7 @@ export const tl: Copy = {
     yearlyCost: 'Gastos sa isang taon',
     rateHistory: 'Kasaysayan ng rate',
     glossary: 'Glosaryo',
+    blog: 'Blog',
     remitbench: 'RemitBench',
     quote: 'Presyo',
     routeBoard: 'Listahan ng mga ruta',
@@ -407,6 +408,23 @@ export const tl: Copy = {
     workshops: 'Workshops',
     workshopsSub: 'Mga sesyon para sa komunidad at paaralan',
     opensWebsite: 'Bubuksan sa website',
+  },
+
+  blog: {
+    written: (n: number, total: number) => `${n} sa ${total} ang buo nang naisulat`,
+    shown: (n: number, total: number) => `${n} sa ${total} na post`,
+    all: 'Lahat',
+    series: {
+      series1: 'Bakit nagpapadala ang mga tao',
+      series2: 'Paano ito inililipat ng mga bangko',
+      series3: 'Pag-scale ng blockchain',
+      series4: 'Gastos, bilis, pagkabigo',
+      series5: 'Pagdugtong-dugtungin',
+    },
+    summaryOnly: 'Buod lang',
+    notYet: 'Isinusulat pa ang buong post. Ito ang buod nito.',
+    keepReading: 'Magbasa pa',
+    englishOnly: 'Nasa Ingles ang mga post.',
   },
 
   glossary: {

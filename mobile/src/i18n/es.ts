@@ -34,6 +34,7 @@ export const es: Copy = {
     yearlyCost: 'Costo al año',
     rateHistory: 'Historial del tipo de cambio',
     glossary: 'Glosario',
+    blog: 'Blog',
     remitbench: 'RemitBench',
     quote: 'Precio',
     routeBoard: 'Tablero de rutas',
@@ -407,6 +408,23 @@ export const es: Copy = {
     workshops: 'Talleres',
     workshopsSub: 'Sesiones para comunidades y escuelas',
     opensWebsite: 'Se abre en el sitio web',
+  },
+
+  blog: {
+    written: (n: number, total: number) => `${n} de ${total} escritos completos hasta ahora`,
+    shown: (n: number, total: number) => `${n} de ${total} artículos`,
+    all: 'Todos',
+    series: {
+      series1: 'Por qué la gente envía dinero',
+      series2: 'Cómo lo mueven los bancos',
+      series3: 'Escalar blockchain',
+      series4: 'Costo, velocidad, fallas',
+      series5: 'Conectarlo todo',
+    },
+    summaryOnly: 'Solo resumen',
+    notYet: 'El artículo completo aún se está escribiendo. Este es su resumen.',
+    keepReading: 'Sigue leyendo',
+    englishOnly: 'Los artículos están en inglés.',
   },
 
   glossary: {

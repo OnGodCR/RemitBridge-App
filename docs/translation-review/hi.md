@@ -52,6 +52,7 @@ with your name and the date.
 | titles.yearlyCost | Yearly cost | सालाना लागत | |
 | titles.rateHistory | Rate history | रेट का इतिहास | |
 | titles.glossary | Glossary | शब्दकोश | |
+| titles.blog | Blog | ब्लॉग | |
 | titles.remitbench | RemitBench | RemitBench | |
 | titles.quote | Quote | कीमत | |
 | titles.routeBoard | Route board | रूट बोर्ड | |
@@ -348,6 +349,18 @@ with your name and the date.
 | learn.workshops | Workshops | वर्कशॉप | |
 | learn.workshopsSub | Sessions for communities and schools | समुदायों और स्कूलों के लिए सत्र | |
 | learn.opensWebsite | Opens on the website | वेबसाइट पर खुलता है | |
+| blog.written | {n} of {total} written in full so far | {total} में से {n} पूरे लिखे जा चुके हैं | |
+| blog.shown | {n} of {total} posts | {total} में से {n} लेख | |
+| blog.all | All | सभी | |
+| blog.series.series1 | Why people send money | लोग पैसे क्यों भेजते हैं | |
+| blog.series.series2 | How banks move it | बैंक इसे कैसे भेजते हैं | |
+| blog.series.series3 | Blockchain scaling | ब्लॉकचेन स्केलिंग | |
+| blog.series.series4 | Cost, speed, failure | लागत, रफ़्तार, गड़बड़ी | |
+| blog.series.series5 | Connecting it up | सब कुछ जोड़ना | |
+| blog.summaryOnly | Summary only | सिर्फ़ सारांश | |
+| blog.notYet | The full post is still being written. This is its summary. | पूरा लेख अभी लिखा जा रहा है। यह उसका सारांश है। | |
+| blog.keepReading | Keep reading | आगे पढ़ें | |
+| blog.englishOnly | Posts are in English. | लेख अंग्रेज़ी में हैं। | |
 | glossary.searchPlaceholder | Search {n} terms | {n} शब्दों में खोजें | |
 | glossary.searchLabel | Search the glossary | शब्दकोश में खोजें | |
 | glossary.noMatch | No term matches “{q}”. | “{q}” से कोई शब्द नहीं मिला। | |

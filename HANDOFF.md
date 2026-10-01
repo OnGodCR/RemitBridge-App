@@ -62,10 +62,13 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   Compare moved to `(tabs)/compare.tsx`; rows lead with drawn illustrations (D103, after
   Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages.
   No yellow in the drawings; larger text on Scan. Learn is eight modules built from the
-  glossary, with numbered lessons that open on tap (D104); How it works is in Account. WhatsApp is
+  glossary, with numbered lessons that open on tap (D104); How it works is in Account.
+  No yellow anywhere, money colours included (D105). The website's blog is in the app,
+  Learn → Blog (D106): `cd mobile && node scripts/port-blog.mjs` re-ports it (needs
+  Google Chrome); then rerun the Hindi sheet script. WhatsApp is
   parked (D100). The Hindi review sheet is regenerated from the string files by
   `npx tsx scripts/review-sheet.ts hi` (in `mobile/`); rerun it after any string change.
-- **Scrape schedule didn't fire:** the `17 */6` cron added on 2026-09-30 had produced no
+- **Scrape schedule:** Angad confirmed it's running (2026-10-01). Earlier note: the `17 */6` cron added on 2026-09-30 had produced no
   scheduled run by 04:00 UTC on 2026-10-01 (00:17 was due); Claude started one by hand
   (run 36813213444, success). Check that 06:17 and later runs appear on their own; if
   not, look at the Health checks workflow's staleness alert.
@@ -224,7 +227,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D105; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D106; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
