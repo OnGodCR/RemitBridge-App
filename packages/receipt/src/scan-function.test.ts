@@ -1,7 +1,7 @@
 /**
  * The scan-receipt Edge Function itself (supabase/functions/scan-receipt), run under
- * vitest: Deno's globals stubbed, supabase-js and the Anthropic SDK swapped for in-memory
- * fakes (vitest.config.ts), Frankfurter's answer stubbed. Checks what the package tests
+ * vitest: Deno's globals stubbed, supabase-js swapped for an in-memory fake
+ * (vitest.config.ts), and fetch stubbed to answer for Frankfurter and OpenRouter. Checks what the package tests
  * can't: the server's second redaction, what's stored and what isn't, consent, the monthly
  * cap, and forgetting.
  */
@@ -9,13 +9,17 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import type { ConfirmResponse, ScanResponse } from './api.ts'
 import { loadFixtures } from './node/fixtures.ts'
 import { detectPii, redactPage } from './redact.ts'
-import { keys, replies, requests } from './test/fake-anthropic.ts'
-import { answer } from './test/fake-model.ts'
+import { OPENROUTER_URL, type ChatRequest } from './model.ts'
+import { answer, chatReply } from './test/fake-model.ts'
 import { reset, rpcs, storage, tables } from './test/fake-supabase.ts'
 
 const env: Record<string, string | undefined> = {}
 let handler: (req: Request) => Promise<Response>
 const fx: string[] = []
+/** What OpenRouter was sent, the replies it gives, and the keys it was called with. */
+const requests: ChatRequest[] = []
+const replies: string[] = []
+const keys: string[] = []
 
 const wu = loadFixtures().find((f) => f.id === 'western-union-cash-usd-mxn')!
 const redacted = redactPage(wu.page, detectPii(wu.page))
@@ -33,7 +37,14 @@ beforeAll(async () => {
       handler = h
     },
   })
-  vi.stubGlobal('fetch', async (url: string) => {
+  vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
+    if (String(url) === OPENROUTER_URL) {
+      requests.push(JSON.parse(String(init?.body)) as ChatRequest)
+      keys.push(String((init?.headers as Record<string, string>).Authorization).replace('Bearer ', ''))
+      const text = replies.shift()
+      if (text === undefined) return new Response('{"error":{"message":"no reply scripted"}}', { status: 500 })
+      return new Response(JSON.stringify(chatReply({ text })), { status: 200 })
+    }
     fx.push(String(url))
     return new Response(JSON.stringify([{ date: '2026-09-28', base: 'USD', quote: 'MXN', rate: 17.7 }]), { status: 200 })
   })
@@ -51,7 +62,9 @@ beforeEach(() => {
   Object.assign(env, {
     SUPABASE_URL: 'https://example.supabase.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-key',
-    ANTHROPIC_API_KEY: 'test-key',
+    OPENROUTER_API_KEY: 'test-key',
+    RECEIPT_MODEL_FALLBACKS: undefined,
+    RECEIPT_INTAKE_SECRET: 'intake-secret',
     RECEIPT_MODEL: undefined,
     RECEIPT_MODEL_MONTHLY_CAP: undefined,
   })
@@ -118,7 +131,7 @@ describe('a scan', () => {
   })
 
   it('reads with the rules alone when no key is set', async () => {
-    env.ANTHROPIC_API_KEY = undefined
+    env.OPENROUTER_API_KEY = undefined
     const { body } = await scan()
     expect(requests).toHaveLength(0)
     expect(body.model).toEqual({ asked: [], error: null })
@@ -126,11 +139,28 @@ describe('a scan', () => {
     expect(tables.receipts).toHaveLength(1)
   })
 
-  it('uses RECEIPT_MODEL when set', async () => {
-    env.RECEIPT_MODEL = 'claude-sonnet-5-5'
+  it('uses RECEIPT_MODEL and RECEIPT_MODEL_FALLBACKS when set', async () => {
+    env.RECEIPT_MODEL = 'qwen/qwen3.5-397b-a17b'
+    env.RECEIPT_MODEL_FALLBACKS = ' qwen/qwen3-vl-32b-instruct , '
     replies.push(goodAnswer())
     await scan()
-    expect(requests[0].model).toBe('claude-sonnet-5-5')
+    expect(requests[0].model).toBe('qwen/qwen3.5-397b-a17b')
+    expect(requests[0].models).toEqual(['qwen/qwen3.5-397b-a17b', 'qwen/qwen3-vl-32b-instruct'])
+  })
+
+  it('asks OpenRouter only for providers that enforce the schema and keep nothing', async () => {
+    replies.push(goodAnswer())
+    await scan()
+    expect(requests[0].model).toBe('qwen/qwen3-vl-32b-instruct')
+    expect(requests[0].provider).toEqual({ require_parameters: true, data_collection: 'deny' })
+    expect(requests[0].response_format.json_schema.strict).toBe(true)
+  })
+
+  it('reads with the rules alone when OpenRouter fails', async () => {
+    const { status, body } = await scan()
+    expect(status).toBe(200)
+    expect(body.model.error).toBe('unavailable')
+    expect(tables.receipts).toHaveLength(1)
   })
 })
 
@@ -144,6 +174,34 @@ describe('the server’s second redaction', () => {
     for (const p of wu.pii) expect(sent).not.toContain(p)
     expect(tables.receipts[0]).toMatchObject({ redaction_status: 'device_rechecked', image_retained: false })
     expect(storage).toEqual([])
+  })
+})
+
+describe('scans from the WhatsApp worker', () => {
+  const fromWorker = (secret?: string) =>
+    handler(
+      new Request('https://example.supabase.co/functions/v1/scan-receipt', {
+        method: 'POST',
+        headers: secret ? { 'x-intake-secret': secret } : {},
+        body: JSON.stringify({ action: 'scan', page: redacted, research_consent: false, today: TODAY, channel: 'whatsapp' }),
+      }),
+    )
+
+  it('are refused without the worker’s secret', async () => {
+    expect((await fromWorker()).status).toBe(403)
+    expect((await fromWorker('wrong-secret!')).status).toBe(403)
+    env.RECEIPT_INTAKE_SECRET = undefined
+    expect((await fromWorker('intake-secret')).status).toBe(403)
+    expect(tables.receipts ?? []).toHaveLength(0)
+  })
+
+  it('are stored as WhatsApp receipts, redacted on the server', async () => {
+    replies.push(goodAnswer())
+    const res = await fromWorker('intake-secret')
+    const body = (await res.json()) as ScanResponse
+    expect(res.status).toBe(200)
+    expect(body.redaction).toBe('server')
+    expect(tables.receipts[0]).toMatchObject({ channel: 'whatsapp', redaction_status: 'server', image_retained: false })
   })
 })
 
@@ -235,6 +293,19 @@ describe('confirming', () => {
     expect(body.comparison.gap).toEqual({ advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.82, gapCurrency: 'USD' })
     expect(tables.receipt_fields.find((f) => f.field_name === 'amount_received')).toMatchObject({ value: '8560', extraction_path: 'user_corrected' })
     expect(tables.receipt_comparisons[0]).toMatchObject({ receipt_id: scanned.id, matched_quote_id: 77, advertised_rate: 17.3, receipt_rate: 17.2, gap_amount: 2.82, gap_currency: 'USD', tax_expected: 5, tax_found: 5 })
+  })
+
+  it('stores the missing disclosures at scan time and the cost for the observatory at confirm', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    // The Western Union fixture has no error-rights notice, provider contact or CFPB line.
+    expect(scanned.disclosures_missing).toEqual(['error_rights', 'provider_contact', 'cfpb_contact'])
+    expect(tables.receipts[0].disclosures_missing).toEqual(scanned.disclosures_missing)
+    const { body } = await confirmCall(scanned.id, {})
+    expect(body.disclosures_missing).toEqual(scanned.disclosures_missing)
+    const c = tables.receipt_comparisons[0]
+    expect(Number(c.total_cost_pct)).toBeGreaterThan(3)
+    expect(Number(c.markup_pct)).toBeCloseTo(((17.7 - 17.2) / 17.7) * 100, 1)
   })
 
   it('says plainly when no advertised price matches', async () => {

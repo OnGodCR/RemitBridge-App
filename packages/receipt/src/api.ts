@@ -3,6 +3,7 @@
  * the two can't drift. parseRequest checks everything that arrives, since the function is
  * reachable with the app's public key.
  */
+import type { DisclosureItem } from './disclosures.ts'
 import type { Gap } from './result.ts'
 import type { Check, Suspect } from './validate.ts'
 import { FIELD_NAMES, type ExtractedFields, type FieldName, type OcrPage } from './types.ts'
@@ -17,6 +18,11 @@ export interface ScanRequest {
   research_consent: boolean
   /** The phone's date, YYYY-MM-DD, so "today" means the person's today. */
   today: string
+  /**
+   * 'whatsapp' when the WhatsApp worker sends it (D94): redacted on the server, no image.
+   * The function accepts it only with the worker's secret. The app leaves it out.
+   */
+  channel?: 'app' | 'whatsapp'
 }
 
 /** Delete a receipt now, before its 30 days are up. Anyone holding the ID may. */
@@ -67,6 +73,8 @@ export interface ConfirmResponse {
   /** The mid-market rate for the receipt's currencies and date, and where it's from. */
   mid: { rate: number; date: string; source: string } | null
   comparison: Comparison
+  /** Standard disclosures not found on the receipt when it was scanned (D95). */
+  disclosures_missing: DisclosureItem[]
 }
 
 export interface ScanResponse {
@@ -81,10 +89,15 @@ export interface ScanResponse {
   suspect: Suspect | null
   missing: FieldName[]
   to_confirm: FieldName[]
+  /** Standard disclosures not found on the receipt (D95). */
+  disclosures_missing: DisclosureItem[]
   /** What the model was asked, and why it gave nothing if it didn't answer. */
   model: { asked: FieldName[]; error: string | null }
-  /** 'device_rechecked' when the server found personal details the phone missed. */
-  redaction: 'device' | 'device_rechecked'
+  /**
+   * 'device_rechecked' when the server found personal details the phone missed; 'server'
+   * for a WhatsApp photo, redacted by the worker.
+   */
+  redaction: 'device' | 'device_rechecked' | 'server'
 }
 
 export const LIMITS = {
@@ -123,6 +136,7 @@ export function parseRequest(body: unknown): Parsed {
     return { ok: true, request: { action: 'confirm', id: b.id, corrections: c as ConfirmRequest['corrections'], today: b.today } }
   }
   if (b.action !== 'scan') return { ok: false, error: 'unknown action' }
+  if (b.channel !== undefined && b.channel !== 'app' && b.channel !== 'whatsapp') return { ok: false, error: 'bad channel' }
   if (typeof b.research_consent !== 'boolean') return { ok: false, error: 'research_consent must be true or false' }
   if (typeof b.today !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(b.today)) return { ok: false, error: 'today must be YYYY-MM-DD' }
 
@@ -158,6 +172,7 @@ export function parseRequest(body: unknown): Parsed {
       ...(image ? { image } : {}),
       research_consent: b.research_consent,
       today: b.today,
+      ...(b.channel === 'whatsapp' ? { channel: 'whatsapp' as const } : {}),
     },
   }
 }

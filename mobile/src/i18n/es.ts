@@ -38,6 +38,7 @@ export const es: Copy = {
     quote: 'Precio',
     routeBoard: 'Tablero de rutas',
     askForRoute: 'Pedir una ruta',
+    observatory: 'Lo que pagó la gente',
   },
 
   delivery: {
@@ -389,6 +390,7 @@ export const es: Copy = {
     glossarySub: (n) => `${n} palabras, explicadas con sencillez`,
     routeBoardSub: 'Qué rutas revisamos y cuáles quiere la gente',
     remitbenchSub: 'Nuestro banco de pruebas de investigación, todavía en construcción',
+    observatorySub: 'Primeros resultados de recibos que la gente compartió',
     website: 'En el sitio web',
     blog: 'Blog',
     blogSub: 'Historias y explicaciones',
@@ -690,6 +692,60 @@ export const es: Copy = {
     compare: 'Compara esta ruta hoy',
     notCovered: 'Aún no revisamos esta ruta.',
     routeBoard: 'Ver qué rutas revisamos',
+    disclosuresTitle: 'Información obligatoria',
+    disclosuresAll: 'Se encontró cada dato obligatorio en este recibo.',
+    disclosuresMissing: (items: string) => `No se encontró en este recibo: ${items}.`,
+    disclosuresNote:
+      'Una foto puede cortar parte del recibo y la letra pequeña puede ser difícil de leer, así que esto no significa que el proveedor haya omitido algo.',
+    disclosureItems: {
+      transfer_amount: 'monto de la transferencia',
+      fees: 'comisiones',
+      taxes: 'impuestos',
+      total: 'total',
+      exchange_rate: 'tipo de cambio',
+      amount_received: 'monto recibido',
+      date_available: 'fecha en que el dinero estará disponible',
+      recipient: 'destinatario',
+      error_rights: 'sus derechos si hay un error',
+      cancellation: 'cómo cancelar',
+      provider_contact: 'los datos de contacto del proveedor',
+      cfpb_contact: 'los datos de contacto de la CFPB',
+    } as Record<string, string>,
+    limits: [
+      'Si cada valor se leyó bien, a menos que usted lo haya revisado.',
+      'Lo que le cobraron a su familia del otro lado, más allá de lo que muestra el recibo.',
+      'El tipo de cambio en el minuto en que envió: el tipo de cambio medio del mercado es una referencia diaria.',
+      'Si un dato faltaba en el recibo o solo en la foto.',
+    ],
+  },
+
+  observatory: {
+    intro: 'Lo que la gente pagó de verdad, según recibos que escanearon y decidieron compartir para investigación.',
+    early: 'Primeros resultados',
+    sample: (n: number, since: string | null) =>
+      `${n} recibo${n === 1 ? '' : 's'} compartido${n === 1 ? '' : 's'}${since ? ` desde ${since}` : ''}`,
+    tooFew: (min: number) =>
+      `Todavía no se han compartido suficientes recibos. Los números aparecen cuando hay al menos ${min}, para que no se pueda identificar ningún recibo.`,
+    groupsTitle: 'Por proveedor y ruta',
+    noGroups: (min: number) => `Ningún proveedor y ruta tiene ${min} recibos compartidos todavía.`,
+    receipts: (n: number) => `${n} recibos`,
+    medianCost: 'Costo total típico',
+    medianMarkup: 'Margen típico en el tipo de cambio',
+    paidMore: (k: number, of: number) => `${k} de ${of} comparados recibieron un tipo de cambio peor que el anunciado ese día`,
+    taxTitle: 'Impuesto federal a las remesas',
+    taxLine: (taxed: number, matches: number, notFound: number) =>
+      `${taxed} se pagaron en efectivo o similar. El impuesto del 1% coincidió en ${matches}; no se encontró la línea del impuesto en ${notFound}.`,
+    disclosuresTitle: 'Información obligatoria no encontrada',
+    disclosureLine: (item: string, n: number, total: number) => `${item}: ${n} de ${total}`,
+    noneMissing: 'Se encontró cada dato obligatorio en todos los recibos compartidos.',
+    method: (min: number) =>
+      `Solo cuentan los recibos que la gente decidió compartir para investigación. Un proveedor y ruta aparece cuando tiene ${min}. “Típico” es la mediana.`,
+    loadFailed: 'No se pudieron cargar los resultados.',
+    limits: [
+      'Lo que paga la mayoría: quienes escanean y comparten recibos no son una muestra al azar.',
+      'Nada sobre una persona o una transferencia. Solo se muestran totales.',
+      'Si un dato faltaba en el recibo o solo en la foto.',
+    ],
   },
 
   receiptFields: {

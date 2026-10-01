@@ -69,6 +69,7 @@ check "receipts are not readable"                 "0" "$(count "${H[@]}" "$REST/
 check "receipt fields are not readable"           "0" "$(count "${H[@]}" "$REST/receipt_fields?select=receipt_id")"
 check "receipt comparisons are not readable"      "0" "$(count "${H[@]}" "$REST/receipt_comparisons?select=receipt_id")"
 check "model call counts are not readable"        "0" "$(count "${H[@]}" "$REST/receipt_model_calls?select=month")"
+check "the WhatsApp photo queue is not readable"  "0" "$(count "${H[@]}" "$REST/receipt_intake?select=id")"
 
 echo "--- writes a stranger must not make (each must fail with 42501)"
 check "can't insert a published quote" "42501" "$(post quotes "$(printf '{"dedupe_key":"rls","provider_id":"wise","route_id":"us-in","send_currency":"USD","receive_currency":"INR","send_amount":500,"delivery_method":"bank_deposit","payment_method":"bank_account","fee":0,"offered_rate":99,"mid_market_rate":95,"mid_market_source":"x","amount_received":49500,"computed_amount_received":49500,"markup_pct":-4,"total_cost":0,"total_cost_pct":0,"source":"scraper","strategy":"x","captured_at":"2026-09-28T00:00:00Z","validation_status":"published"}')")"
@@ -78,6 +79,8 @@ check "can't save a transfer" "42501" "$(post saved_transfers "$(printf '{"user_
 check "can't save a comparison" "42501" "$(post saved_comparisons "$(printf '{"user_id":"%s","route_id":"us-in","send_amount":500,"delivery_method":"upi"}' "$FAKE_USER")")"
 check "can't register an internal install" "42501" "$(post internal_installs "$(printf '{"install_id":"%s","label":"x"}' "$FAKE_USER")")"
 check "can't log an event as someone else" "42501" "$(post events "$(printf '{"install_id":"%s","user_id":"%s","name":"rls_test"}' "$TEST_INSTALL" "$FAKE_USER")")"
+check "can't queue a WhatsApp photo" "42501" "$(post receipt_intake "$(printf '{"phone_hash":"%s","phone_sealed":"xxxxxxxxxxxxxxxxxxxx","media_id":"rls"}' "$(printf 'a%.0s' {1..64})")")"
+check "can't take photos off the queue" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/claim_receipt_intake" -d '{"p_limit":1}')"
 check "can't enter a price" "42501" "$(post manual_observations "$(printf '{"provider_id":"wise","route_id":"us-in","send_amount":500,"delivery_method":"bank_deposit","fee":0,"offered_rate":99,"amount_received":49500,"source_url":"x","observed_by":"%s"}' "$FAKE_USER")")"
 check "can't ask for a route as someone else" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","user_id":"%s"}' "$TEST_INSTALL" "$FAKE_USER")")"
 check "can't file a request as WhatsApp" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","source":"whatsapp"}' "$TEST_INSTALL")")"
@@ -107,6 +110,7 @@ check "anonymous event insert works" "201" "$(post events "$(printf '{"install_i
 check "anonymous route request works" "@(201|23505)" "$(post route_requests "$(printf '{"send_country":"us","receive_country":"np","install_id":"%s","delivery_method":"bank_deposit"}' "$TEST_INSTALL")")"
 check "the same install can't ask twice (23505)" "23505" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s"}' "$TEST_INSTALL")")"
 check "request counts are public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/route_request_counts" -d '{}')"
+check "the receipt observatory is public" "200" "$(pg "${H[@]}" -X POST "$REST/rpc/receipt_observatory" -d '{}')"
 check "a receipt result is read by its ID (none here)" "null" "$(curl -s -m 20 "${H[@]}" -X POST "$REST/rpc/receipt_result" -d '{"p_id":"00000000-0000-4000-8000-000000000000"}')"
 
 echo; echo "$pass passed, $fail failed"

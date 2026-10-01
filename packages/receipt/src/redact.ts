@@ -77,7 +77,8 @@ const UPI_HANDLE = /\b[\w.-]{2,}@[a-z]{2,}\b/gi
 const PHONE_US = /(?:\+?1[\s.-]?)?\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}\b/g
 const PHONE_INTL = /\+\d[\d\s-]{7,16}\d/g
 const CARD_RUN = /\b(?:\d[ -]?){12,18}\d\b/g
-const MASKED_CARD = /(?:[*xX•#]{2,}[\s-]?){1,4}\d{2,4}\b/g
+// OCR often reads a row of asterisks as a mix of *, +, x and dots ("**+*4118").
+const MASKED_CARD = /(?:[*xX•#+·.]*[*xX•#+][*xX•#+·.]*[\s-]?){1,4}(?<=[*xX•#+·.]{2}[\s-]?)\d{2,4}\b/g
 const STREET =
   /\b\d{1,6}\s+(?:[NSEW]\.?\s+)?(?:[A-Za-z0-9]+\.?\s+){0,4}(?:st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|way|ct|court|pl|place|hwy|highway|pkwy|parkway|ter|terrace|cir|circle|calle|av)\b/i
 const UNIT = /\b(?:apt|apartment|suite|ste|unit|p\.?\s?o\.?\s?box)\b\.?\s*#?\s*\w+/i
@@ -193,7 +194,11 @@ export function detectPii(page: OcrPage): Redaction[] {
         .map((o, j) => ({ o, j }))
         .filter(({ o, j }) => o.start >= from && looksLikeId(words[j].text))
       after.forEach(({ j }) => hide(i, j, 'account'))
-      if (!after.length && !text.slice(from).trim() && page.lines[i + 1]) {
+      // An ID under its label, unless that next line is a field of its own: a heading like
+      // "Transfer confirmation" followed by "Date: Aug 9, 2026" is not an ID and a year.
+      const next = page.lines[i + 1] ? lineText(page.lines[i + 1]) : ''
+      const nextIsField = LABELED.test(next) || startsWithFieldLabel(next) || FIELD_WORD.test(next)
+      if (!after.length && !text.slice(from).trim() && page.lines[i + 1] && !nextIsField) {
         page.lines[i + 1].words.forEach((w, j) => {
           if (looksLikeId(w.text)) hide(i + 1, j, 'account')
         })

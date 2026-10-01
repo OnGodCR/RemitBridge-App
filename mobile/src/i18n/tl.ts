@@ -39,6 +39,7 @@ export const tl: Copy = {
     quote: 'Presyo',
     routeBoard: 'Listahan ng mga ruta',
     askForRoute: 'Humiling ng ruta',
+    observatory: 'Ang ibinayad ng mga tao',
   },
 
   delivery: {
@@ -389,6 +390,7 @@ export const tl: Copy = {
     glossarySub: (n) => `${n} termino, ipinaliwanag nang simple`,
     routeBoardSub: 'Ang mga rutang sinusuri namin, at ang gusto ng mga tao',
     remitbenchSub: 'Ang aming research testbed, ginagawa pa',
+    observatorySub: 'Mga unang resulta mula sa mga resibong ibinahagi ng mga tao',
     website: 'Sa website',
     blog: 'Blog',
     blogSub: 'Mga kuwento at paliwanag',
@@ -692,6 +694,59 @@ export const tl: Copy = {
     compare: 'Ikumpara ang route na ito ngayon',
     notCovered: 'Hindi pa namin tinitingnan ang route na ito.',
     routeBoard: 'Tingnan kung aling route ang tinitingnan namin',
+    disclosuresTitle: 'Mga kailangang impormasyon',
+    disclosuresAll: 'Nakita ang bawat kailangang impormasyon sa resibong ito.',
+    disclosuresMissing: (items: string) => `Hindi nakita sa resibong ito: ${items}.`,
+    disclosuresNote:
+      'Puwedeng maputol ng litrato ang bahagi ng resibo at mahirap basahin ang maliliit na letra, kaya hindi ibig sabihin nito na may kinulang ang provider.',
+    disclosureItems: {
+      transfer_amount: 'halagang ipinadala',
+      fees: 'mga bayad',
+      taxes: 'mga buwis',
+      total: 'kabuuan',
+      exchange_rate: 'exchange rate',
+      amount_received: 'halagang natanggap',
+      date_available: 'petsa kung kailan makukuha ang pera',
+      recipient: 'tatanggap',
+      error_rights: 'ang iyong mga karapatan kung may mali',
+      cancellation: 'paano magkansela',
+      provider_contact: 'ang contact details ng provider',
+      cfpb_contact: 'ang contact details ng CFPB',
+    } as Record<string, string>,
+    limits: [
+      'Kung tama ang pagbasa sa bawat halaga, maliban kung tiningnan mo ito.',
+      'Ang siningil sa pamilya mo sa kabila, bukod sa nasa resibo.',
+      'Ang rate sa mismong minuto ng pagpapadala: pang-araw-araw na batayan ang mid-market rate.',
+      'Kung wala talaga sa resibo ang isang impormasyon, o sa litrato lang.',
+    ],
+  },
+
+  observatory: {
+    intro: 'Ang talagang ibinayad ng mga tao, mula sa mga resibong ini-scan nila at piniling ibahagi para sa pananaliksik.',
+    early: 'Mga unang resulta',
+    sample: (n: number, since: string | null) => `${n} ibinahaging resibo${since ? ` mula ${since}` : ''}`,
+    tooFew: (min: number) =>
+      `Kulang pa ang mga ibinahaging resibo. Lalabas ang mga numero kapag may ${min} man lang, para walang resibong matukoy.`,
+    groupsTitle: 'Ayon sa provider at route',
+    noGroups: (min: number) => `Wala pang provider at route na may ${min} ibinahaging resibo.`,
+    receipts: (n: number) => `${n} resibo`,
+    medianCost: 'Karaniwang kabuuang gastos',
+    medianMarkup: 'Karaniwang exchange-rate markup',
+    paidMore: (k: number, of: number) => `${k} sa ${of} na naikumpara ang nakakuha ng mas masamang rate kaysa sa na-advertise noong araw na iyon`,
+    taxTitle: 'Federal na buwis sa remittance',
+    taxLine: (taxed: number, matches: number, notFound: number) =>
+      `${taxed} ang binayaran ng cash o katulad. Tumugma ang 1% na buwis sa ${matches}; walang nakitang linya ng buwis sa ${notFound}.`,
+    disclosuresTitle: 'Mga kailangang impormasyong hindi nakita',
+    disclosureLine: (item: string, n: number, total: number) => `${item}: ${n} sa ${total}`,
+    noneMissing: 'Nakita ang bawat kailangang impormasyon sa bawat ibinahaging resibo.',
+    method: (min: number) =>
+      `Ang mga resibong piniling ibahagi para sa pananaliksik lang ang binibilang. Lalabas ang isang provider at route kapag may ${min} na. Ang “karaniwan” ay ang median.`,
+    loadFailed: 'Hindi ma-load ang mga resulta.',
+    limits: [
+      'Ang ibinabayad ng karamihan: hindi random na sample ang mga nag-i-scan at nagbabahagi ng resibo.',
+      'Anumang tungkol sa isang tao o isang padala. Mga kabuuan lang ang ipinapakita.',
+      'Kung wala talaga sa resibo ang isang impormasyon, o sa litrato lang.',
+    ],
   },
 
   receiptFields: {

@@ -1,0 +1,932 @@
+{
+ "id": "synth-0041-remitly-bank-account-usd-inr",
+ "description": "Remitly, USD to INR, paid by bank account; no tax; values under their labels; tilted",
+ "source": "synthetic",
+ "seed": 41,
+ "expected": {
+  "provider": "Remitly",
+  "send_currency": "USD",
+  "receive_currency": "INR",
+  "amount_sent": 250,
+  "fee": 4.99,
+  "exchange_rate": 84.2324,
+  "amount_received": 21058.1,
+  "transfer_date": "2026-08-15",
+  "funding_method": "bank_account",
+  "tax": 0,
+  "total_paid": 254.99,
+  "delivery_method": "cash_pickup"
+ },
+ "pii": [
+  "Samuel",
+  "Tesfaye",
+  "77 Orchard",
+  "98168",
+  "Rohan",
+  "Gupta",
+  "5402233449"
+ ],
+ "keep": [
+  "08/15/2026",
+  "250.00 USD",
+  "USD 4.99",
+  "USD 0.00",
+  "$254.99",
+  "84.2324",
+  "₹21,058.10"
+ ],
+ "disclosures": [
+  "provider_contact"
+ ],
+ "mid_rate": 86.1751,
+ "printed": [
+  "Remitly",
+  "Transfer receipt",
+  "Transfer Date:",
+  "08/15/2026",
+  "From: Samuel Tesfaye",
+  "77 Orchard Ln Unit 12",
+  "Tukwila, WA 98168",
+  "Recipient: Rohan Gupta",
+  "Reference number 5402233449",
+  "Payment Method:",
+  "Bank transfer",
+  "Receive Method:",
+  "Cash Pickup",
+  "Send Amount:",
+  "250.00 USD",
+  "Service Fee",
+  "USD 4.99",
+  "Remittance Tax",
+  "USD 0.00",
+  "Total:",
+  "$254.99",
+  "Rate:",
+  "1 USD = 84.2324 INR",
+  "Payout Amount:",
+  "₹21,058.10",
+  "For questions or complaints about Remitly, contact us at 1-800-555-0151."
+ ],
+ "style": {
+  "font": "Courier 10 Pitch",
+  "size": 17,
+  "width": 392,
+  "rotate": 0.55,
+  "blur": 0,
+  "paper": "#ffffff",
+  "layout": "next_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1024,
+  "height": 1580,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "Remitly",
+      "box": {
+       "x": 97,
+       "y": 86,
+       "width": 176,
+       "height": 45
+      }
+     }
+    ],
+    "box": {
+     "x": 97,
+     "y": 86,
+     "width": 176,
+     "height": 45
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 95,
+       "y": 157,
+       "width": 162,
+       "height": 28
+      }
+     },
+     {
+      "text": "receipt",
+      "box": {
+       "x": 284,
+       "y": 159,
+       "width": 134,
+       "height": 33
+      }
+     }
+    ],
+    "box": {
+     "x": 95,
+     "y": 157,
+     "width": 323,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 94,
+       "y": 209,
+       "width": 162,
+       "height": 28
+      }
+     },
+     {
+      "text": "Date:",
+      "box": {
+       "x": 279,
+       "y": 211,
+       "width": 93,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 94,
+     "y": 209,
+     "width": 278,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "08/15/2026",
+      "box": {
+       "x": 95,
+       "y": 261,
+       "width": 201,
+       "height": 30
+      }
+     }
+    ],
+    "box": {
+     "x": 95,
+     "y": 261,
+     "width": 201,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "From:",
+      "box": {
+       "x": 96,
+       "y": 313,
+       "width": 91,
+       "height": 27
+      }
+     },
+     {
+      "text": "Samuel",
+      "box": {
+       "x": 217,
+       "y": 314,
+       "width": 118,
+       "height": 27
+      }
+     },
+     {
+      "text": "Tesfaye",
+      "box": {
+       "x": 359,
+       "y": 315,
+       "width": 141,
+       "height": 34
+      }
+     }
+    ],
+    "box": {
+     "x": 96,
+     "y": 313,
+     "width": 404,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "77",
+      "box": {
+       "x": 94,
+       "y": 363,
+       "width": 37,
+       "height": 26
+      }
+     },
+     {
+      "text": "Orchard",
+      "box": {
+       "x": 155,
+       "y": 363,
+       "width": 139,
+       "height": 28
+      }
+     },
+     {
+      "text": "Ln",
+      "box": {
+       "x": 320,
+       "y": 365,
+       "width": 35,
+       "height": 26
+      }
+     },
+     {
+      "text": "Unit",
+      "box": {
+       "x": 381,
+       "y": 365,
+       "width": 76,
+       "height": 27
+      }
+     },
+     {
+      "text": "12",
+      "box": {
+       "x": 485,
+       "y": 367,
+       "width": 34,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 94,
+     "y": 363,
+     "width": 425,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Tukwila,",
+      "box": {
+       "x": 92,
+       "y": 415,
+       "width": 156,
+       "height": 32
+      }
+     },
+     {
+      "text": "WA",
+      "box": {
+       "x": 276,
+       "y": 417,
+       "width": 40,
+       "height": 26
+      }
+     },
+     {
+      "text": "98168",
+      "box": {
+       "x": 339,
+       "y": 417,
+       "width": 99,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 415,
+     "width": 346,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Recipient:",
+      "box": {
+       "x": 93,
+       "y": 467,
+       "width": 195,
+       "height": 33
+      }
+     },
+     {
+      "text": "Rohan",
+      "box": {
+       "x": 318,
+       "y": 469,
+       "width": 98,
+       "height": 27
+      }
+     },
+     {
+      "text": "Gupta",
+      "box": {
+       "x": 440,
+       "y": 470,
+       "width": 99,
+       "height": 33
+      }
+     }
+    ],
+    "box": {
+     "x": 93,
+     "y": 467,
+     "width": 446,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Reference",
+      "box": {
+       "x": 92,
+       "y": 519,
+       "width": 181,
+       "height": 28
+      }
+     },
+     {
+      "text": "number",
+      "box": {
+       "x": 298,
+       "y": 521,
+       "width": 119,
+       "height": 27
+      }
+     },
+     {
+      "text": "5402233449",
+      "box": {
+       "x": 440,
+       "y": 522,
+       "width": 201,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 519,
+     "width": 549,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 93,
+       "y": 571,
+       "width": 137,
+       "height": 33
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 255,
+       "y": 572,
+       "width": 134,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 93,
+     "y": 571,
+     "width": 296,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Bank",
+      "box": {
+       "x": 92,
+       "y": 623,
+       "width": 79,
+       "height": 26
+      }
+     },
+     {
+      "text": "transfer",
+      "box": {
+       "x": 194,
+       "y": 624,
+       "width": 161,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 623,
+     "width": 263,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receive",
+      "box": {
+       "x": 91,
+       "y": 675,
+       "width": 139,
+       "height": 28
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 254,
+       "y": 676,
+       "width": 134,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 675,
+     "width": 297,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Cash",
+      "box": {
+       "x": 90,
+       "y": 727,
+       "width": 78,
+       "height": 27
+      }
+     },
+     {
+      "text": "Pickup",
+      "box": {
+       "x": 193,
+       "y": 727,
+       "width": 119,
+       "height": 35
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 727,
+     "width": 222,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Send",
+      "box": {
+       "x": 90,
+       "y": 779,
+       "width": 77,
+       "height": 27
+      }
+     },
+     {
+      "text": "Amount:",
+      "box": {
+       "x": 191,
+       "y": 780,
+       "width": 135,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 779,
+     "width": 236,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "250.00",
+      "box": {
+       "x": 89,
+       "y": 831,
+       "width": 119,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 233,
+       "y": 832,
+       "width": 58,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 831,
+     "width": 202,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Service",
+      "box": {
+       "x": 89,
+       "y": 883,
+       "width": 139,
+       "height": 28
+      }
+     },
+     {
+      "text": "Fee",
+      "box": {
+       "x": 254,
+       "y": 885,
+       "width": 56,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 883,
+     "width": 221,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "USD",
+      "box": {
+       "x": 88,
+       "y": 935,
+       "width": 58,
+       "height": 26
+      }
+     },
+     {
+      "text": "4.99",
+      "box": {
+       "x": 170,
+       "y": 936,
+       "width": 78,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 935,
+     "width": 160,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Remittance",
+      "box": {
+       "x": 88,
+       "y": 987,
+       "width": 201,
+       "height": 28
+      }
+     },
+     {
+      "text": "Tax",
+      "box": {
+       "x": 312,
+       "y": 989,
+       "width": 59,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 987,
+     "width": 283,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "USD",
+      "box": {
+       "x": 87,
+       "y": 1039,
+       "width": 58,
+       "height": 26
+      }
+     },
+     {
+      "text": "0.00",
+      "box": {
+       "x": 169,
+       "y": 1040,
+       "width": 78,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 1039,
+     "width": 160,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total:",
+      "box": {
+       "x": 86,
+       "y": 1091,
+       "width": 114,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 86,
+     "y": 1091,
+     "width": 114,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "$254.99",
+      "box": {
+       "x": 87,
+       "y": 1142,
+       "width": 139,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 1142,
+     "width": 139,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 86,
+       "y": 1193,
+       "width": 93,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 86,
+     "y": 1193,
+     "width": 93,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "1",
+      "box": {
+       "x": 87,
+       "y": 1245,
+       "width": 15,
+       "height": 26
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 126,
+       "y": 1245,
+       "width": 58,
+       "height": 27
+      }
+     },
+     {
+      "text": "=",
+      "box": {
+       "x": 207,
+       "y": 1255,
+       "width": 19,
+       "height": 11
+      }
+     },
+     {
+      "text": "84.2324",
+      "box": {
+       "x": 249,
+       "y": 1246,
+       "width": 140,
+       "height": 28
+      }
+     },
+     {
+      "text": "INR",
+      "box": {
+       "x": 414,
+       "y": 1248,
+       "width": 58,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 1245,
+     "width": 385,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payout",
+      "box": {
+       "x": 86,
+       "y": 1297,
+       "width": 117,
+       "height": 33
+      }
+     },
+     {
+      "text": "Amount:",
+      "box": {
+       "x": 227,
+       "y": 1299,
+       "width": 135,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 86,
+     "y": 1297,
+     "width": 276,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "21,058.10",
+      "box": {
+       "x": 84,
+       "y": 1349,
+       "width": 201,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 84,
+     "y": 1349,
+     "width": 201,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 86,
+       "y": 1401,
+       "width": 56,
+       "height": 26
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 166,
+       "y": 1402,
+       "width": 179,
+       "height": 33
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 371,
+       "y": 1410,
+       "width": 37,
+       "height": 20
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 433,
+       "y": 1404,
+       "width": 198,
+       "height": 33
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 657,
+       "y": 1406,
+       "width": 97,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 86,
+     "y": 1401,
+     "width": 668,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Remitly,",
+      "box": {
+       "x": 83,
+       "y": 1447,
+       "width": 155,
+       "height": 34
+      }
+     },
+     {
+      "text": "contact",
+      "box": {
+       "x": 269,
+       "y": 1450,
+       "width": 137,
+       "height": 26
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 432,
+       "y": 1457,
+       "width": 35,
+       "height": 20
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 493,
+       "y": 1452,
+       "width": 36,
+       "height": 25
+      }
+     },
+     {
+      "text": "1-800-555-0151.",
+      "box": {
+       "x": 556,
+       "y": 1452,
+       "width": 296,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 83,
+     "y": 1447,
+     "width": 769,
+     "height": 34
+    }
+   }
+  ]
+ }
+}

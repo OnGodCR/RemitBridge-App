@@ -1,0 +1,941 @@
+{
+ "id": "synth-0030-moneygram-cash-usd-php",
+ "description": "MoneyGram, USD to PHP, paid by cash; taxed; tilted",
+ "source": "synthetic",
+ "seed": 30,
+ "expected": {
+  "provider": "MoneyGram",
+  "send_currency": "USD",
+  "receive_currency": "PHP",
+  "amount_sent": 300,
+  "fee": 0,
+  "exchange_rate": 58.5147,
+  "amount_received": 17554.41,
+  "transfer_date": "2026-09-16",
+  "funding_method": "cash",
+  "tax": 3,
+  "total_paid": 303,
+  "delivery_method": "cash_pickup"
+ },
+ "pii": [
+  "Meera",
+  "Patel",
+  "2207 Cedar",
+  "98118",
+  "555-0107",
+  "Maria",
+  "Reyes",
+  "Davao City",
+  "2292788120"
+ ],
+ "keep": [
+  "9/16/2026",
+  "USD 300.00",
+  "$0.00",
+  "3.00 USD",
+  "$303.00",
+  "58.5147",
+  "PHP 17,554.41"
+ ],
+ "disclosures": [
+  "date_available",
+  "provider_contact"
+ ],
+ "mid_rate": 58.8031,
+ "printed": [
+  "MoneyGram",
+  "RECEIPT",
+  "Transfer Date: 9/16/2026",
+  "Sender name: Meera Patel",
+  "2207 Cedar Ave Apt 3",
+  "Seattle, WA 98118",
+  "Phone: (206) 555-0107",
+  "Receiver name: Maria Reyes",
+  "Davao City",
+  "Confirmation 2292788120",
+  "Payment Method: Cash",
+  "Delivery Option: Cash pick-up",
+  "Amount Sent USD 300.00",
+  "Service Fee: $0.00",
+  "Remittance Tax: 3.00 USD",
+  "Total Amount $303.00",
+  "Rate: 58.5147 PHP",
+  "Total to Recipient PHP 17,554.41",
+  "Date Available: Sep 16, 2026",
+  "For questions or complaints about MoneyGram, contact us at 1-800-555-0107."
+ ],
+ "style": {
+  "font": "Liberation Mono",
+  "size": 16,
+  "width": 439,
+  "rotate": -0.27,
+  "blur": 0,
+  "paper": "#ffffff",
+  "layout": "same_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1118,
+  "height": 1212,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "MoneyGram",
+      "box": {
+       "x": 87,
+       "y": 94,
+       "width": 214,
+       "height": 36
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 94,
+     "width": 214,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "RECEIPT",
+      "box": {
+       "x": 88,
+       "y": 158,
+       "width": 131,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 158,
+     "width": 131,
+     "height": 22
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 87,
+       "y": 206,
+       "width": 150,
+       "height": 24
+      }
+     },
+     {
+      "text": "Date:",
+      "box": {
+       "x": 261,
+       "y": 208,
+       "width": 87,
+       "height": 22
+      }
+     },
+     {
+      "text": "9/16/2026",
+      "box": {
+       "x": 376,
+       "y": 205,
+       "width": 169,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 205,
+     "width": 458,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Sender",
+      "box": {
+       "x": 88,
+       "y": 254,
+       "width": 111,
+       "height": 25
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 223,
+       "y": 260,
+       "width": 87,
+       "height": 18
+      }
+     },
+     {
+      "text": "Meera",
+      "box": {
+       "x": 338,
+       "y": 256,
+       "width": 93,
+       "height": 21
+      }
+     },
+     {
+      "text": "Patel",
+      "box": {
+       "x": 453,
+       "y": 252,
+       "width": 93,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 252,
+     "width": 458,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "2207",
+      "box": {
+       "x": 89,
+       "y": 306,
+       "width": 72,
+       "height": 22
+      }
+     },
+     {
+      "text": "Cedar",
+      "box": {
+       "x": 184,
+       "y": 304,
+       "width": 92,
+       "height": 24
+      }
+     },
+     {
+      "text": "Ave",
+      "box": {
+       "x": 298,
+       "y": 306,
+       "width": 56,
+       "height": 21
+      }
+     },
+     {
+      "text": "Apt",
+      "box": {
+       "x": 375,
+       "y": 305,
+       "width": 54,
+       "height": 29
+      }
+     },
+     {
+      "text": "3",
+      "box": {
+       "x": 453,
+       "y": 304,
+       "width": 16,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 304,
+     "width": 380,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Seattle,",
+      "box": {
+       "x": 88,
+       "y": 352,
+       "width": 144,
+       "height": 30
+      }
+     },
+     {
+      "text": "WA",
+      "box": {
+       "x": 260,
+       "y": 354,
+       "width": 38,
+       "height": 21
+      }
+     },
+     {
+      "text": "98118",
+      "box": {
+       "x": 319,
+       "y": 353,
+       "width": 92,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 352,
+     "width": 323,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Phone:",
+      "box": {
+       "x": 89,
+       "y": 402,
+       "width": 106,
+       "height": 24
+      }
+     },
+     {
+      "text": "(206)",
+      "box": {
+       "x": 227,
+       "y": 402,
+       "width": 85,
+       "height": 31
+      }
+     },
+     {
+      "text": "555-0107",
+      "box": {
+       "x": 339,
+       "y": 402,
+       "width": 149,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 402,
+     "width": 399,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receiver",
+      "box": {
+       "x": 89,
+       "y": 452,
+       "width": 149,
+       "height": 24
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 262,
+       "y": 458,
+       "width": 87,
+       "height": 18
+      }
+     },
+     {
+      "text": "Maria",
+      "box": {
+       "x": 377,
+       "y": 451,
+       "width": 94,
+       "height": 24
+      }
+     },
+     {
+      "text": "Reyes",
+      "box": {
+       "x": 493,
+       "y": 453,
+       "width": 91,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 451,
+     "width": 495,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Davao",
+      "box": {
+       "x": 90,
+       "y": 503,
+       "width": 92,
+       "height": 21
+      }
+     },
+     {
+      "text": "City",
+      "box": {
+       "x": 204,
+       "y": 500,
+       "width": 75,
+       "height": 30
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 500,
+     "width": 189,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Confirmation",
+      "box": {
+       "x": 89,
+       "y": 550,
+       "width": 227,
+       "height": 25
+      }
+     },
+     {
+      "text": "2292788120",
+      "box": {
+       "x": 340,
+       "y": 550,
+       "width": 188,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 550,
+     "width": 439,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 90,
+       "y": 600,
+       "width": 129,
+       "height": 29
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 244,
+       "y": 597,
+       "width": 124,
+       "height": 25
+      }
+     },
+     {
+      "text": "Cash",
+      "box": {
+       "x": 397,
+       "y": 597,
+       "width": 72,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 597,
+     "width": 379,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Delivery",
+      "box": {
+       "x": 90,
+       "y": 648,
+       "width": 151,
+       "height": 31
+      }
+     },
+     {
+      "text": "Option:",
+      "box": {
+       "x": 262,
+       "y": 647,
+       "width": 126,
+       "height": 31
+      }
+     },
+     {
+      "text": "Cash",
+      "box": {
+       "x": 416,
+       "y": 647,
+       "width": 73,
+       "height": 24
+      }
+     },
+     {
+      "text": "pick-up",
+      "box": {
+       "x": 513,
+       "y": 646,
+       "width": 130,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 646,
+     "width": 553,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Amount",
+      "box": {
+       "x": 88,
+       "y": 700,
+       "width": 113,
+       "height": 22
+      }
+     },
+     {
+      "text": "Sent",
+      "box": {
+       "x": 224,
+       "y": 699,
+       "width": 73,
+       "height": 23
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 321,
+       "y": 699,
+       "width": 54,
+       "height": 22
+      }
+     },
+     {
+      "text": "300.00",
+      "box": {
+       "x": 398,
+       "y": 698,
+       "width": 111,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 698,
+     "width": 421,
+     "height": 24
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Service",
+      "box": {
+       "x": 90,
+       "y": 746,
+       "width": 131,
+       "height": 24
+      }
+     },
+     {
+      "text": "Fee:",
+      "box": {
+       "x": 245,
+       "y": 748,
+       "width": 67,
+       "height": 22
+      }
+     },
+     {
+      "text": "$0.00",
+      "box": {
+       "x": 339,
+       "y": 746,
+       "width": 94,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 746,
+     "width": 343,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Remittance",
+      "box": {
+       "x": 91,
+       "y": 796,
+       "width": 188,
+       "height": 24
+      }
+     },
+     {
+      "text": "Tax:",
+      "box": {
+       "x": 301,
+       "y": 798,
+       "width": 68,
+       "height": 21
+      }
+     },
+     {
+      "text": "3.00",
+      "box": {
+       "x": 398,
+       "y": 796,
+       "width": 73,
+       "height": 23
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 494,
+       "y": 796,
+       "width": 55,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 796,
+     "width": 458,
+     "height": 24
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 90,
+       "y": 844,
+       "width": 94,
+       "height": 24
+      }
+     },
+     {
+      "text": "Amount",
+      "box": {
+       "x": 204,
+       "y": 846,
+       "width": 113,
+       "height": 22
+      }
+     },
+     {
+      "text": "$303.00",
+      "box": {
+       "x": 340,
+       "y": 844,
+       "width": 131,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 844,
+     "width": 381,
+     "height": 25
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 91,
+       "y": 896,
+       "width": 87,
+       "height": 22
+      }
+     },
+     {
+      "text": "58.5147",
+      "box": {
+       "x": 207,
+       "y": 895,
+       "width": 130,
+       "height": 23
+      }
+     },
+     {
+      "text": "PHP",
+      "box": {
+       "x": 360,
+       "y": 895,
+       "width": 54,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 895,
+     "width": 323,
+     "height": 23
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 90,
+       "y": 944,
+       "width": 94,
+       "height": 24
+      }
+     },
+     {
+      "text": "to",
+      "box": {
+       "x": 207,
+       "y": 946,
+       "width": 35,
+       "height": 22
+      }
+     },
+     {
+      "text": "Recipient",
+      "box": {
+       "x": 264,
+       "y": 943,
+       "width": 168,
+       "height": 31
+      }
+     },
+     {
+      "text": "PHP",
+      "box": {
+       "x": 456,
+       "y": 945,
+       "width": 55,
+       "height": 22
+      }
+     },
+     {
+      "text": "17,554.41",
+      "box": {
+       "x": 533,
+       "y": 944,
+       "width": 170,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 943,
+     "width": 613,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 92,
+       "y": 994,
+       "width": 73,
+       "height": 22
+      }
+     },
+     {
+      "text": "Available:",
+      "box": {
+       "x": 186,
+       "y": 991,
+       "width": 184,
+       "height": 25
+      }
+     },
+     {
+      "text": "Sep",
+      "box": {
+       "x": 399,
+       "y": 993,
+       "width": 54,
+       "height": 29
+      }
+     },
+     {
+      "text": "16,",
+      "box": {
+       "x": 476,
+       "y": 992,
+       "width": 47,
+       "height": 28
+      }
+     },
+     {
+      "text": "2026",
+      "box": {
+       "x": 553,
+       "y": 992,
+       "width": 73,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 991,
+     "width": 534,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 93,
+       "y": 1045,
+       "width": 52,
+       "height": 21
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 169,
+       "y": 1042,
+       "width": 168,
+       "height": 31
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 361,
+       "y": 1047,
+       "width": 34,
+       "height": 18
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 418,
+       "y": 1040,
+       "width": 188,
+       "height": 31
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 630,
+       "y": 1040,
+       "width": 91,
+       "height": 24
+      }
+     },
+     {
+      "text": "MoneyGram,",
+      "box": {
+       "x": 745,
+       "y": 1041,
+       "width": 182,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 93,
+     "y": 1040,
+     "width": 834,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "contact",
+      "box": {
+       "x": 92,
+       "y": 1086,
+       "width": 130,
+       "height": 22
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 247,
+       "y": 1090,
+       "width": 33,
+       "height": 18
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 303,
+       "y": 1085,
+       "width": 34,
+       "height": 22
+      }
+     },
+     {
+      "text": "1-800-555-0107.",
+      "box": {
+       "x": 361,
+       "y": 1084,
+       "width": 279,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 1084,
+     "width": 548,
+     "height": 24
+    }
+   }
+  ]
+ }
+}

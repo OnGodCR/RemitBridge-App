@@ -51,15 +51,19 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       speaker reads each one, agrees in writing, and is named with the date in
       `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
       read. Glossary definitions are still English in every language.
-- [ ] **CAC receipt scanner (D72), Phases 4–6.** Phases 1–3 (gap report; data model,
-      redaction, parser harness, Claude fallback, validation, scan screen; confirmation and
-      result screens, funding method in TrueCost and Compare) done 2026-09-30 on branch
-      `claude/gallant-hopper-51zhhm` (D87), merged with `main` the same day. Waiting on
-      Angad's review before Phase 4. Internal deadline 2026-10-23.
+- [ ] **CAC receipt scanner (D72): Angad's review of Phases 4–6, then the live setup.**
+      All six phases built on `claude/gallant-hopper-51zhhm` (Phases 1–3 merged 2026-09-30;
+      4–6 done the same day: benchmark D93, WhatsApp photos D94, disclosure check D95,
+      observatory D96). Two migrations to push: `20260930020000_whatsapp_receipts.sql` and
+      `20260930030000_receipt_observatory.sql`. Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
-- [ ] **`ANTHROPIC_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D79). Also
-      push the receipts migration (`20260930000000_receipts.sql`, 11 more smoke checks).
+- [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
+      receipts migration is in (48/48 smoke checks, 2026-09-30).
+- [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
+      sealed for up to an hour (2026-10-01). Left: push `20260930020000_whatsapp_receipts.sql`, set
+      `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
+      `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and redeploy.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
       proposed regulations (D78).
@@ -198,7 +202,9 @@ a style choice.
     Every user table has row-level security so only its owner can read it.
   - Deleting an account inside the app deletes all of that user's data.
   - Metrics are aggregate only.
-  - On WhatsApp, store only a hashed phone number.
+  - On WhatsApp, store only a hashed phone number. The one exception (D94, Angad's yes on
+    2026-10-01): while a receipt photo is being read, the number is kept encrypted for at
+    most an hour, and deleted as soon as the reply goes out.
   - Delete the contact details from a route request once its launch
     notification has gone out.
 - **Scraper conduct** is a reliability rule (PRD 9.12):
@@ -242,8 +248,8 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
   state lives in Postgres (D13).
 - **WhatsApp:** Meta Cloud API directly, not Twilio.
 - **Receipt scanning:** OCR and redaction on the phone (ML Kit, Skia); the pipeline in
-  `packages/receipt`; Claude through the Anthropic API, only from the `scan-receipt` Edge
-  Function (D73–D79).
+  `packages/receipt`; Qwen3 VL through OpenRouter, only from the `scan-receipt` Edge
+  Function (D73–D78, D92).
 - **Maintainer alerts:** email to Angad.
 - Use whichever language fits each part. Every part must use the same total-cost formula.
 - **Look:** same as the website (D18). The website repo

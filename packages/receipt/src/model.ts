@@ -1,28 +1,79 @@
 /**
- * The model fallback (DECISIONS.md D79): Claude reads only the fields the parser left
- * missing or unsure, from the redacted photo and the redacted OCR text, and answers in a
- * strict JSON schema. Its answer is then checked again here field by field with
- * checkValue, so nothing it returns reaches the formula unchecked.
+ * The model fallback (DECISIONS.md D79, D92): a vision model reads only the fields the
+ * parser left missing or unsure, from the redacted photo and the redacted OCR text, and
+ * answers in a strict JSON schema. Its answer is then checked again here field by field
+ * with checkValue, so nothing it returns reaches the formula unchecked.
  *
- * This file builds the request and reads the reply. The call itself takes a client passed
- * in (the official SDK in the Edge Function and the benchmark, a fake in tests), so the
- * package stays free of network code and keys.
+ * The model is reached through OpenRouter's chat completions API (OpenAI's request shape),
+ * so which model reads receipts is one setting. This file builds the request and reads
+ * the reply; the call itself takes a client passed in (openRouterClient in the Edge
+ * Function and the benchmark, a fake in tests), so tests never touch the network.
  */
-import type Anthropic from '@anthropic-ai/sdk'
-
 import { checkValue, FIELD_SPECS } from './fields.ts'
 import { lineText } from './ocr.ts'
 import type { FieldName, OcrPage, ParsedField, ParsedFields } from './types.ts'
 
-/** Overridden by RECEIPT_MODEL in the Edge Function. */
-export const DEFAULT_MODEL = 'claude-opus-5-5'
+/**
+ * Qwen3 VL 32B Instruct, on OpenRouter (D92): reads photos, supports a strict JSON schema,
+ * and costs about a tenth of a cent a receipt. Overridden by RECEIPT_MODEL.
+ */
+export const DEFAULT_MODEL = 'qwen/qwen3-vl-32b-instruct'
 
-type CreateParams = Anthropic.Beta.Messages.MessageCreateParamsNonStreaming
-type Message = Anthropic.Beta.Messages.BetaMessage
+export const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
-/** Just the part of the SDK client this file calls. */
+type TextPart = { type: 'text'; text: string }
+type ImagePart = { type: 'image_url'; image_url: { url: string } }
+
+/** The chat completions request, as much of it as this file sends. */
+export interface ChatRequest {
+  model: string
+  /** Tried in order if the first model is down or refuses the request (OpenRouter). */
+  models?: string[]
+  messages: [{ role: 'system'; content: string }, { role: 'user'; content: (TextPart | ImagePart)[] }]
+  response_format: { type: 'json_schema'; json_schema: { name: string; strict: true; schema: Record<string, unknown> } }
+  /**
+   * OpenRouter's provider routing: only providers that honor every parameter (so the
+   * schema is enforced), and only ones that don't keep or train on what's sent.
+   */
+  provider: { require_parameters: true; data_collection: 'deny' }
+  temperature: number
+  max_tokens: number
+}
+
+/** The reply, as much of it as this file reads. */
+export interface ChatResponse {
+  choices?: { finish_reason?: string | null; message?: { content?: string | null; refusal?: string | null } }[]
+  error?: { message?: string; code?: number | string }
+}
+
+/** Just what this file needs from a client: send one request, get one reply. */
 export interface ModelClient {
-  beta: { messages: { create(params: CreateParams): Promise<Message> } }
+  complete(request: ChatRequest): Promise<ChatResponse>
+}
+
+/**
+ * A client for OpenRouter over plain fetch, so no SDK is needed in the app, the Edge
+ * Function or Node. A non-2xx reply throws (the pipeline then reads with the rules alone);
+ * the error names the status only, never the request.
+ */
+export function openRouterClient(apiKey: string, fetchImpl: typeof fetch = fetch): ModelClient {
+  return {
+    async complete(request) {
+      const res = await fetchImpl(OPENROUTER_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          // OpenRouter's app attribution headers; optional, and carry nothing about the person.
+          'HTTP-Referer': 'https://app.remitbridgelabs.org',
+          'X-Title': 'RemitBridge',
+        },
+        body: JSON.stringify(request),
+      })
+      if (!res.ok) throw new Error(`openrouter: HTTP ${res.status}`)
+      return (await res.json()) as ChatResponse
+    },
+  }
 }
 
 export interface ModelInput {
@@ -35,6 +86,8 @@ export interface ModelInput {
   /** Today as YYYY-MM-DD. */
   today: string
   model?: string
+  /** Models to fall back to, in order (RECEIPT_MODEL_FALLBACKS). */
+  fallbacks?: string[]
 }
 
 /**
@@ -65,7 +118,7 @@ function valueSchema(name: FieldName): Schema {
     case 'rate':
       return { type: 'number' }
     case 'date':
-      return { type: 'string', format: 'date' }
+      return { type: 'string', description: 'YYYY-MM-DD' }
     case 'enum':
       return { type: 'string', enum: [...spec.values!] }
     default:
@@ -103,25 +156,28 @@ export function numberedText(page: OcrPage): string {
   return page.lines.map((l, i) => `[${i}] ${lineText(l)}`).join('\n')
 }
 
-export function buildRequest(input: ModelInput): CreateParams {
-  const content: Anthropic.Beta.Messages.BetaContentBlockParam[] = []
+export function buildRequest(input: ModelInput): ChatRequest {
+  const content: (TextPart | ImagePart)[] = []
   if (input.image) {
-    content.push({ type: 'image', source: { type: 'base64', media_type: input.image.mediaType, data: input.image.base64 } })
+    content.push({ type: 'image_url', image_url: { url: `data:${input.image.mediaType};base64,${input.image.base64}` } })
   }
   content.push({
     type: 'text',
     text: `Today is ${input.today}. Read these fields: ${input.fields.join(', ')}.\n\nOCR text:\n${numberedText(input.page)}`,
   })
+  const model = input.model ?? DEFAULT_MODEL
+  const fallbacks = (input.fallbacks ?? []).filter((m) => m && m !== model)
   return {
-    model: input.model ?? DEFAULT_MODEL,
-    max_tokens: 16000,
-    // Refusals on a receipt are unlikely, but if one happens the API retries it on
-    // Anthropic's recommended fallback model instead of returning nothing.
-    betas: ['server-side-fallback-2026-07-01'],
-    fallbacks: 'default',
-    output_config: { effort: 'low', format: { type: 'json_schema', schema: answerSchema(input.fields) } },
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content }],
+    model,
+    ...(fallbacks.length ? { models: [model, ...fallbacks] } : {}),
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content },
+    ],
+    response_format: { type: 'json_schema', json_schema: { name: 'receipt_fields', strict: true, schema: answerSchema(input.fields) } },
+    provider: { require_parameters: true, data_collection: 'deny' },
+    temperature: 0,
+    max_tokens: 4000,
   }
 }
 
@@ -167,30 +223,52 @@ export function readAnswer(json: unknown, fields: FieldName[], page: OcrPage, to
   return out
 }
 
+export type ModelErrorReason = 'refusal' | 'truncated' | 'unreadable' | 'failed' | 'over_cap'
+
 export class ModelError extends Error {
-  constructor(
-    message: string,
-    /** over_cap: this month's model calls are used up (thrown by the caller's gate). */
-    readonly reason: 'refusal' | 'truncated' | 'unreadable' | 'over_cap',
-  ) {
+  /**
+   * refusal: the model declined; truncated: cut off at max_tokens; unreadable: not JSON;
+   * failed: OpenRouter answered with an error; over_cap: this month's model calls are used
+   * up (thrown by the caller's gate).
+   */
+  readonly reason: ModelErrorReason
+
+  // A plain field, not a constructor parameter property, so Node can run this file by
+  // stripping its types (the benchmark script).
+  constructor(message: string, reason: ModelErrorReason) {
     super(message)
+    this.reason = reason
   }
 }
 
 /**
+ * The JSON in a reply. A strict schema should give bare JSON, but some models wrap it in a
+ * Markdown code fence anyway, so one fence around the whole reply is allowed.
+ */
+export function replyJson(text: string): unknown {
+  const fenced = /^\s*```(?:json)?\s*([\s\S]*?)\s*```\s*$/.exec(text)
+  return JSON.parse(fenced ? fenced[1] : text)
+}
+
+/**
  * Asks the model for `input.fields`. Throws ModelError when there's no usable answer (a
- * refusal that the fallback didn't rescue, a reply cut off at max_tokens, or text that
- * isn't JSON); SDK errors (rate limits, outages) pass through for the caller to handle.
+ * refusal, a reply cut off at max_tokens, an error in the reply, or text that isn't JSON);
+ * network errors and non-2xx replies pass through for the caller to handle.
  */
 export async function askModel(client: ModelClient, input: ModelInput): Promise<ModelResult> {
   if (!input.fields.length) return { fields: {}, problems: [] }
-  const message = await client.beta.messages.create(buildRequest(input))
-  if (message.stop_reason === 'refusal') throw new ModelError('the model declined to read this receipt', 'refusal')
-  if (message.stop_reason === 'max_tokens') throw new ModelError('the answer was cut off', 'truncated')
-  const text = message.content.map((b) => (b.type === 'text' ? b.text : '')).join('')
+  const reply = await client.complete(buildRequest(input))
+  if (reply.error) throw new ModelError('the model answered with an error', 'failed')
+  const choice = reply.choices?.[0]
+  if (!choice) throw new ModelError('the reply had no answer', 'failed')
+  if (choice.message?.refusal || choice.finish_reason === 'content_filter') {
+    throw new ModelError('the model declined to read this receipt', 'refusal')
+  }
+  if (choice.finish_reason === 'length') throw new ModelError('the answer was cut off', 'truncated')
+  if (choice.finish_reason === 'error') throw new ModelError('the model answered with an error', 'failed')
   let json: unknown
   try {
-    json = JSON.parse(text)
+    json = replyJson(choice.message?.content ?? '')
   } catch {
     throw new ModelError('the answer was not JSON', 'unreadable')
   }

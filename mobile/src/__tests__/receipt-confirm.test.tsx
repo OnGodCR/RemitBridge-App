@@ -34,6 +34,7 @@ const RESULT: ScanResponse = {
   to_confirm: ['amount_received', 'funding_method'],
   model: { asked: [], error: null },
   redaction: 'device',
+  disclosures_missing: [],
 };
 
 function setup() {
