@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * Rebuilds the table in a translation review sheet (docs/translation-review/<code>.md,
  * DECISIONS.md D69) from the app's string files, so the sheet always matches the app.
