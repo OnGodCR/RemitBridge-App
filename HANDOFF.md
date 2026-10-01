@@ -27,7 +27,8 @@ What stands between this and a working product, in order:
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`. All nine migrations applied (Angad pushed
 the last two, `20260930020000_whatsapp_receipts` and `20260930030000_receipt_observatory`,
-on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions deployed: `delete-account`, `process-prices`, `scan-receipt` (2026-09-30). Not deployed:
+on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions deployed: `delete-account`, `process-prices`, `scan-receipt` (2026-09-30),
+`notify-route-launch` and `whatsapp` (2026-10-01; both do nothing until their secrets are set). Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
 ## 2026-09-30 evening (local session, the go-live list)

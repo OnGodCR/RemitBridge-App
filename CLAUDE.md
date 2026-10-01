@@ -87,11 +87,14 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **More prices.** Wise's are live (D91): the first Scrape run published 20 on
       2026-09-30, and it repeats every 6 hours. The other seven providers still need Add a
       price or their permission.
-- [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
-      `notify-route-launch` (D67). Needed before any requested route goes live.
+- [ ] **Launch emails:** `notify-route-launch` deployed 2026-10-01 (it sends nothing
+      until the key is set). Left: `RESEND_API_KEY` in Supabase secrets (D67). Needed
+      before any requested route goes live.
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
       token, the other four `WHATSAPP_*` secrets (the hash secret is set; never change it once
-      live, or every stored hash stops matching), deploy, register the webhook. Angad reads the
+      live, or every stored hash stops matching), register the webhook. The `whatsapp`
+      function is deployed (2026-10-01) and refuses everything until its secrets are set
+      (403 on verification, 401 on unsigned posts). Angad reads the
       Hindi replies first.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
       form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
