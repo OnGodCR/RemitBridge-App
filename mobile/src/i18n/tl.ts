@@ -689,7 +689,8 @@ export const tl: Copy = {
     taxBank: (total: string, tax: string) =>
       `Kung mula sa bank account ito binayaran, ${total} sana ang kabuuang gastos, mas mababa nang ${tax}.`,
     taxAssumption:
-      'Kinukuha namin ang 1% ng halaga ng padala, bago ang fee. Ito ang pagkaintindi namin sa patakaran, na hindi pa naikukumpara sa huling regulasyon ng IRS.',
+      'Kinukuha namin ang 1% ng halagang ipinadala, bago ang bayad, gaya ng sa mga panukalang patakaran ng IRS. Hindi pa pinal ang mga patakarang iyon.',
+    taxSmall: 'Padala ito na $15 o mas mababa, kaya hindi ito binubuwisan.',
     nextTitle: 'Sa susunod',
     compare: 'Ikumpara ang route na ito ngayon',
     notCovered: 'Hindi pa namin tinitingnan ang route na ito.',

@@ -656,7 +656,7 @@ engine's tolerance: the larger of 0.2% or one unit of the currency (D36), and 2 
 total. `delivery_method` is also a new optional field, for matching prices (D82). *Answers:*
 5, and part of 10.
 
-**D78. Default tax base, unverified.** 1% of the transfer amount (the fee and the tax
+**D78. Default tax base, unverified.** *Checked against the proposed regulations by D97.* 1% of the transfer amount (the fee and the tax
 itself excluded), rounded half up to the cent. It applies to transfers on or after
 2026-01-01 funded by cash, money order or cashier's check. Bank accounts and cards are
 exempt. This matches the "$500, $5 tax" examples in public guides, but the IRS proposed
@@ -910,3 +910,19 @@ D10, with one privacy exception that needs Angad's yes before it's switched on).
   you" block: people who share receipts aren't a random sample.
 - **Stored for it:** `receipt_comparisons` gains `total_cost_pct` and `markup_pct`, from
   the one formula at the day's mid-market rate, written when a receipt is confirmed.
+
+## 2026-10-01: The remittance tax, checked
+
+**D97. The tax follows the IRS proposed regulations** (REG-114499-25, Federal Register
+2026-07085, April 13, 2026; proposed 26 CFR 49.4475-1). Claude checked these from search
+summaries; the Federal Register itself is blocked from its sandbox.
+- **Fees aren't taxed.** The taxed amount is what will reach the recipient. "Service fees,
+  State taxes, and charges for other goods and services that are not ultimately transferred
+  to the designated recipient" aren't part of it. That's D78's assumption, so the base
+  doesn't change.
+- **Small transfers aren't taxed.** Transfers of $15.00 or less are left out
+  (`REMITTANCE_TAX_SMALL` in the formula, both languages, with test cases at $15.00 and
+  $15.01). The receipt tax check says so in plain words.
+- **Not final.** The rules apply from the quarter after they're published as final, and as
+  of this check they weren't. The app's note now says we follow the proposed rules, which
+  aren't final yet.

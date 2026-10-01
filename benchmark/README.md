@@ -24,6 +24,10 @@ OPENROUTER_API_KEY=... npm run benchmark -w @remitbridge/receipt
 OPENROUTER_API_KEY=... npm run benchmark -w @remitbridge/receipt -- --images
 ```
 
+Or on GitHub, without using your computer: Actions → **Receipt benchmark** → Run workflow.
+It needs the `OPENROUTER_API_KEY` Actions secret for the model modes, and puts the table in
+the run's summary.
+
 Other options: `--limit 20`, `--only real` or `--only synthetic`, `--out <file>`.
 `RECEIPT_MODEL` and `RECEIPT_MODEL_FALLBACKS` pick the model, as in the Edge Function.
 

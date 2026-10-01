@@ -140,12 +140,18 @@ export const TAXED_FUNDING: ReadonlySet<FundingMethod> = new Set<FundingMethod>(
 export const REMITTANCE_TAX_RATE = 0.01
 /** The tax covers transfers made after 2025-12-31. */
 export const REMITTANCE_TAX_FROM = '2026-01-01'
+/**
+ * Transfers of this much or less aren't taxed: the proposed regulations leave "small value
+ * transactions" of $15.00 or less out (proposed 26 CFR 49.4475-1, DECISIONS.md D97).
+ */
+export const REMITTANCE_TAX_SMALL = 15
 
 /**
  * The 1% federal remittance tax on a transfer, in the sending currency, rounded half up
- * to the cent. The base is the transfer amount: what gets converted, without the fee or
- * the tax itself. That base is Claude's default and not yet checked against the IRS
- * regulations (DECISIONS.md D78), so anything showing it says so.
+ * to the cent. The base is the transfer amount: what reaches the recipient's side, without
+ * the fee or the tax itself. The IRS proposed regulations (April 2026, not yet final) say
+ * the same: service fees aren't part of the amount (DECISIONS.md D78, D97). Transfers of
+ * $15.00 or less aren't taxed.
  *
  * @param transferAmount the transfer amount, sending currency
  * @param funding how the sender paid
@@ -155,6 +161,7 @@ export const REMITTANCE_TAX_FROM = '2026-01-01'
 export function remittanceTax(transferAmount: number, funding: FundingMethod, date?: string): number {
   if (!TAXED_FUNDING.has(funding)) return 0
   if (date && date < REMITTANCE_TAX_FROM) return 0
+  if (transferAmount <= REMITTANCE_TAX_SMALL) return 0
   // toFixed strips binary noise first (100.5 * 0.01 * 100 is 100.50000000000001), so the
   // half-up rounding lands where decimal arithmetic would, as the Python twin's Decimal does.
   const cents = Number((transferAmount * REMITTANCE_TAX_RATE * 100).toFixed(6))
