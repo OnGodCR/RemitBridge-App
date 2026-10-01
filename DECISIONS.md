@@ -1317,3 +1317,17 @@ Then moved out of the green band (Angad: "way too easy to ignore"): it sits at t
 page, 28pt extra-bold dark text with a green left edge, and the band's subtitle is full
 white rather than the muted tint, for contrast. The privacy line under the steps now says
 details are covered "before anything is sent to our database" (Angad's wording).
+
+**D129. Native Google sign-in** (Angad, 2026-10-01: Google's page said "continue to
+gmzljjdnwndvqciqicbx.supabase.co"). The browser flow shows the Supabase project's address;
+Google's own sign-in sheet (`@react-native-google-signin/google-signin`) shows the app's
+name and no address, and its ID token goes to `supabase.auth.signInWithIdToken`, as Apple's
+does. A custom auth domain was the other way, at about $35 a month on Supabase's paid plan,
+with the browser page still there. The Google clients live in the "Remittances
+Benchmarking" Google Cloud project, beside the web client Supabase already trusts.
+- Native runs on iPhone in the app build; Expo Go (no native module) and Android keep the
+  browser flow. Android needs its own Google client with the signing key's SHA-1, which
+  exists only after the first Android build.
+- Needs: an iOS OAuth client (bundle `org.remitbridgelabs.app`), its ID as
+  `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID` (and in Supabase's Google client IDs, with "skip nonce
+  check", which iOS tokens need). `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` is set locally and on EAS.
