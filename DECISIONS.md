@@ -1328,6 +1328,8 @@ Benchmarking" Google Cloud project, beside the web client Supabase already trust
 - Native runs on iPhone in the app build; Expo Go (no native module) and Android keep the
   browser flow. Android needs its own Google client with the signing key's SHA-1, which
   exists only after the first Android build.
-- Needs: an iOS OAuth client (bundle `org.remitbridgelabs.app`), its ID as
-  `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID` (and in Supabase's Google client IDs, with "skip nonce
-  check", which iOS tokens need). `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` is set locally and on EAS.
+- Set up 2026-10-01: the iOS OAuth client "RemitBridge iOS" (bundle `org.remitbridgelabs.app`,
+  `526944791895-a408…`; public, as client IDs are), as `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID`
+  locally and on EAS beside the web ID; Supabase's Google client IDs are now web then iOS,
+  with the nonce check skipped (iOS tokens need it). The browser flow still uses the web
+  client, checked. Seen for real in the iPhone build.
