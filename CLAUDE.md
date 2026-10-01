@@ -82,8 +82,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       smoke test 55/55 with 9 providers, and the first Scrape run published 20 of 20; it
       tops Compare for $500 to India (2026-10-01). The World Bank survey's US rows are in
       `research/world-bank-rpw/` for research. Paysend is cleared but not built: its public pages show one
-      amount and one price for several ways of receiving, so its numbers can't be verified yet
-      (`docs/MANUAL_RESEARCH.md`). The rest: Add a price, or their permission.
+      amount and one price for several ways of receiving, so its numbers can't be verified yet;
+      asked press@paysend.com for a feed on 2026-10-01 (`docs/outreach/permission-request.md`). The rest: Add a price, or their permission.
 
 ### Testing (once the features are set up)
 
@@ -124,8 +124,9 @@ Angad does this once the app itself is finished (D117).
 
 - [x] **Store listing drafted** (`docs/store/listing.md`), store build config tidied, and
       the public Supabase values set for preview and production builds (D123). Done 2026-10-01.
-- [ ] **Android push notifications:** a Firebase project's FCM key uploaded to EAS (needs a
-      Google account; Angad's own works, it isn't the Play account).
+- [ ] **Android push notifications (D127):** Firebase project `remitbridge` and its Android app
+      are set up and wired in (2026-10-01). Left: Angad generates the service account key and
+      uploads it with `eas credentials` (FCM V1).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
