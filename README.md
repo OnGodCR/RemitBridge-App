@@ -77,6 +77,16 @@ top of each function and are set with `supabase secrets set`, never committed. `
 reads `GROQ_API_KEY` (without it, receipts are read by the rules alone), and optionally
 `RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D98).
 
+To set or rotate the Groq key without it ever showing on screen or in shell history: paste
+this command into a terminal without pressing Enter, copy the key from Groq's "Create API
+Key" pop-up (the list only shows a masked version), then press Enter. It checks the key with
+Groq, saves it to Supabase and GitHub Actions only if Groq answers 200, and empties the
+clipboard.
+
+```sh
+GQ_KEY="$(pbpaste | tr -d '[:space:]')"; code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GQ_KEY" https://api.groq.com/openai/v1/models); echo "Groq says: $code (key starts ${GQ_KEY:0:4}, ${#GQ_KEY} characters)"; if [ "$code" = 200 ]; then supabase secrets set GROQ_API_KEY="$GQ_KEY" && printf %s "$GQ_KEY" | gh secret set GROQ_API_KEY; fi; unset GQ_KEY; pbcopy </dev/null
+```
+
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 
 ## Docs

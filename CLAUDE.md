@@ -63,15 +63,19 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **Receipt model on Groq (D98):** `GROQ_API_KEY` set in Supabase and GitHub Actions
-      (2026-09-30), code switched from OpenRouter, `scan-receipt` deployed. But Groq answers
-      401 "Invalid API Key" (benchmark run 36799220070): Angad re-sets the key, then the
-      benchmark, and Zero Data Retention in Groq's Data Controls.
+      (2026-09-30), code switched from OpenRouter, `scan-receipt` deployed. The first key was
+      refused (401); a new one, checked against Groq before saving, works (2026-10-01 01:15
+      UTC). Zero Data Retention on (Angad, 2026-10-01). Benchmark, 20 synthetic receipts,
+      text only (run 36800320699): model 82.3% accuracy, 93.0% precision; the misses are
+      mostly free-tier 429s that outlasted five waits, not misreadings.
 - [x] Replaced the retiring receipt model (OpenRouter's Qwen3 VL 32B ends 2026-10-09) with
       Qwen3.8 27B on Groq's free tier (D98). Done 2026-09-30.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
-      sealed for up to an hour (2026-10-01). The migration is live (2026-09-30). Left: set
-      `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
-      `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and redeploy.
+      sealed for up to an hour (2026-10-01). The migration is live (2026-09-30).
+      `RECEIPT_INTAKE_SECRET` (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET`
+      (Supabase) set by Claude from `openssl rand`, never displayed (2026-10-01). Left, with
+      the go-live: `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
+      `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and deploy `whatsapp`, `scan-receipt`.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
 - [ ] **Remittance tax: watch for the final IRS regulations.** Checked against the proposed
       ones on 2026-10-01 (D97): fees aren't taxed, as assumed, and transfers of $15 or less
@@ -82,7 +86,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Launch emails:** `RESEND_API_KEY` in Supabase secrets, then deploy
       `notify-route-launch` (D67). Needed before any requested route goes live.
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
-      token, five `WHATSAPP_*` secrets, deploy, register the webhook. Angad reads the
+      token, the other four `WHATSAPP_*` secrets (the hash secret is set; never change it once
+      live, or every stored hash stops matching), deploy, register the webhook. Angad reads the
       Hindi replies first.
 - [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
       form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
