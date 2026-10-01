@@ -49,16 +49,15 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Features to set up
 
-- [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
-      token, the other four `WHATSAPP_*` secrets (the hash secret is set; never change it once
-      live, or every stored hash stops matching), register the webhook. The `whatsapp`
-      function is deployed (2026-10-01) and refuses everything until its secrets are set
-      (403 on verification, 401 on unsigned posts). Angad reads the Hindi replies first.
-- [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
-      sealed for up to an hour (2026-10-01). Migration live; `RECEIPT_INTAKE_SECRET`
-      (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET` (Supabase) set by Claude from
-      `openssl rand`, never displayed; `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` set
-      (2026-10-01). Left, with the go-live: `WHATSAPP_ACCESS_TOKEN` in GitHub Actions too.
+- [ ] **WhatsApp: the first real messages** (D68, D94). Set up 2026-10-01: Meta app
+      "RemitBridge" with a business portfolio (unverified), Meta's free test number
+      +1 555 184 5383 (Phone number ID 1399186246604217) with Angad's phone as the one
+      allowed recipient; all five `WHATSAPP_*` secrets plus `WHATSAPP_RECEIPTS=on`,
+      `RECEIPT_INTAKE_SECRET` and `GITHUB_DISPATCH_TOKEN` in Supabase; `WHATSAPP_ACCESS_TOKEN`
+      (system user `remitbridge-bot`, never expires) and `RECEIPT_INTAKE_SECRET` in GitHub
+      Actions; webhook verified and subscribed to `messages`. Never change
+      `WHATSAPP_HASH_SECRET` now, or every stored hash stops matching. Left: the test texts
+      (below); a real number, payment method and business verification only when going public.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad pays last, once everything free is set up (2026-10-01). EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
