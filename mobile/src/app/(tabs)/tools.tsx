@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import {
   FairRateArt,
+  SavedArt,
   RateHistoryArt,
   ScamCheckArt,
   TrueCostArt,
@@ -50,6 +51,10 @@ export default function ToolsScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={copy.tools.title} />
         <View style={[styles.body, { backgroundColor: t.background }]}>
+          {/* Saved comparisons and receipt checks (D108), first, since they're yours. */}
+          <ListGroup>
+            <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
+          </ListGroup>
           {groups.map((g) => (
             <ListGroup key={g.title} title={g.title}>
               {g.tools.map((tool) => (

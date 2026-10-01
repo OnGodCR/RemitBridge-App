@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
-import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import { createContext, useContext, useId, type ReactNode } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Svg, { Circle, Defs, Ellipse, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 import { useTheme } from '@/hooks/use-theme';
 
@@ -15,12 +16,24 @@ import { useTheme } from '@/hooks/use-theme';
  *
  * Decorative: screen readers skip them, and the words beside them carry the meaning.
  * Colours come from the theme, so they follow dark mode.
+ *
+ * Depth (D109, Angad: the app looked "a tad bland"): every drawing is drawn three times,
+ * stacked. First its disc, shaded from mint to a deeper mint with a soft highlight, so it
+ * reads as lit from the top left. Then the whole drawing as a deep-green silhouette,
+ * shifted a little down and right and faded, so it sits on the disc like a raised sticker.
+ * Then the drawing itself. Each drawing is written once; `depth()` does the stacking.
  */
 
 type Art = { size?: number };
 
+/** Which of the three layers is being drawn. */
+type Layer = 'disc' | 'shadow' | 'art';
+const LayerContext = createContext<Layer>('art');
+
 function useInk() {
   const t = useTheme();
+  const layer = useContext(LayerContext);
+  if (layer === 'shadow') return { ink: t.depth, paper: t.depth, tint: t.depth, green: t.depth, grey: t.depth };
   return {
     ink: t.text,
     paper: t.card,
@@ -30,14 +43,73 @@ function useInk() {
   };
 }
 
-function Frame({ size = 48, children }: { size?: number; children: ReactNode }) {
-  const c = useInk();
+/**
+ * The square a drawing lives in. On the disc layer it draws only the shaded disc; on the
+ * shadow and art layers, only the drawing.
+ */
+function Frame({
+  size = 48,
+  disc = { cx: 35, cy: 31, r: 27 },
+  children,
+}: {
+  size?: number;
+  disc?: { cx: number; cy: number; r: number };
+  children: ReactNode;
+}) {
+  const t = useTheme();
+  const layer = useContext(LayerContext);
+  const id = `disc${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" accessible={false} importantForAccessibility="no-hide-descendants">
-      <Circle cx={35} cy={31} r={27} fill={c.tint} />
-      {children}
+      {layer === 'disc' ? (
+        <>
+          <Defs>
+            <LinearGradient id={id} x1="0.2" y1="0.1" x2="0.85" y2="1">
+              <Stop offset="0" stopColor={t.accent} />
+              <Stop offset="1" stopColor={t.accentDeep} />
+            </LinearGradient>
+          </Defs>
+          <Circle cx={disc.cx} cy={disc.cy} r={disc.r} fill={`url(#${id})`} />
+          <Ellipse
+            cx={disc.cx - disc.r * 0.32}
+            cy={disc.cy - disc.r * 0.5}
+            rx={disc.r * 0.42}
+            ry={disc.r * 0.2}
+            fill={t.glow}
+            opacity={t.glowOpacity}
+            transform={`rotate(-25 ${disc.cx - disc.r * 0.32} ${disc.cy - disc.r * 0.5})`}
+          />
+        </>
+      ) : (
+        children
+      )}
     </Svg>
   );
+}
+
+/** Stacks a drawing's three layers: shaded disc, faded silhouette a little lower, drawing. */
+function depth(Draw: (props: Art) => ReactNode, defaultSize = 48) {
+  return function Layered({ size = defaultSize }: Art) {
+    const t = useTheme();
+    const shift = (size / 64) * 2.4;
+    return (
+      <View style={{ width: size, height: size }} accessible={false} importantForAccessibility="no-hide-descendants">
+        <LayerContext.Provider value="disc">
+          <Draw size={size} />
+        </LayerContext.Provider>
+        <View style={[StyleSheet.absoluteFill, { opacity: t.depthOpacity, transform: [{ translateX: shift * 0.5 }, { translateY: shift }] }]}>
+          <LayerContext.Provider value="shadow">
+            <Draw size={size} />
+          </LayerContext.Provider>
+        </View>
+        <View style={StyleSheet.absoluteFill}>
+          <LayerContext.Provider value="art">
+            <Draw size={size} />
+          </LayerContext.Provider>
+        </View>
+      </View>
+    );
+  };
 }
 
 /** Stroke settings shared by every outline. */
@@ -52,12 +124,11 @@ const RECEIPT = 'M14 10 H40 V50 L35.7 47 L31.3 50 L27 47 L22.7 50 L18.3 47 L14 5
 // Scan ---------------------------------------------------------------------------------
 
 /** The Scan tab's lead: a receipt in a viewfinder, a name covered, the markup lit up. */
-export function ScanHero({ size = 132 }: Art) {
+export const ScanHero = depth(function ScanHero({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
-    <Svg width={size} height={size} viewBox="0 0 64 64" accessible={false} importantForAccessibility="no-hide-descendants">
-      <Circle cx={32} cy={32} r={28} fill={c.tint} />
+    <Frame size={size} disc={{ cx: 32, cy: 32, r: 28 }}>
       <Path d="M20 14 H44 V48 L40 45.5 L36 48 L32 45.5 L28 48 L24 45.5 L20 48 Z" fill={c.paper} {...line} strokeWidth={1.5} />
       <Rect x={24} y={18} width={14} height={3.5} rx={1} fill={c.ink} />
       <Path d="M24 26 H40" {...line} strokeWidth={1.5} />
@@ -65,12 +136,12 @@ export function ScanHero({ size = 132 }: Art) {
       <Path d="M24 32 H40" {...line} strokeWidth={1.5} />
       <Path d="M24 38.5 H34" {...line} strokeWidth={1.5} />
       <Path d="M8 16 V8 H16 M48 8 H56 V16 M56 48 V56 H48 M16 56 H8 V48" stroke={c.green} strokeWidth={2.5} strokeLinecap="round" fill="none" />
-    </Svg>
+    </Frame>
   );
-}
+}, 132);
 
 /** Step 1: a camera. */
-export function StepSnap({ size }: Art) {
+export const StepSnap = depth(function StepSnap({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -81,10 +152,10 @@ export function StepSnap({ size }: Art) {
       <Circle cx={32} cy={37} r={4} fill={c.green} />
     </Frame>
   );
-}
+});
 
 /** Step 2: the receipt with personal details covered. */
-export function StepCover({ size }: Art) {
+export const StepCover = depth(function StepCover({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -96,10 +167,10 @@ export function StepCover({ size }: Art) {
       <Path d="M19 41 H30" {...line} />
     </Frame>
   );
-}
+});
 
 /** Step 3: the cost bar, as Compare draws it: received, fee, markup. */
-export function StepCost({ size }: Art) {
+export const StepCost = depth(function StepCost({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -112,12 +183,12 @@ export function StepCost({ size }: Art) {
       <Path d="M46 44 V50" {...line} />
     </Frame>
   );
-}
+});
 
 // Tools --------------------------------------------------------------------------------
 
 /** Fair rate: a balance whose beam is the bridge's arc. */
-export function FairRateArt({ size }: Art) {
+export const FairRateArt = depth(function FairRateArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -129,10 +200,10 @@ export function FairRateArt({ size }: Art) {
       <Path d="M46 37 A6 5 0 0 0 58 37 Z" fill={c.paper} {...line} />
     </Frame>
   );
-}
+});
 
 /** Scam check: a shield with a warning. */
-export function ScamCheckArt({ size }: Art) {
+export const ScamCheckArt = depth(function ScamCheckArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -142,10 +213,10 @@ export function ScamCheckArt({ size }: Art) {
       <Circle cx={30} cy={41.5} r={2.2} fill={c.ink} />
     </Frame>
   );
-}
+});
 
 /** TrueCost: a receipt under a magnifier, the markup line found. */
-export function TrueCostArt({ size }: Art) {
+export const TrueCostArt = depth(function TrueCostArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -159,10 +230,10 @@ export function TrueCostArt({ size }: Art) {
       <Path d="M49 47 L55 53" {...line} strokeWidth={3} />
     </Frame>
   );
-}
+});
 
 /** Yearly cost: a calendar page with a coin on it. */
-export function YearlyCostArt({ size }: Art) {
+export const YearlyCostArt = depth(function YearlyCostArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -174,10 +245,10 @@ export function YearlyCostArt({ size }: Art) {
       <Circle cx={46} cy={45} r={4.5} fill="none" stroke={c.paper} strokeWidth={1.5} />
     </Frame>
   );
-}
+});
 
 /** Rate history: a line over time. */
-export function RateHistoryArt({ size }: Art) {
+export const RateHistoryArt = depth(function RateHistoryArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -187,12 +258,12 @@ export function RateHistoryArt({ size }: Art) {
       <Circle cx={42} cy={24} r={3.5} fill={c.paper} {...line} />
     </Frame>
   );
-}
+});
 
 // Learn --------------------------------------------------------------------------------
 
 /** Fee + hidden markup: a grey coin plus a highlighted one. */
-export function FeeMarkupArt({ size }: Art) {
+export const FeeMarkupArt = depth(function FeeMarkupArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -202,10 +273,10 @@ export function FeeMarkupArt({ size }: Art) {
       <Path d="M33 31 V41 M28 36 H38" {...line} strokeWidth={2.5} />
     </Frame>
   );
-}
+});
 
 /** Checked prices only: a seal with a tick. */
-export function CheckedArt({ size }: Art) {
+export const CheckedArt = depth(function CheckedArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -215,10 +286,10 @@ export function CheckedArt({ size }: Art) {
       <Path d="M23 30 L28 35 L38 24" stroke={c.green} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </Frame>
   );
-}
+});
 
 /** No affiliate deals: a price tag, struck out. */
-export function NoAffiliateArt({ size }: Art) {
+export const NoAffiliateArt = depth(function NoAffiliateArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -228,10 +299,10 @@ export function NoAffiliateArt({ size }: Art) {
       <Path d="M14 50 L50 14" stroke={c.ink} strokeWidth={3} strokeLinecap="round" />
     </Frame>
   );
-}
+});
 
 /** Wrong price? Write to us: an envelope. */
-export function WrongPriceArt({ size }: Art) {
+export const WrongPriceArt = depth(function WrongPriceArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -241,10 +312,10 @@ export function WrongPriceArt({ size }: Art) {
       <Circle cx={51} cy={20} r={6} fill={c.green} />
     </Frame>
   );
-}
+});
 
 /** Glossary: an open book. */
-export function GlossaryArt({ size }: Art) {
+export const GlossaryArt = depth(function GlossaryArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -254,10 +325,10 @@ export function GlossaryArt({ size }: Art) {
       <Path d="M38 24 H50" stroke={c.green} strokeWidth={2.5} strokeLinecap="round" />
     </Frame>
   );
-}
+});
 
 /** Route board: a folded map with a route on it. */
-export function RouteBoardArt({ size }: Art) {
+export const RouteBoardArt = depth(function RouteBoardArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -268,10 +339,10 @@ export function RouteBoardArt({ size }: Art) {
       <Circle cx={46} cy={26} r={3.5} fill={c.green} />
     </Frame>
   );
-}
+});
 
 /** What people paid: bars from shared receipts. */
-export function ObservatoryArt({ size }: Art) {
+export const ObservatoryArt = depth(function ObservatoryArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -282,10 +353,10 @@ export function ObservatoryArt({ size }: Art) {
       <Path d="M8 50 H56" {...line} />
     </Frame>
   );
-}
+});
 
 /** RemitBench: a flask. */
-export function RemitBenchArt({ size }: Art) {
+export const RemitBenchArt = depth(function RemitBenchArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -296,12 +367,12 @@ export function RemitBenchArt({ size }: Art) {
       <Circle cx={36} cy={33} r={1.5} fill={c.paper} {...line} strokeWidth={1.5} />
     </Frame>
   );
-}
+});
 
 // Learn modules --------------------------------------------------------------------------
 
 /** The basics: a sender and a recipient joined by the bridge's arc. */
-export function BasicsArt({ size }: Art) {
+export const BasicsArt = depth(function BasicsArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -312,10 +383,10 @@ export function BasicsArt({ size }: Art) {
       <Circle cx={52} cy={40} r={5} fill={c.green} {...line} />
     </Frame>
   );
-}
+});
 
 /** How money arrives: a home, with the money at the door. */
-export function ArrivalArt({ size }: Art) {
+export const ArrivalArt = depth(function ArrivalArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -325,10 +396,10 @@ export function ArrivalArt({ size }: Art) {
       <Circle cx={47} cy={46} r={8} fill={c.green} {...line} />
     </Frame>
   );
-}
+});
 
 /** How money moves between banks: a bank building. */
-export function BankArt({ size }: Art) {
+export const BankArt = depth(function BankArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -339,10 +410,10 @@ export function BankArt({ size }: Art) {
       <Path d="M30 34 H38" stroke={c.green} strokeWidth={3} strokeLinecap="round" />
     </Frame>
   );
-}
+});
 
 /** Inside a provider: the pre-funded pool, a tank part full. */
-export function ProviderArt({ size }: Art) {
+export const ProviderArt = depth(function ProviderArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -353,10 +424,10 @@ export function ProviderArt({ size }: Art) {
       <Path d="M16 30 C16 34 48 34 48 30" {...line} fill="none" />
     </Frame>
   );
-}
+});
 
 /** Crypto and stablecoins: blocks in a chain. */
-export function ChainArt({ size }: Art) {
+export const ChainArt = depth(function ChainArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
@@ -367,4 +438,19 @@ export function ChainArt({ size }: Art) {
       <Path d="M20 35 H25 M39 35 H44" {...line} />
     </Frame>
   );
-}
+});
+
+// Saved --------------------------------------------------------------------------------
+
+/** Saved: a bookmark over a receipt. */
+export const SavedArt = depth(function SavedArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Path d={RECEIPT} fill={c.paper} {...line} />
+      <Path d="M19 18 H31 M19 24 H29 M19 30 H26" {...line} />
+      <Path d="M34 8 H48 V34 L41 28 L34 34 Z" fill={c.green} {...line} />
+    </Frame>
+  );
+});

@@ -414,18 +414,22 @@ function SaveComparison({ routeId, amount, method }: { routeId: string; amount: 
       <TextLink
         icon="bookmark.fill"
         label={current === 'saved' ? copy.compare.saved : copy.compare.alreadySaved}
-        onPress={() => router.navigate('/account')}
+        onPress={() => router.push('/saved')}
       />
     );
   }
   return (
-    <TextLink
-      icon="bookmark"
-      arrow={false}
-      busy={current === 'busy'}
-      label={current === 'error' ? copy.compare.saveFailed : copy.compare.save}
-      onPress={save}
-    />
+    <View style={styles.saveLinks}>
+      <TextLink
+        icon="bookmark"
+        arrow={false}
+        busy={current === 'busy'}
+        label={current === 'error' ? copy.compare.saveFailed : copy.compare.save}
+        onPress={save}
+      />
+      {/* Where saved comparisons live (D108), so nobody has to hunt through Account. */}
+      <TextLink icon="list.bullet" label={copy.saved.seeAll} onPress={() => router.push('/saved')} />
+    </View>
   );
 }
 
@@ -434,6 +438,7 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   body: { flexGrow: 1, padding: Spacing.three, gap: Spacing.three, paddingBottom: Spacing.six },
   countries: { flexDirection: 'row', gap: Spacing.two },
+  saveLinks: { gap: Spacing.three },
   stacked: { flexDirection: 'column' },
   amount: {
     borderRadius: Radius.md,

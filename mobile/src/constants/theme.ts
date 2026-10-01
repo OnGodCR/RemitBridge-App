@@ -41,6 +41,14 @@ const light = {
   targetLine: '#5b6470', // the dashed 3% UN target
   stale: '#646d78', // desaturated grey, always with the word "Stale"; 5.0:1 (the old #9aa3ae was 2.4:1)
 
+  // Depth for the drawings and the Learn path (D109): a soft deep-green copy under each
+  // drawing, a deeper mint at the far side of its disc, a highlight at the near side.
+  depth: '#0e4a3c',
+  depthOpacity: 0.2,
+  accentDeep: '#cde5dc',
+  glow: '#ffffff',
+  glowOpacity: 0.55,
+
   // The blog's five series (D106), from the website's palette (src/lib/palette.js): `ink`
   // for the label and active filter, `bar` for the dot, `tint` behind a number cover.
   // Series 4 is the website's amber there, so here it's a slate teal (D105, no yellow).
@@ -79,6 +87,12 @@ const dark: typeof light = {
   moneyPickup: '#5d8f80',
   targetLine: '#9aa3ae',
   stale: '#9aa3ae', // 7.2:1 on the dark background (the old #6b747e was 3.9:1)
+
+  depth: '#000000',
+  depthOpacity: 0.5,
+  accentDeep: '#10261f',
+  glow: '#ffffff',
+  glowOpacity: 0.07,
 
   // Lighter inks for the dark background, the same hues.
   series: {

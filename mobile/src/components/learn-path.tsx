@@ -1,0 +1,222 @@
+import { SymbolView } from 'expo-symbols';
+import { useState, type ReactNode } from 'react';
+import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import Svg, { Circle, Path } from 'react-native-svg';
+
+import { MODULE_ART } from '@/components/module-art';
+import { AppText } from '@/components/ui';
+import { Fonts, Spacing } from '@/constants/theme';
+import type { Module, ModuleId } from '@/data/modules';
+import { useTheme } from '@/hooks/use-theme';
+import { useCopy } from '@/i18n';
+import { moduleProgress } from '@/lib/learn-progress';
+
+/**
+ * Learn's modules as a path (DECISIONS.md D107), after Duolingo's: one node per module,
+ * winding down the screen, joined by a dashed line. Each node's ring fills as its lessons
+ * are read; a finished module gets a tick; the next one carries an "Up next" tag. Nothing
+ * is locked: any module opens any time.
+ */
+const NODE = 92;
+/** How far the rim shows below a node. */
+const RIM = 6;
+const ROW = 176;
+/** Sideways swing for each node, as a share of the room either side. */
+const SWING = [0, 0.7, 1, 0.7, 0, -0.7, -1, -0.7];
+
+export function LearnPath({
+  modules,
+  learned,
+  next,
+  onOpen,
+}: {
+  modules: Module[];
+  learned: Set<string>;
+  next: ModuleId | null;
+  onOpen: (m: Module) => void;
+}) {
+  const t = useTheme();
+  const [width, setWidth] = useState(0);
+  const amp = Math.max(0, Math.min(96, width / 2 - NODE / 2 - Spacing.three));
+  const centers = modules.map((_, i) => ({ x: width / 2 + SWING[i % SWING.length] * amp, y: i * ROW + 40 + NODE / 2 }));
+  const height = modules.length * ROW + 24;
+
+  return (
+    <View style={{ height }} onLayout={(e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width)}>
+      {width > 0 ? (
+        <>
+          <Svg width={width} height={height} style={StyleSheet.absoluteFill} accessible={false}>
+            {centers.slice(1).map((c, i) => {
+              const a = centers[i];
+              return (
+                <Path
+                  key={i}
+                  d={`M${a.x} ${a.y} C${a.x} ${a.y + ROW / 2} ${c.x} ${c.y - ROW / 2} ${c.x} ${c.y}`}
+                  stroke={t.border}
+                  strokeWidth={4}
+                  strokeDasharray="2 10"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              );
+            })}
+          </Svg>
+          {modules.map((m, i) => (
+            <Node key={m.id} index={i} module={m} learned={learned} isNext={m.id === next} center={centers[i]} width={width} onOpen={onOpen} />
+          ))}
+        </>
+      ) : null}
+    </View>
+  );
+}
+
+function Node({
+  index,
+  module: m,
+  learned,
+  isNext,
+  center,
+  width,
+  onOpen,
+}: {
+  index: number;
+  module: Module;
+  learned: Set<string>;
+  isNext: boolean;
+  center: { x: number; y: number };
+  width: number;
+  onOpen: (m: Module) => void;
+}) {
+  const t = useTheme();
+  const copy = useCopy();
+  const l = copy.learn;
+  const { read, total, complete } = moduleProgress(m, learned);
+  const Art = MODULE_ART[m.id];
+  const title = l.modules[m.id].title;
+  const LABEL = 180;
+  const labelLeft = Math.min(Math.max(center.x - LABEL / 2, 0), width - LABEL);
+
+  return (
+    <>
+      {isNext ? (
+        <View style={[styles.tag, { backgroundColor: t.primary, left: center.x - 60, top: center.y - NODE / 2 - 38 }]} pointerEvents="none">
+          <AppText style={[styles.tagText, { color: t.primaryForeground }]}>{read > 0 ? l.continue : l.start}</AppText>
+          <View style={[styles.tagTail, { borderTopColor: t.primary }]} />
+        </View>
+      ) : null}
+      <Pressable
+        onPress={() => onOpen(m)}
+        accessibilityRole="button"
+        accessibilityLabel={l.nodeLabel(index + 1, title, read, total)}
+        style={[styles.node, { left: center.x - NODE / 2, top: center.y - NODE / 2, transform: [{ scale: isNext ? 1.06 : 1 }] }]}>
+        {({ pressed }) => (
+          <>
+            {/* Duolingo's chunky button (D109): a darker rim below the node, which the node
+                sinks into while pressed. Green once started, grey before. */}
+            <View style={[styles.rim, { backgroundColor: read > 0 ? t.depth : t.border, opacity: read > 0 ? 0.55 : 1 }]} />
+            <View style={{ transform: [{ translateY: pressed ? RIM - 1 : 0 }] }}>
+              <Ring progress={total ? read / total : 0} color={t.primary} track={t.border} size={NODE} fill={t.card}>
+                <View style={[styles.face, { backgroundColor: t.card }]}>
+                  <Art size={56} />
+                </View>
+              </Ring>
+              {complete ? (
+                <View style={[styles.badge, { backgroundColor: t.primary, borderColor: t.background }]}>
+                  <SymbolView name="checkmark" size={14} weight="bold" tintColor={t.primaryForeground} fallback={null} />
+                </View>
+              ) : null}
+            </View>
+          </>
+        )}
+      </Pressable>
+      {/* The page colour behind the words, so the dashed line passes under them. */}
+      <View
+        style={[styles.label, { left: labelLeft, top: center.y + NODE / 2 + Spacing.two, width: LABEL, backgroundColor: t.background }]}
+        pointerEvents="none">
+        <AppText style={[styles.labelTitle, { color: t.text }]} numberOfLines={2}>
+          {title}
+        </AppText>
+        <AppText variant="small" style={{ color: complete ? t.primary : t.textSecondary, textAlign: 'center' }}>
+          {complete ? l.moduleDone : l.moduleCount(read, total)}
+        </AppText>
+      </View>
+    </>
+  );
+}
+
+/** A ring that fills clockwise from the top. */
+export function Ring({
+  progress,
+  color,
+  track,
+  size,
+  stroke = 6,
+  fill = 'none',
+  children,
+}: {
+  progress: number;
+  color: string;
+  track: string;
+  size: number;
+  stroke?: number;
+  /** Behind the ring, so the rim beneath doesn't show through. */
+  fill?: string;
+  children?: ReactNode;
+}) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <Svg width={size} height={size} style={StyleSheet.absoluteFill} accessible={false}>
+        <Circle cx={size / 2} cy={size / 2} r={r + stroke / 2} fill={fill} />
+        <Circle cx={size / 2} cy={size / 2} r={r} stroke={track} strokeWidth={stroke} fill="none" />
+        {progress > 0 ? (
+          <Circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            stroke={color}
+            strokeWidth={stroke}
+            fill="none"
+            strokeLinecap="round"
+            strokeDasharray={`${c * Math.min(progress, 1)} ${c}`}
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          />
+        ) : null}
+      </Svg>
+      {children}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  node: { position: 'absolute', width: NODE, height: NODE + RIM },
+  rim: { position: 'absolute', top: RIM, left: 0, width: NODE, height: NODE, borderRadius: NODE / 2 },
+  face: { width: NODE - 16, height: NODE - 16, borderRadius: (NODE - 16) / 2, alignItems: 'center', justifyContent: 'center' },
+  badge: {
+    position: 'absolute',
+    right: 0,
+    bottom: 2,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tag: { position: 'absolute', width: 120, borderRadius: 10, paddingVertical: 6, alignItems: 'center' },
+  tagText: { fontFamily: Fonts.bold, fontSize: 14, lineHeight: 18 },
+  tagTail: {
+    position: 'absolute',
+    bottom: -7,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 7,
+    borderRightWidth: 7,
+    borderTopWidth: 7,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+  },
+  label: { position: 'absolute', alignItems: 'center', gap: 2, paddingVertical: 2, borderRadius: 8 },
+  labelTitle: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 19, textAlign: 'center' },
+});

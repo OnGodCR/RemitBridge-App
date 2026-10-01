@@ -4,10 +4,8 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
-import { CheckedArt, FeeMarkupArt, NoAffiliateArt, WrongPriceArt } from '@/components/illustrations';
+import { CheckedArt, FeeMarkupArt, NoAffiliateArt, SavedArt, WrongPriceArt } from '@/components/illustrations';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
-import { SavedChecks } from '@/components/saved-checks';
-import { SavedComparisons } from '@/components/saved-comparisons';
 import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
@@ -66,8 +64,10 @@ export default function AccountScreen() {
         <View style={[styles.content, { backgroundColor: t.background }]}>
           {session ? (
             <>
-              <SavedComparisons />
-              <SavedChecks />
+              {/* Saved items have their own screen (D108); this row is one of three ways in. */}
+              <ListGroup>
+                <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
+              </ListGroup>
               {isAdmin ? (
                 <ListGroup title={a.admin}>
                   <ListRow icon="plus.circle" title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />

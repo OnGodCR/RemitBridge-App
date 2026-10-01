@@ -17,7 +17,7 @@ import { openCompare } from '@/lib/open-compare';
 import { ROUTES } from '@/lib/routes';
 
 /**
- * Comparisons saved from Compare, newest first, on the Account tab (D66). A tap reopens
+ * Comparisons saved from Compare, newest first, on the Saved screen (D66, D108). A tap reopens
  * Compare on the route, amount and method with today's prices; the bin beside it deletes.
  */
 export function SavedComparisons() {
