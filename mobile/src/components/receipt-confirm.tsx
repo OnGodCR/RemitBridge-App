@@ -25,7 +25,7 @@ import { editText, formatValue, parseTyped } from '@/lib/receipt-format';
 
 /**
  * The confirmation screen (Phase 3, item 1e). The redacted photo with every value that was
- * read outlined where it was read; values to check are outlined in amber and listed first.
+ * read outlined where it was read; values to check are outlined in ink, heavier, and listed first (D105: no yellow).
  * Tapping a value, on the photo or in the list, opens it for editing. Every value to check
  * needs an answer (a correction, or "This is right") before the result is worked out.
  * The person's answers go to the server as user_corrected values.
@@ -95,7 +95,7 @@ export function ReceiptConfirm({
                       top: box.y * scale - 3,
                       width: box.width * scale + 6,
                       height: box.height * scale + 6,
-                      borderColor: warn ? t.moneyMarkup : t.primary,
+                      borderColor: warn ? t.text : t.primary,
                       borderWidth: warn ? 3 : 2,
                     },
                   ]}
@@ -131,7 +131,7 @@ export function ReceiptConfirm({
               style={({ pressed }) => [
                 styles.row,
                 i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.border },
-                warn && { borderLeftWidth: 3, borderLeftColor: t.moneyMarkup, paddingLeft: Spacing.two },
+                warn && { borderLeftWidth: 3, borderLeftColor: t.text, paddingLeft: Spacing.two },
                 { opacity: pressed ? 0.7 : 1 },
               ]}>
               <View style={styles.flex}>
@@ -140,7 +140,7 @@ export function ReceiptConfirm({
                   {name in answers ? copy.receiptPaths.user_corrected : result.fields[name] ? copy.receiptPaths[result.fields[name]!.path] : copy.scan.notFound}
                 </AppText>
                 {warn ? (
-                  <AppText variant="small" style={{ color: t.moneyMarkup }}>
+                  <AppText variant="small" style={{ color: t.text, fontFamily: Fonts.semibold }}>
                     {copy.scan.toCheck}
                   </AppText>
                 ) : null}
