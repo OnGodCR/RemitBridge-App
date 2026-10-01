@@ -87,18 +87,18 @@ export default function LearnScreen() {
       ) : (
         <ScrollView contentContainerStyle={styles.body}>
           {/* The website's blog, in the app (D106). */}
-          <ListGroup title={copy.titles.blog}>
+          <ListGroup title={copy.titles.blog} cards>
             <ListRow icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => router.push('/blog')} />
           </ListGroup>
 
-          <ListGroup title={l.deeper}>
+          <ListGroup title={l.deeper} cards>
             <ListRow art={<GlossaryArt />} title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
             <ListRow art={<RouteBoardArt />} title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
             <ListRow art={<ObservatoryArt />} title={copy.titles.observatory} subtitle={l.observatorySub} onPress={() => router.push('/observatory')} />
             <ListRow art={<RemitBenchArt />} title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
           </ListGroup>
 
-          <ListGroup title={l.website}>
+          <ListGroup title={l.website} cards>
             <ListRow external icon="doc.richtext" title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
             <ListRow external icon="person.2" title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
           </ListGroup>

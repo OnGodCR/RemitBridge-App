@@ -65,11 +65,11 @@ export default function AccountScreen() {
           {session ? (
             <>
               {/* Saved items have their own screen (D108); this row is one of three ways in. */}
-              <ListGroup>
+              <ListGroup cards>
                 <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
               </ListGroup>
               {isAdmin ? (
-                <ListGroup title={a.admin}>
+                <ListGroup title={a.admin} cards>
                   <ListRow icon="plus.circle" title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
                   <ListRow icon="chart.bar" title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
                 </ListGroup>
@@ -89,7 +89,7 @@ export default function AccountScreen() {
           )}
 
           {canChooseLanguage ? (
-            <ListGroup title={copy.language.title}>
+            <ListGroup title={copy.language.title} cards>
               <ListRow icon="globe" title={language.name} subtitle={copy.language.pick} onPress={() => setLanguageOpen(true)} />
               {language.code !== 'en' ? (
                 <ListRow
@@ -116,7 +116,7 @@ export default function AccountScreen() {
             </ListPoint>
           </ListGroup>
 
-          <ListGroup title={a.about}>
+          <ListGroup title={a.about} cards>
             <ListRow icon="map" title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
             <ListRow external icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
             <ListRow external icon="questionmark.circle" title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />

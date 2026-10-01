@@ -256,8 +256,9 @@ a style choice.
 
 ## Words and voice
 
-Visual register (D44, D47, D103): no emoji, modest corners, hairlines over shadows,
-segmented controls over pill chips, the website's editorial index over cards. Few words:
+Visual register (D44, D47, D103, D109, D112): no emoji, segmented controls over pill chips.
+Buttons and rows that go somewhere are chunky (a darker lip they sink into when pressed);
+cards sit on a soft rim; rows that state facts keep thin dividers. Few words:
 rows lead with the app's own illustrations (`components/illustrations.tsx`, one style, money
 colours only) or, for settings, a small ink symbol; never icon tiles, never an icon in place
 of a label. Color comes
