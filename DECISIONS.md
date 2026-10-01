@@ -1313,3 +1313,7 @@ generated the service account key and uploaded it with `eas credentials` as the 
 now greets by the phone's time of day, with the first name when we have one and an
 exclamation mark: "Good morning, Angad!", "Good afternoon!", "Good evening!" (morning 4 am to
 noon, afternoon to 5 pm). In all five languages (Spanish with its opening ¡).
+Then moved out of the green band (Angad: "way too easy to ignore"): it sits at the top of the
+page, 28pt extra-bold dark text with a green left edge, and the band's subtitle is full
+white rather than the muted tint, for contrast. The privacy line under the steps now says
+details are covered "before anything is sent to our database" (Angad's wording).

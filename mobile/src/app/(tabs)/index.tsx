@@ -165,14 +165,20 @@ export default function ScanScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-        <HeroHeader
-          title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}
-          greeting={step.kind === 'start' ? copy.common.greeting(partOfDay(), name ?? undefined) : undefined}>
-          {step.kind === 'start' ? <AppText style={{ color: t.heroMuted }}>{s.heroSub}</AppText> : null}
+        <HeroHeader title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}>
+          {/* Full white, not the muted tint: it's the instruction, so it gets full contrast. */}
+          {step.kind === 'start' ? <AppText style={[styles.heroSub, { color: t.heroText }]}>{s.heroSub}</AppText> : null}
         </HeroHeader>
         <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
       {step.kind === 'start' ? (
         <>
+          {/* The greeting sits on the page, dark on light with a green edge, where it can't be
+              missed; in the green band it was faint and easy to skip (D128). */}
+          <View style={[styles.greeting, { borderLeftColor: t.primary }]}>
+            <AppText accessibilityRole="header" style={[styles.greetingText, { color: t.text }]}>
+              {copy.common.greeting(partOfDay(), name ?? undefined)}
+            </AppText>
+          </View>
           <View style={styles.capture}>
             <ScanHero />
             <View style={styles.buttons}>
@@ -343,6 +349,9 @@ function RedactedPhoto({
 }
 
 const styles = StyleSheet.create({
+  greeting: { borderLeftWidth: 4, paddingLeft: Spacing.three, paddingVertical: Spacing.one },
+  greetingText: { fontFamily: Fonts.extrabold, fontSize: 28, lineHeight: 34, letterSpacing: -0.4 },
+  heroSub: { fontSize: 17, lineHeight: 24 },
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.four, paddingBottom: Spacing.six },

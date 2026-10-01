@@ -671,7 +671,7 @@ export const tl: Copy = {
     heroTitle: 'Magkano talaga ang nagastos sa padala mo?',
     heroSub: 'I-scan ang resibo. Tingnan ang fee at ang nakatagong markup.',
     steps: ['Kunan ang resibo', 'Tinatakpan ang detalye mo', 'Tingnan ang tunay na gastos'],
-    privacy: 'Binabasa sa phone mo. Tinatakpan ang mga pangalan at number bago may maipadala.',
+    privacy: 'Binabasa sa phone mo. Tinatakpan ang mga pangalan at number bago may maipadala sa aming database.',
     takePhoto: 'Kumuha ng litrato',
     choosePhoto: 'Pumili ng litrato',
     needsBuild: 'Kailangan ng buong bersyon ng app para mag-scan. Hindi ito gumagana sa Expo Go.',

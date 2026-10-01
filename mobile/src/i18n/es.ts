@@ -669,7 +669,7 @@ export const es: Copy = {
     heroTitle: '¿Cuánto te costó de verdad tu envío?',
     heroSub: 'Escanea el recibo. Mira la comisión y el margen escondido.',
     steps: ['Toma una foto del recibo', 'Tapamos tus datos', 'Mira el costo real'],
-    privacy: 'Se lee en tu teléfono. Nombres y números se tapan antes de enviar nada.',
+    privacy: 'Se lee en tu teléfono. Nombres y números se tapan antes de enviar nada a nuestra base de datos.',
     takePhoto: 'Tomar una foto',
     choosePhoto: 'Elegir una foto',
     needsBuild: 'Para escanear hace falta la versión completa de la app. No funciona en Expo Go.',
