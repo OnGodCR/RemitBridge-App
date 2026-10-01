@@ -8,11 +8,19 @@
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     "types": [],
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "paths": {
-      "npm:@supabase/supabase-js@2": ["../../node_modules/@supabase/supabase-js"],
-      "npm:@anthropic-ai/sdk@0.129.0": ["../../node_modules/@anthropic-ai/sdk"]
+      "npm:@supabase/supabase-js@2": [
+        "../../node_modules/@supabase/supabase-js"
+      ]
     }
   },
-  "files": ["src/test/deno.d.ts", "../../supabase/functions/scan-receipt/index.ts"]
+  "files": [
+    "src/test/deno.d.ts",
+    "../../supabase/functions/scan-receipt/index.ts",
+    "../../supabase/functions/whatsapp/index.ts"
+  ]
 }

@@ -30,19 +30,41 @@ What stands between this and a working product, in order:
 `20260930030000`) wait on its merge. RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
-## CAC receipt scanner (merged to `main` on 2026-09-30, PR #1)
+## CAC receipt scanner (Phases 1–3 merged to `main` on 2026-09-30, PR #1)
 
-Built by the cloud session for the Congressional App Challenge (D72–D90), on the branch
-`claude/gallant-hopper-51zhhm` until Angad merged it (D87). `main` (languages D69, accessibility D70, flags) was merged into
+Built by the cloud session for the Congressional App Challenge (D72–D90, D92), on the branch
+`claude/gallant-hopper-51zhhm`; later phases reach `main` the same way, by PR (D87). `main` (languages D69, accessibility D70, flags) was merged into
 the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 - Phases 1–3 done: gap report (`docs/cac-gap-report.md`); `packages/receipt` (redaction,
-  parser frame with Angad's 13 `TODO(angad)` extractors, Claude fallback, validation,
+  parser frame with Angad's 13 `TODO(angad)` extractors, model fallback, validation,
   result logic); `supabase/migrations/20260930000000_receipts.sql`; the `scan-receipt` Edge
   Function; the Scan a receipt screen with confirmation and result; the funding method and
   1% remittance tax in TrueCost and Compare. Every file is listed in `docs/AI_USAGE.md`.
 - Tests: `npm test -w @remitbridge/receipt`, `npm test -w @remitbridge/mobile` (jest-expo),
-  and `supabase/tests/local_migrations.sh` (55 checks, also in CI).
-- Angad's next steps: review, write the extractors, set `ANTHROPIC_API_KEY`, make an EAS development build (scanning needs ML Kit, not in
+  and `supabase/tests/local_migrations.sh` (77 checks, also in CI). The live smoke test has
+  52 checks; the 4 for the photo queue and the observatory need their migrations.
+- The model fallback is Qwen3 VL 32B through OpenRouter (D92), no longer Claude.
+- Phase 4 done (2026-09-30): the accuracy benchmark in `benchmark/` (D85, D93). 60 synthetic
+  receipts, drawn in Chromium and read back with tesseract.js; `npm run benchmark -w
+  @remitbridge/receipt` scores parser, model and combined modes into `benchmark/results.md`.
+  Parser mode is 0% until Angad's extractors land; the model modes need `OPENROUTER_API_KEY`
+  in the shell and haven't been run (the key isn't in the cloud sandbox). The generator
+  found two redaction bugs, both fixed.
+- Phase 5 built (2026-09-30), approved by Angad 2026-10-01 but off until its secrets are set
+  (D94): receipt photos on WhatsApp. The
+  webhook queues a photo (`receipt_intake`, migration `20260930020000_whatsapp_receipts.sql`,
+  not pushed), `.github/workflows/receipt-intake.yml` reads and redacts it, `scan-receipt`
+  reads the redacted text, and the bot replies or checks unsure values one at a time. To turn
+  it on: push the migration; `supabase secrets set RECEIPT_INTAKE_SECRET=... GITHUB_DISPATCH_TOKEN=... WHATSAPP_RECEIPTS=on`;
+  the same `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` as GitHub Actions secrets;
+  redeploy `whatsapp` and `scan-receipt`.
+- Phase 6 built (2026-09-30): the disclosure check (D95), on the result screen and in the
+  WhatsApp reply, scored in the benchmark; and the receipt observatory (D96), Learn → "What
+  people paid", from `receipt_observatory()`. Migration `20260930030000_receipt_observatory.sql`,
+  not pushed. All six CAC phases are built; Angad's extractors and the live setup are what's
+  left.
+- Angad's next steps: review, write the extractors, set `OPENROUTER_API_KEY`
+  (`supabase secrets set OPENROUTER_API_KEY=...` in his own terminal), make an EAS development build (scanning needs ML Kit, not in
   Expo Go), check the tax base (D78).
 - Known limit: `scan-receipt` runs without JWT verification (scanning works signed out); the
   monthly model cap bounds spend.
@@ -126,7 +148,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D90; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D94; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

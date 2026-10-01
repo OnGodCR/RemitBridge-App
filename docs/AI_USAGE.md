@@ -307,3 +307,133 @@ its theme tokens, and the branch's language setting on Account.
   reference in code and docs (24 files). D71 was left to the other session.
 - `CLAUDE.md`, `HANDOFF.md`: short CAC additions on top of `main`'s text.
 - `docs/cac-gap-report.md`: one em dash replaced (house rule).
+
+## 2026-09-30: switching the model fallback to Qwen through OpenRouter
+
+**What Angad asked:** use a cheaper Chinese model through OpenRouter instead of Anthropic,
+putting cost first. **What Claude did:** chose Qwen3 VL 32B Instruct (D92) and rewrote the
+model client. Angad chose the provider and the priority; the model choice and the code are
+Claude's.
+
+**Changed:**
+- `packages/receipt/src/model.ts`: the request is now OpenRouter's chat completions shape
+  (system and user messages, the photo as a data URL, `response_format` with a strict JSON
+  schema, `provider` routing that asks for hosts that keep nothing and honor every
+  parameter, optional fallback models). New `openRouterClient()` over plain `fetch`,
+  `replyJson()` (accepts one Markdown fence), and a `failed` ModelError reason. The date
+  schema uses a description in place of `format: "date"`.
+- `packages/receipt/src/pipeline.ts`: passes the fallback models through.
+- `packages/receipt/src/test/fake-model.ts`: fakes the new client. `fake-anthropic.ts`
+  deleted.
+- `packages/receipt/src/model.test.ts`, `pipeline.test.ts`, `scan-function.test.ts`: tests for
+  the new request, the client, fences, refusals, errors, `RECEIPT_MODEL_FALLBACKS`, and
+  reading with the rules alone when OpenRouter fails. 158 receipt tests pass.
+- `packages/receipt/package.json`, `vitest.config.ts`, `package-lock.json`: the Anthropic SDK
+  removed.
+- `supabase/functions/scan-receipt/index.ts`: reads `OPENROUTER_API_KEY`,
+  `RECEIPT_MODEL_FALLBACKS`; cap default 2,000. `supabase/functions/scan-receipt/deno.json`
+  deleted (it only mapped the SDK).
+- `site/privacy.html`: OpenRouter and Qwen replace Anthropic as the processor.
+- `DECISIONS.md` (D92, and a note on D79), `README.md`, `HANDOFF.md`, `CLAUDE.md`.
+
+## 2026-09-30: Phase 4, the accuracy benchmark and synthetic receipts
+
+**What Angad asked:** build Phase 4 (benchmark and synthetic generator). **What Claude did:**
+wrote all of the files below. The rule-based extractors are still Angad's `TODO(angad)`
+functions and were not touched; the benchmark measures them.
+
+**Created:**
+- `packages/receipt/src/synth.ts`: seeded synthetic receipt generator (values from the
+  formula, Reg E labels and variants, layouts, fictional personal details, disclosures, the
+  HTML drawing). `src/synth.test.ts`: determinism, every receipt passes the checks, tax only
+  on cash-type funding, coverage, redaction on 200 generated receipts.
+- `packages/receipt/src/node/tesseract.ts`: tesseract.js output to an OcrPage.
+- `packages/receipt/src/benchmark.ts` and `src/benchmark.test.ts`: per-mode summaries and the
+  `results.md` format.
+- `packages/receipt/scripts/synthesize.ts`: draws each receipt in Chromium (Playwright), reads
+  it with tesseract.js, writes the JSON and a redacted picture.
+- `packages/receipt/scripts/benchmark.ts`: runs parser, model and combined modes and writes
+  `benchmark/results.md`.
+- `benchmark/README.md`, `benchmark/results.md` (parser mode only), and
+  `benchmark/synthetic/synth-0001…0060-*.json` (generated).
+
+**Changed:**
+- `packages/receipt/src/redact.ts`: two fixes the generator found (a field line under a
+  heading ending in an ID word; OCR-misread card masks). Tests added in `src/redact.test.ts`.
+- `packages/receipt/src/node/fixtures.ts`: optional `mid_rate` and `disclosures`.
+- `packages/receipt/src/model.ts`: `ModelError.reason` as a plain field, so Node can run the
+  file by stripping types.
+- `packages/receipt/package.json`, `package-lock.json`: dev dependencies tesseract.js,
+  playwright-core, @tesseract.js-data/eng (about 70 MB installed); `synthesize` and
+  `benchmark` scripts.
+- `.github/workflows/ci.yml`: runs parser mode on the committed set.
+- `.gitignore`: benchmark photos.
+- `DECISIONS.md` (D93; D92 renumbered from D91, which the other session is using),
+  `README.md`, `HANDOFF.md`, `CLAUDE.md`.
+
+## 2026-09-30: Phase 5, receipt photos on WhatsApp
+
+**What Angad asked:** build Phase 5 (WhatsApp photo intake with server-side redaction, the
+same pipeline, a compact reply, confirming low-confidence values by text, in the user's
+language). **What Claude did:** wrote all of the files below. Photo intake is built but off
+until Angad agrees to the sealed-number exception in D94.
+
+**Created:**
+- `supabase/migrations/20260930020000_whatsapp_receipts.sql`: the `receipt_intake` queue,
+  pending-check columns on `whatsapp_users`, `claim_receipt_intake()` and
+  `forget_stale_receipt_intake()`.
+- `packages/bot/src/receipt.ts` and `src/receipt.test.ts`: the replies (acknowledgement,
+  can't read, failed, off, one question at a time, the compact result) in English and Hindi,
+  and reading a person's answer (yes, a number, a date, a code, a method by number or word).
+- `packages/receipt/src/node/intake.ts` and `src/intake.test.ts`: the worker's flow (claim,
+  download from Meta, OCR, redact, scan, confirm, report back), with network and OCR passed in.
+- `packages/receipt/scripts/intake-worker.ts`: runs the flow with tesseract.js.
+- `.github/workflows/receipt-intake.yml`: the worker, started by a dispatch per photo.
+
+**Changed:**
+- `supabase/functions/whatsapp/index.ts`: photo messages queued with the number sealed
+  (AES-GCM), the `?intake=done` report endpoint, the one-question-at-a-time checking, STOP
+  also clearing queued photos. `packages/bot/src/index.ts` exports the new replies.
+- `supabase/functions/scan-receipt/index.ts` and `packages/receipt/src/api.ts`: channel
+  `whatsapp`, accepted only with `RECEIPT_INTAKE_SECRET`; redaction status `server`.
+- Tests: `packages/bot/src/webhook.test.ts` (8 photo tests) with `src/test/fake-supabase.ts`
+  gaining `rpc` and `update`; `packages/receipt/src/scan-function.test.ts` (2 tests).
+- `packages/receipt/tsconfig.functions.json`: now typechecks the whatsapp function too.
+- `supabase/tests/local/checks.sql` (14 checks), `supabase/tests/rls_smoke.sh` (3 checks).
+- `site/privacy.html`: what happens to a receipt photo sent on WhatsApp.
+- `DECISIONS.md` (D94), `HANDOFF.md`, `CLAUDE.md`, `README.md`.
+- My migration was first named `20260930010000_…`, the same timestamp as the other
+  session's Wise migration; it was renamed to `20260930020000_…` before either was pushed.
+
+## 2026-09-30: Phase 6, the disclosure check and the receipt observatory
+
+**What Angad asked:** build Phase 6 (a disclosure check listing standard items "not found on
+this receipt"; an observatory of anonymized totals from research-consented receipts, with
+the sample size prominent and labeled early results). **What Claude did:** wrote all of the
+files below. D86 assigns the disclosure check to Claude.
+
+**Created:**
+- `packages/receipt/src/disclosures.ts` and `src/disclosures.test.ts`: the check, tested on
+  the fixtures and on 120 synthetic receipts' ground truth.
+- `supabase/migrations/20260930030000_receipt_observatory.sql`: `disclosures_missing`, the
+  two cost columns, `receipt_result()` with disclosures, and `receipt_observatory()`.
+- `mobile/src/lib/observatory.ts`, `mobile/src/app/observatory.tsx`, and
+  `mobile/src/__tests__/observatory.test.tsx` (3 tests).
+
+**Changed:**
+- `supabase/functions/scan-receipt/index.ts`, `packages/receipt/src/api.ts`: disclosures
+  worked out at scan, stored and returned; total cost and markup stored at confirm. Test in
+  `packages/receipt/src/scan-function.test.ts`.
+- `packages/receipt/src/benchmark.ts`, `scripts/benchmark.ts`: a disclosure-check table.
+  `benchmark/results.md` regenerated.
+- `packages/bot/src/receipt.ts` and its test: a "not found on this receipt" line in the
+  WhatsApp result, in English and Hindi.
+- `mobile/src/components/receipt-result.tsx`: a disclosures section and a "What this does not
+  tell you" block. Tests in `mobile/src/__tests__/receipt-result.test.tsx`, fixtures in
+  three other app tests.
+- `mobile/src/i18n/en.ts`, `hi.ts`, `es.ts`, `tl.ts`, `vi.ts`: the new strings. English is the
+  source; the other four are Claude's drafts behind D69's reviewer gate.
+- `mobile/src/app/_layout.tsx`, `mobile/src/app/(tabs)/learn.tsx`: the screen and its entry.
+- `supabase/tests/local/checks.sql` (7 checks), `supabase/tests/rls_smoke.sh` (1 check).
+- `site/privacy.html`: the observatory's totals and the five-receipt minimum.
+- `DECISIONS.md` (D95, D96), `HANDOFF.md`, `CLAUDE.md`.

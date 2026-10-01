@@ -5,7 +5,7 @@
 //   1. checks the request, and runs the same PII detection over the text again; if it
 //      finds anything, it hides it in the text and drops the image, which then never
 //      goes to the model or into storage;
-//   2. reads the receipt with packages/receipt: the rules first, then Claude for what they
+//   2. reads the receipt with packages/receipt: the rules first, then the model for what they
 //      missed or weren't sure of (within this month's cap), then the checks with the one
 //      formula and the day's mid-market rate;
 //   3. stores the values, where each came from, and the two consent flags; never the text,
@@ -14,16 +14,18 @@
 // It also deletes a receipt on request ('forget'), and every receipt past its 30 days.
 //
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
-//   ANTHROPIC_API_KEY           the model fallback; without it, the rules alone
+//   OPENROUTER_API_KEY          the model fallback, through OpenRouter; without it, the
+//                               rules alone (D92)
 // Optional:
-//   RECEIPT_MODEL               default claude-opus-5-5 (D79)
-//   RECEIPT_MODEL_MONTHLY_CAP   default 300 model calls a month
+//   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D92)
+//   RECEIPT_MODEL_FALLBACKS     comma-separated OpenRouter models to try if it fails
+//   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
+//   RECEIPT_INTAKE_SECRET       lets the WhatsApp worker send channel 'whatsapp' (D94)
 //
 // Called by the app, signed in or not. The publishable key isn't a JWT, so JWT verification
 // is off (supabase/config.toml); parseRequest checks everything that arrives, and the
 // monthly cap bounds what a flood of requests could spend. Logs never carry the text, the
 // image or any value.
-import Anthropic from 'npm:@anthropic-ai/sdk@0.129.0';
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 
 import {
@@ -32,9 +34,12 @@ import {
   deserializeValue,
   detectPii,
   matchQuote,
+  missingDisclosures,
   ModelError,
+  openRouterClient,
   parseRequest,
   readReceipt,
+  receiptCost,
   redactPage,
   serializeValue,
   taxCheck,
@@ -55,7 +60,7 @@ import {
 } from '../../../packages/receipt/src/index.ts';
 import { checkedAmountFor, ROUTES } from '../../../mobile/src/lib/routes.ts';
 
-const DEFAULT_CAP = 300;
+const DEFAULT_CAP = 2000;
 const KEEP_DAYS = 30;
 const BUCKET = 'receipt-images';
 
@@ -87,6 +92,8 @@ Deno.serve(async (req) => {
       const confirmed = await confirm(db, parsed.request);
       return 'error' in confirmed ? json(confirmed, confirmed.status) : json(confirmed);
     }
+    // A WhatsApp scan comes only from the worker, which holds RECEIPT_INTAKE_SECRET (D94).
+    if (parsed.request.channel === 'whatsapp' && !fromWorker(req)) return json({ error: 'forbidden' }, 403);
     return json(await scan(db, parsed.request));
   } catch (e) {
     console.error('scan-receipt: failed', e instanceof Error ? e.name : 'unknown');
@@ -103,11 +110,14 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const page = leftovers.length ? redactPage(request.page, leftovers) : request.page;
   const image = leftovers.length ? undefined : request.image;
   const today = trustedToday(request.today, new Date());
+  const whatsapp = request.channel === 'whatsapp';
+  const redaction: ScanResponse['redaction'] = whatsapp ? 'server' : leftovers.length ? 'device_rechecked' : 'device';
 
-  const key = Deno.env.get('ANTHROPIC_API_KEY');
+  const key = Deno.env.get('OPENROUTER_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
+  const fallbacks = (Deno.env.get('RECEIPT_MODEL_FALLBACKS') ?? '').split(',').map((m) => m.trim()).filter(Boolean);
   const model = key
-    ? { client: capped(new Anthropic({ apiKey: key }), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined }
+    ? { client: capped(openRouterClient(key), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined, fallbacks }
     : null;
 
   const result = await readReceipt({ page, image, today, model, midRate });
@@ -128,13 +138,18 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     if (!error) imagePath = path;
   }
 
+  // Read from the redacted text and the values the parser and model read, before the
+  // person corrects anything: a value typed in wasn't on the receipt (D95).
+  const disclosures = missingDisclosures(page, valuesFrom(fields));
+
   const { error: receiptError } = await db.from('receipts').insert({
+    disclosures_missing: disclosures,
     id,
-    channel: 'app',
+    channel: whatsapp ? 'whatsapp' : 'app',
     provider_id: result.providerId,
     provider_name: result.providerId ? null : (fields.provider?.value ?? null),
     route_id: routeId,
-    redaction_status: leftovers.length ? 'device_rechecked' : 'device',
+    redaction_status: redaction,
     research_consent: request.research_consent,
     image_retained: imagePath !== null,
     image_path: imagePath,
@@ -160,7 +175,8 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
     missing: result.validation.missing,
     to_confirm: result.validation.toConfirm,
     model: { asked: result.askedModel, error: result.modelError },
-    redaction: leftovers.length ? 'device_rechecked' : 'device',
+    redaction,
+    disclosures_missing: disclosures,
   };
 }
 
@@ -174,7 +190,7 @@ async function confirm(
   db: SupabaseClient,
   request: ConfirmRequest,
 ): Promise<ConfirmResponse | { error: string; status: number }> {
-  const { data: receipt } = await db.from('receipts').select('id, expires_at').eq('id', request.id).maybeSingle();
+  const { data: receipt } = await db.from('receipts').select('id, expires_at, disclosures_missing').eq('id', request.id).maybeSingle();
   if (!receipt || (receipt.expires_at && Date.parse(receipt.expires_at) <= Date.now())) return { error: 'not found', status: 404 };
   const today = trustedToday(request.today, new Date());
 
@@ -207,6 +223,7 @@ async function confirm(
   const routeId = ROUTES.find((r) => r.sendCurrency === v.send_currency && r.receiveCurrency === v.receive_currency)?.id ?? null;
   const comparison = await compare(db, v, providerId, routeId, mid?.rate ?? null);
   const tax = taxCheck(v, mid?.rate ?? null);
+  const cost = mid ? receiptCost(v, mid.rate) : null;
 
   await db.from('receipt_fields').delete().eq('receipt_id', request.id);
   const { error } = await db.from('receipt_fields').insert(fieldRows(request.id, fields));
@@ -221,6 +238,9 @@ async function confirm(
     gap_currency: comparison.gap?.gapCurrency ?? null,
     tax_expected: tax.expected,
     tax_found: tax.found,
+    // For the observatory (D96): the receipt's cost at the day's mid-market rate.
+    total_cost_pct: cost ? Math.round(cost.totalCostPct * 100) / 100 : null,
+    markup_pct: cost ? Math.round(cost.markupPct * 100) / 100 : null,
   });
 
   return {
@@ -234,6 +254,7 @@ async function confirm(
     route_id: routeId,
     mid,
     comparison,
+    disclosures_missing: (receipt.disclosures_missing ?? []) as ConfirmResponse['disclosures_missing'],
   };
 }
 
@@ -305,16 +326,21 @@ async function forget(db: SupabaseClient, id: string) {
  */
 function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClient {
   return {
-    beta: {
-      messages: {
-        create: async (params) => {
-          const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap });
-          if (error || data !== true) throw new ModelError('this month’s model calls are used up', 'over_cap');
-          return client.beta.messages.create(params);
-        },
-      },
+    complete: async (request) => {
+      const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap });
+      if (error || data !== true) throw new ModelError('this month’s model calls are used up', 'over_cap');
+      return client.complete(request);
     },
   };
+}
+
+function fromWorker(req: Request): boolean {
+  const secret = Deno.env.get('RECEIPT_INTAKE_SECRET');
+  const given = req.headers.get('x-intake-secret') ?? '';
+  if (!secret || given.length !== secret.length) return false;
+  let diff = 0;
+  for (let i = 0; i < secret.length; i++) diff |= secret.charCodeAt(i) ^ given.charCodeAt(i);
+  return diff === 0;
 }
 
 /** The mid-market rate for the day from Frankfurter (D35), with the date it's for, or null. */

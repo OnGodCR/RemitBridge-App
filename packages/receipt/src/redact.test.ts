@@ -21,6 +21,7 @@ describe('hides personal details', () => {
     ['email addresses', 'Contact: nguyen.an@example.com', `Contact: ${HIDDEN}`],
     ['UPI handles', 'UPI ID: priya.m@okaxis', `UPI ID: ${HIDDEN}`],
     ['masked cards', 'Funding: Visa Debit ****4821', `Funding: Visa Debit ${HIDDEN}`],
+    ['masked cards that OCR misread', 'Paid With: Debit **+*4118', `Paid With: Debit ${HIDDEN}`],
     ['full card numbers', 'Card 4111 1111 1111 1111', `Card ${HIDDEN} ${HIDDEN} ${HIDDEN} ${HIDDEN}`],
     ['account numbers', 'Account number 000123456789', `Account number ${HIDDEN}`],
     ['the last digits after an account label', 'Paid with: Bank Account (ACH) ending 6613', `Paid with: Bank Account (ACH) ending ${HIDDEN}`],
@@ -69,6 +70,11 @@ describe('leaves amounts, rates, dates and labels alone', () => {
 
   it('reads a recipient label followed by an amount on the next line as an amount', () => {
     expect(redacted('Recipient receives', '8,600.00 MXN')).toEqual(['Recipient receives', '8,600.00 MXN'])
+  })
+
+  it('leaves a field under a heading that ends in an ID word alone, and still hides an ID there', () => {
+    expect(redacted('Transfer confirmation', 'Transfer Date: Aug 9, 2026')).toEqual(['Transfer confirmation', 'Transfer Date: Aug 9, 2026'])
+    expect(redacted('Confirmation number', 'R4839201756')).toEqual(['Confirmation number', HIDDEN])
   })
 })
 

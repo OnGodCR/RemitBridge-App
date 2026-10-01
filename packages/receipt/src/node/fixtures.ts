@@ -15,6 +15,8 @@
  *   pii          optional: personal details on the receipt (fictional in synthetic ones)
  *                that redaction must remove
  *   keep         optional: text that redaction must leave readable
+ *   mid_rate     optional: the mid-market rate for the day, for the rate check
+ *   disclosures  optional: the standard disclosures the receipt prints (Phase 6)
  */
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -32,6 +34,8 @@ export interface Fixture {
   expected: Partial<FieldValues>
   pii: string[]
   keep: string[]
+  midRate?: number
+  disclosures?: string[]
 }
 
 export const FIXTURES_DIR = fileURLToPath(new URL('../../fixtures/', import.meta.url))
@@ -80,5 +84,7 @@ export function parseFixture(fileId: string, raw: unknown): Fixture {
     expected,
     pii: strings(r.pii, 'pii'),
     keep: strings(r.keep, 'keep'),
+    ...(typeof r.mid_rate === 'number' && r.mid_rate > 0 ? { midRate: r.mid_rate } : {}),
+    ...(r.disclosures !== undefined ? { disclosures: strings(r.disclosures, 'disclosures') } : {}),
   }
 }

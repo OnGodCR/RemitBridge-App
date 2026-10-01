@@ -1,0 +1,1277 @@
+{
+ "id": "synth-0015-western-union-debit-card-usd-mxn",
+ "description": "Western Union, USD to MXN, paid by debit card; no tax; values under their labels; blurred",
+ "source": "synthetic",
+ "seed": 15,
+ "expected": {
+  "provider": "Western Union",
+  "send_currency": "USD",
+  "receive_currency": "MXN",
+  "amount_sent": 400,
+  "fee": 9.99,
+  "exchange_rate": 18.7995,
+  "amount_received": 7519.8,
+  "transfer_date": "2026-08-02",
+  "funding_method": "debit_card",
+  "tax": 0,
+  "total_paid": 409.99,
+  "delivery_method": "mobile_wallet"
+ },
+ "pii": [
+  "Aisha",
+  "Mohamed",
+  "95 Lakeview",
+  "98055",
+  "555-0109",
+  "Jose",
+  "Ramirez",
+  "6784728053",
+  "3440"
+ ],
+ "keep": [
+  "8/2/2026",
+  "US$400.00",
+  "9.99 USD",
+  "0.00 USD",
+  "409.99 USD",
+  "18.7995",
+  "7,519.80 MXN"
+ ],
+ "disclosures": [
+  "date_available",
+  "error_rights",
+  "provider_contact"
+ ],
+ "mid_rate": 18.9971,
+ "printed": [
+  "WESTERN UNION",
+  "Money Transfer Receipt",
+  "Transaction Date:",
+  "8/2/2026",
+  "Sender: Aisha Mohamed",
+  "95 Lakeview Dr",
+  "Renton, WA 98055",
+  "Phone: (206) 555-0109",
+  "Receiver name: Jose Ramirez",
+  "MTCN 6784728053",
+  "Payment Method:",
+  "Visa Debit ****3440",
+  "Receive Method:",
+  "Mobile Wallet",
+  "Transfer Amount",
+  "US$400.00",
+  "Fee:",
+  "9.99 USD",
+  "Transfer Taxes",
+  "0.00 USD",
+  "Total",
+  "409.99 USD",
+  "Rate:",
+  "1 USD = 18.7995 MXN",
+  "Recipient Gets:",
+  "7,519.80 MXN",
+  "Date Available: Aug 2, 2026",
+  "You have a right to dispute errors in your transaction. If you think there is an error, contact us within 180 days.",
+  "For questions or complaints about Western Union, contact us at 1-800-555-0181."
+ ],
+ "style": {
+  "font": "DejaVu Sans",
+  "size": 17,
+  "width": 384,
+  "rotate": 0,
+  "blur": 0.4,
+  "paper": "#f7f7f7",
+  "layout": "next_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1008,
+  "height": 1828,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "WESTERN",
+      "box": {
+       "x": 89,
+       "y": 92,
+       "width": 229,
+       "height": 33
+      }
+     },
+     {
+      "text": "UNION",
+      "box": {
+       "x": 339,
+       "y": 92,
+       "width": 151,
+       "height": 33
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 92,
+     "width": 401,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Money",
+      "box": {
+       "x": 90,
+       "y": 160,
+       "width": 110,
+       "height": 34
+      }
+     },
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 211,
+       "y": 159,
+       "width": 138,
+       "height": 28
+      }
+     },
+     {
+      "text": "Receipt",
+      "box": {
+       "x": 361,
+       "y": 160,
+       "width": 125,
+       "height": 34
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 159,
+     "width": 396,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transaction",
+      "box": {
+       "x": 87,
+       "y": 212,
+       "width": 194,
+       "height": 27
+      }
+     },
+     {
+      "text": "Date:",
+      "box": {
+       "x": 296,
+       "y": 212,
+       "width": 87,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 212,
+     "width": 296,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "8/2/2026",
+      "box": {
+       "x": 90,
+       "y": 264,
+       "width": 149,
+       "height": 30
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 264,
+     "width": 149,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Sender:",
+      "box": {
+       "x": 90,
+       "y": 316,
+       "width": 126,
+       "height": 27
+      }
+     },
+     {
+      "text": "Aisha",
+      "box": {
+       "x": 230,
+       "y": 316,
+       "width": 91,
+       "height": 27
+      }
+     },
+     {
+      "text": "Mohamed",
+      "box": {
+       "x": 336,
+       "y": 316,
+       "width": 164,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 316,
+     "width": 410,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "95",
+      "box": {
+       "x": 89,
+       "y": 366,
+       "width": 40,
+       "height": 27
+      }
+     },
+     {
+      "text": "Lakeview",
+      "box": {
+       "x": 144,
+       "y": 366,
+       "width": 154,
+       "height": 27
+      }
+     },
+     {
+      "text": "Dr",
+      "box": {
+       "x": 313,
+       "y": 366,
+       "width": 38,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 366,
+     "width": 262,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Renton,",
+      "box": {
+       "x": 90,
+       "y": 418,
+       "width": 126,
+       "height": 30
+      }
+     },
+     {
+      "text": "WA",
+      "box": {
+       "x": 231,
+       "y": 418,
+       "width": 54,
+       "height": 27
+      }
+     },
+     {
+      "text": "98055",
+      "box": {
+       "x": 297,
+       "y": 418,
+       "width": 105,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 418,
+     "width": 312,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Phone:",
+      "box": {
+       "x": 90,
+       "y": 470,
+       "width": 112,
+       "height": 27
+      }
+     },
+     {
+      "text": "(206)",
+      "box": {
+       "x": 218,
+       "y": 470,
+       "width": 87,
+       "height": 31
+      }
+     },
+     {
+      "text": "555-0109",
+      "box": {
+       "x": 320,
+       "y": 470,
+       "width": 160,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 470,
+     "width": 390,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receiver",
+      "box": {
+       "x": 90,
+       "y": 522,
+       "width": 146,
+       "height": 27
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 248,
+       "y": 528,
+       "width": 103,
+       "height": 21
+      }
+     },
+     {
+      "text": "Jose",
+      "box": {
+       "x": 362,
+       "y": 523,
+       "width": 71,
+       "height": 32
+      }
+     },
+     {
+      "text": "Ramirez",
+      "box": {
+       "x": 447,
+       "y": 522,
+       "width": 135,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 522,
+     "width": 492,
+     "height": 33
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "MTCN",
+      "box": {
+       "x": 90,
+       "y": 574,
+       "width": 93,
+       "height": 27
+      }
+     },
+     {
+      "text": "6784728053",
+      "box": {
+       "x": 198,
+       "y": 574,
+       "width": 212,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 574,
+     "width": 320,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 90,
+       "y": 626,
+       "width": 146,
+       "height": 34
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 250,
+       "y": 626,
+       "width": 134,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 626,
+     "width": 294,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Visa",
+      "box": {
+       "x": 88,
+       "y": 678,
+       "width": 68,
+       "height": 27
+      }
+     },
+     {
+      "text": "Debit",
+      "box": {
+       "x": 172,
+       "y": 678,
+       "width": 88,
+       "height": 27
+      }
+     },
+     {
+      "text": "****3440",
+      "box": {
+       "x": 273,
+       "y": 678,
+       "width": 152,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 678,
+     "width": 337,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receive",
+      "box": {
+       "x": 90,
+       "y": 730,
+       "width": 130,
+       "height": 27
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 234,
+       "y": 730,
+       "width": 134,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 730,
+     "width": 278,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Mobile",
+      "box": {
+       "x": 90,
+       "y": 782,
+       "width": 108,
+       "height": 27
+      }
+     },
+     {
+      "text": "Wallet",
+      "box": {
+       "x": 211,
+       "y": 782,
+       "width": 104,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 782,
+     "width": 225,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 87,
+       "y": 833,
+       "width": 138,
+       "height": 28
+      }
+     },
+     {
+      "text": "Amount",
+      "box": {
+       "x": 236,
+       "y": 834,
+       "width": 133,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 833,
+     "width": 282,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "US$400.00",
+      "box": {
+       "x": 90,
+       "y": 886,
+       "width": 184,
+       "height": 31
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 886,
+     "width": 184,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Fee:",
+      "box": {
+       "x": 90,
+       "y": 938,
+       "width": 66,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 938,
+     "width": 66,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "9.99",
+      "box": {
+       "x": 89,
+       "y": 990,
+       "width": 73,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 177,
+       "y": 990,
+       "width": 69,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 990,
+     "width": 157,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 87,
+       "y": 1041,
+       "width": 138,
+       "height": 28
+      }
+     },
+     {
+      "text": "Taxes",
+      "box": {
+       "x": 235,
+       "y": 1042,
+       "width": 93,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 1041,
+     "width": 241,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "0.00",
+      "box": {
+       "x": 89,
+       "y": 1094,
+       "width": 73,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 177,
+       "y": 1094,
+       "width": 69,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1094,
+     "width": 157,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 87,
+       "y": 1146,
+       "width": 78,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 1146,
+     "width": 78,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "409.99",
+      "box": {
+       "x": 89,
+       "y": 1196,
+       "width": 116,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 220,
+       "y": 1196,
+       "width": 69,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1196,
+     "width": 200,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Rate:",
+      "box": {
+       "x": 90,
+       "y": 1248,
+       "width": 84,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1248,
+     "width": 84,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "1",
+      "box": {
+       "x": 91,
+       "y": 1300,
+       "width": 16,
+       "height": 27
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 123,
+       "y": 1300,
+       "width": 69,
+       "height": 27
+      }
+     },
+     {
+      "text": "=",
+      "box": {
+       "x": 207,
+       "y": 1310,
+       "width": 22,
+       "height": 11
+      }
+     },
+     {
+      "text": "18.7995",
+      "box": {
+       "x": 246,
+       "y": 1300,
+       "width": 136,
+       "height": 27
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 397,
+       "y": 1300,
+       "width": 73,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 1300,
+     "width": 379,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Recipient",
+      "box": {
+       "x": 90,
+       "y": 1352,
+       "width": 156,
+       "height": 34
+      }
+     },
+     {
+      "text": "Gets:",
+      "box": {
+       "x": 258,
+       "y": 1352,
+       "width": 85,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1352,
+     "width": 253,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "7,519.80",
+      "box": {
+       "x": 90,
+       "y": 1404,
+       "width": 148,
+       "height": 30
+      }
+     },
+     {
+      "text": "MXN",
+      "box": {
+       "x": 253,
+       "y": 1404,
+       "width": 73,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1404,
+     "width": 236,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 90,
+       "y": 1456,
+       "width": 78,
+       "height": 27
+      }
+     },
+     {
+      "text": "Available:",
+      "box": {
+       "x": 180,
+       "y": 1456,
+       "width": 162,
+       "height": 27
+      }
+     },
+     {
+      "text": "Aug",
+      "box": {
+       "x": 356,
+       "y": 1456,
+       "width": 64,
+       "height": 34
+      }
+     },
+     {
+      "text": "2,",
+      "box": {
+       "x": 435,
+       "y": 1456,
+       "width": 28,
+       "height": 30
+      }
+     },
+     {
+      "text": "2026",
+      "box": {
+       "x": 479,
+       "y": 1456,
+       "width": 83,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1456,
+     "width": 472,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "You",
+      "box": {
+       "x": 88,
+       "y": 1509,
+       "width": 56,
+       "height": 26
+      }
+     },
+     {
+      "text": "have",
+      "box": {
+       "x": 160,
+       "y": 1508,
+       "width": 80,
+       "height": 27
+      }
+     },
+     {
+      "text": "a",
+      "box": {
+       "x": 253,
+       "y": 1514,
+       "width": 17,
+       "height": 21
+      }
+     },
+     {
+      "text": "right",
+      "box": {
+       "x": 285,
+       "y": 1508,
+       "width": 78,
+       "height": 34
+      }
+     },
+     {
+      "text": "to",
+      "box": {
+       "x": 375,
+       "y": 1510,
+       "width": 32,
+       "height": 25
+      }
+     },
+     {
+      "text": "dispute",
+      "box": {
+       "x": 420,
+       "y": 1508,
+       "width": 124,
+       "height": 34
+      }
+     },
+     {
+      "text": "errors",
+      "box": {
+       "x": 557,
+       "y": 1514,
+       "width": 98,
+       "height": 21
+      }
+     },
+     {
+      "text": "in",
+      "box": {
+       "x": 669,
+       "y": 1508,
+       "width": 27,
+       "height": 27
+      }
+     },
+     {
+      "text": "your",
+      "box": {
+       "x": 709,
+       "y": 1514,
+       "width": 77,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 1508,
+     "width": 698,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "transaction.",
+      "box": {
+       "x": 89,
+       "y": 1554,
+       "width": 199,
+       "height": 27
+      }
+     },
+     {
+      "text": "If",
+      "box": {
+       "x": 304,
+       "y": 1553,
+       "width": 21,
+       "height": 28
+      }
+     },
+     {
+      "text": "you",
+      "box": {
+       "x": 335,
+       "y": 1560,
+       "width": 60,
+       "height": 28
+      }
+     },
+     {
+      "text": "think",
+      "box": {
+       "x": 408,
+       "y": 1554,
+       "width": 85,
+       "height": 27
+      }
+     },
+     {
+      "text": "there",
+      "box": {
+       "x": 505,
+       "y": 1554,
+       "width": 88,
+       "height": 27
+      }
+     },
+     {
+      "text": "is",
+      "box": {
+       "x": 607,
+       "y": 1554,
+       "width": 24,
+       "height": 27
+      }
+     },
+     {
+      "text": "an",
+      "box": {
+       "x": 644,
+       "y": 1560,
+       "width": 39,
+       "height": 21
+      }
+     },
+     {
+      "text": "error,",
+      "box": {
+       "x": 697,
+       "y": 1560,
+       "width": 89,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1553,
+     "width": 697,
+     "height": 35
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "contact",
+      "box": {
+       "x": 89,
+       "y": 1602,
+       "width": 126,
+       "height": 25
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 228,
+       "y": 1606,
+       "width": 36,
+       "height": 21
+      }
+     },
+     {
+      "text": "within",
+      "box": {
+       "x": 277,
+       "y": 1600,
+       "width": 100,
+       "height": 27
+      }
+     },
+     {
+      "text": "180",
+      "box": {
+       "x": 393,
+       "y": 1600,
+       "width": 60,
+       "height": 27
+      }
+     },
+     {
+      "text": "days.",
+      "box": {
+       "x": 467,
+       "y": 1600,
+       "width": 87,
+       "height": 34
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 1600,
+     "width": 465,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "For",
+      "box": {
+       "x": 90,
+       "y": 1652,
+       "width": 52,
+       "height": 27
+      }
+     },
+     {
+      "text": "questions",
+      "box": {
+       "x": 153,
+       "y": 1652,
+       "width": 162,
+       "height": 34
+      }
+     },
+     {
+      "text": "or",
+      "box": {
+       "x": 328,
+       "y": 1658,
+       "width": 35,
+       "height": 21
+      }
+     },
+     {
+      "text": "complaints",
+      "box": {
+       "x": 374,
+       "y": 1652,
+       "width": 184,
+       "height": 34
+      }
+     },
+     {
+      "text": "about",
+      "box": {
+       "x": 572,
+       "y": 1652,
+       "width": 96,
+       "height": 27
+      }
+     },
+     {
+      "text": "Western",
+      "box": {
+       "x": 680,
+       "y": 1652,
+       "width": 137,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1652,
+     "width": 727,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Union,",
+      "box": {
+       "x": 90,
+       "y": 1698,
+       "width": 104,
+       "height": 30
+      }
+     },
+     {
+      "text": "contact",
+      "box": {
+       "x": 209,
+       "y": 1700,
+       "width": 126,
+       "height": 25
+      }
+     },
+     {
+      "text": "us",
+      "box": {
+       "x": 348,
+       "y": 1704,
+       "width": 36,
+       "height": 21
+      }
+     },
+     {
+      "text": "at",
+      "box": {
+       "x": 397,
+       "y": 1700,
+       "width": 33,
+       "height": 25
+      }
+     },
+     {
+      "text": "1-800-555-0181.",
+      "box": {
+       "x": 444,
+       "y": 1698,
+       "width": 280,
+       "height": 27
+      }
+     }
+    ],
+    "box": {
+     "x": 90,
+     "y": 1698,
+     "width": 634,
+     "height": 30
+    }
+   }
+  ]
+ }
+}

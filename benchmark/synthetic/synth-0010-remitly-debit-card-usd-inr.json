@@ -1,0 +1,769 @@
+{
+ "id": "synth-0010-remitly-debit-card-usd-inr",
+ "description": "Remitly, USD to INR, paid by debit card; no tax; tilted",
+ "source": "synthetic",
+ "seed": 10,
+ "expected": {
+  "provider": "Remitly",
+  "send_currency": "USD",
+  "receive_currency": "INR",
+  "amount_sent": 150,
+  "fee": 2.99,
+  "exchange_rate": 82.1166,
+  "amount_received": 12317.49,
+  "transfer_date": "2026-06-21",
+  "funding_method": "debit_card",
+  "total_paid": 152.99,
+  "delivery_method": "cash_pickup"
+ },
+ "pii": [
+  "Sofia",
+  "Martinez",
+  "555-0177",
+  "Vikram",
+  "Singh",
+  "Pune",
+  "3317543108"
+ ],
+ "keep": [
+  "06/21/2026",
+  "150.00 USD",
+  "US$2.99",
+  "US$152.99",
+  "82.1166",
+  "12,317.49 INR"
+ ],
+ "disclosures": [
+  "date_available",
+  "cfpb_contact"
+ ],
+ "mid_rate": 84.6445,
+ "printed": [
+  "Remitly",
+  "Transfer receipt",
+  "Transaction Date: 06/21/2026",
+  "Sender name: Sofia Martinez",
+  "Phone: (206) 555-0177",
+  "Receiver: Vikram Singh",
+  "Pune, Maharashtra",
+  "Reference # 3317543108",
+  "Payment Method: Debit Card",
+  "Receive Method: Cash Pickup",
+  "You Sent 150.00 USD",
+  "Fee: US$2.99",
+  "Total US$152.99",
+  "FX Rate US$1.00 = 82.1166 INR",
+  "Total to Recipient: 12,317.49 INR",
+  "Date Available: 6/21/2026",
+  "Consumer Financial Protection Bureau 855-411-2372 consumerfinance.gov/sending-money"
+ ],
+ "style": {
+  "font": "Courier 10 Pitch",
+  "size": 14,
+  "width": 462,
+  "rotate": 1.18,
+  "blur": 0,
+  "paper": "#ffffff",
+  "layout": "same_line"
+ },
+ "ocr": "tesseract.js 7, eng 4.0.0_best_int",
+ "page": {
+  "width": 1164,
+  "height": 966,
+  "lines": [
+   {
+    "words": [
+     {
+      "text": "Remitly",
+      "box": {
+       "x": 98,
+       "y": 79,
+       "width": 144,
+       "height": 38
+      }
+     }
+    ],
+    "box": {
+     "x": 98,
+     "y": 79,
+     "width": 144,
+     "height": 38
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transfer",
+      "box": {
+       "x": 95,
+       "y": 140,
+       "width": 134,
+       "height": 24
+      }
+     },
+     {
+      "text": "receipt",
+      "box": {
+       "x": 251,
+       "y": 144,
+       "width": 111,
+       "height": 28
+      }
+     }
+    ],
+    "box": {
+     "x": 95,
+     "y": 140,
+     "width": 267,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Transaction",
+      "box": {
+       "x": 94,
+       "y": 184,
+       "width": 183,
+       "height": 25
+      }
+     },
+     {
+      "text": "Date:",
+      "box": {
+       "x": 297,
+       "y": 188,
+       "width": 77,
+       "height": 23
+      }
+     },
+     {
+      "text": "06/21/2026",
+      "box": {
+       "x": 399,
+       "y": 190,
+       "width": 165,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 94,
+     "y": 184,
+     "width": 470,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Sender",
+      "box": {
+       "x": 95,
+       "y": 226,
+       "width": 98,
+       "height": 23
+      }
+     },
+     {
+      "text": "name:",
+      "box": {
+       "x": 213,
+       "y": 233,
+       "width": 76,
+       "height": 18
+      }
+     },
+     {
+      "text": "Sofia",
+      "box": {
+       "x": 314,
+       "y": 230,
+       "width": 80,
+       "height": 23
+      }
+     },
+     {
+      "text": "Martinez",
+      "box": {
+       "x": 414,
+       "y": 232,
+       "width": 132,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 95,
+     "y": 226,
+     "width": 451,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Phone:",
+      "box": {
+       "x": 94,
+       "y": 269,
+       "width": 93,
+       "height": 24
+      }
+     },
+     {
+      "text": "(206)",
+      "box": {
+       "x": 216,
+       "y": 272,
+       "width": 73,
+       "height": 27
+      }
+     },
+     {
+      "text": "555-0177",
+      "box": {
+       "x": 313,
+       "y": 274,
+       "width": 131,
+       "height": 24
+      }
+     }
+    ],
+    "box": {
+     "x": 94,
+     "y": 269,
+     "width": 350,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receiver:",
+      "box": {
+       "x": 93,
+       "y": 314,
+       "width": 143,
+       "height": 24
+      }
+     },
+     {
+      "text": "Vikram",
+      "box": {
+       "x": 260,
+       "y": 317,
+       "width": 100,
+       "height": 23
+      }
+     },
+     {
+      "text": "Singh",
+      "box": {
+       "x": 379,
+       "y": 319,
+       "width": 81,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 93,
+     "y": 314,
+     "width": 367,
+     "height": 34
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Pune,",
+      "box": {
+       "x": 92,
+       "y": 358,
+       "width": 76,
+       "height": 26
+      }
+     },
+     {
+      "text": "Maharashtra",
+      "box": {
+       "x": 192,
+       "y": 360,
+       "width": 183,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 92,
+     "y": 358,
+     "width": 283,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Reference",
+      "box": {
+       "x": 91,
+       "y": 402,
+       "width": 149,
+       "height": 24
+      }
+     },
+     {
+      "text": "#",
+      "box": {
+       "x": 257,
+       "y": 406,
+       "width": 18,
+       "height": 20
+      }
+     },
+     {
+      "text": "3317543108",
+      "box": {
+       "x": 293,
+       "y": 406,
+       "width": 165,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 402,
+     "width": 367,
+     "height": 29
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Payment",
+      "box": {
+       "x": 91,
+       "y": 446,
+       "width": 113,
+       "height": 27
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 224,
+       "y": 448,
+       "width": 111,
+       "height": 24
+      }
+     },
+     {
+      "text": "Debit",
+      "box": {
+       "x": 359,
+       "y": 451,
+       "width": 81,
+       "height": 23
+      }
+     },
+     {
+      "text": "Card",
+      "box": {
+       "x": 461,
+       "y": 453,
+       "width": 64,
+       "height": 23
+      }
+     }
+    ],
+    "box": {
+     "x": 91,
+     "y": 446,
+     "width": 434,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Receive",
+      "box": {
+       "x": 89,
+       "y": 490,
+       "width": 115,
+       "height": 24
+      }
+     },
+     {
+      "text": "Method:",
+      "box": {
+       "x": 223,
+       "y": 492,
+       "width": 111,
+       "height": 24
+      }
+     },
+     {
+      "text": "Cash",
+      "box": {
+       "x": 359,
+       "y": 495,
+       "width": 64,
+       "height": 23
+      }
+     },
+     {
+      "text": "Pickup",
+      "box": {
+       "x": 444,
+       "y": 497,
+       "width": 97,
+       "height": 29
+      }
+     }
+    ],
+    "box": {
+     "x": 89,
+     "y": 490,
+     "width": 452,
+     "height": 36
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "You",
+      "box": {
+       "x": 88,
+       "y": 534,
+       "width": 47,
+       "height": 22
+      }
+     },
+     {
+      "text": "Sent",
+      "box": {
+       "x": 156,
+       "y": 535,
+       "width": 63,
+       "height": 22
+      }
+     },
+     {
+      "text": "150.00",
+      "box": {
+       "x": 241,
+       "y": 537,
+       "width": 97,
+       "height": 23
+      }
+     },
+     {
+      "text": "USD",
+      "box": {
+       "x": 358,
+       "y": 539,
+       "width": 48,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 534,
+     "width": 318,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Fee:",
+      "box": {
+       "x": 88,
+       "y": 578,
+       "width": 59,
+       "height": 22
+      }
+     },
+     {
+      "text": "US$2.99",
+      "box": {
+       "x": 172,
+       "y": 579,
+       "width": 115,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 88,
+     "y": 578,
+     "width": 199,
+     "height": 27
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 85,
+       "y": 620,
+       "width": 82,
+       "height": 23
+      }
+     },
+     {
+      "text": "US$152.99",
+      "box": {
+       "x": 188,
+       "y": 622,
+       "width": 148,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 85,
+     "y": 620,
+     "width": 251,
+     "height": 28
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "FX",
+      "box": {
+       "x": 87,
+       "y": 664,
+       "width": 30,
+       "height": 21
+      }
+     },
+     {
+      "text": "Rate",
+      "box": {
+       "x": 136,
+       "y": 665,
+       "width": 65,
+       "height": 23
+      }
+     },
+     {
+      "text": "US$1.00",
+      "box": {
+       "x": 220,
+       "y": 666,
+       "width": 115,
+       "height": 26
+      }
+     },
+     {
+      "text": "=",
+      "box": {
+       "x": 355,
+       "y": 677,
+       "width": 15,
+       "height": 9
+      }
+     },
+     {
+      "text": "82.1166",
+      "box": {
+       "x": 389,
+       "y": 670,
+       "width": 115,
+       "height": 24
+      }
+     },
+     {
+      "text": "INR",
+      "box": {
+       "x": 524,
+       "y": 673,
+       "width": 48,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 87,
+     "y": 664,
+     "width": 485,
+     "height": 31
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Total",
+      "box": {
+       "x": 83,
+       "y": 708,
+       "width": 82,
+       "height": 23
+      }
+     },
+     {
+      "text": "to",
+      "box": {
+       "x": 186,
+       "y": 711,
+       "width": 30,
+       "height": 21
+      }
+     },
+     {
+      "text": "Recipient:",
+      "box": {
+       "x": 236,
+       "y": 711,
+       "width": 161,
+       "height": 28
+      }
+     },
+     {
+      "text": "12,317.49",
+      "box": {
+       "x": 423,
+       "y": 715,
+       "width": 147,
+       "height": 25
+      }
+     },
+     {
+      "text": "INR",
+      "box": {
+       "x": 591,
+       "y": 718,
+       "width": 48,
+       "height": 22
+      }
+     }
+    ],
+    "box": {
+     "x": 83,
+     "y": 708,
+     "width": 556,
+     "height": 32
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Date",
+      "box": {
+       "x": 84,
+       "y": 752,
+       "width": 64,
+       "height": 23
+      }
+     },
+     {
+      "text": "Available:",
+      "box": {
+       "x": 167,
+       "y": 753,
+       "width": 162,
+       "height": 25
+      }
+     },
+     {
+      "text": "6/21/2026",
+      "box": {
+       "x": 353,
+       "y": 757,
+       "width": 149,
+       "height": 25
+      }
+     }
+    ],
+    "box": {
+     "x": 84,
+     "y": 752,
+     "width": 418,
+     "height": 30
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "Consumer",
+      "box": {
+       "x": 83,
+       "y": 796,
+       "width": 132,
+       "height": 24
+      }
+     },
+     {
+      "text": "Financial",
+      "box": {
+       "x": 236,
+       "y": 799,
+       "width": 146,
+       "height": 24
+      }
+     },
+     {
+      "text": "Protection",
+      "box": {
+       "x": 404,
+       "y": 802,
+       "width": 164,
+       "height": 25
+      }
+     },
+     {
+      "text": "Bureau",
+      "box": {
+       "x": 589,
+       "y": 806,
+       "width": 97,
+       "height": 24
+      }
+     },
+     {
+      "text": "855-411-2372",
+      "box": {
+       "x": 706,
+       "y": 808,
+       "width": 199,
+       "height": 26
+      }
+     }
+    ],
+    "box": {
+     "x": 83,
+     "y": 796,
+     "width": 822,
+     "height": 38
+    }
+   },
+   {
+    "words": [
+     {
+      "text": "consumerfinance.gov/sending-money",
+      "box": {
+       "x": 83,
+       "y": 836,
+       "width": 553,
+       "height": 36
+      }
+     }
+    ],
+    "box": {
+     "x": 83,
+     "y": 836,
+     "width": 553,
+     "height": 36
+    }
+   }
+  ]
+ }
+}

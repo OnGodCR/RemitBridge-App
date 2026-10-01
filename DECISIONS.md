@@ -663,7 +663,8 @@ exempt. This matches the "$500, $5 tax" examples in public guides, but the IRS p
 regulations (Federal Register 2026-07085) couldn't be read from Claude's sandbox. So the tax
 check says it's an assumption until the base is checked. *Answers:* 6.
 
-**D79. The model fallback runs only on the server, on Claude.** The `scan-receipt` Edge
+**D79. The model fallback runs only on the server, on Claude.** *Model and API superseded by
+D92 (Qwen through OpenRouter); the scope, schema and cap rules stand.* The `scan-receipt` Edge
 Function calls the Anthropic API with the official SDK. The key is the `ANTHROPIC_API_KEY`
 Supabase secret, which Angad sets. Details:
 - **Model:** `claude-opus-5-5` at `low` effort by default; `RECEIPT_MODEL` overrides it.
@@ -791,3 +792,121 @@ be a problem." Angad then asked Claude to "just do everything", which included t
   pay-in method. The permission was for the Comparison API, so that endpoint isn't used.
   The docs say future API versions will need authentication; when that lands, the adapter
   needs a Wise API token, which Angad would create.
+
+## 2026-09-30: The receipt model
+
+**D92. Receipts are read by Qwen3 VL 32B through OpenRouter, not Claude** (replaces D79's
+model and API). Angad chose cost first, and asked for a cheaper Chinese model through
+OpenRouter.
+- **Model:** `qwen/qwen3-vl-32b-instruct` (Alibaba's Qwen3 VL 32B Instruct). It reads photos,
+  supports a strict JSON schema, and lists at about $0.10 per million input tokens and $0.42
+  per million output tokens. A receipt (photo, text and answer) is about 2,000–3,000 tokens,
+  so roughly a tenth of a cent, against 2–5 cents on Claude. OpenRouter's site is blocked from
+  Claude's sandbox, so these figures come from search results, not the live model list;
+  check them on openrouter.ai before relying on them. Qwen3.7 Flash is cheaper still; the
+  Phase 4 benchmark will show whether it reads well enough.
+- **Why Qwen VL:** of the cheap Chinese models, DeepSeek's are text only, and the fallback
+  sends the redacted photo as well as the text. Qwen's VL line is the established vision one.
+- **API:** OpenRouter's chat completions endpoint over plain `fetch`, so no SDK. The key is
+  the `OPENROUTER_API_KEY` Supabase secret, which Angad sets. `RECEIPT_MODEL` overrides the
+  model and `RECEIPT_MODEL_FALLBACKS` (comma-separated) lists models to try if it fails; none
+  by default.
+- **Privacy:** every request asks OpenRouter for providers that don't store or train on what
+  they're sent (`data_collection: "deny"`) and that honor every parameter, so the schema is
+  enforced (`require_parameters: true`). Only the redacted photo and text are ever sent, as
+  before. If no provider of a model meets both, OpenRouter refuses the request, and the
+  person types the values; the fix is another model, not relaxing either rule.
+- **Spend cap:** raised from 300 to **2,000 calls a month**, which is about $2 at the listed
+  price.
+- **Unchanged:** the strict schema, our own check of every value, the 0.8 threshold, and
+  that only the scan-receipt Edge Function calls the model.
+
+## 2026-09-30: Phase 4 defaults
+
+**D93. How the benchmark is built** (details under D85; defaults Claude picked under D10).
+- **Synthetic set:** 60 receipts, seeds 1–60, committed as JSON with tesseract.js's OCR of
+  each. They cover all eight Tier 1 providers, all six funding methods, and five receiving
+  currencies (MXN, INR, PHP, VND, GTQ). Numbers come from the one formula, so a correct
+  reading passes every receipt check. Wording is Regulation E's labels and common variants,
+  not any provider's real wording.
+- **Scores:** accuracy (of the values shown, the share read right) and precision (of the
+  values read, the share right), per field and overall, for each mode; plus the share read by
+  the rules, the share of wrong values the checks flagged for the person, the model's
+  failures, and redaction leaks.
+- **Model modes** run only by hand, with `OPENROUTER_API_KEY` in the shell. They're never in
+  CI. CI runs parser mode on the committed set.
+- **Real receipts** go in `benchmark/receipts/`. Their JSON names personal details (so the
+  redaction check has something to check), so it stays out of git unless every detail has been
+  swapped for a made-up one. Photos stay out unless redacted and checked (D85).
+- **Redaction fixes the generator found:** a heading ending in an ID word ("Transfer
+  confirmation") hid the year on the next line; and a masked card that OCR read as `**+*4118`
+  wasn't hidden. Both are fixed and tested.
+
+## 2026-09-30: Phase 5, receipt photos on WhatsApp
+
+**D94. How a WhatsApp receipt photo is read** (builds on D80; defaults Claude picked under
+D10, with one privacy exception that needs Angad's yes before it's switched on).
+- **Flow:** the whatsapp function queues the photo in `receipt_intake` and replies "got it".
+  A GitHub Actions worker (`receipt-intake.yml`) downloads the photo from Meta, reads it with
+  tesseract.js, hides personal details with the phone's redaction code, and sends only the
+  redacted text through `scan-receipt` as channel `whatsapp`. It then reports back, and the
+  whatsapp function sends the reply.
+- **No photo leaves the worker.** WhatsApp receipts are read from the redacted text alone,
+  with no image to the model. The photo is held in memory and never written to disk or
+  stored. There's no research-consent question on WhatsApp, so no WhatsApp receipt is kept
+  past 30 days.
+- **The exception: the number is sealed for minutes.** The reply has to reach the person
+  after the worker finishes, so the queue row holds the number encrypted (AES-GCM, with a key
+  derived from `WHATSAPP_HASH_SECRET` that only the whatsapp function has). The worker never
+  sees it. The row is deleted when the reply goes out, and every row is deleted after an hour
+  regardless. This bends the rule "on WhatsApp, store only a hashed phone number", so photo
+  intake stays off (`WHATSAPP_RECEIPTS`) until Angad agrees. **Angad agreed on 2026-10-01**,
+  and CLAUDE.md's privacy rule now names the exception. It still needs the WhatsApp go-live
+  and the secrets below before it runs.
+- **Checking values:** the bot asks about unsure values one at a time (at most four), each
+  answer confirmed through `scan-receipt`, and then sends the result. It names any values that
+  weren't confirmed. While it's asking, `whatsapp_users` holds the receipt's ID and the field
+  being asked. That's cleared when the checking ends, or when the person sends a new photo or
+  an ordinary message instead.
+- **Starting the worker:** a workflow dispatch per photo (`GITHUB_DISPATCH_TOKEN`), with no
+  schedule. Rows expire in an hour, and a schedule often enough to matter would use most of
+  the private repo's Actions minutes. Intake also needs `RECEIPT_INTAKE_SECRET`, shared by the
+  two functions and the worker.
+- **Language:** replies in the bot's language (English or Hindi). The Hindi needs the same
+  read as the rest of the bot's (D68).
+- **Limits:** photos up to 10 MB (JPEG, PNG or WebP). A photo with under four lines of text,
+  or no digits at all, gets "couldn't read a receipt". OCR is tesseract's, not ML Kit's, so
+  WhatsApp reads less well than the app. The benchmark's synthetic set measures that OCR.
+
+## 2026-09-30: Phase 6, the disclosure check and the observatory
+
+**D95. The disclosure check** (defaults Claude picked under D10).
+- **Items:** the receipt items in Regulation E (12 CFR 1005.31(b)(2)): transfer amount, fees,
+  taxes (only for a cash-type transfer), total, exchange rate, amount received, date
+  available, recipient, error-resolution rights, cancellation, the provider's contact
+  details, and the CFPB's.
+- **How:** the amounts count as found when a value was read for them. The rest count as found
+  when their usual words appear in the redacted text. The recipient's name is hidden, but its
+  label stays.
+- **When:** it's worked out once, at scan time, from what the parser and the model read. A
+  value the person typed in wasn't on the receipt, so it doesn't count as found. It's stored
+  in `receipts.disclosures_missing`.
+- **Wording:** the only claim is "not found on this receipt", always with the note that a
+  photo can cut part of it off. It never says a provider broke a rule. On the synthetic set
+  it's right on every item. Those receipts use the wording the check looks for, which the
+  benchmark says.
+
+**D96. The receipt observatory.**
+- **Which receipts:** only research-consented receipts that went through the result (a
+  `receipt_comparisons` row), through one database function, `receipt_observatory()`, that
+  anyone can read.
+- **What it shows:** per provider and route, the median total cost and exchange-rate markup,
+  and how many got a worse rate than advertised. Overall, the tax totals and how often each
+  disclosure wasn't found.
+- **Privacy:** no group smaller than **five** receipts is shown, and no breakdown at all
+  while there are fewer than five receipts in all. The start date is given to the month only.
+- **The screen:** Learn → "What people paid", labeled "Early results", with the sample size
+  first. The method line says "typical" means the median. There's a "What this does not tell
+  you" block: people who share receipts aren't a random sample.
+- **Stored for it:** `receipt_comparisons` gains `total_cost_pct` and `markup_pct`, from
+  the one formula at the day's mid-market rate, written when a receipt is confirmed.
