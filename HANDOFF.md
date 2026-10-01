@@ -61,8 +61,12 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **UI pass (D101, D102), in progress:** Scan is the first tab and the app opens on it;
   Compare moved to `(tabs)/compare.tsx`; rows lead with drawn illustrations (D103, after
   Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages. WhatsApp is
-  parked (D100). `docs/translation-review/hi.md` is now out of date for the changed strings;
-  regenerate it when the UI pass ends, before it goes to a reviewer.
+  parked (D100). The Hindi review sheet is regenerated from the string files by
+  `npx tsx scripts/review-sheet.ts hi` (in `mobile/`); rerun it after any string change.
+- **Scrape schedule didn't fire:** the `17 */6` cron added on 2026-09-30 had produced no
+  scheduled run by 04:00 UTC on 2026-10-01 (00:17 was due); Claude started one by hand
+  (run 36813213444, success). Check that 06:17 and later runs appear on their own; if
+  not, look at the Health checks workflow's staleness alert.
 - **Order of work (D99):** every free setup first (Resend done; GitHub token and Meta
   next), then the Apple Developer Program fee, the iPhone build and universal links, then
   testing. CLAUDE.md's open items are now grouped that way.

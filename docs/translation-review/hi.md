@@ -40,6 +40,7 @@ with your name and the date.
 | common.stepOf | Step {step} of {of} | चरण {step}, कुल {of} | |
 | common.noMailTitle | Email us | हमें ईमेल करें | |
 | common.noMailBody | This phone has no email app set up. Write to us at {address} from any email. | इस फ़ोन में कोई ईमेल ऐप सेट नहीं है। किसी भी ईमेल से {address} पर लिखें। | |
+| tabs.scan | Scan | स्कैन | |
 | tabs.compare | Compare | तुलना | |
 | tabs.tools | Tools | टूल | |
 | tabs.learn | Learn | जानें | |
@@ -261,7 +262,6 @@ with your name and the date.
 | board.ask | Ask for a route | नया रूट माँगें | |
 | account.title | Account | खाता | |
 | account.signedInApple | Signed in with Apple | Apple से साइन इन किया गया | |
-| account.signedOutLine | Save comparisons and the receipts you check. | तुलनाएँ और जाँची हुई रसीदें सहेजें। | |
 | account.optional | An account is optional. It keeps what you save, on any phone you use. | खाता बनाना ज़रूरी नहीं है। इसमें आपका सहेजा हुआ सब रहता है, किसी भी फ़ोन पर। | |
 | account.createOrSignIn | Create account or sign in | खाता बनाएँ या साइन इन करें | |
 | account.signOut | Sign out | साइन आउट करें | |
@@ -272,7 +272,7 @@ with your name and the date.
 | account.deleteFailedBody | Try again in a moment. | थोड़ी देर बाद फिर कोशिश करें। | |
 | account.about | About | जानकारी | |
 | account.routeBoard | Route board | रूट बोर्ड | |
-| account.routeBoardSub | Which routes we check, and which people want | हम कौन से रूट जाँचते हैं, और लोग कौन से चाहते हैं | |
+| account.routeBoardSub | Routes we check, and ones people want | हम कौन से रूट जाँचते हैं, और लोग कौन से चाहते हैं | |
 | account.privacy | Privacy policy | निजता नीति | |
 | account.privacySub | What we keep, and what we never do | हम क्या रखते हैं, और क्या कभी नहीं करते | |
 | account.support | Support | मदद | |
@@ -298,23 +298,19 @@ with your name and the date.
 | saved.checkDeleted | Check deleted. | जाँच मिटा दी गई। | |
 | saved.offersDelete | Offers to delete this check | यह जाँच मिटाने का विकल्प देता है | |
 | saved.checkTitle | {provider} · {amount} to {currency} | {provider} · {amount}, {currency} में | |
-| tools.scan | Scan a receipt | रसीद स्कैन करें | |
-| tools.scanSub | Read a receipt with your camera, with personal details covered first | कैमरे से रसीद पढ़ें, निजी जानकारी पहले ढक दी जाती है | |
 | tools.title | Tools | टूल | |
-| tools.subtitle | Check a rate, a receipt, or a request. | रेट, रसीद, या पैसे की किसी माँग की जाँच करें। | |
 | tools.before | Before you send | भेजने से पहले | |
 | tools.after | After you send | भेजने के बाद | |
 | tools.rates | Rates | रेट | |
-| tools.fairRateSub | What the mid-market rate would give you | मिड-मार्केट रेट पर आपको कितना मिलता | |
-| tools.scamCheckSub | Eight questions before you send to a stranger | किसी अनजान को भेजने से पहले आठ सवाल | |
-| tools.trueCostSub | Check a receipt for the cost you didn’t see | रसीद में छिपी लागत देखें | |
-| tools.yearlyCostSub | What a year of sending adds up to | साल भर भेजने का कुल खर्च | |
-| tools.rateHistorySub | The mid-market rate, day by day | मिड-मार्केट रेट, दिन-ब-दिन | |
+| tools.fairRateSub | Is your rate fair? | क्या आपका रेट सही है? | |
+| tools.scamCheckSub | Before you pay a stranger | किसी अजनबी को भेजने से पहले | |
+| tools.trueCostSub | Check a receipt by hand | रसीद खुद भरकर जाँचें | |
+| tools.yearlyCostSub | A year of sending | साल भर का खर्च | |
+| tools.rateHistorySub | The rate, day by day | रेट, दिन-ब-दिन | |
 | learn.title | Learn | जानें | |
-| learn.subtitle | How it works, and the words behind it. | यह कैसे काम करता है, और इसके पीछे के शब्द। | |
 | learn.howItWorks | How it works | यह कैसे काम करता है | |
 | learn.feeMarkup | Fee + hidden markup | फ़ीस + छिपा मार्कअप | |
-| learn.feeMarkupBody | Total cost is the fee plus the markup hidden in the exchange rate. | कुल लागत का मतलब है फ़ीस, और एक्सचेंज रेट में छिपा मार्कअप। | |
+| learn.feeMarkupBody | The fee, plus what’s hidden in the rate. | फ़ीस, और रेट में छिपा खर्च। | |
 | learn.checkedOnly | Checked prices only | सिर्फ़ जाँची हुई कीमतें | |
 | learn.checkedOnlyBody | Every price passes our checks, or it isn’t shown. Mid-market rates from Frankfurter. | हर कीमत हमारी जाँच पास करती है, नहीं तो दिखाई नहीं जाती। मिड-मार्केट रेट Frankfurter से। | |
 | learn.noAffiliate | No affiliate deals | किसी कंपनी से कोई सौदा नहीं | |
@@ -322,7 +318,7 @@ with your name and the date.
 | learn.wrongPrice | Wrong price? | कीमत गलत है? | |
 | learn.deeper | Go deeper | और गहराई से | |
 | learn.glossarySub | {n} terms, in plain English | {n} शब्द, आसान भाषा में | |
-| learn.routeBoardSub | Which routes we check, and which people want | हम कौन से रूट जाँचते हैं, और लोग कौन से चाहते हैं | |
+| learn.routeBoardSub | Routes we check, and ones people want | हम कौन से रूट जाँचते हैं, और लोग कौन से चाहते हैं | |
 | learn.remitbenchSub | Our research testbed, still being built | हमारा रिसर्च टेस्टबेड, अभी बन रहा है | |
 | learn.observatorySub | Early results from receipts people shared | लोगों की साझा की गई रसीदों से शुरुआती नतीजे | |
 | learn.website | On the website | वेबसाइट पर | |
@@ -341,7 +337,7 @@ with your name and the date.
 | limitsBlock.heading | What this does not tell you | यह आपको क्या नहीं बताता | |
 | tool.inUnit | {label}, in {unit} | {label}, {unit} में | |
 | tool.sliderValue | {v} percent | {v} प्रतिशत | |
-| fairRate.intro | The mid-market rate is the honest yardstick. Every point a quote sits below it comes out of your transfer. | मिड-मार्केट रेट ईमानदार पैमाना है। कोई कीमत इससे जितने पॉइंट नीचे होती है, उतना आपके भेजे पैसे से कटता है। | |
+| fairRate.intro | Every point below the mid-market rate comes out of your transfer. | मिड-मार्केट रेट से हर पॉइंट नीचे का पैसा आपके ट्रांसफ़र से कटता है। | |
 | fairRate.yourTransfer | Your transfer | आपका ट्रांसफ़र | |
 | fairRate.amountToSend | Amount to send | भेजने की रकम | |
 | fairRate.markup | Exchange-rate markup | एक्सचेंज रेट में मार्कअप | |
@@ -354,7 +350,7 @@ with your name and the date.
 | fairRate.lost | Lost to the markup | मार्कअप में गए | |
 | fairRate.worth | Worth, in what you sent | आपकी भेजी रकम में इसकी कीमत | |
 | fairRate.source | Mid-market rate from {source}, for {day}. It’s a daily reference, not a live rate, and no provider offers it exactly. | मिड-मार्केट रेट {source} से, {day} का। यह रोज़ का संदर्भ है, लाइव रेट नहीं, और कोई कंपनी ठीक यही रेट नहीं देती। | |
-| trueCost.intro | Enter what’s on your receipt. See the cost hidden in the exchange rate, not just the fee. | अपनी रसीद पर लिखा हुआ भरें। सिर्फ़ फ़ीस नहीं, एक्सचेंज रेट में छिपी लागत भी देखें। | |
+| trueCost.intro | Type in your receipt. See the cost hidden in the rate. | अपनी रसीद भरें। रेट में छिपी लागत देखें। | |
 | trueCost.currencies | Currencies | मुद्राएँ | |
 | trueCost.sent | Sent | भेजी | |
 | trueCost.received | Received | पहुँची | |
@@ -394,7 +390,7 @@ with your name and the date.
 | trueCost.errors.notConnected | Not connected. | सर्वर से जुड़ा नहीं है। | |
 | trueCost.errors.signedOut | Sign in to save checks. | जाँचें सहेजने के लिए साइन इन करें। | |
 | trueCost.errors.failed | Couldn’t save. Try again. | सहेजी नहीं जा सकी। फिर कोशिश करें। | |
-| yearlyCost.intro | The same transfer, made all year. See what it adds up to at your cost and at the benchmarks. | वही ट्रांसफ़र, पूरे साल। देखें कि आपकी लागत पर और तय पैमानों पर यह कितना बैठता है। | |
+| yearlyCost.intro | The same transfer, all year. What does it add up to? | वही ट्रांसफ़र, पूरे साल। कुल कितना बनता है? | |
 | yearlyCost.yourTransfers | Your transfers | आपके ट्रांसफ़र | |
 | yearlyCost.amountEach | Amount each time | हर बार की रकम | |
 | yearlyCost.yourCost | Your total cost | आपकी कुल लागत | |
@@ -414,7 +410,7 @@ with your name and the date.
 | yearlyCost.atGlobal | At the global average ({pct}) | दुनिया के औसत पर ({pct}) | |
 | yearlyCost.atTarget | At the UN target ({target}%) | संयुक्त राष्ट्र के लक्ष्य पर ({target}%) | |
 | yearlyCost.source | Global average: {global}, for sending $200. Target: {target}. Your own figure is multiplied as entered; costs vary with the amount and the provider. | दुनिया का औसत: {global}, $200 भेजने पर। लक्ष्य: {target}। आपका अपना आँकड़ा जैसा लिखा वैसा ही गुणा किया गया है; लागत रकम और कंपनी के हिसाब से बदलती है। | |
-| rateHistory.intro | The mid-market rate, day by day. A rising line means each dollar buys more. | मिड-मार्केट रेट, दिन-ब-दिन। रेखा ऊपर जाए तो हर डॉलर में ज़्यादा मिलता है। | |
+| rateHistory.intro | The mid-market rate, day by day. Up means each dollar buys more. | मिड-मार्केट रेट, दिन-ब-दिन। ऊपर जाए तो हर डॉलर में ज़्यादा मिलता है। | |
 | rateHistory.pair | Pair | मुद्राएँ | |
 | rateHistory.failed | Couldn’t load the history. Check your connection and try again. | इतिहास लोड नहीं हुआ। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
 | rateHistory.notEnough | Not enough days published for this pair yet. | इन मुद्राओं के लिए अभी पर्याप्त दिनों के रेट प्रकाशित नहीं हुए हैं। | |
@@ -425,7 +421,7 @@ with your name and the date.
 | rateHistory.lowest | Lowest | सबसे कम | |
 | rateHistory.source | {n} daily reference rates from {source}, which aggregates central bank publications. Providers’ rates sit below these by their markup. | {source} से {n} दिनों के संदर्भ रेट, जो केंद्रीय बैंकों के प्रकाशनों को जोड़ता है। कंपनियों के रेट इनसे उनके मार्कअप जितने नीचे होते हैं। | |
 | chart.label | {unit}, {n} days from {first} to {last}. Low {low}, high {high}. | {unit}, {first} से {last} तक {n} दिन। सबसे कम {low}, सबसे ज़्यादा {high}। | |
-| scamCheck.intro | Eight questions about your situation, one at a time. Nothing you answer leaves your phone. | आपकी स्थिति के बारे में आठ सवाल, एक-एक करके। आपके जवाब आपके फ़ोन से बाहर नहीं जाते। | |
+| scamCheck.intro | Eight quick questions. Your answers stay on your phone. | आठ छोटे सवाल। आपके जवाब आपके फ़ोन पर ही रहते हैं। | |
 | scamCheck.questions.payment-method.ask | Have you been asked to pay with a gift card, cryptocurrency, a crypto ATM, or a wire to someone you have never met in person? | क्या आपसे गिफ़्ट कार्ड, क्रिप्टोकरेंसी, क्रिप्टो ATM, या किसी ऐसे व्यक्ति को वायर ट्रांसफ़र से पैसे माँगे गए हैं जिनसे आप कभी आमने-सामने नहीं मिले? | |
 | scamCheck.questions.payment-method.why | These are hard to reverse and hard to trace, which is exactly why scammers ask for them. No legitimate business or government agency demands payment this way. | ऐसे भुगतान वापस लेना और उनका पता लगाना मुश्किल होता है, इसीलिए धोखेबाज़ इन्हें माँगते हैं। कोई भी असली कंपनी या सरकारी विभाग इस तरह भुगतान नहीं माँगता। | |
 | scamCheck.questions.urgency.ask | Are you being rushed, or told to keep this transfer to yourself? | क्या आप पर जल्दी करने का दबाव है, या कहा जा रहा है कि इस ट्रांसफ़र के बारे में किसी को न बताएँ? | |
@@ -469,7 +465,12 @@ with your name and the date.
 | scamCheck.step3After | , which takes money-transfer complaints. |  के पास शिकायत दर्ज करें, जो पैसे भेजने से जुड़ी शिकायतें लेता है। | |
 | scamCheck.note | The risk numbers are our own reading of how strongly each sign points to fraud on its own, drawn from FTC and CFPB guidance. They aren’t a published statistic or your odds of being defrauded. This is education, not legal or financial advice, and we can’t recover money or step in with a company. | खतरे के ये अंक हमारी अपनी समझ हैं कि हर संकेत अपने आप में धोखे की ओर कितना इशारा करता है, जो FTC और CFPB की सलाह पर आधारित है। ये कोई प्रकाशित आँकड़ा या आपके साथ धोखा होने की संभावना नहीं हैं। यह जानकारी है, कानूनी या वित्तीय सलाह नहीं, और हम पैसा वापस नहीं दिला सकते या किसी कंपनी के साथ दखल नहीं दे सकते। | |
 | scamCheck.again | Start again | फिर से शुरू करें | |
-| scan.intro | Take a photo of a transfer receipt. The app reads it on your phone and covers names, addresses, and phone and account numbers before anything is sent. | पैसे भेजने की रसीद की फ़ोटो लें। ऐप उसे आपके फ़ोन पर ही पढ़ता है और कुछ भी भेजने से पहले नाम, पते, फ़ोन नंबर और खाता नंबर ढक देता है। | |
+| scan.heroTitle | What did your transfer really cost? | आपके ट्रांसफ़र पर असल में कितना खर्च हुआ? | |
+| scan.heroSub | Scan the receipt. See the fee and the hidden markup. | रसीद स्कैन करें। फ़ीस और रेट में छिपा मार्कअप देखें। | |
+| scan.steps[1] | Snap the receipt | रसीद की फ़ोटो लें | |
+| scan.steps[2] | Your details get covered | आपकी जानकारी ढक दी जाती है | |
+| scan.steps[3] | See the real cost | असली खर्च देखें | |
+| scan.privacy | Read on your phone. Names and numbers are covered before anything is sent. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। कुछ भी भेजने से पहले नाम और नंबर ढक दिए जाते हैं। | |
 | scan.takePhoto | Take a photo | फ़ोटो लें | |
 | scan.choosePhoto | Choose a photo | फ़ोटो चुनें | |
 | scan.needsBuild | Scanning needs the full build of the app. It doesn’t work in Expo Go. | स्कैन करने के लिए ऐप का पूरा वर्ज़न चाहिए। यह Expo Go में काम नहीं करता। | |
@@ -569,7 +570,7 @@ with your name and the date.
 | result.limits[2] | What your family was charged at their end, beyond what the receipt shows. | आपके परिवार से उनकी तरफ़ क्या लिया गया, रसीद में जो दिखता है उसके अलावा। | |
 | result.limits[3] | The rate at the minute you sent: the mid-market rate is a daily reference. | भेजने के समय का रेट: मिड-मार्केट रेट दिन भर का संदर्भ है। | |
 | result.limits[4] | Whether a disclosure was missing from the receipt, or only from the photo. | कोई जानकारी रसीद से गायब थी या सिर्फ़ फ़ोटो से। | |
-| observatory.intro | What people really paid, from receipts they scanned and chose to share for research. | लोगों ने असल में कितना चुकाया, उन रसीदों से जो उन्होंने स्कैन कीं और रिसर्च के लिए साझा कीं। | |
+| observatory.intro | What people really paid, from receipts they chose to share. | लोगों ने असल में कितना चुकाया, उन रसीदों से जो उन्होंने साझा कीं। | |
 | observatory.early | Early results | शुरुआती नतीजे | |
 | observatory.sample | {n} shared receipts since {since} | {n} साझा रसीदें, {since} से | |
 | observatory.tooFew | Not enough receipts have been shared yet. Numbers show once there are at least {min}, so no single receipt can be picked out. | अभी काफ़ी रसीदें साझा नहीं हुईं। कम से कम {min} होने पर ही आँकड़े दिखते हैं, ताकि कोई एक रसीद पहचानी न जा सके। | |
