@@ -63,8 +63,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **Receipt model on Groq (D98):** `GROQ_API_KEY` set in Supabase and GitHub Actions
-      (2026-09-30), code switched from OpenRouter. Left: deploy `scan-receipt`, run the
-      benchmark, and Angad turns on Zero Data Retention in Groq's Data Controls.
+      (2026-09-30), code switched from OpenRouter, `scan-receipt` deployed. But Groq answers
+      401 "Invalid API Key" (benchmark run 36799220070): Angad re-sets the key, then the
+      benchmark, and Zero Data Retention in Groq's Data Controls.
 - [x] Replaced the retiring receipt model (OpenRouter's Qwen3 VL 32B ends 2026-10-09) with
       Qwen3.8 27B on Groq's free tier (D98). Done 2026-09-30.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
