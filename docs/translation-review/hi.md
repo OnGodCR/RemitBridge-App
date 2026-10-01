@@ -586,20 +586,15 @@ with your name and the date.
 | confirm.currencyPlaceholder | e.g. USD | जैसे USD | |
 | confirm.editing | Change: {field} | बदलें: {field} | |
 | result.title | What this transfer really cost | इस ट्रांसफ़र पर असल में कितना खर्च हुआ | |
-| result.costNote | {pct} of what you sent. The world average is {world}%; the UN target is {target}%. | आपकी भेजी रकम का {pct}। दुनिया का औसत {world}% है; संयुक्त राष्ट्र का लक्ष्य {target}% है। | |
 | result.fee | Fee you could see | दिखने वाली फ़ीस | |
 | result.tax | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
 | result.markup | Hidden in the rate ({pct} markup) | रेट में छिपा ({pct} मार्कअप) | |
 | result.pickup | Charged at pickup | पिकअप पर लिया गया | |
-| result.received | They received | उन्हें मिला | |
-| result.benchmark | At mid-market, with no fee | मिड-मार्केट रेट पर, बिना फ़ीस | |
 | result.betterThanMid | The rate was better than mid-market. That usually means a first-transfer promotion. | रेट मिड-मार्केट से बेहतर था। अक्सर इसका मतलब पहले ट्रांसफ़र का ऑफ़र होता है। | |
 | result.source | Mid-market rate from {source}: {rate}, for {day}. It’s a daily reference, so rates on the day may have moved. | मिड-मार्केट रेट {source} से: {rate}, {day} के लिए। यह दिन का एक संदर्भ रेट है, इसलिए उस दिन रेट बदल सकता है। | |
 | result.noMid | The mid-market rate for that day couldn’t be loaded, so the cost hidden in the rate can’t be worked out. | उस दिन का मिड-मार्केट रेट नहीं मिल पाया, इसलिए रेट में छिपी लागत का हिसाब नहीं हो सकता। | |
 | result.missing | Some values are missing, so the total cost can’t be worked out. | कुछ रकमें नहीं मिलीं, इसलिए कुल लागत का हिसाब नहीं हो सकता। | |
 | result.advertisedTitle | Advertised vs. paid | दिखाया गया रेट बनाम चुकाया गया | |
-| result.advertised | On {day}, {provider} showed {rate} for this route at {amount}, checked {time}. | {day} को {provider} इस रूट पर {amount} के लिए {rate} दिखा रहा था, {time} जाँचा गया। | |
-| result.yourRate | Your receipt: {rate}. | आपकी रसीद: {rate}। | |
 | result.gapMore | The rate you got cost {gap} more than the advertised one. | आपको मिले रेट की वजह से दिखाए गए रेट से {gap} ज़्यादा खर्च हुआ। | |
 | result.gapLess | The rate you got was better than the advertised one, by {gap}. | आपको मिला रेट दिखाए गए रेट से {gap} बेहतर था। | |
 | result.gapSame | The rate you got matches the advertised one. | आपको मिला रेट दिखाए गए रेट जैसा ही है। | |
@@ -607,10 +602,27 @@ with your name and the date.
 | result.noRoute | We don’t check prices on this route yet, so there’s no advertised price to compare with. | हम अभी इस रूट की कीमतें नहीं जाँचते, इसलिए मिलाने के लिए कोई दिखाया गया रेट नहीं है। | |
 | result.noQuote | We have no price from this provider checked within a day of this transfer, so there’s nothing to compare with. | इस ट्रांसफ़र के एक दिन के अंदर इस कंपनी की कोई जाँची हुई कीमत हमारे पास नहीं है, इसलिए मिलाने को कुछ नहीं है। | |
 | result.missingValues | The receipt’s date, amount or rate is missing, so it can’t be compared. | रसीद की तारीख, रकम या रेट नहीं मिला, इसलिए मिलाया नहीं जा सकता। | |
+| result.pctOfSent | {pct} of what you sent | भेजी गई रकम का {pct} | |
+| result.scaleLabel | This transfer cost {pct} of what was sent. The world average is {world}%; the UN target is {target}%. | इस ट्रांसफ़र का खर्च भेजी गई रकम का {pct} रहा। दुनिया का औसत {world}% है; UN का लक्ष्य {target}% है। | |
+| result.scaleYou | This one {pct} | यह {pct} | |
+| result.scaleWorld | World {n}% | दुनिया {n}% | |
+| result.scaleTarget | UN target {n}% | UN लक्ष्य {n}% | |
+| result.costTitle | Where the cost came from | खर्च कहाँ से आया | |
+| result.arrivedTitle | What arrived | क्या पहुँचा | |
+| result.arrivedGot | {got} of {possible} | {possible} में से {got} | |
+| result.arrivedLost | {lost} lost | {lost} गए | |
+| result.arrivedLabel | {got} arrived. At the mid-market rate with no fee, {possible} would have. {lost} was lost. | {got} पहुँचे। मिड-मार्केट रेट पर, बिना फ़ीस के, {possible} पहुँचते। {lost} गए। | |
+| result.keptYou | Your cost | आपका खर्च | |
+| result.keptBarsLabel | Your cost {you}. {provider}: {theirs}. | आपका खर्च {you}। {provider}: {theirs}। | |
+| result.rateMid | Mid-market | मिड-मार्केट | |
+| result.rateAdvertised | {provider} advertised | {provider} का विज्ञापित | |
+| result.rateYours | Your receipt | आपकी रसीद | |
+| result.rateChecked | Advertised price checked {time}. | विज्ञापित दाम {time} जाँचा गया। | |
+| result.rateLabel | Mid-market rate {mid}. Advertised {advertised}. Your receipt {yours}. | मिड-मार्केट रेट {mid}। विज्ञापित {advertised}। आपकी रसीद {yours}। | |
+| result.notFound | Not found on this receipt | इस रसीद पर नहीं मिला | |
 | result.keptTitle | What you could have kept | आप कितना बचा सकते थे | |
 | result.keptLabel | With {provider}, you could have kept | {provider} से भेजने पर आप बचा सकते थे | |
 | result.keptNote | Sending the same amount, your family would have received {received}. | उतनी ही रकम भेजने पर आपके परिवार को {received} मिलते। | |
-| result.keptCosts | True cost with {provider}: {theirs}. Yours: {yours}. Both measured at the same mid-market rate. | {provider} के साथ असली खर्च: {theirs}। आपका: {yours}। दोनों एक ही मिड-मार्केट रेट पर मापे गए। | |
 | result.keptBest | You already had the best price we found: {provider}. | आपको पहले से ही हमारा पाया सबसे अच्छा दाम मिला: {provider}। | |
 | result.keptAsGood | Your price was as good as or better than every price we had for the same kind of transfer. | उसी तरह के ट्रांसफ़र के लिए हमारे पास जितने दाम थे, आपका दाम उन सब जितना या उनसे बेहतर था। | |
 | result.keptThatDay | Prices checked {time}, within a day of your transfer. | दाम {time} जाँचे गए, आपके ट्रांसफ़र के एक दिन के अंदर। | |
@@ -623,13 +635,14 @@ with your name and the date.
 | result.keptMissing | The receipt’s amount or rate is missing, so it can’t be compared. | रसीद की रकम या रेट नहीं मिला, इसलिए तुलना नहीं हो सकती। | |
 | result.keptNoMid | Without that day’s mid-market rate, the costs can’t be measured the same way, so there’s no comparison. | उस दिन के मिड-मार्केट रेट के बिना खर्च एक जैसे नहीं मापे जा सकते, इसलिए तुलना नहीं है। | |
 | result.taxTitle | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
-| result.taxRule | Since January 1, 2026, transfers paid in cash, by money order or by cashier’s check carry a 1% federal tax. Transfers paid from a bank account or by card don’t. | 1 जनवरी 2026 से, नकद, मनी ऑर्डर या कैशियर चेक से भेजे गए पैसे पर 1% संघीय टैक्स लगता है। बैंक खाते या कार्ड से भेजे गए पैसे पर नहीं। | |
 | result.taxMatches | This one was paid by {funding}. 1% of {amount} is {expected}, and the receipt shows {found}. | यह {funding} से भेजा गया। {amount} का 1% {expected} है, और रसीद पर {found} लिखा है। | |
 | result.taxNotFound | This one was paid by {funding}. 1% of {amount} is {expected}. No tax line was found on this receipt. | यह {funding} से भेजा गया। {amount} का 1% {expected} है। इस रसीद पर टैक्स की कोई लाइन नहीं मिली। | |
 | result.taxDiffers | This one was paid by {funding}. 1% of {amount} is {expected}. The receipt shows {found}. | यह {funding} से भेजा गया। {amount} का 1% {expected} है। रसीद पर {found} लिखा है। | |
 | result.taxNotTaxed | This one was paid by {funding}, so the tax doesn’t apply. | यह {funding} से भेजा गया, इसलिए यह टैक्स नहीं लगता। | |
 | result.taxBefore | This transfer was made before the tax started. | यह ट्रांसफ़र टैक्स शुरू होने से पहले हुआ था। | |
 | result.taxUnknown | The receipt doesn’t say how it was paid for, so the tax can’t be checked. | रसीद पर नहीं लिखा कि भुगतान कैसे हुआ, इसलिए टैक्स जाँचा नहीं जा सकता। | |
+| result.taxPaidBy | Paid by {funding} | {funding} से भुगतान | |
+| result.taxFromBank | From a bank account | बैंक खाते से | |
 | result.taxBank | Paid from a bank account instead, the same transfer would have cost {total} in total, {tax} less. | अगर यही पैसा बैंक खाते से भेजा जाता, तो कुल खर्च {total} होता, यानी {tax} कम। | |
 | result.taxAssumption | We take 1% of the transfer amount, before fees, as the IRS’s proposed rules do. Those rules aren’t final yet. | हम फ़ीस से पहले की ट्रांसफ़र रकम का 1% लेते हैं, जैसा IRS के प्रस्तावित नियम कहते हैं। ये नियम अभी अंतिम नहीं हैं। | |
 | result.taxSmall | This was a transfer of $15 or less, so the tax doesn’t apply. | यह $15 या उससे कम का ट्रांसफ़र था, इसलिए टैक्स नहीं लगता। | |
@@ -639,7 +652,6 @@ with your name and the date.
 | result.routeBoard | See which routes we check | देखें हम कौन से रूट जाँचते हैं | |
 | result.disclosuresTitle | Standard disclosures | ज़रूरी जानकारियाँ | |
 | result.disclosuresAll | Every standard item was found on this receipt. | इस रसीद पर हर ज़रूरी जानकारी मिली। | |
-| result.disclosuresMissing | Not found on this receipt: {items}. | इस रसीद पर नहीं मिला: {items}। | |
 | result.disclosuresNote | A photo can cut off part of a receipt, and small print can be hard to read, so this doesn’t mean the provider left anything out. | फ़ोटो में रसीद का कुछ हिस्सा छूट सकता है और छोटे अक्षर पढ़ना मुश्किल हो सकता है, इसलिए इसका मतलब यह नहीं कि कंपनी ने कुछ छोड़ा। | |
 | result.disclosureItems.transfer_amount | transfer amount | भेजी गई रकम | |
 | result.disclosureItems.fees | fees | फ़ीस | |

@@ -719,23 +719,16 @@ export const es: Copy = {
 
   result: {
     title: 'Lo que realmente costó este envío',
-    costNote: (pct: string, world: number, target: number) =>
-      `${pct} de lo que enviaste. El promedio mundial es ${world}%; la meta de la ONU es ${target}%.`,
     fee: 'Comisión visible',
     tax: 'Impuesto federal a las remesas',
     markup: (pct: string) => `Escondido en el tipo de cambio (margen de ${pct})`,
     pickup: 'Cobrado al recoger',
-    received: 'Recibieron',
-    benchmark: 'Al tipo de cambio medio, sin comisión',
     betterThanMid: 'El tipo de cambio fue mejor que el medio del mercado. Eso suele indicar una promoción de primer envío.',
     source: (source: string, rate: string, day: string) =>
       `Tipo de cambio medio del mercado de ${source}: ${rate}, del ${day}. Es una referencia diaria, así que el tipo pudo cambiar ese día.`,
     noMid: 'No se pudo cargar el tipo de cambio medio de ese día, así que no se puede calcular el costo escondido en el tipo.',
     missing: 'Faltan algunas cifras, así que no se puede calcular el costo total.',
     advertisedTitle: 'Anunciado vs. pagado',
-    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
-      `El ${day}, ${provider} mostraba ${rate} para esta ruta con ${amount}, revisado ${time}.`,
-    yourRate: (rate: string) => `Tu recibo: ${rate}.`,
     gapMore: (gap: string) => `El tipo que te dieron costó ${gap} más que el anunciado.`,
     gapLess: (gap: string) => `El tipo que te dieron fue mejor que el anunciado, por ${gap}.`,
     gapSame: 'El tipo que te dieron coincide con el anunciado.',
@@ -743,11 +736,30 @@ export const es: Copy = {
     noRoute: 'Aún no revisamos precios en esta ruta, así que no hay un precio anunciado para comparar.',
     noQuote: 'No tenemos un precio de este proveedor revisado dentro de un día de este envío, así que no hay nada que comparar.',
     missingValues: 'Falta la fecha, el monto o el tipo de cambio del recibo, así que no se puede comparar.',
+    pctOfSent: (pct: string) => `${pct} de lo que enviaste`,
+    scaleLabel: (pct: string, world: number, target: number) =>
+      `Este envío costó ${pct} de lo enviado. El promedio mundial es ${world}%; la meta de la ONU es ${target}%.`,
+    scaleYou: (pct: string) => `Este ${pct}`,
+    scaleWorld: (n: number) => `Mundo ${n}%`,
+    scaleTarget: (n: number) => `Meta ONU ${n}%`,
+    costTitle: 'De dónde salió el costo',
+    arrivedTitle: 'Lo que llegó',
+    arrivedGot: (got: string, possible: string) => `${got} de ${possible}`,
+    arrivedLost: (lost: string) => `${lost} perdidos`,
+    arrivedLabel: (got: string, possible: string, lost: string) =>
+      `Llegaron ${got}. Al tipo de cambio medio del mercado y sin comisión, habrían llegado ${possible}. Se perdieron ${lost}.`,
+    keptYou: 'Tu costo',
+    keptBarsLabel: (you: string, provider: string, theirs: string) => `Tu costo ${you}. ${provider}: ${theirs}.`,
+    rateMid: 'Medio del mercado',
+    rateAdvertised: (provider: string) => `Anunciado por ${provider}`,
+    rateYours: 'Tu recibo',
+    rateChecked: (time: string) => `Precio anunciado revisado ${time}.`,
+    rateLabel: (mid: string, advertised: string, yours: string) =>
+      `Tipo medio del mercado ${mid}. Anunciado ${advertised}. Tu recibo ${yours}.`,
+    notFound: 'No se encontró en este recibo',
     keptTitle: 'Lo que pudo haberse ahorrado',
     keptLabel: (provider: string) => `Con ${provider}, pudo haberse ahorrado`,
     keptNote: (received: string) => `Enviando el mismo monto, su familia habría recibido ${received}.`,
-    keptCosts: (provider: string, theirs: string, yours: string) =>
-      `Costo real con ${provider}: ${theirs}. El suyo: ${yours}. Los dos medidos con el mismo tipo de cambio medio del mercado.`,
     keptBest: (provider: string) => `Usted ya tenía el mejor precio que encontramos: ${provider}.`,
     keptAsGood: 'Su precio fue igual o mejor que todos los que teníamos para el mismo tipo de envío.',
     keptThatDay: (time: string) => `Precios revisados ${time}, dentro de un día de su envío.`,
@@ -762,8 +774,6 @@ export const es: Copy = {
     keptMissing: 'Falta el monto o el tipo de cambio del recibo, así que no se puede comparar.',
     keptNoMid: 'Sin el tipo de cambio medio del mercado de ese día, los costos no se pueden medir igual, así que no hay comparación.',
     taxTitle: 'Impuesto federal a las remesas',
-    taxRule:
-      'Desde el 1 de enero de 2026, los envíos pagados en efectivo, con giro postal o con cheque de caja tienen un impuesto federal del 1%. Los pagados desde una cuenta bancaria o con tarjeta, no.',
     taxMatches: (funding: string, amount: string, expected: string, found: string) =>
       `Este se pagó con ${funding}. El 1% de ${amount} es ${expected}, y el recibo muestra ${found}.`,
     taxNotFound: (funding: string, amount: string, expected: string) =>
@@ -773,6 +783,8 @@ export const es: Copy = {
     taxNotTaxed: (funding: string) => `Este se pagó con ${funding}, así que el impuesto no aplica.`,
     taxBefore: 'Este envío se hizo antes de que empezara el impuesto.',
     taxUnknown: 'El recibo no dice cómo se pagó, así que no se puede revisar el impuesto.',
+    taxPaidBy: (funding: string) => `Pagado con ${funding}`,
+    taxFromBank: 'Desde una cuenta bancaria',
     taxBank: (total: string, tax: string) =>
       `Pagado desde una cuenta bancaria, el mismo envío habría costado ${total} en total, ${tax} menos.`,
     taxAssumption:
@@ -784,7 +796,6 @@ export const es: Copy = {
     routeBoard: 'Ver qué rutas revisamos',
     disclosuresTitle: 'Información obligatoria',
     disclosuresAll: 'Se encontró cada dato obligatorio en este recibo.',
-    disclosuresMissing: (items: string) => `No se encontró en este recibo: ${items}.`,
     disclosuresNote:
       'Una foto puede cortar parte del recibo y la letra pequeña puede ser difícil de leer, así que esto no significa que el proveedor haya omitido algo.',
     disclosureItems: {

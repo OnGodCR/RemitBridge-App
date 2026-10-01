@@ -719,23 +719,16 @@ export const vi: Copy = {
 
   result: {
     title: 'Chi phí thực của lần chuyển này',
-    costNote: (pct: string, world: number, target: number) =>
-      `${pct} số tiền bạn gửi. Trung bình thế giới là ${world}%; mục tiêu của Liên Hợp Quốc là ${target}%.`,
     fee: 'Phí bạn thấy được',
     tax: 'Thuế chuyển tiền liên bang',
     markup: (pct: string) => `Ẩn trong tỷ giá (chênh lệch ${pct})`,
     pickup: 'Phí khi nhận tiền mặt',
-    received: 'Người nhận nhận được',
-    benchmark: 'Theo tỷ giá trung bình thị trường, không phí',
     betterThanMid: 'Tỷ giá tốt hơn tỷ giá trung bình thị trường. Thường đó là khuyến mãi cho lần chuyển đầu.',
     source: (source: string, rate: string, day: string) =>
       `Tỷ giá trung bình thị trường từ ${source}: ${rate}, ngày ${day}. Đây là mức tham chiếu theo ngày, nên tỷ giá trong ngày có thể đã thay đổi.`,
     noMid: 'Không tải được tỷ giá trung bình thị trường của ngày đó, nên không tính được chi phí ẩn trong tỷ giá.',
     missing: 'Thiếu một số con số, nên không tính được tổng chi phí.',
     advertisedTitle: 'Quảng cáo và thực trả',
-    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
-      `Ngày ${day}, ${provider} hiển thị ${rate} cho tuyến này với ${amount}, kiểm tra ${time}.`,
-    yourRate: (rate: string) => `Biên lai của bạn: ${rate}.`,
     gapMore: (gap: string) => `Tỷ giá bạn nhận khiến bạn tốn hơn mức quảng cáo ${gap}.`,
     gapLess: (gap: string) => `Tỷ giá bạn nhận tốt hơn mức quảng cáo ${gap}.`,
     gapSame: 'Tỷ giá bạn nhận khớp với mức quảng cáo.',
@@ -743,11 +736,30 @@ export const vi: Copy = {
     noRoute: 'Chúng tôi chưa kiểm tra giá trên tuyến này, nên không có giá quảng cáo để so sánh.',
     noQuote: 'Chúng tôi không có giá nào của nhà cung cấp này được kiểm tra trong vòng một ngày của lần chuyển này, nên không có gì để so sánh.',
     missingValues: 'Biên lai thiếu ngày, số tiền hoặc tỷ giá, nên không thể so sánh.',
+    pctOfSent: (pct: string) => `${pct} số tiền bạn gửi`,
+    scaleLabel: (pct: string, world: number, target: number) =>
+      `Lần chuyển này tốn ${pct} số tiền đã gửi. Mức trung bình thế giới là ${world}%; mục tiêu của LHQ là ${target}%.`,
+    scaleYou: (pct: string) => `Lần này ${pct}`,
+    scaleWorld: (n: number) => `Thế giới ${n}%`,
+    scaleTarget: (n: number) => `Mục tiêu LHQ ${n}%`,
+    costTitle: 'Chi phí đến từ đâu',
+    arrivedTitle: 'Số tiền đã đến',
+    arrivedGot: (got: string, possible: string) => `${got} trên ${possible}`,
+    arrivedLost: (lost: string) => `mất ${lost}`,
+    arrivedLabel: (got: string, possible: string, lost: string) =>
+      `Đã đến ${got}. Theo tỷ giá thị trường, không phí, lẽ ra là ${possible}. Mất ${lost}.`,
+    keptYou: 'Chi phí của bạn',
+    keptBarsLabel: (you: string, provider: string, theirs: string) => `Chi phí của bạn ${you}. ${provider}: ${theirs}.`,
+    rateMid: 'Thị trường',
+    rateAdvertised: (provider: string) => `${provider} quảng cáo`,
+    rateYours: 'Biên lai của bạn',
+    rateChecked: (time: string) => `Giá quảng cáo kiểm tra lúc ${time}.`,
+    rateLabel: (mid: string, advertised: string, yours: string) =>
+      `Tỷ giá thị trường ${mid}. Quảng cáo ${advertised}. Biên lai của bạn ${yours}.`,
+    notFound: 'Không tìm thấy trên biên lai này',
     keptTitle: 'Số tiền bạn có thể đã giữ lại',
     keptLabel: (provider: string) => `Với ${provider}, bạn có thể đã giữ lại`,
     keptNote: (received: string) => `Gửi cùng số tiền, gia đình bạn sẽ nhận được ${received}.`,
-    keptCosts: (provider: string, theirs: string, yours: string) =>
-      `Chi phí thực với ${provider}: ${theirs}. Của bạn: ${yours}. Cả hai đều tính theo cùng một tỷ giá thị trường.`,
     keptBest: (provider: string) => `Bạn đã có mức giá tốt nhất chúng tôi tìm được: ${provider}.`,
     keptAsGood: 'Giá của bạn bằng hoặc tốt hơn mọi mức giá chúng tôi có cho cùng loại chuyển tiền.',
     keptThatDay: (time: string) => `Giá được kiểm tra ${time}, trong vòng một ngày so với lần chuyển của bạn.`,
@@ -762,8 +774,6 @@ export const vi: Copy = {
     keptMissing: 'Biên lai thiếu số tiền hoặc tỷ giá, nên không thể so sánh.',
     keptNoMid: 'Không có tỷ giá thị trường của ngày đó, các chi phí không thể đo như nhau, nên không có so sánh.',
     taxTitle: 'Thuế chuyển tiền liên bang',
-    taxRule:
-      'Từ ngày 1 tháng 1 năm 2026, các lần chuyển trả bằng tiền mặt, lệnh chuyển tiền hoặc séc thủ quỹ chịu thuế liên bang 1%. Chuyển từ tài khoản ngân hàng hoặc bằng thẻ thì không.',
     taxMatches: (funding: string, amount: string, expected: string, found: string) =>
       `Lần này trả bằng ${funding}. 1% của ${amount} là ${expected}, và biên lai ghi ${found}.`,
     taxNotFound: (funding: string, amount: string, expected: string) =>
@@ -773,6 +783,8 @@ export const vi: Copy = {
     taxNotTaxed: (funding: string) => `Lần này trả bằng ${funding}, nên không áp dụng thuế.`,
     taxBefore: 'Lần chuyển này diễn ra trước khi có thuế.',
     taxUnknown: 'Biên lai không ghi cách thanh toán, nên không kiểm tra được thuế.',
+    taxPaidBy: (funding: string) => `Trả bằng ${funding}`,
+    taxFromBank: 'Từ tài khoản ngân hàng',
     taxBank: (total: string, tax: string) =>
       `Nếu trả từ tài khoản ngân hàng, cùng lần chuyển này sẽ tốn tổng cộng ${total}, ít hơn ${tax}.`,
     taxAssumption:
@@ -784,7 +796,6 @@ export const vi: Copy = {
     routeBoard: 'Xem các tuyến chúng tôi kiểm tra',
     disclosuresTitle: 'Thông tin bắt buộc',
     disclosuresAll: 'Đã tìm thấy mọi thông tin bắt buộc trên biên lai này.',
-    disclosuresMissing: (items: string) => `Không tìm thấy trên biên lai này: ${items}.`,
     disclosuresNote:
       'Ảnh có thể cắt mất một phần biên lai và chữ nhỏ có thể khó đọc, nên điều này không có nghĩa là nhà cung cấp đã bỏ sót.',
     disclosureItems: {

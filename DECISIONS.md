@@ -1281,3 +1281,21 @@ the Hindi with the English term beneath it, since that's the word printed on rec
 (`termIn`). The Hindi review sheet now carries the glossary too, term and definition, 840
 lines in all. Like the rest of Hindi, it shows only in development builds until the
 reviewer signs off (D69). Spanish, Tagalog and Vietnamese glossaries wait for reviewers.
+
+**D126. The receipt result shows rather than tells** (Angad, 2026-10-01: "way too much text…
+add more data visualizations"). Each paragraph became a chart with a short label
+(`mobile/src/components/receipt-charts.tsx`):
+- **The cost on a scale:** the receipt's % as a dot, with the UN target (3%, the good zone
+  shaded) and the world average (6.36%) marked.
+- **Where the cost came from:** one bar split into fee, tax, markup and pickup, amounts
+  beneath.
+- **What arrived:** the whole bar is what the mid-market rate with no fee would have
+  delivered; the filled part is what did; the end is marked as lost.
+- **Could have kept:** your cost and the cheapest provider's as two bars.
+- **Advertised vs. paid:** mid-market, advertised and the receipt's rate as dots on one
+  line, so the gaps are distances.
+- **Tax** and **"paid from a bank instead"** as a status line and two bars; **missing
+  disclosures** as small chips.
+Every chart's accessibility label carries the same facts in words, and the tests check
+those labels. Red stays for real errors: a mismatch shows a neutral mark. The long "rule"
+and "advertised" sentences are gone from all five languages.
