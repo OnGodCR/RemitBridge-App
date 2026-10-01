@@ -957,3 +957,14 @@ the same day.
   on text models, not guaranteed); GitHub Models (prototyping only).
 - **Benchmark:** the workflow takes a `model` input and the `GROQ_API_KEY` secret, and the
   script waits out 429s instead of counting them as failures.
+
+## 2026-10-01: Order of the go-live
+
+**D99. Set up every feature first, test after, and pay Apple last.** Angad asked to finish
+setting up all the features before exact testing, and to have everything else done before
+paying the Apple Developer Program fee ($99 a year). The fee gates only the iPhone
+development build, universal links (the Team ID), Sign in with Apple in a real build,
+TestFlight and the App Store; Resend, WhatsApp (Meta's test number), the GitHub token, the
+extractors, the reviews and Expo Go are free. The membership year starts at payment, so
+waiting costs nothing. CLAUDE.md's open items are grouped to match: features to set up,
+testing, the CAC submission, thank-yous and outreach, before launch, watching and later.

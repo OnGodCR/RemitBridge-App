@@ -44,94 +44,101 @@ the work, not afterwards:
 
 ## Open items
 
-These are deferred on purpose, not forgotten. Update this list as things land.
+These are deferred on purpose, not forgotten. Update this list as things land. Grouped
+by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
-- [ ] **CAC entry:** Angad rewrites `docs/cac/submission.md` (Claude's draft, 2026-10-01) in
-      his own words, records the demo video (3 minutes at most), and submits by Oct 23
-      (official deadline Oct 26).
-- [ ] **Translation reviewers** (D69). The Hindi review sheet is ready to send:
-      `docs/translation-review/hi.md` (585 strings, 2026-10-01). Hindi, Spanish, Tagalog and Vietnamese are
-      written (Claude's drafts) and show only in development builds until a fluent
-      speaker reads each one, agrees in writing, and is named with the date in
-      `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
-      read. Glossary definitions are still English in every language.
-- [ ] **CAC receipt scanner (D72): the live setup.** All six phases are on `main` (PR #1
-      2026-09-30; PR #2 2026-10-01: benchmark D93, WhatsApp photos D94, disclosure check D95,
-      observatory D96). Every migration is live: Angad pushed the last two on 2026-09-30,
-      smoke test 52/52. Left: the model key, the EAS build, the WhatsApp secrets.
-      Internal deadline 2026-10-23.
-- [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
-      `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
-- [ ] **Receipt model on Groq (D98):** `GROQ_API_KEY` set in Supabase and GitHub Actions
-      (2026-09-30), code switched from OpenRouter, `scan-receipt` deployed. The first key was
-      refused (401); a new one, checked against Groq before saving, works (2026-10-01 01:15
-      UTC). Zero Data Retention on (Angad, 2026-10-01). Benchmark, 20 synthetic receipts,
-      text only (run 36800320699): model 82.3% accuracy, 93.0% precision; the misses are
-      mostly free-tier 429s that outlasted five waits, not misreadings.
-- [x] Replaced the retiring receipt model (OpenRouter's Qwen3 VL 32B ends 2026-10-09) with
-      Qwen3.8 27B on Groq's free tier (D98). Done 2026-09-30.
-- [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
-      sealed for up to an hour (2026-10-01). The migration is live (2026-09-30).
-      `RECEIPT_INTAKE_SECRET` (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET`
-      (Supabase) set by Claude from `openssl rand`, never displayed (2026-10-01). Left, with
-      the go-live: `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
-      `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and deploy `whatsapp`, `scan-receipt`.
-- [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
-      Angad signed in to EAS (account `ongodcr`); project @ongodcr/remitbridge linked
-      (projectId in app.json) and the two `EXPO_PUBLIC_SUPABASE_*` variables created for
-      the development environment (2026-10-01). Left: `eas device:create`, Developer Mode,
-      `eas build --profile development --platform ios`, all Angad's (Apple sign-in).
-- [ ] **Remittance tax: watch for the final IRS regulations.** Checked against the proposed
-      ones on 2026-10-01 (D97): fees aren't taxed, as assumed, and transfers of $15 or less
-      aren't taxed at all, now in the formula. Re-check when the rules are final.
-- [ ] **More prices.** Wise's are live (D91): the first Scrape run published 20 on
-      2026-09-30, and it repeats every 6 hours. The other seven providers still need Add a
-      price or their permission.
-- [ ] **Launch emails:** `notify-route-launch` deployed 2026-10-01 (it sends nothing
-      until the key is set). Left: `RESEND_API_KEY` in Supabase secrets (D67). Needed
-      before any requested route goes live.
+### Features to set up
+
 - [ ] **WhatsApp go-live** (D68): Meta business account and app, a number, a system-user
       token, the other four `WHATSAPP_*` secrets (the hash secret is set; never change it once
       live, or every stored hash stops matching), register the webhook. The `whatsapp`
       function is deployed (2026-10-01) and refuses everything until its secrets are set
-      (403 on verification, 401 on unsigned posts). Angad reads the
-      Hindi replies first.
-- [ ] **Permission requests: all 8 sent 2026-09-28** (Xe through its help-centre
-      form), waiting on replies. So far only auto-replies (Xoom's media desk, Xe ticket
-      26724746, checked 2026-09-29). **Wise said yes 2026-09-30** and is automated (D91);
-      a thank-you reply is Angad's to send. Follow up with the rest on 2026-10-12
-      (calendar reminder set).
-      Log replies in `docs/outreach/permission-request.md` (D52).
-- [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
-      RemitBridge-App only, Actions read and write) so entries are checked in minutes.
-      Without it, the three-hourly schedule checks them.
-- [ ] **Disk space and memory.** 12 GB free on 2026-09-30 (evening); native builds (and real store screenshots) need 15–20 GB. With 8 GB of
-      RAM and swap nearly full, the simulator took 90 seconds to boot.
-- [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
-- [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
-- [ ] **Store screenshots from a development build** (no Expo Go dev button); also
-      swap them into `site/screens/` (D59).
-- [ ] **Check on a real phone:** in the simulator, the first tap after a screen
-      change was sometimes dropped. It looked like Expo Go's dev overlay, but
-      that's unconfirmed. On 2026-09-30 at least some "dropped" taps had landed and the
-      simulator's screenshot was a step behind.
-- [ ] **Bank connections or receipt scanning** for past transfers. Manual
-      entry only for now (D30).
+      (403 on verification, 401 on unsigned posts). Angad reads the Hindi replies first.
+- [ ] **`GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token, RemitBridge-App
+      only, Actions read and write). Receipt photos on WhatsApp need it to start their
+      worker; price entries get checked in minutes instead of three-hourly.
+- [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
+      sealed for up to an hour (2026-10-01). Migration live; `RECEIPT_INTAKE_SECRET`
+      (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET` (Supabase) set by Claude from
+      `openssl rand`, never displayed (2026-10-01). Left, with the go-live:
+      `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase, `WHATSAPP_ACCESS_TOKEN`
+      in GitHub Actions, and redeploy `whatsapp` and `scan-receipt`.
+- [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
+      Angad pays last, once everything free is set up (2026-10-01). EAS is ready: account
+      `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
+      variables created for development. Left: `eas device:create`, Developer Mode,
+      `eas build --profile development --platform ios`, all Angad's (Apple sign-in).
+- [ ] **Universal links** (D48): the app side is in (the associated domain, the
+      `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
+      `site/.well-known/apple-app-site-association`.
+- [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
+      `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
+- [ ] **More prices.** Wise's are live (D91, every 6 hours). The other seven Tier 1 providers
+      are manual (terms checked 2026-09-28, `docs/MANUAL_RESEARCH.md`): Add a price, or
+      their permission.
+
+### Testing (once the features are set up)
+
+- [ ] **Scan a real receipt** on the iPhone development build.
+- [ ] **Apple and Google sign-in** on a real iPhone (the simulator hides Apple).
+- [ ] **Dropped first tap:** in the simulator, the first tap after a screen change sometimes
+      seemed dropped; on 2026-09-30 at least some had landed and the screenshot lagged.
+      Check on a real phone.
+- [ ] **WhatsApp:** text "500 to India", then send a receipt photo.
+- [ ] **Launch email:** the first real send, when a requested route goes live.
+
+### CAC submission (internal deadline Oct 23, official Oct 26)
+
+- [ ] **Write-up and video:** Angad rewrites `docs/cac/submission.md` (Claude's draft,
+      2026-10-01) in his own words, records the demo video (3 minutes at most), and submits.
+- [ ] **Scanner live for the demo** (D72): all six phases on `main`, every migration live
+      (52/52), the model on Groq. Left: the iPhone build and a real scan (above).
+
+### Thank-yous and outreach (Angad sends)
+
+- [ ] **Thank-you to Simon Bruins at Wise** for the Comparison API permission (D91).
+- [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
+      auto-replies (Xoom's media desk, Xe ticket 26724746). Follow up on 2026-10-12
+      (calendar reminder set). Log replies in `docs/outreach/permission-request.md` (D52).
+- [ ] **Partner emails** (D50): Horn of Africa Services sent 2026-09-30; East African
+      Community Services is in the RemitBridge Gmail's Drafts; the other seven texts are in
+      `docs/outreach/partners.md` (the permission system stopped Claude after the first).
+- [ ] **Translation reviewers** (D69): the Hindi sheet is ready to send,
+      `docs/translation-review/hi.md` (585 strings). Hindi, Spanish, Tagalog and Vietnamese
+      are Claude's drafts and show only in development builds until a fluent speaker reads
+      each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
+      Hindi first; the bot's Hindi (D68) needs the same read. Glossary definitions are
+      still English in every language.
+
+### Before launch
+
+- [ ] **Remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
+- [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
+      them into `site/screens/` (D59).
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
-      Apple's came through on 2026-09-29.
+- [ ] **Disk space and memory.** 12 GB free on 2026-09-30; native builds and real store
+      screenshots need 15–20 GB. With 8 GB of RAM, the simulator takes 1–2 minutes to boot.
+
+### Watching and later
+
+- [ ] **Remittance tax: final IRS regulations.** Checked against the proposed ones on
+      2026-10-01 (D97). Re-check when they're final.
+- [ ] **Bank connections or receipt scanning for past transfers.** Manual entry only (D30).
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Universal links** (open the app straight from a link, D48): the app side is in
-      (the associated domain, and the `p/[partner]` route, 2026-09-30). Left: the Apple Team
-      ID from developer.apple.com → Membership, for `site/.well-known/apple-app-site-association`.
-- [ ] **Partner outreach** (D50): no partners yet. Nine Seattle-area organizations and the
-      texts are in `docs/outreach/partners.md`. Horn of Africa Services sent 2026-09-30;
-      East African Community Services is in the RemitBridge Gmail's Drafts; the other seven
-      are Angad's to send (the permission system stopped Claude after the first).
-- [ ] **Seven of the eight Tier 1 providers are manual** (terms checked 2026-09-28); Wise is
-      automated with permission (D91). See `docs/MANUAL_RESEARCH.md`.
+
+### Done
+
+- [x] Launch emails: `notify-route-launch` deployed and `RESEND_API_KEY` set (sending
+      access, remitbridgelabs.org), checked against Resend before saving (D67). Done 2026-10-01.
+- [x] Receipt model on Groq's free tier (D98): Qwen3.8 27B replaces OpenRouter's Qwen3 VL
+      32B (retiring 2026-10-09); `GROQ_API_KEY` in Supabase and GitHub Actions, Zero Data
+      Retention on, `scan-receipt` deployed. Benchmark, 20 synthetic receipts, text only
+      (run 36800320699): model 82.3% accuracy, 93.0% precision; the misses are mostly
+      free-tier 429s, not misreadings. Done 2026-10-01.
+- [x] The two receipt migrations pushed by Angad; smoke test 52/52. Done 2026-09-30.
 - [x] All seven migrations on `main` pushed by Angad (route requests, metrics, WhatsApp,
       receipts, the Wise provider row); smoke test 48/48, and the route board loads in the
-      app. Done 2026-09-30. Two newer ones, merged 2026-10-01, wait on the next push.
+      app. Done 2026-09-30.
 - [x] Wise adapter on its Comparison API (D91): 20 live quotes passed the gate on the first
       local run; Scrape schedule on. Google brand verified and published: the sign-in page
       now says "RemitBridge App". Done 2026-09-30.
@@ -148,9 +155,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [x] Quote detail, saved comparisons, and TrueCost's "compare what $X gets today" link
       (D66). Done 2026-09-29.
 - [x] Route requests, the route board and "Ask for a route" (D64), with launch emails
-      (D67). Built 2026-09-29; the database half waits on the migration push above.
+      (D67). Built 2026-09-29; migrations live 2026-09-30.
 - [x] Admin metrics screen with a definition under every number and CSV export, from one
-      database function (D65). Built 2026-09-29; waits on the migration push.
+      database function (D65). Built 2026-09-29; migrations live 2026-09-30.
 - [x] WhatsApp bot built and tested: parser, replies in English and Hindi, webhook with
       signature checks and a keyed hash in place of the number (D68). Built 2026-09-29;
       going live is Meta setup.
