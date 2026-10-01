@@ -22,31 +22,51 @@ import { takeSwipeDirection } from '@/lib/current-tab';
 
 const EASE = Easing.out(Easing.cubic);
 
+/** Every tab body's "hide me", so the tab coming into view can hide the others. */
+const hiders = new Set<() => void>();
+
 /**
  * A tab's body, which rises into place each time the tab comes into view: a fade and a 10pt
  * lift after a tap, or a 28pt slide from the side the person swiped from. Native tabs
  * switch with no animation of their own, so this is what makes the change feel smooth.
+ *
+ * A body starts hidden, and when a tab comes into view it hides every other tab's body,
+ * which is out of sight by then. So a tab only ever animates in, from hidden. Resetting on
+ * its own focus showed the content whole for a frame, then hid it, then faded it back (a
+ * flash); resetting on blur blanked a tab while a pushed screen slid over it. Coming back
+ * from a pushed screen, the body was never hidden, so it simply stays.
  */
 export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; children: ReactNode }) {
   const reduced = useReducedMotion();
-  const progress = useSharedValue(1);
+  const progress = useSharedValue(reduced ? 1 : 0);
   const side = useSharedValue(0);
+
+  const hide = useCallback(() => progress.set(0), [progress]);
+  useEffect(() => {
+    hiders.add(hide);
+    return () => {
+      hiders.delete(hide);
+    };
+  }, [hide]);
 
   useFocusEffect(
     useCallback(() => {
       const direction = takeSwipeDirection();
-      if (reduced) return;
+      if (reduced) {
+        progress.set(1);
+        return;
+      }
+      for (const other of hiders) if (other !== hide) other();
       side.set(direction);
-      progress.set(0);
       progress.set(withTiming(1, { duration: 320, easing: EASE }));
-    }, [reduced, progress, side]),
+    }, [reduced, progress, side, hide]),
   );
 
   const animated = useAnimatedStyle(() => {
     const p = progress.get();
     const s = side.get();
     return {
-      opacity: 0.2 + 0.8 * p,
+      opacity: p,
       transform: s ? [{ translateX: (1 - p) * -s * 28 }] : [{ translateY: (1 - p) * 10 }],
     };
   });

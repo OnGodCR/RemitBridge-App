@@ -1228,7 +1228,10 @@ smoother"). In the website's register (D18, `components/motion.ts`): short, smal
 ease-out, and off when the phone asks for reduced motion. In `components/motion-views.tsx`:
 - **Tabs:** each tab's body rises into place when it comes into view (a fade and a 10pt
   lift after a tap; a 28pt slide from the side swiped from, D120). Native tabs switch with
-  no motion of their own.
+  no motion of their own. A body starts hidden, and the tab coming into view hides the
+  others (out of sight by then), so a tab only animates in from hidden: resetting on its
+  own focus flashed the content first (Angad, 2026-10-01), and resetting on blur blanked a
+  tab while a pushed screen slid over it.
 - **Compare:** the price cards arrive in turn, best first, each time a new set loads, and
   each card's cost bar fills from the left.
 - **Progress:** Learn's progress bar and a module's progress bar fill to their value.
