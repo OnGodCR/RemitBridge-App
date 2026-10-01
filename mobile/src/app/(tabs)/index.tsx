@@ -32,6 +32,7 @@ import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
+import { FocusRise } from '@/components/motion-views';
 
 /**
  * Scan a receipt (DECISIONS.md D72-D75), the app's first tab since D101. The photo is read and redacted on the phone; the
@@ -163,7 +164,7 @@ export default function ScanScreen() {
           greeting={step.kind === 'start' ? (name ? copy.common.hi(name) : copy.common.hiThere) : undefined}>
           {step.kind === 'start' ? <AppText style={{ color: t.heroMuted }}>{s.heroSub}</AppText> : null}
         </HeroHeader>
-        <View style={[styles.content, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
       {step.kind === 'start' ? (
         <>
           <View style={styles.capture}>
@@ -270,7 +271,7 @@ export default function ScanScreen() {
       ) : null}
 
       {step.kind === 'start' || step.kind === 'result' ? <DoesNotTellYou items={s.limits} /> : null}
-        </View>
+        </FocusRise>
       </ScrollView>
       <StatusBarShield />
     </View>

@@ -16,6 +16,7 @@ import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useTabFocus } from '@/lib/current-tab';
+import { FocusRise } from '@/components/motion-views';
 
 /**
  * The tools, rebuilt from the website (DECISIONS.md D58), grouped by when you'd reach for
@@ -52,7 +53,7 @@ export default function ToolsScreen() {
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={copy.tools.title} />
-        <View style={[styles.body, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.body, { backgroundColor: t.background }]}>
           {/* Saved comparisons and receipt checks (D108), first, since they're yours. */}
           <ListGroup cards>
             <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
@@ -64,7 +65,7 @@ export default function ToolsScreen() {
               ))}
             </ListGroup>
           ))}
-        </View>
+        </FocusRise>
       </ScrollView>
       <StatusBarShield />
     </View>

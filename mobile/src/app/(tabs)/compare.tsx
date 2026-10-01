@@ -34,6 +34,7 @@ import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib
 import { checkedAmountFor, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
+import { FocusRise, RiseIn } from '@/components/motion-views';
 
 
 
@@ -143,7 +144,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           </View>
         </HeroHeader>
 
-        <View style={[styles.body, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.body, { backgroundColor: t.background }]}>
           {route ? (
             <>
               <Segmented
@@ -172,7 +173,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           ) : (
             <RouteNotCovered from={from} to={to} />
           )}
-        </View>
+        </FocusRise>
       </ScrollView>
       <StatusBarShield />
     </View>
@@ -359,13 +360,15 @@ function Results({
         </AppText>
       ) : null}
       {standing.map((q, i) => (
-        <QuoteCard
-          key={q.id}
-          quote={q}
-          featured={i === 0 && standing.length > 1}
-          highlight={i === 0 && standing.length > 1 ? copy.compare.mostToFamily : undefined}
-          onPress={() => open(q)}
-        />
+        // Each set of prices arrives in turn, best first (D121).
+        <RiseIn key={q.id} index={i}>
+          <QuoteCard
+            quote={q}
+            featured={i === 0 && standing.length > 1}
+            highlight={i === 0 && standing.length > 1 ? copy.compare.mostToFamily : undefined}
+            onPress={() => open(q)}
+          />
+        </RiseIn>
       ))}
       {promotional.length > 0 ? (
         <>

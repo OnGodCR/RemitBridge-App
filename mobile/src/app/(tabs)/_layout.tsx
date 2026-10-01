@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import AppTabs from '@/components/app-tabs';
-import { currentTab } from '@/lib/current-tab';
+import { currentTab, setSwipeDirection } from '@/lib/current-tab';
 
 /** The tabs left to right, as the tab bar shows them. */
 const ORDER = ['/', '/compare', '/tools', '/learn', '/account'] as const;
@@ -35,7 +35,9 @@ const swipe = Gesture.Pan()
     const i = ORDER.indexOf(currentTab() as (typeof ORDER)[number]);
     if (i < 0) return;
     const next = direction < 0 ? i + 1 : i - 1;
-    if (next >= 0 && next < ORDER.length) router.navigate(ORDER[next]);
+    if (next < 0 || next >= ORDER.length) return;
+    setSwipeDirection(direction);
+    router.navigate(ORDER[next]);
   });
 
 export default function TabsLayout() {

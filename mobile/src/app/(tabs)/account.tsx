@@ -19,6 +19,7 @@ import { fullName, saveName } from '@/lib/name';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
+import { FocusRise } from '@/components/motion-views';
 
 /**
  * Account: what's saved (comparisons, then receipts), the admin tools for admins, the
@@ -65,7 +66,7 @@ export default function AccountScreen() {
             <AppText style={{ color: t.heroMuted }}>{session.user.email ?? a.signedInApple}</AppText>
           ) : null}
         </HeroHeader>
-        <View style={[styles.content, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
           {session ? (
             <>
               <NameField />
@@ -137,7 +138,7 @@ export default function AccountScreen() {
               }}
             />
           ) : null}
-        </View>
+        </FocusRise>
       </ScrollView>
       <StatusBarShield />
     </View>
