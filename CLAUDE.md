@@ -54,15 +54,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       live, or every stored hash stops matching), register the webhook. The `whatsapp`
       function is deployed (2026-10-01) and refuses everything until its secrets are set
       (403 on verification, 401 on unsigned posts). Angad reads the Hindi replies first.
-- [ ] **`GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token, RemitBridge-App
-      only, Actions read and write). Receipt photos on WhatsApp need it to start their
-      worker; price entries get checked in minutes instead of three-hourly.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
       sealed for up to an hour (2026-10-01). Migration live; `RECEIPT_INTAKE_SECRET`
       (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET` (Supabase) set by Claude from
-      `openssl rand`, never displayed (2026-10-01). Left, with the go-live:
-      `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase, `WHATSAPP_ACCESS_TOKEN`
-      in GitHub Actions, and redeploy `whatsapp` and `scan-receipt`.
+      `openssl rand`, never displayed; `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` set
+      (2026-10-01). Left, with the go-live: `WHATSAPP_ACCESS_TOKEN` in GitHub Actions too.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad pays last, once everything free is set up (2026-10-01). EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
@@ -127,6 +123,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
 
 ### Done
+
+- [x] `GITHUB_DISPATCH_TOKEN` in Supabase (fine-grained, RemitBridge-App only, Actions read
+      and write), checked against GitHub before saving: receipt photos on WhatsApp can start
+      their worker, and price entries are checked in minutes. Done 2026-10-01.
 
 - [x] Launch emails: `notify-route-launch` deployed and `RESEND_API_KEY` set (sending
       access, remitbridgelabs.org), checked against Resend before saving (D67). Done 2026-10-01.
