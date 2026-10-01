@@ -101,10 +101,11 @@ export function useLargeText(): boolean {
   return useWindowDimensions().fontScale >= 1.35;
 }
 
+/** A card, sitting on a soft rim along its bottom edge so it lifts off the page (D112). */
 export function Card({ children, style }: { children: ReactNode; style?: StyleProp<ViewStyle> }) {
   const t = useTheme();
   return (
-    <View style={[styles.card, { backgroundColor: t.card, borderColor: t.border }, style]}>
+    <View style={[styles.card, { backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim }, style]}>
       {children}
     </View>
   );
@@ -163,6 +164,9 @@ export function Segmented<T extends string>({
  * outline. `trailingIcon` puts a symbol after the label, like the site's "Try the
  * calculator" arrow.
  */
+/** How tall a chunky button's lip is. */
+const LIP = 4;
+
 export function Button({
   label,
   onPress,
@@ -190,6 +194,10 @@ export function Button({
         : variant === 'inverse'
           ? t.heroField
           : 'transparent';
+  // Chunky, like Duolingo's (D112): a darker lip under the button, which it sinks into
+  // while pressed. The lip and the sink trade the same height, so nothing below moves.
+  const rim =
+    variant === 'primary' ? t.primaryDeep : variant === 'secondary' ? t.rim : variant === 'inverse' ? t.inverseRim : null;
   const fg =
     variant === 'primary'
       ? t.primaryForeground
@@ -211,7 +219,12 @@ export function Button({
         {
           backgroundColor: bg,
           borderColor: variant === 'secondary' ? t.border : 'transparent',
-          opacity: disabled ? 0.45 : pressed ? 0.8 : 1,
+          opacity: disabled ? 0.45 : !rim && pressed ? 0.6 : 1,
+        },
+        rim && {
+          borderBottomColor: rim,
+          borderBottomWidth: pressed && !disabled ? 1 : LIP + 1,
+          marginTop: pressed && !disabled ? LIP : 0,
         },
       ]}>
       {loading ? (
@@ -284,6 +297,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: Radius.lg,
     borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 3,
     padding: Spacing.three,
     gap: Spacing.two,
   },

@@ -52,11 +52,11 @@ export default function ToolsScreen() {
         <HeroHeader title={copy.tools.title} />
         <View style={[styles.body, { backgroundColor: t.background }]}>
           {/* Saved comparisons and receipt checks (D108), first, since they're yours. */}
-          <ListGroup>
+          <ListGroup cards>
             <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
           </ListGroup>
           {groups.map((g) => (
-            <ListGroup key={g.title} title={g.title}>
+            <ListGroup key={g.title} title={g.title} cards>
               {g.tools.map((tool) => (
                 <ListRow key={tool.title} art={tool.art} title={tool.title} subtitle={tool.subtitle} onPress={() => router.push(tool.href)} />
               ))}

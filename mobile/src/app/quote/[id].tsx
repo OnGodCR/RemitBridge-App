@@ -212,7 +212,7 @@ export default function QuoteDetail() {
         ) : null}
       </ListGroup>
 
-      <ListGroup>
+      <ListGroup cards>
         <ListRow
           title={copy.quoteDetail.isFair}
           subtitle={copy.quoteDetail.isFairSub}

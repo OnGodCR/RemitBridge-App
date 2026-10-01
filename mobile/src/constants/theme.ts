@@ -45,6 +45,10 @@ const light = {
   // drawing, a deeper mint at the far side of its disc, a highlight at the near side.
   depth: '#0e4a3c',
   depthOpacity: 0.2,
+  // The lip under chunky buttons and cards (D112): what each sits on and presses into.
+  primaryDeep: '#0b4f3f',
+  rim: '#d6dce2',
+  inverseRim: '#0b4f3f',
   accentDeep: '#cde5dc',
   glow: '#ffffff',
   glowOpacity: 0.55,
@@ -90,6 +94,9 @@ const dark: typeof light = {
 
   depth: '#000000',
   depthOpacity: 0.5,
+  primaryDeep: '#22755d',
+  rim: '#0b0d0f',
+  inverseRim: '#08251e',
   accentDeep: '#10261f',
   glow: '#ffffff',
   glowOpacity: 0.07,

@@ -230,7 +230,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D111; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D112; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

@@ -1097,3 +1097,17 @@ green band stays fixed with a Modules | Library switch; Modules has the progress
 and the path, now drawn from the bottom up (module 1 lowest) and opened scrolled to the
 module you're on; Library has the blog, the glossary A to Z, the route board, What people
 paid, RemitBench and the website's papers and workshops.
+
+**D112. Learn's chunky, raised look, everywhere.** Angad: the Learn tab looks great, but the
+rest is still too bland. The pieces that make Learn feel alive are now the app's shared
+components, so every screen gets them:
+- **Buttons** are chunky, like Duolingo's: a darker lip under each (deep green under
+  green, a grey rim under outlined, deep green under white on the band) that the button
+  sinks into while pressed. The lip and the sink trade the same height, so nothing moves.
+- **Cards** sit on a soft rim along their bottom edge.
+- **Rows that go somewhere** (Tools, Library, Account, a quote's links) are chunky cards on
+  a rim, sinking when pressed, with the drawing or a symbol on a mint disc. Rows that
+  state facts (a price breakdown, How it works, saved items) keep the website's thin
+  dividers, since they're for reading, not tapping.
+- **The green band** carries the website's bridge mark, large and faint, behind the title.
+Tokens: `primaryDeep`, `rim`, `inverseRim`.
