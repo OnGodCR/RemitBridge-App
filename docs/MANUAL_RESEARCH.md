@@ -23,7 +23,7 @@ by hand. Add a row when you find one; don't build around it.
 | Provider | What we found (2026-10-01) |
 |---|---|
 | Western Union | Terms and conditions and the intellectual-property page have no automated-access clause, and robots.txt allows the currency-converter pages. But the rate and fee load through a call guarded by bot protection, and getting past that would break the scraper rules (PRD 9.12). Manual, or with permission (asked 2026-09-28). |
-| Instarem | **Cleared for an adapter (D115).** No automated-access clause in its terms or US customer agreement; robots.txt only disallows `/wp-admin/`. Its site's public quote endpoint answered one honest request. Not built yet. |
+| Instarem | **Cleared for an adapter (D115).** No automated-access clause in its terms or US customer agreement; robots.txt only disallows `/wp-admin/`. Its site's public quote endpoint answered one honest request. **Automated 2026-10-01 (D118).** |
 
 ## Not yet checked
 
@@ -34,4 +34,4 @@ Paysend, Remitbee, OFX, Revolut and the banks.
 
 The World Bank's Remittance Prices Worldwide (remittanceprices.worldbank.org): quarterly
 prices by provider for 42 US routes, free to reuse with attribution. Newest survey Q3 2025,
-so research only, never a current price (D115).
+so research only, never a current price (D115). The US rows are in `research/world-bank-rpw/` (D118).
