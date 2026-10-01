@@ -70,8 +70,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
       `site/.well-known/apple-app-site-association`.
-- [ ] **"What you could have kept" on the receipt result (D119):** built 2026-10-01, all tests
-      pass. Left: `scan-receipt` deployed; seen for real once the iPhone build can scan. It
+- [ ] **"What you could have kept" on the receipt result (D119):** built and `scan-receipt`
+      deployed 2026-10-01, all tests pass. Left: seen for real once the iPhone build can scan. It
       grows more useful as prices pile up.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
