@@ -1305,7 +1305,6 @@ RemitBridge Google account (Spark, free; Analytics and the Developer Program sig
 with the Android app `org.remitbridgelabs.app` registered. Its `google-services.json` is
 config rather than a secret, but holds an API key, so it stays out of git: it's at
 `mobile/google-services.json` (git-ignored) and on EAS as the secret file
-`GOOGLE_SERVICES_JSON` for every environment, read by `mobile/app.config.ts`. Left for
-Angad: the service account key (Project settings > Service accounts > Generate new private
-key) uploaded with `eas credentials` as the FCM V1 key. It's a real secret, so it never
-passes through Claude.
+`GOOGLE_SERVICES_JSON` for every environment, read by `mobile/app.config.ts`. Angad
+generated the service account key and uploaded it with `eas credentials` as the FCM V1 key
+(2026-10-01); it's a real secret, so it never passed through Claude.

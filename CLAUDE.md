@@ -124,9 +124,9 @@ Angad does this once the app itself is finished (D117).
 
 - [x] **Store listing drafted** (`docs/store/listing.md`), store build config tidied, and
       the public Supabase values set for preview and production builds (D123). Done 2026-10-01.
-- [ ] **Android push notifications (D127):** Firebase project `remitbridge` and its Android app
-      are set up and wired in (2026-10-01). Left: Angad generates the service account key and
-      uploads it with `eas credentials` (FCM V1).
+- [x] **Android push notifications set up (D127):** Firebase project `remitbridge`, its Android
+      app wired in, and the FCM V1 key uploaded to EAS by Angad. Done 2026-10-01. A real
+      Android notification waits on an Android build.
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
