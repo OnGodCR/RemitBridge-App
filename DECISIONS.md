@@ -1213,4 +1213,4 @@ app, the Edge Function and any later surface agree) and fed by `scan-receipt`.
 - **Honest scope:** every result names the providers compared and says we don't have every
   provider yet; an amount we don't check is worked out from the nearest checked amount and
   labelled. When the receipt already had the best price, it says that.
-- Not yet in the WhatsApp reply (parked, D100). Needs `scan-receipt` redeployed.
+- Not yet in the WhatsApp reply (parked, D100). `scan-receipt` redeployed 2026-10-01.
