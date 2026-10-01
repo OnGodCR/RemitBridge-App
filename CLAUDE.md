@@ -46,7 +46,11 @@ the work, not afterwards:
 
 These are deferred on purpose, not forgotten. Update this list as things land.
 
-- [ ] **Translation reviewers** (D69). Hindi, Spanish, Tagalog and Vietnamese are
+- [ ] **CAC entry:** Angad rewrites `docs/cac/submission.md` (Claude's draft, 2026-10-01) in
+      his own words, records the demo video (3 minutes at most), and submits by Oct 23
+      (official deadline Oct 26).
+- [ ] **Translation reviewers** (D69). The Hindi review sheet is ready to send:
+      `docs/translation-review/hi.md` (585 strings, 2026-10-01). Hindi, Spanish, Tagalog and Vietnamese are
       written (Claude's drafts) and show only in development builds until a fluent
       speaker reads each one, agrees in writing, and is named with the date in
       `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
