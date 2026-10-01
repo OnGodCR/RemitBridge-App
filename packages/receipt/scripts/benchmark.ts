@@ -78,6 +78,11 @@ const modes = wanted.filter((m) => {
 async function patientFetch(url: string | URL | Request, init?: RequestInit): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
     const res = await fetch(url, init)
+    if (!res.ok && res.status !== 429) {
+      // Groq's own error message, to see why a request was refused; never the request.
+      const body = (await res.clone().json().catch(() => null)) as { error?: { message?: string } } | null
+      console.error(`model service: HTTP ${res.status}: ${body?.error?.message ?? '(no message)'}`)
+    }
     if (res.status !== 429 || attempt === 6) return res
     const wait = Math.min(Number(res.headers.get('retry-after')) || 20, 90)
     console.error(`429 from the model service; waiting ${wait} s (attempt ${attempt} of 5)`)
