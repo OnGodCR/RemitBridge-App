@@ -24,7 +24,7 @@ export const es: Copy = {
     noMailBody: (address) => `Este teléfono no tiene una app de correo configurada. Escríbenos a ${address} desde cualquier correo.`,
   },
 
-  tabs: { compare: 'Comparar', tools: 'Herramientas', learn: 'Aprender', account: 'Cuenta' },
+  tabs: { scan: 'Escanear', compare: 'Comparar', tools: 'Herramientas', learn: 'Aprender', account: 'Cuenta' },
 
   titles: {
     scan: 'Escanear un recibo',
@@ -361,23 +361,19 @@ export const es: Copy = {
   },
 
   tools: {
-    scan: 'Escanear un recibo',
-    scanSub: 'Lee un recibo con tu cámara, tapando primero los datos personales',
     title: 'Herramientas',
-    subtitle: 'Revisa un tipo de cambio, un recibo o una petición de dinero.',
     before: 'Antes de enviar',
     after: 'Después de enviar',
     rates: 'Tipos de cambio',
-    fairRateSub: 'Cuánto te daría el tipo de cambio de mercado',
-    scamCheckSub: 'Ocho preguntas antes de mandarle dinero a un desconocido',
-    trueCostSub: 'Revisa un recibo para ver el costo que no se ve',
-    yearlyCostSub: 'Lo que suma un año de envíos',
-    rateHistorySub: 'El tipo de cambio de mercado, día a día',
+    fairRateSub: '¿Tu tipo de cambio es justo?',
+    scamCheckSub: 'Antes de pagarle a un desconocido',
+    trueCostSub: 'Revisa un recibo a mano',
+    yearlyCostSub: 'Un año de envíos',
+    rateHistorySub: 'El tipo de cambio, día a día',
   },
 
   learn: {
     title: 'Aprender',
-    subtitle: 'Cómo funciona, y las palabras que hay detrás.',
     howItWorks: 'Cómo funciona',
     feeMarkup: 'Comisión + margen escondido',
     feeMarkupBody: 'El costo total es la comisión más el margen escondido en el tipo de cambio.',
@@ -594,8 +590,10 @@ export const es: Copy = {
   },
 
   scan: {
-    intro:
-      'Toma una foto de un recibo de envío. La app lo lee en tu teléfono y tapa nombres, direcciones y números de teléfono y de cuenta antes de enviar nada.',
+    heroTitle: '¿Cuánto te costó de verdad tu envío?',
+    heroSub: 'Escanea el recibo. Mira la comisión y el margen escondido.',
+    steps: ['Toma una foto del recibo', 'Tapamos tus datos', 'Mira el costo real'],
+    privacy: 'Se lee en tu teléfono. Nombres y números se tapan antes de enviar nada.',
     takePhoto: 'Tomar una foto',
     choosePhoto: 'Elegir una foto',
     needsBuild: 'Para escanear hace falta la versión completa de la app. No funciona en Expo Go.',

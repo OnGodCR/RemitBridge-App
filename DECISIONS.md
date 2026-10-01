@@ -968,3 +968,28 @@ TestFlight and the App Store; Resend, WhatsApp (Meta's test number), the GitHub 
 extractors, the reviews and Expo Go are free. The membership year starts at payment, so
 waiting costs nothing. CLAUDE.md's open items are grouped to match: features to set up,
 testing, the CAC submission, thank-yous and outreach, before launch, watching and later.
+
+## 2026-10-01: WhatsApp parked, and the app's look
+
+**D100. WhatsApp is parked.** Meta restricted the new WhatsApp Business Account at once
+(error 131031; "Account Restricted, Duration: Permanent" until business verification), and
+RemitBridge isn't a registered business (D49). Angad chose to park it rather than register a
+business, use a parent's account, or add another channel. Everything on our side stays set
+(secrets, webhook, subscription), so it works with no changes if Meta lifts the
+restriction. Unofficial WhatsApp libraries were ruled out: they break WhatsApp's terms and
+get numbers banned. Telegram stays an option if a chat channel is wanted later.
+
+**D101. The receipt scanner is the first tab, and the app opens on it.** Angad: a real
+receipt is a better lead-in than Compare, which "is kind of just math". The tabs are Scan ·
+Compare · Tools · Learn · Account (replacing D58's four). Scan left Tools. Links that open
+Compare (saved comparisons, TrueCost, the route board) now go to `/compare`; a partner link
+and the sign-in callback land on `/`, so on Scan.
+
+**D102. Fewer words, more icons** (Angad: "too much text, not enough... icons"). Reverses
+D63's "no icon tiles" and softens D44/D47's "text labels over decoration": every list row
+and card leads with an SF Symbol on a mint tile, but icons go next to words, never instead
+of them, and there is still no emoji. Tools and Learn's "How it works" and "Go deeper"
+become two-column cards (`components/tile-grid.tsx`) with a few words each; the tab
+headers lose their subtitle line; the Scan tab leads with one large scan icon, two buttons,
+three icon steps and one privacy line. In Expo Go the scan card shows as it will in the
+app, and pressing it explains that scanning needs the full build.

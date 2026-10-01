@@ -2,8 +2,8 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
-import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
-import { AppText } from '@/components/ui';
+import { ListGroup, ListRow } from '@/components/list-row';
+import { Tile, TileGrid } from '@/components/tile-grid';
 import { Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
@@ -25,35 +25,26 @@ export default function LearnScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <HeroHeader title={l.title}>
-          <AppText style={{ color: t.heroMuted }}>{l.subtitle}</AppText>
-        </HeroHeader>
+        <HeroHeader title={l.title} />
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          <ListGroup title={l.howItWorks}>
-            <ListPoint title={l.feeMarkup}>{l.feeMarkupBody}</ListPoint>
-            <ListPoint title={l.checkedOnly}>{l.checkedOnlyBody}</ListPoint>
-            <ListPoint title={l.noAffiliate}>{l.noAffiliateBody}</ListPoint>
-            <ListPoint title={l.wrongPrice}>
-              <AppText
-                style={{ color: t.primary }}
-                accessibilityRole="link"
-                onPress={() => writeToUs(copy)}>
-                {CONTACT}
-              </AppText>
-            </ListPoint>
-          </ListGroup>
+          <TileGrid title={l.howItWorks}>
+            <Tile icon="percent" title={l.feeMarkup} caption={l.feeMarkupBody} />
+            <Tile icon="checkmark.seal" title={l.checkedOnly} caption={l.checkedOnlyBody} />
+            <Tile icon="hand.raised" title={l.noAffiliate} caption={l.noAffiliateBody} />
+            <Tile icon="envelope" title={l.wrongPrice} caption={CONTACT} onPress={() => writeToUs(copy)} />
+          </TileGrid>
 
-          <ListGroup title={l.deeper}>
-            <ListRow title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
-            <ListRow title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
-            <ListRow title={copy.titles.observatory} subtitle={l.observatorySub} onPress={() => router.push('/observatory')} />
-            <ListRow title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
-          </ListGroup>
+          <TileGrid title={l.deeper}>
+            <Tile icon="character.book.closed" title={copy.titles.glossary} caption={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
+            <Tile icon="map" title={copy.titles.routeBoard} caption={l.routeBoardSub} onPress={() => router.push('/routes')} />
+            <Tile icon="chart.bar.xaxis" title={copy.titles.observatory} caption={l.observatorySub} onPress={() => router.push('/observatory')} />
+            <Tile icon="flask" title={copy.titles.remitbench} caption={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
+          </TileGrid>
 
           <ListGroup title={l.website}>
-            <ListRow external title={l.blog} subtitle={l.blogSub} onPress={() => openPage(`${WEBSITE}/blog`)} />
-            <ListRow external title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
-            <ListRow external title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
+            <ListRow external icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => openPage(`${WEBSITE}/blog`)} />
+            <ListRow external icon="doc.richtext" title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
+            <ListRow external icon="person.2" title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
           </ListGroup>
         </View>
       </ScrollView>

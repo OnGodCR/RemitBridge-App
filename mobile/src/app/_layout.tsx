@@ -83,7 +83,6 @@ function Navigator() {
         <Stack.Screen name="fair-rate" options={{ ...pushed, title: titles.fairRate }} />
         <Stack.Screen name="scam-check" options={{ ...pushed, title: titles.scamCheck }} />
         <Stack.Screen name="true-cost" options={{ ...pushed, title: titles.trueCost }} />
-        <Stack.Screen name="scan" options={{ ...pushed, title: titles.scan }} />
         <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
         <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
         <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />

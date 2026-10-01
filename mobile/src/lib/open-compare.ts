@@ -12,7 +12,7 @@ export function openCompare(c: { routeId: string; amount?: number; method?: Deli
   // switched the tab underneath and left the pushed screen on top. dismissTo pops back to
   // the tabs first, and from inside the tabs it just switches to Compare.
   router.dismissTo({
-    pathname: '/',
+    pathname: '/compare',
     params: {
       route: c.routeId,
       ...(c.amount ? { amount: String(c.amount) } : {}),

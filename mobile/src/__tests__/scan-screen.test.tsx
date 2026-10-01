@@ -1,5 +1,5 @@
 /**
- * The scan screen's flow (app/scan.tsx), with the photo, OCR, drawing and network faked:
+ * The scan screen's flow (app/(tabs)/index.tsx, the first tab since D101), with the photo, OCR, drawing and network faked:
  * nothing is sent before the person presses "Read my receipt", what's sent is the redacted
  * text and image, their extra cover and consent choice go with it, and a result can be
  * deleted. Also: Expo Go, errors, and Hindi.
@@ -8,7 +8,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react-nativ
 
 import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type ScanResponse } from '@remitbridge/receipt';
 
-import ScanScreen from '@/app/scan';
+import ScanScreen from '@/app/(tabs)/index';
 import { LanguageProvider } from '@/i18n';
 import { canScan, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
@@ -18,6 +18,8 @@ jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, se
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('expo-image', () => ({ Image: () => null }));
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
+jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }) }));
+jest.mock('expo-status-bar', () => ({ StatusBar: () => null }));
 jest.mock('expo-image-picker', () => ({
   requestCameraPermissionsAsync: async () => ({ granted: false }),
   requestMediaLibraryPermissionsAsync: async () => ({ granted: true }),
@@ -94,11 +96,13 @@ async function toPreview() {
   fireEvent(screen.getByTestId('receipt-photo'), 'layout', { nativeEvent: { layout: { width: 400, height: 200 } } });
 }
 
-it('in Expo Go, says scanning needs the full build and offers no buttons', () => {
+it('in Expo Go, shows the screen, and a press says scanning needs the full build', () => {
   jest.mocked(canScan).mockReturnValue(false);
   render(<ScanScreen />);
+  expect(screen.queryByText(/needs the full build/)).toBeNull();
+  fireEvent.press(screen.getByText('Take a photo'));
   expect(screen.getByText(/needs the full build/)).toBeTruthy();
-  expect(screen.queryByText('Take a photo')).toBeNull();
+  expect(screen.queryByText('Check what’s covered')).toBeNull();
 });
 
 it('covers personal details before showing the preview, and sends nothing yet', async () => {
