@@ -31,6 +31,7 @@ import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
 import { track } from '@/lib/track';
+import { useTabFocus } from '@/lib/current-tab';
 
 /**
  * Scan a receipt (DECISIONS.md D72-D75), the app's first tab since D101. The photo is read and redacted on the phone; the
@@ -58,6 +59,7 @@ type Step =
   | { kind: 'result'; id: string; confirmed: ConfirmResponse; deleted: boolean };
 
 export default function ScanScreen() {
+  useTabFocus('/');
   const t = useTheme();
   const copy = useCopy();
   const s = copy.scan;

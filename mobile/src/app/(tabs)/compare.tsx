@@ -33,6 +33,7 @@ import { fundingWord } from '@/lib/receipt-format';
 import { atAmount, fetchQuotes, type QuotesResult, type ShownQuote } from '@/lib/quotes';
 import { checkedAmountFor, ROUTES, routeFor, type DeliveryMethod, type Route } from '@/lib/routes';
 import { track } from '@/lib/track';
+import { useTabFocus } from '@/lib/current-tab';
 
 
 
@@ -51,6 +52,7 @@ function cleanAmount(text: string): string {
  * screen, so a second open of the same saved comparison still resets anything changed since.
  */
 export default function CompareScreen() {
+  useTabFocus('/compare');
   const p = useLocalSearchParams<{ route?: string; amount?: string; method?: string; at?: string }>();
   return <Compare key={p.at ?? 'home'} routeId={p.route} amount={p.amount} method={p.method} />;
 }

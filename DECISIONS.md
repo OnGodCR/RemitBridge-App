@@ -1214,3 +1214,11 @@ app, the Edge Function and any later surface agree) and fed by `scan-receipt`.
   provider yet; an amount we don't check is worked out from the nearest checked amount and
   labelled. When the receipt already had the best price, it says that.
 - Not yet in the WhatsApp reply (parked, D100). `scan-receipt` redeployed 2026-10-01.
+
+**D120. Swipe left or right to change tabs** (Angad, 2026-10-01). A sideways pan anywhere on
+a tab moves to the next or previous tab in the bar's order (Scan, Compare, Tools, Learn,
+Account), in `mobile/src/app/(tabs)/_layout.tsx`. It must be clearly sideways (a gesture
+that starts vertical stays with the scroll view) and long or quick enough, so reading and
+scrolling are unchanged. Native tabs switch without updating the layout's `usePathname`, so
+each tab records itself when it comes into view (`lib/current-tab.ts`). The app now has
+the gesture-handler root it needs (`GestureHandlerRootView` in the root layout).

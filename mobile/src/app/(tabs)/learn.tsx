@@ -14,6 +14,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { nextStep, useLearned } from '@/lib/learn-progress';
 import { openPage } from '@/lib/links';
+import { useTabFocus } from '@/lib/current-tab';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
@@ -23,6 +24,7 @@ const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects 
  * and climbs; and Library, with the blog, the glossary A to Z and the research.
  */
 export default function LearnScreen() {
+  useTabFocus('/learn');
   const t = useTheme();
   const copy = useCopy();
   const l = copy.learn;
