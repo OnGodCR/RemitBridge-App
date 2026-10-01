@@ -1247,3 +1247,20 @@ follows, and it scrolls with the path (`LearnBackdrop` in `components/learn-path
 The dashed line is green at low opacity so it reads on the mint, and each module's name
 sits on a small card so it reads on the scene. The path's sideways swing is halved (at most
 52pt either side of the middle), so the modules zigzag gently near the centre.
+
+**D123. Store readiness without the accounts** (Angad, 2026-10-01: "finish everything except
+the stuff that requires the accounts"; his dad will hold the Apple and Google accounts
+until Angad is 18, then the apps transfer).
+- **`docs/store/listing.md`:** every field both stores ask for, drafted to paste: names,
+  descriptions, keywords, URLs, App Privacy and Data safety answers that follow
+  `site/privacy.html`, age and content ratings, the financial-features declaration ("no
+  financial features": the app shows information and never moves money), notes for App
+  Review, the closed-test message for Google's 12 testers, and the screenshot plan.
+- **Build config:** `usesNonExemptEncryption: false` (standard HTTPS only, so no export
+  question on each upload); Android asks for the camera explicitly and no longer for the
+  microphone, overlay or legacy storage writes it never used.
+- **EAS:** the two public `EXPO_PUBLIC_SUPABASE_*` values now exist for preview and
+  production builds too (they were development-only, so those builds would have shipped
+  without a database).
+- Not doable without accounts: Android push needs a Firebase project's FCM key uploaded to
+  EAS; submission IDs go in `eas.json` once the store records exist.
