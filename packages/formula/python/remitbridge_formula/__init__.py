@@ -97,16 +97,20 @@ FUNDING_METHODS = (
 )
 TAXED_FUNDING = frozenset({"cash", "money_order", "cashiers_check"})
 REMITTANCE_TAX_RATE = Decimal("0.01")
+REMITTANCE_TAX_SMALL = Decimal("15")
 REMITTANCE_TAX_FROM = "2026-01-01"
 
 
 def remittance_tax(transfer_amount: float, funding: str, date: str | None = None) -> float:
     """The 1% federal remittance tax, rounded half up to the cent. The base is the
-    transfer amount, without the fee or the tax (Claude's default, unverified: D78).
-    ``date`` is YYYY-MM-DD; before 2026-01-01 there was no tax."""
+    transfer amount, without the fee or the tax, as in the IRS proposed regulations (D78,
+    D97). Transfers of $15.00 or less aren't taxed. ``date`` is YYYY-MM-DD; before
+    2026-01-01 there was no tax."""
     if funding not in TAXED_FUNDING:
         return 0.0
     if date is not None and date < REMITTANCE_TAX_FROM:
+        return 0.0
+    if Decimal(str(transfer_amount)) <= REMITTANCE_TAX_SMALL:
         return 0.0
     tax = Decimal(str(transfer_amount)) * REMITTANCE_TAX_RATE
     return float(tax.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))

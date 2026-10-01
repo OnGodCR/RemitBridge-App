@@ -687,7 +687,8 @@ export const es: Copy = {
     taxBank: (total: string, tax: string) =>
       `Pagado desde una cuenta bancaria, el mismo envío habría costado ${total} en total, ${tax} menos.`,
     taxAssumption:
-      'Tomamos el 1% del monto del envío, antes de comisiones. Es nuestra lectura de la regla, aún sin comparar con el reglamento final del IRS.',
+      'Tomamos el 1% del monto de la transferencia, antes de comisiones, como lo hacen las reglas propuestas del IRS. Esas reglas todavía no son definitivas.',
+    taxSmall: 'Fue una transferencia de $15 o menos, así que el impuesto no aplica.',
     nextTitle: 'La próxima vez',
     compare: 'Compara esta ruta hoy',
     notCovered: 'Aún no revisamos esta ruta.',

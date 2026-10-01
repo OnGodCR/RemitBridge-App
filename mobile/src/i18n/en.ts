@@ -670,7 +670,8 @@ export const en = {
     taxBank: (total: string, tax: string) =>
       `Paid from a bank account instead, the same transfer would have cost ${total} in total, ${tax} less.`,
     taxAssumption:
-      'We take 1% of the transfer amount, before fees. That is our reading of the rule, not yet checked against the IRS’s final regulations.',
+      'We take 1% of the transfer amount, before fees, as the IRS’s proposed rules do. Those rules aren’t final yet.',
+    taxSmall: 'This was a transfer of $15 or less, so the tax doesn’t apply.',
     nextTitle: 'Next time',
     compare: 'Compare this route today',
     notCovered: 'We don’t check this route yet.',

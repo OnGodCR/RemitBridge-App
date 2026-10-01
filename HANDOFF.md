@@ -32,6 +32,17 @@ pushed the last four on 2026-09-30). Not yet applied: `20260930020000_whatsapp_r
 (52 checks). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
+## 2026-10-01 (cloud session)
+
+- The remittance tax now follows the IRS proposed rules (D97): no tax at $15 or less.
+- `.github/workflows/benchmark.yml` runs the full receipt benchmark on GitHub, by hand. It
+  needs an `OPENROUTER_API_KEY` Actions secret.
+- `docs/translation-review/hi.md` is the Hindi review sheet; `docs/cac/submission.md` is the
+  draft CAC entry and video script.
+- Still Angad's: `supabase db push` for the two receipt migrations (refused for Claude as a
+  production deploy, from the cloud and through a local session alike), the OpenRouter key,
+  and the EAS build.
+
 ## CAC receipt scanner (all six phases on `main`: PR #1 on 2026-09-30, PR #2 on 2026-10-01)
 
 Built by the cloud session for the Congressional App Challenge (D72–D90, D92), on the branch

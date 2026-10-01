@@ -8,6 +8,7 @@ import {
   computeTransferCost,
   remittanceTax,
   REMITTANCE_TAX_FROM,
+  REMITTANCE_TAX_SMALL,
   TAXED_FUNDING,
   type FundingMethod,
   type TransferCost,
@@ -49,6 +50,8 @@ export type TaxStatus =
   | 'not_taxed'
   /** Before 2026-01-01, when there was no tax. */
   | 'before_tax'
+  /** $15.00 or less: a small transfer, not taxed (D97). */
+  | 'small_transfer'
   /** The receipt doesn't say how it was paid. */
   | 'unknown_funding'
   /** Taxed, and the receipt's tax line matches 1%. */
@@ -78,6 +81,7 @@ export function taxCheck(v: Values, midRate: number | null): TaxCheck {
   if (!TAXED_FUNDING.has(v.funding_method as FundingMethod)) return none('not_taxed')
   if (v.transfer_date && v.transfer_date < REMITTANCE_TAX_FROM) return none('before_tax')
   if (v.amount_sent === undefined) return none('not_found')
+  if (v.amount_sent <= REMITTANCE_TAX_SMALL) return none('small_transfer')
 
   const expected = remittanceTax(v.amount_sent, v.funding_method, v.transfer_date)
   const status: TaxStatus = found === null ? 'not_found' : Math.abs(found - expected) <= 0.01 ? 'matches' : 'differs'

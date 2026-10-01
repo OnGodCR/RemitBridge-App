@@ -1,5 +1,5 @@
 {
-  "_about": "Test cases for the remittance tax in the one formula (DECISIONS.md D76, D78). The website's TrueCost has no tax, so unlike vectors.json these were not generated from the website: expected values were computed on 2026-09-30 from the formula's definitions with exact rational arithmetic (Python fractions.Fraction) and decimal half-up rounding for the tax, not by running either implementation. Both implementations must pass them. Relative tolerance: 1e-9.",
+  "_about": "Test cases for the remittance tax in the one formula (DECISIONS.md D76, D78). The website's TrueCost has no tax, so unlike vectors.json these were not generated from the website: expected values were computed on 2026-09-30 from the formula's definitions with exact rational arithmetic (Python fractions.Fraction) and decimal half-up rounding for the tax, not by running either implementation. Both implementations must pass them. Relative tolerance: 1e-9. Updated 2026-10-01 for the $15.00 small-transfer exclusion in the proposed regulations (D97).",
   "tax": [
     {
       "name": "cash, $500",
@@ -24,14 +24,6 @@
         "funding": "cashiers_check"
       },
       "expected": 1.01
-    },
-    {
-      "name": "cash, $0.49 rounds to nothing",
-      "input": {
-        "transferAmount": 0.49,
-        "funding": "cash"
-      },
-      "expected": 0.0
     },
     {
       "name": "cash, $2,499.99",
@@ -82,6 +74,30 @@
         "date": "2026-01-01"
       },
       "expected": 5.0
+    },
+    {
+      "name": "cash, $15.00 is a small transfer, not taxed",
+      "input": {
+        "transferAmount": 15,
+        "funding": "cash"
+      },
+      "expected": 0
+    },
+    {
+      "name": "cash, $15.01 is taxed",
+      "input": {
+        "transferAmount": 15.01,
+        "funding": "cash"
+      },
+      "expected": 0.15
+    },
+    {
+      "name": "cash, $0.49 is a small transfer, not taxed",
+      "input": {
+        "transferAmount": 0.49,
+        "funding": "cash"
+      },
+      "expected": 0
     }
   ],
   "cases": [
