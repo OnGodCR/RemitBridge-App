@@ -41,8 +41,12 @@ Thresholds are in `config.py` and recorded in DECISIONS.md D36.
 - `wise`: Wise's own quote from its Comparison API, with Wise's written permission
   (DECISIONS.md D91). Bank transfer in, bank deposit out. The Scrape workflow runs it every
   6 hours; `uv run rb-engine run --adapter wise` runs it into the local store.
+- `instarem`: Instarem's public quote endpoint; its terms and robots.txt allow it
+  (DECISIONS.md D115, D118). Publishes the standing price, never the first-transfer
+  offer. Bank account in, bank deposit out, on the same schedule.
 
-Every other Tier 1 provider's terms forbid automated access: see `docs/MANUAL_RESEARCH.md`.
+Every other Tier 1 provider's terms forbid automated access (Western Union's prices sit
+behind bot protection): see `docs/MANUAL_RESEARCH.md`.
 
 ## Adding an adapter
 

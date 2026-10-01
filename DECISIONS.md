@@ -1175,3 +1175,22 @@ has the real bundle ID.
 finished (the deadlines stay Oct 23 internal, Oct 26 official). The Hindi translation
 review goes to Angad's mother: she reads `docs/translation-review/hi.md`, agrees in writing,
 and is named with the date in `mobile/src/i18n/languages.ts` (D69).
+
+**D118. Instarem is automated, and the World Bank survey is in the repo for research**
+(Angad's yes to both, 2026-10-01).
+- **Instarem adapter** (`engine/src/remitbridge_engine/adapters/instarem.py`): Instarem's
+  public quote endpoint, 20 quotes a run (four routes, the amount grid), bank deposit paid
+  from a bank account, 5 seconds between requests, on the same 6-hourly Scrape schedule.
+  A signed-out visitor gets a first-transfer rate; the adapter publishes the standing
+  (`regular_*`) rate and fees instead, working out the amount received the way Instarem
+  does (fees off, then the rate), and refuses any quote where Instarem's own first-transfer
+  figure doesn't match that calculation, or that carries a warning, a tax or a coupon. The
+  first local run against the live endpoint published 20 of 20 through the gate: no fee,
+  markups of 0.4% to 0.9%. Migration `20261001010000_instarem_provider.sql` adds the
+  provider row, which quotes need; the smoke test now expects 9 providers.
+- **World Bank Remittance Prices Worldwide**: `research/world-bank-rpw/` holds `extract.py`,
+  the 28,532 US-sending rows from Q2 2016 to Q1 2025 as `us-sends.csv`, and `summary.md`
+  (every service surveyed on the four Tier 1 routes in Q1 2025, and the median cost of a
+  $200 transfer by year). The 49 MB workbook isn't committed. The website shows a newer
+  round (Q3 2025) than the download. Nothing here reaches Compare; any use in the app names
+  the World Bank and the quarter, and never implies the World Bank endorses RemitBridge.

@@ -46,6 +46,8 @@ supabase/            Migrations, row-level security, Edge Functions (delete-acco
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks, the WhatsApp photo worker
 site/                app.remitbridgelabs.org: privacy policy, support, partner links (Vercel, root "site")
 docs/                PRD, manual-research list
+research/            world-bank-rpw/: the World Bank's US remittance price survey (Q2 2016 to Q1 2025)
+                     as CSV, its summary, and extract.py to rebuild both from the downloaded workbook
 ```
 
 ## Setup

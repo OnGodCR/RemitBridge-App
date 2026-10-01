@@ -50,7 +50,7 @@ post() { # table, json body
 
 echo "--- public reads"
 check "routes are readable (4 seeded)"            "4"   "$(count "${H[@]}" "$REST/routes?select=id")"
-check "providers are readable (8 seeded)"         "8"   "$(count "${H[@]}" "$REST/providers?select=id")"
+check "providers are readable (9: 8 seeded + Instarem)" "9"   "$(count "${H[@]}" "$REST/providers?select=id")"
 check "latest_quotes view is readable"            "200" "$(pg "${H[@]}" "$REST/latest_quotes?select=id")"
 
 echo "--- private reads return nothing"
@@ -99,7 +99,7 @@ check "event names are validated (23514)" "23514" "$(post events "$(printf '{"in
 curl -s -m 20 -o /dev/null "${H[@]}" -X PATCH "$REST/routes?id=eq.us-in" -d '{"status":"not_feasible"}'
 check "can't change a route (still 'building')" "building" "$(curl -s -m 20 "${H[@]}" "$REST/routes?id=eq.us-in&select=status" | python3 -c 'import sys,json; print(json.load(sys.stdin)[0]["status"])')"
 curl -s -m 20 -o /dev/null "${H[@]}" -X DELETE "$REST/providers?id=eq.wise"
-check "can't delete a provider (still 8)" "8" "$(count "${H[@]}" "$REST/providers?select=id")"
+check "can't delete a provider (still 9)" "9" "$(count "${H[@]}" "$REST/providers?select=id")"
 # A private bucket answers a list with [] rather than an error, so check both sides.
 check "raw archive lists as empty" "[]" "$(curl -s -m 20 -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: application/json" -X POST "$SUPABASE_URL/storage/v1/object/list/raw-archive" -d '{"prefix":""}')"
 check "can't upload to the raw archive" "AccessDenied" "$(pg -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Authorization: Bearer $SUPABASE_PUBLISHABLE_KEY" -H "Content-Type: text/plain" -X POST "$SUPABASE_URL/storage/v1/object/raw-archive/rls-test.txt" --data-binary "x")"

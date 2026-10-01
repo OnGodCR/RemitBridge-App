@@ -71,7 +71,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   depth (D109).
 - **2026-10-01, later:** the Wise thank-you and seven partner emails sent; `host.exp.Exponent`
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
-  the World Bank survey found (D115).
+  the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
+  20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
 - **Rate alerts (D113)** and a greeting (D114) are live. Angad pushed
   `20261001000000_rate_alerts.sql` on 2026-10-01; smoke test 55/55, and the next
   `rate-alerts.yml` run read the function ("0 alert(s) due"). A real push still needs the
@@ -189,8 +190,9 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
-2. **More prices** (D115): say go for the Instarem adapter (cleared 2026-10-01), and yes or
-   no to downloading the World Bank's survey for research. Everyone else: Add a price
+2. **More prices:** push `20261001010000_instarem_provider.sql` so the Instarem adapter
+   (D118) can save its quotes on the next Scrape run (the run before the push fails for
+   Instarem only). The World Bank survey's US rows are in `research/world-bank-rpw/`. Everyone else: Add a price
    (Account tab) or their permission; `docs/MANUAL_RESEARCH.md` quotes each clause.
 3. **Launch emails:** done 2026-10-01 (`notify-route-launch` deployed, `RESEND_API_KEY`
    set). The first real send is when a requested route goes live.
