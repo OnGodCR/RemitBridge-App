@@ -49,6 +49,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   "Open the app" button now opens `remitbridge://p/<partner>`. Only the
   `apple-app-site-association` file is left, and it needs the Team ID.
 - Disk: 12 GB free.
+- `GITHUB_DISPATCH_TOKEN` (Angad, checked against GitHub first) and `WHATSAPP_RECEIPTS=on`
+  are set in Supabase. WhatsApp now needs only Meta's four values.
 - **Order of work (D99):** every free setup first (Resend done; GitHub token and Meta
   next), then the Apple Developer Program fee, the iPhone build and universal links, then
   testing. CLAUDE.md's open items are now grouped that way.
