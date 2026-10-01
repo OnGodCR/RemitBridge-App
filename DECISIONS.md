@@ -1020,3 +1020,12 @@ modules and move "How it works" to Account.
 - **No yellow in the drawings** (Angad, the same day): the hidden markup is a translucent
   green highlighter. The money colours in charts and cost bars (PRD 14.5's amber for the
   markup) are unchanged until Angad says otherwise.
+
+**D105. No yellow anywhere** (replaces PRD 14.5's amber for the markup). Angad doesn't like
+the yellow. The cost hidden in the rate is now a mid green (#46a085, 3.2:1 on white),
+lighter than the green of what arrives (1.9:1 apart), with a deep green for text (#0e5c49,
+7.9:1); pickup charges are a pale green; dark mode uses a pale mint. Every bar and dot has
+a text legend, so colour never carries the meaning alone. On the receipt confirmation
+screen, values to check are outlined in ink, heavier, instead of amber, since a green
+outline would look like a confirmed one. The drawings use a translucent green highlighter
+for the markup (D104).

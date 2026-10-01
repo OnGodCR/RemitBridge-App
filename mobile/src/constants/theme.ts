@@ -30,12 +30,14 @@ const light = {
   heroMuted: 'rgba(255,255,255,0.9)',
   heroField: '#ffffff',
 
-  // Semantic money colours (PRD 14.5), identical in every chart and breakdown.
+  // Semantic money colours (PRD 14.5), identical in every chart and breakdown. No yellow
+  // (D105, Angad): the hidden cost is a lighter green than what arrives, and every bar has
+  // a text legend, so colour never carries the meaning alone.
   moneyReceived: '#14705a', // brand green: the part that reaches family
   moneyFee: '#8d97a3', // neutral grey: visible, expected cost
-  moneyMarkup: '#c47f17', // warm amber: the hidden cost, eye-catching but not an error
-  moneyMarkupText: '#9a6212', // the same amber, deep enough for text (4.9:1); bars and dots keep the bright one
-  moneyPickup: '#e3b867', // muted amber: secondary hidden cost
+  moneyMarkup: '#46a085', // mid green: the hidden cost; 3.2:1 on white, lighter than received (1.9:1 apart)
+  moneyMarkupText: '#0e5c49', // deep green for text, 7.9:1 on white; bars and dots keep the lighter one
+  moneyPickup: '#8fcab6', // pale green: secondary hidden cost
   targetLine: '#5b6470', // the dashed 3% UN target
   stale: '#646d78', // desaturated grey, always with the word "Stale"; 5.0:1 (the old #9aa3ae was 2.4:1)
 };
@@ -60,9 +62,9 @@ const dark: typeof light = {
 
   moneyReceived: '#3fae8e',
   moneyFee: '#7b858f',
-  moneyMarkup: '#e0a33a',
-  moneyMarkupText: '#e0a33a',
-  moneyPickup: '#b98d4a',
+  moneyMarkup: '#a8e0cd', // pale mint, 11.3:1 on the dark card, lighter than received
+  moneyMarkupText: '#a8e0cd',
+  moneyPickup: '#5d8f80',
   targetLine: '#9aa3ae',
   stale: '#9aa3ae', // 7.2:1 on the dark background (the old #6b747e was 3.9:1)
 };
