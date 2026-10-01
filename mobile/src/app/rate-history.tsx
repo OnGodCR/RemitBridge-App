@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { RateHistoryArt } from '@/components/illustrations';
 import { LineChart } from '@/components/line-chart';
 import { CurrencySelect } from '@/components/select-field';
 import { Breakdown, Section, SourceNote, ToolScreen } from '@/components/tool';
@@ -57,7 +58,7 @@ export default function RateHistoryScreen() {
   const change = first && last ? ((last.rate - first.rate) / first.rate) * 100 : 0;
 
   return (
-    <ToolScreen intro={r.intro}>
+    <ToolScreen intro={r.intro} art={<RateHistoryArt />}>
       <Section title={r.pair}>
         <View style={styles.pair}>
           <CurrencySelect label={copy.common.from} value={from} onChange={setFrom} />

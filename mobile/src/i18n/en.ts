@@ -399,7 +399,7 @@ export const en = {
   },
 
   fairRate: {
-    intro: 'The mid-market rate is the honest yardstick. Every point a quote sits below it comes out of your transfer.',
+    intro: 'Every point below the mid-market rate comes out of your transfer.',
     yourTransfer: 'Your transfer',
     amountToSend: 'Amount to send',
     markup: 'Exchange-rate markup',
@@ -416,7 +416,7 @@ export const en = {
   },
 
   trueCost: {
-    intro: 'Enter what’s on your receipt. See the cost hidden in the exchange rate, not just the fee.',
+    intro: 'Type in your receipt. See the cost hidden in the rate.',
     currencies: 'Currencies',
     sent: 'Sent',
     received: 'Received',
@@ -459,7 +459,7 @@ export const en = {
   },
 
   yearlyCost: {
-    intro: 'The same transfer, made all year. See what it adds up to at your cost and at the benchmarks.',
+    intro: 'The same transfer, all year. What does it add up to?',
     yourTransfers: 'Your transfers',
     amountEach: 'Amount each time',
     yourCost: 'Your total cost',
@@ -483,7 +483,7 @@ export const en = {
   },
 
   rateHistory: {
-    intro: 'The mid-market rate, day by day. A rising line means each dollar buys more.',
+    intro: 'The mid-market rate, day by day. Up means each dollar buys more.',
     pair: 'Pair',
     failed: 'Couldn’t load the history. Check your connection and try again.',
     notEnough: 'Not enough days published for this pair yet.',
@@ -502,7 +502,7 @@ export const en = {
   },
 
   scamCheck: {
-    intro: 'Eight questions about your situation, one at a time. Nothing you answer leaves your phone.',
+    intro: 'Eight quick questions. Your answers stay on your phone.',
     questions: {
       'payment-method': {
         ask: 'Have you been asked to pay with a gift card, cryptocurrency, a crypto ATM, or a wire to someone you have never met in person?',
@@ -701,7 +701,7 @@ export const en = {
   },
 
   observatory: {
-    intro: 'What people really paid, from receipts they scanned and chose to share for research.',
+    intro: 'What people really paid, from receipts they chose to share.',
     early: 'Early results',
     sample: (n: number, since: string | null) =>
       `${n} shared receipt${n === 1 ? '' : 's'}${since ? ` since ${since}` : ''}`,

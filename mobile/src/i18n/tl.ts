@@ -415,7 +415,7 @@ export const tl: Copy = {
   },
 
   fairRate: {
-    intro: 'Ang mid-market rate ang tapat na panukat. Bawat punto na mas mababa rito ang isang rate ay binabawas sa padala mo.',
+    intro: 'Bawat punto sa ilalim ng mid-market rate ay bawas sa padala mo.',
     yourTransfer: 'Ang padala mo',
     amountToSend: 'Halagang ipapadala',
     markup: 'Markup sa exchange rate',
@@ -432,7 +432,7 @@ export const tl: Copy = {
   },
 
   trueCost: {
-    intro: 'Ilagay ang nasa resibo mo. Tingnan ang gastos na nakatago sa rate, hindi lang ang fee.',
+    intro: 'Ilagay ang nasa resibo mo. Tingnan ang gastos na nakatago sa rate.',
     currencies: 'Mga currency',
     sent: 'Ipinadala',
     received: 'Natanggap',
@@ -479,7 +479,7 @@ export const tl: Copy = {
   },
 
   yearlyCost: {
-    intro: 'Parehong padala, inuulit sa loob ng isang taon. Tingnan ang kabuuan sa gastos mo at sa mga panukat.',
+    intro: 'Parehong padala, buong taon. Magkano ang kabuuan?',
     yourTransfers: 'Ang mga padala mo',
     amountEach: 'Halaga bawat padala',
     yourCost: 'Ang kabuuang gastos mo',
@@ -503,7 +503,7 @@ export const tl: Copy = {
   },
 
   rateHistory: {
-    intro: 'Ang mid-market rate, araw-araw. Kapag pataas ang linya, mas marami ang nabibili ng bawat dolyar.',
+    intro: 'Ang mid-market rate, araw-araw. Pataas, mas marami ang nabibili ng bawat dolyar.',
     pair: 'Pares ng currency',
     failed: 'Hindi ma-load ang kasaysayan. Tingnan ang koneksyon mo at subukan ulit.',
     notEnough: 'Wala pang sapat na araw na naka-publish para sa pares na ito.',
@@ -522,7 +522,7 @@ export const tl: Copy = {
   },
 
   scamCheck: {
-    intro: 'Walong tanong tungkol sa sitwasyon mo, isa-isa. Hindi umaalis sa phone mo ang mga sagot mo.',
+    intro: 'Walong mabilis na tanong. Nananatili sa phone mo ang mga sagot mo.',
     questions: {
       'payment-method': {
         ask: 'Pinababayad ka ba gamit ang gift card, crypto, crypto ATM, o wire transfer sa taong hindi mo pa nakikita nang personal?',
@@ -720,7 +720,7 @@ export const tl: Copy = {
   },
 
   observatory: {
-    intro: 'Ang talagang ibinayad ng mga tao, mula sa mga resibong ini-scan nila at piniling ibahagi para sa pananaliksik.',
+    intro: 'Ang talagang ibinayad ng mga tao, mula sa mga resibong piniling ibahagi.',
     early: 'Mga unang resulta',
     sample: (n: number, since: string | null) => `${n} ibinahaging resibo${since ? ` mula ${since}` : ''}`,
     tooFew: (min: number) =>

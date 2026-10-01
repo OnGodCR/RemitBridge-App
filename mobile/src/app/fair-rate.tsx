@@ -3,6 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { FairRateArt } from '@/components/illustrations';
 import { CurrencySelect } from '@/components/select-field';
 import { Answer, Breakdown, cleanNumber, Field, Fields, Section, Slider, SourceNote, ToolScreen } from '@/components/tool';
 import { AppText } from '@/components/ui';
@@ -48,7 +49,7 @@ export default function FairRateScreen() {
     : null;
 
   return (
-    <ToolScreen intro={f.intro}>
+    <ToolScreen intro={f.intro} art={<FairRateArt />}>
       <Section title={f.yourTransfer}>
         <Fields>
           <Field label={f.amountToSend} unit={from} value={amount} onChange={setAmount} last />

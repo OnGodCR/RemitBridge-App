@@ -18,10 +18,10 @@ import { useCopy } from '@/i18n';
 
 /**
  * The frame every tool screen shares (DECISIONS.md D58): a native header from the tools
- * stack, one short line saying what the tool does, then the inputs and the answer. The
+ * stack, the tool's drawing (D103) beside one short line saying what it does, then the inputs and the answer. The
  * keyboard gets out of the way on scroll, since number pads have no return key.
  */
-export function ToolScreen({ intro, children }: { intro: string; children: ReactNode }) {
+export function ToolScreen({ intro, art, children }: { intro: string; art?: ReactNode; children: ReactNode }) {
   const t = useTheme();
   return (
     <KeyboardAvoidingView
@@ -34,7 +34,18 @@ export function ToolScreen({ intro, children }: { intro: string; children: React
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         contentInsetAdjustmentBehavior="automatic">
-        <AppText muted>{intro}</AppText>
+        {art ? (
+          <View style={styles.lead}>
+            <View accessible={false} importantForAccessibility="no-hide-descendants">
+              {art}
+            </View>
+            <AppText muted style={styles.leadText}>
+              {intro}
+            </AppText>
+          </View>
+        ) : (
+          <AppText muted>{intro}</AppText>
+        )}
         {children}
       </ScrollView>
     </KeyboardAvoidingView>
@@ -240,6 +251,8 @@ export function Slider({
 const THUMB = 26;
 
 const styles = StyleSheet.create({
+  lead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
+  leadText: { flex: 1 },
   fill: { flex: 1 },
   flex: { flex: 1 },
   content: { padding: Spacing.three, gap: Spacing.four, paddingBottom: Spacing.six },
