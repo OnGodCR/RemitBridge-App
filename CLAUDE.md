@@ -122,7 +122,10 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
-- [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
+- [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
+      angadkochar2000@gmail.com, 2026-10-01; Claude drafted the "About you" answers). Left:
+      Angad finishes it, including identity verification. New personal accounts must run a
+      closed test with at least 12 testers for 14 days before releasing to everyone.
 - [ ] **Disk space and memory.** 12 GB free on 2026-09-30; native builds and real store
       screenshots need 15–20 GB. With 8 GB of RAM, the simulator takes 1–2 minutes to boot.
 
