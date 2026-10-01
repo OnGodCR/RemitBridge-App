@@ -2,8 +2,18 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
-import { ListGroup, ListRow } from '@/components/list-row';
-import { Tile, TileGrid } from '@/components/tile-grid';
+import {
+  CheckedArt,
+  FeeMarkupArt,
+  GlossaryArt,
+  NoAffiliateArt,
+  ObservatoryArt,
+  RemitBenchArt,
+  RouteBoardArt,
+  WrongPriceArt,
+} from '@/components/illustrations';
+import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
+import { AppText } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
@@ -27,19 +37,23 @@ export default function LearnScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={l.title} />
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          <TileGrid title={l.howItWorks}>
-            <Tile icon="percent" title={l.feeMarkup} caption={l.feeMarkupBody} />
-            <Tile icon="checkmark.seal" title={l.checkedOnly} caption={l.checkedOnlyBody} />
-            <Tile icon="hand.raised" title={l.noAffiliate} caption={l.noAffiliateBody} />
-            <Tile icon="envelope" title={l.wrongPrice} caption={CONTACT} onPress={() => writeToUs(copy)} />
-          </TileGrid>
+          <ListGroup title={l.howItWorks}>
+            <ListPoint art={<FeeMarkupArt />} title={l.feeMarkup}>{l.feeMarkupBody}</ListPoint>
+            <ListPoint art={<CheckedArt />} title={l.checkedOnly}>{l.checkedOnlyBody}</ListPoint>
+            <ListPoint art={<NoAffiliateArt />} title={l.noAffiliate}>{l.noAffiliateBody}</ListPoint>
+            <ListPoint art={<WrongPriceArt />} title={l.wrongPrice}>
+              <AppText style={{ color: t.primary }} accessibilityRole="link" onPress={() => writeToUs(copy)}>
+                {CONTACT}
+              </AppText>
+            </ListPoint>
+          </ListGroup>
 
-          <TileGrid title={l.deeper}>
-            <Tile icon="character.book.closed" title={copy.titles.glossary} caption={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
-            <Tile icon="map" title={copy.titles.routeBoard} caption={l.routeBoardSub} onPress={() => router.push('/routes')} />
-            <Tile icon="chart.bar.xaxis" title={copy.titles.observatory} caption={l.observatorySub} onPress={() => router.push('/observatory')} />
-            <Tile icon="flask" title={copy.titles.remitbench} caption={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
-          </TileGrid>
+          <ListGroup title={l.deeper}>
+            <ListRow art={<GlossaryArt />} title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
+            <ListRow art={<RouteBoardArt />} title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
+            <ListRow art={<ObservatoryArt />} title={copy.titles.observatory} subtitle={l.observatorySub} onPress={() => router.push('/observatory')} />
+            <ListRow art={<RemitBenchArt />} title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
+          </ListGroup>
 
           <ListGroup title={l.website}>
             <ListRow external icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => openPage(`${WEBSITE}/blog`)} />

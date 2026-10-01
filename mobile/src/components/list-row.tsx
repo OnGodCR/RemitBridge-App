@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type 
 
 import { Eyebrow } from '@/components/brand';
 import { AppText } from '@/components/ui';
-import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
@@ -12,8 +12,8 @@ import { useCopy } from '@/i18n';
 /**
  * The website's divided index (its home page's "Start here" list), for the Tools, Learn and
  * Account tabs (DECISIONS.md D63): hairline rules above and between, no card. The group's
- * name is an eyebrow, as on the site. Since D102 each row leads with an icon, so the list
- * can be read by picture before words.
+ * name is an eyebrow, as on the site. Since D103 a row can lead with one of the app's own
+ * illustrations (components/illustrations.tsx), or, for settings, a small plain symbol.
  */
 export function ListGroup({ title, children }: { title?: string; children: ReactNode }) {
   const t = useTheme();
@@ -26,20 +26,22 @@ export function ListGroup({ title, children }: { title?: string; children: React
 }
 
 /**
- * One destination: an icon, a bold title, one short line saying what it's for, and the
- * website's green arrow (up and to the right for pages that open on the website).
+ * One destination: an illustration or a symbol, a bold title, one short line saying what
+ * it's for, and the website's green arrow (up and to the right for website pages).
  */
 export function ListRow({
   title,
   subtitle,
   onPress,
   external,
+  art,
   icon,
 }: {
   title: string;
   subtitle: string;
   onPress: () => void;
   external?: boolean;
+  art?: ReactNode;
   icon?: SFSymbol;
 }) {
   const t = useTheme();
@@ -50,7 +52,7 @@ export function ListRow({
       accessibilityRole={external ? 'link' : 'button'}
       accessibilityLabel={`${title}. ${subtitle}`}
       accessibilityHint={external ? copy.learn.opensWebsite : undefined}>
-      {icon ? <IconTile name={icon} /> : null}
+      <Lead art={art} icon={icon} />
       <View style={styles.text}>
         <AppText style={[styles.title, { color: t.text }]}>{title}</AppText>
         <AppText style={[styles.subtitle, { color: t.textSecondary }]}>{subtitle}</AppText>
@@ -60,12 +62,12 @@ export function ListRow({
   );
 }
 
-/** A row that says something rather than going somewhere: an icon, a bold title and plain text. */
-export function ListPoint({ title, children, icon }: { title: string; children: ReactNode; icon?: SFSymbol }) {
+/** A row that says something rather than going somewhere: an illustration, a bold title and plain text. */
+export function ListPoint({ title, children, art }: { title: string; children: ReactNode; art?: ReactNode }) {
   const t = useTheme();
   return (
     <ListItem>
-      {icon ? <IconTile name={icon} /> : null}
+      <Lead art={art} />
       <View style={styles.text}>
         <AppText style={[styles.title, { color: t.text }]}>{title}</AppText>
         <AppText style={[styles.subtitle, { color: t.textSecondary }]}>{children}</AppText>
@@ -137,19 +139,23 @@ export function ListItem({
 }
 
 /**
- * A symbol on a mint square (D102): the icon that leads a row or a step. Decorative, so
- * screen readers skip it; the words next to it carry the meaning.
+ * What leads a row: an illustration (decorative, so hidden from screen readers), or a
+ * small symbol in ink for plain settings rows. No tinted square behind either (D103).
  */
-export function IconTile({ name, size = 44 }: { name: SFSymbol; size?: number }) {
+function Lead({ art, icon }: { art?: ReactNode; icon?: SFSymbol }) {
   const t = useTheme();
-  const glyph = useIconSize(Math.round(size * 0.48));
-  const box = useIconSize(size);
+  const size = useIconSize(20);
+  if (art) {
+    return (
+      <View accessible={false} importantForAccessibility="no-hide-descendants">
+        {art}
+      </View>
+    );
+  }
+  if (!icon) return null;
   return (
-    <View
-      accessible={false}
-      importantForAccessibility="no-hide-descendants"
-      style={[styles.tile, { width: box, height: box, backgroundColor: t.accent }]}>
-      <SymbolView pointerEvents="none" name={name} size={glyph} weight="semibold" tintColor={t.accentForeground} fallback={null} />
+    <View style={styles.symbol} accessible={false} importantForAccessibility="no-hide-descendants">
+      <SymbolView pointerEvents="none" name={icon} size={size} weight="regular" tintColor={t.text} fallback={null} />
     </View>
   );
 }
@@ -182,7 +188,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   text: { flex: 1, gap: 3 },
-  tile: { borderRadius: Radius.md, alignItems: 'center', justifyContent: 'center' },
+  symbol: { width: 28, alignItems: 'center' },
   // The site's index title is text-2xl bold; 19 keeps a long tool name on one line here.
   title: { fontFamily: Fonts.bold, fontSize: 19, lineHeight: 24, letterSpacing: -0.3 },
   subtitle: { fontSize: 15, lineHeight: 21 },

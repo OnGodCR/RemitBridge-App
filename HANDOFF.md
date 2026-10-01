@@ -59,8 +59,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   business verification), so no message can be sent or answered yet. RemitBridge isn't a
   registered business (D49), so whether and how to verify is Angad's decision.
 - **UI pass (D101, D102), in progress:** Scan is the first tab and the app opens on it;
-  Compare moved to `(tabs)/compare.tsx`; list rows and the new tile grid carry icons;
-  Tools and Learn are icon cards; shorter captions in all five languages. WhatsApp is
+  Compare moved to `(tabs)/compare.tsx`; rows lead with drawn illustrations (D103, after
+  Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages. WhatsApp is
   parked (D100). `docs/translation-review/hi.md` is now out of date for the changed strings;
   regenerate it when the UI pass ends, before it goes to a reviewer.
 - **Order of work (D99):** every free setup first (Resend done; GitHub token and Meta
@@ -218,7 +218,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D102; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D103; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
