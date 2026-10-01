@@ -51,9 +51,22 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **The receipt model moved to Groq's free tier (D98):** `qwen/qwen3.8-27b`, `GROQ_API_KEY`
   (set by Angad in Supabase and GitHub Actions). No more OpenRouter, no fallback models.
   About 60 receipts a day free; past that the rules read alone. The privacy policy names Groq.
-  `scan-receipt` is deployed (2026-09-30). The first benchmark runs got 401 "Invalid API Key"
-  from Groq, so the stored key is wrong and Angad sets it again; until then receipts are
-  read by the rules alone.
+  `scan-receipt` is deployed (2026-09-30). The first key was refused (401: the value had
+  stray spaces); Angad made a new one and set it with a command that checks it against Groq
+  first and reads it from the clipboard, so it never shows (README). The first live call
+  (run 36800253679) read all 11 fields of one synthetic receipt right. Zero Data Retention
+  is on (Angad, 2026-10-01).
+- **Benchmark on Groq** (run 36800320699, 20 synthetic receipts, redacted text only, now
+  `benchmark/results.md`): model mode 82.3% accuracy, 93.0% precision; combined 68.1%
+  accuracy, 93.9% precision. Parser mode is 0% until Angad's extractors land. The gap
+  between accuracy and precision is the free tier: the run hit 112 rate-limit waits, and
+  6 receipts in combined mode (3 in model mode) gave up after five. What it reads, it
+  reads right; how much it can read at once is the limit. Only 1 of 14 wrong values was
+  flagged for checking, which is worth a look once the extractors exist.
+- `RECEIPT_INTAKE_SECRET` (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET`
+  (Supabase) set by Claude with `openssl rand`, never displayed.
+- The app runs in Expo Go on the iPhone 18 Pro simulator (`npx expo start --lan`, then
+  `exp://192.168.1.25:8081`); Compare shows Wise's live price.
 
 ## 2026-10-01 (cloud session)
 
