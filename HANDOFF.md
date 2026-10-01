@@ -27,7 +27,7 @@ What stands between this and a working product, in order:
 
 **Supabase:** project ref `gmzljjdnwndvqciqicbx`. All nine migrations applied (Angad pushed
 the last two, `20260930020000_whatsapp_receipts` and `20260930030000_receipt_observatory`,
-on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions deployed: `delete-account`, `process-prices`, `scan-receipt` (2026-09-30). Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
 ## 2026-09-30 evening (local session, the go-live list)
@@ -51,6 +51,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **The receipt model moved to Groq's free tier (D98):** `qwen/qwen3.8-27b`, `GROQ_API_KEY`
   (set by Angad in Supabase and GitHub Actions). No more OpenRouter, no fallback models.
   About 60 receipts a day free; past that the rules read alone. The privacy policy names Groq.
+  `scan-receipt` is deployed (2026-09-30). The first benchmark runs got 401 "Invalid API Key"
+  from Groq, so the stored key is wrong and Angad sets it again; until then receipts are
+  read by the rules alone.
 
 ## 2026-10-01 (cloud session)
 
