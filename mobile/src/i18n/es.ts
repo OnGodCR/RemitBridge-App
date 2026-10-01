@@ -809,6 +809,16 @@ export const es: Copy = {
     ],
   },
 
+  devPreview: {
+    title: 'Vista previa del recibo',
+    row: 'Ver las pantallas del recibo',
+    intro: 'Recibos inventados, para revisar estas pantallas antes de que la versión completa pueda escanear. Solo en versiones de desarrollo.',
+    check: 'Revisar',
+    result: 'Resultado',
+    today: 'Hoy',
+    none: 'Sin datos',
+  },
+
   observatory: {
     intro: 'Lo que la gente pagó de verdad, según recibos que decidieron compartir.',
     early: 'Primeros resultados',

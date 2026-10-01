@@ -792,6 +792,16 @@ export const en = {
     ],
   },
 
+  devPreview: {
+    title: 'Receipt preview',
+    row: 'Preview the receipt screens',
+    intro: 'Made-up receipts, to check these screens before the full build can scan. Development builds only.',
+    check: 'Check',
+    result: 'Result',
+    today: 'Today',
+    none: 'No match',
+  },
+
   observatory: {
     intro: 'What people really paid, from receipts they chose to share.',
     early: 'Early results',

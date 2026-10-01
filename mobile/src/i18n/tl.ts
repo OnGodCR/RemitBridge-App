@@ -811,6 +811,16 @@ export const tl: Copy = {
     ],
   },
 
+  devPreview: {
+    title: 'Silip sa resibo',
+    row: 'Silipin ang mga screen ng resibo',
+    intro: 'Mga gawa-gawang resibo, para masuri ang mga screen na ito bago makapag-scan ang buong build. Sa development builds lang.',
+    check: 'Suriin',
+    result: 'Resulta',
+    today: 'Ngayon',
+    none: 'Walang tugma',
+  },
+
   observatory: {
     intro: 'Ang talagang ibinayad ng mga tao, mula sa mga resibong piniling ibahagi.',
     early: 'Mga unang resulta',

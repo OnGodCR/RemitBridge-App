@@ -657,6 +657,13 @@ with your name and the date.
 | result.limits[2] | What your family was charged at their end, beyond what the receipt shows. | आपके परिवार से उनकी तरफ़ क्या लिया गया, रसीद में जो दिखता है उसके अलावा। | |
 | result.limits[3] | The rate at the minute you sent: the mid-market rate is a daily reference. | भेजने के समय का रेट: मिड-मार्केट रेट दिन भर का संदर्भ है। | |
 | result.limits[4] | Whether a disclosure was missing from the receipt, or only from the photo. | कोई जानकारी रसीद से गायब थी या सिर्फ़ फ़ोटो से। | |
+| devPreview.title | Receipt preview | रसीद का पूर्वावलोकन | |
+| devPreview.row | Preview the receipt screens | रसीद वाली स्क्रीन देखें | |
+| devPreview.intro | Made-up receipts, to check these screens before the full build can scan. Development builds only. | बनावटी रसीदें, ताकि पूरा बिल्ड स्कैन कर सके उससे पहले ये स्क्रीन जाँची जा सकें। सिर्फ़ डेवलपमेंट बिल्ड में। | |
+| devPreview.check | Check | जाँच | |
+| devPreview.result | Result | नतीजा | |
+| devPreview.today | Today | आज | |
+| devPreview.none | No match | कोई मेल नहीं | |
 | observatory.intro | What people really paid, from receipts they chose to share. | लोगों ने असल में कितना चुकाया, उन रसीदों से जो उन्होंने साझा कीं। | |
 | observatory.early | Early results | शुरुआती नतीजे | |
 | observatory.sample | {n} shared receipts since {since} | {n} साझा रसीदें, {since} से | |
