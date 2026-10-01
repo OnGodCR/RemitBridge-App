@@ -25,12 +25,14 @@ What stands between this and a working product, in order:
    automated access (D52): Add a price, or follow up on 2026-10-12.
 2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
-**Supabase:** project ref `gmzljjdnwndvqciqicbx`. All seven migrations on `main` applied
-(Angad pushed the last four on 2026-09-30). The cloud branch's two (`20260930020000`,
-`20260930030000`) wait on its merge. RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`. Seven of nine migrations applied (Angad
+pushed the last four on 2026-09-30). Not yet applied: `20260930020000_whatsapp_receipts` and
+`20260930030000_receipt_observatory`, merged with PR #2 on 2026-10-01. Angad runs
+`supabase db push --dry-run`, then `supabase db push` (ProtonVPN off), then the smoke test
+(52 checks). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
-## CAC receipt scanner (Phases 1–3 merged to `main` on 2026-09-30, PR #1)
+## CAC receipt scanner (all six phases on `main`: PR #1 on 2026-09-30, PR #2 on 2026-10-01)
 
 Built by the cloud session for the Congressional App Challenge (D72–D90, D92), on the branch
 `claude/gallant-hopper-51zhhm`; later phases reach `main` the same way, by PR (D87). `main` (languages D69, accessibility D70, flags) was merged into
