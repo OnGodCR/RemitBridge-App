@@ -7,6 +7,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { agoIn, useCopy } from '@/i18n';
 import { money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
+import { GrowIn } from '@/components/motion-views';
 
 
 
@@ -111,9 +112,11 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
         parts.map((p) => `${p.label} ${moneySpoken(p.amount, q.send_currency)}`).join(', '),
       )}>
       <View style={[styles.bar, { backgroundColor: t.muted }]}>
-        {parts.map((p) => (
-          <View key={p.key} style={{ flex: p.amount, backgroundColor: p.color }} />
-        ))}
+        <GrowIn style={styles.barParts}>
+          {parts.map((p) => (
+            <View key={p.key} style={{ flex: p.amount, backgroundColor: p.color }} />
+          ))}
+        </GrowIn>
       </View>
       <View style={styles.legend}>
         {parts.map((p) => (
@@ -157,7 +160,8 @@ const styles = StyleSheet.create({
   flex: { flex: 1, gap: 2 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   tag: { fontFamily: Fonts.semibold },
-  bar: { height: 8, borderRadius: Radius.sm, overflow: 'hidden', flexDirection: 'row', gap: 1 },
+  bar: { height: 8, borderRadius: Radius.sm, overflow: 'hidden' },
+  barParts: { flex: 1, flexDirection: 'row', gap: 1 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three, marginTop: Spacing.two },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
   dot: { width: 8, height: 8, borderRadius: 2 },

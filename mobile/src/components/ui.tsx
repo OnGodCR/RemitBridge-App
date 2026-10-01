@@ -1,5 +1,5 @@
 import { SymbolView, type SFSymbol } from 'expo-symbols';
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -12,6 +12,7 @@ import {
   type TextStyle,
   type ViewStyle,
 } from 'react-native';
+import Animated, { Easing, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { DevanagariFonts, Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useBoldText } from '@/components/accessibility';
@@ -128,10 +129,18 @@ export function Segmented<T extends string>({
   // With large text, three labels side by side get cut off ("Bank dep…"), so the choices
   // stack into full-width rows instead.
   const stacked = useLargeText();
+  // Side by side, the selection is one green thumb that slides to the choice (D121). Until
+  // the bar is measured, and when stacked, the chosen segment is filled directly instead.
+  const [width, setWidth] = useState(0);
+  const sliding = !stacked && width > 0;
+  const index = Math.max(0, options.findIndex((o) => o.value === value));
+  const segment = (width - SEGMENT_PAD * 2 - SEGMENT_GAP * (options.length - 1)) / options.length;
   return (
     <View
       accessibilityRole="radiogroup"
+      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       style={[styles.segmented, stacked && styles.segmentedStacked, { backgroundColor: t.muted, borderColor: t.border }]}>
+      {sliding ? <SegmentThumb x={index * (segment + SEGMENT_GAP)} width={segment} color={t.primary} /> : null}
       {options.map((o) => {
         const selected = o.value === value;
         return (
@@ -143,7 +152,7 @@ export function Segmented<T extends string>({
             style={[
               styles.segment,
               stacked && styles.segmentStacked,
-              selected && [styles.segmentSelected, { backgroundColor: t.primary, borderColor: t.primary }],
+              selected && !sliding && [styles.segmentSelected, { backgroundColor: t.primary, borderColor: t.primary }],
             ]}>
             <AppText
               variant="label"
@@ -156,6 +165,20 @@ export function Segmented<T extends string>({
       })}
     </View>
   );
+}
+
+const SEGMENT_PAD = 3;
+const SEGMENT_GAP = 3;
+
+/** The green thumb behind the chosen segment, sliding between choices. */
+function SegmentThumb({ x, width, color }: { x: number; width: number; color: string }) {
+  const reduced = useReducedMotion();
+  const offset = useSharedValue(x);
+  useEffect(() => {
+    offset.set(reduced ? x : withTiming(x, { duration: 240, easing: Easing.out(Easing.cubic) }));
+  }, [x, reduced, offset]);
+  const animated = useAnimatedStyle(() => ({ transform: [{ translateX: offset.get() }] }));
+  return <Animated.View pointerEvents="none" style={[styles.segmentThumb, styles.segmentSelected, { width, backgroundColor: color }, animated]} />;
 }
 
 /**
@@ -323,6 +346,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacing.one,
+  },
+  segmentThumb: {
+    position: 'absolute',
+    top: SEGMENT_PAD,
+    bottom: SEGMENT_PAD,
+    left: SEGMENT_PAD,
+    borderRadius: Radius.md - 3,
   },
   segmentSelected: {
     shadowColor: '#000',

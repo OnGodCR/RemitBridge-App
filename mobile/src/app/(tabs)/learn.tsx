@@ -15,6 +15,7 @@ import { useCopy } from '@/i18n';
 import { nextStep, useLearned } from '@/lib/learn-progress';
 import { openPage } from '@/lib/links';
 import { useTabFocus } from '@/lib/current-tab';
+import { FocusRise, GrowBar } from '@/components/motion-views';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
@@ -68,7 +69,7 @@ export default function LearnScreen() {
             <View style={styles.progress}>
               <AppText style={[styles.progressText, { color: t.heroText }]}>{next ? l.progress(done, total) : l.allDone}</AppText>
               <View style={[styles.bar, { backgroundColor: t.heroMuted, opacity: 0.25 }]} />
-              <View style={[styles.bar, styles.fillBar, { backgroundColor: t.heroText, width: `${(done / total) * 100}%` }]} />
+              <GrowBar fraction={done / total} delay={150} style={[styles.bar, styles.fillBar, { backgroundColor: t.heroText }]} />
             </View>
             {next ? (
               <Button
@@ -82,6 +83,7 @@ export default function LearnScreen() {
         ) : null}
       </HeroHeader>
 
+      <FocusRise style={styles.fill}>
       {part === 'modules' ? (
         <ScrollView ref={path} onLayout={(e) => setViewport(e.nativeEvent.layout.height)} contentContainerStyle={styles.path}>
           <LearnPath modules={MODULES} learned={learned} next={next?.module.id ?? null} onOpen={(m) => open(m)} onNextAt={toNext} />
@@ -106,6 +108,7 @@ export default function LearnScreen() {
           </ListGroup>
         </ScrollView>
       )}
+      </FocusRise>
     </View>
   );
 }

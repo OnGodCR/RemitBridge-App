@@ -73,6 +73,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **Swipe between tabs (D120) and motion (D121):** a sideways swipe changes tab; tab bodies
+  rise in on focus, Compare's cards arrive in turn, bars fill, segmented choices slide.
+  `components/motion-views.tsx`, `lib/current-tab.ts`. One swipe over Learn's path didn't
+  register in the simulator: check on a phone.
 - **What you could have kept (D119):** the receipt result now names the cheapest way we had
   prices for to send the same amount, and the difference in true cost. Pure logic in
   `packages/receipt/src/result.ts` (`bestOption`), fed by `scan-receipt` (`cheapest`). `scan-receipt`

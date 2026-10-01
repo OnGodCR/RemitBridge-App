@@ -1222,3 +1222,16 @@ that starts vertical stays with the scroll view) and long or quick enough, so re
 scrolling are unchanged. Native tabs switch without updating the layout's `usePathname`, so
 each tab records itself when it comes into view (`lib/current-tab.ts`). The app now has
 the gesture-handler root it needs (`GestureHandlerRootView` in the root layout).
+
+**D121. Motion across the app** (Angad, 2026-10-01: "more animations that make the app
+smoother"). In the website's register (D18, `components/motion.ts`): short, small,
+ease-out, and off when the phone asks for reduced motion. In `components/motion-views.tsx`:
+- **Tabs:** each tab's body rises into place when it comes into view (a fade and a 10pt
+  lift after a tap; a 28pt slide from the side swiped from, D120). Native tabs switch with
+  no motion of their own.
+- **Compare:** the price cards arrive in turn, best first, each time a new set loads, and
+  each card's cost bar fills from the left.
+- **Progress:** Learn's progress bar and a module's progress bar fill to their value.
+- **Segmented choices** (delivery method, Modules | Library): one green thumb slides to the
+  choice. When stacked for large text, the chosen row is filled as before.
+Tests run with the stand-ins Reanimated ships (`mobile/jest.setup.js`).

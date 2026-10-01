@@ -15,6 +15,12 @@ import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
 let mockSavedLanguage: string | null = null;
 jest.mock('@/lib/current-tab', () => ({ useTabFocus: () => undefined, currentTab: () => '/' }));
+// The tab's entrance needs navigation focus, which this test renders without.
+jest.mock('@/components/motion-views', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { View } = require('react-native');
+  return { FocusRise: View, RiseIn: View, GrowIn: View, GrowBar: View };
+});
 jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, setLanguage: () => undefined } }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('@/lib/auth', () => ({ useAuth: () => ({ session: null }) }));

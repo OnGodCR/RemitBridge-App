@@ -14,6 +14,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { markLearned, moduleProgress, useLearned } from '@/lib/learn-progress';
 import { track } from '@/lib/track';
+import { GrowBar } from '@/components/motion-views';
 
 /**
  * One Learn module (DECISIONS.md D104): its drawing and what it covers, then its terms as
@@ -66,7 +67,7 @@ export default function ModuleScreen() {
 
         <View style={styles.progress} accessible accessibilityLabel={l.moduleCount(read, total)}>
           <View style={[styles.track, { backgroundColor: t.border }]}>
-            <View style={[styles.fill, { backgroundColor: t.primary, width: `${(read / total) * 100}%` }]} />
+            <GrowBar fraction={read / total} delay={150} style={[styles.fill, { backgroundColor: t.primary }]} />
           </View>
           <AppText variant="small" style={{ color: complete ? t.primary : t.textSecondary, fontFamily: Fonts.semibold }}>
             {complete ? l.moduleDone : l.moduleCount(read, total)}
