@@ -56,8 +56,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `RECEIPT_INTAKE_SECRET` and `GITHUB_DISPATCH_TOKEN` in Supabase; `WHATSAPP_ACCESS_TOKEN`
       (system user `remitbridge-bot`, never expires) and `RECEIPT_INTAKE_SECRET` in GitHub
       Actions; webhook verified and subscribed to `messages`. Never change
-      `WHATSAPP_HASH_SECRET` now, or every stored hash stops matching. Left: the test texts
-      (below); a real number, payment method and business verification only when going public.
+      `WHATSAPP_HASH_SECRET` now, or every stored hash stops matching. **Blocked by Meta:**
+      the first sends failed with error 131031 "Business Account locked"; Business Support
+      Home shows the WhatsApp account (ID 1656013116119219) "Account Restricted, Duration:
+      Permanent" until the business is verified (2026-10-01). Verification asks for a
+      business's legal documents, and RemitBridge isn't registered (D49), so this is
+      Angad's call. Nothing on our side needs to change once Meta lifts it.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad pays last, once everything free is set up (2026-10-01). EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
