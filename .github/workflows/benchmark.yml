@@ -1,0 +1,48 @@
+name: Receipt benchmark
+
+# Runs the receipt reading benchmark in all three modes (DECISIONS.md D85, D93) on the
+# committed synthetic receipts, so nobody's laptop has to. Manual only: the model modes
+# cost about a tenth of a cent a receipt (D92). Needs the OPENROUTER_API_KEY Actions
+# secret; without it, only parser mode runs.
+#
+# The results are the run's summary and a results.md artifact. They're not committed:
+# to keep a run, download the artifact and commit it as benchmark/results.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "How many receipts (blank for all)"
+        required: false
+        default: ""
+      modes:
+        description: "Modes, comma-separated"
+        required: false
+        default: "parser,model,combined"
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --workspace @remitbridge/receipt --include-workspace-root
+      - name: Benchmark
+        run: |
+          args=(--modes "${{ inputs.modes }}" --out "$RUNNER_TEMP/results.md")
+          if [ -n "${{ inputs.limit }}" ]; then args+=(--limit "${{ inputs.limit }}"); fi
+          node packages/receipt/scripts/benchmark.ts "${args[@]}" > /dev/null
+          cat "$RUNNER_TEMP/results.md" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: ${{ runner.temp }}/results.md
