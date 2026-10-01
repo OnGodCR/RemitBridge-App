@@ -1082,3 +1082,11 @@ deep-green silhouette a little down and right; then the drawing. The Learn path'
 on a darker rim they sink into when pressed, like Duolingo's buttons. All colours are
 theme tokens (`depth`, `depthOpacity`, `accentDeep`, `glow`, `glowOpacity`), lighter in
 dark mode.
+
+**D110. The tax watch is automatic.** Checked 2026-10-01: the IRS rules on the 1% remittance
+tax (IRC 4475) are still proposed (Federal Register 2026-07085); the latest step is Notice
+2026-52, extending providers' deposit-penalty relief until final rules apply. So D97's
+tax stands. Instead of someone remembering to look, `.github/workflows/tax-rules.yml` asks
+the Federal Register API every Monday for an IRS final rule on remittance transfers and
+fails, which emails the repo owner, when one appears. Then the final text gets checked
+against D97 and the formula updated.

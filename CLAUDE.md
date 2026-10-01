@@ -124,8 +124,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Watching and later
 
-- [ ] **Remittance tax: final IRS regulations.** Checked against the proposed ones on
-      2026-10-01 (D97). Re-check when they're final.
+- [ ] **Remittance tax: final IRS regulations.** Still proposed on 2026-10-01 (Notice
+      2026-52 extended penalty relief). Watched automatically: the weekly "Remittance tax
+      rules" workflow fails and emails Angad when a final rule appears (D110); then update
+      the formula against the final text.
 - [ ] **Bank connections or receipt scanning for past transfers.** Manual entry only (D30).
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
 
