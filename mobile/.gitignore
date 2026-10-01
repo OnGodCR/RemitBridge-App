@@ -41,3 +41,6 @@ example
 # generated native folders
 /ios
 /android
+
+# Firebase config for Android push (D127): kept out of git, uploaded to EAS as a secret file.
+google-services.json

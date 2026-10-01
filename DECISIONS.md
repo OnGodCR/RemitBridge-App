@@ -1299,3 +1299,13 @@ add more data visualizations"). Each paragraph became a chart with a short label
 Every chart's accessibility label carries the same facts in words, and the tests check
 those labels. Red stays for real errors: a mismatch shows a neutral mark. The long "rule"
 and "advertised" sentences are gone from all five languages.
+
+**D127. Firebase for Android push** (Angad, 2026-10-01). Firebase project `remitbridge` on the
+RemitBridge Google account (Spark, free; Analytics and the Developer Program sign-up off),
+with the Android app `org.remitbridgelabs.app` registered. Its `google-services.json` is
+config rather than a secret, but holds an API key, so it stays out of git: it's at
+`mobile/google-services.json` (git-ignored) and on EAS as the secret file
+`GOOGLE_SERVICES_JSON` for every environment, read by `mobile/app.config.ts`. Left for
+Angad: the service account key (Project settings > Service accounts > Generate new private
+key) uploaded with `eas credentials` as the FCM V1 key. It's a real secret, so it never
+passes through Claude.
