@@ -59,11 +59,18 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       2026-09-30; PR #2 2026-10-01: benchmark D93, WhatsApp photos D94, disclosure check D95,
       observatory D96). Angad pushes the two new migrations,
       `20260930020000_whatsapp_receipts.sql` and `20260930030000_receipt_observatory.sql`,
-      then runs the smoke test (52 checks). Internal deadline 2026-10-23.
+      then runs the smoke test (52 checks). The dry run on 2026-09-30 listed exactly those
+      two; Claude's push was refused as a production deploy, so it's Angad's.
+      Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
       receipts migration is in (48/48 smoke checks, 2026-09-30).
+- [ ] **Replace the receipt model before 2026-10-09.** OpenRouter lists
+      `qwen/qwen3-vl-32b-instruct` (D92's default) as going away that day, served by one
+      provider (Alibaba Cloud, Singapore and China; no prompt training, retention unknown),
+      $0.104/$0.416 per million tokens (checked 2026-09-30). Run the benchmark with its new
+      `model` input on candidates, then Angad picks.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
       sealed for up to an hour (2026-10-01). Left: push `20260930020000_whatsapp_receipts.sql`, set
       `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
@@ -89,8 +96,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Optional: `GITHUB_DISPATCH_TOKEN`** in Supabase secrets (fine-grained token,
       RemitBridge-App only, Actions read and write) so entries are checked in minutes.
       Without it, the three-hourly schedule checks them.
-- [ ] **Disk space and memory.** 5.8 GB free on 2026-09-30 after the merge's packages
-      (about 1.8 GB); native builds (and real store screenshots) need 15–20 GB. With 8 GB of
+- [ ] **Disk space and memory.** 12 GB free on 2026-09-30 (evening); native builds (and real store screenshots) need 15–20 GB. With 8 GB of
       RAM and swap nearly full, the simulator took 90 seconds to boot.
 - [ ] **Test Apple and Google sign-in on a real iPhone** (the simulator hides Apple).
 - [ ] **Before launch: remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
@@ -105,9 +111,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
       Apple's came through on 2026-09-29.
 - [ ] **Rate alerts as push notifications.** Post-launch (D34).
-- [ ] **Universal links** (open the app straight from a link, D48): need the Apple Team
-      ID from developer.apple.com → Membership. It isn't on the Mac (Xcode has no account
-      signed in) and Chrome isn't signed in to developer.apple.com (checked 2026-09-30).
+- [ ] **Universal links** (open the app straight from a link, D48): the app side is in
+      (the associated domain, and the `p/[partner]` route, 2026-09-30). Left: the Apple Team
+      ID from developer.apple.com → Membership, for `site/.well-known/apple-app-site-association`.
 - [ ] **Partner outreach** (D50): no partners yet. Nine Seattle-area organizations and the
       texts are in `docs/outreach/partners.md`. Horn of Africa Services sent 2026-09-30;
       East African Community Services is in the RemitBridge Gmail's Drafts; the other seven
