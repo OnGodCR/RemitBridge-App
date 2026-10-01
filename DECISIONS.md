@@ -1273,3 +1273,11 @@ stand-in for the covered photo (`mobile/src/dev/`). The samples' comparisons are
 by the real `bestOption`, so they agree with the true cost above them. First fix from it:
 "what you could have kept" is a mint card with a green left edge, so it reads apart from the
 dark true-cost block above it.
+
+**D125. The glossary in Hindi** (Claude's draft, 2026-10-01). All 80 definitions, in the
+Hindi app strings' own words (कंपनी for provider, फ़ीस for fee, मिड-मार्केट रेट), in
+`mobile/src/data/glossary-translations.ts`. The glossary and the module lessons both show
+the Hindi with the English term beneath it, since that's the word printed on receipts
+(`termIn`). The Hindi review sheet now carries the glossary too, term and definition, 840
+lines in all. Like the rest of Hindi, it shows only in development builds until the
+reviewer signs off (D69). Spanish, Tagalog and Vietnamese glossaries wait for reviewers.
