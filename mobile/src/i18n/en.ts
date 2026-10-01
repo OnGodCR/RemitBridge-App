@@ -12,6 +12,8 @@ import { DELIVERY_LABELS } from '@/lib/routes';
  */
 export const en = {
   common: {
+    hi: (name: string) => `Hi, ${name}`,
+    hiThere: 'Hi there',
     back: 'Back',
     close: 'Close',
     cancel: 'Cancel',
@@ -42,6 +44,7 @@ export const en = {
     glossary: 'Glossary',
     blog: 'Blog',
     saved: 'Saved',
+    alert: 'Rate alert',
     remitbench: 'RemitBench',
     quote: 'Quote',
     routeBoard: 'Route board',
@@ -302,6 +305,9 @@ export const en = {
   },
 
   account: {
+    yourName: 'Your name',
+    namePlaceholder: 'What should we call you?',
+    nameSaved: 'Name saved.',
     title: 'Account',
     signedInApple: 'Signed in with Apple',
     optional: 'An account is optional. It keeps what you save, on any phone you use.',
@@ -407,6 +413,28 @@ export const en = {
     workshops: 'Workshops',
     workshopsSub: 'Sessions for communities and schools',
     opensWebsite: 'Opens on the website',
+  },
+
+  alerts: {
+    link: 'Tell me when it’s better',
+    intro: (amount: string, country: string) => `Alert me when ${amount} to ${country} gets at least`,
+    today: (amount: string, provider: string) => `Today’s best: ${amount} from ${provider}`,
+    often: 'One notification when a price reaches this, then at most once a day while it stays there.',
+    less: 'Lower target',
+    more: 'Higher target',
+    turnOn: 'Turn on alert',
+    on: 'Alert on. You’ll find it in Saved.',
+    signInTitle: 'Sign in for alerts',
+    signInBody: 'Alerts are kept with your free account, so they reach this phone.',
+    denied: 'Notifications are off for RemitBridge. Turn them on in Settings to get alerts.',
+    unavailable: 'Notifications need the full app on a phone.',
+    limit: 'You have 10 alerts, the most there can be. Delete one in Saved first.',
+    failed: 'That didn’t go through. Check your connection and try again.',
+    yours: 'Your alerts',
+    row: (amount: string, country: string, target: string) => `${amount} to ${country}: ${target} or more`,
+    deleteNamed: (name: string) => `Delete alert: ${name}`,
+    deleted: 'Alert deleted.',
+    none: 'No prices yet for this amount, so there’s nothing to compare an alert against.',
   },
 
   blog: {

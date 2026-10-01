@@ -68,7 +68,12 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   Google Chrome); then rerun the Hindi sheet script. Learn shows progress as a path of
   modules with Continue (D107, kept on the phone); saved comparisons and checks have
   their own screen, reached from Tools, Compare and Account (D108); the drawings have
-  depth (D109). WhatsApp is
+  depth (D109).
+- **Rate alerts (D113)** and a greeting (D114) are built. Not live until Angad runs
+  `supabase db push` for `20261001000000_rate_alerts.sql` (tested locally: every check in
+  `supabase/tests/local_migrations.sh` passes, 10 of them new), then the smoke test (55).
+  The sender is `.github/scripts/send-rate-alerts.mjs`, run by `rate-alerts.yml` after
+  each price update. Remittance tax: still proposed; `tax-rules.yml` watches weekly (D110). WhatsApp is
   parked (D100). The Hindi review sheet is regenerated from the string files by
   `npx tsx scripts/review-sheet.ts hi` (in `mobile/`); rerun it after any string change.
 - **Scrape schedule:** Angad confirmed it's running (2026-10-01). Earlier note: the `17 */6` cron added on 2026-09-30 had produced no
@@ -230,7 +235,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D112; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D114; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

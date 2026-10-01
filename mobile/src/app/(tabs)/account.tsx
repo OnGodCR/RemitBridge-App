@@ -1,19 +1,21 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
 import { CheckedArt, FeeMarkupArt, NoAffiliateArt, SavedArt, WrongPriceArt } from '@/components/illustrations';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
-import { Spacing } from '@/constants/theme';
+import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { offeredLanguages } from '@/i18n/languages';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
+import { announce } from '@/lib/announce';
 import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
+import { fullName, saveName } from '@/lib/name';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 
@@ -64,6 +66,7 @@ export default function AccountScreen() {
         <View style={[styles.content, { backgroundColor: t.background }]}>
           {session ? (
             <>
+              <NameField />
               {/* Saved items have their own screen (D108); this row is one of three ways in. */}
               <ListGroup cards>
                 <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
@@ -139,7 +142,59 @@ export default function AccountScreen() {
   );
 }
 
+/** The name the app greets you by (D114), kept with the account and deleted with it. */
+function NameField() {
+  const t = useTheme();
+  const copy = useCopy();
+  const { session } = useAuth();
+  const stored = fullName(session);
+  const [value, setValue] = useState(stored);
+  const [busy, setBusy] = useState(false);
+  const changed = value.trim() !== stored;
+  return (
+    <View style={styles.nameField}>
+      <AppText variant="label" muted>
+        {copy.account.yourName}
+      </AppText>
+      <TextInput
+        value={value}
+        onChangeText={setValue}
+        placeholder={copy.account.namePlaceholder}
+        placeholderTextColor={t.textSecondary}
+        autoCapitalize="words"
+        autoComplete="given-name"
+        textContentType="givenName"
+        maxLength={40}
+        accessibilityLabel={copy.account.yourName}
+        style={[styles.nameInput, { color: t.text, backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim }]}
+      />
+      {changed && value.trim() ? (
+        <Button
+          label={copy.confirm.save}
+          variant="secondary"
+          loading={busy}
+          onPress={async () => {
+            setBusy(true);
+            if (await saveName(value)) announce(copy.account.nameSaved);
+            setBusy(false);
+          }}
+        />
+      ) : null}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  nameField: { gap: Spacing.two },
+  nameInput: {
+    minHeight: MinTapTarget + 8,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 3,
+    borderRadius: Radius.lg,
+    paddingHorizontal: Spacing.three,
+    fontFamily: Fonts.semibold,
+    fontSize: 17,
+  },
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six },

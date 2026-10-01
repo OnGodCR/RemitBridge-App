@@ -1111,3 +1111,30 @@ components, so every screen gets them:
   dividers, since they're for reading, not tapping.
 - **The green band** carries the website's bridge mark, large and faint, behind the title.
 Tokens: `primaryDeep`, `rim`, `inverseRim`.
+
+**D113. Rate alerts are push notifications, built now** (D34 said post-launch; Angad asked
+for them now). "Tell me when it's better" on Compare opens a screen with a target in the
+receiving currency, starting a little above today's best standing price for the checked
+amount, method and payment, moved in round steps (₹100 near ₹47,000).
+- **Storage:** `rate_alerts` (migration 20261001000000), owner-only by RLS like saved
+  comparisons, at most ten each, deleted with the account; a client can't mark one sent.
+  It holds the phone's Expo push token and the language, nothing else about the device.
+- **Sending:** the "Rate alerts" workflow runs after every Scrape and Manual prices run.
+  It calls `due_rate_alerts()` (service role only: it returns tokens), which matches each
+  alert against the best standing, fresh, non-promotional price, and sends through Expo's
+  push service in the person's language, at most once in 20 hours per alert. Phones that
+  stopped taking notifications have their alerts deleted. Before the migration is pushed,
+  the workflow finds nothing and passes.
+- **Tapping one** opens Compare on that route, amount and method. Alerts are listed on
+  the Saved screen, with delete.
+- **Needs before it works for real:** the migration pushed, and the iPhone development
+  build (Expo Go and simulators can't get a real push token; EAS sets up Apple's push key
+  with the paid Apple account).
+- Privacy policy updated: what's kept, and that Expo, Apple and Google deliver the message.
+
+**D114. "Hi, [name]" on the home tab.** Angad asked for a greeting at the top. The Scan tab's
+green band says "Hi, Angad" above its question, or "Hi there" with no name. The name is
+the one typed in Account ("Your name", shown when signed in), else the one Google or Apple
+gave, first name only, kept in the account's metadata and deleted with it. Also fixed:
+the empty saved-comparisons "Compare prices" button still went to `/`, which is Scan since
+D101; it goes to Compare.

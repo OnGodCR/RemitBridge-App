@@ -7,6 +7,8 @@ import type { Copy } from '@/i18n/en';
  */
 export const es: Copy = {
   common: {
+    hi: (name: string) => `Hola, ${name}`,
+    hiThere: 'Hola',
     back: 'Atrás',
     close: 'Cerrar',
     cancel: 'Cancelar',
@@ -36,6 +38,7 @@ export const es: Copy = {
     glossary: 'Glosario',
     blog: 'Blog',
     saved: 'Guardado',
+    alert: 'Alerta de tipo de cambio',
     remitbench: 'RemitBench',
     quote: 'Precio',
     routeBoard: 'Tablero de rutas',
@@ -318,6 +321,9 @@ export const es: Copy = {
   },
 
   account: {
+    yourName: 'Tu nombre',
+    namePlaceholder: '¿Cómo te llamamos?',
+    nameSaved: 'Nombre guardado.',
     title: 'Cuenta',
     signedInApple: 'Sesión iniciada con Apple',
     optional: 'La cuenta es opcional. Guarda lo que quieras, en cualquier teléfono que uses.',
@@ -423,6 +429,28 @@ export const es: Copy = {
     workshops: 'Talleres',
     workshopsSub: 'Sesiones para comunidades y escuelas',
     opensWebsite: 'Se abre en el sitio web',
+  },
+
+  alerts: {
+    link: 'Avísame cuando mejore',
+    intro: (amount: string, country: string) => `Avísame cuando ${amount} a ${country} reciba al menos`,
+    today: (amount: string, provider: string) => `Lo mejor hoy: ${amount} con ${provider}`,
+    often: 'Una notificación cuando un precio llegue aquí, y luego como máximo una al día mientras siga así.',
+    less: 'Meta más baja',
+    more: 'Meta más alta',
+    turnOn: 'Activar alerta',
+    on: 'Alerta activada. La verás en Guardado.',
+    signInTitle: 'Inicia sesión para recibir alertas',
+    signInBody: 'Las alertas se guardan con tu cuenta gratuita, para que lleguen a este teléfono.',
+    denied: 'Las notificaciones de RemitBridge están desactivadas. Actívalas en Ajustes para recibir alertas.',
+    unavailable: 'Las notificaciones necesitan la app completa en un teléfono.',
+    limit: 'Tienes 10 alertas, el máximo. Primero borra una en Guardado.',
+    failed: 'No se pudo. Revisa tu conexión e inténtalo de nuevo.',
+    yours: 'Tus alertas',
+    row: (amount: string, country: string, target: string) => `${amount} a ${country}: ${target} o más`,
+    deleteNamed: (name: string) => `Borrar alerta: ${name}`,
+    deleted: 'Alerta borrada.',
+    none: 'Aún no hay precios para este monto, así que no hay con qué comparar una alerta.',
   },
 
   blog: {

@@ -63,6 +63,12 @@
           "cameraPermission": "RemitBridge uses the camera to photograph a transfer receipt, which it reads on your phone.",
           "microphonePermission": false
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#14705A"
+        }
       ]
     ],
     "experiments": {

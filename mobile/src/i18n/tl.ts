@@ -8,6 +8,8 @@ import type { Copy } from '@/i18n/en';
  */
 export const tl: Copy = {
   common: {
+    hi: (name: string) => `Hi, ${name}`,
+    hiThere: 'Hi',
     back: 'Bumalik',
     close: 'Isara',
     cancel: 'Kanselahin',
@@ -37,6 +39,7 @@ export const tl: Copy = {
     glossary: 'Glosaryo',
     blog: 'Blog',
     saved: 'Naka-save',
+    alert: 'Rate alert',
     remitbench: 'RemitBench',
     quote: 'Presyo',
     routeBoard: 'Listahan ng mga ruta',
@@ -318,6 +321,9 @@ export const tl: Copy = {
   },
 
   account: {
+    yourName: 'Pangalan mo',
+    namePlaceholder: 'Ano ang itatawag namin sa iyo?',
+    nameSaved: 'Na-save ang pangalan.',
     title: 'Account',
     signedInApple: 'Naka-sign in gamit ang Apple',
     optional: 'Hindi kailangan ang account. Iniingatan nito ang mga sine-save mo, sa kahit anong phone na gamit mo.',
@@ -423,6 +429,28 @@ export const tl: Copy = {
     workshops: 'Workshops',
     workshopsSub: 'Mga sesyon para sa komunidad at paaralan',
     opensWebsite: 'Bubuksan sa website',
+  },
+
+  alerts: {
+    link: 'Sabihan ako kapag mas maganda',
+    intro: (amount: string, country: string) => `Sabihan ako kapag ang ${amount} papuntang ${country} ay makakatanggap ng hindi bababa sa`,
+    today: (amount: string, provider: string) => `Pinakamaganda ngayon: ${amount} mula sa ${provider}`,
+    often: 'Isang notification kapag umabot dito ang presyo, tapos hanggang isang beses lang sa isang araw habang ganoon pa rin.',
+    less: 'Ibaba ang target',
+    more: 'Itaas ang target',
+    turnOn: 'I-on ang alert',
+    on: 'Naka-on ang alert. Makikita mo ito sa Naka-save.',
+    signInTitle: 'Mag-sign in para sa alerts',
+    signInBody: 'Naka-save ang alerts sa libre mong account, para makarating sa phone na ito.',
+    denied: 'Naka-off ang notifications ng RemitBridge. I-on ito sa Settings para makatanggap ng alerts.',
+    unavailable: 'Kailangan ng buong app sa phone para sa notifications.',
+    limit: 'May 10 alert ka na, ang pinakamarami. Magbura muna ng isa sa Naka-save.',
+    failed: 'Hindi ito natuloy. Tingnan ang koneksyon mo at subukan ulit.',
+    yours: 'Ang alerts mo',
+    row: (amount: string, country: string, target: string) => `${amount} papuntang ${country}: ${target} o higit pa`,
+    deleteNamed: (name: string) => `Burahin ang alert: ${name}`,
+    deleted: 'Nabura ang alert.',
+    none: 'Wala pang presyo para sa halagang ito, kaya walang maihahambing sa alert.',
   },
 
   blog: {

@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { SavedArt } from '@/components/illustrations';
+import { RateAlerts } from '@/components/rate-alerts';
 import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
 import { AppText, Button } from '@/components/ui';
@@ -12,8 +13,8 @@ import { useCopy } from '@/i18n';
 import { useAuth } from '@/lib/auth';
 
 /**
- * Everything saved, in one place (DECISIONS.md D108): comparisons from Compare and receipt
- * checks from TrueCost. Reached from Tools, from Compare's save link and from Account, so
+ * Everything saved, in one place (DECISIONS.md D108, D113): rate alerts and comparisons
+ * from Compare, and receipt checks from TrueCost. Reached from Tools, from Compare's save link and from Account, so
  * it isn't buried at the bottom of Account. Saving needs an account (D19), so signed out
  * it says so and offers to sign in.
  */
@@ -26,6 +27,7 @@ export default function SavedScreen() {
       <StatusBar style="auto" />
       {session ? (
         <>
+          <RateAlerts />
           <SavedComparisons />
           <SavedChecks />
         </>

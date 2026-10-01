@@ -8,6 +8,7 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 import { Hind_400Regular, Hind_500Medium, Hind_600SemiBold, Hind_700Bold } from '@expo-google-fonts/hind';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
@@ -19,6 +20,8 @@ import { useTheme } from '@/hooks/use-theme';
 import { LanguageProvider, useCopy } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { openCompare } from '@/lib/open-compare';
+import type { DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 SplashScreen.preventAutoHideAsync();
@@ -70,6 +73,7 @@ function Navigator() {
   }, [ready]);
 
   useSessionEvents();
+  useAlertTaps();
 
   if (!ready) return null;
 
@@ -90,6 +94,7 @@ function Navigator() {
         <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
         <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />
         <Stack.Screen name="saved" options={{ ...pushed, title: titles.saved }} />
+        <Stack.Screen name="alert" options={{ ...pushed, title: titles.alert }} />
         <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
         <Stack.Screen name="observatory" options={{ ...pushed, title: titles.observatory }} />
         <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />
@@ -106,6 +111,30 @@ function Navigator() {
       </Stack.Protected>
     </Stack>
   );
+}
+
+// A rate alert that arrives while the app is open still shows as a banner (D113).
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }),
+});
+
+/** Tapping a rate alert opens Compare on its route, amount and method (D113). */
+function useAlertTaps() {
+  useEffect(() => {
+    const open = (data: Record<string, unknown> | undefined) => {
+      if (typeof data?.route !== 'string') return;
+      openCompare({
+        routeId: data.route,
+        amount: typeof data.amount === 'number' ? data.amount : undefined,
+        method: typeof data.method === 'string' ? (data.method as DeliveryMethod) : undefined,
+      });
+    };
+    // Opened from a notification while the app was closed.
+    const last = Notifications.getLastNotificationResponse();
+    if (last) open(last.notification.request.content.data);
+    const sub = Notifications.addNotificationResponseReceivedListener((r) => open(r.notification.request.content.data));
+    return () => sub.remove();
+  }, []);
 }
 
 /**

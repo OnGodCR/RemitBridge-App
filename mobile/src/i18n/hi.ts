@@ -8,6 +8,8 @@ import type { Copy } from '@/i18n/en';
  */
 export const hi: Copy = {
   common: {
+    hi: (name: string) => `नमस्ते, ${name}`,
+    hiThere: 'नमस्ते',
     back: 'वापस',
     close: 'बंद करें',
     cancel: 'रद्द करें',
@@ -37,6 +39,7 @@ export const hi: Copy = {
     glossary: 'शब्दकोश',
     blog: 'ब्लॉग',
     saved: 'सहेजा गया',
+    alert: 'रेट अलर्ट',
     remitbench: 'RemitBench',
     quote: 'कीमत',
     routeBoard: 'रूट बोर्ड',
@@ -318,6 +321,9 @@ export const hi: Copy = {
   },
 
   account: {
+    yourName: 'आपका नाम',
+    namePlaceholder: 'हम आपको क्या कहें?',
+    nameSaved: 'नाम सहेज लिया गया।',
     title: 'खाता',
     signedInApple: 'Apple से साइन इन किया गया',
     optional: 'खाता बनाना ज़रूरी नहीं है। इसमें आपका सहेजा हुआ सब रहता है, किसी भी फ़ोन पर।',
@@ -423,6 +429,28 @@ export const hi: Copy = {
     workshops: 'वर्कशॉप',
     workshopsSub: 'समुदायों और स्कूलों के लिए सत्र',
     opensWebsite: 'वेबसाइट पर खुलता है',
+  },
+
+  alerts: {
+    link: 'बेहतर होने पर बताएँ',
+    intro: (amount: string, country: string) => `तब बताएँ जब ${country} को ${amount} पर कम से कम इतना मिले`,
+    today: (amount: string, provider: string) => `आज सबसे अच्छा: ${provider} से ${amount}`,
+    often: 'कीमत यहाँ पहुँचने पर एक सूचना, फिर जब तक वैसी रहे, दिन में ज़्यादा से ज़्यादा एक।',
+    less: 'लक्ष्य कम करें',
+    more: 'लक्ष्य बढ़ाएँ',
+    turnOn: 'अलर्ट चालू करें',
+    on: 'अलर्ट चालू है। यह सहेजा गया में मिलेगा।',
+    signInTitle: 'अलर्ट के लिए साइन इन करें',
+    signInBody: 'अलर्ट आपके मुफ़्त खाते के साथ रखे जाते हैं, ताकि वे इस फ़ोन तक पहुँचें।',
+    denied: 'RemitBridge की सूचनाएँ बंद हैं। अलर्ट पाने के लिए सेटिंग्स में चालू करें।',
+    unavailable: 'सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए।',
+    limit: 'आपके 10 अलर्ट हैं, जो अधिकतम है। पहले सहेजा गया में एक मिटाएँ।',
+    failed: 'यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें।',
+    yours: 'आपके अलर्ट',
+    row: (amount: string, country: string, target: string) => `${country} को ${amount}: ${target} या ज़्यादा`,
+    deleteNamed: (name: string) => `अलर्ट मिटाएँ: ${name}`,
+    deleted: 'अलर्ट मिटा दिया गया।',
+    none: 'इस रकम के लिए अभी कोई कीमत नहीं है, इसलिए अलर्ट की तुलना के लिए कुछ नहीं है।',
   },
 
   blog: {

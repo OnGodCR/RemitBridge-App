@@ -32,10 +32,14 @@
 <p>An account is optional. If you create one, we also store:</p>
 <ul>
 <li>your email address, or the account details Apple or Google share if you sign in with them;</li>
+<li>the name you give in Account, or the one Apple or Google share, used only to greet you in the app;</li>
 <li>anything you choose to save, such as comparisons and transfers you enter yourself (provider, amounts, rate, date and any note);</li>
 <li>the usage records above, linked to your account while you're signed in.</li>
 </ul>
 <p>Saved items are private to your account. Database rules stop anyone else from reading them.</p>
+
+<h2>Rate alerts</h2>
+<p>If you turn on a rate alert, we keep the route, the amount, how you send and pay, your target, your language, and your phone's notification token (a code that lets a notification reach this app on your phone), with your account. After each price update we check your alert, and when a price reaches your target we send one notification, at most once a day. Asking for notifications happens only when you turn an alert on. Delete an alert in the app, or delete your account, and it's gone.</p>
 
 <h2>Scanning a receipt</h2>
 <p>The app asks for camera or photo access only when you scan a transfer receipt, and uses only the photo you take or choose. It reads the receipt on your phone first. Before anything leaves your phone, it covers names, addresses, phone numbers, email addresses, and card, account and reference numbers with solid boxes, removes the photo's hidden details (such as where it was taken), and shows you exactly what would be sent. You can cover more before sending.</p>
@@ -55,6 +59,7 @@
 <li><strong>Supabase</strong> hosts the database and sign-in, in the United States.</li>
 <li><strong>Resend</strong> sends the sign-in code email, if you sign in with email.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
+<li><strong>Expo</strong>'s push service, with <strong>Apple</strong> or <strong>Google</strong>, delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else.</li>
 <li><strong>Groq</strong> runs an AI model (currently Alibaba's Qwen) on a scanned receipt when the app can't read a value on its own. It gets only the covered photo and text, never the original. Groq says it doesn't keep what it's sent, except briefly when investigating errors or abuse, and doesn't train on it.</li>
 </ul>
 <p>To check a receipt, our server also asks Frankfurter, a public exchange-rate service, for the rate on the receipt's date. That request holds only the two currencies and the date.</p>

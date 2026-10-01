@@ -178,10 +178,56 @@ select pg_temp.expect($$insert into public.whatsapp_users (phone_hash, language)
 reset role;
 select pg_temp.ok((select count(*) = 1 from public.whatsapp_users), 'whatsapp: the function (service_role) can write');
 
+-- ---------------------------------------------------------------------------------------
+-- Rate alerts (20261001000000_rate_alerts.sql): owner-only, sent only by the service role
+-- ---------------------------------------------------------------------------------------
+select pg_temp.as_user(null);
+set role anon;
+select pg_temp.expect($$insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, push_token)
+  values ('00000000-0000-4000-8000-0000000000b2', 'us-in', 500, 'bank_deposit', 47000, 'ExponentPushToken[abcdefghijklmnop]')$$,
+  '42501', 'alerts: anon can''t make one');
+select pg_temp.expect($$select public.due_rate_alerts()$$, '42501', 'alerts: anon can''t read due alerts or their tokens');
+reset role;
+
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000b2');
+insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, push_token, last_notified_at)
+  values ('00000000-0000-4000-8000-0000000000b2', 'us-in', 500, 'bank_deposit', 47000, 'ExponentPushToken[abcdefghijklmnop]', now());
+select pg_temp.ok((select count(*) = 1 and bool_and(last_notified_at is null) from public.rate_alerts),
+  'alerts: a person makes one, and can''t mark it as already sent');
+select pg_temp.expect($$insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, push_token)
+  values ('00000000-0000-4000-8000-0000000000b2', 'us-in', 500, 'bank_deposit', 47000, 'not-a-token')$$,
+  '23514', 'alerts: only an Expo push token is kept');
+select pg_temp.expect($$select public.due_rate_alerts()$$, '42501', 'alerts: a person can''t read the due list');
+insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, push_token)
+select '00000000-0000-4000-8000-0000000000b2', 'us-mx', 200 * i, 'bank_deposit', 3000, 'ExponentPushToken[abcdefghijklmnop]'
+  from generate_series(1, 9) i;
+select pg_temp.expect($$insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, push_token)
+  values ('00000000-0000-4000-8000-0000000000b2', 'us-ph', 500, 'bank_deposit', 28000, 'ExponentPushToken[abcdefghijklmnop]')$$,
+  '23514', 'alerts: at most ten each');
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000a1');
+select pg_temp.ok((select count(*) = 0 from public.rate_alerts), 'alerts: nobody else sees them, not even an admin');
+reset role;
+select pg_temp.as_user(null);
+
+-- A published Wise price for $500 to India by bank deposit: ₹47,495 received.
+insert into public.quotes (dedupe_key, provider_id, route_id, send_currency, receive_currency, send_amount, delivery_method,
+  payment_method, fee, offered_rate, mid_market_rate, mid_market_source, amount_received, computed_amount_received,
+  markup_pct, total_cost, total_cost_pct, source, strategy, captured_at, validation_status)
+values ('alert-check', 'wise', 'us-in', 'USD', 'INR', 500, 'bank_deposit', 'bank_account', 5, 95.95, 96, 'check', 47495, 47495,
+  0.05, 5.03, 1.0, 'api', 'check', now(), 'published');
+set role service_role;
+select pg_temp.ok((select count(*) = 1 and min(best_received) = 47495 and min(provider_name) = 'Wise' from public.due_rate_alerts()),
+  'alerts: due once the best standing price meets the target');
+update public.rate_alerts set last_notified_at = now();
+select pg_temp.ok((select count(*) = 0 from public.due_rate_alerts()), 'alerts: not again within a day of being sent');
+reset role;
+
 -- Deleting an account takes its requests and saved comparisons with it (D19).
 delete from auth.users where id = '00000000-0000-4000-8000-0000000000b2';
 select pg_temp.ok((select count(*) = 0 from public.route_requests where user_id = '00000000-0000-4000-8000-0000000000b2')
-  and (select count(*) = 0 from public.saved_comparisons), 'deleting an account deletes its requests and comparisons');
+  and (select count(*) = 0 from public.saved_comparisons)
+  and (select count(*) = 0 from public.rate_alerts), 'deleting an account deletes its requests, comparisons and alerts');
 
 -- ---------------------------------------------------------------------------------------
 -- Receipts (20260930000000_receipts.sql): only the function writes; the ID reads a result

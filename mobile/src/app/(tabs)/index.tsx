@@ -28,6 +28,8 @@ import type { Copy } from '@/i18n/en';
 import { isoDay } from '@/lib/fx';
 import { canScan, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
+import { useAuth } from '@/lib/auth';
+import { firstName } from '@/lib/name';
 import { track } from '@/lib/track';
 
 /**
@@ -61,6 +63,7 @@ export default function ScanScreen() {
   const s = copy.scan;
   const [step, setStep] = useState<Step>({ kind: 'start' });
   const [consent, setConsent] = useState(false);
+  const name = firstName(useAuth().session);
 
   useEffect(() => track('tool_opened', { tool: 'receipt_scan' }), []);
 
@@ -153,7 +156,9 @@ export default function ScanScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-        <HeroHeader title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}>
+        <HeroHeader
+          title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}
+          greeting={step.kind === 'start' ? (name ? copy.common.hi(name) : copy.common.hiThere) : undefined}>
           {step.kind === 'start' ? <AppText style={{ color: t.heroMuted }}>{s.heroSub}</AppText> : null}
         </HeroHeader>
         <View style={[styles.content, { backgroundColor: t.background }]}>
