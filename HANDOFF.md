@@ -73,6 +73,13 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-01, afternoon (accounts on hold: Angad's dad will hold Apple and Google until
+  Angad is 18):** store pack in `docs/store/listing.md` and build config tidied (D123);
+  scanner screens previewable in Expo Go via Account > Preview the receipt screens (D124);
+  Hindi glossary drafted, 840-line review sheet (D125); Learn's mountain (D122); Paysend
+  cleared but not built (fee on top, see `docs/MANUAL_RESEARCH.md`). This Mac was on a
+  network with an iboss filter that blocks app.remitbridgelabs.org and changes the LAN
+  address; open Expo Go with `exp://127.0.0.1:8081` from the simulator when that happens.
 - **Swipe between tabs (D120) and motion (D121):** a sideways swipe changes tab; tab bodies
   rise in on focus, Compare's cards arrive in turn, bars fill, segmented choices slide.
   `components/motion-views.tsx`, `lib/current-tab.ts`. One swipe over Learn's path didn't
