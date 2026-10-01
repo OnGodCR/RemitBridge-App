@@ -8,8 +8,11 @@ import type { Copy } from '@/i18n/en';
  */
 export const tl: Copy = {
   common: {
-    hi: (name: string) => `Hi, ${name}`,
-    hiThere: 'Hi',
+    /** The home tab's greeting by time of day (D128), with the first name when we have it. */
+    greeting: (part: 'morning' | 'afternoon' | 'evening', name?: string) => {
+      const g = { morning: 'Magandang umaga', afternoon: 'Magandang hapon', evening: 'Magandang gabi' }[part];
+      return name ? `${g}, ${name}!` : `${g}!`;
+    },
     back: 'Bumalik',
     close: 'Isara',
     cancel: 'Kanselahin',

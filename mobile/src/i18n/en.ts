@@ -12,8 +12,11 @@ import { DELIVERY_LABELS } from '@/lib/routes';
  */
 export const en = {
   common: {
-    hi: (name: string) => `Hi, ${name}`,
-    hiThere: 'Hi there',
+    /** The home tab's greeting by time of day (D128), with the first name when we have it. */
+    greeting: (part: 'morning' | 'afternoon' | 'evening', name?: string) => {
+      const g = { morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening' }[part];
+      return name ? `${g}, ${name}!` : `${g}!`;
+    },
     back: 'Back',
     close: 'Close',
     cancel: 'Cancel',

@@ -7,8 +7,11 @@ import type { Copy } from '@/i18n/en';
  */
 export const vi: Copy = {
   common: {
-    hi: (name: string) => `Xin chào, ${name}`,
-    hiThere: 'Xin chào',
+    /** The home tab's greeting by time of day (D128), with the first name when we have it. */
+    greeting: (part: 'morning' | 'afternoon' | 'evening', name?: string) => {
+      const g = { morning: 'Chào buổi sáng', afternoon: 'Chào buổi chiều', evening: 'Chào buổi tối' }[part];
+      return name ? `${g}, ${name}!` : `${g}!`;
+    },
     back: 'Quay lại',
     close: 'Đóng',
     cancel: 'Hủy',

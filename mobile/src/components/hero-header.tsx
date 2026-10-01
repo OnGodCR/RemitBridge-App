@@ -26,7 +26,7 @@ export function HeroHeader({ title, greeting, children }: { title: string; greet
           <Path d="M14 30v-6q10-9 20 0v6" />
         </G>
       </Svg>
-      {/* "Hi, Angad" above the title on the home tab (D114). */}
+      {/* "Good morning, Angad" above the title on the home tab (D114, D128). */}
       {greeting ? <AppText style={[styles.greeting, { color: t.heroMuted }]}>{greeting}</AppText> : null}
       <AppText variant="title" accessibilityRole="header" style={{ color: t.heroText }}>
         {title}

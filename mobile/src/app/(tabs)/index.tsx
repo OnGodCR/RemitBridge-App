@@ -59,6 +59,12 @@ type Step =
     }
   | { kind: 'result'; id: string; confirmed: ConfirmResponse; deleted: boolean };
 
+/** Morning until noon, afternoon until 5 pm, evening after, by the phone's own clock. */
+function partOfDay(now = new Date()): 'morning' | 'afternoon' | 'evening' {
+  const h = now.getHours();
+  return h >= 4 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'afternoon' : 'evening';
+}
+
 export default function ScanScreen() {
   useTabFocus('/');
   const t = useTheme();
@@ -161,7 +167,7 @@ export default function ScanScreen() {
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <HeroHeader
           title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}
-          greeting={step.kind === 'start' ? (name ? copy.common.hi(name) : copy.common.hiThere) : undefined}>
+          greeting={step.kind === 'start' ? copy.common.greeting(partOfDay(), name ?? undefined) : undefined}>
           {step.kind === 'start' ? <AppText style={{ color: t.heroMuted }}>{s.heroSub}</AppText> : null}
         </HeroHeader>
         <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
