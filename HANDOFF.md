@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-30
+**Last updated:** 2026-09-30 (evening)
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -31,6 +31,25 @@ pushed the last four on 2026-09-30). Not yet applied: `20260930020000_whatsapp_r
 `supabase db push --dry-run`, then `supabase db push` (ProtonVPN off), then the smoke test
 (52 checks). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
+
+## 2026-09-30 evening (local session, the go-live list)
+
+- `supabase db push --dry-run` listed exactly `20260930020000_whatsapp_receipts` and
+  `20260930030000_receipt_observatory`. Claude's `supabase db push` was refused as a
+  production deploy, so Angad runs it, then the smoke test (52 checks).
+- **The receipt model is going away.** OpenRouter lists `qwen/qwen3-vl-32b-instruct` as
+  retired on 2026-10-09 (suggesting Qwen3.7 Plus). One provider serves it: Alibaba Cloud
+  Int. (Singapore and China), no prompt training, retention "unknown", $0.104 in and
+  $0.416 out per million tokens. Candidates with vision and structured outputs and no
+  end date: `qwen/qwen3-vl-30b-a3b-instruct` ($0.15/$0.60), `qwen/qwen3.8-flash`
+  ($0.15/$0.47), `qwen/qwen3.7-plus` ($0.32/$1.28). `qwen/qwen3.7-flash` is cheaper but
+  doesn't list structured outputs, which D92 requires. The benchmark workflow now takes a
+  `model` input to compare them.
+- Universal links, app side: `ios.associatedDomains` and an Android intent filter in
+  `app.json`, and a `p/[partner]` route that counts the visit and goes to `/`. The page's
+  "Open the app" button now opens `remitbridge://p/<partner>`. Only the
+  `apple-app-site-association` file is left, and it needs the Team ID.
+- EAS: not signed in yet. Disk: 12 GB free.
 
 ## 2026-10-01 (cloud session)
 
