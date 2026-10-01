@@ -11,7 +11,8 @@ import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { MODULES, moduleFor, moduleTerms } from '@/data/modules';
 import { useTheme } from '@/hooks/use-theme';
-import { useCopy } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
+import { termIn } from '@/data/glossary-translations';
 import { markLearned, moduleProgress, useLearned } from '@/lib/learn-progress';
 import { track } from '@/lib/track';
 import { GrowBar } from '@/components/motion-views';
@@ -121,6 +122,8 @@ export default function ModuleScreen() {
 function Lesson({ n, term, learned, startOpen }: { n: number; term: Term; learned: boolean; startOpen: boolean }) {
   const t = useTheme();
   const copy = useCopy();
+  const { language } = useLanguage();
+  const shown = termIn(language.code, term);
   const [open, setOpen] = useState(startOpen);
   useEffect(() => {
     if (open) markLearned(term.id);
@@ -131,7 +134,7 @@ function Lesson({ n, term, learned, startOpen }: { n: number; term: Term; learne
         onPress={() => setOpen((o) => !o)}
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
-        accessibilityLabel={`${n}. ${term.term}${learned ? `, ${copy.learn.learned}` : ''}`}
+        accessibilityLabel={`${n}. ${shown.term}${learned ? `, ${copy.learn.learned}` : ''}`}
         style={({ pressed }) => [styles.lessonHead, { opacity: pressed ? 0.6 : 1 }]}>
         <View style={[styles.number, { borderColor: t.primary, backgroundColor: learned ? t.primary : 'transparent' }]}>
           {learned ? (
@@ -140,7 +143,14 @@ function Lesson({ n, term, learned, startOpen }: { n: number; term: Term; learne
             <AppText style={[styles.numberText, { color: t.primary }]}>{n}</AppText>
           )}
         </View>
-        <AppText style={[styles.term, { color: t.text }]}>{term.term}</AppText>
+        <View style={styles.termText}>
+          <AppText style={[styles.term, { color: t.text }]}>{shown.term}</AppText>
+          {shown.english ? (
+            <AppText variant="small" muted>
+              {shown.english}
+            </AppText>
+          ) : null}
+        </View>
         <SymbolView
           pointerEvents="none"
           name={open ? 'chevron.up' : 'chevron.down'}
@@ -150,7 +160,7 @@ function Lesson({ n, term, learned, startOpen }: { n: number; term: Term; learne
           fallback={null}
         />
       </Pressable>
-      {open ? <AppText style={[styles.plain, { color: t.textSecondary }]}>{term.plain}</AppText> : null}
+      {open ? <AppText style={[styles.plain, { color: t.textSecondary }]}>{shown.plain}</AppText> : null}
     </View>
   );
 }
@@ -163,7 +173,8 @@ const styles = StyleSheet.create({
   lessonHead: { minHeight: MinTapTarget + 12, flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
   number: { width: 30, height: 30, borderRadius: 15, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
   numberText: { fontFamily: Fonts.bold, fontSize: 14, lineHeight: 18, fontVariant: ['tabular-nums'] },
-  term: { flex: 1, fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23, letterSpacing: -0.2 },
+  termText: { flex: 1, gap: 2 },
+  term: { fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23, letterSpacing: -0.2 },
   plain: { fontSize: 16, lineHeight: 23, paddingLeft: 30 + Spacing.three, paddingBottom: Spacing.two },
   progress: { gap: Spacing.two },
   track: { height: 10, borderRadius: 5, overflow: 'hidden' },

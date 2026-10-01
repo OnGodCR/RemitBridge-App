@@ -14,6 +14,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { TERMS } from '../src/data/glossary';
+import { TERM_TRANSLATIONS } from '../src/data/glossary-translations';
 import { en } from '../src/i18n/en';
 import { es } from '../src/i18n/es';
 import { hi } from '../src/i18n/hi';
@@ -56,6 +58,13 @@ const cell = (s: string) => s.replace(/\s*\n\s*/g, ' ').replace(/\|/g, '\\|');
 
 const draft = new Map(leaves(DRAFTS[code], ''));
 const rows = leaves(en, '').map(([key, text]) => `| ${key} | ${cell(text)} | ${cell(draft.get(key) ?? '(missing)')} | |`);
+// The glossary's definitions (data/glossary-translations.ts) follow, term then definition.
+const terms = TERM_TRANSLATIONS[code] ?? {};
+for (const x of TERMS) {
+  const tr = terms[x.id];
+  rows.push(`| glossary.${x.id}.term | ${cell(x.term)} | ${cell(tr?.term ?? '(missing)')} | |`);
+  rows.push(`| glossary.${x.id}.plain | ${cell(x.plain)} | ${cell(tr?.plain ?? '(missing)')} | |`);
+}
 
 const doc = readFileSync(sheet, 'utf8');
 const lines = doc.split('\n');

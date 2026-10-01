@@ -7,7 +7,7 @@ import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
-import { TERM_TRANSLATIONS } from '@/data/glossary-translations';
+import { TERM_TRANSLATIONS, termIn } from '@/data/glossary-translations';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
@@ -30,11 +30,7 @@ export default function GlossaryScreen() {
 
   // In another language, each entry shows the translated term with the English one under it,
   // because the English word is what's printed on receipts and provider sites.
-  const translations = language.code === 'en' ? undefined : TERM_TRANSLATIONS[language.code];
-  const entries = TERMS.map((x) => {
-    const tr = translations?.[x.id];
-    return { id: x.id, term: tr?.term ?? x.term, english: tr ? x.term : null, plain: tr?.plain ?? x.plain };
-  });
+  const entries = TERMS.map((x) => ({ id: x.id, ...termIn(language.code, x) }));
   const q = query.trim().toLowerCase();
   const matchesTerm = (x: (typeof entries)[number]) =>
     x.term.toLowerCase().includes(q) || !!x.english?.toLowerCase().includes(q);
@@ -82,7 +78,7 @@ export default function GlossaryScreen() {
         }
         ListEmptyComponent={<AppText muted>{copy.glossary.noMatch(query.trim())}</AppText>}
         ListFooterComponent={
-          language.code !== 'en' && !translations ? (
+          language.code !== 'en' && !TERM_TRANSLATIONS[language.code] ? (
             <AppText variant="small" muted style={styles.footer}>
               {copy.glossary.englishOnly}
             </AppText>
