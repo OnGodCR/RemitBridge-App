@@ -1004,3 +1004,19 @@ grey for the fee, amber for the hidden markup. So the pictures repeat what the n
 say: Scan's lead is a receipt in a viewfinder with a name covered and the markup in amber;
 the third step is Compare's own cost bar. Settings rows (Account, website links) keep a
 small plain SF Symbol in ink, with no tile. Still no emoji (D44).
+
+**D104. Learn is modules; How it works moves to Account.** Angad asked to split Learn into
+modules and move "How it works" to Account.
+- **Modules:** eight short topics built from the glossary's 80 terms, every term in exactly
+  one (`src/data/modules.ts`, checked by a test): The basics; What a transfer really costs;
+  How money arrives; Staying safe; Why remittances matter; How money moves between banks;
+  Inside a provider; Crypto and stablecoins. Sender-facing topics come first, plumbing
+  and crypto last. A module shows its drawing and one line, then its terms as numbered
+  lessons that open to the glossary's definition, then a "Try it" tool where one fits
+  (Fair rate, Compare, Scam check, What people paid). The A to Z glossary stays under
+  "Go deeper". Definitions stay English in every language, as in the glossary.
+- **How it works** (fee plus markup, checked prices, no affiliate deals, wrong price) is
+  about RemitBridge, not a lesson, so it sits in Account above About.
+- **No yellow in the drawings** (Angad, the same day): the hidden markup is a translucent
+  green highlighter. The money colours in charts and cost bars (PRD 14.5's amber for the
+  markup) are unchanged until Angad says otherwise.

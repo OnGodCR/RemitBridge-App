@@ -372,6 +372,19 @@ export const vi: Copy = {
 
   learn: {
     title: 'Tìm hiểu',
+    modulesTitle: 'Học phần',
+    terms: (n: number) => (n === 1 ? '1 thuật ngữ' : `${n} thuật ngữ`),
+    tryIt: (tool: string) => `Thử ngay: ${tool}`,
+    modules: {
+      basics: { title: 'Những điều cơ bản', line: 'Ai gửi, ai nhận, và ai ở giữa' },
+      cost: { title: 'Chi phí thực của một lần chuyển', line: 'Phí, tỷ giá, và phần chênh lệch ẩn trong đó' },
+      arrival: { title: 'Tiền đến tay thế nào', line: 'Ngân hàng, nhận tiền mặt, hoặc ví trên điện thoại' },
+      safety: { title: 'Giữ an toàn', line: 'Lừa đảo, kiểm tra danh tính, và vì sao một số giao dịch bị dừng' },
+      bigger: { title: 'Vì sao kiều hối quan trọng', line: 'Tiền gửi về nhà giúp gì cho gia đình' },
+      banks: { title: 'Tiền đi giữa các ngân hàng thế nào', line: 'Các mạng lưới mà một lần chuyển đi qua' },
+      provider: { title: 'Bên trong một nhà cung cấp', line: 'Một công ty chuyển tiền vận hành thế nào' },
+      crypto: { title: 'Tiền mã hóa và stablecoin', line: 'Những từ bạn sẽ gặp nếu gửi bằng tiền mã hóa' },
+    },
     howItWorks: 'Cách hoạt động',
     feeMarkup: 'Phí + chênh lệch bị che giấu',
     feeMarkupBody: 'Phí, cộng phần ẩn trong tỷ giá.',

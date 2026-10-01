@@ -357,6 +357,19 @@ export const en = {
 
   learn: {
     title: 'Learn',
+    modulesTitle: 'Modules',
+    terms: (n: number) => (n === 1 ? '1 term' : `${n} terms`),
+    tryIt: (tool: string) => `Try it: ${tool}`,
+    modules: {
+      basics: { title: 'The basics', line: 'Who sends, who receives, and who’s in between' },
+      cost: { title: 'What a transfer really costs', line: 'The fee, the rate, and the markup hidden in it' },
+      arrival: { title: 'How money arrives', line: 'Bank, cash pickup, or a phone wallet' },
+      safety: { title: 'Staying safe', line: 'Scams, ID checks, and why some transfers stop' },
+      bigger: { title: 'Why remittances matter', line: 'What money sent home does for families' },
+      banks: { title: 'How money moves between banks', line: 'The networks a transfer travels on' },
+      provider: { title: 'Inside a provider', line: 'How a transfer company runs' },
+      crypto: { title: 'Crypto and stablecoins', line: 'Words you’ll meet if you send with crypto' },
+    },
     howItWorks: 'How it works',
     feeMarkup: 'Fee + hidden markup',
     feeMarkupBody: 'The fee, plus what’s hidden in the rate.',

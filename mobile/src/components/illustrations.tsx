@@ -297,3 +297,74 @@ export function RemitBenchArt({ size }: Art) {
     </Frame>
   );
 }
+
+// Learn modules --------------------------------------------------------------------------
+
+/** The basics: a sender and a recipient joined by the bridge's arc. */
+export function BasicsArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Path d="M12 44 Q32 16 52 44" stroke={c.green} strokeWidth={3} strokeLinecap="round" fill="none" />
+      <Path d="M20 34 V50 M44 34 V50 M8 50 H56" {...line} />
+      <Circle cx={12} cy={40} r={5} fill={c.paper} {...line} />
+      <Circle cx={52} cy={40} r={5} fill={c.green} {...line} />
+    </Frame>
+  );
+}
+
+/** How money arrives: a home, with the money at the door. */
+export function ArrivalArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Path d="M12 30 L30 14 L48 30 V52 H12 Z" fill={c.paper} {...line} />
+      <Rect x={25} y={38} width={10} height={14} rx={1} fill={c.paper} {...line} />
+      <Circle cx={47} cy={46} r={8} fill={c.green} {...line} />
+    </Frame>
+  );
+}
+
+/** How money moves between banks: a bank building. */
+export function BankArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Path d="M8 24 L32 12 L56 24 Z" fill={c.paper} {...line} />
+      <Path d="M14 28 V46 M24 28 V46 M40 28 V46 M50 28 V46" {...line} />
+      <Path d="M8 50 H56 M10 24 H54" {...line} />
+      <Path d="M30 34 H38" stroke={c.green} strokeWidth={3} strokeLinecap="round" />
+    </Frame>
+  );
+}
+
+/** Inside a provider: the pre-funded pool, a tank part full. */
+export function ProviderArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Path d="M16 30 V48 C16 52 48 52 48 48 V30 C48 34 16 34 16 30 Z" fill={c.green} />
+      <Path d="M16 16 V48 C16 52 48 52 48 48 V16" fill="none" {...line} />
+      <Path d="M16 16 C16 12 48 12 48 16 C48 20 16 20 16 16 Z" fill={c.paper} {...line} />
+      <Path d="M16 30 C16 34 48 34 48 30" {...line} fill="none" />
+    </Frame>
+  );
+}
+
+/** Crypto and stablecoins: blocks in a chain. */
+export function ChainArt({ size }: Art) {
+  const c = useInk();
+  const line = useLine();
+  return (
+    <Frame size={size}>
+      <Rect x={6} y={28} width={14} height={14} rx={2} fill={c.paper} {...line} />
+      <Rect x={25} y={28} width={14} height={14} rx={2} fill={c.green} {...line} />
+      <Rect x={44} y={28} width={14} height={14} rx={2} fill={c.paper} {...line} />
+      <Path d="M20 35 H25 M39 35 H44" {...line} />
+    </Frame>
+  );
+}

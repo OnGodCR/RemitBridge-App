@@ -373,6 +373,19 @@ export const es: Copy = {
 
   learn: {
     title: 'Aprender',
+    modulesTitle: 'Módulos',
+    terms: (n: number) => (n === 1 ? '1 término' : `${n} términos`),
+    tryIt: (tool: string) => `Pruébalo: ${tool}`,
+    modules: {
+      basics: { title: 'Lo básico', line: 'Quién envía, quién recibe y quién está en medio' },
+      cost: { title: 'Lo que de verdad cuesta un envío', line: 'La comisión, el tipo de cambio y el margen escondido' },
+      arrival: { title: 'Cómo llega el dinero', line: 'Banco, retiro en efectivo o billetera en el teléfono' },
+      safety: { title: 'Mantente seguro', line: 'Estafas, revisión de identidad y por qué se detienen algunos envíos' },
+      bigger: { title: 'Por qué importan las remesas', line: 'Lo que el dinero enviado hace por las familias' },
+      banks: { title: 'Cómo se mueve el dinero entre bancos', line: 'Las redes por las que viaja un envío' },
+      provider: { title: 'Por dentro de un proveedor', line: 'Cómo funciona una empresa de envíos' },
+      crypto: { title: 'Cripto y stablecoins', line: 'Palabras que verás si envías con cripto' },
+    },
     howItWorks: 'Cómo funciona',
     feeMarkup: 'Comisión + margen escondido',
     feeMarkupBody: 'La comisión, más lo que se esconde en el tipo de cambio.',

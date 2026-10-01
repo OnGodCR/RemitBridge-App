@@ -60,7 +60,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   registered business (D49), so whether and how to verify is Angad's decision.
 - **UI pass (D101, D102), in progress:** Scan is the first tab and the app opens on it;
   Compare moved to `(tabs)/compare.tsx`; rows lead with drawn illustrations (D103, after
-  Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages. WhatsApp is
+  Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages.
+  No yellow in the drawings; larger text on Scan. Learn is eight modules built from the
+  glossary, with numbered lessons that open on tap (D104); How it works is in Account. WhatsApp is
   parked (D100). The Hindi review sheet is regenerated from the string files by
   `npx tsx scripts/review-sheet.ts hi` (in `mobile/`); rerun it after any string change.
 - **Scrape schedule didn't fire:** the `17 */6` cron added on 2026-09-30 had produced no
@@ -222,7 +224,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D103; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D104; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

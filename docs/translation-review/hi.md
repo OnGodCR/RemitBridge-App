@@ -308,6 +308,25 @@ with your name and the date.
 | tools.yearlyCostSub | A year of sending | साल भर का खर्च | |
 | tools.rateHistorySub | The rate, day by day | रेट, दिन-ब-दिन | |
 | learn.title | Learn | जानें | |
+| learn.modulesTitle | Modules | मॉड्यूल | |
+| learn.terms | {n} terms | {n} शब्द | |
+| learn.tryIt | Try it: {tool} | आज़माएँ: {tool} | |
+| learn.modules.basics.title | The basics | बुनियादी बातें | |
+| learn.modules.basics.line | Who sends, who receives, and who’s in between | कौन भेजता है, किसे मिलता है, और बीच में कौन है | |
+| learn.modules.cost.title | What a transfer really costs | ट्रांसफ़र का असली खर्च | |
+| learn.modules.cost.line | The fee, the rate, and the markup hidden in it | फ़ीस, रेट, और उसमें छिपा मार्कअप | |
+| learn.modules.arrival.title | How money arrives | पैसा कैसे पहुँचता है | |
+| learn.modules.arrival.line | Bank, cash pickup, or a phone wallet | बैंक, नकद पिकअप, या फ़ोन वॉलेट | |
+| learn.modules.safety.title | Staying safe | सुरक्षित रहें | |
+| learn.modules.safety.line | Scams, ID checks, and why some transfers stop | धोखाधड़ी, पहचान की जाँच, और कुछ ट्रांसफ़र क्यों रुकते हैं | |
+| learn.modules.bigger.title | Why remittances matter | घर पैसा भेजना क्यों मायने रखता है | |
+| learn.modules.bigger.line | What money sent home does for families | घर भेजा पैसा परिवारों के लिए क्या करता है | |
+| learn.modules.banks.title | How money moves between banks | बैंकों के बीच पैसा कैसे चलता है | |
+| learn.modules.banks.line | The networks a transfer travels on | वे नेटवर्क जिन पर ट्रांसफ़र चलता है | |
+| learn.modules.provider.title | Inside a provider | एक कंपनी के अंदर | |
+| learn.modules.provider.line | How a transfer company runs | पैसे भेजने वाली कंपनी कैसे चलती है | |
+| learn.modules.crypto.title | Crypto and stablecoins | क्रिप्टो और स्टेबलकॉइन | |
+| learn.modules.crypto.line | Words you’ll meet if you send with crypto | क्रिप्टो से भेजने पर मिलने वाले शब्द | |
 | learn.howItWorks | How it works | यह कैसे काम करता है | |
 | learn.feeMarkup | Fee + hidden markup | फ़ीस + छिपा मार्कअप | |
 | learn.feeMarkupBody | The fee, plus what’s hidden in the rate. | फ़ीस, और रेट में छिपा खर्च। | |
