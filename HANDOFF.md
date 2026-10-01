@@ -69,10 +69,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   modules with Continue (D107, kept on the phone); saved comparisons and checks have
   their own screen, reached from Tools, Compare and Account (D108); the drawings have
   depth (D109).
-- **Rate alerts (D113)** and a greeting (D114) are built. Not live until Angad runs
-  `supabase db push` for `20261001000000_rate_alerts.sql` (tested locally: every check in
-  `supabase/tests/local_migrations.sh` passes, 10 of them new), then the smoke test (55).
-  The sender is `.github/scripts/send-rate-alerts.mjs`, run by `rate-alerts.yml` after
+- **Rate alerts (D113)** and a greeting (D114) are live. Angad pushed
+  `20261001000000_rate_alerts.sql` on 2026-10-01; smoke test 55/55, and the next
+  `rate-alerts.yml` run read the function ("0 alert(s) due"). A real push still needs the
+  iPhone development build (Expo Go and simulators get no token). The sender is `.github/scripts/send-rate-alerts.mjs`, run by `rate-alerts.yml` after
   each price update. Remittance tax: still proposed; `tax-rules.yml` watches weekly (D110). WhatsApp is
   parked (D100). The Hindi review sheet is regenerated from the string files by
   `npx tsx scripts/review-sheet.ts hi` (in `mobile/`); rerun it after any string change.

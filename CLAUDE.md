@@ -129,9 +129,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       rules" workflow fails and emails Angad when a final rule appears (D110); then update
       the formula against the final text.
 - [ ] **Bank connections or receipt scanning for past transfers.** Manual entry only (D30).
-- [ ] **Rate alerts (D113): built 2026-10-01.** Left: Angad pushes migration
-      `20261001000000_rate_alerts.sql` (then the smoke test, 55 checks), and a real push
-      needs the iPhone development build (Expo Go and simulators get no token).
+- [ ] **Rate alerts (D113): live 2026-10-01** (migration pushed by Angad, smoke test 55/55,
+      the sender reads it). Left: a real push needs the iPhone development build (Expo Go
+      and simulators get no token).
 
 ### Done
 
