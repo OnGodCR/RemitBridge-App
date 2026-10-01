@@ -127,6 +127,8 @@ Angad does this once the app itself is finished (D117).
 - [x] **Android push notifications set up (D127):** Firebase project `remitbridge`, its Android
       app wired in, and the FCM V1 key uploaded to EAS by Angad. Done 2026-10-01. A real
       Android notification waits on an Android build.
+- [ ] **Native Google sign-in on Android (D129):** an Android OAuth client with the signing
+      key's SHA-1, after the first Android build; iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
