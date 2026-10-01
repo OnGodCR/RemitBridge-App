@@ -195,9 +195,9 @@ export function FeeMarkupArt({ size }: Art) {
   const line = useLine();
   return (
     <Frame size={size}>
-      <Circle cx={20} cy={36} r={10} fill={c.grey} {...line} />
-      <Circle cx={46} cy={36} r={10} fill={c.amber} {...line} />
-      <Path d="M33 31 V41 M28 36 H38" {...line} />
+      <Circle cx={16} cy={36} r={9} fill={c.grey} {...line} />
+      <Circle cx={50} cy={36} r={9} fill={c.amber} {...line} />
+      <Path d="M33 31 V41 M28 36 H38" {...line} strokeWidth={2.5} />
     </Frame>
   );
 }
@@ -223,7 +223,7 @@ export function NoAffiliateArt({ size }: Art) {
     <Frame size={size}>
       <Path d="M12 28 L30 10 H50 V30 L32 48 Z" fill={c.paper} {...line} />
       <Circle cx={43} cy={17} r={3} fill="none" {...line} />
-      <Path d="M10 52 L54 12" stroke={c.amber} strokeWidth={3} strokeLinecap="round" />
+      <Path d="M14 50 L50 14" stroke={c.amber} strokeWidth={3} strokeLinecap="round" />
     </Frame>
   );
 }

@@ -58,9 +58,9 @@ export default function AccountScreen() {
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={a.title}>
-          <AppText style={{ color: t.heroMuted }}>
-            {session ? (session.user.email ?? a.signedInApple) : a.signedOutLine}
-          </AppText>
+          {session ? (
+            <AppText style={{ color: t.heroMuted }}>{session.user.email ?? a.signedInApple}</AppText>
+          ) : null}
         </HeroHeader>
         <View style={[styles.content, { backgroundColor: t.background }]}>
           {session ? (

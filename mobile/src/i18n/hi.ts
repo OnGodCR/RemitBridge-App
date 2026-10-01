@@ -318,7 +318,6 @@ export const hi: Copy = {
   account: {
     title: 'खाता',
     signedInApple: 'Apple से साइन इन किया गया',
-    signedOutLine: 'तुलनाएँ और जाँची हुई रसीदें सहेजें।',
     optional: 'खाता बनाना ज़रूरी नहीं है। इसमें आपका सहेजा हुआ सब रहता है, किसी भी फ़ोन पर।',
     createOrSignIn: 'खाता बनाएँ या साइन इन करें',
     signOut: 'साइन आउट करें',
@@ -376,7 +375,7 @@ export const hi: Copy = {
     title: 'जानें',
     howItWorks: 'यह कैसे काम करता है',
     feeMarkup: 'फ़ीस + छिपा मार्कअप',
-    feeMarkupBody: 'कुल लागत का मतलब है फ़ीस, और एक्सचेंज रेट में छिपा मार्कअप।',
+    feeMarkupBody: 'फ़ीस, और रेट में छिपा खर्च।',
     checkedOnly: 'सिर्फ़ जाँची हुई कीमतें',
     checkedOnlyBody: 'हर कीमत हमारी जाँच पास करती है, नहीं तो दिखाई नहीं जाती। मिड-मार्केट रेट Frankfurter से।',
     noAffiliate: 'किसी कंपनी से कोई सौदा नहीं',
