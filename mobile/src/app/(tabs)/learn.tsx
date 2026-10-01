@@ -2,29 +2,19 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
-import {
-  CheckedArt,
-  FeeMarkupArt,
-  GlossaryArt,
-  NoAffiliateArt,
-  ObservatoryArt,
-  RemitBenchArt,
-  RouteBoardArt,
-  WrongPriceArt,
-} from '@/components/illustrations';
-import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
-import { AppText } from '@/components/ui';
+import { GlossaryArt, ObservatoryArt, RemitBenchArt, RouteBoardArt } from '@/components/illustrations';
+import { ListGroup, ListRow } from '@/components/list-row';
 import { Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
-import { CONTACT, openPage, writeToUs } from '@/lib/links';
+import { openPage } from '@/lib/links';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
 /**
- * Learn (DECISIONS.md D33, D58): how RemitBridge works, one line per point (PRD 5.4), then
- * the glossary and research. Long-form writing (blog, papers, workshops) stays on the
+ * Learn (DECISIONS.md D33, D58): the glossary and research. How RemitBridge works moved to
+ * Account (D104). Long-form writing (blog, papers, workshops) stays on the
  * website and opens there.
  */
 export default function LearnScreen() {
@@ -37,17 +27,6 @@ export default function LearnScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={l.title} />
         <View style={[styles.body, { backgroundColor: t.background }]}>
-          <ListGroup title={l.howItWorks}>
-            <ListPoint art={<FeeMarkupArt />} title={l.feeMarkup}>{l.feeMarkupBody}</ListPoint>
-            <ListPoint art={<CheckedArt />} title={l.checkedOnly}>{l.checkedOnlyBody}</ListPoint>
-            <ListPoint art={<NoAffiliateArt />} title={l.noAffiliate}>{l.noAffiliateBody}</ListPoint>
-            <ListPoint art={<WrongPriceArt />} title={l.wrongPrice}>
-              <AppText style={{ color: t.primary }} accessibilityRole="link" onPress={() => writeToUs(copy)}>
-                {CONTACT}
-              </AppText>
-            </ListPoint>
-          </ListGroup>
-
           <ListGroup title={l.deeper}>
             <ListRow art={<GlossaryArt />} title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
             <ListRow art={<RouteBoardArt />} title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />

@@ -9,8 +9,9 @@ import { useTheme } from '@/hooks/use-theme';
  * One style for all of them, so they read as a set:
  * - a 64-unit square, ink outlines 2 units wide with round ends, white "paper" fills;
  * - a mint disc behind, always the same size and place;
- * - colour only from the money palette (PRD 14.5): green for what arrives, grey for the
- *   fee, amber for the cost hidden in the rate. So the pictures repeat what the numbers say.
+ * - colour only from the brand: solid green for what arrives, grey for the fee, and a
+ *   translucent green "highlighter" for the cost hidden in the rate (no yellow, Angad's
+ *   call), kept apart from the solid black bar that means a detail is covered.
  *
  * Decorative: screen readers skip them, and the words beside them carry the meaning.
  * Colours come from the theme, so they follow dark mode.
@@ -26,7 +27,6 @@ function useInk() {
     tint: t.accent,
     green: t.moneyReceived,
     grey: t.moneyFee,
-    amber: t.moneyMarkup,
   };
 }
 
@@ -61,7 +61,8 @@ export function ScanHero({ size = 132 }: Art) {
       <Path d="M20 14 H44 V48 L40 45.5 L36 48 L32 45.5 L28 48 L24 45.5 L20 48 Z" fill={c.paper} {...line} strokeWidth={1.5} />
       <Rect x={24} y={18} width={14} height={3.5} rx={1} fill={c.ink} />
       <Path d="M24 26 H40" {...line} strokeWidth={1.5} />
-      <Rect x={24} y={30} width={16} height={4} rx={1} fill={c.amber} />
+      <Rect x={23} y={29} width={18} height={6} rx={1.5} fill={c.green} fillOpacity={0.4} />
+      <Path d="M24 32 H40" {...line} strokeWidth={1.5} />
       <Path d="M24 38.5 H34" {...line} strokeWidth={1.5} />
       <Path d="M8 16 V8 H16 M48 8 H56 V16 M56 48 V56 H48 M16 56 H8 V48" stroke={c.green} strokeWidth={2.5} strokeLinecap="round" fill="none" />
     </Svg>
@@ -105,10 +106,10 @@ export function StepCost({ size }: Art) {
     <Frame size={size}>
       <Rect x={8} y={28} width={30} height={10} rx={2} fill={c.green} />
       <Rect x={38} y={28} width={8} height={10} fill={c.grey} />
-      <Rect x={46} y={28} width={10} height={10} rx={2} fill={c.amber} />
+      <Rect x={46} y={28} width={10} height={10} rx={2} fill={c.green} fillOpacity={0.4} />
       <Rect x={8} y={28} width={48} height={10} rx={2} fill="none" {...line} />
       <Path d="M8 48 H30" {...line} />
-      <Path d="M46 44 V50" stroke={c.amber} strokeWidth={2} strokeLinecap="round" />
+      <Path d="M46 44 V50" {...line} />
     </Frame>
   );
 }
@@ -137,8 +138,8 @@ export function ScamCheckArt({ size }: Art) {
   return (
     <Frame size={size}>
       <Path d="M30 10 L46 16 V30 C46 42 38 50 30 54 C22 50 14 42 14 30 V16 Z" fill={c.paper} {...line} />
-      <Path d="M30 22 V34" stroke={c.amber} strokeWidth={3.5} strokeLinecap="round" />
-      <Circle cx={30} cy={41.5} r={2.2} fill={c.amber} />
+      <Path d="M30 22 V34" stroke={c.ink} strokeWidth={3.5} strokeLinecap="round" />
+      <Circle cx={30} cy={41.5} r={2.2} fill={c.ink} />
     </Frame>
   );
 }
@@ -151,7 +152,8 @@ export function TrueCostArt({ size }: Art) {
     <Frame size={size}>
       <Path d={RECEIPT} fill={c.paper} {...line} />
       <Path d="M19 18 H35 M19 24 H31" {...line} />
-      <Rect x={19} y={29} width={14} height={4} rx={1} fill={c.amber} />
+      <Rect x={18} y={28} width={16} height={6} rx={1.5} fill={c.green} fillOpacity={0.4} />
+      <Path d="M19 31 H33" {...line} />
       <Path d="M19 39 H27" {...line} />
       <Circle cx={43} cy={41} r={8} fill={c.paper} {...line} />
       <Path d="M49 47 L55 53" {...line} strokeWidth={3} />
@@ -168,7 +170,7 @@ export function YearlyCostArt({ size }: Art) {
       <Rect x={10} y={14} width={36} height={34} rx={4} fill={c.paper} {...line} />
       <Path d="M10 22 H46 M20 10 V17 M36 10 V17" {...line} />
       <Path d="M16 30 H22 M26 30 H32 M16 38 H22" {...line} />
-      <Circle cx={46} cy={45} r={9} fill={c.amber} {...line} />
+      <Circle cx={46} cy={45} r={9} fill={c.green} {...line} />
       <Circle cx={46} cy={45} r={4.5} fill="none" stroke={c.paper} strokeWidth={1.5} />
     </Frame>
   );
@@ -189,14 +191,14 @@ export function RateHistoryArt({ size }: Art) {
 
 // Learn --------------------------------------------------------------------------------
 
-/** Fee + hidden markup: a grey coin plus an amber one. */
+/** Fee + hidden markup: a grey coin plus a highlighted one. */
 export function FeeMarkupArt({ size }: Art) {
   const c = useInk();
   const line = useLine();
   return (
     <Frame size={size}>
       <Circle cx={16} cy={36} r={9} fill={c.grey} {...line} />
-      <Circle cx={50} cy={36} r={9} fill={c.amber} {...line} />
+      <Circle cx={50} cy={36} r={9} fill={c.green} fillOpacity={0.4} {...line} />
       <Path d="M33 31 V41 M28 36 H38" {...line} strokeWidth={2.5} />
     </Frame>
   );
@@ -223,7 +225,7 @@ export function NoAffiliateArt({ size }: Art) {
     <Frame size={size}>
       <Path d="M12 28 L30 10 H50 V30 L32 48 Z" fill={c.paper} {...line} />
       <Circle cx={43} cy={17} r={3} fill="none" {...line} />
-      <Path d="M14 50 L50 14" stroke={c.amber} strokeWidth={3} strokeLinecap="round" />
+      <Path d="M14 50 L50 14" stroke={c.ink} strokeWidth={3} strokeLinecap="round" />
     </Frame>
   );
 }
@@ -263,7 +265,7 @@ export function RouteBoardArt({ size }: Art) {
       <Path d="M8 18 L22 12 L38 18 L54 12 V46 L38 52 L22 46 L8 52 Z" fill={c.paper} {...line} />
       <Path d="M22 12 V46 M38 18 V52" {...line} strokeWidth={1.5} />
       <Path d="M13 42 Q28 22 46 26" stroke={c.green} strokeWidth={2.5} strokeLinecap="round" strokeDasharray="3 4" fill="none" />
-      <Circle cx={46} cy={26} r={3.5} fill={c.amber} />
+      <Circle cx={46} cy={26} r={3.5} fill={c.green} />
     </Frame>
   );
 }
@@ -276,7 +278,7 @@ export function ObservatoryArt({ size }: Art) {
     <Frame size={size}>
       <Rect x={13} y={32} width={9} height={18} rx={1.5} fill={c.green} {...line} />
       <Rect x={27} y={22} width={9} height={28} rx={1.5} fill={c.paper} {...line} />
-      <Rect x={41} y={36} width={9} height={14} rx={1.5} fill={c.amber} {...line} />
+      <Rect x={41} y={36} width={9} height={14} rx={1.5} fill={c.grey} {...line} />
       <Path d="M8 50 H56" {...line} />
     </Frame>
   );

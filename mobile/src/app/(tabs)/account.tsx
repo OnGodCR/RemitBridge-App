@@ -4,7 +4,8 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
-import { ListGroup, ListRow } from '@/components/list-row';
+import { CheckedArt, FeeMarkupArt, NoAffiliateArt, WrongPriceArt } from '@/components/illustrations';
+import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
 import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
 import { AppText, Button } from '@/components/ui';
@@ -102,6 +103,18 @@ export default function AccountScreen() {
             </ListGroup>
           ) : null}
           <LanguageSheet visible={languageOpen} onClose={() => setLanguageOpen(false)} />
+
+          {/* How RemitBridge works, moved here from Learn (D104): it's about us, not a lesson. */}
+          <ListGroup title={copy.learn.howItWorks}>
+            <ListPoint art={<FeeMarkupArt />} title={copy.learn.feeMarkup}>{copy.learn.feeMarkupBody}</ListPoint>
+            <ListPoint art={<CheckedArt />} title={copy.learn.checkedOnly}>{copy.learn.checkedOnlyBody}</ListPoint>
+            <ListPoint art={<NoAffiliateArt />} title={copy.learn.noAffiliate}>{copy.learn.noAffiliateBody}</ListPoint>
+            <ListPoint art={<WrongPriceArt />} title={copy.learn.wrongPrice}>
+              <AppText style={{ color: t.primary }} accessibilityRole="link" onPress={() => writeToUs(copy)}>
+                {CONTACT}
+              </AppText>
+            </ListPoint>
+          </ListGroup>
 
           <ListGroup title={a.about}>
             <ListRow icon="map" title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
