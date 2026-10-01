@@ -7,7 +7,7 @@ import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { Answer, Breakdown, Section, SourceNote } from '@/components/tool';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
-import { Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { dayIn, useCopy, useLanguage } from '@/i18n';
 import { money, pct } from '@/lib/format';
@@ -224,7 +224,14 @@ function BestOptionView({
     <>
       {b.could_keep > 0 ? (
         <>
-          <Answer label={s.keptLabel(b.provider_name)} value={money(b.could_keep, from)} note={s.keptNote(money(b.received, to))} />
+          {/* Mint with a green edge, so it reads apart from the true cost above (D124). */}
+          <View style={[styles.kept, { backgroundColor: t.accent, borderLeftColor: t.primary }]} accessible accessibilityLiveRegion="polite">
+            <AppText variant="label" style={{ color: t.accentForeground }}>
+              {s.keptLabel(b.provider_name)}
+            </AppText>
+            <AppText style={[styles.keptValue, { color: t.primary }]}>{money(b.could_keep, from)}</AppText>
+            <AppText style={{ color: t.accentForeground }}>{s.keptNote(money(b.received, to))}</AppText>
+          </View>
           <AppText>{s.keptCosts(b.provider_name, money(b.total_cost, from), money(b.your_total_cost, from))}</AppText>
         </>
       ) : (
@@ -242,5 +249,7 @@ function BestOptionView({
 }
 
 const styles = StyleSheet.create({
+  kept: { borderLeftWidth: 4, borderRadius: 12, padding: Spacing.three, gap: Spacing.one },
+  keptValue: { fontFamily: Fonts.extrabold, fontSize: 34, lineHeight: 40, fontVariant: ['tabular-nums'] },
   rule: { borderLeftWidth: 3, paddingLeft: Spacing.three, gap: Spacing.one },
 });

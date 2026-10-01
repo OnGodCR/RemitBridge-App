@@ -1264,3 +1264,12 @@ until Angad is 18, then the apps transfer).
   without a database).
 - Not doable without accounts: Android push needs a Firebase project's FCM key uploaded to
   EAS; submission IDs go in `eas.json` once the store records exist.
+
+**D124. The scanner's later screens can be seen before the iPhone build.** A development-
+only screen, Account > "Preview the receipt screens" (`mobile/src/app/dev/receipt-preview.tsx`,
+a release build sends the route home), shows the value check and the result three ways
+(that day's prices, today's, nothing fair to compare) with made-up receipts and a drawn
+stand-in for the covered photo (`mobile/src/dev/`). The samples' comparisons are worked out
+by the real `bestOption`, so they agree with the true cost above them. First fix from it:
+"what you could have kept" is a mint card with a green left edge, so it reads apart from the
+dark true-cost block above it.

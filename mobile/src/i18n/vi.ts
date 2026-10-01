@@ -809,6 +809,16 @@ export const vi: Copy = {
     ],
   },
 
+  devPreview: {
+    title: 'Xem trước biên lai',
+    row: 'Xem trước các màn hình biên lai',
+    intro: 'Biên lai giả, để kiểm tra các màn hình này trước khi bản đầy đủ có thể quét. Chỉ có trong bản phát triển.',
+    check: 'Kiểm tra',
+    result: 'Kết quả',
+    today: 'Hôm nay',
+    none: 'Không khớp',
+  },
+
   observatory: {
     intro: 'Số tiền mọi người thực sự đã trả, từ các biên lai họ chọn chia sẻ.',
     early: 'Kết quả ban đầu',

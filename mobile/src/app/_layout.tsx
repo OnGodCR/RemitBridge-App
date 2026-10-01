@@ -64,7 +64,7 @@ function Navigator() {
   const { ready, onboarded } = useAuth();
   const isAdmin = useIsAdmin();
   const t = useTheme();
-  const { titles } = useCopy();
+  const { titles, devPreview } = useCopy();
   // Pushed screens (tools, learn, admin) sit on this root stack with a native header, so
   // each gets a back button to the tab it came from. Nested stacks gave their first screen
   // no back button, because nothing came before it inside that stack.
@@ -94,6 +94,7 @@ function Navigator() {
         <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
         <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
         <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
+        <Stack.Screen name="dev/receipt-preview" options={{ ...pushed, title: devPreview.title }} />
         <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
         <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
         <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />

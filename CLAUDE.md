@@ -112,7 +112,7 @@ Angad does this once the app itself is finished (D117).
       (it needs a phone number and answers an anti-spam question), Angad's. Log replies in
       `docs/outreach/partners.md`.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
-      `docs/translation-review/hi.md` (673 strings). Hindi, Spanish, Tagalog and Vietnamese
+      `docs/translation-review/hi.md` (680 strings). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads
       each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
       Hindi first; the bot's Hindi (D68) needs the same read. Glossary definitions are
