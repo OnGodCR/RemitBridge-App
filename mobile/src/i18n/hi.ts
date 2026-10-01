@@ -720,23 +720,16 @@ export const hi: Copy = {
 
   result: {
     title: 'इस ट्रांसफ़र पर असल में कितना खर्च हुआ',
-    costNote: (pct: string, world: number, target: number) =>
-      `आपकी भेजी रकम का ${pct}। दुनिया का औसत ${world}% है; संयुक्त राष्ट्र का लक्ष्य ${target}% है।`,
     fee: 'दिखने वाली फ़ीस',
     tax: 'संघीय रेमिटेंस टैक्स',
     markup: (pct: string) => `रेट में छिपा (${pct} मार्कअप)`,
     pickup: 'पिकअप पर लिया गया',
-    received: 'उन्हें मिला',
-    benchmark: 'मिड-मार्केट रेट पर, बिना फ़ीस',
     betterThanMid: 'रेट मिड-मार्केट से बेहतर था। अक्सर इसका मतलब पहले ट्रांसफ़र का ऑफ़र होता है।',
     source: (source: string, rate: string, day: string) =>
       `मिड-मार्केट रेट ${source} से: ${rate}, ${day} के लिए। यह दिन का एक संदर्भ रेट है, इसलिए उस दिन रेट बदल सकता है।`,
     noMid: 'उस दिन का मिड-मार्केट रेट नहीं मिल पाया, इसलिए रेट में छिपी लागत का हिसाब नहीं हो सकता।',
     missing: 'कुछ रकमें नहीं मिलीं, इसलिए कुल लागत का हिसाब नहीं हो सकता।',
     advertisedTitle: 'दिखाया गया रेट बनाम चुकाया गया',
-    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
-      `${day} को ${provider} इस रूट पर ${amount} के लिए ${rate} दिखा रहा था, ${time} जाँचा गया।`,
-    yourRate: (rate: string) => `आपकी रसीद: ${rate}।`,
     gapMore: (gap: string) => `आपको मिले रेट की वजह से दिखाए गए रेट से ${gap} ज़्यादा खर्च हुआ।`,
     gapLess: (gap: string) => `आपको मिला रेट दिखाए गए रेट से ${gap} बेहतर था।`,
     gapSame: 'आपको मिला रेट दिखाए गए रेट जैसा ही है।',
@@ -744,11 +737,30 @@ export const hi: Copy = {
     noRoute: 'हम अभी इस रूट की कीमतें नहीं जाँचते, इसलिए मिलाने के लिए कोई दिखाया गया रेट नहीं है।',
     noQuote: 'इस ट्रांसफ़र के एक दिन के अंदर इस कंपनी की कोई जाँची हुई कीमत हमारे पास नहीं है, इसलिए मिलाने को कुछ नहीं है।',
     missingValues: 'रसीद की तारीख, रकम या रेट नहीं मिला, इसलिए मिलाया नहीं जा सकता।',
+    pctOfSent: (pct: string) => `भेजी गई रकम का ${pct}`,
+    scaleLabel: (pct: string, world: number, target: number) =>
+      `इस ट्रांसफ़र का खर्च भेजी गई रकम का ${pct} रहा। दुनिया का औसत ${world}% है; UN का लक्ष्य ${target}% है।`,
+    scaleYou: (pct: string) => `यह ${pct}`,
+    scaleWorld: (n: number) => `दुनिया ${n}%`,
+    scaleTarget: (n: number) => `UN लक्ष्य ${n}%`,
+    costTitle: 'खर्च कहाँ से आया',
+    arrivedTitle: 'क्या पहुँचा',
+    arrivedGot: (got: string, possible: string) => `${possible} में से ${got}`,
+    arrivedLost: (lost: string) => `${lost} गए`,
+    arrivedLabel: (got: string, possible: string, lost: string) =>
+      `${got} पहुँचे। मिड-मार्केट रेट पर, बिना फ़ीस के, ${possible} पहुँचते। ${lost} गए।`,
+    keptYou: 'आपका खर्च',
+    keptBarsLabel: (you: string, provider: string, theirs: string) => `आपका खर्च ${you}। ${provider}: ${theirs}।`,
+    rateMid: 'मिड-मार्केट',
+    rateAdvertised: (provider: string) => `${provider} का विज्ञापित`,
+    rateYours: 'आपकी रसीद',
+    rateChecked: (time: string) => `विज्ञापित दाम ${time} जाँचा गया।`,
+    rateLabel: (mid: string, advertised: string, yours: string) =>
+      `मिड-मार्केट रेट ${mid}। विज्ञापित ${advertised}। आपकी रसीद ${yours}।`,
+    notFound: 'इस रसीद पर नहीं मिला',
     keptTitle: 'आप कितना बचा सकते थे',
     keptLabel: (provider: string) => `${provider} से भेजने पर आप बचा सकते थे`,
     keptNote: (received: string) => `उतनी ही रकम भेजने पर आपके परिवार को ${received} मिलते।`,
-    keptCosts: (provider: string, theirs: string, yours: string) =>
-      `${provider} के साथ असली खर्च: ${theirs}। आपका: ${yours}। दोनों एक ही मिड-मार्केट रेट पर मापे गए।`,
     keptBest: (provider: string) => `आपको पहले से ही हमारा पाया सबसे अच्छा दाम मिला: ${provider}।`,
     keptAsGood: 'उसी तरह के ट्रांसफ़र के लिए हमारे पास जितने दाम थे, आपका दाम उन सब जितना या उनसे बेहतर था।',
     keptThatDay: (time: string) => `दाम ${time} जाँचे गए, आपके ट्रांसफ़र के एक दिन के अंदर।`,
@@ -763,8 +775,6 @@ export const hi: Copy = {
     keptMissing: 'रसीद की रकम या रेट नहीं मिला, इसलिए तुलना नहीं हो सकती।',
     keptNoMid: 'उस दिन के मिड-मार्केट रेट के बिना खर्च एक जैसे नहीं मापे जा सकते, इसलिए तुलना नहीं है।',
     taxTitle: 'संघीय रेमिटेंस टैक्स',
-    taxRule:
-      '1 जनवरी 2026 से, नकद, मनी ऑर्डर या कैशियर चेक से भेजे गए पैसे पर 1% संघीय टैक्स लगता है। बैंक खाते या कार्ड से भेजे गए पैसे पर नहीं।',
     taxMatches: (funding: string, amount: string, expected: string, found: string) =>
       `यह ${funding} से भेजा गया। ${amount} का 1% ${expected} है, और रसीद पर ${found} लिखा है।`,
     taxNotFound: (funding: string, amount: string, expected: string) =>
@@ -774,6 +784,8 @@ export const hi: Copy = {
     taxNotTaxed: (funding: string) => `यह ${funding} से भेजा गया, इसलिए यह टैक्स नहीं लगता।`,
     taxBefore: 'यह ट्रांसफ़र टैक्स शुरू होने से पहले हुआ था।',
     taxUnknown: 'रसीद पर नहीं लिखा कि भुगतान कैसे हुआ, इसलिए टैक्स जाँचा नहीं जा सकता।',
+    taxPaidBy: (funding: string) => `${funding} से भुगतान`,
+    taxFromBank: 'बैंक खाते से',
     taxBank: (total: string, tax: string) => `अगर यही पैसा बैंक खाते से भेजा जाता, तो कुल खर्च ${total} होता, यानी ${tax} कम।`,
     taxAssumption:
       'हम फ़ीस से पहले की ट्रांसफ़र रकम का 1% लेते हैं, जैसा IRS के प्रस्तावित नियम कहते हैं। ये नियम अभी अंतिम नहीं हैं।',
@@ -784,7 +796,6 @@ export const hi: Copy = {
     routeBoard: 'देखें हम कौन से रूट जाँचते हैं',
     disclosuresTitle: 'ज़रूरी जानकारियाँ',
     disclosuresAll: 'इस रसीद पर हर ज़रूरी जानकारी मिली।',
-    disclosuresMissing: (items: string) => `इस रसीद पर नहीं मिला: ${items}।`,
     disclosuresNote:
       'फ़ोटो में रसीद का कुछ हिस्सा छूट सकता है और छोटे अक्षर पढ़ना मुश्किल हो सकता है, इसलिए इसका मतलब यह नहीं कि कंपनी ने कुछ छोड़ा।',
     disclosureItems: {

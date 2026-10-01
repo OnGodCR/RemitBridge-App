@@ -702,23 +702,16 @@ export const en = {
 
   result: {
     title: 'What this transfer really cost',
-    costNote: (pct: string, world: number, target: number) =>
-      `${pct} of what you sent. The world average is ${world}%; the UN target is ${target}%.`,
     fee: 'Fee you could see',
     tax: 'Federal remittance tax',
     markup: (pct: string) => `Hidden in the rate (${pct} markup)`,
     pickup: 'Charged at pickup',
-    received: 'They received',
-    benchmark: 'At mid-market, with no fee',
     betterThanMid: 'The rate was better than mid-market. That usually means a first-transfer promotion.',
     source: (source: string, rate: string, day: string) =>
       `Mid-market rate from ${source}: ${rate}, for ${day}. It’s a daily reference, so rates on the day may have moved.`,
     noMid: 'The mid-market rate for that day couldn’t be loaded, so the cost hidden in the rate can’t be worked out.',
     missing: 'Some values are missing, so the total cost can’t be worked out.',
     advertisedTitle: 'Advertised vs. paid',
-    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
-      `On ${day}, ${provider} showed ${rate} for this route at ${amount}, checked ${time}.`,
-    yourRate: (rate: string) => `Your receipt: ${rate}.`,
     gapMore: (gap: string) => `The rate you got cost ${gap} more than the advertised one.`,
     gapLess: (gap: string) => `The rate you got was better than the advertised one, by ${gap}.`,
     gapSame: 'The rate you got matches the advertised one.',
@@ -726,11 +719,30 @@ export const en = {
     noRoute: 'We don’t check prices on this route yet, so there’s no advertised price to compare with.',
     noQuote: 'We have no price from this provider checked within a day of this transfer, so there’s nothing to compare with.',
     missingValues: 'The receipt’s date, amount or rate is missing, so it can’t be compared.',
+    pctOfSent: (pct: string) => `${pct} of what you sent`,
+    scaleLabel: (pct: string, world: number, target: number) =>
+      `This transfer cost ${pct} of what was sent. The world average is ${world}%; the UN target is ${target}%.`,
+    scaleYou: (pct: string) => `This one ${pct}`,
+    scaleWorld: (n: number) => `World ${n}%`,
+    scaleTarget: (n: number) => `UN target ${n}%`,
+    costTitle: 'Where the cost came from',
+    arrivedTitle: 'What arrived',
+    arrivedGot: (got: string, possible: string) => `${got} of ${possible}`,
+    arrivedLost: (lost: string) => `${lost} lost`,
+    arrivedLabel: (got: string, possible: string, lost: string) =>
+      `${got} arrived. At the mid-market rate with no fee, ${possible} would have. ${lost} was lost.`,
+    keptYou: 'Your cost',
+    keptBarsLabel: (you: string, provider: string, theirs: string) => `Your cost ${you}. ${provider}: ${theirs}.`,
+    rateMid: 'Mid-market',
+    rateAdvertised: (provider: string) => `${provider} advertised`,
+    rateYours: 'Your receipt',
+    rateChecked: (time: string) => `Advertised price checked ${time}.`,
+    rateLabel: (mid: string, advertised: string, yours: string) =>
+      `Mid-market rate ${mid}. Advertised ${advertised}. Your receipt ${yours}.`,
+    notFound: 'Not found on this receipt',
     keptTitle: 'What you could have kept',
     keptLabel: (provider: string) => `With ${provider}, you could have kept`,
     keptNote: (received: string) => `Sending the same amount, your family would have received ${received}.`,
-    keptCosts: (provider: string, theirs: string, yours: string) =>
-      `True cost with ${provider}: ${theirs}. Yours: ${yours}. Both measured at the same mid-market rate.`,
     keptBest: (provider: string) => `You already had the best price we found: ${provider}.`,
     keptAsGood: 'Your price was as good as or better than every price we had for the same kind of transfer.',
     keptThatDay: (time: string) => `Prices checked ${time}, within a day of your transfer.`,
@@ -745,8 +757,6 @@ export const en = {
     keptMissing: 'The receipt’s amount or rate is missing, so it can’t be compared.',
     keptNoMid: 'Without that day’s mid-market rate, the costs can’t be measured the same way, so there’s no comparison.',
     taxTitle: 'Federal remittance tax',
-    taxRule:
-      'Since January 1, 2026, transfers paid in cash, by money order or by cashier’s check carry a 1% federal tax. Transfers paid from a bank account or by card don’t.',
     taxMatches: (funding: string, amount: string, expected: string, found: string) =>
       `This one was paid by ${funding}. 1% of ${amount} is ${expected}, and the receipt shows ${found}.`,
     taxNotFound: (funding: string, amount: string, expected: string) =>
@@ -756,6 +766,8 @@ export const en = {
     taxNotTaxed: (funding: string) => `This one was paid by ${funding}, so the tax doesn’t apply.`,
     taxBefore: 'This transfer was made before the tax started.',
     taxUnknown: 'The receipt doesn’t say how it was paid for, so the tax can’t be checked.',
+    taxPaidBy: (funding: string) => `Paid by ${funding}`,
+    taxFromBank: 'From a bank account',
     taxBank: (total: string, tax: string) =>
       `Paid from a bank account instead, the same transfer would have cost ${total} in total, ${tax} less.`,
     taxAssumption:
@@ -767,7 +779,6 @@ export const en = {
     routeBoard: 'See which routes we check',
     disclosuresTitle: 'Standard disclosures',
     disclosuresAll: 'Every standard item was found on this receipt.',
-    disclosuresMissing: (items: string) => `Not found on this receipt: ${items}.`,
     disclosuresNote:
       'A photo can cut off part of a receipt, and small print can be hard to read, so this doesn’t mean the provider left anything out.',
     disclosureItems: {

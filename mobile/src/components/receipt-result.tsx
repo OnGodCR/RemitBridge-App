@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { receiptCost, taxCheck, valuesFrom, type ConfirmResponse } from '@remitbridge/receipt';
 
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
-import { Answer, Breakdown, Section, SourceNote } from '@/components/tool';
+import { ArrivedBar, Chips, CompareBars, CostScale, RateLine, SplitBar, StatusLine } from '@/components/receipt-charts';
+import { Answer, Section, SourceNote } from '@/components/tool';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Fonts, Spacing } from '@/constants/theme';
@@ -16,8 +17,9 @@ import { formatValue, fundingWord } from '@/lib/receipt-format';
 import { ROUTES, type DeliveryMethod } from '@/lib/routes';
 
 /**
- * The scan result (Phase 3, item 2; Phase 6), in six parts:
- *   - the true cost, with TrueCost's own Answer and Breakdown and the one formula;
+ * The scan result (Phase 3, item 2; Phase 6), mostly as charts (D126), in six parts:
+ *   - the true cost: the number, where it sits against the UN target and the world
+ *     average, what it was made of, and what arrived of what could have;
  *   - what you could have kept: the cheapest way we had prices for (D119);
  *   - advertised vs. paid: the provider's published rate that day, or plainly why not;
  *   - the federal remittance tax check, in neutral words;
@@ -38,6 +40,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
   const route = ROUTES.find((r) => r.id === confirmed.route_id);
   /** "1 USD = 17.3 MXN": money keeps US formatting in every language (D69). */
   const rate = (x: number) => `1 ${from} = ${x.toLocaleString('en-US', { maximumFractionDigits: 6 })} ${to}`;
+  const num = (x: number) => x.toLocaleString('en-US', { maximumFractionDigits: 4 });
   const gap = confirmed.comparison.gap;
   const quote = confirmed.comparison.quote;
 
@@ -71,23 +74,48 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
       {/* 1. True cost */}
       {cost ? (
         <>
-          <Answer label={s.title} value={money(cost.totalCost, from)} note={s.costNote(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)} />
-          <Breakdown
-            rows={[
-              { label: s.fee, value: money(cost.feeCost, from), tone: t.moneyFee },
-              ...(cost.taxCost > 0 ? [{ label: s.tax, value: money(cost.taxCost, from), tone: t.moneyFee }] : []),
-              { label: s.markup(pct(cost.markupPct, 2)), value: money(cost.markupCost, from), tone: t.moneyMarkup },
-              ...(cost.pickupCost > 0 ? [{ label: s.pickup, value: money(cost.pickupCost, from), tone: t.moneyPickup }] : []),
-              { label: s.received, value: money(cost.amountReceived, to), strong: true },
-              { label: s.benchmark, value: money(cost.benchmarkReceived, to) },
-            ]}
+          <Answer label={s.title} value={money(cost.totalCost, from)} note={s.pctOfSent(pct(cost.totalCostPct, 2))} />
+          <CostScale
+            you={cost.totalCostPct}
+            world={FIGURES.globalCostPct}
+            target={FIGURES.targetPct}
+            labels={{ you: s.scaleYou(pct(cost.totalCostPct, 1)), world: s.scaleWorld(FIGURES.globalCostPct), target: s.scaleTarget(FIGURES.targetPct) }}
+            label={s.scaleLabel(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)}
           />
-          {cost.markupPct < 0 ? (
-            <AppText variant="small" muted>
-              {s.betterThanMid}
-            </AppText>
-          ) : null}
-          <SourceNote>{s.source(mid!.source, rate(mid!.rate), dayIn(language, mid!.date))}</SourceNote>
+          <Section title={s.costTitle}>
+            <SplitBar
+              label={[
+                [s.fee, cost.feeCost],
+                [s.tax, cost.taxCost],
+                [s.markup(pct(cost.markupPct, 2)), cost.markupCost],
+                [s.pickup, cost.pickupCost],
+              ]
+                .filter(([, x]) => (x as number) > 0)
+                .map(([l, x]) => `${l} ${money(x as number, from)}`)
+                .join(', ')}
+              parts={[
+                { key: 'fee', label: s.fee, amount: cost.feeCost, display: money(cost.feeCost, from), color: t.moneyFee },
+                { key: 'tax', label: s.tax, amount: cost.taxCost, display: money(cost.taxCost, from), color: t.textSecondary },
+                { key: 'markup', label: s.markup(pct(cost.markupPct, 2)), amount: cost.markupCost, display: money(cost.markupCost, from), color: t.moneyMarkup },
+                { key: 'pickup', label: s.pickup, amount: cost.pickupCost, display: money(cost.pickupCost, from), color: t.moneyPickup },
+              ]}
+            />
+            {cost.markupPct < 0 ? (
+              <AppText variant="small" muted>
+                {s.betterThanMid}
+              </AppText>
+            ) : null}
+          </Section>
+          <Section title={s.arrivedTitle}>
+            <ArrivedBar
+              got={cost.amountReceived}
+              possible={cost.benchmarkReceived}
+              gotText={s.arrivedGot(money(cost.amountReceived, to), money(cost.benchmarkReceived, to))}
+              lostText={s.arrivedLost(money(cost.shortfall, to))}
+              label={s.arrivedLabel(money(cost.amountReceived, to), money(cost.benchmarkReceived, to), money(cost.shortfall, to))}
+            />
+            <SourceNote>{s.source(mid!.source, rate(mid!.rate), dayIn(language, mid!.date))}</SourceNote>
+          </Section>
         </>
       ) : (
         <AppText muted>{mid ? s.missing : s.noMid}</AppText>
@@ -98,24 +126,26 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         <BestOptionView best={confirmed.best} from={from} to={to} transferDate={v.transfer_date} />
       </Section>
 
-      {/* 3. Advertised vs. paid */}
+      {/* 3. Advertised vs. paid: three rates on one line. */}
       <Section title={s.advertisedTitle}>
-        {quote && gap ? (
-          <View style={[styles.rule, { borderLeftColor: t.primary }]}>
-            <AppText>
-              {s.advertised(
-                dayIn(language, v.transfer_date!),
-                v.provider ?? '',
-                rate(gap.advertisedRate),
-                money(quote.send_amount, from).replace('.00', ''),
-                new Date(quote.captured_at).toLocaleString(language.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }),
-              )}
+        {quote && gap && mid ? (
+          <>
+            <RateLine
+              label={s.rateLabel(rate(mid.rate), rate(gap.advertisedRate), rate(gap.receiptRate))}
+              points={[
+                { key: 'mid', name: s.rateMid, value: mid.rate, display: num(mid.rate), color: t.border },
+                { key: 'ad', name: s.rateAdvertised(v.provider ?? ''), value: gap.advertisedRate, display: num(gap.advertisedRate), color: t.moneyMarkup },
+                { key: 'you', name: s.rateYours, value: gap.receiptRate, display: num(gap.receiptRate), color: t.text, strong: true },
+              ]}
+            />
+            <StatusLine
+              tone={gap.gapAmount > 0 ? 'warn' : 'good'}
+              text={gap.gapAmount > 0 ? s.gapMore(money(gap.gapAmount, from)) : gap.gapAmount < 0 ? s.gapLess(money(-gap.gapAmount, from)) : s.gapSame}
+            />
+            <AppText variant="small" muted>
+              {s.rateChecked(new Date(quote.captured_at).toLocaleString(language.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}
             </AppText>
-            <AppText>{s.yourRate(rate(gap.receiptRate))}</AppText>
-            <AppText variant="label">
-              {gap.gapAmount > 0 ? s.gapMore(money(gap.gapAmount, from)) : gap.gapAmount < 0 ? s.gapLess(money(-gap.gapAmount, from)) : s.gapSame}
-            </AppText>
-          </View>
+          </>
         ) : (
           <AppText muted>
             {reason === 'not_tracked' ? s.notTracked : reason === 'no_route' ? s.noRoute : reason === 'missing_values' ? s.missingValues : s.noQuote}
@@ -125,10 +155,15 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
 
       {/* 4. The tax check */}
       <Section title={s.taxTitle}>
-        <AppText muted>{s.taxRule}</AppText>
-        <AppText>{taxText()}</AppText>
+        <StatusLine tone={tax.status === 'matches' || tax.status === 'not_taxed' || tax.status === 'small_transfer' || tax.status === 'before_tax' ? 'good' : tax.status === 'differs' || tax.status === 'not_found' ? 'warn' : 'neutral'} text={taxText()} />
         {tax.bankEquivalent && cost ? (
-          <AppText>{s.taxBank(money(tax.bankEquivalent.totalCost, from), money(cost.totalCost - tax.bankEquivalent.totalCost, from))}</AppText>
+          <CompareBars
+            label={s.taxBank(money(tax.bankEquivalent.totalCost, from), money(cost.totalCost - tax.bankEquivalent.totalCost, from))}
+            rows={[
+              { key: 'paid', name: s.taxPaidBy(v.funding_method ? fundingWord(v.funding_method, copy, language) : ''), value: cost.totalCost, display: money(cost.totalCost, from), color: t.moneyMarkup },
+              { key: 'bank', name: s.taxFromBank, value: tax.bankEquivalent.totalCost, display: money(tax.bankEquivalent.totalCost, from), color: t.primary, strong: true },
+            ]}
+          />
         ) : null}
         {tax.expected !== null ? (
           <AppText variant="small" muted>
@@ -141,13 +176,14 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
       <Section title={s.disclosuresTitle}>
         {confirmed.disclosures_missing.length ? (
           <>
-            <AppText>{s.disclosuresMissing(confirmed.disclosures_missing.map((d) => s.disclosureItems[d] ?? d).join(', '))}</AppText>
+            <AppText variant="label">{s.notFound}</AppText>
+            <Chips icon="xmark" items={confirmed.disclosures_missing.map((d) => s.disclosureItems[d] ?? d)} />
             <AppText variant="small" muted>
               {s.disclosuresNote}
             </AppText>
           </>
         ) : (
-          <AppText muted>{s.disclosuresAll}</AppText>
+          <StatusLine tone="good" text={s.disclosuresAll} />
         )}
       </Section>
 
@@ -232,7 +268,13 @@ function BestOptionView({
             <AppText style={[styles.keptValue, { color: t.primary }]}>{money(b.could_keep, from)}</AppText>
             <AppText style={{ color: t.accentForeground }}>{s.keptNote(money(b.received, to))}</AppText>
           </View>
-          <AppText>{s.keptCosts(b.provider_name, money(b.total_cost, from), money(b.your_total_cost, from))}</AppText>
+          <CompareBars
+            label={s.keptBarsLabel(money(b.your_total_cost, from), b.provider_name, money(b.total_cost, from))}
+            rows={[
+              { key: 'you', name: s.keptYou, value: b.your_total_cost, display: money(b.your_total_cost, from), color: t.moneyMarkup },
+              { key: 'best', name: b.provider_name, value: b.total_cost, display: money(b.total_cost, from), color: t.primary, strong: true },
+            ]}
+          />
         </>
       ) : (
         <View style={[styles.rule, { borderLeftColor: t.primary }]}>

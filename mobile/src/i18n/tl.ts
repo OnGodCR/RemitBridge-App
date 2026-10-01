@@ -721,23 +721,16 @@ export const tl: Copy = {
 
   result: {
     title: 'Magkano talaga ang nagastos sa padalang ito',
-    costNote: (pct: string, world: number, target: number) =>
-      `${pct} ng ipinadala mo. Ang average sa buong mundo ay ${world}%; ang target ng UN ay ${target}%.`,
     fee: 'Fee na nakikita',
     tax: 'Federal na remittance tax',
     markup: (pct: string) => `Nakatago sa rate (${pct} markup)`,
     pickup: 'Singil sa pag-pickup',
-    received: 'Natanggap nila',
-    benchmark: 'Sa mid-market rate, walang fee',
     betterThanMid: 'Mas maganda ang rate kaysa sa mid-market. Kadalasan, promo ito para sa unang padala.',
     source: (source: string, rate: string, day: string) =>
       `Mid-market rate mula sa ${source}: ${rate}, para sa ${day}. Pang-araw-araw na reference ito, kaya maaaring gumalaw ang rate noong araw na iyon.`,
     noMid: 'Hindi ma-load ang mid-market rate noong araw na iyon, kaya hindi makalkula ang gastos na nakatago sa rate.',
     missing: 'May kulang na halaga, kaya hindi makalkula ang kabuuang gastos.',
     advertisedTitle: 'Ipinakita vs. binayaran',
-    advertised: (day: string, provider: string, rate: string, amount: string, time: string) =>
-      `Noong ${day}, ipinakita ng ${provider} ang ${rate} para sa route na ito sa ${amount}, na-check ${time}.`,
-    yourRate: (rate: string) => `Ang resibo mo: ${rate}.`,
     gapMore: (gap: string) => `Mas mahal nang ${gap} ang rate na nakuha mo kaysa sa ipinakita.`,
     gapLess: (gap: string) => `Mas maganda nang ${gap} ang rate na nakuha mo kaysa sa ipinakita.`,
     gapSame: 'Pareho ang rate na nakuha mo at ang ipinakita.',
@@ -745,11 +738,30 @@ export const tl: Copy = {
     noRoute: 'Hindi pa namin tinitingnan ang presyo sa route na ito, kaya walang ipinakitang presyo na maikukumpara.',
     noQuote: 'Wala kaming presyo mula sa provider na ito na na-check sa loob ng isang araw ng padalang ito, kaya walang maikukumpara.',
     missingValues: 'Kulang ang petsa, halaga o rate sa resibo, kaya hindi ito maikukumpara.',
+    pctOfSent: (pct: string) => `${pct} ng ipinadala mo`,
+    scaleLabel: (pct: string, world: number, target: number) =>
+      `Ang padalang ito ay nagkahalaga ng ${pct} ng ipinadala. Ang pandaigdigang average ay ${world}%; ang target ng UN ay ${target}%.`,
+    scaleYou: (pct: string) => `Ito ${pct}`,
+    scaleWorld: (n: number) => `Mundo ${n}%`,
+    scaleTarget: (n: number) => `Target ng UN ${n}%`,
+    costTitle: 'Saan galing ang gastos',
+    arrivedTitle: 'Ang dumating',
+    arrivedGot: (got: string, possible: string) => `${got} sa ${possible}`,
+    arrivedLost: (lost: string) => `${lost} nawala`,
+    arrivedLabel: (got: string, possible: string, lost: string) =>
+      `${got} ang dumating. Sa mid-market rate at walang fee, ${possible} sana. ${lost} ang nawala.`,
+    keptYou: 'Gastos mo',
+    keptBarsLabel: (you: string, provider: string, theirs: string) => `Gastos mo ${you}. ${provider}: ${theirs}.`,
+    rateMid: 'Mid-market',
+    rateAdvertised: (provider: string) => `Inanunsyo ng ${provider}`,
+    rateYours: 'Resibo mo',
+    rateChecked: (time: string) => `Inanunsyong presyo, sinuri ${time}.`,
+    rateLabel: (mid: string, advertised: string, yours: string) =>
+      `Mid-market rate ${mid}. Inanunsyo ${advertised}. Resibo mo ${yours}.`,
+    notFound: 'Hindi nakita sa resibong ito',
     keptTitle: 'Ang maaari sanang natipid mo',
     keptLabel: (provider: string) => `Sa ${provider}, maaari sanang natipid mo`,
     keptNote: (received: string) => `Kung pareho ang halagang ipinadala, matatanggap sana ng pamilya mo ang ${received}.`,
-    keptCosts: (provider: string, theirs: string, yours: string) =>
-      `Tunay na gastos sa ${provider}: ${theirs}. Sa iyo: ${yours}. Parehong sinukat sa iisang mid-market rate.`,
     keptBest: (provider: string) => `Nasa iyo na ang pinakamagandang presyong nakita namin: ${provider}.`,
     keptAsGood: 'Ang presyo mo ay kasing-ganda o mas maganda pa sa lahat ng presyong mayroon kami para sa parehong uri ng padala.',
     keptThatDay: (time: string) => `Mga presyong sinuri ${time}, sa loob ng isang araw ng padala mo.`,
@@ -764,8 +776,6 @@ export const tl: Copy = {
     keptMissing: 'Kulang ang halaga o rate sa resibo, kaya hindi ito maikukumpara.',
     keptNoMid: 'Kung walang mid-market rate sa araw na iyon, hindi masusukat nang pareho ang mga gastos, kaya walang paghahambing.',
     taxTitle: 'Federal na remittance tax',
-    taxRule:
-      'Mula Enero 1, 2026, may 1% federal tax ang mga padalang binayaran ng cash, money order o cashier’s check. Wala ito sa mga binayaran mula sa bank account o gamit ang card.',
     taxMatches: (funding: string, amount: string, expected: string, found: string) =>
       `Binayaran ito gamit ang ${funding}. Ang 1% ng ${amount} ay ${expected}, at ${found} ang nasa resibo.`,
     taxNotFound: (funding: string, amount: string, expected: string) =>
@@ -775,6 +785,8 @@ export const tl: Copy = {
     taxNotTaxed: (funding: string) => `Binayaran ito gamit ang ${funding}, kaya hindi kasama ang tax.`,
     taxBefore: 'Ginawa ang padalang ito bago nagsimula ang tax.',
     taxUnknown: 'Hindi sinasabi ng resibo kung paano ito binayaran, kaya hindi matitingnan ang tax.',
+    taxPaidBy: (funding: string) => `Bayad sa ${funding}`,
+    taxFromBank: 'Mula sa bank account',
     taxBank: (total: string, tax: string) =>
       `Kung mula sa bank account ito binayaran, ${total} sana ang kabuuang gastos, mas mababa nang ${tax}.`,
     taxAssumption:
@@ -786,7 +798,6 @@ export const tl: Copy = {
     routeBoard: 'Tingnan kung aling route ang tinitingnan namin',
     disclosuresTitle: 'Mga kailangang impormasyon',
     disclosuresAll: 'Nakita ang bawat kailangang impormasyon sa resibong ito.',
-    disclosuresMissing: (items: string) => `Hindi nakita sa resibong ito: ${items}.`,
     disclosuresNote:
       'Puwedeng maputol ng litrato ang bahagi ng resibo at mahirap basahin ang maliliit na letra, kaya hindi ibig sabihin nito na may kinulang ang provider.',
     disclosureItems: {

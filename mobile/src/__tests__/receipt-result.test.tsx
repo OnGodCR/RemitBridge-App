@@ -60,10 +60,14 @@ const expected = computeTransferCost({ sent: 509.99, fee: 4.99, transferTax: 5, 
 describe('true cost', () => {
   it('is the one formula’s total, with the tax on its own line', () => {
     render(<ReceiptResult confirmed={confirmed()} />);
-    expect(screen.getByText(money(expected.totalCost, 'USD'))).toBeTruthy();
-    expect(screen.getAllByText('Federal remittance tax').length).toBe(2); // the breakdown row and the section
-    expect(screen.getByText('$5.00')).toBeTruthy();
+    // The headline, and again on the cash-vs-bank bars in the tax check.
+    expect(screen.getAllByText(money(expected.totalCost, 'USD')).length).toBe(2);
+    expect(screen.getAllByText('Federal remittance tax').length).toBe(2); // the cost bar's legend and the section
+    expect(screen.getAllByText('$5.00').length).toBeGreaterThan(0);
     expect(screen.getByText(money(expected.markupCost, 'USD'))).toBeTruthy();
+    // The charts say the same in words, for VoiceOver.
+    expect(screen.getByLabelText(/This transfer cost 5\.\d+% of what was sent\. The world average is 6\.36%; the UN target is 3%\./)).toBeTruthy();
+    expect(screen.getByLabelText(/^MX\$8,560\.00 arrived\. At the mid-market rate with no fee, MX\$9,026\.82 would have\./)).toBeTruthy();
     expect(screen.getByText(/Mid-market rate from Frankfurter: 1 USD = 17\.7 MXN, for Sep 28, 2026/)).toBeTruthy();
   });
 
@@ -102,7 +106,7 @@ describe('what you could have kept (D119)', () => {
     expect(screen.getByText('With Ria, you could have kept')).toBeTruthy();
     expect(screen.getByText('$12.68')).toBeTruthy();
     expect(screen.getByText(/your family would have received MX\$8,710\.00/)).toBeTruthy();
-    expect(screen.getByText(/True cost with Ria: \$10\.92\. Yours: \$23\.60\./)).toBeTruthy();
+    expect(screen.getByLabelText('Your cost $23.60. Ria: $10.92.')).toBeTruthy();
     expect(screen.getByText(/within a day of your transfer/)).toBeTruthy();
     expect(screen.getByText('Compared with: Ria, Western Union. We don’t have prices from every provider yet.')).toBeTruthy();
   });
@@ -127,8 +131,8 @@ describe('what you could have kept (D119)', () => {
 describe('advertised vs. paid', () => {
   it('shows the advertised rate, the capture, the receipt’s rate and the gap', () => {
     render(<ReceiptResult confirmed={confirmed()} />);
-    expect(screen.getByText(/Western Union showed 1 USD = 17\.3 MXN for this route at \$500, checked Sep 28/)).toBeTruthy();
-    expect(screen.getByText('Your receipt: 1 USD = 17.2 MXN.')).toBeTruthy();
+    expect(screen.getByLabelText('Mid-market rate 1 USD = 17.7 MXN. Advertised 1 USD = 17.3 MXN. Your receipt 1 USD = 17.2 MXN.')).toBeTruthy();
+    expect(screen.getByText(/Advertised price checked Sep 28/)).toBeTruthy();
     expect(screen.getByText('The rate you got cost $2.82 more than the advertised one.')).toBeTruthy();
   });
 
@@ -147,7 +151,8 @@ describe('the tax check', () => {
   it('confirms a correct 1% and shows the bank-funded equivalent', () => {
     render(<ReceiptResult confirmed={confirmed()} />);
     expect(screen.getByText('This one was paid by cash. 1% of $500.00 is $5.00, and the receipt shows $5.00.')).toBeTruthy();
-    expect(screen.getByText(`Paid from a bank account instead, the same transfer would have cost ${money(expected.totalCost - 5, 'USD')} in total, $5.00 less.`)).toBeTruthy();
+    expect(screen.getByLabelText(`Paid from a bank account instead, the same transfer would have cost ${money(expected.totalCost - 5, 'USD')} in total, $5.00 less.`)).toBeTruthy();
+    expect(screen.getByText('From a bank account')).toBeTruthy();
     expect(screen.getByText(/proposed rules do/)).toBeTruthy();
   });
 
@@ -180,7 +185,9 @@ describe('next time', () => {
 describe('standard disclosures', () => {
   it('names what wasn’t found, and says that isn’t a finding', () => {
     render(<ReceiptResult confirmed={confirmed({ disclosures_missing: ['error_rights', 'cfpb_contact'] })} />);
-    expect(screen.getByText('Not found on this receipt: your rights if there’s an error, the CFPB’s contact details.')).toBeTruthy();
+    expect(screen.getByText('Not found on this receipt')).toBeTruthy();
+    expect(screen.getByText('your rights if there’s an error')).toBeTruthy();
+    expect(screen.getByText('the CFPB’s contact details')).toBeTruthy();
     expect(screen.getByText(/doesn’t mean the provider left anything out/)).toBeTruthy();
   });
 
