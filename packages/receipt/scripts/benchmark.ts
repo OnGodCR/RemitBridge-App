@@ -8,11 +8,12 @@
  * `npm run synthesize`), redacts it as the phone would, reads it in each mode, scores each
  * field against the ground truth, and writes benchmark/results.md.
  *
- * The model modes need OPENROUTER_API_KEY in the environment (never in a file here) and
- * use RECEIPT_MODEL / RECEIPT_MODEL_FALLBACKS like the Edge Function. Without the key they
- * are skipped and results.md says so. --images also sends each receipt's redacted photo
- * (<id>.redacted.png next to a real receipt, or in benchmark/synthetic/images/).
- * They cost money: about a tenth of a cent a receipt at the D92 price. Not run in CI.
+ * The model modes need GROQ_API_KEY in the environment (never in a file here) and use
+ * RECEIPT_MODEL like the Edge Function. Without the key they are skipped and results.md
+ * says so. --images also sends each receipt's redacted photo (<id>.redacted.png next to a
+ * real receipt, or in benchmark/synthetic/images/). Groq's free tier costs nothing but
+ * allows about 8,000 tokens a minute (D98), so a 429 here waits and tries again instead of
+ * counting as a failure; in the app, a 429 means the rules read alone. Not run in CI.
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -22,7 +23,7 @@ import { parseArgs } from 'node:util'
 import { formatResults, MODES, showsWord, summarize, type Mode, type ReceiptRun } from '../src/benchmark.ts'
 import { checkDisclosures } from '../src/disclosures.ts'
 import { scoreFields, valuesOf } from '../src/harness.ts'
-import { DEFAULT_MODEL, openRouterClient } from '../src/model.ts'
+import { DEFAULT_MODEL, groqClient } from '../src/model.ts'
 import { loadFixtures, type Fixture } from '../src/node/fixtures.ts'
 import { pageText } from '../src/ocr.ts'
 import { parseReceipt } from '../src/parser.ts'
@@ -61,20 +62,30 @@ if (!receipts.length) {
   process.exit(1)
 }
 
-const key = process.env.OPENROUTER_API_KEY
+const key = process.env.GROQ_API_KEY
 const modelName = process.env.RECEIPT_MODEL || DEFAULT_MODEL
-const fallbacks = (process.env.RECEIPT_MODEL_FALLBACKS ?? '').split(',').map((m) => m.trim()).filter(Boolean)
 const wanted = args.modes.split(',').map((m) => m.trim()) as Mode[]
 const skipped: { mode: Mode; why: string }[] = []
 const modes = wanted.filter((m) => {
   if (!MODES.includes(m)) throw new Error(`unknown mode "${m}"`)
   if (m !== 'parser' && !key) {
-    skipped.push({ mode: m, why: 'no `OPENROUTER_API_KEY` in the environment.' })
+    skipped.push({ mode: m, why: 'no `GROQ_API_KEY` in the environment.' })
     return false
   }
   return true
 })
-const client = key ? openRouterClient(key) : null
+/** fetch that waits out the free tier's per-minute limit: Groq's retry-after, or 20 s. */
+async function patientFetch(url: string | URL | Request, init?: RequestInit): Promise<Response> {
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(url, init)
+    if (res.status !== 429 || attempt === 6) return res
+    const wait = Math.min(Number(res.headers.get('retry-after')) || 20, 90)
+    console.error(`429 from the model service; waiting ${wait} s (attempt ${attempt} of 5)`)
+    await new Promise((r) => setTimeout(r, wait * 1000))
+  }
+}
+
+const client = key ? groqClient(key, patientFetch) : null
 
 function imageFor(f: Fixture): { mediaType: 'image/png'; base64: string } | undefined {
   if (!args.images) return undefined
@@ -122,7 +133,7 @@ async function readOne(f: Fixture, mode: Mode): Promise<ReceiptRun> {
     page,
     image: imageFor(f),
     today,
-    model: { client: client!, model: modelName, fallbacks },
+    model: { client: client!, model: modelName },
     mode: mode === 'model' ? 'model' : 'combined',
     midRate: async () => f.midRate ?? null,
   })
@@ -177,7 +188,7 @@ for (const f of receipts) {
 const md = formatResults({
   date: today,
   sets: { real: real.length, synthetic: synthetic.length },
-  model: modes.some((m) => m !== 'parser') ? [modelName, ...fallbacks].join(', then ') : null,
+  model: modes.some((m) => m !== 'parser') ? modelName : null,
   images: args.images,
   summaries,
   redaction: { receipts: receipts.length, leaks, lost },

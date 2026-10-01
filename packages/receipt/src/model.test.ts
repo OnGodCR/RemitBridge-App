@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { answerSchema, askModel, buildRequest, DEFAULT_MODEL, ModelError, numberedText, OPENROUTER_URL, openRouterClient, readAnswer, replyJson, SYSTEM_PROMPT } from './model.ts'
+import { answerSchema, askModel, buildRequest, DEFAULT_MODEL, ModelError, numberedText, GROQ_URL, groqClient, readAnswer, replyJson, SYSTEM_PROMPT } from './model.ts'
 import { pageFromLines } from './ocr.ts'
 import { answer, fakeModel } from './test/fake-model.ts'
 
@@ -34,7 +34,6 @@ describe('the request', () => {
   it('sends the redacted photo first, then the numbered text, with a strict schema', () => {
     const req = buildRequest({ fields: ['fee'], page, image: { mediaType: 'image/jpeg', base64: 'AAAA' }, today: TODAY })
     expect(req.model).toBe(DEFAULT_MODEL)
-    expect(req.models).toBeUndefined()
     expect(req.messages[0]).toEqual({ role: 'system', content: SYSTEM_PROMPT })
     expect(req.response_format.type).toBe('json_schema')
     expect(req.response_format.json_schema.strict).toBe(true)
@@ -48,15 +47,18 @@ describe('the request', () => {
     expect(text).toContain('[1] Sender: [hidden] [hidden]')
   })
 
-  it('asks OpenRouter only for providers that enforce the schema and keep nothing', () => {
-    expect(buildRequest({ fields: ['fee'], page, today: TODAY }).provider).toEqual({ require_parameters: true, data_collection: 'deny' })
+  it('turns Qwen’s thinking off and asks for the answer alone', () => {
+    const req = buildRequest({ fields: ['fee'], page, today: TODAY })
+    expect(req.model).toBe('qwen/qwen3.8-27b')
+    expect(req.reasoning_effort).toBe('none')
+    expect(req.reasoning_format).toBe('hidden')
+    expect(req.max_tokens).toBeLessThanOrEqual(1500)
   })
 
-  it('sends text alone when the photo may not go, and lists fallbacks after the model', () => {
-    const req = buildRequest({ fields: ['fee'], page, today: TODAY, model: 'qwen/a', fallbacks: ['qwen/a', 'qwen/b', ''] })
+  it('sends text alone when the photo may not go, to the model asked for', () => {
+    const req = buildRequest({ fields: ['fee'], page, today: TODAY, model: 'qwen/a' })
     expect(req.messages[1].content).toHaveLength(1)
     expect(req.model).toBe('qwen/a')
-    expect(req.models).toEqual(['qwen/a', 'qwen/b'])
   })
 
   it('keeps the system prompt free of anything per request, so it caches', () => {
@@ -65,7 +67,7 @@ describe('the request', () => {
   })
 })
 
-describe('the OpenRouter client', () => {
+describe('the Groq client', () => {
   it('posts the request with the key, and returns the reply', async () => {
     const calls: { url: string; init: RequestInit }[] = []
     const fetchImpl = (async (url: string, init: RequestInit) => {
@@ -73,17 +75,17 @@ describe('the OpenRouter client', () => {
       return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: '{}' } }] }), { status: 200 })
     }) as unknown as typeof fetch
     const req = buildRequest({ fields: ['fee'], page, today: TODAY })
-    const reply = await openRouterClient('sk-or-test', fetchImpl).complete(req)
+    const reply = await groqClient('gsk-test', fetchImpl).complete(req)
     expect(reply.choices?.[0].message?.content).toBe('{}')
-    expect(calls[0].url).toBe(OPENROUTER_URL)
-    expect((calls[0].init.headers as Record<string, string>).Authorization).toBe('Bearer sk-or-test')
+    expect(calls[0].url).toBe(GROQ_URL)
+    expect((calls[0].init.headers as Record<string, string>).Authorization).toBe('Bearer gsk-test')
     expect(JSON.parse(String(calls[0].init.body))).toEqual(req)
   })
 
   it('throws on a non-2xx reply, naming only the status', async () => {
-    const fetchImpl = (async () => new Response('{"error":{"message":"No endpoints found"}}', { status: 404 })) as unknown as typeof fetch
-    await expect(openRouterClient('k', fetchImpl).complete(buildRequest({ fields: ['fee'], page, today: TODAY }))).rejects.toThrow(
-      'openrouter: HTTP 404',
+    const fetchImpl = (async () => new Response('{"error":{"message":"Rate limit reached"}}', { status: 429 })) as unknown as typeof fetch
+    await expect(groqClient('k', fetchImpl).complete(buildRequest({ fields: ['fee'], page, today: TODAY }))).rejects.toThrow(
+      'groq: HTTP 429',
     )
   })
 })

@@ -53,7 +53,7 @@ describe('results.md', () => {
   const md = formatResults({
     date: '2026-09-30',
     sets: { real: 2, synthetic: 3 },
-    model: 'qwen/qwen3-vl-32b-instruct',
+    model: 'qwen/qwen3.8-27b',
     images: true,
     summaries: [summarize('parser', []), combined],
     redaction: { receipts: 5, leaks: ['a: “Tran”'], lost: [] },
@@ -62,7 +62,7 @@ describe('results.md', () => {
 
   it('says how many receipts, which model, and that the results are early', () => {
     expect(md).toContain('on 5 receipts: 2 real, 3 synthetic')
-    expect(md).toContain('`qwen/qwen3-vl-32b-instruct` through OpenRouter, with the redacted photo')
+    expect(md).toContain('`qwen/qwen3.8-27b` on Groq, with the redacted photo')
     expect(md).toContain('**Early results.**')
     expect(md).toContain('- model mode didn’t run: no key.')
   })

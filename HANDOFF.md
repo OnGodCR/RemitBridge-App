@@ -48,6 +48,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   "Open the app" button now opens `remitbridge://p/<partner>`. Only the
   `apple-app-site-association` file is left, and it needs the Team ID.
 - EAS: not signed in yet. Disk: 12 GB free.
+- **The receipt model moved to Groq's free tier (D98):** `qwen/qwen3.8-27b`, `GROQ_API_KEY`
+  (set by Angad in Supabase and GitHub Actions). No more OpenRouter, no fallback models.
+  About 60 receipts a day free; past that the rules read alone. The privacy policy names Groq.
 
 ## 2026-10-01 (cloud session)
 
@@ -178,7 +181,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D94; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D98; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |

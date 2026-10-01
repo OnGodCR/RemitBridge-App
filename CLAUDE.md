@@ -62,13 +62,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
-- [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
-      receipts migration is in (48/48 smoke checks, 2026-09-30).
-- [ ] **Replace the receipt model before 2026-10-09.** OpenRouter lists
-      `qwen/qwen3-vl-32b-instruct` (D92's default) as going away that day, served by one
-      provider (Alibaba Cloud, Singapore and China; no prompt training, retention unknown),
-      $0.104/$0.416 per million tokens (checked 2026-09-30). Run the benchmark with its new
-      `model` input on candidates, then Angad picks.
+- [ ] **Receipt model on Groq (D98):** `GROQ_API_KEY` set in Supabase and GitHub Actions
+      (2026-09-30), code switched from OpenRouter. Left: deploy `scan-receipt`, run the
+      benchmark, and Angad turns on Zero Data Retention in Groq's Data Controls.
+- [x] Replaced the retiring receipt model (OpenRouter's Qwen3 VL 32B ends 2026-10-09) with
+      Qwen3.8 27B on Groq's free tier (D98). Done 2026-09-30.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
       sealed for up to an hour (2026-10-01). The migration is live (2026-09-30). Left: set
       `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
@@ -257,8 +255,8 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
   state lives in Postgres (D13).
 - **WhatsApp:** Meta Cloud API directly, not Twilio.
 - **Receipt scanning:** OCR and redaction on the phone (ML Kit, Skia); the pipeline in
-  `packages/receipt`; Qwen3 VL through OpenRouter, only from the `scan-receipt` Edge
-  Function (D73–D78, D92).
+  `packages/receipt`; Qwen3.8 27B on Groq's free tier, only from the `scan-receipt` Edge
+  Function (D73–D78, D98).
 - **Maintainer alerts:** email to Angad.
 - Use whichever language fits each part. Every part must use the same total-cost formula.
 - **Look:** same as the website (D18). The website repo

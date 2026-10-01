@@ -2,8 +2,9 @@ name: Receipt benchmark
 
 # Runs the receipt reading benchmark in all three modes (DECISIONS.md D85, D93) on the
 # committed synthetic receipts, so nobody's laptop has to. Manual only: the model modes
-# cost about a tenth of a cent a receipt (D92). Needs the OPENROUTER_API_KEY Actions
-# secret; without it, only parser mode runs.
+# use the same free Groq tier as the app (D98), whose daily tokens they share. Needs the
+# GROQ_API_KEY Actions secret; without it, only parser mode runs. The synthetic photos
+# aren't committed, so the model reads the redacted text alone, as on WhatsApp.
 #
 # The results are the run's summary and a results.md artifact. They're not committed:
 # to keep a run, download the artifact and commit it as benchmark/results.md.
@@ -20,7 +21,7 @@ on:
         required: false
         default: "parser,model,combined"
       model:
-        description: "OpenRouter model (blank for the app's default)"
+        description: "Groq model (blank for the app's default)"
         required: false
         default: ""
 
@@ -30,9 +31,10 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # The free tier's tokens-a-minute limit makes the script wait between model calls.
+    timeout-minutes: 60
     env:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       RECEIPT_MODEL: ${{ inputs.model }}
     steps:
       - uses: actions/checkout@v4

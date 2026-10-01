@@ -96,7 +96,7 @@ export interface RedactionSummary {
 export interface ResultsInput {
   date: string
   sets: { real: number; synthetic: number }
-  /** The model and fallbacks used, or null when the model modes didn't run. */
+  /** The model used, or null when the model modes didn't run. */
   model: string | null
   images: boolean
   summaries: ModeSummary[]
@@ -123,8 +123,8 @@ export function formatResults(input: ResultsInput): string {
     '',
     `Run ${input.date}, on ${total} receipt${total === 1 ? '' : 's'}: ${input.sets.real} real, ${input.sets.synthetic} synthetic.`,
     input.model
-      ? `Model: \`${input.model}\` through OpenRouter, ${input.images ? 'with the redacted photo and the text' : 'with the redacted text only (no photo)'}.`
-      : 'Model: not run (no `OPENROUTER_API_KEY`).',
+      ? `Model: \`${input.model}\` on Groq, ${input.images ? 'with the redacted photo and the text' : 'with the redacted text only (no photo)'}.`
+      : 'Model: not run (no `GROQ_API_KEY`).',
     '',
     '**Early results.** Synthetic receipts are made up, and they were read with tesseract.js, not',
     'the phone’s ML Kit, so these numbers are a stand-in for real accuracy until there are',

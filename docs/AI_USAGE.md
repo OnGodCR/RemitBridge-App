@@ -450,3 +450,21 @@ $15.00 small-transfer exclusion the formula didn't have; added it.
   line and new wording for the tax note, in five languages (four are drafts). Test in
   `mobile/src/__tests__/receipt-result.test.tsx`.
 - `DECISIONS.md` (D97), `CLAUDE.md`.
+
+## 2026-09-30: switching the model fallback to Groq's free tier
+
+**What Angad asked:** find a free API, since OpenRouter needs paid credit. **What Claude
+did:** compared free tiers (Groq, OpenRouter's free models, Gemini, Cloudflare Workers AI,
+GitHub Models) against D92's needs: photos, a strict JSON schema, nothing kept or trained
+on. Recommended Groq with Qwen3.8 27B (D98); Angad made the key, and Claude switched the code.
+- `packages/receipt/src/model.ts`: `groqClient()` and `GROQ_URL` replace the OpenRouter
+  client; the request drops OpenRouter's `provider` and `models` fields and turns Qwen's
+  thinking off; `max_tokens` 1,500. Fallback models removed (also in `pipeline.ts`).
+- `supabase/functions/scan-receipt/index.ts`: reads `GROQ_API_KEY`.
+- `packages/receipt/scripts/benchmark.ts`, `src/benchmark.ts`, `.github/workflows/benchmark.yml`:
+  the Groq key, waiting out 429s, a 60-minute timeout.
+- Tests: `model.test.ts`, `scan-function.test.ts`, `benchmark.test.ts`, `test/fake-model.ts`.
+  189 receipt tests pass.
+- `site/privacy.html`: Groq replaces OpenRouter as the processor.
+- `README.md`, `benchmark/README.md`, `docs/cac/submission.md`, `DECISIONS.md` (D98),
+  `CLAUDE.md`, `HANDOFF.md`.

@@ -926,3 +926,34 @@ summaries; the Federal Register itself is blocked from its sandbox.
 - **Not final.** The rules apply from the quarter after they're published as final, and as
   of this check they weren't. The app's note now says we follow the proposed rules, which
   aren't final yet.
+
+## 2026-09-30: The receipt model, again
+
+**D98. Receipts are read by Qwen3.8 27B on Groq's free tier, not Qwen3 VL 32B on
+OpenRouter** (replaces D92's model and API; its scope, schema and cap rules stand). Angad
+asked for something free, since OpenRouter needs prepaid credit, and created the Groq key
+the same day.
+- **Why the switch was needed anyway:** on 2026-09-30 OpenRouter listed
+  `qwen/qwen3-vl-32b-instruct` as going away on 2026-10-09, served by one provider (Alibaba
+  Cloud, Singapore and China; no prompt training, retention "unknown").
+- **Model:** `qwen/qwen3.8-27b`, Groq's only model that reads images and one of three it
+  holds to a strict JSON schema (`strict: true`, with our `anyOf`-null fields). Thinking is
+  off (`reasoning_effort: "none"`, `reasoning_format: "hidden"`, which Groq requires with a
+  schema), and `max_tokens` is 1,500, since Groq counts what's asked for against the
+  per-minute limit. `RECEIPT_MODEL` still overrides it.
+- **Free tier, from Groq's docs:** 30 requests a minute, 1,000 a day, 8,000 tokens a
+  minute, 200,000 a day for this model. A receipt is about 3,000 tokens (an image counts as
+  2,048), so about 60 receipts a day and 2 a minute. Past that, Groq answers 429 and the
+  rules read alone; the person types what's missing, as when the monthly cap is reached.
+- **Privacy:** Groq keeps no inference data by default, except logs for up to 30 days when
+  investigating errors or abuse; Zero Data Retention (Data Controls) removes that exception.
+  Its docs don't say "no training" in so many words; third-party summaries say training is
+  excluded by contract. The privacy policy says what Groq says.
+- **Fallback models are gone** (`RECEIPT_MODEL_FALLBACKS`): Groq has no field for them, and
+  no second model there reads images.
+- **Other free options looked at:** OpenRouter's `:free` models (most endpoints may train
+  on or publish prompts, which our privacy setting excludes; 50 a day); Gemini's free tier
+  (prompts may be used to improve Google's products); Cloudflare Workers AI (schema mode only
+  on text models, not guaranteed); GitHub Models (prototyping only).
+- **Benchmark:** the workflow takes a `model` input and the `GROQ_API_KEY` secret, and the
+  script waits out 429s instead of counting them as failures.

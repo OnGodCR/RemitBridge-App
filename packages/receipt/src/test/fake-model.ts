@@ -1,4 +1,4 @@
-/** A stand-in for the OpenRouter client: records each request and answers from a script. */
+/** A stand-in for the Groq client: records each request and answers from a script. */
 import type { ChatRequest, ChatResponse, ModelClient } from '../model.ts'
 
 type Reply = { finish_reason?: string; text: string; refusal?: string } | { error: string } | Error

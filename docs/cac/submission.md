@@ -55,7 +55,7 @@ the Philippines and Vietnam, and community organizations in the Seattle area tha
 - **Backend:** Supabase (Postgres with row-level security, Edge Functions on Deno).
 - **Price checker:** Python, run on GitHub Actions.
 - **Receipt reading:** on-device text recognition (Google ML Kit) and redaction (Skia); a
-  rule-based parser; a vision model (Qwen3 VL, through OpenRouter) only for values the rules
+  rule-based parser; a vision model (Qwen3.8, on Groq) only for values the rules
   couldn't read, and only ever on the redacted receipt.
 - **One formula:** a single total-cost formula, written once in TypeScript and once in
   Python, both held to the same test cases so no two screens can disagree.
@@ -85,7 +85,7 @@ scanner. Short version for the form:
   receipt parser's field-extraction rules (`packages/receipt/src/extract/fields.ts`).
 - Claude wrote most of the other code under Angad's direction and review, including the
   app screens, the database, the redaction, the benchmark and the WhatsApp bot.
-- The app itself uses an AI model (Qwen3 VL) to read receipt values the rules miss. It only
+- The app itself uses an AI model (Qwen3.8) to read receipt values the rules miss. It only
   ever sees a redacted receipt.
 
 *(Check the form for its exact AI-use rules before submitting.)*
@@ -112,7 +112,7 @@ talking, and no claims the app can't back up.
 | 2:40 | App icon and name | "RemitBridge." |
 
 Before recording, check:
-- [ ] The scanner reads a real receipt end to end on the phone (needs OPENROUTER_API_KEY).
+- [ ] The scanner reads a real receipt end to end on the phone (needs GROQ_API_KEY).
 - [ ] Compare shows live prices (Wise is automated; add a few others with Add a price).
 - [ ] No real personal details appear anywhere on screen. Use your own receipt, or one made
       up for the demo.
