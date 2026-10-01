@@ -72,9 +72,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `site/.well-known/apple-app-site-association`.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
-- [ ] **More prices.** Wise's are live (D91, every 6 hours). The other seven Tier 1 providers
-      are manual (terms checked 2026-09-28, `docs/MANUAL_RESEARCH.md`): Add a price, or
-      their permission.
+- [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
+      2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
+      Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its
+      prices sit behind bot protection. **Instarem is cleared**: its adapter waits on Angad's
+      go. The World Bank's quarterly survey (newest Q3 2025) can feed research once Angad
+      says yes to the download. The rest: Add a price, or their permission.
 
 ### Testing (once the features are set up)
 
@@ -88,6 +91,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### CAC submission (internal deadline Oct 23, official Oct 26)
 
+Angad does this once the app itself is finished (D117).
+
 - [ ] **Write-up and video:** Angad rewrites `docs/cac/submission.md` (Claude's draft,
       2026-10-01) in his own words, records the demo video (3 minutes at most), and submits.
 - [ ] **Scanner live for the demo** (D72): all six phases on `main`, every migration live
@@ -95,19 +100,15 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Thank-yous and outreach (Angad sends)
 
-- [ ] **Thank-you to Simon Bruins at Wise** for the Comparison API permission (D91). Drafted
-      by Claude as a reply in his thread in the RemitBridge Gmail (2026-10-01); it also
-      declines the affiliate program he mentioned. Angad reads it and sends.
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow up on 2026-10-12
       (calendar reminder set). Log replies in `docs/outreach/permission-request.md` (D52).
-- [ ] **Partner emails** (D50): Horn of Africa Services sent 2026-09-30; East African
-      Community Services is in the RemitBridge Gmail's Drafts; the other seven texts are in
-      `docs/outreach/partners.md`. The permission system stopped Claude after the first send
-      (2026-09-30) and again while drafting the Filipino Community one (2026-10-01): that
-      draft has the address and subject but no text yet. The rest are Angad's.
-- [ ] **Translation reviewers** (D69): the Hindi sheet is ready to send,
-      `docs/translation-review/hi.md` (585 strings). Hindi, Spanish, Tagalog and Vietnamese
+- [ ] **Partner emails** (D50): eight of nine sent from the RemitBridge Gmail (Horn of Africa
+      Services 2026-09-30, the other seven 2026-10-01). Left: El Centro de la Raza's web form
+      (it needs a phone number and answers an anti-spam question), Angad's. Log replies in
+      `docs/outreach/partners.md`.
+- [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
+      `docs/translation-review/hi.md` (658 strings). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads
       each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
       Hindi first; the bot's Hindi (D68) needs the same read. Glossary definitions are
@@ -115,7 +116,6 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Before launch
 
-- [ ] **Remove `host.exp.Exponent`** from Supabase's Apple client IDs (D60).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account.** Angad enrolls closer to submission (D32).
@@ -134,6 +134,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       and simulators get no token).
 
 ### Done
+
+- [x] Thank-you to Simon Bruins at Wise sent (it also declines the affiliate program).
+      Done 2026-10-01.
+- [x] `host.exp.Exponent` removed from Supabase's Apple client IDs, live and in
+      `supabase/config.toml` (D116). Done 2026-10-01.
 
 - [x] `GITHUB_DISPATCH_TOKEN` in Supabase (fine-grained, RemitBridge-App only, Actions read
       and write), checked against GitHub before saving: receipt photos on WhatsApp can start

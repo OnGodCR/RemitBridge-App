@@ -69,6 +69,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   modules with Continue (D107, kept on the phone); saved comparisons and checks have
   their own screen, reached from Tools, Compare and Account (D108); the drawings have
   depth (D109).
+- **2026-10-01, later:** the Wise thank-you and seven partner emails sent; `host.exp.Exponent`
+  removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
+  the World Bank survey found (D115).
 - **Rate alerts (D113)** and a greeting (D114) are live. Angad pushed
   `20261001000000_rate_alerts.sql` on 2026-10-01; smoke test 55/55, and the next
   `rate-alerts.yml` run read the function ("0 alert(s) due"). A real push still needs the
@@ -186,7 +189,9 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
-2. **More prices** with Add a price (Account tab), for providers other than Wise.
+2. **More prices** (D115): say go for the Instarem adapter (cleared 2026-10-01), and yes or
+   no to downloading the World Bank's survey for research. Everyone else: Add a price
+   (Account tab) or their permission; `docs/MANUAL_RESEARCH.md` quotes each clause.
 3. **Launch emails:** done 2026-10-01 (`notify-route-launch` deployed, `RESEND_API_KEY`
    set). The first real send is when a requested route goes live.
 4. **WhatsApp** (D68), when ready: a Meta business account and app with the WhatsApp
@@ -206,16 +211,17 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers
    (`...ShipIt`) 1.6 GB. Clearing them from each app's own settings frees about 12 GB.
    The iOS 27 simulator runtime (7.5 GB) is needed; keep it.
-8. **Partners:** Horn of Africa Services is sent. East African Community Services is ready
-   in the RemitBridge Gmail's Drafts; the other seven texts are in
-   `docs/outreach/partners.md` (El Centro de la Raza takes a web form).
+8. **Partners:** eight of nine sent (2026-09-30 and 2026-10-01). El Centro de la Raza's web
+   form is yours: it needs a phone number and an anti-spam answer. Replies go in the log
+   in `docs/outreach/partners.md`.
 9. **Translation reviewers** (D69): one fluent speaker each for Hindi, Spanish, Tagalog
    and Vietnamese, Hindi first. They read the draft in a development build (Account →
    Language), send corrections, and agree in writing to stand behind it; then their name
    and the date go in `mobile/src/i18n/languages.ts` and the language ships. Partner
-   organizations (item 8) are a natural place to ask.
-10. **Wise:** the adapter is built and scheduled (D91). A short thank-you reply to Simon
-   Bruins is yours to send.
+   organizations (item 8) are a natural place to ask. Hindi: Angad's mother (D117).
+10. **Wise:** the adapter is built and scheduled (D91); the thank-you to Simon Bruins went
+   out 2026-10-01.
+11. **CAC:** after the app is finished (D117).
 
 ## The shape of the product
 
@@ -237,7 +243,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
 | `DECISIONS.md` | Decisions on top of the PRD (D1–D114; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
-| `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
+| `docs/MANUAL_RESEARCH.md` | Every provider checked, with the terms clause quoted (D115) |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
 | `packages/formula/` | The one total-cost formula, TypeScript and Python, pinned to `vectors.json` |
 | `packages/bot/` | The WhatsApp bot's logic: parser, planner, replies in English and Hindi. 58 vitest tests, including the real webhook run against a fake database |

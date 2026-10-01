@@ -8,17 +8,30 @@ by hand. Add a row when you find one; don't build around it.
 |---|---|---|---|---|
 | Wise | wise.com | US terms of use: "use any robot, spider, other automatic device, or manual process to monitor or copy our websites without our prior written permission". | 2026-09-28 | **Resolved 2026-09-30: automated, with permission.** Simon Bruins (Wise) allowed the Comparison API in writing; the `wise` adapter uses it for Wise's own quote only (DECISIONS.md D91). wise.com's pages are still never fetched. |
 | Remitly | remitly.com | User agreement: "use any robot, spider, scraper, automatic device, or manual process to monitor or copy our website or app". | 2026-09-28 | Open |
+| Ria | riamoneytransfer.com | US terms (d): no "automated program or mechanism, including without limitation any scraper, spider, or robot, to access, extract, download, scrape, display, transmit, publish, any materials, data, or information (including pricing information)". | 2026-10-01 | Open; permission asked 2026-09-28 |
+| MoneyGram | moneygram.com | Terms of use: "Use any robot, spider or other automatic device, process or means to access the Sites for any purpose, including monitoring or copying". robots.txt: `Crawl-delay: 5`. A developer portal exists (developer.moneygram.com) for business partners. | 2026-10-01 | Open; permission asked 2026-09-28 |
+| Xe | xe.com | Terms of use: no automatic or manual process to "systematically extract data or data fields, including without limitation any financial and/or currency data", and no scraping "except with express written permission from XE". | 2026-10-01 | Open; permission asked 2026-09-28 (ticket 26724746) |
+| WorldRemit | worldremit.com | US terms (Zepz, PDF linked from the terms page): "use any robot, spider, scraper, or other automated device to access the Services". | 2026-10-01 | Open; permission asked 2026-09-28 |
+| Sendwave | sendwave.com | Same company as WorldRemit (WorldRemit Corp. DBA Sendwave, Zepz); treated as forbidden until its own sender terms are read. | 2026-10-01 | Not asked |
+| Xoom | xoom.com | A PayPal service under PayPal, Inc. PayPal's user agreement: "use any robot, spider, other automatic device, or manual process to monitor or copy our websites without our prior written permission". robots.txt disallows `/send/` and `/sendmoney`. | 2026-10-01 | Open; permission asked 2026-09-28 |
+| Pangea | pangeamoneytransfer.com | Terms: "Using any automatic device or manual process to monitor or copy any elements on our Website or Mobile Applications". | 2026-10-01 | Not asked |
+| Intermex | intermexonline.com | Online terms of service: "prohibited from using automated processes, such as scrapers or other programs ... without Intermex's prior express written permission". | 2026-10-01 | Not asked |
+| Taptap Send | taptapsend.com | US user agreement: "use any robot, spider, scraper or other automated device to access the App or the Services". | 2026-10-01 | Not asked |
+
+## Neither forbidden nor automated
+
+| Provider | What we found (2026-10-01) |
+|---|---|
+| Western Union | Terms and conditions and the intellectual-property page have no automated-access clause, and robots.txt allows the currency-converter pages. But the rate and fee load through a call guarded by bot protection, and getting past that would break the scraper rules (PRD 9.12). Manual, or with permission (asked 2026-09-28). |
+| Instarem | **Cleared for an adapter (D115).** No automated-access clause in its terms or US customer agreement; robots.txt only disallows `/wp-admin/`. Its site's public quote endpoint answered one honest request. Not built yet. |
 
 ## Not yet checked
 
-A plain request couldn't read these providers' terms on 2026-09-28, so they're
-neither cleared nor blocked. Check them in a real browser before writing any adapter.
+Viamericas (terms are a PDF on corporate.viamericas.com), Boss Revolution, Félix Pago,
+Paysend, Remitbee, OFX, Revolut and the banks.
 
-| Provider | What happened |
-|---|---|
-| Western Union | Terms page returned HTTP 403 (bot protection) |
-| Ria | Terms page returned HTTP 403 |
-| Xoom | User agreement loaded but had no automated-access clause in its text; PayPal's acceptable-use policy may carry one |
-| MoneyGram, Xe, WorldRemit | Terms pages render with JavaScript; the plain request got no text |
+## Public datasets
 
-robots.txt notes from the same day: MoneyGram asks for `Crawl-delay: 5`; Xoom disallows `/send/` and `/sendmoney`.
+The World Bank's Remittance Prices Worldwide (remittanceprices.worldbank.org): quarterly
+prices by provider for 42 US routes, free to reuse with attribution. Newest survey Q3 2025,
+so research only, never a current price (D115).
