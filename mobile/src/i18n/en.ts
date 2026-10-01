@@ -362,6 +362,7 @@ export const en = {
 
   learn: {
     title: 'Learn',
+    library: 'Library',
     modulesTitle: 'Modules',
     terms: (n: number) => (n === 1 ? '1 term' : `${n} terms`),
     tryIt: (tool: string) => `Try it: ${tool}`,

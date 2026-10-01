@@ -1090,3 +1090,10 @@ tax stands. Instead of someone remembering to look, `.github/workflows/tax-rules
 the Federal Register API every Monday for an IRS final rule on remittance transfers and
 fails, which emails the repo owner, when one appears. Then the final text gets checked
 against D97 and the formula updated.
+
+**D111. Learn has two parts, and the path climbs.** Angad: split the modules and the other
+learning resources into two tabs, and start the modules at the bottom, going up. Learn's
+green band stays fixed with a Modules | Library switch; Modules has the progress, Continue
+and the path, now drawn from the bottom up (module 1 lowest) and opened scrolled to the
+module you're on; Library has the blog, the glossary A to Z, the route board, What people
+paid, RemitBench and the website's papers and workshops.
