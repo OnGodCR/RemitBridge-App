@@ -993,3 +993,14 @@ become two-column cards (`components/tile-grid.tsx`) with a few words each; the 
 headers lose their subtitle line; the Scan tab leads with one large scan icon, two buttons,
 three icon steps and one privacy line. In Expo Go the scan card shows as it will in the
 app, and pressing it explains that scanning needs the full build.
+
+**D103. Drawn illustrations in an editorial list, not icon tiles** (replaces D102's tiles
+and cards). Angad found the mint-square icons and two-column cards "too vibecoded", and
+chose a mix: the website's editorial index (divided list, big titles, no cards) with
+custom illustrations. `components/illustrations.tsx` holds one set, drawn as SVG
+(react-native-svg, which Expo Go includes): a 64-unit square, ink outlines 2 units wide, a
+mint disc behind each, and colour only from the money palette, green for what arrives,
+grey for the fee, amber for the hidden markup. So the pictures repeat what the numbers
+say: Scan's lead is a receipt in a viewfinder with a name covered and the markup in amber;
+the third step is Compare's own cost bar. Settings rows (Account, website links) keep a
+small plain SF Symbol in ink, with no tile. Still no emoji (D44).

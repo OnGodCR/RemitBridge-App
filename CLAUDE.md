@@ -254,9 +254,11 @@ a style choice.
 
 ## Words and voice
 
-Visual register (D44, D47, D102): no emoji, modest corners, hairlines over shadows,
-segmented controls over pill chips. Few words: every row and card leads with an SF Symbol on
-a mint tile, next to a short label, never instead of one. Color comes
+Visual register (D44, D47, D103): no emoji, modest corners, hairlines over shadows,
+segmented controls over pill chips, the website's editorial index over cards. Few words:
+rows lead with the app's own illustrations (`components/illustrations.tsx`, one style, money
+colours only) or, for settings, a small ink symbol; never icon tiles, never an icon in place
+of a label. Color comes
 from the website's vocabulary: a brand-green header band, mint tints, and a green
 left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 

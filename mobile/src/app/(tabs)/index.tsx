@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { SymbolView, type SFSymbol } from 'expo-symbols';
+import { SymbolView } from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
@@ -17,7 +17,7 @@ import {
 
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
-import { IconTile } from '@/components/list-row';
+import { ScanHero, StepCost, StepCover, StepSnap } from '@/components/illustrations';
 import { ReceiptConfirm, type Answers } from '@/components/receipt-confirm';
 import { ReceiptResult } from '@/components/receipt-result';
 import { AppText, Button, Card } from '@/components/ui';
@@ -147,7 +147,7 @@ export default function ScanScreen() {
     if (await forgetReceipt(step.id)) setStep({ ...step, deleted: true });
   };
 
-  const steps: SFSymbol[] = ['camera.viewfinder', 'eye.slash', 'chart.bar.xaxis'];
+  const steps = [StepSnap, StepCover, StepCost];
 
   return (
     <View style={[styles.fill, { backgroundColor: t.background }]}>
@@ -159,10 +159,8 @@ export default function ScanScreen() {
         <View style={[styles.content, { backgroundColor: t.background }]}>
       {step.kind === 'start' ? (
         <>
-          <Card style={styles.capture}>
-            <View style={[styles.lens, { backgroundColor: t.accent }]}>
-              <SymbolView name="doc.text.viewfinder" size={56} weight="medium" tintColor={t.accentForeground} fallback={null} />
-            </View>
+          <View style={styles.capture}>
+            <ScanHero />
             <View style={styles.buttons}>
               <Button
                 label={s.takePhoto}
@@ -176,18 +174,21 @@ export default function ScanScreen() {
                 onPress={() => pick('library')}
               />
             </View>
-          </Card>
+          </View>
           {step.message ? <AppText style={{ color: t.destructive }}>{step.message}</AppText> : null}
 
           <View style={styles.steps}>
-            {s.steps.map((label, i) => (
-              <View key={label} style={styles.step}>
-                <IconTile name={steps[i]} size={52} />
-                <AppText variant="small" style={[styles.stepLabel, { color: t.text }]}>
-                  {label}
-                </AppText>
-              </View>
-            ))}
+            {s.steps.map((label, i) => {
+              const Art = steps[i];
+              return (
+                <View key={label} style={styles.step}>
+                  <Art size={56} />
+                  <AppText variant="small" style={[styles.stepLabel, { color: t.text }]}>
+                    {label}
+                  </AppText>
+                </View>
+              );
+            })}
           </View>
 
           <View style={styles.privacy}>
@@ -331,8 +332,7 @@ const styles = StyleSheet.create({
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.four, paddingBottom: Spacing.six },
-  capture: { alignItems: 'center', gap: Spacing.four, paddingVertical: Spacing.five },
-  lens: { width: 112, height: 112, borderRadius: 56, alignItems: 'center', justifyContent: 'center' },
+  capture: { alignItems: 'center', gap: Spacing.four, paddingTop: Spacing.two },
   steps: { flexDirection: 'row', justifyContent: 'space-between', gap: Spacing.two },
   step: { flex: 1, alignItems: 'center', gap: Spacing.two },
   stepLabel: { fontFamily: Fonts.semibold, textAlign: 'center' },
