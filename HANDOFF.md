@@ -54,7 +54,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **WhatsApp is set up** (Meta app "RemitBridge", test number +1 555 184 5383, Phone number
   ID 1399186246604217, system-user token, webhook verified and subscribed to `messages`).
   The verify token was made twice (the first was lost from the clipboard); only the second
-  is stored. Real number, payment and business verification wait for going public.
+  is stored. **But Meta restricted the WhatsApp account at once** (error 131031, "Business
+  Account locked"; Business Support Home: "Account Restricted, Duration: Permanent" until
+  business verification), so no message can be sent or answered yet. RemitBridge isn't a
+  registered business (D49), so whether and how to verify is Angad's decision.
 - **Order of work (D99):** every free setup first (Resend done; GitHub token and Meta
   next), then the Apple Developer Program fee, the iPhone build and universal links, then
   testing. CLAUDE.md's open items are now grouped that way.
