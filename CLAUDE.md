@@ -81,8 +81,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       prices sit behind bot protection. **Instarem is live** (D118): migration pushed by Angad,
       smoke test 55/55 with 9 providers, and the first Scrape run published 20 of 20; it
       tops Compare for $500 to India (2026-10-01). The World Bank survey's US rows are in
-      `research/world-bank-rpw/` for research. Paysend is cleared but not built: its fee
-      sits on top of the amount sent, which needs a decision first (`docs/MANUAL_RESEARCH.md`). The rest: Add a price, or their permission.
+      `research/world-bank-rpw/` for research. Paysend is cleared but not built: its public pages show one
+      amount and one price for several ways of receiving, so its numbers can't be verified yet
+      (`docs/MANUAL_RESEARCH.md`). The rest: Add a price, or their permission.
 
 ### Testing (once the features are set up)
 
