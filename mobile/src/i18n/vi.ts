@@ -687,7 +687,8 @@ export const vi: Copy = {
     taxBank: (total: string, tax: string) =>
       `Nếu trả từ tài khoản ngân hàng, cùng lần chuyển này sẽ tốn tổng cộng ${total}, ít hơn ${tax}.`,
     taxAssumption:
-      'Chúng tôi lấy 1% của số tiền chuyển, trước phí. Đó là cách chúng tôi hiểu quy định, chưa đối chiếu với quy định cuối cùng của IRS.',
+      'Chúng tôi tính 1% trên số tiền chuyển, trước phí, theo quy định đề xuất của IRS. Các quy định đó chưa phải là bản cuối cùng.',
+    taxSmall: 'Đây là lần chuyển $15 trở xuống, nên không chịu thuế.',
     nextTitle: 'Lần sau',
     compare: 'So sánh tuyến này hôm nay',
     notCovered: 'Chúng tôi chưa kiểm tra tuyến này.',

@@ -38,6 +38,11 @@ describe('true cost', () => {
 })
 
 describe('the tax check', () => {
+  it('leaves out small transfers of $15 or less, as the proposed rules do (D97)', () => {
+    expect(taxCheck({ ...WU, amount_sent: 15, tax: undefined }, 17.7).status).toBe('small_transfer')
+    expect(taxCheck({ ...WU, amount_sent: 15.01, tax: 0.15 }, 17.7).status).toBe('matches')
+  })
+
   it('finds a correct 1% on a cash transfer, and shows the bank-funded equivalent', () => {
     const t = taxCheck(WU, 17.7)
     expect(t).toMatchObject({ status: 'matches', expected: 5, found: 5 })
