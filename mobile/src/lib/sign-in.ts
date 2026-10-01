@@ -1,6 +1,8 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
+import { Platform } from 'react-native';
 
 import { supabase } from '@/lib/supabase';
 
@@ -70,11 +72,27 @@ export async function signInWithApple(): Promise<Result> {
   }
 }
 
+/**
+ * Google's own sign-in sheet (D129) shows "RemitBridge App" and no web address; the browser
+ * flow below shows our Supabase project's address. Native needs the app build (Expo Go has
+ * no Google module) and a Google client for the platform: the iPhone one exists; Android's
+ * needs the signing key's fingerprint from the first Android build, so Android stays on the
+ * browser until then.
+ */
+const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID;
+const nativeGoogle =
+  Constants.executionEnvironment !== ExecutionEnvironment.StoreClient &&
+  Platform.OS === 'ios' &&
+  !!GOOGLE_WEB_CLIENT_ID &&
+  !!GOOGLE_IOS_CLIENT_ID;
+
 export async function signInWithGoogle(): Promise<Result> {
   if (!supabase) return 'notConnected';
   // Supabase hands back a URL even when Google isn't enabled; ask first so the person
   // sees a plain message instead of a JSON error page in the browser.
   if (!(await providerEnabled('google'))) return 'notReady';
+  if (nativeGoogle) return signInWithGoogleNative();
   const redirectTo = Linking.createURL('sign-in/callback');
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -88,6 +106,27 @@ export async function signInWithGoogle(): Promise<Result> {
   if (!code) return friendly('');
   const exchange = await supabase.auth.exchangeCodeForSession(code);
   return exchange.error ? friendly(exchange.error.message) : null;
+}
+
+async function signInWithGoogleNative(): Promise<Result> {
+  if (!supabase) return 'notConnected';
+  // Loaded only here: importing it in Expo Go, which lacks the native module, would crash.
+  const { GoogleSignin, isErrorWithCode, isSuccessResponse, statusCodes } = await import(
+    '@react-native-google-signin/google-signin'
+  );
+  // The web client is the token's audience, so Supabase (which trusts it) accepts it.
+  GoogleSignin.configure({ webClientId: GOOGLE_WEB_CLIENT_ID, iosClientId: GOOGLE_IOS_CLIENT_ID });
+  try {
+    const response = await GoogleSignin.signIn();
+    if (!isSuccessResponse(response)) return 'closed';
+    const token = response.data.idToken;
+    if (!token) return friendly('');
+    const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token });
+    return error ? friendly(error.message) : null;
+  } catch (e) {
+    if (isErrorWithCode(e) && (e.code === statusCodes.SIGN_IN_CANCELLED || e.code === statusCodes.IN_PROGRESS)) return 'closed';
+    return friendly(String(e));
+  }
 }
 
 async function providerEnabled(provider: 'google' | 'apple'): Promise<boolean> {
