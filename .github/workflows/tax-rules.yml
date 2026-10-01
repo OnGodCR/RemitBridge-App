@@ -1,0 +1,47 @@
+name: Remittance tax rules
+
+# Watches for the IRS's final regulations on the 1% remittance tax (IRC 4475), so nobody
+# has to remember to look (DECISIONS.md D97, D110). The app follows the proposed rules
+# (Federal Register 2026-07085, April 13, 2026). When the Federal Register publishes a
+# final rule on remittance transfers from the IRS, this run fails, which emails the repo
+# owner; then check the final text against D97 (what's taxed, the $15 exclusion, when it
+# applies) and update packages/formula and the app's tax note.
+#
+# Weekly, Monday morning UTC; a failure repeats weekly until the run is updated.
+
+on:
+  schedule:
+    - cron: "23 13 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Look for a final rule
+        run: |
+          set -euo pipefail
+          curl -sf -G "https://www.federalregister.gov/api/v1/documents.json" \
+            --data-urlencode 'conditions[term]="remittance transfers"' \
+            --data-urlencode 'conditions[agencies][]=internal-revenue-service' \
+            --data-urlencode 'per_page=50' \
+            --data-urlencode 'fields[]=title' \
+            --data-urlencode 'fields[]=type' \
+            --data-urlencode 'fields[]=publication_date' \
+            --data-urlencode 'fields[]=html_url' > docs.json
+          python3 - <<'EOF'
+          import json, sys
+          docs = json.load(open("docs.json")).get("results", [])
+          for d in docs:
+              print(f'{d["publication_date"]}  {d["type"]:<14}  {d["title"]}')
+          final = [d for d in docs if d["type"] == "Rule" and "remittance" in d["title"].lower()]
+          if final:
+              for d in final:
+                  print(f'::error::Final rule published: {d["title"]} ({d["publication_date"]}) {d["html_url"]}')
+              sys.exit(1)
+          print("No final rule yet; the app's proposed-rules tax stands.")
+          EOF
