@@ -12,7 +12,7 @@ import { announce } from '@/lib/announce';
 
 import { costOf, deleteCheck, fetchChecks, type SavedCheck } from '@/lib/saved';
 
-/** Receipts saved from TrueCost, newest first, on the Account tab (DECISIONS.md D58). */
+/** Receipts saved from TrueCost, newest first, on the Saved screen (DECISIONS.md D58, D108). */
 export function SavedChecks() {
   const t = useTheme();
   const copy = useCopy();

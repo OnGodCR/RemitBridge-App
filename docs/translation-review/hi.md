@@ -53,6 +53,7 @@ with your name and the date.
 | titles.rateHistory | Rate history | रेट का इतिहास | |
 | titles.glossary | Glossary | शब्दकोश | |
 | titles.blog | Blog | ब्लॉग | |
+| titles.saved | Saved | सहेजा गया | |
 | titles.remitbench | RemitBench | RemitBench | |
 | titles.quote | Quote | कीमत | |
 | titles.routeBoard | Route board | रूट बोर्ड | |
@@ -162,8 +163,8 @@ with your name and the date.
 | compare.promotion | Promotion | ऑफ़र | |
 | compare.firstTransferOffers | First-transfer offers | पहली बार भेजने के ऑफ़र | |
 | compare.save | Save this comparison | यह तुलना सहेजें | |
-| compare.saved | Saved. Find it on Account | सहेज ली गई। खाता में देखें | |
-| compare.alreadySaved | Already saved. Find it on Account | पहले से सहेजी हुई है। खाता में देखें | |
+| compare.saved | Saved. See your saved list | सहेज ली गई। अपनी सूची देखें | |
+| compare.alreadySaved | Already saved. See your saved list | पहले से सहेजी हुई है। अपनी सूची देखें | |
 | compare.saveFailed | Couldn’t save. Try again | सहेजी नहीं जा सकी। फिर कोशिश करें | |
 | compare.savedSpoken | Saved to your account. | आपके खाते में सहेज ली गई। | |
 | compare.alreadySpoken | Already saved. | पहले से सहेजी हुई है। | |
@@ -284,6 +285,9 @@ with your name and the date.
 | account.metrics | Metrics | आँकड़े | |
 | account.metricsSub | Usage, funnel and impact, with definitions | इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ | |
 | account.replay | Replay onboarding (dev only) | शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में) | |
+| saved.rowSub | Comparisons and receipt checks | तुलनाएँ और रसीद जाँचें | |
+| saved.signedOut | Sign in to save comparisons and receipt checks, and open them again on any phone. | तुलनाएँ और रसीद जाँचें सहेजने के लिए साइन इन करें, और उन्हें किसी भी फ़ोन पर फिर खोलें। | |
+| saved.seeAll | Your saved comparisons | आपकी सहेजी तुलनाएँ | |
 | saved.comparisons | Your comparisons | आपकी तुलनाएँ | |
 | saved.comparisonsEmpty | Save a comparison on Compare to reopen it here in one tap. | तुलना में कोई तुलना सहेजें, ताकि उसे यहाँ से एक टैप में फिर खोल सकें। | |
 | saved.comparePrices | Compare prices | कीमतों की तुलना करें | |
@@ -328,6 +332,16 @@ with your name and the date.
 | learn.modules.provider.line | How a transfer company runs | पैसे भेजने वाली कंपनी कैसे चलती है | |
 | learn.modules.crypto.title | Crypto and stablecoins | क्रिप्टो और स्टेबलकॉइन | |
 | learn.modules.crypto.line | Words you’ll meet if you send with crypto | क्रिप्टो से भेजने पर मिलने वाले शब्द | |
+| learn.progress | {n} of {total} terms learned | {total} में से {n} शब्द सीखे | |
+| learn.continue | Continue | जारी रखें | |
+| learn.start | Start | शुरू करें | |
+| learn.allDone | You’ve learned every term. | आपने सारे शब्द सीख लिए हैं। | |
+| learn.moduleCount | {n} of {total} | {total} में से {n} | |
+| learn.moduleDone | Module complete | मॉड्यूल पूरा हुआ | |
+| learn.nextModule | Next: {title} | अगला: {title} | |
+| learn.nodeLabel | Module {n}: {title}. {read} of {total} learned. | मॉड्यूल {n}: {title}। {total} में से {read} सीखे। | |
+| learn.learned | Learned | सीख लिया | |
+| learn.upNext | Up next | आगे | |
 | learn.howItWorks | How it works | यह कैसे काम करता है | |
 | learn.feeMarkup | Fee + hidden markup | फ़ीस + छिपा मार्कअप | |
 | learn.feeMarkupBody | The fee, plus what’s hidden in the rate. | फ़ीस, और रेट में छिपा खर्च। | |

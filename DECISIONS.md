@@ -1052,3 +1052,33 @@ for the blogs in the app "with similar formatting as the way it is on the websit
   pictures, so VoiceOver can't read the words inside them; the paragraphs around each
   figure carry the same points. Posts the website writes in its dashboard, if any, aren't
   in the port.
+
+**D107. Learn shows progress, Duolingo-style, without the games.** Angad asked for Learn to
+feel more like Duolingo, with "a level of progression" but no "crazy gamification".
+- **The tab:** the green band shows terms learned out of 80 with a bar, and a Continue
+  button to the first unread lesson; below it, the modules wind down the screen as a path
+  of round nodes, each with its drawing inside a ring that fills as its lessons are read,
+  a tick when finished, and an "Up next" tag on the next one.
+- **A module:** a progress bar; opening a lesson counts it as learned and turns its
+  number into a tick; once all are read, a "Module complete" card offers the next module.
+- **What it isn't:** no points, streaks, hearts or locks; any module opens any time.
+- **Privacy:** progress is kept on the phone (`lib/learn-progress.ts`, local storage),
+  like the other preferences, and never sent.
+
+**D108. Saved comparisons and checks get their own screen, reachable from where they're
+made.** Angad asked where people find saved comparisons from the tools. They were only at
+the bottom of Account, signed in. Now `/saved` holds both, and is reached from the top of
+Tools, from Compare (a link under "Save this comparison", and the confirmation itself),
+and from Account (one row instead of two lists). Signed out, it says saving needs a free
+account and offers sign-in.
+- **Also:** Compare's quote cards no longer print the source ("Official API"), at
+  Angad's request, to cut text. The source stays on each price's own screen, a tap away,
+  and in the card's spoken label, so every figure still names its source (PRD 14.6).
+
+**D109. Depth in the drawings** (Angad: the app is "a tad bit bland"; "maybe something that
+makes them look 3D"). Each illustration is drawn in three stacked layers: its disc, shaded
+from mint to a deeper mint with a soft highlight at the top left; the drawing as a faded
+deep-green silhouette a little down and right; then the drawing. The Learn path's nodes sit
+on a darker rim they sink into when pressed, like Duolingo's buttons. All colours are
+theme tokens (`depth`, `depthOpacity`, `accentDeep`, `glow`, `glowOpacity`), lighter in
+dark mode.

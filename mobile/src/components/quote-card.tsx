@@ -58,7 +58,7 @@ export function QuoteCard({
 
       <View style={styles.footer}>
         <View style={styles.flex}>
-          <FreshnessBadge quote={q} />
+          <FreshnessBadge quote={q} showSource={false} />
           {q.basedOn !== null ? (
             <AppText variant="small" muted>
               {copy.quote.estimatedFrom(money(q.basedOn, q.send_currency).replace('.00', ''))}
@@ -132,9 +132,10 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
 /**
  * "Checked 3h ago · Public calculator" (PRD 14.6): freshness and source in one line.
  * Stale gets a word, never colour alone. The mid-market source is in the accessibility
- * label and on How it works.
+ * label and on How it works. On Compare's cards the source is left off (Angad,
+ * 2026-10-01: less text); the quote's own screen, a tap away, still names it.
  */
-export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
+export function FreshnessBadge({ quote, showSource = true }: { quote: LatestQuote; showSource?: boolean }) {
   const t = useTheme();
   const copy = useCopy();
   const checked = copy.time.checked(agoIn(copy, quote.captured_at));
@@ -145,7 +146,7 @@ export function FreshnessBadge({ quote }: { quote: LatestQuote }) {
       style={{ color: quote.is_stale ? t.stale : t.textSecondary }}
       accessibilityLabel={copy.quote.spokenFreshness(quote.is_stale, checked, source, quote.mid_market_source)}>
       {quote.is_stale ? `${copy.quote.stale} · ` : ''}
-      {checked} · {source}
+      {showSource ? `${checked} · ${source}` : checked}
     </AppText>
   );
 }
