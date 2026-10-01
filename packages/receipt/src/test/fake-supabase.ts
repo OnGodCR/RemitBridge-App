@@ -73,6 +73,7 @@ function query(table: string) {
       filters.push((r) => String(r[col]) <= val)
       return api
     },
+    limit: () => api,
     then: (resolve: (v: { data: Row[]; error: null }) => void) => resolve({ data: matching(), error: null }),
     update: (patch: Row) => ({
       eq: async (col: string, val: unknown) => {

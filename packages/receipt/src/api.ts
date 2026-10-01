@@ -4,7 +4,7 @@
  * reachable with the app's public key.
  */
 import type { DisclosureItem } from './disclosures.ts'
-import type { Gap } from './result.ts'
+import type { BestResult, Gap } from './result.ts'
 import type { Check, Suspect } from './validate.ts'
 import { FIELD_NAMES, type ExtractedFields, type FieldName, type OcrPage } from './types.ts'
 
@@ -73,6 +73,9 @@ export interface ConfirmResponse {
   /** The mid-market rate for the receipt's currencies and date, and where it's from. */
   mid: { rate: number; date: string; source: string } | null
   comparison: Comparison
+  /** The cheapest way we had prices for to send the same amount, and what it would have
+   * saved (D119). */
+  best: BestResult
   /** Standard disclosures not found on the receipt when it was scanned (D95). */
   disclosures_missing: DisclosureItem[]
 }

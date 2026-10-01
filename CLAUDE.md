@@ -70,6 +70,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
       `site/.well-known/apple-app-site-association`.
+- [ ] **"What you could have kept" on the receipt result (D119):** built 2026-10-01, all tests
+      pass. Left: `scan-receipt` deployed; seen for real once the iPhone build can scan. It
+      grows more useful as prices pile up.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
@@ -109,7 +112,7 @@ Angad does this once the app itself is finished (D117).
       (it needs a phone number and answers an anti-spam question), Angad's. Log replies in
       `docs/outreach/partners.md`.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
-      `docs/translation-review/hi.md` (658 strings). Hindi, Spanish, Tagalog and Vietnamese
+      `docs/translation-review/hi.md` (673 strings). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads
       each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
       Hindi first; the bot's Hindi (D68) needs the same read. Glossary definitions are

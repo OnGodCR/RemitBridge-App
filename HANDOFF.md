@@ -73,6 +73,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **What you could have kept (D119):** the receipt result now names the cheapest way we had
+  prices for to send the same amount, and the difference in true cost. Pure logic in
+  `packages/receipt/src/result.ts` (`bestOption`), fed by `scan-receipt` (`cheapest`). Needs
+  `scan-receipt` deployed; not in the WhatsApp reply yet.
 - **Rate alerts (D113)** and a greeting (D114) are live. Angad pushed
   `20261001000000_rate_alerts.sql` on 2026-10-01; smoke test 55/55, and the next
   `rate-alerts.yml` run read the function ("0 alert(s) due"). A real push still needs the

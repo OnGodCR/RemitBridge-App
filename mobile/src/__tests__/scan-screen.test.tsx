@@ -76,6 +76,7 @@ const CONFIRMED: ConfirmResponse = {
   route_id: 'us-mx',
   mid: { rate: 17.7, date: '2026-09-28', source: 'Frankfurter' },
   comparison: { quote: null, gap: null, reason: 'no_quote' },
+  best: { best: null, reason: 'no_prices' },
   disclosures_missing: [],
 };
 

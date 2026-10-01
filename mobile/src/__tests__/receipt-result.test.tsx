@@ -50,6 +50,7 @@ const confirmed = (over: Partial<ConfirmResponse> = {}, values: Partial<FieldVal
     gap: { advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.82, gapCurrency: 'USD' },
     reason: null,
   },
+  best: { best: null, reason: 'no_prices' },
   disclosures_missing: [],
   ...over,
 });
@@ -69,6 +70,57 @@ describe('true cost', () => {
   it('says why when the day’s mid-market rate couldn’t be loaded', () => {
     render(<ReceiptResult confirmed={confirmed({ mid: null })} />);
     expect(screen.getByText(/couldn’t be loaded/)).toBeTruthy();
+  });
+});
+
+describe('what you could have kept (D119)', () => {
+  const best = (over: Partial<NonNullable<ConfirmResponse['best']['best']>> = {}): ConfirmResponse['best'] => ({
+    best: {
+      when: 'that_day',
+      provider_id: 'ria',
+      provider_name: 'Ria',
+      captured_at: '2026-09-28T15:00:00Z',
+      checked_amount: 500,
+      estimated: false,
+      fee: 2,
+      offered_rate: 17.5,
+      received: 8710,
+      total_cost: 10.92,
+      your_total_cost: 23.6,
+      could_keep: 12.68,
+      currency: 'USD',
+      same_provider: false,
+      paid_from: null,
+      providers_compared: ['Ria', 'Western Union'],
+      ...over,
+    },
+    reason: null,
+  });
+
+  it('leads with what could have been kept, names who, and says what was compared', () => {
+    render(<ReceiptResult confirmed={confirmed({ best: best() })} />);
+    expect(screen.getByText('With Ria, you could have kept')).toBeTruthy();
+    expect(screen.getByText('$12.68')).toBeTruthy();
+    expect(screen.getByText(/your family would have received MX\$8,710\.00/)).toBeTruthy();
+    expect(screen.getByText(/True cost with Ria: \$10\.92\. Yours: \$23\.60\./)).toBeTruthy();
+    expect(screen.getByText(/within a day of your transfer/)).toBeTruthy();
+    expect(screen.getByText('Compared with: Ria, Western Union. We don’t have prices from every provider yet.')).toBeTruthy();
+  });
+
+  it('says plainly when today’s prices stand in, when the amount was estimated, and a bank payment', () => {
+    render(<ReceiptResult confirmed={confirmed({ best: best({ when: 'today', estimated: true, checked_amount: 200, paid_from: 'bank_account' }) })} />);
+    expect(screen.getByText(/We don’t have prices from Sep 28, 2026, so these are today’s/)).toBeTruthy();
+    expect(screen.getByText(/the price for \$200, the nearest amount we check/)).toBeTruthy();
+    expect(screen.getByText(/That’s paying from a bank account/)).toBeTruthy();
+  });
+
+  it('says so when the receipt already had the best price, and why when there is nothing to compare', () => {
+    render(<ReceiptResult confirmed={confirmed({ best: best({ provider_name: 'Western Union', same_provider: true, could_keep: 0 }) })} />);
+    expect(screen.getByText('You already had the best price we found: Western Union.')).toBeTruthy();
+    expect(screen.queryByText(/, you could have kept/)).toBeNull();
+    screen.unmount();
+    render(<ReceiptResult confirmed={confirmed()} />);
+    expect(screen.getByText(/nothing fair to compare with/)).toBeTruthy();
   });
 });
 

@@ -43,6 +43,7 @@ const result = (over: Partial<ConfirmResponse> = {}): ConfirmResponse => ({
     gap: { advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.83, gapCurrency: 'USD' },
     reason: null,
   },
+  best: { best: null, reason: 'no_prices' },
   disclosures_missing: [],
   ...over,
 })

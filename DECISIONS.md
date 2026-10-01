@@ -1194,3 +1194,23 @@ and is named with the date in `mobile/src/i18n/languages.ts` (D69).
   $200 transfer by year). The 49 MB workbook isn't committed. The website shows a newer
   round (Q3 2025) than the download. Nothing here reaches Compare; any use in the app names
   the World Bank and the quarter, and never implies the World Bank endorses RemitBridge.
+
+**D119. A scanned receipt says what you could have kept** (Angad, 2026-10-01: "how much money
+they could have saved if they chose the most efficient provider"). A new part of the result,
+right after the true cost, built by `bestOption` in `packages/receipt/src/result.ts` (so the
+app, the Edge Function and any later surface agree) and fed by `scan-receipt`.
+- **The comparison:** every provider's published standing price for the same route and
+  checked amount, the same way of receiving, and the same way of paying. Each option sends
+  the receipt's own amount with its own fee and rate (and the same tax), costed with the one
+  formula at the receipt day's mid-market rate; "could have kept" is the difference in true
+  cost, in dollars, plus what the family would have received.
+- **Which prices:** from within a day of the transfer when we have any; otherwise today's,
+  and the screen says so ("We don't have prices from Sep 3, so these are today's").
+- **Fair, or nothing:** a cash pickup is never compared with a bank deposit, and promotions
+  never count. A card payer is also compared with paying from a bank account when that's
+  all we have, and told so (they have a bank account); a cash or money-order payer isn't
+  (they may not). With nothing fair to compare, the screen says why instead of a number.
+- **Honest scope:** every result names the providers compared and says we don't have every
+  provider yet; an amount we don't check is worked out from the nearest checked amount and
+  labelled. When the receipt already had the best price, it says that.
+- Not yet in the WhatsApp reply (parked, D100). Needs `scan-receipt` redeployed.

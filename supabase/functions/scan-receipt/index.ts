@@ -30,6 +30,7 @@ import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import {
   advertisedGap,
   applyCorrection,
+  bestOption,
   deserializeValue,
   detectPii,
   matchQuote,
@@ -46,6 +47,7 @@ import {
   trustedToday,
   validateReceipt,
   valuesFrom,
+  type BestResult,
   type Comparison,
   type ConfirmRequest,
   type ConfirmResponse,
@@ -53,6 +55,7 @@ import {
   type ExtractedFields,
   type FieldName,
   type ModelClient,
+  type PriceCandidate,
   type QuoteCandidate,
   type ScanRequest,
   type ScanResponse,
@@ -218,6 +221,7 @@ async function confirm(
   const providerId = templateFor(v.provider).providerId;
   const routeId = ROUTES.find((r) => r.sendCurrency === v.send_currency && r.receiveCurrency === v.receive_currency)?.id ?? null;
   const comparison = await compare(db, v, providerId, routeId, mid?.rate ?? null);
+  const best = await cheapest(db, v, providerId, routeId, mid?.rate ?? null);
   const tax = taxCheck(v, mid?.rate ?? null);
   const cost = mid ? receiptCost(v, mid.rate) : null;
 
@@ -250,7 +254,65 @@ async function confirm(
     route_id: routeId,
     mid,
     comparison,
+    best,
     disclosures_missing: (receipt.disclosures_missing ?? []) as ConfirmResponse['disclosures_missing'],
+  };
+}
+
+/**
+ * The cheapest way we had prices for to send the same amount (D119): every provider's
+ * published standing quotes for the route and checked amount near the transfer day, and
+ * the newest ones in case there are none from then. The choosing is bestOption's.
+ */
+async function cheapest(
+  db: SupabaseClient,
+  v: ReturnType<typeof valuesFrom>,
+  providerId: string | null,
+  routeId: string | null,
+  midRate: number | null,
+): Promise<BestResult> {
+  if (!routeId) return { best: null, reason: 'no_route' };
+  if (v.amount_sent === undefined) return { best: null, reason: 'missing_values' };
+  const amount = checkedAmountFor(v.amount_sent);
+  const columns = 'id, provider_id, route_id, send_amount, delivery_method, payment_method, fee, offered_rate, mid_market_rate, pickup_charge, is_promotional, captured_at';
+  let thatDay: PriceCandidate[] = [];
+  if (v.transfer_date) {
+    const day = Date.parse(`${v.transfer_date}T00:00:00Z`);
+    const { data } = await db
+      .from('quotes')
+      .select(`${columns}, providers(name)`)
+      .eq('route_id', routeId)
+      .eq('send_amount', amount)
+      .eq('validation_status', 'published')
+      .gte('captured_at', new Date(day - 86_400_000).toISOString())
+      .lte('captured_at', new Date(day + 2 * 86_400_000).toISOString())
+      .limit(1000);
+    // A many-to-one join arrives as one object; the generated types call it a list.
+    type Joined = QuoteCandidate & { providers: { name: string } | { name: string }[] | null };
+    thatDay = ((data ?? []) as unknown as Joined[]).map(({ providers, ...q }) => {
+      const name = Array.isArray(providers) ? providers[0]?.name : providers?.name;
+      return numericQuote({ ...q, provider_name: name ?? q.provider_id });
+    });
+  }
+  const { data: latestRows } = await db
+    .from('latest_quotes')
+    .select(`${columns}, provider_name, is_stale`)
+    .eq('route_id', routeId)
+    .eq('send_amount', amount);
+  const latest = ((latestRows ?? []) as (PriceCandidate & { is_stale: boolean })[])
+    .filter((q) => !q.is_stale)
+    .map(({ is_stale: _, ...q }) => numericQuote(q));
+  return bestOption(v, { thatDay, latest }, midRate, providerId);
+}
+
+function numericQuote(q: PriceCandidate): PriceCandidate {
+  return {
+    ...q,
+    send_amount: Number(q.send_amount),
+    fee: Number(q.fee),
+    offered_rate: Number(q.offered_rate),
+    mid_market_rate: Number(q.mid_market_rate),
+    pickup_charge: Number(q.pickup_charge),
   };
 }
 

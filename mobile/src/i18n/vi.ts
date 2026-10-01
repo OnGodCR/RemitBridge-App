@@ -743,6 +743,24 @@ export const vi: Copy = {
     noRoute: 'Chúng tôi chưa kiểm tra giá trên tuyến này, nên không có giá quảng cáo để so sánh.',
     noQuote: 'Chúng tôi không có giá nào của nhà cung cấp này được kiểm tra trong vòng một ngày của lần chuyển này, nên không có gì để so sánh.',
     missingValues: 'Biên lai thiếu ngày, số tiền hoặc tỷ giá, nên không thể so sánh.',
+    keptTitle: 'Số tiền bạn có thể đã giữ lại',
+    keptLabel: (provider: string) => `Với ${provider}, bạn có thể đã giữ lại`,
+    keptNote: (received: string) => `Gửi cùng số tiền, gia đình bạn sẽ nhận được ${received}.`,
+    keptCosts: (provider: string, theirs: string, yours: string) =>
+      `Chi phí thực với ${provider}: ${theirs}. Của bạn: ${yours}. Cả hai đều tính theo cùng một tỷ giá thị trường.`,
+    keptBest: (provider: string) => `Bạn đã có mức giá tốt nhất chúng tôi tìm được: ${provider}.`,
+    keptAsGood: 'Giá của bạn bằng hoặc tốt hơn mọi mức giá chúng tôi có cho cùng loại chuyển tiền.',
+    keptThatDay: (time: string) => `Giá được kiểm tra ${time}, trong vòng một ngày so với lần chuyển của bạn.`,
+    keptToday: (day: string, time: string) =>
+      `Chúng tôi không có giá của ngày ${day}, nên đây là giá hôm nay, kiểm tra ${time}. Tỷ giá thay đổi, nên hãy xem đây là gợi ý cho lần sau.`,
+    keptEstimated: (amount: string) => `Tính từ giá cho ${amount}, số tiền gần nhất mà chúng tôi kiểm tra.`,
+    keptBank: 'Đó là khi trả từ tài khoản ngân hàng. Bạn đã trả bằng thẻ, và trả từ tài khoản ngân hàng thường rẻ hơn.',
+    keptCompared: (names: string) => `So sánh với: ${names}. Chúng tôi chưa có giá của mọi nhà cung cấp.`,
+    keptNoPrices:
+      'Chúng tôi chưa có giá cho cùng loại chuyển tiền trên tuyến này (cùng cách trả và cách nhận), nên không có gì để so sánh công bằng.',
+    keptNoRoute: 'Chúng tôi chưa kiểm tra giá trên tuyến này, nên không có gì để so sánh.',
+    keptMissing: 'Biên lai thiếu số tiền hoặc tỷ giá, nên không thể so sánh.',
+    keptNoMid: 'Không có tỷ giá thị trường của ngày đó, các chi phí không thể đo như nhau, nên không có so sánh.',
     taxTitle: 'Thuế chuyển tiền liên bang',
     taxRule:
       'Từ ngày 1 tháng 1 năm 2026, các lần chuyển trả bằng tiền mặt, lệnh chuyển tiền hoặc séc thủ quỹ chịu thuế liên bang 1%. Chuyển từ tài khoản ngân hàng hoặc bằng thẻ thì không.',

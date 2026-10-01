@@ -16,8 +16,9 @@ import { formatValue, fundingWord } from '@/lib/receipt-format';
 import { ROUTES, type DeliveryMethod } from '@/lib/routes';
 
 /**
- * The scan result (Phase 3, item 2; Phase 6), in five parts:
+ * The scan result (Phase 3, item 2; Phase 6), in six parts:
  *   - the true cost, with TrueCost's own Answer and Breakdown and the one formula;
+ *   - what you could have kept: the cheapest way we had prices for (D119);
  *   - advertised vs. paid: the provider's published rate that day, or plainly why not;
  *   - the federal remittance tax check, in neutral words;
  *   - the standard disclosures not found on the receipt (D95), never as a finding;
@@ -92,7 +93,12 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         <AppText muted>{mid ? s.missing : s.noMid}</AppText>
       )}
 
-      {/* 2. Advertised vs. paid */}
+      {/* 2. What you could have kept (D119) */}
+      <Section title={s.keptTitle}>
+        <BestOptionView best={confirmed.best} from={from} to={to} transferDate={v.transfer_date} />
+      </Section>
+
+      {/* 3. Advertised vs. paid */}
       <Section title={s.advertisedTitle}>
         {quote && gap ? (
           <View style={[styles.rule, { borderLeftColor: t.primary }]}>
@@ -117,7 +123,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         )}
       </Section>
 
-      {/* 3. The tax check */}
+      {/* 4. The tax check */}
       <Section title={s.taxTitle}>
         <AppText muted>{s.taxRule}</AppText>
         <AppText>{taxText()}</AppText>
@@ -131,7 +137,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         ) : null}
       </Section>
 
-      {/* 4. Standard disclosures (D95): what wasn't found, and why that isn't a finding. */}
+      {/* 5. Standard disclosures (D95): what wasn't found, and why that isn't a finding. */}
       <Section title={s.disclosuresTitle}>
         {confirmed.disclosures_missing.length ? (
           <>
@@ -145,7 +151,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         )}
       </Section>
 
-      {/* 5. Next time */}
+      {/* 6. Next time */}
       <Section title={s.nextTitle}>
         {route ? (
           <Button
@@ -178,6 +184,59 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
           .join(' · ')}
       </SourceNote>
       <DoesNotTellYou items={s.limits} />
+    </>
+  );
+}
+
+/**
+ * The cheapest way we had prices for to send the same amount, and the difference in true
+ * cost. Says which providers were compared, and when the prices are from, every time, so
+ * "could have kept" never reads as covering providers or days we don't have.
+ */
+function BestOptionView({
+  best: result,
+  from,
+  to,
+  transferDate,
+}: {
+  best: ConfirmResponse['best'];
+  from: string;
+  to: string;
+  transferDate: string | undefined;
+}) {
+  const t = useTheme();
+  const copy = useCopy();
+  const { language } = useLanguage();
+  const s = copy.result;
+  if (!result.best) {
+    const why = { no_route: s.keptNoRoute, missing_values: s.keptMissing, no_prices: s.keptNoPrices, no_mid: s.keptNoMid }[result.reason];
+    return <AppText muted>{why}</AppText>;
+  }
+  const b = result.best;
+  const checked = new Date(b.captured_at).toLocaleString(language.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const notes = [
+    b.when === 'that_day' ? s.keptThatDay(checked) : s.keptToday(transferDate ? dayIn(language, transferDate) : '', checked),
+    b.estimated ? s.keptEstimated(money(b.checked_amount, from).replace('.00', '')) : null,
+    b.paid_from === 'bank_account' ? s.keptBank : null,
+    s.keptCompared(b.providers_compared.join(', ')),
+  ].filter((x): x is string => Boolean(x));
+  return (
+    <>
+      {b.could_keep > 0 ? (
+        <>
+          <Answer label={s.keptLabel(b.provider_name)} value={money(b.could_keep, from)} note={s.keptNote(money(b.received, to))} />
+          <AppText>{s.keptCosts(b.provider_name, money(b.total_cost, from), money(b.your_total_cost, from))}</AppText>
+        </>
+      ) : (
+        <View style={[styles.rule, { borderLeftColor: t.primary }]}>
+          <AppText>{b.same_provider ? s.keptBest(b.provider_name) : s.keptAsGood}</AppText>
+        </View>
+      )}
+      {notes.map((n) => (
+        <AppText key={n} variant="small" muted>
+          {n}
+        </AppText>
+      ))}
     </>
   );
 }

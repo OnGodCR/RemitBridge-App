@@ -160,3 +160,140 @@ export function advertisedGap(v: Values, quote: QuoteCandidate, midRate: number 
     gapCurrency: v.send_currency,
   }
 }
+
+// ---------------------------------------------------------------------------------------
+// What you could have kept (D119)
+// ---------------------------------------------------------------------------------------
+
+/** A published standing quote from any provider, with its name, for the comparison. */
+export interface PriceCandidate extends QuoteCandidate {
+  provider_name: string
+}
+
+export interface BestOption {
+  /** 'that_day': prices from within a day of the transfer; 'today': the newest we have. */
+  when: 'that_day' | 'today'
+  provider_id: string
+  provider_name: string
+  captured_at: string
+  /** The checked amount whose fee and rate were used. */
+  checked_amount: number
+  /** True when the receipt's amount isn't a checked amount, so the fee and rate are the
+   * nearest checked amount's, run through the one formula (as Compare does). */
+  estimated: boolean
+  fee: number
+  offered_rate: number
+  /** What the family would have received sending the same amount this way. */
+  received: number
+  /** The true cost this way, and on the receipt, in the sending currency at the same
+   * mid-market rate, so the two are measured with one ruler. */
+  total_cost: number
+  your_total_cost: number
+  /** your_total_cost - total_cost, rounded to the cent. Zero or less: the receipt's
+   * provider was as good or better than anything we had. */
+  could_keep: number
+  currency: string
+  /** True when the best price we had is the receipt's own provider. */
+  same_provider: boolean
+  /** Set when the receipt was paid by card and we only had prices for paying from a bank
+   * account: a card payer has a bank account, so it's a choice they had, and it's said. */
+  paid_from: 'bank_account' | null
+  /** Every provider whose price was compared, by name, so the result never reads as
+   * covering providers we don't have. */
+  providers_compared: string[]
+}
+
+export type BestResult =
+  | { best: BestOption; reason: null }
+  | { best: null; reason: 'no_route' | 'missing_values' | 'no_prices' | 'no_mid' }
+
+/**
+ * The cheapest way we had prices for to send the receipt's amount: same route, same way of
+ * arriving and of paying when the receipt shows them (a cash pickup is never compared with
+ * a bank deposit), standing prices only. Someone who paid by card is also compared with
+ * paying from a bank account when that's all we have, and the result says so; someone who
+ * paid cash or by money order isn't, since they may not have a bank account. Each option sends the same amount_sent, with its
+ * own fee and rate and the same tax, and is costed with the one formula at the receipt's
+ * mid-market rate, so "could keep" is the difference in true cost.
+ *
+ * `thatDay` are quotes captured near the transfer; `latest` the newest per provider. That
+ * day's prices are used when there are any; otherwise today's, and the result says so.
+ */
+export function bestOption(
+  v: Values,
+  candidates: { thatDay: PriceCandidate[]; latest: PriceCandidate[] },
+  midRate: number | null,
+  receiptProviderId: string | null,
+): BestResult {
+  const inputs = formulaInputs(v)
+  if (!inputs || !v.send_currency || v.amount_sent === undefined) return { best: null, reason: 'missing_values' }
+  if (!(midRate && midRate > 0)) return { best: null, reason: 'no_mid' }
+  const yours = computeTransferCost({ ...inputs, midRate })
+
+  const fair = (funding: string | undefined) => (q: PriceCandidate) =>
+    !q.is_promotional &&
+    (!v.delivery_method || q.delivery_method === v.delivery_method) &&
+    (!funding || q.payment_method === funding)
+  const pick = (funding: string | undefined) => {
+    const near = v.transfer_date ? matchingDay(candidates.thatDay.filter(fair(funding)), v.transfer_date) : []
+    return { nearDay: near, pool: near.length ? near : candidates.latest.filter(fair(funding)) }
+  }
+  let { nearDay, pool } = pick(v.funding_method)
+  let paidFrom: 'bank_account' | null = null
+  if (!pool.length && (v.funding_method === 'debit_card' || v.funding_method === 'credit_card')) {
+    ;({ nearDay, pool } = pick('bank_account'))
+    paidFrom = pool.length ? 'bank_account' : null
+  }
+  if (!pool.length) return { best: null, reason: 'no_prices' }
+
+  // One price per provider: the one nearest the transfer (or the newest).
+  const byProvider = new Map<string, PriceCandidate>()
+  const target = v.transfer_date ? Date.parse(`${v.transfer_date}T12:00:00Z`) : Date.now()
+  for (const q of pool) {
+    const held = byProvider.get(q.provider_id)
+    const closer = (x: PriceCandidate) => Math.abs(Date.parse(x.captured_at) - (nearDay.length ? target : Date.now()))
+    if (!held || closer(q) < closer(held)) byProvider.set(q.provider_id, q)
+  }
+
+  const options = [...byProvider.values()].map((q) => {
+    const cost = computeTransferCost({
+      sent: v.amount_sent! + q.fee + inputs.transferTax,
+      fee: q.fee,
+      transferTax: inputs.transferTax,
+      quotedRate: q.offered_rate,
+      midRate,
+      pickupCharge: q.pickup_charge,
+    })
+    return { q, cost }
+  })
+  options.sort((a, b) => a.cost.totalCost - b.cost.totalCost)
+  const { q, cost } = options[0]!
+  return {
+    best: {
+      when: nearDay.length ? 'that_day' : 'today',
+      provider_id: q.provider_id,
+      provider_name: q.provider_name,
+      captured_at: q.captured_at,
+      checked_amount: q.send_amount,
+      estimated: q.send_amount !== v.amount_sent,
+      fee: q.fee,
+      offered_rate: q.offered_rate,
+      received: cost.amountReceived,
+      total_cost: Math.round(cost.totalCost * 100) / 100,
+      your_total_cost: Math.round(yours.totalCost * 100) / 100,
+      could_keep: Math.round((yours.totalCost - cost.totalCost) * 100) / 100,
+      currency: v.send_currency,
+      same_provider: receiptProviderId !== null && q.provider_id === receiptProviderId,
+      paid_from: paidFrom,
+      providers_compared: [...new Set(options.map((o) => o.q.provider_name))].sort(),
+    },
+    reason: null,
+  }
+}
+
+/** Quotes captured within a day and a half of the transfer day's middle, as matchQuote. */
+function matchingDay(quotes: PriceCandidate[], transferDate: string): PriceCandidate[] {
+  const midday = Date.parse(`${transferDate}T12:00:00Z`)
+  if (Number.isNaN(midday)) return []
+  return quotes.filter((q) => Math.abs(Date.parse(q.captured_at) - midday) <= 12 * 3_600_000 + DAY_MS)
+}
