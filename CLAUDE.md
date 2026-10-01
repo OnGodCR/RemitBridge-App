@@ -65,8 +65,9 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
       `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and redeploy.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
-- [ ] **Check the remittance tax base** (whether fees count toward the 1%) against the IRS
-      proposed regulations (D78).
+- [ ] **Remittance tax: watch for the final IRS regulations.** Checked against the proposed
+      ones on 2026-10-01 (D97): fees aren't taxed, as assumed, and transfers of $15 or less
+      aren't taxed at all, now in the formula. Re-check when the rules are final.
 - [ ] **More prices.** Wise's are live (D91): the first Scrape run published 20 on
       2026-09-30, and it repeats every 6 hours. The other seven providers still need Add a
       price or their permission.

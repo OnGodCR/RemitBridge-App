@@ -96,7 +96,7 @@ describe('the tax check', () => {
     render(<ReceiptResult confirmed={confirmed()} />);
     expect(screen.getByText('This one was paid by cash. 1% of $500.00 is $5.00, and the receipt shows $5.00.')).toBeTruthy();
     expect(screen.getByText(`Paid from a bank account instead, the same transfer would have cost ${money(expected.totalCost - 5, 'USD')} in total, $5.00 less.`)).toBeTruthy();
-    expect(screen.getByText(/not yet checked against the IRS/)).toBeTruthy();
+    expect(screen.getByText(/proposed rules do/)).toBeTruthy();
   });
 
   it('says a tax line wasn’t found, without implying anything', () => {
@@ -108,7 +108,7 @@ describe('the tax check', () => {
   it('says the tax doesn’t apply to a card payment', () => {
     render(<ReceiptResult confirmed={confirmed({}, { ...WU, funding_method: 'debit_card', tax: undefined })} />);
     expect(screen.getByText('This one was paid by debit card, so the tax doesn’t apply.')).toBeTruthy();
-    expect(screen.queryByText(/not yet checked against the IRS/)).toBeNull();
+    expect(screen.queryByText(/proposed rules do/)).toBeNull();
   });
 });
 
@@ -136,6 +136,13 @@ describe('standard disclosures', () => {
     render(<ReceiptResult confirmed={confirmed()} />);
     expect(screen.getByText('Every standard item was found on this receipt.')).toBeTruthy();
     expect(screen.getByText('What this does not tell you')).toBeTruthy();
+  });
+});
+
+describe('a small transfer', () => {
+  it('says the tax doesn’t apply to $15 or less', () => {
+    render(<ReceiptResult confirmed={confirmed({ fields: fields({ ...WU, amount_sent: 12, fee: 2, tax: undefined, amount_received: 206.4 }) })} />);
+    expect(screen.getByText('This was a transfer of $15 or less, so the tax doesn’t apply.')).toBeTruthy();
   });
 });
 

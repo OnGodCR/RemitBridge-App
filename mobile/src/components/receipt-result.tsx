@@ -56,6 +56,8 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         return s.taxNotTaxed(funding);
       case 'before_tax':
         return s.taxBefore;
+      case 'small_transfer':
+        return s.taxSmall;
       default:
         return s.taxUnknown;
     }

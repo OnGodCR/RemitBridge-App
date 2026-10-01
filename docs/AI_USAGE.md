@@ -437,3 +437,16 @@ files below. D86 assigns the disclosure check to Claude.
 - `supabase/tests/local/checks.sql` (7 checks), `supabase/tests/rls_smoke.sh` (1 check).
 - `site/privacy.html`: the observatory's totals and the five-receipt minimum.
 - `DECISIONS.md` (D95, D96), `HANDOFF.md`, `CLAUDE.md`.
+
+## 2026-10-01: the remittance tax checked against the IRS proposed rules
+
+**What Claude did:** read summaries of the proposed regulations (REG-114499-25) and found a
+$15.00 small-transfer exclusion the formula didn't have; added it.
+- `packages/formula/src/index.ts`, `packages/formula/python/remitbridge_formula/__init__.py`:
+  `REMITTANCE_TAX_SMALL`, no tax at $15.00 or less. `packages/formula/vectors.tax.json`:
+  cases at $15.00 and $15.01; the $0.49 case renamed.
+- `packages/receipt/src/result.ts` and its test: tax status `small_transfer`.
+- `mobile/src/components/receipt-result.tsx`, `mobile/src/i18n/*.ts`: the small-transfer
+  line and new wording for the tax note, in five languages (four are drafts). Test in
+  `mobile/src/__tests__/receipt-result.test.tsx`.
+- `DECISIONS.md` (D97), `CLAUDE.md`.
