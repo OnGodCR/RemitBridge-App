@@ -182,8 +182,8 @@ export default function ScanScreen() {
               const Art = steps[i];
               return (
                 <View key={label} style={styles.step}>
-                  <Art size={56} />
-                  <AppText variant="small" style={[styles.stepLabel, { color: t.text }]}>
+                  <Art size={64} />
+                  <AppText style={[styles.stepLabel, { color: t.text }]}>
                     {label}
                   </AppText>
                 </View>
@@ -192,8 +192,8 @@ export default function ScanScreen() {
           </View>
 
           <View style={styles.privacy}>
-            <SymbolView name="lock.shield" size={18} tintColor={t.primary} fallback={null} />
-            <AppText variant="small" muted style={styles.flex}>
+            <SymbolView name="lock.shield" size={22} tintColor={t.primary} fallback={null} />
+            <AppText muted style={styles.flex}>
               {s.privacy}
             </AppText>
           </View>
