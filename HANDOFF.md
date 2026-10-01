@@ -25,18 +25,16 @@ What stands between this and a working product, in order:
    automated access (D52): Add a price, or follow up on 2026-10-12.
 2. **Sign-in on a real iPhone** hasn't been tried (Apple and Google are enabled, D60, D61).
 
-**Supabase:** project ref `gmzljjdnwndvqciqicbx`. Seven of nine migrations applied (Angad
-pushed the last four on 2026-09-30). Not yet applied: `20260930020000_whatsapp_receipts` and
-`20260930030000_receipt_observatory`, merged with PR #2 on 2026-10-01. Angad runs
-`supabase db push --dry-run`, then `supabase db push` (ProtonVPN off), then the smoke test
-(52 checks). RLS smoke test: 48/48 on 2026-09-30. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
+**Supabase:** project ref `gmzljjdnwndvqciqicbx`. All nine migrations applied (Angad pushed
+the last two, `20260930020000_whatsapp_receipts` and `20260930030000_receipt_observatory`,
+on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions deployed: `delete-account`, `process-prices`. Not deployed:
 `notify-route-launch` (needs `RESEND_API_KEY`), `whatsapp` (needs Meta).
 
 ## 2026-09-30 evening (local session, the go-live list)
 
 - `supabase db push --dry-run` listed exactly `20260930020000_whatsapp_receipts` and
   `20260930030000_receipt_observatory`. Claude's `supabase db push` was refused as a
-  production deploy, so Angad runs it, then the smoke test (52 checks).
+  production deploy; Angad ran it, and the smoke test passed 52/52.
 - **The receipt model is going away.** OpenRouter lists `qwen/qwen3-vl-32b-instruct` as
   retired on 2026-10-09 (suggesting Qwen3.7 Plus). One provider serves it: Alibaba Cloud
   Int. (Singapore and China), no prompt training, retention "unknown", $0.104 in and
