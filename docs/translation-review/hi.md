@@ -541,7 +541,7 @@ with your name and the date.
 | scan.steps[1] | Snap the receipt | रसीद की फ़ोटो लें | |
 | scan.steps[2] | Your details get covered | आपकी जानकारी ढक दी जाती है | |
 | scan.steps[3] | See the real cost | असली खर्च देखें | |
-| scan.privacy | Read on your phone. Names and numbers are covered before anything is sent. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। कुछ भी भेजने से पहले नाम और नंबर ढक दिए जाते हैं। | |
+| scan.privacy | Read on your phone. Names and numbers are covered before anything is sent to our database. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। हमारे डेटाबेस में कुछ भी भेजने से पहले नाम और नंबर ढक दिए जाते हैं। | |
 | scan.takePhoto | Take a photo | फ़ोटो लें | |
 | scan.choosePhoto | Choose a photo | फ़ोटो चुनें | |
 | scan.needsBuild | Scanning needs the full build of the app. It doesn’t work in Expo Go. | स्कैन करने के लिए ऐप का पूरा वर्ज़न चाहिए। यह Expo Go में काम नहीं करता। | |

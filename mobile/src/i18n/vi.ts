@@ -669,7 +669,7 @@ export const vi: Copy = {
     heroTitle: 'Lần chuyển tiền của bạn thực sự tốn bao nhiêu?',
     heroSub: 'Quét biên lai. Xem phí và phần chênh lệch ẩn trong tỷ giá.',
     steps: ['Chụp biên lai', 'Thông tin của bạn được che', 'Xem chi phí thực'],
-    privacy: 'Đọc ngay trên điện thoại. Tên và số được che trước khi gửi bất cứ thứ gì.',
+    privacy: 'Đọc ngay trên điện thoại. Tên và số được che trước khi gửi bất cứ thứ gì lên cơ sở dữ liệu của chúng tôi.',
     takePhoto: 'Chụp ảnh',
     choosePhoto: 'Chọn ảnh',
     needsBuild: 'Cần bản đầy đủ của ứng dụng để quét. Tính năng này không chạy trên Expo Go.',

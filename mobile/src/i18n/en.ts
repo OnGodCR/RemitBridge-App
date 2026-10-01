@@ -652,7 +652,7 @@ export const en = {
     heroTitle: 'What did your transfer really cost?',
     heroSub: 'Scan the receipt. See the fee and the hidden markup.',
     steps: ['Snap the receipt', 'Your details get covered', 'See the real cost'],
-    privacy: 'Read on your phone. Names and numbers are covered before anything is sent.',
+    privacy: 'Read on your phone. Names and numbers are covered before anything is sent to our database.',
     takePhoto: 'Take a photo',
     choosePhoto: 'Choose a photo',
     needsBuild: 'Scanning needs the full build of the app. It doesn’t work in Expo Go.',
