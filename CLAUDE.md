@@ -92,13 +92,17 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Thank-yous and outreach (Angad sends)
 
-- [ ] **Thank-you to Simon Bruins at Wise** for the Comparison API permission (D91).
+- [ ] **Thank-you to Simon Bruins at Wise** for the Comparison API permission (D91). Drafted
+      by Claude as a reply in his thread in the RemitBridge Gmail (2026-10-01); it also
+      declines the affiliate program he mentioned. Angad reads it and sends.
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow up on 2026-10-12
       (calendar reminder set). Log replies in `docs/outreach/permission-request.md` (D52).
 - [ ] **Partner emails** (D50): Horn of Africa Services sent 2026-09-30; East African
       Community Services is in the RemitBridge Gmail's Drafts; the other seven texts are in
-      `docs/outreach/partners.md` (the permission system stopped Claude after the first).
+      `docs/outreach/partners.md`. The permission system stopped Claude after the first send
+      (2026-09-30) and again while drafting the Filipino Community one (2026-10-01): that
+      draft has the address and subject but no text yet. The rest are Angad's.
 - [ ] **Translation reviewers** (D69): the Hindi sheet is ready to send,
       `docs/translation-review/hi.md` (585 strings). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads

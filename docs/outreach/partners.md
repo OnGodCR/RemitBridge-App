@@ -95,7 +95,7 @@ El Centro de la Raza takes messages through its web form, so paste the standard 
 | Organization | Sent | Reply |
 |---|---|---|
 | Horn of Africa Services | 2026-09-30, to info@hoas.org | |
-| Filipino Community of Seattle | not sent | |
+| Filipino Community of Seattle | not sent; a draft with address and subject only (2026-10-01) | |
 | Indian American Community Services | not sent | |
 | Casa Latina | not sent | |
 | El Centro de la Raza | not sent | |
