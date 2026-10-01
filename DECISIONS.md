@@ -1138,3 +1138,40 @@ the one typed in Account ("Your name", shown when signed in), else the one Googl
 gave, first name only, kept in the account's metadata and deleted with it. Also fixed:
 the empty saved-comparisons "Compare prices" button still went to `/`, which is Scan since
 D101; it goes to Compare.
+
+**D115. Which other providers can be automated, checked 2026-10-01** (Angad: "check for more
+prices and any ways to expand our aggregate database"). Read in a real browser, since plain
+requests were blocked on 2026-09-28. Full quotes are in `docs/MANUAL_RESEARCH.md`.
+- **Terms forbid automated access** (no adapter): Ria, MoneyGram, Xe, WorldRemit, Xoom
+  (PayPal's user agreement), Pangea, Intermex, Taptap Send, and Remitly (2026-09-28).
+  Sendwave is the same company as WorldRemit (Zepz) and is treated the same until its
+  own sender terms are read.
+- **Western Union:** neither its terms nor robots.txt forbids it, but its prices load
+  through a call guarded by bot protection. Getting past that would break PRD 9.12, so
+  it stays manual, waiting on the permission request sent 2026-09-28.
+- **Instarem: cleared.** Its terms and US customer agreement have no automated-access
+  clause, robots.txt allows everything but `/wp-admin/`, and its own site's quote endpoint
+  (`/api/v1/public/transaction/computed-value`) answered one honest request with its rate,
+  its fees and when the rate was updated. It is the next adapter to build, once Angad says
+  go: a provider row (a migration he pushes), the adapter with archived raw responses,
+  and care with its "first transfer" and "special FX rate" offers, which are promotions
+  (the gate's `is_promotional`).
+- **The World Bank's Remittance Prices Worldwide** publishes provider-by-provider prices for
+  42 US routes (including MoneyGram, Ria, Western Union, WorldRemit, Pangea and banks),
+  free to reuse with credit ("The World Bank, Remittance Prices Worldwide, available at
+  http://remittanceprices.worldbank.org") and without implying endorsement. The newest
+  survey is Q3 2025 (collected August 2025), so it never appears as a current price in
+  Compare. It fits research, the observatory and Learn, labelled with its quarter. The
+  Excel download needs Angad's yes (a plain request got 403; a browser can fetch it).
+
+**D116. `host.exp.Exponent` removed from Apple sign-in's client IDs** (Angad, 2026-10-01; the
+D60 "before launch" item, done early). Apple sign-in now accepts only the app's own bundle,
+`org.remitbridgelabs.app`, changed live through Supabase's Management API and matched in
+`supabase/config.toml`. Sign in with Apple no longer works inside Expo Go, which was only
+ever a development convenience (the simulator hides Apple anyway); the development build
+has the real bundle ID.
+
+**D117. Two of Angad's calls, 2026-10-01.** The CAC entry waits until the app itself is
+finished (the deadlines stay Oct 23 internal, Oct 26 official). The Hindi translation
+review goes to Angad's mother: she reads `docs/translation-review/hi.md`, agrees in writing,
+and is named with the date in `mobile/src/i18n/languages.ts` (D69).

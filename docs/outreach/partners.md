@@ -1,17 +1,16 @@
 # Partner outreach: Seattle-area organizations
 
 A shortlist for D50 (no partners yet) and PRD 6.4 (the special-handling routes need a
-community partner before they can be done well). **One of nine has been sent** (Horn of
-Africa Services, 2026-09-30). Angad sends the rest; log each send and reply in the table
-at the bottom.
+community partner before they can be done well). **Eight of nine are sent** (Horn of Africa
+Services 2026-09-30, the other seven 2026-10-01). El Centro de la Raza is left: its web form
+needs a phone number and answers an anti-spam question, so Angad sends it. Log each reply
+in the table at the bottom.
 
 Researched 2026-09-29. Every contact below was read on the organization's own site on that
 date. Use the organization's general address or form, never a staff member's personal email.
 
-On 2026-09-30 Angad asked Claude to send them from the RemitBridge Gmail. The Horn of Africa
-Services email went out; the permission system then stopped the next send. East African
-Community Services is written and waiting in Drafts, ready to send as is. The other texts
-are below to paste.
+Claude sent them from the RemitBridge Gmail at Angad's request: Horn of Africa Services on
+2026-09-30, and the other seven on 2026-10-01 with the texts below, unchanged.
 
 ## Who, and why
 
@@ -95,11 +94,11 @@ El Centro de la Raza takes messages through its web form, so paste the standard 
 | Organization | Sent | Reply |
 |---|---|---|
 | Horn of Africa Services | 2026-09-30, to info@hoas.org | |
-| Filipino Community of Seattle | not sent; a draft with address and subject only (2026-10-01) | |
-| Indian American Community Services | not sent | |
-| Casa Latina | not sent | |
-| El Centro de la Raza | not sent | |
-| Financial Empowerment Network of Washington | not sent | |
-| Seattle Office of Immigrant and Refugee Affairs | not sent | |
-| Kandelia | not sent | |
-| East African Community Services | in Drafts, not sent | |
+| Filipino Community of Seattle | 2026-10-01, to info@filcommsea.org | |
+| Indian American Community Services | 2026-10-01, to Contactus@iaww.org | |
+| Casa Latina | 2026-10-01, to info@casa-latina.org | |
+| El Centro de la Raza | not sent; web form (phone number and anti-spam question), Angad's | |
+| Financial Empowerment Network of Washington | 2026-10-01, to hello@fenwa.org | |
+| Seattle Office of Immigrant and Refugee Affairs | 2026-10-01, to OIRA@seattle.gov | |
+| Kandelia | 2026-10-01, to info@kandelia.org | |
+| East African Community Services | 2026-10-01, to info@eastafricancs.org | |

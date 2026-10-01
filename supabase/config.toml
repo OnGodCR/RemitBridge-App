@@ -319,7 +319,7 @@ max_frequency = "5s"
 # testing; remove it before launch. Set live 2026-09-29 through the Management API.
 [auth.external.apple]
 enabled = true
-client_id = "org.remitbridgelabs.app,host.exp.Exponent"
+client_id = "org.remitbridgelabs.app"
 # Only needed for web or Android Apple sign-in, which the app doesn't offer.
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 # Overrides the default auth redirectUrl.
