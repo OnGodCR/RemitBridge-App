@@ -50,7 +50,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
   Parser mode is 0% until Angad's extractors land; the model modes need `OPENROUTER_API_KEY`
   in the shell and haven't been run (the key isn't in the cloud sandbox). The generator
   found two redaction bugs, both fixed.
-- Phase 5 built (2026-09-30), off until Angad says yes (D94): receipt photos on WhatsApp. The
+- Phase 5 built (2026-09-30), approved by Angad 2026-10-01 but off until its secrets are set
+  (D94): receipt photos on WhatsApp. The
   webhook queues a photo (`receipt_intake`, migration `20260930020000_whatsapp_receipts.sql`,
   not pushed), `.github/workflows/receipt-intake.yml` reads and redacts it, `scan-receipt`
   reads the redacted text, and the bot replies or checks unsure values one at a time. To turn
