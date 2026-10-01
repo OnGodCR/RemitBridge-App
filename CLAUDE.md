@@ -120,6 +120,10 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [x] **Store listing drafted** (`docs/store/listing.md`), store build config tidied, and
+      the public Supabase values set for preview and production builds (D123). Done 2026-10-01.
+- [ ] **Android push notifications:** a Firebase project's FCM key uploaded to EAS (needs a
+      Google account; Angad's own works, it isn't the Play account).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
