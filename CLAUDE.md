@@ -57,10 +57,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       read. Glossary definitions are still English in every language.
 - [ ] **CAC receipt scanner (D72): the live setup.** All six phases are on `main` (PR #1
       2026-09-30; PR #2 2026-10-01: benchmark D93, WhatsApp photos D94, disclosure check D95,
-      observatory D96). Angad pushes the two new migrations,
-      `20260930020000_whatsapp_receipts.sql` and `20260930030000_receipt_observatory.sql`,
-      then runs the smoke test (52 checks). The dry run on 2026-09-30 listed exactly those
-      two; Claude's push was refused as a production deploy, so it's Angad's.
+      observatory D96). Every migration is live: Angad pushed the last two on 2026-09-30,
+      smoke test 52/52. Left: the model key, the EAS build, the WhatsApp secrets.
       Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
@@ -72,7 +70,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       $0.104/$0.416 per million tokens (checked 2026-09-30). Run the benchmark with its new
       `model` input on candidates, then Angad picks.
 - [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
-      sealed for up to an hour (2026-10-01). Left: push `20260930020000_whatsapp_receipts.sql`, set
+      sealed for up to an hour (2026-10-01). The migration is live (2026-09-30). Left: set
       `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
       `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and redeploy.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
