@@ -19,6 +19,10 @@ on:
         description: "Modes, comma-separated"
         required: false
         default: "parser,model,combined"
+      model:
+        description: "OpenRouter model (blank for the app's default)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -29,6 +33,7 @@ jobs:
     timeout-minutes: 30
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      RECEIPT_MODEL: ${{ inputs.model }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
