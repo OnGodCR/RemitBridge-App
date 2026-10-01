@@ -60,8 +60,8 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
       receipts migration is in (48/48 smoke checks, 2026-09-30).
-- [ ] **WhatsApp receipt photos (D94):** built, off. Angad's yes to keeping the number
-      sealed for up to an hour; then push `20260930020000_whatsapp_receipts.sql`, set
+- [ ] **WhatsApp receipt photos (D94):** built, off. Angad said yes to keeping the number
+      sealed for up to an hour (2026-10-01). Left: push `20260930020000_whatsapp_receipts.sql`, set
       `RECEIPT_INTAKE_SECRET`, `GITHUB_DISPATCH_TOKEN` and `WHATSAPP_RECEIPTS=on` in Supabase,
       `RECEIPT_INTAKE_SECRET` and `WHATSAPP_ACCESS_TOKEN` in GitHub Actions, and redeploy.
 - [ ] **First development build on EAS**, then scan a real receipt on the iPhone (D73).
@@ -202,7 +202,9 @@ a style choice.
     Every user table has row-level security so only its owner can read it.
   - Deleting an account inside the app deletes all of that user's data.
   - Metrics are aggregate only.
-  - On WhatsApp, store only a hashed phone number.
+  - On WhatsApp, store only a hashed phone number. The one exception (D94, Angad's yes on
+    2026-10-01): while a receipt photo is being read, the number is kept encrypted for at
+    most an hour, and deleted as soon as the reply goes out.
   - Delete the contact details from a route request once its launch
     notification has gone out.
 - **Scraper conduct** is a reliability rule (PRD 9.12):

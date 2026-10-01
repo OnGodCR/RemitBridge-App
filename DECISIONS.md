@@ -860,7 +860,9 @@ D10, with one privacy exception that needs Angad's yes before it's switched on).
   derived from `WHATSAPP_HASH_SECRET` that only the whatsapp function has). The worker never
   sees it. The row is deleted when the reply goes out, and every row is deleted after an hour
   regardless. This bends the rule "on WhatsApp, store only a hashed phone number", so photo
-  intake stays off (`WHATSAPP_RECEIPTS`) until Angad agrees.
+  intake stays off (`WHATSAPP_RECEIPTS`) until Angad agrees. **Angad agreed on 2026-10-01**,
+  and CLAUDE.md's privacy rule now names the exception. It still needs the WhatsApp go-live
+  and the secrets below before it runs.
 - **Checking values:** the bot asks about unsure values one at a time (at most four), each
   answer confirmed through `scan-receipt`, and then sends the result. It names any values that
   weren't confirmed. While it's asking, `whatsapp_users` holds the receipt's ID and the field
