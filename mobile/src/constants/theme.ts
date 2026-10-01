@@ -40,6 +40,18 @@ const light = {
   moneyPickup: '#8fcab6', // pale green: secondary hidden cost
   targetLine: '#5b6470', // the dashed 3% UN target
   stale: '#646d78', // desaturated grey, always with the word "Stale"; 5.0:1 (the old #9aa3ae was 2.4:1)
+
+  // The blog's five series (D106), from the website's palette (src/lib/palette.js): `ink`
+  // for the label and active filter, `bar` for the dot, `tint` behind a number cover.
+  // Series 4 is the website's amber there, so here it's a slate teal (D105, no yellow).
+  series: {
+    all: { ink: '#1c2024', bar: '#5b6470', tint: '#f2f4f7' },
+    series1: { ink: '#0f5a48', bar: '#14705a', tint: '#e6f2ee' },
+    series2: { ink: '#17558f', bar: '#1b5fa8', tint: '#e7eff9' },
+    series3: { ink: '#5a3e96', bar: '#6a4ba8', tint: '#efeaf8' },
+    series4: { ink: '#2b5566', bar: '#356a7d', tint: '#e6eef1' },
+    series5: { ink: '#97325a', bar: '#a63c63', tint: '#faeaef' },
+  },
 };
 
 const dark: typeof light = {
@@ -67,6 +79,16 @@ const dark: typeof light = {
   moneyPickup: '#5d8f80',
   targetLine: '#9aa3ae',
   stale: '#9aa3ae', // 7.2:1 on the dark background (the old #6b747e was 3.9:1)
+
+  // Lighter inks for the dark background, the same hues.
+  series: {
+    all: { ink: '#eef1f4', bar: '#9aa3ae', tint: '#20252a' },
+    series1: { ink: '#7fd1b5', bar: '#3fae8e', tint: '#173229' },
+    series2: { ink: '#93bdeb', bar: '#5b93d6', tint: '#16263a' },
+    series3: { ink: '#bba6ea', bar: '#9479d6', tint: '#251d38' },
+    series4: { ink: '#93c3d3', bar: '#5d9bb0', tint: '#172a31' },
+    series5: { ink: '#eba1bc', bar: '#d36a92', tint: '#36192a' },
+  },
 };
 
 export const Colors = { light, dark } as const;

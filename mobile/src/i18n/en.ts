@@ -40,6 +40,7 @@ export const en = {
     yearlyCost: 'Yearly cost',
     rateHistory: 'Rate history',
     glossary: 'Glossary',
+    blog: 'Blog',
     remitbench: 'RemitBench',
     quote: 'Quote',
     routeBoard: 'Route board',
@@ -391,6 +392,23 @@ export const en = {
     workshops: 'Workshops',
     workshopsSub: 'Sessions for communities and schools',
     opensWebsite: 'Opens on the website',
+  },
+
+  blog: {
+    written: (n: number, total: number) => `${n} of ${total} written in full so far`,
+    shown: (n: number, total: number) => `${n} of ${total} posts`,
+    all: 'All',
+    series: {
+      series1: 'Why people send money',
+      series2: 'How banks move it',
+      series3: 'Blockchain scaling',
+      series4: 'Cost, speed, failure',
+      series5: 'Connecting it up',
+    },
+    summaryOnly: 'Summary only',
+    notYet: 'The full post is still being written. This is its summary.',
+    keepReading: 'Keep reading',
+    englishOnly: 'Posts are in English.',
   },
 
   glossary: {

@@ -17,8 +17,8 @@ const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects 
 /**
  * Learn (DECISIONS.md D33, D58, D104): modules first, each a short topic built from the
  * glossary's terms, then the glossary A to Z and the research. How RemitBridge works moved
- * to Account (D104). Long-form writing (blog, papers, workshops) stays on the
- * website and opens there.
+ * to Account (D104). The blog is ported into the app (D106); papers and workshops stay on
+ * the website and open there.
  */
 export default function LearnScreen() {
   const t = useTheme();
@@ -45,6 +45,11 @@ export default function LearnScreen() {
             })}
           </ListGroup>
 
+          {/* The website's blog, in the app (D106). */}
+          <ListGroup title={copy.titles.blog}>
+            <ListRow icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => router.push('/blog')} />
+          </ListGroup>
+
           <ListGroup title={l.deeper}>
             <ListRow art={<GlossaryArt />} title={copy.titles.glossary} subtitle={l.glossarySub(TERMS.length)} onPress={() => router.push('/glossary')} />
             <ListRow art={<RouteBoardArt />} title={copy.titles.routeBoard} subtitle={l.routeBoardSub} onPress={() => router.push('/routes')} />
@@ -53,7 +58,7 @@ export default function LearnScreen() {
           </ListGroup>
 
           <ListGroup title={l.website}>
-            <ListRow external icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => openPage(`${WEBSITE}/blog`)} />
+
             <ListRow external icon="doc.richtext" title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
             <ListRow external icon="person.2" title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
           </ListGroup>

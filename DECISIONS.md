@@ -1029,3 +1029,26 @@ a text legend, so colour never carries the meaning alone. On the receipt confirm
 screen, values to check are outlined in ink, heavier, instead of amber, since a green
 outline would look like a confirmed one. The drawings use a translucent green highlighter
 for the markup (D104).
+
+**D106. The website's blog lives in the app too, formatted as on the website.** Angad asked
+for the blogs in the app "with similar formatting as the way it is on the website".
+- **Ported, not linked:** `mobile/scripts/port-blog.mjs` reads the website repo (never
+  writes to it) and writes `src/data/blog.json`: all 30 posts' catalogue entries, and the
+  17 written in full with their body blocks exactly as the website stores them. Rerun it
+  when the website publishes or edits a post.
+- **Figures:** on the website they're React components. The script captures each one
+  from the live post page with headless Chrome at phone width (430 px, 2x) and checks the
+  count against the data before saving (86 figures). Photo covers are copied and
+  resized to 1200 px. 8.8 MB in `assets/blog` in all.
+- **Layout:** the website's index (written-in-full count, series as text toggles that are
+  also the colour key, cards with cover, series, title, summary, date and read time) and
+  post page (cover, series, title, author, date, summary, body, sources, "Keep reading").
+  Inline tokens work as on the site: bold, glossary terms (open the glossary), and links
+  between posts (open the post in the app; TrueCost and the reckoner open the app's
+  tools; anything else opens the website).
+- **Colours:** the website's series hues are theme tokens; series 4's amber became a
+  slate teal (D105), in the app and in its captured figures.
+- **Not yet:** posts are English in every language (the app says so). Figures are
+  pictures, so VoiceOver can't read the words inside them; the paragraphs around each
+  figure carry the same points. Posts the website writes in its dashboard, if any, aren't
+  in the port.

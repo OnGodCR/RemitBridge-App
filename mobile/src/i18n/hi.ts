@@ -35,6 +35,7 @@ export const hi: Copy = {
     yearlyCost: 'सालाना लागत',
     rateHistory: 'रेट का इतिहास',
     glossary: 'शब्दकोश',
+    blog: 'ब्लॉग',
     remitbench: 'RemitBench',
     quote: 'कीमत',
     routeBoard: 'रूट बोर्ड',
@@ -407,6 +408,23 @@ export const hi: Copy = {
     workshops: 'वर्कशॉप',
     workshopsSub: 'समुदायों और स्कूलों के लिए सत्र',
     opensWebsite: 'वेबसाइट पर खुलता है',
+  },
+
+  blog: {
+    written: (n: number, total: number) => `${total} में से ${n} पूरे लिखे जा चुके हैं`,
+    shown: (n: number, total: number) => `${total} में से ${n} लेख`,
+    all: 'सभी',
+    series: {
+      series1: 'लोग पैसे क्यों भेजते हैं',
+      series2: 'बैंक इसे कैसे भेजते हैं',
+      series3: 'ब्लॉकचेन स्केलिंग',
+      series4: 'लागत, रफ़्तार, गड़बड़ी',
+      series5: 'सब कुछ जोड़ना',
+    },
+    summaryOnly: 'सिर्फ़ सारांश',
+    notYet: 'पूरा लेख अभी लिखा जा रहा है। यह उसका सारांश है।',
+    keepReading: 'आगे पढ़ें',
+    englishOnly: 'लेख अंग्रेज़ी में हैं।',
   },
 
   glossary: {

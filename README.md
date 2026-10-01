@@ -32,6 +32,7 @@ mobile/              Expo app (iOS and Android): Scan, Compare, Tools, Learn, Ac
 mobile/src/i18n/     Every string the app shows: English source, drafts in Hindi, Spanish,
                      Tagalog and Vietnamese, and the reviewer gate that keeps drafts out of releases.
                      `npx tsx scripts/review-sheet.ts hi` rebuilds docs/translation-review/hi.md from them
+mobile/scripts/      port-blog.mjs ports the website's blog (posts, figures, covers) into the app
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 packages/bot/        The WhatsApp bot's logic (parser, replies in English and Hindi, receipt photo replies),
                      tested with vitest
