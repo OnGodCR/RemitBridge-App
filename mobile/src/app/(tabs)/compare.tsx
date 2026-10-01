@@ -159,6 +159,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
                     retrying={quotes.refreshing}
                   />
                   <SaveComparison routeId={route.id} amount={amount} method={activeMethod} />
+                  <AlertLink routeId={route.id} amount={checked} method={activeMethod} funding={funding} result={quotes.result} />
                 </>
               ) : (
                 <AppText muted>{copy.compare.enterAmount}</AppText>
@@ -378,6 +379,51 @@ function Notice({
       </View>
       {action ? <TextLink label={action.label} onPress={action.onPress} /> : null}
     </View>
+  );
+}
+
+/**
+ * "Tell me when it's better" (D113): opens the rate alert screen on this route, the checked
+ * amount, the method and how it's paid, starting from today's best standing price.
+ */
+function AlertLink({
+  routeId,
+  amount,
+  method,
+  funding,
+  result,
+}: {
+  routeId: string;
+  amount: number;
+  method: DeliveryMethod;
+  funding: FundingMethod;
+  result: QuotesResult | null;
+}) {
+  const copy = useCopy();
+  if (result?.kind !== 'ok') return null;
+  const best = result.standing
+    .filter((q) => q.payment_method === funding)
+    .reduce<(typeof result.standing)[number] | null>((top, q) => (!top || Number(q.amount_received) > Number(top.amount_received) ? q : top), null);
+  if (!best) return null;
+  return (
+    <TextLink
+      icon="bell"
+      label={copy.alerts.link}
+      onPress={() =>
+        router.push({
+          pathname: '/alert',
+          params: {
+            route: routeId,
+            amount: String(amount),
+            method,
+            funding,
+            best: String(best.amount_received),
+            currency: best.receive_currency,
+            provider: best.provider_name,
+          },
+        })
+      }
+    />
   );
 }
 

@@ -25,6 +25,8 @@ with your name and the date.
 
 | Key | English | Hindi draft | Your change (blank if fine) |
 |---|---|---|---|
+| common.hi | Hi, {name} | नमस्ते, {name} | |
+| common.hiThere | Hi there | नमस्ते | |
 | common.back | Back | वापस | |
 | common.close | Close | बंद करें | |
 | common.cancel | Cancel | रद्द करें | |
@@ -54,6 +56,7 @@ with your name and the date.
 | titles.glossary | Glossary | शब्दकोश | |
 | titles.blog | Blog | ब्लॉग | |
 | titles.saved | Saved | सहेजा गया | |
+| titles.alert | Rate alert | रेट अलर्ट | |
 | titles.remitbench | RemitBench | RemitBench | |
 | titles.quote | Quote | कीमत | |
 | titles.routeBoard | Route board | रूट बोर्ड | |
@@ -262,6 +265,9 @@ with your name and the date.
 | board.requests | {n} requests | {n} माँगें | |
 | board.opensCompare | Opens Compare on this route | इस रूट पर तुलना खोलता है | |
 | board.ask | Ask for a route | नया रूट माँगें | |
+| account.yourName | Your name | आपका नाम | |
+| account.namePlaceholder | What should we call you? | हम आपको क्या कहें? | |
+| account.nameSaved | Name saved. | नाम सहेज लिया गया। | |
 | account.title | Account | खाता | |
 | account.signedInApple | Signed in with Apple | Apple से साइन इन किया गया | |
 | account.optional | An account is optional. It keeps what you save, on any phone you use. | खाता बनाना ज़रूरी नहीं है। इसमें आपका सहेजा हुआ सब रहता है, किसी भी फ़ोन पर। | |
@@ -364,6 +370,25 @@ with your name and the date.
 | learn.workshops | Workshops | वर्कशॉप | |
 | learn.workshopsSub | Sessions for communities and schools | समुदायों और स्कूलों के लिए सत्र | |
 | learn.opensWebsite | Opens on the website | वेबसाइट पर खुलता है | |
+| alerts.link | Tell me when it’s better | बेहतर होने पर बताएँ | |
+| alerts.intro | Alert me when {amount} to {country} gets at least | तब बताएँ जब {country} को {amount} पर कम से कम इतना मिले | |
+| alerts.today | Today’s best: {amount} from {provider} | आज सबसे अच्छा: {provider} से {amount} | |
+| alerts.often | One notification when a price reaches this, then at most once a day while it stays there. | कीमत यहाँ पहुँचने पर एक सूचना, फिर जब तक वैसी रहे, दिन में ज़्यादा से ज़्यादा एक। | |
+| alerts.less | Lower target | लक्ष्य कम करें | |
+| alerts.more | Higher target | लक्ष्य बढ़ाएँ | |
+| alerts.turnOn | Turn on alert | अलर्ट चालू करें | |
+| alerts.on | Alert on. You’ll find it in Saved. | अलर्ट चालू है। यह सहेजा गया में मिलेगा। | |
+| alerts.signInTitle | Sign in for alerts | अलर्ट के लिए साइन इन करें | |
+| alerts.signInBody | Alerts are kept with your free account, so they reach this phone. | अलर्ट आपके मुफ़्त खाते के साथ रखे जाते हैं, ताकि वे इस फ़ोन तक पहुँचें। | |
+| alerts.denied | Notifications are off for RemitBridge. Turn them on in Settings to get alerts. | RemitBridge की सूचनाएँ बंद हैं। अलर्ट पाने के लिए सेटिंग्स में चालू करें। | |
+| alerts.unavailable | Notifications need the full app on a phone. | सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए। | |
+| alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले सहेजा गया में एक मिटाएँ। | |
+| alerts.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें। | |
+| alerts.yours | Your alerts | आपके अलर्ट | |
+| alerts.row | {amount} to {country}: {target} or more | {country} को {amount}: {target} या ज़्यादा | |
+| alerts.deleteNamed | Delete alert: {name} | अलर्ट मिटाएँ: {name} | |
+| alerts.deleted | Alert deleted. | अलर्ट मिटा दिया गया। | |
+| alerts.none | No prices yet for this amount, so there’s nothing to compare an alert against. | इस रकम के लिए अभी कोई कीमत नहीं है, इसलिए अलर्ट की तुलना के लिए कुछ नहीं है। | |
 | blog.written | {n} of {total} written in full so far | {total} में से {n} पूरे लिखे जा चुके हैं | |
 | blog.shown | {n} of {total} posts | {total} में से {n} लेख | |
 | blog.all | All | सभी | |

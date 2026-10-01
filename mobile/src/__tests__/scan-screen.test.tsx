@@ -16,6 +16,8 @@ import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 let mockSavedLanguage: string | null = null;
 jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, setLanguage: () => undefined } }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
+jest.mock('@/lib/auth', () => ({ useAuth: () => ({ session: null }) }));
+jest.mock('@/lib/name', () => ({ firstName: () => null }));
 jest.mock('expo-image', () => ({ Image: () => null }));
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
 jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }) }));

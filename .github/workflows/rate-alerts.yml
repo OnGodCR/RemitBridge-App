@@ -1,0 +1,35 @@
+name: Rate alerts
+
+# Sends the push notifications people asked for (DECISIONS.md D34, D113) right after new
+# prices land: when Scrape or Manual prices finishes. Each alert fires at most once in
+# 20 hours. Before the rate alerts migration is pushed, it finds nothing and passes.
+
+on:
+  workflow_run:
+    workflows: ["Scrape", "Manual prices"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rate-alerts
+  cancel-in-progress: false
+
+jobs:
+  send:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node .github/scripts/send-rate-alerts.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

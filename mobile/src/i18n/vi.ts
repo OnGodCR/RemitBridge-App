@@ -7,6 +7,8 @@ import type { Copy } from '@/i18n/en';
  */
 export const vi: Copy = {
   common: {
+    hi: (name: string) => `Xin chào, ${name}`,
+    hiThere: 'Xin chào',
     back: 'Quay lại',
     close: 'Đóng',
     cancel: 'Hủy',
@@ -36,6 +38,7 @@ export const vi: Copy = {
     glossary: 'Từ điển thuật ngữ',
     blog: 'Blog',
     saved: 'Đã lưu',
+    alert: 'Cảnh báo tỷ giá',
     remitbench: 'RemitBench',
     quote: 'Giá',
     routeBoard: 'Bảng tuyến chuyển tiền',
@@ -317,6 +320,9 @@ export const vi: Copy = {
   },
 
   account: {
+    yourName: 'Tên của bạn',
+    namePlaceholder: 'Chúng tôi nên gọi bạn là gì?',
+    nameSaved: 'Đã lưu tên.',
     title: 'Tài khoản',
     signedInApple: 'Đã đăng nhập bằng Apple',
     optional: 'Tài khoản là không bắt buộc. Nó giữ những gì bạn lưu, trên bất kỳ điện thoại nào bạn dùng.',
@@ -422,6 +428,28 @@ export const vi: Copy = {
     workshops: 'Hội thảo',
     workshopsSub: 'Các buổi dành cho cộng đồng và trường học',
     opensWebsite: 'Mở trên trang web',
+  },
+
+  alerts: {
+    link: 'Báo tôi khi tốt hơn',
+    intro: (amount: string, country: string) => `Báo tôi khi gửi ${amount} đến ${country} nhận được ít nhất`,
+    today: (amount: string, provider: string) => `Tốt nhất hôm nay: ${amount} từ ${provider}`,
+    often: 'Một thông báo khi giá đạt mức này, rồi tối đa một lần mỗi ngày khi giá vẫn giữ như vậy.',
+    less: 'Giảm mục tiêu',
+    more: 'Tăng mục tiêu',
+    turnOn: 'Bật cảnh báo',
+    on: 'Đã bật cảnh báo. Bạn sẽ thấy nó trong mục Đã lưu.',
+    signInTitle: 'Đăng nhập để nhận cảnh báo',
+    signInBody: 'Cảnh báo được lưu cùng tài khoản miễn phí, để gửi đến điện thoại này.',
+    denied: 'Thông báo của RemitBridge đang tắt. Hãy bật trong Cài đặt để nhận cảnh báo.',
+    unavailable: 'Thông báo cần ứng dụng đầy đủ trên điện thoại.',
+    limit: 'Bạn đã có 10 cảnh báo, mức tối đa. Hãy xóa một cái trong Đã lưu trước.',
+    failed: 'Không thành công. Hãy kiểm tra kết nối và thử lại.',
+    yours: 'Cảnh báo của bạn',
+    row: (amount: string, country: string, target: string) => `${amount} đến ${country}: ${target} trở lên`,
+    deleteNamed: (name: string) => `Xóa cảnh báo: ${name}`,
+    deleted: 'Đã xóa cảnh báo.',
+    none: 'Chưa có giá cho số tiền này, nên chưa có gì để so sánh với cảnh báo.',
   },
 
   blog: {

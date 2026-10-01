@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { G, Path } from 'react-native-svg';
 
 import { AppText } from '@/components/ui';
-import { Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 /**
@@ -14,7 +14,7 @@ import { useTheme } from '@/hooks/use-theme';
  * Behind the title, the website's bridge mark, drawn large and faint, so the band has some
  * texture instead of being a flat slab of green (D112).
  */
-export function HeroHeader({ title, children }: { title: string; children?: ReactNode }) {
+export function HeroHeader({ title, greeting, children }: { title: string; greeting?: string; children?: ReactNode }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -26,6 +26,8 @@ export function HeroHeader({ title, children }: { title: string; children?: Reac
           <Path d="M14 30v-6q10-9 20 0v6" />
         </G>
       </Svg>
+      {/* "Hi, Angad" above the title on the home tab (D114). */}
+      {greeting ? <AppText style={[styles.greeting, { color: t.heroMuted }]}>{greeting}</AppText> : null}
       <AppText variant="title" accessibilityRole="header" style={{ color: t.heroText }}>
         {title}
       </AppText>
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
   },
   mark: { position: 'absolute', right: -70 },
+  greeting: { fontFamily: Fonts.semibold, fontSize: 18, lineHeight: 23, marginBottom: -Spacing.two },
   backdrop: { position: 'absolute', top: 0, left: 0, right: 0, height: 420 },
   shield: { position: 'absolute', top: 0, left: 0, right: 0 },
 });
