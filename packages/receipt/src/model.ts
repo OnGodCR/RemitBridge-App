@@ -4,22 +4,23 @@
  * answers in a strict JSON schema. Its answer is then checked again here field by field
  * with checkValue, so nothing it returns reaches the formula unchecked.
  *
- * The model is reached through OpenRouter's chat completions API (OpenAI's request shape),
- * so which model reads receipts is one setting. This file builds the request and reads
- * the reply; the call itself takes a client passed in (openRouterClient in the Edge
- * Function and the benchmark, a fake in tests), so tests never touch the network.
+ * The model is reached through Groq's chat completions API (OpenAI's request shape), so
+ * which model reads receipts is one setting. This file builds the request and reads the
+ * reply; the call itself takes a client passed in (groqClient in the Edge Function and the
+ * benchmark, a fake in tests), so tests never touch the network.
  */
 import { checkValue, FIELD_SPECS } from './fields.ts'
 import { lineText } from './ocr.ts'
 import type { FieldName, OcrPage, ParsedField, ParsedFields } from './types.ts'
 
 /**
- * Qwen3 VL 32B Instruct, on OpenRouter (D92): reads photos, supports a strict JSON schema,
- * and costs about a tenth of a cent a receipt. Overridden by RECEIPT_MODEL.
+ * Qwen3.8 27B, on Groq's free tier (D98): Groq's one model that reads photos, and one of
+ * the three it holds to a strict JSON schema. Groq keeps nothing it's sent by default.
+ * Overridden by RECEIPT_MODEL.
  */
-export const DEFAULT_MODEL = 'qwen/qwen3-vl-32b-instruct'
+export const DEFAULT_MODEL = 'qwen/qwen3.8-27b'
 
-export const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+export const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 
 type TextPart = { type: 'text'; text: string }
 type ImagePart = { type: 'image_url'; image_url: { url: string } }
@@ -27,15 +28,13 @@ type ImagePart = { type: 'image_url'; image_url: { url: string } }
 /** The chat completions request, as much of it as this file sends. */
 export interface ChatRequest {
   model: string
-  /** Tried in order if the first model is down or refuses the request (OpenRouter). */
-  models?: string[]
   messages: [{ role: 'system'; content: string }, { role: 'user'; content: (TextPart | ImagePart)[] }]
   response_format: { type: 'json_schema'; json_schema: { name: string; strict: true; schema: Record<string, unknown> } }
-  /**
-   * OpenRouter's provider routing: only providers that honor every parameter (so the
-   * schema is enforced), and only ones that don't keep or train on what's sent.
-   */
-  provider: { require_parameters: true; data_collection: 'deny' }
+  /** Groq's switch for Qwen's thinking. Off: the answer is a reading, not a puzzle, and
+   *  thinking would spend the free tier's tokens. */
+  reasoning_effort: 'none'
+  /** Groq requires parsed or hidden with a JSON schema; hidden returns the answer alone. */
+  reasoning_format: 'hidden'
   temperature: number
   max_tokens: number
 }
@@ -52,25 +51,20 @@ export interface ModelClient {
 }
 
 /**
- * A client for OpenRouter over plain fetch, so no SDK is needed in the app, the Edge
- * Function or Node. A non-2xx reply throws (the pipeline then reads with the rules alone);
- * the error names the status only, never the request.
+ * A client for Groq over plain fetch, so no SDK is needed in the app, the Edge Function or
+ * Node. A non-2xx reply throws (the pipeline then reads with the rules alone), including a
+ * 429 when the free tier's limits are reached; the error names the status only, never the
+ * request.
  */
-export function openRouterClient(apiKey: string, fetchImpl: typeof fetch = fetch): ModelClient {
+export function groqClient(apiKey: string, fetchImpl: typeof fetch = fetch): ModelClient {
   return {
     async complete(request) {
-      const res = await fetchImpl(OPENROUTER_URL, {
+      const res = await fetchImpl(GROQ_URL, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-          // OpenRouter's app attribution headers; optional, and carry nothing about the person.
-          'HTTP-Referer': 'https://app.remitbridgelabs.org',
-          'X-Title': 'RemitBridge',
-        },
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(request),
       })
-      if (!res.ok) throw new Error(`openrouter: HTTP ${res.status}`)
+      if (!res.ok) throw new Error(`groq: HTTP ${res.status}`)
       return (await res.json()) as ChatResponse
     },
   }
@@ -86,8 +80,6 @@ export interface ModelInput {
   /** Today as YYYY-MM-DD. */
   today: string
   model?: string
-  /** Models to fall back to, in order (RECEIPT_MODEL_FALLBACKS). */
-  fallbacks?: string[]
 }
 
 /**
@@ -165,19 +157,19 @@ export function buildRequest(input: ModelInput): ChatRequest {
     type: 'text',
     text: `Today is ${input.today}. Read these fields: ${input.fields.join(', ')}.\n\nOCR text:\n${numberedText(input.page)}`,
   })
-  const model = input.model ?? DEFAULT_MODEL
-  const fallbacks = (input.fallbacks ?? []).filter((m) => m && m !== model)
   return {
-    model,
-    ...(fallbacks.length ? { models: [model, ...fallbacks] } : {}),
+    model: input.model ?? DEFAULT_MODEL,
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content },
     ],
     response_format: { type: 'json_schema', json_schema: { name: 'receipt_fields', strict: true, schema: answerSchema(input.fields) } },
-    provider: { require_parameters: true, data_collection: 'deny' },
+    reasoning_effort: 'none',
+    reasoning_format: 'hidden',
     temperature: 0,
-    max_tokens: 4000,
+    // An answer is about 40 tokens a field. Groq counts what's asked for against the free
+    // tier's tokens a minute, so this stays near what an answer can use.
+    max_tokens: 1500,
   }
 }
 
@@ -228,7 +220,7 @@ export type ModelErrorReason = 'refusal' | 'truncated' | 'unreadable' | 'failed'
 export class ModelError extends Error {
   /**
    * refusal: the model declined; truncated: cut off at max_tokens; unreadable: not JSON;
-   * failed: OpenRouter answered with an error; over_cap: this month's model calls are used
+   * failed: the model service answered with an error; over_cap: this month's model calls are used
    * up (thrown by the caller's gate).
    */
   readonly reason: ModelErrorReason

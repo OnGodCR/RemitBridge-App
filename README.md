@@ -74,8 +74,8 @@ Database changes: `supabase db push`, then the RLS smoke test
 (`SUPABASE_URL=... SUPABASE_PUBLISHABLE_KEY=... supabase/tests/rls_smoke.sh`). Edge Functions
 deploy with `supabase functions deploy <name> --use-api`; their secrets are listed at the
 top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
-reads `OPENROUTER_API_KEY` (without it, receipts are read by the rules alone), and optionally
-`RECEIPT_MODEL`, `RECEIPT_MODEL_FALLBACKS` and `RECEIPT_MODEL_MONTHLY_CAP` (D92).
+reads `GROQ_API_KEY` (without it, receipts are read by the rules alone), and optionally
+`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D98).
 
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 

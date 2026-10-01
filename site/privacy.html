@@ -55,7 +55,7 @@
 <li><strong>Supabase</strong> hosts the database and sign-in, in the United States.</li>
 <li><strong>Resend</strong> sends the sign-in code email, if you sign in with email.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
-<li><strong>OpenRouter</strong> passes a scanned receipt to an AI model (currently Alibaba's Qwen) when the app can't read a value on its own. It gets only the covered photo and text, never the original, and we ask it to use only model hosts that don't store or train on what they're sent.</li>
+<li><strong>Groq</strong> runs an AI model (currently Alibaba's Qwen) on a scanned receipt when the app can't read a value on its own. It gets only the covered photo and text, never the original. Groq says it doesn't keep what it's sent, except briefly when investigating errors or abuse, and doesn't train on it.</li>
 </ul>
 <p>To check a receipt, our server also asks Frankfurter, a public exchange-rate service, for the rate on the receipt's date. That request holds only the two currencies and the date.</p>
 <p>Each processes data only to provide its service to RemitBridge.</p>

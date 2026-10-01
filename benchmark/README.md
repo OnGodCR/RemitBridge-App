@@ -16,20 +16,20 @@ The latest results are in [`results.md`](results.md).
 # The rules only. Free, and runs in CI.
 npm run benchmark -w @remitbridge/receipt -- --modes parser
 
-# All three modes. Costs about a tenth of a cent a receipt. The key goes in your shell,
-# never in a file in this repo.
-OPENROUTER_API_KEY=... npm run benchmark -w @remitbridge/receipt
+# All three modes, on Groq's free tier (D98). It shares the app's daily tokens, and waits
+# whenever the per-minute limit is hit. The key goes in your shell, never in a file here.
+GROQ_API_KEY=... npm run benchmark -w @remitbridge/receipt
 
 # Also send each receipt's redacted photo to the model, as the app does.
-OPENROUTER_API_KEY=... npm run benchmark -w @remitbridge/receipt -- --images
+GROQ_API_KEY=... npm run benchmark -w @remitbridge/receipt -- --images
 ```
 
 Or on GitHub, without using your computer: Actions → **Receipt benchmark** → Run workflow.
-It needs the `OPENROUTER_API_KEY` Actions secret for the model modes, and puts the table in
-the run's summary.
+It needs the `GROQ_API_KEY` Actions secret for the model modes, and puts the table in the
+run's summary. The synthetic photos aren't committed, so there the model reads text only.
 
 Other options: `--limit 20`, `--only real` or `--only synthetic`, `--out <file>`.
-`RECEIPT_MODEL` and `RECEIPT_MODEL_FALLBACKS` pick the model, as in the Edge Function.
+`RECEIPT_MODEL` picks the model, as in the Edge Function (the workflow's `model` input).
 
 ## Synthetic receipts (`synthetic/`)
 

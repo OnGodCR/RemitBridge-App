@@ -14,11 +14,10 @@
 // It also deletes a receipt on request ('forget'), and every receipt past its 30 days.
 //
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
-//   OPENROUTER_API_KEY          the model fallback, through OpenRouter; without it, the
-//                               rules alone (D92)
+//   GROQ_API_KEY                the model fallback, on Groq's free tier; without it, the
+//                               rules alone (D98)
 // Optional:
-//   RECEIPT_MODEL               default qwen/qwen3-vl-32b-instruct (D92)
-//   RECEIPT_MODEL_FALLBACKS     comma-separated OpenRouter models to try if it fails
+//   RECEIPT_MODEL               default qwen/qwen3.8-27b (D98)
 //   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
 //   RECEIPT_INTAKE_SECRET       lets the WhatsApp worker send channel 'whatsapp' (D94)
 //
@@ -36,7 +35,7 @@ import {
   matchQuote,
   missingDisclosures,
   ModelError,
-  openRouterClient,
+  groqClient,
   parseRequest,
   readReceipt,
   receiptCost,
@@ -113,12 +112,9 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const whatsapp = request.channel === 'whatsapp';
   const redaction: ScanResponse['redaction'] = whatsapp ? 'server' : leftovers.length ? 'device_rechecked' : 'device';
 
-  const key = Deno.env.get('OPENROUTER_API_KEY');
+  const key = Deno.env.get('GROQ_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
-  const fallbacks = (Deno.env.get('RECEIPT_MODEL_FALLBACKS') ?? '').split(',').map((m) => m.trim()).filter(Boolean);
-  const model = key
-    ? { client: capped(openRouterClient(key), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined, fallbacks }
-    : null;
+  const model = key ? { client: capped(groqClient(key), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined } : null;
 
   const result = await readReceipt({ page, image, today, model, midRate });
 
