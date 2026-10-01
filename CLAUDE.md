@@ -63,7 +63,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       business's legal documents, and RemitBridge isn't registered (D49), so this is
       Angad's call. Nothing on our side needs to change once Meta lifts it.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
-      Angad pays last, once everything free is set up (2026-10-01). EAS is ready: account
+      Angad's dad enrolls and holds it until Angad is 18 (D123); paid last, once everything
+      free is set up (2026-10-01). It must land by about Oct 10 for the CAC demo's scan. EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
       variables created for development. Left: `eas device:create`, Developer Mode,
       `eas build --profile development --platform ios`, all Angad's (Apple sign-in).
@@ -131,9 +132,9 @@ Angad does this once the app itself is finished (D117).
       key's SHA-1, after the first Android build; iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
-- [ ] **Google Play developer account (D32): sign-up in progress** (personal account,
-      angadkochar2000@gmail.com, 2026-10-01; Claude drafted the "About you" answers). Left:
-      Angad finishes it, including identity verification. New personal accounts must run a
+- [ ] **Google Play developer account (D32):** Angad's dad holds it until Angad is 18
+      (D123); Angad's own sign-up (2026-10-01) stopped at the 18+ check. Claude's "About you"
+      answers carry over. Left: his dad signs up, including identity verification. New personal accounts must run a
       closed test with at least 12 testers for 14 days before releasing to everyone.
 - [ ] **Disk space and memory.** 12 GB free on 2026-09-30; native builds and real store
       screenshots need 15–20 GB. With 8 GB of RAM, the simulator takes 1–2 minutes to boot.
