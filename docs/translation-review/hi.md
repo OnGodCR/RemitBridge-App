@@ -25,8 +25,7 @@ with your name and the date.
 
 | Key | English | Hindi draft | Your change (blank if fine) |
 |---|---|---|---|
-| common.hi | Hi, {name} | नमस्ते, {name} | |
-| common.hiThere | Hi there | नमस्ते | |
+| common.greeting | undefined, {name}! | undefined, {name}! | |
 | common.back | Back | वापस | |
 | common.close | Close | बंद करें | |
 | common.cancel | Cancel | रद्द करें | |

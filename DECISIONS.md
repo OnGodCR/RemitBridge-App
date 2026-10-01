@@ -1308,3 +1308,8 @@ config rather than a secret, but holds an API key, so it stays out of git: it's 
 `GOOGLE_SERVICES_JSON` for every environment, read by `mobile/app.config.ts`. Angad
 generated the service account key and uploaded it with `eas credentials` as the FCM V1 key
 (2026-10-01); it's a real secret, so it never passed through Claude.
+
+**D128. A warmer greeting** (Angad, 2026-10-01: "Hi there" felt off-putting). The home tab
+now greets by the phone's time of day, with the first name when we have one and an
+exclamation mark: "Good morning, Angad!", "Good afternoon!", "Good evening!" (morning 4 am to
+noon, afternoon to 5 pm). In all five languages (Spanish with its opening ¡).
