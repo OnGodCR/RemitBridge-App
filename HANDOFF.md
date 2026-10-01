@@ -47,7 +47,7 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   `app.json`, and a `p/[partner]` route that counts the visit and goes to `/`. The page's
   "Open the app" button now opens `remitbridge://p/<partner>`. Only the
   `apple-app-site-association` file is left, and it needs the Team ID.
-- EAS: not signed in yet. Disk: 12 GB free.
+- Disk: 12 GB free.
 - **The receipt model moved to Groq's free tier (D98):** `qwen/qwen3.8-27b`, `GROQ_API_KEY`
   (set by Angad in Supabase and GitHub Actions). No more OpenRouter, no fallback models.
   About 60 receipts a day free; past that the rules read alone. The privacy policy names Groq.
@@ -65,6 +65,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   flagged for checking, which is worth a look once the extractors exist.
 - `RECEIPT_INTAKE_SECRET` (Supabase and GitHub Actions) and `WHATSAPP_HASH_SECRET`
   (Supabase) set by Claude with `openssl rand`, never displayed.
+- EAS: Angad signed in (`ongodcr`); Claude ran `eas init` (project @ongodcr/remitbridge,
+  ID 4f77369f-d571-441a-831d-f29591585375) and created `EXPO_PUBLIC_SUPABASE_URL` and
+  `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` as plaintext variables for `development`. Next:
+  `eas device:create` and the build, which need Angad's Apple sign-in.
 - The app runs in Expo Go on the iPhone 18 Pro simulator (`npx expo start --lan`, then
   `exp://192.168.1.25:8081`); Compare shows Wise's live price.
 
