@@ -51,11 +51,11 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       speaker reads each one, agrees in writing, and is named with the date in
       `mobile/src/i18n/languages.ts`. Hindi first. The bot's Hindi (D68) needs the same
       read. Glossary definitions are still English in every language.
-- [ ] **CAC receipt scanner (D72): Angad's review of Phases 4–6, then the live setup.**
-      All six phases built on `claude/gallant-hopper-51zhhm` (Phases 1–3 merged 2026-09-30;
-      4–6 done the same day: benchmark D93, WhatsApp photos D94, disclosure check D95,
-      observatory D96). Two migrations to push: `20260930020000_whatsapp_receipts.sql` and
-      `20260930030000_receipt_observatory.sql`. Internal deadline 2026-10-23.
+- [ ] **CAC receipt scanner (D72): the live setup.** All six phases are on `main` (PR #1
+      2026-09-30; PR #2 2026-10-01: benchmark D93, WhatsApp photos D94, disclosure check D95,
+      observatory D96). Angad pushes the two new migrations,
+      `20260930020000_whatsapp_receipts.sql` and `20260930030000_receipt_observatory.sql`,
+      then runs the smoke test (52 checks). Internal deadline 2026-10-23.
 - [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
       `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
 - [ ] **`OPENROUTER_API_KEY`** in Supabase secrets, then deploy `scan-receipt` (D92). The
@@ -111,7 +111,7 @@ These are deferred on purpose, not forgotten. Update this list as things land.
       automated with permission (D91). See `docs/MANUAL_RESEARCH.md`.
 - [x] All seven migrations on `main` pushed by Angad (route requests, metrics, WhatsApp,
       receipts, the Wise provider row); smoke test 48/48, and the route board loads in the
-      app. Done 2026-09-30. The cloud branch's two newer ones wait on its merge.
+      app. Done 2026-09-30. Two newer ones, merged 2026-10-01, wait on the next push.
 - [x] Wise adapter on its Comparison API (D91): 20 live quotes passed the gate on the first
       local run; Scrape schedule on. Google brand verified and published: the sign-in page
       now says "RemitBridge App". Done 2026-09-30.
