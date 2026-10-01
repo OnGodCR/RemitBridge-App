@@ -49,6 +49,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   "Open the app" button now opens `remitbridge://p/<partner>`. Only the
   `apple-app-site-association` file is left, and it needs the Team ID.
 - Disk: 12 GB free.
+- **Order of work (D99):** every free setup first (Resend done; GitHub token and Meta
+  next), then the Apple Developer Program fee, the iPhone build and universal links, then
+  testing. CLAUDE.md's open items are now grouped that way.
 - **The receipt model moved to Groq's free tier (D98):** `qwen/qwen3.8-27b`, `GROQ_API_KEY`
   (set by Angad in Supabase and GitHub Actions). No more OpenRouter, no fallback models.
   About 60 receipts a day free; past that the rules read alone. The privacy policy names Groq.
@@ -153,9 +156,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
 2. **More prices** with Add a price (Account tab), for providers other than Wise.
-3. **Launch emails:** create an API key in Resend (sending access, remitbridgelabs.org),
-   set it with `supabase secrets set RESEND_API_KEY=...` in your own terminal, then
-   `supabase functions deploy notify-route-launch --use-api`.
+3. **Launch emails:** done 2026-10-01 (`notify-route-launch` deployed, `RESEND_API_KEY`
+   set). The first real send is when a requested route goes live.
 4. **WhatsApp** (D68), when ready: a Meta business account and app with the WhatsApp
    product, a phone number, and a system-user token. Set the five `WHATSAPP_*` secrets
    listed at the top of `supabase/functions/whatsapp/index.ts`, deploy with
@@ -202,7 +204,7 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | How to work on this repo: reply conventions, rules, voice, stack, secrets, git, open items |
-| `DECISIONS.md` | Decisions on top of the PRD (D1–D98; D71 unused) |
+| `DECISIONS.md` | Decisions on top of the PRD (D1–D99; D71 unused) |
 | `docs/PRD.md` | PRD v0.4, kept as written |
 | `docs/MANUAL_RESEARCH.md` | All eight Tier 1 providers, with the terms clause quoted |
 | `docs/outreach/permission-request.md` | The permission email and the send/reply log |
