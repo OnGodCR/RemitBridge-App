@@ -75,9 +75,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
       2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its
-      prices sit behind bot protection. **Instarem is automated** (D118): 20 of 20 live quotes
-      passed the gate locally; left, Angad pushes `20261001010000_instarem_provider.sql`
-      before the next Scrape run. The World Bank survey's US rows are in
+      prices sit behind bot protection. **Instarem is live** (D118): migration pushed by Angad,
+      smoke test 55/55 with 9 providers, and the first Scrape run published 20 of 20; it
+      tops Compare for $500 to India (2026-10-01). The World Bank survey's US rows are in
       `research/world-bank-rpw/` for research. The rest: Add a price, or their permission.
 
 ### Testing (once the features are set up)

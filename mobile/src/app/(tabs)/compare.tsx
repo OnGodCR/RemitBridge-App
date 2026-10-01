@@ -1,8 +1,9 @@
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  AppState,
   Keyboard,
   RefreshControl,
   ScrollView,
@@ -176,15 +177,20 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
   );
 }
 
+const REFETCH_AFTER_MS = 2 * 60 * 1000;
+
 /**
  * The prices for a route, amount and method. Fetched for the checked amount at or below
  * what was typed, so typing only refetches when it crosses into another checked amount.
- * Nothing is fetched for a route we don't cover.
+ * Nothing is fetched for a route we don't cover. Prices are checked every few hours, so
+ * coming back to the tab or the app refetches quietly when the last load is over
+ * REFETCH_AFTER_MS old; otherwise a screen left open would keep showing old prices.
  */
 function useQuotes(route: Route | undefined, checked: number, method: DeliveryMethod) {
   const [loaded, setLoaded] = useState<{ key: string; result: QuotesResult } | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const key = route ? `${route.id}|${checked}|${method}` : null;
+  const loadedAt = useRef(0);
 
   useEffect(() => {
     if (!route) return;
@@ -192,6 +198,7 @@ function useQuotes(route: Route | undefined, checked: number, method: DeliveryMe
     fetchQuotes(route.id, checked, method).then((r) => {
       if (!live) return;
       setLoaded({ key: `${route.id}|${checked}|${method}`, result: r });
+      loadedAt.current = Date.now();
       // Metrics (D31): the choice and how many prices came back, never the amount typed.
       track('comparison_run', {
         route: route.id,
@@ -209,8 +216,23 @@ function useQuotes(route: Route | undefined, checked: number, method: DeliveryMe
     if (!route || !key) return;
     setRefreshing(true);
     setLoaded({ key, result: await fetchQuotes(route.id, checked, method) });
+    loadedAt.current = Date.now();
     setRefreshing(false);
   };
+
+  const refetchIfOld = useCallback(() => {
+    if (!route || !loadedAt.current || Date.now() - loadedAt.current < REFETCH_AFTER_MS) return;
+    loadedAt.current = Date.now();
+    fetchQuotes(route.id, checked, method).then((r) =>
+      setLoaded({ key: `${route.id}|${checked}|${method}`, result: r }),
+    );
+  }, [route, checked, method]);
+
+  useFocusEffect(refetchIfOld);
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (s) => s === 'active' && refetchIfOld());
+    return () => sub.remove();
+  }, [refetchIfOld]);
 
   return { result: key && loaded?.key === key ? loaded.result : null, refresh, refreshing };
 }

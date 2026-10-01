@@ -190,9 +190,11 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 1. **Future migrations:** turn ProtonVPN off first (it resets connections to Supabase's
    database port), test with `supabase/tests/local_migrations.sh`, then `supabase db push`
    and the smoke test (commands in README).
-2. **More prices:** push `20261001010000_instarem_provider.sql` so the Instarem adapter
-   (D118) can save its quotes on the next Scrape run (the run before the push fails for
-   Instarem only). The World Bank survey's US rows are in `research/world-bank-rpw/`. Everyone else: Add a price
+2. **More prices:** Instarem is live (D118; Angad pushed the migration 2026-10-01, smoke
+   test 55/55, Scrape run 36828590283 published 20 of 20 for Wise and for Instarem). The
+   World Bank survey's US rows are in `research/world-bank-rpw/`. Compare now refetches
+   when its tab or the app comes back after two minutes, so a screen left open doesn't
+   keep old prices (it only refetched on a route, amount or method change before). Everyone else: Add a price
    (Account tab) or their permission; `docs/MANUAL_RESEARCH.md` quotes each clause.
 3. **Launch emails:** done 2026-10-01 (`notify-route-launch` deployed, `RESEND_API_KEY`
    set). The first real send is when a requested route goes live.
