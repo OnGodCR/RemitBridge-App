@@ -11,7 +11,10 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "org.remitbridgelabs.app",
       "supportsTablet": false,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "associatedDomains": [
+        "applinks:app.remitbridgelabs.org"
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +24,24 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "org.remitbridgelabs.app"
+      "package": "org.remitbridgelabs.app",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.remitbridgelabs.org",
+              "pathPrefix": "/p/"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "plugins": [
       "expo-router",
