@@ -86,6 +86,7 @@ function Navigator() {
         <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
         <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
         <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
+        <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
         <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
         <Stack.Screen name="observatory" options={{ ...pushed, title: titles.observatory }} />
         <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />

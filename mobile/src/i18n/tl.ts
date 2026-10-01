@@ -373,6 +373,19 @@ export const tl: Copy = {
 
   learn: {
     title: 'Matuto',
+    modulesTitle: 'Mga module',
+    terms: (n: number) => (n === 1 ? '1 termino' : `${n} termino`),
+    tryIt: (tool: string) => `Subukan: ${tool}`,
+    modules: {
+      basics: { title: 'Ang mga pangunahing kaalaman', line: 'Sino ang nagpapadala, sino ang tumatanggap, at sino ang nasa gitna' },
+      cost: { title: 'Ang tunay na gastos ng padala', line: 'Ang fee, ang rate, at ang markup na nakatago rito' },
+      arrival: { title: 'Paano dumarating ang pera', line: 'Bangko, cash pickup, o wallet sa phone' },
+      safety: { title: 'Manatiling ligtas', line: 'Mga scam, ID check, at kung bakit humihinto ang ilang padala' },
+      bigger: { title: 'Bakit mahalaga ang padala', line: 'Ang nagagawa ng padala para sa mga pamilya' },
+      banks: { title: 'Paano gumagalaw ang pera sa pagitan ng mga bangko', line: 'Ang mga network na dinadaanan ng padala' },
+      provider: { title: 'Sa loob ng isang provider', line: 'Paano tumatakbo ang isang kompanya ng padala' },
+      crypto: { title: 'Crypto at stablecoin', line: 'Mga salitang makikita mo kung magpapadala gamit ang crypto' },
+    },
     howItWorks: 'Paano ito gumagana',
     feeMarkup: 'Fee + nakatagong markup',
     feeMarkupBody: 'Ang fee, dagdag ang nakatago sa rate.',
