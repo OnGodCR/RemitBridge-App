@@ -314,6 +314,23 @@ describe('confirming', () => {
     expect(tables.receipt_comparisons[0]).toMatchObject({ matched_quote_id: null, gap_amount: null, tax_expected: 5 })
   })
 
+  it('names the cheapest way we had prices for, that day, and what it would have kept (D119)', async () => {
+    replies.push(goodAnswer())
+    const { body: scanned } = await scan()
+    tables.quotes = [
+      publishedQuote(),
+      // Another provider, same cash pickup paid in cash, a lower fee and a better rate.
+      publishedQuote({ id: 90, provider_id: 'ria', fee: '2.00', offered_rate: '17.5' }),
+      // Cheaper still, but a bank deposit: never compared with a cash pickup.
+      publishedQuote({ id: 91, provider_id: 'wise', delivery_method: 'bank_deposit', payment_method: 'bank_account', fee: '0', offered_rate: '17.7' }),
+    ]
+    const { body } = await confirmCall(scanned.id, {})
+    expect(body.best.reason).toBeNull()
+    expect(body.best.best).toMatchObject({ provider_id: 'ria', when: 'that_day', same_provider: false, paid_from: null, currency: 'USD' })
+    expect(body.best.best!.could_keep).toBeGreaterThan(0)
+    expect(body.best.best!.providers_compared).toEqual(['ria', 'western-union'])
+  })
+
   it('says when the provider isn’t one we track', async () => {
     replies.push(goodAnswer())
     const { body: scanned } = await scan()

@@ -743,6 +743,24 @@ export const es: Copy = {
     noRoute: 'Aún no revisamos precios en esta ruta, así que no hay un precio anunciado para comparar.',
     noQuote: 'No tenemos un precio de este proveedor revisado dentro de un día de este envío, así que no hay nada que comparar.',
     missingValues: 'Falta la fecha, el monto o el tipo de cambio del recibo, así que no se puede comparar.',
+    keptTitle: 'Lo que pudo haberse ahorrado',
+    keptLabel: (provider: string) => `Con ${provider}, pudo haberse ahorrado`,
+    keptNote: (received: string) => `Enviando el mismo monto, su familia habría recibido ${received}.`,
+    keptCosts: (provider: string, theirs: string, yours: string) =>
+      `Costo real con ${provider}: ${theirs}. El suyo: ${yours}. Los dos medidos con el mismo tipo de cambio medio del mercado.`,
+    keptBest: (provider: string) => `Usted ya tenía el mejor precio que encontramos: ${provider}.`,
+    keptAsGood: 'Su precio fue igual o mejor que todos los que teníamos para el mismo tipo de envío.',
+    keptThatDay: (time: string) => `Precios revisados ${time}, dentro de un día de su envío.`,
+    keptToday: (day: string, time: string) =>
+      `No tenemos precios del ${day}, así que estos son de hoy, revisados ${time}. Los tipos de cambio se mueven: tómelo como guía para la próxima vez.`,
+    keptEstimated: (amount: string) => `Calculado con el precio para ${amount}, el monto revisado más cercano.`,
+    keptBank: 'Eso es pagando desde una cuenta bancaria. Usted pagó con tarjeta, y pagar desde su cuenta bancaria suele costar menos.',
+    keptCompared: (names: string) => `Comparado con: ${names}. Todavía no tenemos precios de todos los proveedores.`,
+    keptNoPrices:
+      'Todavía no tenemos precios para el mismo tipo de envío en esta ruta (la misma forma de pagar y de recibir), así que no hay con qué comparar de forma justa.',
+    keptNoRoute: 'Todavía no revisamos precios en esta ruta, así que no hay con qué comparar.',
+    keptMissing: 'Falta el monto o el tipo de cambio del recibo, así que no se puede comparar.',
+    keptNoMid: 'Sin el tipo de cambio medio del mercado de ese día, los costos no se pueden medir igual, así que no hay comparación.',
     taxTitle: 'Impuesto federal a las remesas',
     taxRule:
       'Desde el 1 de enero de 2026, los envíos pagados en efectivo, con giro postal o con cheque de caja tienen un impuesto federal del 1%. Los pagados desde una cuenta bancaria o con tarjeta, no.',

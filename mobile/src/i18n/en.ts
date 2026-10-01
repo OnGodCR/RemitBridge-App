@@ -726,6 +726,24 @@ export const en = {
     noRoute: 'We don’t check prices on this route yet, so there’s no advertised price to compare with.',
     noQuote: 'We have no price from this provider checked within a day of this transfer, so there’s nothing to compare with.',
     missingValues: 'The receipt’s date, amount or rate is missing, so it can’t be compared.',
+    keptTitle: 'What you could have kept',
+    keptLabel: (provider: string) => `With ${provider}, you could have kept`,
+    keptNote: (received: string) => `Sending the same amount, your family would have received ${received}.`,
+    keptCosts: (provider: string, theirs: string, yours: string) =>
+      `True cost with ${provider}: ${theirs}. Yours: ${yours}. Both measured at the same mid-market rate.`,
+    keptBest: (provider: string) => `You already had the best price we found: ${provider}.`,
+    keptAsGood: 'Your price was as good as or better than every price we had for the same kind of transfer.',
+    keptThatDay: (time: string) => `Prices checked ${time}, within a day of your transfer.`,
+    keptToday: (day: string, time: string) =>
+      `We don’t have prices from ${day}, so these are today’s, checked ${time}. Rates move, so treat this as a guide to next time.`,
+    keptEstimated: (amount: string) => `Worked out from the price for ${amount}, the nearest amount we check.`,
+    keptBank: 'That’s paying from a bank account. You paid by card, and paying from your bank account usually costs less.',
+    keptCompared: (names: string) => `Compared with: ${names}. We don’t have prices from every provider yet.`,
+    keptNoPrices:
+      'We have no prices yet for the same kind of transfer on this route (the same way of paying and of receiving), so there’s nothing fair to compare with.',
+    keptNoRoute: 'We don’t check prices on this route yet, so there’s nothing to compare with.',
+    keptMissing: 'The receipt’s amount or rate is missing, so it can’t be compared.',
+    keptNoMid: 'Without that day’s mid-market rate, the costs can’t be measured the same way, so there’s no comparison.',
     taxTitle: 'Federal remittance tax',
     taxRule:
       'Since January 1, 2026, transfers paid in cash, by money order or by cashier’s check carry a 1% federal tax. Transfers paid from a bank account or by card don’t.',

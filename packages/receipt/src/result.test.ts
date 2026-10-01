@@ -1,6 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { computeTransferCost } from '../../formula/src/index.ts'
-import { advertisedGap, formulaInputs, matchQuote, receiptCost, taxCheck, valuesFrom, type QuoteCandidate } from './result.ts'
+import {
+  advertisedGap,
+  bestOption,
+  formulaInputs,
+  matchQuote,
+  receiptCost,
+  taxCheck,
+  valuesFrom,
+  type PriceCandidate,
+  type QuoteCandidate,
+} from './result.ts'
 import type { FieldValues } from './types.ts'
 
 /** The Western Union fixture: $500 cash, $4.99 fee, $5 tax, 17.2, 40 MXN pickup. */
@@ -106,5 +116,86 @@ describe('matching the advertised price', () => {
     expect(g).toEqual({ advertisedRate: 17.3, receiptRate: 17.2, gapAmount: 2.82, gapCurrency: 'USD' })
     expect(advertisedGap(WU, quote({ offered_rate: 17.2 }), 17.7)!.gapAmount).toBe(0)
     expect(advertisedGap(WU, quote({ offered_rate: 17.1 }), null)!.gapAmount).toBeLessThan(0)
+  })
+})
+
+describe('what you could have kept (D119)', () => {
+  /** $500 to India from a bank account into a bank account, on Sep 30. */
+  const BANK: Partial<FieldValues> = {
+    send_currency: 'USD',
+    receive_currency: 'INR',
+    amount_sent: 500,
+    fee: 3.99,
+    exchange_rate: 94.5,
+    transfer_date: '2026-09-30',
+    funding_method: 'bank_account',
+    delivery_method: 'bank_deposit',
+  }
+  const MID = 96
+  const price = (over: Partial<PriceCandidate>): PriceCandidate => ({
+    id: 1,
+    provider_id: 'instarem',
+    provider_name: 'Instarem',
+    route_id: 'us-in',
+    send_amount: 500,
+    delivery_method: 'bank_deposit',
+    payment_method: 'bank_account',
+    fee: 0,
+    offered_rate: 95.5,
+    mid_market_rate: MID,
+    pickup_charge: 0,
+    is_promotional: false,
+    captured_at: '2026-09-30T13:00:00Z',
+    ...over,
+  })
+  const wise = price({ id: 2, provider_id: 'wise', provider_name: 'Wise', fee: 9.17, offered_rate: 96 })
+
+  it('picks the lowest true cost and says what the difference is, with one formula', () => {
+    const r = bestOption(BANK, { thatDay: [price({}), wise], latest: [] }, MID, null)
+    expect(r.reason).toBeNull()
+    const b = r.best!
+    expect(b.provider_name).toBe('Instarem')
+    expect(b.when).toBe('that_day')
+    const yours = computeTransferCost({ sent: 503.99, fee: 3.99, transferTax: 0, quotedRate: 94.5, midRate: MID, pickupCharge: 0 })
+    const theirs = computeTransferCost({ sent: 500, fee: 0, transferTax: 0, quotedRate: 95.5, midRate: MID, pickupCharge: 0 })
+    expect(b.your_total_cost).toBeCloseTo(yours.totalCost, 2)
+    expect(b.total_cost).toBeCloseTo(theirs.totalCost, 2)
+    expect(b.could_keep).toBeCloseTo(yours.totalCost - theirs.totalCost, 2)
+    expect(b.received).toBeCloseTo(47750, 6)
+    expect(b.providers_compared).toEqual(['Instarem', 'Wise'])
+    expect(b.estimated).toBe(false)
+    expect(b.paid_from).toBeNull()
+  })
+
+  it("uses today's prices when there are none from that day, and says so", () => {
+    const old = price({ captured_at: '2026-09-20T12:00:00Z' })
+    const r = bestOption(BANK, { thatDay: [old], latest: [price({ captured_at: '2026-10-01T07:00:00Z' })] }, MID, null)
+    expect(r.best?.when).toBe('today')
+  })
+
+  it('never compares a different way of arriving, or a promotion', () => {
+    const cash: Partial<FieldValues> = { ...BANK, delivery_method: 'cash_pickup' }
+    expect(bestOption(cash, { thatDay: [price({})], latest: [price({})] }, MID, null)).toEqual({ best: null, reason: 'no_prices' })
+    expect(bestOption(BANK, { thatDay: [price({ is_promotional: true })], latest: [] }, MID, null).reason).toBe('no_prices')
+  })
+
+  it('compares a card payer with paying from a bank account, and says so; never a cash payer', () => {
+    const card = bestOption({ ...BANK, funding_method: 'debit_card' }, { thatDay: [price({})], latest: [] }, MID, null)
+    expect(card.best?.paid_from).toBe('bank_account')
+    const cash = bestOption({ ...BANK, funding_method: 'cash' }, { thatDay: [price({})], latest: [] }, MID, null)
+    expect(cash.reason).toBe('no_prices')
+  })
+
+  it('says when the receipt already had the best price, and when the amount was estimated', () => {
+    const r = bestOption({ ...BANK, fee: 0, exchange_rate: 95.5 }, { thatDay: [price({})], latest: [] }, MID, 'instarem')
+    expect(r.best?.same_provider).toBe(true)
+    expect(r.best?.could_keep).toBe(0)
+    const odd = bestOption({ ...BANK, amount_sent: 650 }, { thatDay: [price({})], latest: [] }, MID, null)
+    expect(odd.best?.estimated).toBe(true)
+  })
+
+  it('needs the amount, the rate and a mid-market rate', () => {
+    expect(bestOption({ ...BANK, exchange_rate: undefined }, { thatDay: [price({})], latest: [] }, MID, null).reason).toBe('missing_values')
+    expect(bestOption(BANK, { thatDay: [price({})], latest: [] }, null, null).reason).toBe('no_mid')
   })
 })

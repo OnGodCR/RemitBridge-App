@@ -745,6 +745,24 @@ export const tl: Copy = {
     noRoute: 'Hindi pa namin tinitingnan ang presyo sa route na ito, kaya walang ipinakitang presyo na maikukumpara.',
     noQuote: 'Wala kaming presyo mula sa provider na ito na na-check sa loob ng isang araw ng padalang ito, kaya walang maikukumpara.',
     missingValues: 'Kulang ang petsa, halaga o rate sa resibo, kaya hindi ito maikukumpara.',
+    keptTitle: 'Ang maaari sanang natipid mo',
+    keptLabel: (provider: string) => `Sa ${provider}, maaari sanang natipid mo`,
+    keptNote: (received: string) => `Kung pareho ang halagang ipinadala, matatanggap sana ng pamilya mo ang ${received}.`,
+    keptCosts: (provider: string, theirs: string, yours: string) =>
+      `Tunay na gastos sa ${provider}: ${theirs}. Sa iyo: ${yours}. Parehong sinukat sa iisang mid-market rate.`,
+    keptBest: (provider: string) => `Nasa iyo na ang pinakamagandang presyong nakita namin: ${provider}.`,
+    keptAsGood: 'Ang presyo mo ay kasing-ganda o mas maganda pa sa lahat ng presyong mayroon kami para sa parehong uri ng padala.',
+    keptThatDay: (time: string) => `Mga presyong sinuri ${time}, sa loob ng isang araw ng padala mo.`,
+    keptToday: (day: string, time: string) =>
+      `Wala kaming presyo mula ${day}, kaya ang mga ito ay sa araw na ito, sinuri ${time}. Gumagalaw ang mga rate, kaya gabay ito para sa susunod.`,
+    keptEstimated: (amount: string) => `Kinuwenta mula sa presyo para sa ${amount}, ang pinakamalapit na halagang sinusuri namin.`,
+    keptBank: 'Iyan ay kung magbabayad mula sa bank account. Card ang ginamit mo, at kadalasang mas mura ang magbayad mula sa bank account.',
+    keptCompared: (names: string) => `Ikinumpara sa: ${names}. Wala pa kaming presyo mula sa lahat ng provider.`,
+    keptNoPrices:
+      'Wala pa kaming presyo para sa parehong uri ng padala sa rutang ito (parehong paraan ng pagbayad at pagtanggap), kaya walang patas na maikukumpara.',
+    keptNoRoute: 'Hindi pa namin sinusuri ang mga presyo sa rutang ito, kaya walang maikukumpara.',
+    keptMissing: 'Kulang ang halaga o rate sa resibo, kaya hindi ito maikukumpara.',
+    keptNoMid: 'Kung walang mid-market rate sa araw na iyon, hindi masusukat nang pareho ang mga gastos, kaya walang paghahambing.',
     taxTitle: 'Federal na remittance tax',
     taxRule:
       'Mula Enero 1, 2026, may 1% federal tax ang mga padalang binayaran ng cash, money order o cashier’s check. Wala ito sa mga binayaran mula sa bank account o gamit ang card.',
