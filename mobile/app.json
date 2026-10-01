@@ -68,6 +68,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4f77369f-d571-441a-831d-f29591585375"
+      }
+    },
+    "owner": "ongodcr"
   }
 }
