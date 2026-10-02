@@ -130,12 +130,14 @@ Angad does this once the app itself is finished (D117).
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
 - [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
       (2026-10-01). Left:
-      - Angad pushes `20261002000000_security_hardening` (`supabase db push`); then Claude
-        switches on the sign-in hook and runs `rls_smoke.sh`.
-      - **Rotate the legacy JWT secret**, printed into a Claude session on 2026-10-01: move
-        the functions and GitHub Actions to an `sb_secret_` key, then Migrate, Rotate and
-        Revoke under Settings > JWT (Angad's clicks, with Claude).
-      - SSL enforcement on in the Supabase dashboard (Database > Settings), Angad's.
+      - [x] Migration pushed by Angad, sign-in hook on, smoke test 58/58 (2026-10-02).
+      - [x] SSL enforcement on (2026-10-02).
+      - **Retire the exposed legacy JWT secret (D137):** everything moved to the newer keys
+        and tested live (functions, GitHub secret replaced from Angad's terminal, rate
+        alerts, manual prices and a full Scrape run); the project already signs logins with
+        an ECC key, the legacy HS256 secret listed as "previously used". Left, Angad's
+        clicks (the browser step was refused for Claude): API Keys > Legacy > Disable
+        JWT-based API keys (type "disable"), then JWT Keys > the Legacy HS256 key > Revoke.
       - Two-factor on every account that can reach data (Supabase, GitHub, Expo, the
         RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta), Angad's.
 

@@ -1460,3 +1460,9 @@ First, everything was made to work with Supabase's newer keys as well:
 Then: a secret key into the GitHub secret from Angad's terminal; Migrate and Rotate under
 Settings > JWT Keys; once everything runs on the new keys, disable the legacy keys and
 revoke the old secret.
+- 2026-10-02: done so far. The GitHub secret now holds the project's `sb_secret_` key (set from
+  Angad's terminal, never displayed); rate alerts, manual prices and a full Scrape run (reads
+  and raw-archive uploads) passed on it; a throwaway function confirmed Edge Functions get the
+  newer keys, then was deleted. The project already signed logins with an ECC key, with the
+  legacy HS256 secret "previously used". Disabling the legacy keys and revoking the secret
+  are Angad's clicks: the browser step was refused for Claude.
