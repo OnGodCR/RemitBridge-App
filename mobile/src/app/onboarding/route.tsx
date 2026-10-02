@@ -1,11 +1,10 @@
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import { DisplayTitle, Eyebrow } from '@/components/brand';
 import { Flag } from '@/components/flag';
 import { Arrow } from '@/components/list-row';
-import { rise } from '@/components/motion';
+import { Rise } from '@/components/motion-views';
 import { Step } from '@/components/onboarding';
 import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
@@ -37,15 +36,15 @@ export default function PickRoute() {
 
   return (
     <Step step={3} of={4} actions={null}>
-      <Animated.View entering={rise(0)} style={styles.head}>
+      <Rise step={0} style={styles.head}>
         <Eyebrow>{o.eyebrow}</Eyebrow>
         <DisplayTitle lead={o.lead} accent={o.accent} />
         <AppText style={[styles.intro, { color: t.textSecondary }]}>
           {o.intro}
         </AppText>
-      </Animated.View>
+      </Rise>
 
-      <Animated.View entering={rise(1)} style={[styles.index, { borderTopColor: t.border }]}>
+      <Rise step={1} style={[styles.index, { borderTopColor: t.border }]}>
         {ROUTES.map((route) => {
           const code = route.id.split('-')[1];
           const country = countryIn(copy, code);
@@ -71,13 +70,13 @@ export default function PickRoute() {
             </Pressable>
           );
         })}
-      </Animated.View>
+      </Rise>
 
-      <Animated.View entering={rise(2)}>
+      <Rise step={2}>
         <AppText variant="small" style={{ color: t.textSecondary }}>
           {o.elsewhere}
         </AppText>
-      </Animated.View>
+      </Rise>
     </Step>
   );
 }

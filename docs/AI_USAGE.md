@@ -536,3 +536,12 @@ settings (Supabase's security advisor included), git history and dependencies, t
   `CLAUDE.md`, `HANDOFF.md`, `README.md`.
 - While reading the project's settings, Claude printed the legacy JWT secret into the
   session by mistake; it's recorded in D135 and set to be rotated.
+
+## 2026-10-02: gamified Learn (D136)
+
+**What Angad asked:** teach the terms in a more gamified way than dropdowns. **What Claude
+did:** wrote `mobile/src/lib/lesson.ts`, `mobile/src/app/lesson/[id].tsx` and their tests
+(`lesson.test.ts`, `lesson-screen.test.tsx`); XP and streak in `lib/learn-progress.ts`; the
+module screen and Learn tab changes; lesson strings in five languages (four drafts); added
+`expo-haptics`. Replaced every Reanimated `entering` animation with `Rise` in
+`components/motion-views.tsx` after finding they blocked taps.

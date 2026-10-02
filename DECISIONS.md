@@ -1425,3 +1425,21 @@ list, with what stops each threat, is `docs/SECURITY.md`. What changed:
   legacy JWT secret into the session. It isn't public, but it is treated as compromised:
   rotating it (move functions and workflows to the new `sb_secret_` key, then Migrate,
   Rotate and Revoke under Settings > JWT) is Angad's next step with Claude.
+
+**D136. Learn teaches by lessons, not fold-out definitions** (Angad, 2026-10-01: "make the
+terms be taught in a more gamified way rather than just being basic dropdowns").
+- A lesson (`app/lesson/[id].tsx`, logic in `lib/lesson.ts`) takes up to five new words:
+  each on a card, then "Which word means this?" (four choices); then a review round the
+  other way, "What does X mean?" (three definitions). A miss comes back once at the end.
+  10 XP right first time, 5 on the retry; a combo counter; a day streak; a finish screen
+  with XP, accuracy and the streak. Haptics on answers. Full screen with a close button.
+- Wrong answers shake and grey; they're never red (red is for real errors, PRD 14.5).
+- A word counts as learned when it's answered right. XP and the streak stay on the phone.
+- The module screen has "Start lesson" (or "Practice these words") and a word list that
+  opens each word in the glossary; Learn's Continue starts the next lesson directly, and the
+  streak and XP show under its progress bar.
+- **The dropped first tap, found:** a view with a Reanimated `entering` animation ignored
+  taps for a few seconds after it appeared (Continue seemed broken in a lesson). Every
+  `entering` in the app (onboarding, sign-in, Compare's cards, the Scan steps, lessons) is
+  now `Rise` or a spring on the view's own transform, and taps land at once (checked in the
+  simulator).

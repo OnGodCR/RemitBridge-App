@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
 import { useCallback, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -12,7 +13,7 @@ import { TERMS } from '@/data/glossary';
 import { MODULES, type Module } from '@/data/modules';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
-import { nextStep, useLearned } from '@/lib/learn-progress';
+import { nextStep, useLearnStats, useLearned } from '@/lib/learn-progress';
 import { openPage } from '@/lib/links';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise, GrowBar } from '@/components/motion-views';
@@ -34,8 +35,10 @@ export default function LearnScreen() {
   const total = MODULES.reduce((n, m) => n + m.terms.length, 0);
   const done = MODULES.reduce((n, m) => n + m.terms.filter((id) => learned.has(id)).length, 0);
   const next = nextStep(learned);
-  const open = (m: Module, termId?: string) =>
-    router.push({ pathname: '/module/[id]', params: termId ? { id: m.id, open: termId } : { id: m.id } });
+  const stats = useLearnStats();
+  const open = (m: Module) => router.push({ pathname: '/module/[id]', params: { id: m.id } });
+  // Continue starts the next lesson itself (D136), the way Duolingo's big button does.
+  const lesson = (m: Module) => router.push({ pathname: '/lesson/[id]', params: { id: m.id } });
 
   // Open on the module you're up to, like Duolingo; once, so it doesn't jump while you scroll.
   const path = useRef<ScrollView>(null);
@@ -71,12 +74,18 @@ export default function LearnScreen() {
               <View style={[styles.bar, { backgroundColor: t.heroMuted, opacity: 0.25 }]} />
               <GrowBar fraction={done / total} delay={150} style={[styles.bar, styles.fillBar, { backgroundColor: t.heroText }]} />
             </View>
+            {stats.xp ? (
+              <View style={styles.stats} accessible accessibilityLabel={l.lesson.streakLine(stats.streak, stats.xp)}>
+                <SymbolView name={stats.streak ? 'flame.fill' : 'bolt.fill'} size={16} tintColor={t.heroText} fallback={null} />
+                <AppText style={[styles.statsText, { color: t.heroText }]}>{l.lesson.streakLine(stats.streak, stats.xp)}</AppText>
+              </View>
+            ) : null}
             {next ? (
               <Button
                 label={`${done ? l.continue : l.start}: ${l.modules[next.module.id].title}`}
                 variant="inverse"
                 trailingIcon="arrow.right"
-                onPress={() => open(next.module, next.termId)}
+                onPress={() => lesson(next.module)}
               />
             ) : null}
           </>
@@ -119,6 +128,8 @@ const styles = StyleSheet.create({
   body: { padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six + Spacing.five },
   progress: { gap: Spacing.two },
   progressText: { fontFamily: Fonts.semibold, fontSize: 16, lineHeight: 21 },
+  stats: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
+  statsText: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 20 },
   bar: { height: 8, borderRadius: 4 },
   fillBar: { position: 'absolute', left: 0, bottom: 0, minWidth: 8 },
 });

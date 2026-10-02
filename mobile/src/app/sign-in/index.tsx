@@ -4,10 +4,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import { DisplayTitle, Eyebrow } from '@/components/brand';
-import { rise } from '@/components/motion';
+import { Rise } from '@/components/motion-views';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
@@ -72,7 +71,7 @@ export default function SignInOptions() {
       step={onboarding ? 4 : undefined}
       of={onboarding ? 4 : undefined}
       actions={
-        <Animated.View entering={rise(4)} style={styles.actions}>
+        <Rise step={4} style={styles.actions}>
           {appleAvailable ? (
             <AppleAuthentication.AppleAuthenticationButton
               buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
@@ -102,32 +101,32 @@ export default function SignInOptions() {
             onPress={() => router.push({ pathname: '/sign-in/email', params: { from } })}
           />
           {onboarding ? <Button label={si.skip} variant="plain" onPress={skip} /> : null}
-        </Animated.View>
+        </Rise>
       }>
-      <Animated.View entering={rise(0)} style={styles.head}>
+      <Rise step={0} style={styles.head}>
         <Eyebrow>{onboarding ? si.eyebrowOnboarding : si.eyebrowAccount}</Eyebrow>
         <DisplayTitle
           lead={onboarding ? si.leadOnboarding : si.leadAccount}
           accent={onboarding ? si.accentOnboarding : si.accentAccount}
         />
-      </Animated.View>
+      </Rise>
 
       {/* A divided list, the website's way: hairline rows, bold label, one plain line. */}
-      <Animated.View entering={rise(1)} style={[styles.list, { borderTopColor: t.border }]}>
+      <Rise step={1} style={[styles.list, { borderTopColor: t.border }]}>
         {si.benefits.map((b) => (
           <View key={b.title} style={[styles.row, { borderBottomColor: t.border }]}>
             <AppText style={[styles.rowTitle, { color: t.text }]}>{b.title}</AppText>
             <AppText style={{ color: t.textSecondary }}>{b.body}</AppText>
           </View>
         ))}
-      </Animated.View>
+      </Rise>
 
       {/* The website's callout: a saturated green left edge, on the plain ground. */}
-      <Animated.View entering={rise(2)} style={[styles.callout, { borderLeftColor: t.primary }]}>
+      <Rise step={2} style={[styles.callout, { borderLeftColor: t.primary }]}>
         <AppText style={[styles.calloutText, { color: t.text }]}>
           {si.promise}
         </AppText>
-      </Animated.View>
+      </Rise>
 
       {error ? (
         <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">

@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, type ReactNode } from 'react';
-import { type StyleProp, type ViewStyle } from 'react-native';
+import { type StyleProp, type ViewProps, type ViewStyle } from 'react-native';
 import Animated, {
   LinearTransition,
   ReduceMotion,
@@ -12,7 +12,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { EASE_OUT, GENTLE, rise } from '@/components/motion';
+import { EASE_OUT, GENTLE, RISE_DELAYS, RISE_DISTANCE, RISE_DURATION, RISE_EASING } from '@/components/motion';
 import { takeSwipeDirection } from '@/lib/current-tab';
 
 /**
@@ -81,14 +81,36 @@ export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; c
   return <Animated.View style={[style, animated]}>{children}</Animated.View>;
 }
 
+/**
+ * The website's rise (components/motion.ts): fades in while moving up 12pt, staggered by
+ * `step`. Drawn on the view's own opacity and transform when it mounts, not as a Reanimated
+ * `entering` animation: a view with one of those didn't take taps for a few seconds after it
+ * appeared, which was the "dropped first tap" (D136).
+ */
+export function Rise({ step = 0, style, children, ...rest }: ViewProps & { step?: number; children?: ReactNode }) {
+  const reduced = useReducedMotion();
+  const p = useSharedValue(reduced ? 1 : 0);
+  useEffect(() => {
+    if (reduced) return;
+    const delay = RISE_DELAYS[Math.min(step, RISE_DELAYS.length - 1)];
+    p.set(withDelay(delay, withTiming(1, { duration: RISE_DURATION, easing: RISE_EASING })));
+  }, [reduced, p, step]);
+  const animated = useAnimatedStyle(() => ({
+    opacity: p.get(),
+    transform: [{ translateY: (1 - p.get()) * RISE_DISTANCE }],
+  }));
+  return (
+    <Animated.View {...rest} style={[style, animated]}>
+      {children}
+    </Animated.View>
+  );
+}
+
 /** One item in a list that arrives in turn: the site's rise, staggered by its place. */
 export function RiseIn({ index, style, children }: { index: number; style?: StyleProp<ViewStyle>; children: ReactNode }) {
   return (
-    <Animated.View
-      entering={rise(index)}
-      layout={LinearTransition.springify().damping(22).stiffness(190).reduceMotion(ReduceMotion.System)}
-      style={style}>
-      {children}
+    <Animated.View layout={LinearTransition.springify().damping(22).stiffness(190).reduceMotion(ReduceMotion.System)} style={style}>
+      <Rise step={index}>{children}</Rise>
     </Animated.View>
   );
 }

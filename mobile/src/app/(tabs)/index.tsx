@@ -3,7 +3,6 @@ import { SymbolView } from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import {
   detectPii,
@@ -33,8 +32,7 @@ import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
-import { FocusRise } from '@/components/motion-views';
-import { rise } from '@/components/motion';
+import { FocusRise, Rise } from '@/components/motion-views';
 
 /**
  * Scan a receipt (DECISIONS.md D72-D75), the app's first tab since D101. The photo is read and redacted on the phone; the
@@ -208,7 +206,9 @@ export default function ScanScreen() {
         <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
       {/* Each step rises in as it replaces the last (D132), instead of swapping in a frame. The
           opening one doesn't: the tab's own entrance already brings it in. */}
-      <Animated.View key={step.kind} entering={step.kind === 'start' ? undefined : rise(0)} style={styles.stepBody}>
+      {/* key: each step mounts fresh, so it rises in (Rise draws on its transform; an
+          `entering` animation kept the step's buttons from taking taps at first, D136). */}
+      <StepBody key={step.kind} rise={step.kind !== 'start'}>
       {step.kind === 'start' ? (
         <>
           {/* The greeting sits on the page, dark on light with a green edge, where it can't be
@@ -327,7 +327,7 @@ export default function ScanScreen() {
       ) : null}
 
       {step.kind === 'start' || step.kind === 'result' ? <DoesNotTellYou items={s.limits} /> : null}
-      </Animated.View>
+      </StepBody>
         </FocusRise>
       </ScrollView>
       <StatusBarShield />
@@ -391,6 +391,11 @@ function RedactedPhoto({
         : null}
     </View>
   );
+}
+
+/** A step's content: the opening one appears with the tab; the ones after rise in. */
+function StepBody({ rise, children }: { rise: boolean; children: React.ReactNode }) {
+  return rise ? <Rise style={styles.stepBody}>{children}</Rise> : <View style={styles.stepBody}>{children}</View>;
 }
 
 const styles = StyleSheet.create({

@@ -96,6 +96,8 @@ function Navigator() {
         <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
         <Stack.Screen name="dev/receipt-preview" options={{ ...pushed, title: devPreview.title }} />
         <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
+        {/* A lesson (D136) takes the whole screen, like Duolingo's, and closes with its own button. */}
+        <Stack.Screen name="lesson/[id]" options={{ presentation: 'fullScreenModal', headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
         <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />
         <Stack.Screen name="saved" options={{ ...pushed, title: titles.saved }} />
