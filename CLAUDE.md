@@ -63,8 +63,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       business's legal documents, and RemitBridge isn't registered (D49), so this is
       Angad's call. Nothing on our side needs to change once Meta lifts it.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
-      Angad's dad enrolls and holds it until Angad is 18 (D123); paid last, once everything
-      free is set up (2026-10-01). It must land by about Oct 10 for the CAC demo's scan. EAS is ready: account
+      Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
+      enrolled and paid 2026-10-01; Apple can take up to 48 hours to process it. It must land
+      by about Oct 10 for the CAC demo's scan. EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
       variables created for development. Left: `eas device:create`, Developer Mode,
       `eas build --profile development --platform ios`, all Angad's (Apple sign-in).

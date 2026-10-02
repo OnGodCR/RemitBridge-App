@@ -1384,3 +1384,11 @@ the read by AI thing"). The line under each value said "Read from the text" or "
 now it shows only what the person can act on: "You entered" for a changed value, "Not found"
 for a missing one, and "Please check" as before. Which reader found each value is still
 stored (`receipt_fields.extraction_path`) and measured by the benchmark.
+
+**D134. The Apple developer account is an individual one, in Angad's dad's name** (Angad,
+2026-10-01, with his dad's permission). Individual / Sole Proprietor, so the App Store shows
+his dad's legal name as the seller; an organization account would show "RemitBridge" but needs
+a registered entity and a D-U-N-S number, which RemitBridge doesn't have (D49). Enrolled on
+the web the same day: details confirmed, the Program License Agreement accepted and the $99
+paid by Angad on his dad's account. Apple says a purchase can take up to 48 hours to process.
+The app moves to Angad's own account when he's 18 (D123).
