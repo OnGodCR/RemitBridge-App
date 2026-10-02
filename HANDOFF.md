@@ -80,8 +80,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   SAVE and UNLINK in the bot, Chat on WhatsApp in Account (development builds until
   `whatsapp_live`). Needs `supabase db push` of `20261002010000_whatsapp_link`.
 - **2026-10-02: off the legacy keys (D137).** Everything runs on the newer keys; SSL
-  enforced; the sign-in hook on; smoke test 58/58. Angad's two clicks left: disable the
-  legacy keys, revoke the legacy HS256 secret.
+  enforced; the sign-in hook on; smoke test 58/58. Legacy keys disabled and the HS256
+  secret revoked by Angad the same night; the old key now gets 401.
 - **2026-10-02, early: gamified Learn (D136).** Lessons with cards, quizzes, XP, combo,
   streak and a finish screen replace the fold-out definitions; the dropped-first-tap cause
   (Reanimated `entering` animations) found and removed app-wide.

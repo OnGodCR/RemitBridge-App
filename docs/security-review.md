@@ -62,7 +62,7 @@ tell Claude, who switches on the sign-in hook and runs the live security test.
 ## 4. Things only you can do
 
 - [ ] **Push the database update:** `supabase db push`, then tell Claude.
-- [ ] **Replace the old JWT secret, with Claude.** While checking the project's settings,
+- [x] **Replace the old JWT secret, with Claude.** Done 2026-10-02: revoked, and the old key is refused. While checking the project's settings,
       Claude accidentally printed this secret into the chat. It isn't public, but anyone who
       had it could make a key with full database access, so it should be replaced. Steps:
       Claude first moves the functions and GitHub jobs to Supabase's newer `sb_secret_` key;
