@@ -4,7 +4,7 @@
  * runs the pipeline and calls these.
  *
  * Three modes, over the same receipts:
- *   parser    the rules alone (Angad's extractors), no model call
+ *   parser    the rules alone (the extractors in extract/), no model call
  *   model     the model reads every field
  *   combined  what the app does: the rules first, the model for what they missed
  */

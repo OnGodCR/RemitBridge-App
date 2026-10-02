@@ -66,7 +66,8 @@ the Philippines and Vietnam, and community organizations in the Seattle area tha
 - Keeping a person's details private while still reading their receipt: redaction runs on
   the phone first, the server checks again, and nothing personal is stored.
 - Making the rule-based parser read receipts printed by different companies in different
-  layouts. *(Your extractors.)*
+  layouts, and through OCR's mistakes. *(Claude wrote the extractors, D130; only use this
+  if you can speak to it, e.g. the choices you reviewed.)*
 - Measuring accuracy honestly: a benchmark of 60 synthetic receipts plus real ones, scored
   field by field, reporting how much the rules read without the AI model.
 - Never showing a number we can't check: every price goes through a publish gate first.
@@ -81,10 +82,10 @@ RemitBridge was built with heavy help from Claude, an AI coding assistant. Be sp
 honest here. `docs/AI_USAGE.md` lists, file by file, what Claude wrote for the receipt
 scanner. Short version for the form:
 
-- Angad defined the product, made the decisions recorded in DECISIONS.md, and wrote the
-  receipt parser's field-extraction rules (`packages/receipt/src/extract/fields.ts`).
-- Claude wrote most of the other code under Angad's direction and review, including the
-  app screens, the database, the redaction, the benchmark and the WhatsApp bot.
+- Angad defined the product and made the decisions recorded in DECISIONS.md.
+- Claude wrote the code under Angad's direction and review, including the app screens, the
+  database, the redaction, the receipt parser's field-extraction rules (D130), the
+  benchmark and the WhatsApp bot.
 - The app itself uses an AI model (Qwen3.8) to read receipt values the rules miss. It only
   ever sees a redacted receipt.
 

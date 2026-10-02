@@ -1333,3 +1333,21 @@ Benchmarking" Google Cloud project, beside the web client Supabase already trust
   locally and on EAS beside the web ID; Supabase's Google client IDs are now web then iOS,
   with the nonce check skipped (iOS tokens need it). The browser flow still uses the web
   client, checked. Seen for real in the iPhone build.
+
+**D130. Claude writes the receipt extractors** (Angad, 2026-10-01: "go ahead and do the
+extractamountsent and allat stuff"). Supersedes D86's split and D72's "Angad writes the
+parser's field-extraction heuristics himself": all 13 functions in
+`packages/receipt/src/extract/fields.ts` are Claude's, with shared reading helpers in
+`extract/read.ts` (labels at the start of a line, longest label wins; amounts with their
+currency; rates either way round; dates month first). **For the CAC's AI-use disclosure,
+the rule-based parser is now AI-written**; `docs/AI_USAGE.md` says so, and the write-up
+(`docs/cac/submission.md`) must not claim it as Angad's code.
+- Results: the four fixtures 47 of 47. The 60 synthetic receipts read back with OCR, which
+  weren't used to write the rules: 97.8% accuracy and 99.0% precision on the first run
+  (model mode was 82.3% on Groq, D98). After handling OCR's usual slips (a currency sign
+  read as a stray letter or as a "3", a name split in two, "=" stuck to a number), all but
+  two values right, and the one wrong number is flagged for the person to check.
+- Anything read through a smudge or a guess gets a confidence below 0.8, so the model and
+  the person check it (D79); an amount received far from amount sent × rate is flagged.
+- A cash pickup is inferred, at 0.5, from a pickup charge when the receipt doesn't print the
+  delivery method.

@@ -74,8 +74,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **"What you could have kept" on the receipt result (D119):** built and `scan-receipt`
       deployed 2026-10-01, all tests pass. Left: seen for real once the iPhone build can scan. It
       grows more useful as prices pile up.
-- [ ] **Receipt parser extractors:** Angad writes the 13 `TODO(angad)` functions in
-      `packages/receipt/src/extract/fields.ts` (D86). Until then, the model reads every value.
+- [x] **Receipt parser extractors (D130):** Claude wrote all 13 at Angad's request; 47 of 47
+      on the fixtures, 97.8% on 60 OCR'd synthetic receipts before the OCR fixes. The model
+      now reads only what the rules miss or doubt. Done 2026-10-01. The CAC write-up must
+      say the parser is AI-written (`docs/AI_USAGE.md`).
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
       2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its

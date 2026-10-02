@@ -73,6 +73,11 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-01, evening:** the 13 receipt extractors written by Claude at Angad's request
+  (D130): 47 of 47 on the fixtures, 97.8% accuracy and 99.0% precision on 60 OCR'd synthetic
+  receipts on the first run. The scan now calls the model only for what the rules miss or
+  doubt. `scan-receipt` must be redeployed to pick them up. El Centro de la Raza's site was
+  down (connection reset from this Mac and from outside), so its form waits.
 - **2026-10-01, afternoon (accounts on hold: Angad's dad will hold Apple and Google until
   Angad is 18):** store pack in `docs/store/listing.md` and build config tidied (D123);
   scanner screens previewable in Expo Go via Account > Preview the receipt screens (D124);
@@ -112,7 +117,7 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   is on (Angad, 2026-10-01).
 - **Benchmark on Groq** (run 36800320699, 20 synthetic receipts, redacted text only, now
   `benchmark/results.md`): model mode 82.3% accuracy, 93.0% precision; combined 68.1%
-  accuracy, 93.9% precision. Parser mode is 0% until Angad's extractors land. The gap
+  accuracy, 93.9% precision. Parser mode was 0% then; the extractors landed later that day (D130). The gap
   between accuracy and precision is the free tier: the run hit 112 rate-limit waits, and
   6 receipts in combined mode (3 in model mode) gave up after five. What it reads, it
   reads right; how much it can read at once is the limit. Only 1 of 14 wrong values was

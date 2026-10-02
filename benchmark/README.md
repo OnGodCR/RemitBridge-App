@@ -65,4 +65,6 @@ Photos of real receipts stay out of git (`.gitignore`). The exception is a redac
 - Synthetic receipts use the Regulation E wording and some common variants. Real providers
   word things their own way, so real receipts will score lower until the templates learn them.
 - tesseract.js is not the phone's OCR (ML Kit), so OCR mistakes differ.
-- The parser scores 0% until the `TODO(angad)` extractors are written. That's expected.
+- The rules were written against the four fixtures, not these receipts, so the parser's score here
+  is a fair test of them (D130). The templates' labels are still Regulation E's, which these
+  receipts also use; real receipts will be harder.
