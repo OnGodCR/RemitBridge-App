@@ -91,6 +91,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 ### Testing (once the features are set up)
 
 - [ ] **Scan a real receipt** on the iPhone development build.
+- [ ] **A blurry receipt on a real phone (D131):** the blur limits were calibrated on
+      tesseract, not ML Kit; check that a shaky photo is turned back and a sharp one isn't.
 - [ ] **Apple and Google sign-in** on a real iPhone (the simulator hides Apple).
 - [ ] **Dropped first tap:** in the simulator, the first tap after a screen change sometimes
       seemed dropped; on 2026-09-30 at least some had landed and the screenshot lagged.

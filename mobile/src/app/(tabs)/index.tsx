@@ -3,6 +3,7 @@ import { SymbolView } from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import {
   detectPii,
@@ -33,6 +34,7 @@ import { firstName } from '@/lib/name';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise } from '@/components/motion-views';
+import { rise } from '@/components/motion';
 
 /**
  * Scan a receipt (DECISIONS.md D72-D75), the app's first tab since D101. The photo is read and redacted on the phone; the
@@ -47,7 +49,17 @@ import { FocusRise } from '@/components/motion-views';
 type Step =
   | { kind: 'start'; message?: string }
   | { kind: 'reading' }
-  | { kind: 'preview'; photo: PreparedPhoto; page: OcrPage; hidden: Redaction[]; redacted: string; sending: boolean; message?: string }
+  | {
+      kind: 'preview';
+      photo: PreparedPhoto;
+      page: OcrPage;
+      hidden: Redaction[];
+      redacted: string;
+      sending: boolean;
+      /** Readable, but soft enough that some numbers may come out wrong (D131). */
+      blurry: boolean;
+      message?: string;
+    }
   | {
       kind: 'confirm';
       photo: PreparedPhoto;
@@ -99,11 +111,21 @@ export default function ScanScreen() {
       const photo = await preparePhoto(asset.uri, asset.width, asset.height);
       const ocr = await recognize(photo);
       if (!ocr.ok) {
-        setStep({ kind: 'start', message: ocr.reason === 'no_text' ? s.noText : ocr.reason === 'misaligned' ? s.misaligned : s.needsBuild });
+        const messages = { no_text: s.noText, misaligned: s.misaligned, blurry: s.tooBlurry, unavailable: s.needsBuild };
+        if (ocr.reason === 'blurry') track('receipt_blurry', {});
+        setStep({ kind: 'start', message: messages[ocr.reason] });
         return;
       }
       const hidden = detectPii(ocr.page);
-      setStep({ kind: 'preview', photo, page: ocr.page, hidden, redacted: renderRedacted(photo, redactionBoxes(ocr.page, hidden)), sending: false });
+      setStep({
+        kind: 'preview',
+        photo,
+        page: ocr.page,
+        hidden,
+        redacted: renderRedacted(photo, redactionBoxes(ocr.page, hidden)),
+        sending: false,
+        blurry: ocr.sharpness === 'somewhat_blurry',
+      });
     } catch {
       setStep({ kind: 'start', message: s.failed });
     }
@@ -127,6 +149,16 @@ export default function ScanScreen() {
     });
     if (!sent.ok) {
       setStep({ ...step, sending: false, message: sent.reason === 'not_connected' ? s.notConnected : s.sendFailed });
+      return;
+    }
+    // Nothing that matters could be read, by the rules or the model: almost always a blurry
+    // or cut-off photo (D131). Say so and ask for another, rather than a page of blanks; the
+    // receipt the server just stored is deleted.
+    const f = sent.result.fields;
+    if (!f.amount_sent && !f.total_paid && !f.amount_received) {
+      void forgetReceipt(sent.result.id);
+      track('receipt_unreadable', { model_asked: sent.result.model.asked.length });
+      setStep({ kind: 'start', message: s.unreadable });
       return;
     }
     // Counts only (D31): how much was read and whether it added up, never a value.
@@ -170,6 +202,9 @@ export default function ScanScreen() {
           {step.kind === 'start' ? <AppText style={[styles.heroSub, { color: t.heroText }]}>{s.heroSub}</AppText> : null}
         </HeroHeader>
         <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
+      {/* Each step rises in as it replaces the last (D132), instead of swapping in a frame. The
+          opening one doesn't: the tab's own entrance already brings it in. */}
+      <Animated.View key={step.kind} entering={step.kind === 'start' ? undefined : rise(0)} style={styles.stepBody}>
       {step.kind === 'start' ? (
         <>
           {/* The greeting sits on the page, dark on light with a green edge, where it can't be
@@ -231,6 +266,11 @@ export default function ScanScreen() {
         <>
           <AppText variant="heading">{s.previewTitle}</AppText>
           <AppText muted>{s.previewHelp}</AppText>
+          {step.blurry ? (
+            <View accessibilityRole="alert" style={[styles.blurNote, { borderLeftColor: t.primary, backgroundColor: t.card }]}>
+              <AppText style={{ color: t.text }}>{s.bitBlurry}</AppText>
+            </View>
+          ) : null}
           <RedactedPhoto photo={step.photo} page={step.page} hidden={step.hidden} redacted={step.redacted} onTap={tap} strings={s} />
           <AppText variant="small" muted>
             {s.covered(redactionBoxes(step.page, step.hidden).length)}
@@ -283,6 +323,7 @@ export default function ScanScreen() {
       ) : null}
 
       {step.kind === 'start' || step.kind === 'result' ? <DoesNotTellYou items={s.limits} /> : null}
+      </Animated.View>
         </FocusRise>
       </ScrollView>
       <StatusBarShield />
@@ -350,11 +391,13 @@ function RedactedPhoto({
 
 const styles = StyleSheet.create({
   greeting: { borderLeftWidth: 4, paddingLeft: Spacing.three, paddingVertical: Spacing.one },
+  blurNote: { borderLeftWidth: 4, borderRadius: Radius.sm, padding: Spacing.three },
   greetingText: { fontFamily: Fonts.extrabold, fontSize: 28, lineHeight: 34, letterSpacing: -0.4 },
   heroSub: { fontSize: 17, lineHeight: 24 },
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.four, paddingBottom: Spacing.six },
+  stepBody: { gap: Spacing.four },
   capture: { alignItems: 'center', gap: Spacing.four, paddingTop: Spacing.two },
   steps: { flexDirection: 'row', justifyContent: 'space-between', gap: Spacing.two },
   step: { flex: 1, alignItems: 'center', gap: Spacing.two },

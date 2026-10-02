@@ -12,10 +12,11 @@ import {
   type TextStyle,
   type ViewStyle,
 } from 'react-native';
-import Animated, { Easing, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { DevanagariFonts, Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useBoldText } from '@/components/accessibility';
+import { GENTLE, SNAPPY } from '@/components/motion';
 import { useIconSize } from '@/hooks/use-icon-size';
 import { useTextLanguage } from '@/i18n';
 import { useTheme } from '@/hooks/use-theme';
@@ -175,7 +176,7 @@ function SegmentThumb({ x, width, color }: { x: number; width: number; color: st
   const reduced = useReducedMotion();
   const offset = useSharedValue(x);
   useEffect(() => {
-    offset.set(reduced ? x : withTiming(x, { duration: 240, easing: Easing.out(Easing.cubic) }));
+    offset.set(reduced ? x : withSpring(x, GENTLE));
   }, [x, reduced, offset]);
   const animated = useAnimatedStyle(() => ({ transform: [{ translateX: offset.get() }] }));
   return <Animated.View pointerEvents="none" style={[styles.segmentThumb, styles.segmentSelected, { width, backgroundColor: color }, animated]} />;
@@ -231,38 +232,45 @@ export function Button({
           : variant === 'inverse-plain'
             ? t.heroText
             : t.text;
+  // The face springs down onto its lip and back (D132): a transform, so nothing around it
+  // moves, where the old instant border swap jumped.
+  const reduced = useReducedMotion();
+  const sink = useSharedValue(0);
+  const press = (down: boolean) => {
+    if (!rim || disabled || loading) return;
+    sink.set(reduced ? Number(down) : withSpring(Number(down), SNAPPY));
+  };
+  const face = useAnimatedStyle(() => ({ transform: [{ translateY: sink.get() * LIP }] }));
   return (
     <Pressable
       onPress={onPress}
+      onPressIn={() => press(true)}
+      onPressOut={() => press(false)}
       disabled={disabled || loading}
       accessibilityRole="button"
       accessibilityState={{ disabled: disabled || loading, busy: loading }}
-      style={({ pressed }) => [
-        styles.button,
-        {
-          backgroundColor: bg,
-          borderColor: variant === 'secondary' ? t.border : 'transparent',
-          opacity: disabled ? 0.45 : !rim && pressed ? 0.6 : 1,
-        },
-        rim && {
-          borderBottomColor: rim,
-          borderBottomWidth: pressed && !disabled ? 1 : LIP + 1,
-          marginTop: pressed && !disabled ? LIP : 0,
-        },
-      ]}>
-      {loading ? (
-        <ActivityIndicator color={fg} />
-      ) : (
-        <View style={styles.buttonInner}>
-          {icon}
-          <AppText variant="label" style={[styles.buttonLabel, { color: fg }]}>
-            {label}
-          </AppText>
-          {trailingIcon ? (
-            <SymbolView pointerEvents="none" name={trailingIcon} size={iconSize} weight="bold" tintColor={fg} fallback={null} />
-          ) : null}
-        </View>
-      )}
+      style={({ pressed }) => ({ opacity: disabled ? 0.45 : !rim && pressed ? 0.6 : 1 })}>
+      {rim ? <View pointerEvents="none" style={[styles.buttonLip, { backgroundColor: rim }]} /> : null}
+      <Animated.View
+        style={[
+          styles.button,
+          { backgroundColor: bg, borderColor: variant === 'secondary' ? t.border : 'transparent', marginBottom: rim ? LIP : 0 },
+          face,
+        ]}>
+        {loading ? (
+          <ActivityIndicator color={fg} />
+        ) : (
+          <View style={styles.buttonInner}>
+            {icon}
+            <AppText variant="label" style={[styles.buttonLabel, { color: fg }]}>
+              {label}
+            </AppText>
+            {trailingIcon ? (
+              <SymbolView pointerEvents="none" name={trailingIcon} size={iconSize} weight="bold" tintColor={fg} fallback={null} />
+            ) : null}
+          </View>
+        )}
+      </Animated.View>
     </Pressable>
   );
 }
@@ -370,6 +378,8 @@ const styles = StyleSheet.create({
     // Room above and below when a large-text label wraps to two lines.
     paddingVertical: Spacing.two + 2,
   },
+  /** The darker lip under a chunky button: the face's shape, shown LIP below it. */
+  buttonLip: { position: 'absolute', left: 0, right: 0, top: LIP, bottom: 0, borderRadius: Radius.pill },
   buttonInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.two, flexShrink: 1 },
   buttonLabel: { fontSize: 16, fontFamily: Fonts.bold, textAlign: 'center', flexShrink: 1 },
 });

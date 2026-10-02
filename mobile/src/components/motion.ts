@@ -1,5 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Easing, Keyframe, ReduceMotion, useReducedMotion } from 'react-native-reanimated';
+import { Easing, Keyframe, ReduceMotion, useReducedMotion, type WithSpringConfig } from 'react-native-reanimated';
+
+/**
+ * The app's motion vocabulary (D132). Things that move because of a touch or a choice (a
+ * button sinking, a segment thumb, a tab arriving) use springs: they start at once, carry
+ * their speed, and settle without a visible bounce, which reads as physical rather than as
+ * a timed effect. Things that fill (bars) use one long, soft ease-out.
+ */
+/** Under the finger: quick, damped just short of a bounce. */
+export const SNAPPY: WithSpringConfig = { damping: 24, stiffness: 340, mass: 0.7, reduceMotion: ReduceMotion.System };
+/** A view arriving or a thumb travelling: a little slower, still no wobble. */
+export const GENTLE: WithSpringConfig = { damping: 22, stiffness: 190, mass: 1, reduceMotion: ReduceMotion.System };
+/** Ease-out expo: fast start, long soft landing, for fills and fades. */
+export const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
 
 /**
  * The website's `rise` entrance (src/index.css): fade in while moving up 0.75rem, over

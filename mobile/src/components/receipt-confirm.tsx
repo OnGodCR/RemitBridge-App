@@ -136,9 +136,17 @@ export function ReceiptConfirm({
               ]}>
               <View style={styles.flex}>
                 <AppText variant="label">{copy.receiptFields[name]}</AppText>
-                <AppText variant="small" muted>
-                  {name in answers ? copy.receiptPaths.user_corrected : result.fields[name] ? copy.receiptPaths[result.fields[name]!.path] : copy.scan.notFound}
-                </AppText>
+                {/* Who read a value (the rules or the model) isn't shown (Angad, 2026-10-01): only
+                    what the person can act on, a value they changed or one that wasn't found. */}
+                {name in answers || result.fields[name]?.path === 'user_corrected' ? (
+                  <AppText variant="small" muted>
+                    {copy.receiptPaths.user_corrected}
+                  </AppText>
+                ) : !result.fields[name] ? (
+                  <AppText variant="small" muted>
+                    {copy.scan.notFound}
+                  </AppText>
+                ) : null}
                 {warn ? (
                   <AppText variant="small" style={{ color: t.text, fontFamily: Fonts.semibold }}>
                     {copy.scan.toCheck}

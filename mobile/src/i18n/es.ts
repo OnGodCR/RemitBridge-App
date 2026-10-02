@@ -676,7 +676,10 @@ export const es: Copy = {
     cameraDenied: 'Para tomar una foto, permite el acceso a la cámara para RemitBridge en Configuración.',
     photosDenied: 'Para elegir una foto, permite el acceso a las fotos para RemitBridge en Configuración.',
     reading: 'Leyendo el recibo en tu teléfono…',
-    noText: 'No se encontró texto. Intenta de nuevo con todo el recibo plano y con buena luz.',
+    noText: 'No se encontró texto. Puede que la foto esté borrosa. Sostén el teléfono firme, con todo el recibo plano y con buena luz.',
+    tooBlurry: 'Esta foto está demasiado borrosa para leerla. Tómala otra vez: sostén el teléfono firme, toca el recibo para enfocar y usa buena luz.',
+    bitBlurry: 'Esta foto está un poco borrosa, así que algunos números podrían leerse mal. Una foto más nítida da una mejor lectura.',
+    unreadable: 'No pudimos leer los montos de este recibo. Puede que la foto esté borrosa o cortada. Tómala otra vez con todo el recibo a la vista.',
     misaligned: 'El texto no coincidió con la foto, así que no se tapó nada. Toma la foto otra vez.',
     failed: 'Algo salió mal al leer la foto. Intenta de nuevo.',
     previewTitle: 'Revisa lo que se tapó',
@@ -879,8 +882,6 @@ export const es: Copy = {
   },
 
   receiptPaths: {
-    parser: 'Leído del texto',
-    model: 'Leído por IA',
     user_corrected: 'Lo escribiste tú',
   },
 
