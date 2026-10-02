@@ -113,6 +113,11 @@ export function WhatsAppSection() {
           )
         ) : null}
       </ListGroup>
+      {session && status && !status.linked ? (
+        <AppText variant="small" muted>
+          {w.linkNote}
+        </AppText>
+      ) : null}
       {note ? <AppText muted>{note}</AppText> : null}
       {!settings.live ? (
         <AppText variant="small" muted>

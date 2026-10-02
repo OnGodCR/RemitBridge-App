@@ -72,9 +72,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **WhatsApp in the app (D138):** built 2026-10-02: link a chat to an account with a
       one-time code (no number stored), SAVE from WhatsApp into Saved, UNLINK, Chat on
       WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
-      Left: Angad pushes `20261002010000_whatsapp_link`; try LINK from his phone; flip
-      `whatsapp_live` once Meta lifts the restriction. Rate alerts by WhatsApp need Angad's
-      yes on storing numbers, encrypted.
+      Migration pushed 2026-10-02 (smoke test 63/63). Left: try LINK from his phone; flip
+      `whatsapp_live` once Meta lifts the restriction.
+- [ ] **Rate alerts by WhatsApp (D139):** built 2026-10-02, the number kept encrypted only
+      while linked. Left: Angad pushes `20261002020000_whatsapp_alerts`; once Meta lifts the
+      restriction, create the `rate_alert` template from `docs/whatsapp-templates.md`.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
       `site/.well-known/apple-app-site-association`.

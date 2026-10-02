@@ -75,10 +75,16 @@ export function RateAlerts() {
               <View style={styles.text}>
                 <AppText style={[styles.title, { color: t.text }]}>{name}</AppText>
                 <AppText variant="small" muted>
-                  {copy.delivery[x.delivery_method]}
+                  {x.channel === 'whatsapp' ? `${copy.delivery[x.delivery_method]} · ${a.byWhatsApp}` : copy.delivery[x.delivery_method]}
                 </AppText>
               </View>
-              <SymbolView pointerEvents="none" name="bell.fill" size={iconSize} tintColor={t.primary} fallback={null} />
+              <SymbolView
+                pointerEvents="none"
+                name={x.channel === 'whatsapp' ? 'message.fill' : 'bell.fill'}
+                size={iconSize}
+                tintColor={t.primary}
+                fallback={null}
+              />
             </Pressable>
             <Pressable
               onPress={() => confirmDelete(x, name)}

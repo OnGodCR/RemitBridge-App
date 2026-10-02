@@ -7,6 +7,10 @@
  *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... node .github/scripts/send-rate-alerts.mjs
  *
  * Nothing about the person is sent to Expo beyond the push token and the message.
+ *
+ * WhatsApp alerts (D139) go to the whatsapp Edge Function instead, which alone can open the
+ * linked chat's sealed number; this script only words them. It needs RECEIPT_INTAKE_SECRET
+ * for that call; without it, WhatsApp alerts wait.
  */
 const url = process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -45,7 +49,39 @@ const due = await res.json();
 console.log(`${due.length} alert(s) due`);
 if (!due.length) process.exit(0);
 
-const messages = due.map((a) => {
+// WhatsApp alerts: the template's values, in the order its body uses them (docs/whatsapp-templates.md).
+const whatsapp = due.filter((a) => a.channel === 'whatsapp');
+const push = due.filter((a) => a.channel !== 'whatsapp');
+const sentWhatsApp = [];
+if (whatsapp.length) {
+  const secret = process.env.RECEIPT_INTAKE_SECRET;
+  if (!secret) console.log(`${whatsapp.length} WhatsApp alert(s) wait: RECEIPT_INTAKE_SECRET is not set`);
+  else {
+    const alerts = whatsapp.map((a) => {
+      const lang = a.language === 'hi' ? 'hi' : 'en';
+      const country = COUNTRY[a.route_id]?.[lang] ?? a.receive_currency;
+      return {
+        id: a.id,
+        user_id: a.user_id,
+        language: lang,
+        params: [a.provider_name, money(a.best_received, a.receive_currency), money(a.send_amount, 'USD'), country, money(a.target_received, a.receive_currency)],
+      };
+    });
+    const r = await fetch(`${url}/functions/v1/whatsapp?alerts=send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-intake-secret': secret },
+      body: JSON.stringify({ alerts }),
+    });
+    if (!r.ok) console.log(`WhatsApp alerts: HTTP ${r.status}`);
+    else {
+      const { sent: ok = [], failed = [] } = await r.json();
+      sentWhatsApp.push(...ok);
+      if (failed.length) console.log(`WhatsApp alerts not sent: ${failed.length} (not linked, or the template isn't approved yet)`);
+    }
+  }
+}
+
+const messages = push.map((a) => {
   const lang = TEXT[a.language] ? a.language : 'en';
   const country = COUNTRY[a.route_id]?.[lang] ?? a.receive_currency;
   return {
@@ -70,13 +106,14 @@ for (let i = 0; i < messages.length; i += 100) {
   if (!r.ok) throw new Error(`Expo push: HTTP ${r.status} ${redactTokens(await r.text())}`);
   const { data } = await r.json();
   data.forEach((ticket, j) => {
-    const alert = due[i + j];
+    const alert = push[i + j];
     if (ticket.status === 'ok') sent.push(alert.id);
     else if (ticket.details?.error === 'DeviceNotRegistered') gone.push(alert.id);
     else console.log(`alert ${alert.id}: ${redactTokens(ticket.message)}`);
   });
 }
 
+sent.push(...sentWhatsApp);
 const ids = (list) => `(${list.join(',')})`;
 
 // Expo's messages can quote the phone's push token; the Actions log never shows one (D135).
@@ -95,4 +132,4 @@ if (gone.length) {
   const r = await fetch(`${REST}/rate_alerts?id=in.${ids(gone)}`, { method: 'DELETE', headers: H });
   if (!r.ok) throw new Error(`deleting dead alerts: HTTP ${r.status}`);
 }
-console.log(`sent ${sent.length}, removed ${gone.length} for phones that no longer take notifications`);
+console.log(`sent ${sent.length} (${sentWhatsApp.length} by WhatsApp), removed ${gone.length} for phones that no longer take notifications`);

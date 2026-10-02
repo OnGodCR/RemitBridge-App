@@ -411,6 +411,7 @@ with your name and the date.
 | whatsapp.unlinked | WhatsApp unlinked. | WhatsApp हटा दिया गया। | |
 | whatsapp.cancel | Cancel | रद्द करें | |
 | whatsapp.failed | That didn’t work. Check your connection and try again. | यह नहीं हुआ। अपना कनेक्शन देखें और फिर कोशिश करें। | |
+| whatsapp.linkNote | Linking keeps your WhatsApp number encrypted, only to send alerts you turn on. Unlink and it’s deleted. | जोड़ने पर आपका WhatsApp नंबर एन्क्रिप्ट करके रखा जाता है, सिर्फ़ आपके चालू किए अलर्ट भेजने के लिए। हटाते ही वह मिट जाता है। | |
 | whatsapp.devOnly | Development builds only, until the WhatsApp bot can reply to everyone. | सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता। | |
 | alerts.link | Tell me when it’s better | बेहतर होने पर बताएँ | |
 | alerts.intro | Alert me when {amount} to {country} gets at least | तब बताएँ जब {country} को {amount} पर कम से कम इतना मिले | |
@@ -426,6 +427,11 @@ with your name and the date.
 | alerts.unavailable | Notifications need the full app on a phone. | सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए। | |
 | alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले सहेजा गया में एक मिटाएँ। | |
 | alerts.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें। | |
+| alerts.via | Tell me by | मुझे बताएँ | |
+| alerts.viaPush | Notification | सूचना | |
+| alerts.viaWhatsApp | WhatsApp | WhatsApp | |
+| alerts.byWhatsApp | by WhatsApp | WhatsApp पर | |
+| alerts.notLinked | Link WhatsApp in Account first, then choose it here. | पहले Account में WhatsApp जोड़ें, फिर यहाँ चुनें। | |
 | alerts.yours | Your alerts | आपके अलर्ट | |
 | alerts.row | {amount} to {country}: {target} or more | {country} को {amount}: {target} या ज़्यादा | |
 | alerts.deleteNamed | Delete alert: {name} | अलर्ट मिटाएँ: {name} | |

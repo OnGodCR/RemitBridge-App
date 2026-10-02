@@ -24,6 +24,7 @@ let handler: (req: Request) => Promise<Response>
 const sent: { to: string; body: string }[] = []
 const dispatched: string[] = []
 const confirms: Record<string, unknown>[] = []
+const templates: { to: string; template: { name: string; language: { code: string }; components: { parameters: { text: string }[] }[] } }[] = []
 let confirmReply: unknown = null
 
 beforeAll(async () => {
@@ -44,7 +45,10 @@ beforeAll(async () => {
       confirms.push(b)
       return new Response(JSON.stringify(confirmReply), { status: 200 })
     }
-    if (u.includes('graph.facebook.com')) sent.push({ to: b.to, body: b.text.body })
+    if (u.includes('graph.facebook.com')) {
+      if (b.type === 'template') templates.push(b)
+      else sent.push({ to: b.to, body: b.text.body })
+    }
     return new Response('{}', { status: 200 })
   })
   await import('../../../supabase/functions/whatsapp/index.ts')
@@ -75,6 +79,7 @@ beforeEach(() => {
   sent.length = 0
   dispatched.length = 0
   confirms.length = 0
+  templates.length = 0
   confirmReply = null
   Object.assign(env, { WHATSAPP_RECEIPTS: undefined, RECEIPT_INTAKE_SECRET: undefined, GITHUB_DISPATCH_TOKEN: undefined })
   reset({ latest_quotes: [quote(), quote({ provider_name: 'Provider B', amount_received: 47000, total_cost_pct: 2 })] })
@@ -235,7 +240,10 @@ describe('linking to an app account (D138)', () => {
   it('links with the app’s code, and says so', async () => {
     rpcs.link_whatsapp = (args) => args.p_code === 'K7P2QX'
     await handler(delivery('link k7p2qx'))
-    expect(rpcCalls.find((c) => c.name === 'link_whatsapp')?.args).toEqual({ p_code: 'K7P2QX', p_phone_hash: hashOf() })
+    const args = rpcCalls.find((c) => c.name === 'link_whatsapp')?.args
+    expect(args).toMatchObject({ p_code: 'K7P2QX', p_phone_hash: hashOf() })
+    // The number goes to the database sealed (D139), never as it is.
+    expect(typeof args?.p_number_sealed).toBe('string')
     expect(sent.at(-1)?.body).toMatch(/^Linked\./)
     expect(JSON.stringify(rpcCalls)).not.toContain(PHONE)
   })
@@ -271,6 +279,44 @@ describe('linking to an app account (D138)', () => {
     await handler(delivery('unlink'))
     expect(tables.whatsapp_users[0].user_id).toBeNull()
     expect(sent.at(-1)?.body).toMatch(/^Unlinked\./)
+  })
+})
+
+describe('rate alerts by WhatsApp (D139)', () => {
+  const sendAlerts = (body: unknown, secret?: string) =>
+    handler(
+      new Request('https://example.supabase.co/functions/v1/whatsapp?alerts=send', {
+        method: 'POST',
+        headers: secret ? { 'x-intake-secret': secret } : {},
+        body: JSON.stringify(body),
+      }),
+    )
+  const alert = { id: 7, user_id: 'user-1', language: 'en', params: ['Wise', '₹47,800', '$500', 'India', '₹47,600'] }
+
+  it('refuses anyone without the workflow’s secret', async () => {
+    env.RECEIPT_INTAKE_SECRET = 'intake-secret'
+    expect((await sendAlerts({ alerts: [alert] })).status).toBe(403)
+    expect((await sendAlerts({ alerts: [alert] }, 'wrong-secret!')).status).toBe(403)
+    expect(templates).toEqual([])
+  })
+
+  it('opens the linked chat’s sealed number and sends the approved template', async () => {
+    env.RECEIPT_INTAKE_SECRET = 'intake-secret'
+    // Link through the bot, so the number is sealed exactly as in real use.
+    rpcs.link_whatsapp = (args) => {
+      tables.whatsapp_users = [{ phone_hash: args.p_phone_hash, user_id: 'user-1', number_sealed: args.p_number_sealed }]
+      return true
+    }
+    await handler(delivery('LINK K7P2QX'))
+    expect(JSON.stringify(tables.whatsapp_users)).not.toContain(PHONE)
+
+    const res = await sendAlerts({ alerts: [alert, { ...alert, id: 8, user_id: 'not-linked' }] }, 'intake-secret')
+    expect(await res.json()).toEqual({ sent: [7], failed: [8] })
+    expect(templates).toHaveLength(1)
+    expect(templates[0].to).toBe(PHONE)
+    expect(templates[0].template.name).toBe('rate_alert')
+    expect(templates[0].template.language.code).toBe('en_US')
+    expect(templates[0].template.components[0].parameters.map((p) => p.text)).toEqual(alert.params)
   })
 })
 

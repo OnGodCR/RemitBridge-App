@@ -75,6 +75,14 @@ tell Claude, who switches on the sign-in hook and runs the live security test.
 - [ ] **Database password:** make sure it's long and random (Claude can't see it). If you're
       not sure, reset it in Supabase > Database > Settings.
 
+## 4b. WhatsApp numbers (your yes, 2026-10-02)
+
+- [ ] **Linked chats keep the number, locked.** When someone links WhatsApp to their account,
+      the bot stores their number encrypted, so it can send the WhatsApp alerts they turn on.
+      Only the WhatsApp server function can unlock it. Unlinking, STOP, or deleting the
+      account deletes it and their WhatsApp alerts straight away. The app says this next to
+      the Link button, and the privacy policy says it too.
+
 ## 5. Checked and fine (nothing to do, for your information)
 
 - [ ] Every table has row-level security; private tables (receipts, WhatsApp, the photo

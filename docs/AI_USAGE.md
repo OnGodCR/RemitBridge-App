@@ -558,3 +558,13 @@ Angad's terminal; turned on SSL enforcement. For WhatsApp: the migration
 and the whatsapp function, with tests; `mobile/src/lib/whatsapp.ts`,
 `components/whatsapp-section.tsx`, the Account tab, strings in five languages (four drafts)
 and a test; the privacy policy's WhatsApp section.
+
+## 2026-10-02: rate alerts by WhatsApp (D139)
+
+**What Angad asked:** allow storing WhatsApp numbers, encrypted and within privacy rules,
+for alerts. **What Claude did:** the migration `20261002020000_whatsapp_alerts.sql` and its
+checks; sealing the number at link time and the `?alerts=send` sender in the whatsapp
+function, with tests; the WhatsApp branch in `.github/scripts/send-rate-alerts.mjs` and the
+workflow's secret; the channel choice in `mobile/src/app/alert.tsx`, `lib/rate-alerts.ts`,
+`components/rate-alerts.tsx`, the link note, strings in five languages and a test;
+`docs/whatsapp-templates.md`; the privacy policy, `docs/SECURITY.md` and the review list.

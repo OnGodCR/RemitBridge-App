@@ -93,6 +93,8 @@ Deno.serve(async (req) => {
 
   // The receipt worker reporting back (D94). Its own secret, not Meta's signature.
   if (url.searchParams.get('intake') === 'done') return intakeDone(req);
+  // The "Rate alerts" workflow handing over WhatsApp alerts to send (D139). Same secret.
+  if (url.searchParams.get('alerts') === 'send') return sendAlerts(req);
 
   const raw = await req.arrayBuffer();
   if (!(await signedByMeta(raw, req.headers.get('x-hub-signature-256')))) {
@@ -204,7 +206,7 @@ async function handle(m: Incoming) {
     return;
   }
   const next: State = { ...state, ...update };
-  const reply = await act(db, action, next.language, hash, row?.user_id ?? null);
+  const reply = await act(db, action, next.language, hash, row?.user_id ?? null, m.from);
   await save(next);
   await send(m.from, reply);
   await track(db, hash, 'whatsapp_message', {});
@@ -217,6 +219,8 @@ async function act(
   hash: string,
   /** The app account this chat is linked to (D138), if any. */
   userId: string | null,
+  /** The number, used only to seal it when linking (D139); never stored as it is. */
+  phone: string,
 ) {
   switch (action.type) {
     case 'say':
@@ -244,7 +248,13 @@ async function act(
       return `${reply}\n\n${formatSaveNote(lang, saved)}`;
     }
     case 'link': {
-      const { data, error } = await db.rpc('link_whatsapp', { p_code: action.code, p_phone_hash: hash });
+      // The number is kept sealed with the link, so the alerts the person turns on can reach
+      // them (D139); unlinking, STOP or deleting the account clears it.
+      const { data, error } = await db.rpc('link_whatsapp', {
+        p_code: action.code,
+        p_phone_hash: hash,
+        p_number_sealed: await seal(phone, LINKED_NUMBER),
+      });
       const linked = !error && data === true;
       if (linked) await track(db, hash, 'whatsapp_linked', {});
       return formatLinked(lang, linked);
@@ -496,26 +506,108 @@ function storedFields(result: { fields?: Record<string, { value: string; path: s
   return out as unknown as ScanResponse['fields'];
 }
 
-/** AES-GCM with a key derived from WHATSAPP_HASH_SECRET: base64(iv || ciphertext). */
-async function sealKey(): Promise<CryptoKey> {
+// ---------------------------------------------------------------------------------------
+// Rate alerts by WhatsApp (D139)
+// ---------------------------------------------------------------------------------------
+
+interface AlertToSend {
+  id: number;
+  user_id: string;
+  /** 'en' or 'hi': the template languages; the workflow maps the app's others to English. */
+  language: Language;
+  /** The template's body values, in order, already worded by the workflow. */
+  params: string[];
+}
+
+/**
+ * Sends the WhatsApp alerts the workflow found due, each to its linked chat's sealed number,
+ * through the approved template (WHATSAPP_ALERT_TEMPLATE, default "rate_alert"): a message
+ * the person didn't just ask for needs one. Answers which ids went, so only those are
+ * stamped. The numbers are opened here and nowhere else, and never logged.
+ */
+async function sendAlerts(req: Request): Promise<Response> {
+  const secret = Deno.env.get('RECEIPT_INTAKE_SECRET');
+  if (!secret || !sameText(req.headers.get('x-intake-secret') ?? '', secret)) return new Response('forbidden', { status: 403 });
+  let body: { alerts?: AlertToSend[] };
+  try {
+    body = await req.json();
+  } catch {
+    return new Response('not JSON', { status: 400 });
+  }
+  const alerts = Array.isArray(body.alerts) ? body.alerts.slice(0, 500) : [];
+  const token = Deno.env.get('WHATSAPP_ACCESS_TOKEN');
+  const phoneId = Deno.env.get('WHATSAPP_PHONE_NUMBER_ID');
+  if (!token || !phoneId) return Response.json({ sent: [], failed: alerts.map((a) => a.id) });
+  const template = Deno.env.get('WHATSAPP_ALERT_TEMPLATE') || 'rate_alert';
+
+  const db = service();
+  const sent: number[] = [];
+  const failed: number[] = [];
+  for (const a of alerts) {
+    if (typeof a?.id !== 'number' || typeof a.user_id !== 'string' || !Array.isArray(a.params)) continue;
+    const { data: row } = await db.from('whatsapp_users').select('number_sealed').eq('user_id', a.user_id).maybeSingle();
+    if (!row?.number_sealed) {
+      failed.push(a.id);
+      continue;
+    }
+    let to: string;
+    try {
+      to = await unseal(row.number_sealed, LINKED_NUMBER);
+    } catch {
+      console.error('whatsapp: a linked number would not open');
+      failed.push(a.id);
+      continue;
+    }
+    const res = await fetch(`${GRAPH}/${phoneId}/messages`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messaging_product: 'whatsapp',
+        to,
+        type: 'template',
+        template: {
+          name: template,
+          language: { code: a.language === 'hi' ? 'hi' : 'en_US' },
+          components: [{ type: 'body', parameters: a.params.slice(0, 10).map((p) => ({ type: 'text', text: String(p).slice(0, 200) })) }],
+        },
+      }),
+    });
+    if (res.ok) sent.push(a.id);
+    else {
+      console.error('whatsapp: alert send failed', res.status);
+      failed.push(a.id);
+    }
+  }
+  return Response.json({ sent, failed });
+}
+
+/**
+ * AES-GCM with a key derived from WHATSAPP_HASH_SECRET: base64(iv || ciphertext). Each use has
+ * its own label, so its own key: the photo queue's numbers (an hour at most) and a linked
+ * chat's number for alerts (D139) can't be opened with each other's key.
+ */
+const PHOTO_QUEUE = 'receipt-intake-seal';
+const LINKED_NUMBER = 'linked-number-seal';
+
+async function sealKey(label: string): Promise<CryptoKey> {
   const secret = Deno.env.get('WHATSAPP_HASH_SECRET');
   if (!secret) throw new Error('WHATSAPP_HASH_SECRET is not set');
-  const raw = await hmacBytes(secret, new TextEncoder().encode('receipt-intake-seal'));
+  const raw = await hmacBytes(secret, new TextEncoder().encode(label));
   return crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['encrypt', 'decrypt']);
 }
 
-async function seal(phone: string): Promise<string> {
+async function seal(phone: string, label = PHOTO_QUEUE): Promise<string> {
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await sealKey(), new TextEncoder().encode(phone)));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await sealKey(label), new TextEncoder().encode(phone)));
   const all = new Uint8Array(iv.length + ct.length);
   all.set(iv);
   all.set(ct, iv.length);
   return btoa(String.fromCharCode(...all));
 }
 
-async function unseal(sealed: string): Promise<string> {
+async function unseal(sealed: string, label = PHOTO_QUEUE): Promise<string> {
   const all = Uint8Array.from(atob(sealed), (c) => c.charCodeAt(0));
-  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: all.slice(0, 12) }, await sealKey(), all.slice(12));
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: all.slice(0, 12) }, await sealKey(label), all.slice(12));
   return new TextDecoder().decode(pt);
 }
 
