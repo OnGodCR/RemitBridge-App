@@ -34,10 +34,13 @@ import { publishableKey, secretKey } from '../_shared/keys.ts';
 import {
   formatCompare,
   formatForgotten,
+  formatLinked,
   formatNotText,
   formatRateLimited,
   formatRequested,
+  formatSaveNote,
   formatSay,
+  formatUnlinked,
   formatReceiptAck,
   formatReceiptFailed,
   formatReceiptQuestion,
@@ -201,13 +204,20 @@ async function handle(m: Incoming) {
     return;
   }
   const next: State = { ...state, ...update };
-  const reply = await act(db, action, next.language, hash);
+  const reply = await act(db, action, next.language, hash, row?.user_id ?? null);
   await save(next);
   await send(m.from, reply);
   await track(db, hash, 'whatsapp_message', {});
 }
 
-async function act(db: SupabaseClient, action: Exclude<Action, { type: 'forget' }>, lang: Language, hash: string) {
+async function act(
+  db: SupabaseClient,
+  action: Exclude<Action, { type: 'forget' }>,
+  lang: Language,
+  hash: string,
+  /** The app account this chat is linked to (D138), if any. */
+  userId: string | null,
+) {
   switch (action.type) {
     case 'say':
       return formatSay(lang, action.say);
@@ -219,7 +229,29 @@ async function act(db: SupabaseClient, action: Exclude<Action, { type: 'forget' 
         method: action.method,
         quotes: rows.filter((q) => !q.is_promotional).length,
       });
-      return formatCompare(lang, { ...action, rows, now: new Date() });
+      const reply = formatCompare(lang, { ...action, rows, now: new Date() });
+      if (!action.save) return reply;
+      // "SAVE 500 to India": kept in the linked account's saved comparisons, as if saved in
+      // the app. The amount goes to the account the person chose, never to the chat's row.
+      let saved = false;
+      if (userId) {
+        const { error } = await db
+          .from('saved_comparisons')
+          .insert({ user_id: userId, route_id: action.route.id, send_amount: action.amount, delivery_method: action.method });
+        saved = !error;
+        if (saved) await track(db, hash, 'comparison_saved', { route: action.route.id });
+      }
+      return `${reply}\n\n${formatSaveNote(lang, saved)}`;
+    }
+    case 'link': {
+      const { data, error } = await db.rpc('link_whatsapp', { p_code: action.code, p_phone_hash: hash });
+      const linked = !error && data === true;
+      if (linked) await track(db, hash, 'whatsapp_linked', {});
+      return formatLinked(lang, linked);
+    }
+    case 'unlink': {
+      if (userId) await db.from('whatsapp_users').update({ user_id: null, linked_at: null }).eq('phone_hash', hash);
+      return formatUnlinked(lang, !!userId);
     }
     case 'why': {
       // The $500 example on the last route (the bot keeps no amounts).

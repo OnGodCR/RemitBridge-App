@@ -40,12 +40,16 @@ export type Say =
   | { key: 'scam' }
   | { key: 'check' }
   | { key: 'nothingPending' }
+  | { key: 'saveHow' }
   | { key: 'unknown' }
 
 export type Action =
   | { type: 'say'; say: Say }
-  /** Look up prices, then reply with the top three. */
-  | { type: 'compare'; route: Route; amount: number; checked: number; method: DeliveryMethod }
+  /** Look up prices, then reply with the top three; `save` keeps it in the linked account. */
+  | { type: 'compare'; route: Route; amount: number; checked: number; method: DeliveryMethod; save?: boolean }
+  /** Link this chat to the app account that made the code (D138). */
+  | { type: 'link'; code: string }
+  | { type: 'unlink' }
   /** Explain the markup, with the last route's prices if there are any. */
   | { type: 'why'; route: Route | null; method: DeliveryMethod | null }
   /** Count a request for a route we don't cover (PRD 6.7, source 'whatsapp'). */
@@ -67,6 +71,12 @@ export function plan(cmd: Command, state: State): { action: Action; state: Parti
       return say({ key: 'check' })
     case 'unknown':
       return say({ key: 'unknown' })
+    case 'save':
+      return say({ key: 'saveHow' })
+    case 'link':
+      return { action: { type: 'link', code: cmd.code }, state: {} }
+    case 'unlink':
+      return { action: { type: 'unlink' }, state: {} }
     case 'forget':
       return { action: { type: 'forget' }, state: {} }
     case 'why': {
@@ -107,7 +117,7 @@ export function plan(cmd: Command, state: State): { action: Action; state: Parti
       const kept = state.lastRoute === route.id && state.lastMethod && route.deliveryMethods.includes(state.lastMethod)
       const method = cmd.method ?? (kept ? state.lastMethod! : route.deliveryMethods[0])
       return {
-        action: { type: 'compare', route, amount: cmd.amount, checked: checkedAmountFor(cmd.amount), method },
+        action: { type: 'compare', route, amount: cmd.amount, checked: checkedAmountFor(cmd.amount), method, ...(cmd.save ? { save: true } : {}) },
         state: { lastRoute: route.id, lastMethod: method, pendingRequest: null },
       }
     }

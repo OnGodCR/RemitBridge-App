@@ -8,10 +8,13 @@ export { MAX_AMOUNT, NEW_STATE, plan, type Action, type Say, type State } from '
 export {
   formatCompare,
   formatForgotten,
+  formatLinked,
   formatNotText,
   formatRateLimited,
   formatRequested,
+  formatSaveNote,
   formatSay,
+  formatUnlinked,
   formatWhy,
   LINK,
   rankFor,

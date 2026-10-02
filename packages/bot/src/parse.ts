@@ -23,7 +23,13 @@ export type Command =
   /** STOP: delete what the bot keeps about this number. */
   | { kind: 'forget' }
   | { kind: 'request'; from?: string; to?: string }
-  | { kind: 'compare'; amount?: number; from?: string; to?: string; method?: DeliveryMethod }
+  /** `save`: "SAVE 500 to India", to keep it in the linked app account (D138). */
+  | { kind: 'compare'; amount?: number; from?: string; to?: string; method?: DeliveryMethod; save?: boolean }
+  /** The one-time code from the app's Link WhatsApp (D138). */
+  | { kind: 'link'; code: string }
+  | { kind: 'unlink' }
+  /** SAVE with nothing to save: explain how. */
+  | { kind: 'save' }
   | { kind: 'unknown' }
 
 /** Lower-case, no accents, Devanagari digits as ASCII, symbols as currency codes. */
@@ -57,6 +63,10 @@ const HINDI = words(['hindi', 'हिंदी', 'हिन्दी'])
 const ENGLISH = words(['english', 'angrezi', 'अंग्रेज़ी', 'अंग्रेजी', 'इंग्लिश'])
 const SCAM = words(['scam', 'fraud', 'scammed', 'धोखा', 'ठगी'])
 const CHECK = words(['check', 'truecost', 'receipt'])
+const UNLINK = words(['unlink'])
+const SAVE = words(['save', 'सेव', 'सहेजें'])
+// Letters and digits as the app prints them: no 0/O or 1/I (supabase migration D138).
+const LINK_CODE = /^\s*link\s+([a-hj-np-z2-9]{6})\s*$/i
 const YES = words(['yes', 'y', 'yeah', 'yep', 'yup', 'ok', 'okay', 'sure', 'haan', 'han', 'ha', 'ji', 'हाँ', 'हां', 'si'])
 const REQUEST = words(['request', 'add'])
 const FORGET = new Set(['stop', 'unsubscribe', 'delete my data', 'forget me', 'delete me'].map(normalize))
@@ -114,11 +124,20 @@ const METHODS: [string[], DeliveryMethod][] = [
 ]
 
 export function parse(text: string): Command {
+  // Read before normalizing, which would split "K7P2QX" into words and numbers.
+  const link = text.match(LINK_CODE)
+  if (link) return { kind: 'link', code: link[1].toUpperCase() }
+
   const s = normalize(text)
   if (!s) return { kind: 'unknown' }
   const tokens = s.split(' ')
 
   if (FORGET.has(s)) return { kind: 'forget' }
+  if (UNLINK.has(s)) return { kind: 'unlink' }
+  if (SAVE.has(tokens[0])) {
+    const rest = tokens.length > 1 ? parse(text.trim().replace(/^\S+\s+/, '')) : null
+    return rest?.kind === 'compare' ? { ...rest, save: true } : { kind: 'save' }
+  }
 
   if (REQUEST.has(tokens[0]) && tokens.length > 1) {
     const { from, to } = findPlaces(s)

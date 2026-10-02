@@ -69,6 +69,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
       variables created for development. Left: `eas device:create`, Developer Mode,
       `eas build --profile development --platform ios`, all Angad's (Apple sign-in).
+- [ ] **WhatsApp in the app (D138):** built 2026-10-02: link a chat to an account with a
+      one-time code (no number stored), SAVE from WhatsApp into Saved, UNLINK, Chat on
+      WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
+      Left: Angad pushes `20261002010000_whatsapp_link`; try LINK from his phone; flip
+      `whatsapp_live` once Meta lifts the restriction. Rate alerts by WhatsApp need Angad's
+      yes on storing numbers, encrypted.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
       `site/.well-known/apple-app-site-association`.

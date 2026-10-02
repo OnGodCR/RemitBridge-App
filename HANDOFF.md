@@ -73,6 +73,12 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-02: WhatsApp in the app (D138).** Linking by one-time code (no number stored),
+  SAVE and UNLINK in the bot, Chat on WhatsApp in Account (development builds until
+  `whatsapp_live`). Needs `supabase db push` of `20261002010000_whatsapp_link`.
+- **2026-10-02: off the legacy keys (D137).** Everything runs on the newer keys; SSL
+  enforced; the sign-in hook on; smoke test 58/58. Angad's two clicks left: disable the
+  legacy keys, revoke the legacy HS256 secret.
 - **2026-10-02, early: gamified Learn (D136).** Lessons with cards, quizzes, XP, combo,
   streak and a finish screen replace the fold-out definitions; the dropped-first-tap cause
   (Reanimated `entering` animations) found and removed app-wide.

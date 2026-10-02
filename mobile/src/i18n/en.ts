@@ -446,6 +446,25 @@ export const en = {
     },
   },
 
+  /** WhatsApp in Account (D138): chat with the bot, and link this account's WhatsApp. */
+  whatsapp: {
+    title: 'WhatsApp',
+    chat: 'Chat on WhatsApp',
+    hello: 'Hi',
+    link: 'Link WhatsApp',
+    linkSub: 'Save comparisons from WhatsApp to this account',
+    linkSent: 'WhatsApp is open with your code typed in. Press send, then come back here.',
+    linked: 'WhatsApp linked',
+    linkedSub: (since: string) => (since ? `Since ${since}. Tap to unlink.` : 'Tap to unlink.'),
+    unlinkTitle: 'Unlink WhatsApp?',
+    unlinkBody: 'Your WhatsApp chat stays as it is, but SAVE there will stop adding to this account.',
+    unlink: 'Unlink',
+    unlinked: 'WhatsApp unlinked.',
+    cancel: 'Cancel',
+    failed: 'That didn’t work. Check your connection and try again.',
+    devOnly: 'Development builds only, until the WhatsApp bot can reply to everyone.',
+  },
+
   alerts: {
     link: 'Tell me when it’s better',
     intro: (amount: string, country: string) => `Alert me when ${amount} to ${country} gets at least`,

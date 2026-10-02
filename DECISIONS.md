@@ -1466,3 +1466,20 @@ revoke the old secret.
   newer keys, then was deleted. The project already signed logins with an ECC key, with the
   legacy HS256 secret "previously used". Disabling the legacy keys and revoking the secret
   are Angad's clicks: the browser step was refused for Claude.
+
+**D138. WhatsApp in the app: link a chat to an account, chat with the bot, show its number**
+(Angad, 2026-10-02: "it should do all of the above, but most specifically it should link
+whatsapp to this account"). Built without storing phone numbers:
+- **Linking:** Account > Link WhatsApp makes a one-time code (six characters without
+  0/O/1/I, ten minutes, one live per person) and opens WhatsApp with "LINK <code>" typed in.
+  Sending it proves the person holds the number; the bot calls `link_whatsapp()`, which
+  points the chat's existing keyed-hash row at the account. Then "SAVE 500 to India" on
+  WhatsApp adds that comparison to the account's Saved (the amount goes to the account the
+  person chose, never to the chat's row). UNLINK on WhatsApp or Unlink in the app undoes it;
+  deleting the account unlinks it (a check that tied the link and its date together made
+  account deletion fail, caught by the local checks, so a trigger clears the date instead).
+- **Chat on WhatsApp** with the bot's number, from the public `app_settings` table, so it
+  switches on for everyone (`whatsapp_live` = true) without a new build once Meta lets the
+  bot reply to anyone; until then only development builds show it.
+- **Not built: rate alerts by WhatsApp.** Messaging someone first needs their real number,
+  which the privacy rule doesn't allow to be stored; that's Angad's call.

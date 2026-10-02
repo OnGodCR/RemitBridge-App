@@ -461,6 +461,24 @@ export const tl: Copy = {
     },
   },
 
+  whatsapp: {
+    title: 'WhatsApp',
+    chat: 'Mag-chat sa WhatsApp',
+    hello: 'Hi',
+    link: 'I-link ang WhatsApp',
+    linkSub: 'I-save sa account na ito ang mga paghahambing mula sa WhatsApp',
+    linkSent: 'Bukas ang WhatsApp na may naka-type nang code. Pindutin ang send, saka bumalik dito.',
+    linked: 'Naka-link ang WhatsApp',
+    linkedSub: (since: string) => (since ? `Mula ${since}. I-tap para i-unlink.` : 'I-tap para i-unlink.'),
+    unlinkTitle: 'I-unlink ang WhatsApp?',
+    unlinkBody: 'Mananatili ang chat mo sa WhatsApp, pero hindi na mase-save sa account na ito ang SAVE doon.',
+    unlink: 'I-unlink',
+    unlinked: 'Na-unlink ang WhatsApp.',
+    cancel: 'Kanselahin',
+    failed: 'Hindi ito gumana. Tingnan ang koneksyon mo at subukan ulit.',
+    devOnly: 'Sa development builds lang, hanggang makasagot ang WhatsApp bot sa lahat.',
+  },
+
   alerts: {
     link: 'Sabihan ako kapag mas maganda',
     intro: (amount: string, country: string) => `Sabihan ako kapag ang ${amount} papuntang ${country} ay makakatanggap ng hindi bababa sa`,

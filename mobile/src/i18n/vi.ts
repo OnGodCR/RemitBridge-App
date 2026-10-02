@@ -460,6 +460,24 @@ export const vi: Copy = {
     },
   },
 
+  whatsapp: {
+    title: 'WhatsApp',
+    chat: 'Trò chuyện qua WhatsApp',
+    hello: 'Xin chào',
+    link: 'Liên kết WhatsApp',
+    linkSub: 'Lưu các so sánh từ WhatsApp vào tài khoản này',
+    linkSent: 'WhatsApp đã mở với mã của bạn. Bấm gửi, rồi quay lại đây.',
+    linked: 'Đã liên kết WhatsApp',
+    linkedSub: (since: string) => (since ? `Từ ${since}. Chạm để hủy liên kết.` : 'Chạm để hủy liên kết.'),
+    unlinkTitle: 'Hủy liên kết WhatsApp?',
+    unlinkBody: 'Cuộc trò chuyện WhatsApp vẫn giữ nguyên, nhưng lệnh SAVE ở đó sẽ không lưu vào tài khoản này nữa.',
+    unlink: 'Hủy liên kết',
+    unlinked: 'Đã hủy liên kết WhatsApp.',
+    cancel: 'Hủy',
+    failed: 'Không thành công. Hãy kiểm tra kết nối và thử lại.',
+    devOnly: 'Chỉ trong bản phát triển, cho đến khi bot WhatsApp trả lời được mọi người.',
+  },
+
   alerts: {
     link: 'Báo tôi khi tốt hơn',
     intro: (amount: string, country: string) => `Báo tôi khi gửi ${amount} đến ${country} nhận được ít nhất`,

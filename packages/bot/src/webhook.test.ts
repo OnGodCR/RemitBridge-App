@@ -229,6 +229,51 @@ const done = (body: unknown, secret = 'intake-secret') =>
     }),
   )
 
+describe('linking to an app account (D138)', () => {
+  const hashOf = () => (tables.whatsapp_users ?? [])[0]?.phone_hash as string
+
+  it('links with the app’s code, and says so', async () => {
+    rpcs.link_whatsapp = (args) => args.p_code === 'K7P2QX'
+    await handler(delivery('link k7p2qx'))
+    expect(rpcCalls.find((c) => c.name === 'link_whatsapp')?.args).toEqual({ p_code: 'K7P2QX', p_phone_hash: hashOf() })
+    expect(sent.at(-1)?.body).toMatch(/^Linked\./)
+    expect(JSON.stringify(rpcCalls)).not.toContain(PHONE)
+  })
+
+  it('says when a code is wrong or old', async () => {
+    rpcs.link_whatsapp = () => false
+    await handler(delivery('LINK ABCDEF'))
+    expect(sent.at(-1)?.body).toMatch(/didn't work/)
+  })
+
+  it('saves a comparison to the linked account with SAVE, and only the account gets the amount', async () => {
+    await handler(delivery('hi'))
+    tables.whatsapp_users[0].user_id = 'user-1'
+    await handler(delivery('SAVE 500 to India'))
+    expect(tables.saved_comparisons).toEqual([
+      expect.objectContaining({ user_id: 'user-1', route_id: 'us-in', send_amount: 500, delivery_method: 'bank_deposit' }),
+    ])
+    expect(sent.at(-1)?.body).toMatch(/Provider A/)
+    expect(sent.at(-1)?.body).toMatch(/Saved to your app/)
+    expect(JSON.stringify(tables.whatsapp_users)).not.toContain('500')
+  })
+
+  it('asks to link first when SAVE comes from a chat that isn’t linked', async () => {
+    await handler(delivery('save 500 to india'))
+    expect(tables.saved_comparisons ?? []).toEqual([])
+    expect(sent.at(-1)?.body).toMatch(/link WhatsApp in the app first/)
+  })
+
+  it('unlinks on UNLINK', async () => {
+    await handler(delivery('hi'))
+    tables.whatsapp_users[0].user_id = 'user-1'
+    tables.whatsapp_users[0].linked_at = new Date().toISOString()
+    await handler(delivery('unlink'))
+    expect(tables.whatsapp_users[0].user_id).toBeNull()
+    expect(sent.at(-1)?.body).toMatch(/^Unlinked\./)
+  })
+})
+
 describe('receipt photos', () => {
   it('are politely declined while photo intake is off', async () => {
     await handler(photo())

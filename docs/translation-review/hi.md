@@ -369,6 +369,49 @@ with your name and the date.
 | learn.workshops | Workshops | वर्कशॉप | |
 | learn.workshopsSub | Sessions for communities and schools | समुदायों और स्कूलों के लिए सत्र | |
 | learn.opensWebsite | Opens on the website | वेबसाइट पर खुलता है | |
+| learn.lesson.start | Start lesson: {n} new words | पाठ शुरू करें: {n} नए शब्द | |
+| learn.lesson.practice | Practice these words | इन शब्दों का अभ्यास करें | |
+| learn.lesson.close | Close the lesson | पाठ बंद करें | |
+| learn.lesson.newWord | New word | नया शब्द | |
+| learn.lesson.gotIt | Got it | ठीक है | |
+| learn.lesson.whichWord | Which word means this? | यह किस शब्द का मतलब है? | |
+| learn.lesson.whatMeans | What does “{term}” mean? | “{term}” का मतलब क्या है? | |
+| learn.lesson.again | One more try | एक और कोशिश | |
+| learn.lesson.right[1] | Nice! | बहुत बढ़िया! | |
+| learn.lesson.right[2] | Exactly right. | बिलकुल सही! | |
+| learn.lesson.right[3] | You got it. | सही जवाब! | |
+| learn.lesson.right[4] | Spot on. | शाबाश! | |
+| learn.lesson.wrong | Not quite. | पूरी तरह सही नहीं। | |
+| learn.lesson.answerWas | The answer: {answer} | सही जवाब: {answer} | |
+| learn.lesson.continue | Continue | आगे बढ़ें | |
+| learn.lesson.inARow | {n} in a row | लगातार {n} सही | |
+| learn.lesson.xp | +{n} XP | +{n} XP | |
+| learn.lesson.done | Lesson complete! | पाठ पूरा हुआ! | |
+| learn.lesson.practiceDone | Practice complete! | अभ्यास पूरा हुआ! | |
+| learn.lesson.xpLabel | XP earned | मिले XP | |
+| learn.lesson.accuracyLabel | Accuracy | सटीकता | |
+| learn.lesson.streakLabel | Day streak | लगातार दिन | |
+| learn.lesson.streakDays | {n} days | {n} दिन | |
+| learn.lesson.wordsLearned | You learned {n} words. | आपने {n} शब्द सीखे। | |
+| learn.lesson.progressLabel | Step {n} of {total} | चरण {n} / {total} | |
+| learn.lesson.words | Words in this module | इस मॉड्यूल के शब्द | |
+| learn.lesson.lookUp | {term}. Look it up in the glossary. | {term}. शब्दकोश में देखें। | |
+| learn.lesson.streakLine | {days}-day streak · {xp} XP | लगातार {days} दिन · {xp} XP | |
+| whatsapp.title | WhatsApp | WhatsApp | |
+| whatsapp.chat | Chat on WhatsApp | WhatsApp पर बात करें | |
+| whatsapp.hello | Hi | नमस्ते | |
+| whatsapp.link | Link WhatsApp | WhatsApp जोड़ें | |
+| whatsapp.linkSub | Save comparisons from WhatsApp to this account | WhatsApp की तुलनाएँ इस खाते में रखें | |
+| whatsapp.linkSent | WhatsApp is open with your code typed in. Press send, then come back here. | WhatsApp आपके कोड के साथ खुला है। भेजें दबाएँ, फिर यहाँ वापस आएँ। | |
+| whatsapp.linked | WhatsApp linked | WhatsApp जुड़ा है | |
+| whatsapp.linkedSub | Since {since}. Tap to unlink. | {since} से। हटाने के लिए टैप करें। | |
+| whatsapp.unlinkTitle | Unlink WhatsApp? | WhatsApp हटाएँ? | |
+| whatsapp.unlinkBody | Your WhatsApp chat stays as it is, but SAVE there will stop adding to this account. | आपकी WhatsApp चैट वैसी ही रहेगी, पर वहाँ SAVE से इस खाते में कुछ नहीं जुड़ेगा। | |
+| whatsapp.unlink | Unlink | हटाएँ | |
+| whatsapp.unlinked | WhatsApp unlinked. | WhatsApp हटा दिया गया। | |
+| whatsapp.cancel | Cancel | रद्द करें | |
+| whatsapp.failed | That didn’t work. Check your connection and try again. | यह नहीं हुआ। अपना कनेक्शन देखें और फिर कोशिश करें। | |
+| whatsapp.devOnly | Development builds only, until the WhatsApp bot can reply to everyone. | सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता। | |
 | alerts.link | Tell me when it’s better | बेहतर होने पर बताएँ | |
 | alerts.intro | Alert me when {amount} to {country} gets at least | तब बताएँ जब {country} को {amount} पर कम से कम इतना मिले | |
 | alerts.today | Today’s best: {amount} from {provider} | आज सबसे अच्छा: {provider} से {amount} | |
