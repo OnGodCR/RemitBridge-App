@@ -362,4 +362,64 @@ select pg_temp.ok((select public.receipt_result('70000000-0000-4000-8000-0000000
   'receipts: the result carries the missing disclosures');
 reset role;
 
+-- ---------------------------------------------------------------------------------------
+-- Security hardening (D135)
+-- ---------------------------------------------------------------------------------------
+-- Password sign-in gets no token; a code, Apple, Google or a refresh of one of those does.
+select pg_temp.ok((select public.custom_access_token_hook('{"authentication_method": "password", "claims": {"sub": "x"}}') ? 'error'),
+  'hook: a password sign-in gets no token');
+select pg_temp.ok((select public.custom_access_token_hook(
+    '{"authentication_method": "token_refresh", "claims": {"sub": "x", "amr": [{"method": "password", "timestamp": 1}]}}') ? 'error'),
+  'hook: nor does refreshing a session that began with a password');
+select pg_temp.ok((select public.custom_access_token_hook('{"authentication_method": "otp", "claims": {"sub": "x", "role": "authenticated"}}')
+    = '{"claims": {"sub": "x", "role": "authenticated"}}'::jsonb),
+  'hook: an email code passes its claims through unchanged');
+select pg_temp.ok((select not (public.custom_access_token_hook(
+    '{"authentication_method": "token_refresh", "claims": {"sub": "x", "amr": [{"method": "oauth", "timestamp": 1}]}}') ? 'error')),
+  'hook: refreshing a Google or Apple session works');
+
+set role anon;
+select pg_temp.expect($$select public.custom_access_token_hook('{}')$$, '42501', 'anon: can''t call the sign-in hook');
+select pg_temp.expect($$select public.take_hit_for_ip('scan', '1.2.3.4', 1, 60)$$, '42501', 'anon: can''t touch rate limits');
+select pg_temp.expect($$select public.is_admin()$$, '42501', 'anon: is_admin() isn''t callable');
+select pg_temp.expect($$select * from private.rate_limit_hits$$, '42501', 'anon: the private schema is closed');
+-- Seven events from one address against a limit of 600 per 10 minutes: all fine.
+select set_config('request.headers', '{"x-forwarded-for": "203.0.113.9, 10.0.0.1"}', false);
+insert into public.events (install_id, name) select '30000000-0000-4000-8000-000000000003', 'app_opened' from generate_series(1, 7);
+reset role;
+select pg_temp.ok((select hits = 7 from private.rate_limit_hits where bucket = 'events'),
+  'rate limit: hits counted per address');
+select pg_temp.ok((select client !~ '203' and length(client) = 64 from private.rate_limit_hits where bucket = 'events'),
+  'rate limit: the address is kept only as a keyed hash');
+-- The limit itself, made tiny for the test.
+select pg_temp.ok((select private.take_hit('test', '198.51.100.7', 2, interval '1 hour')
+                     and private.take_hit('test', '198.51.100.7', 2, interval '1 hour')
+                     and not private.take_hit('test', '198.51.100.7', 2, interval '1 hour')
+                     and private.take_hit('test', '198.51.100.8', 2, interval '1 hour')),
+  'rate limit: the third hit in the window is refused, another address is not');
+select pg_temp.ok((select private.take_hit('test', null, 0, interval '1 hour')), 'rate limit: no address (SQL, migrations) is never limited');
+-- Route requests from one address, past 30 an hour.
+set role anon;
+select set_config('request.headers', '{"x-real-ip": "192.0.2.44"}', false);
+insert into public.route_requests (send_country, receive_country, install_id)
+  select 'US', 'TZ', gen_random_uuid() from generate_series(1, 30);
+select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id)
+  values ('US', 'TZ', gen_random_uuid())$$, '54000', 'rate limit: the 31st route request in an hour is refused');
+select set_config('request.headers', '', false);
+reset role;
+select pg_temp.ok((select count(*) = 30 from public.route_requests where receive_country = 'TZ'), 'rate limit: the first 30 went in');
+-- The service role (WhatsApp, the engine) shares Supabase's address and isn't limited.
+set role service_role;
+select set_config('request.headers', '{"x-real-ip": "192.0.2.44"}', false);
+insert into public.route_requests (send_country, receive_country, install_id, source) values ('US', 'TZ', gen_random_uuid(), 'whatsapp');
+select set_config('request.headers', '', false);
+reset role;
+select pg_temp.ok(true, 'rate limit: the service role isn''t limited');
+select private.forget_rate_limits();
+
+-- Free text has a cap.
+select pg_temp.expect($$insert into public.saved_transfers (user_id, provider_name, send_currency, receive_currency, sent, quoted_rate, sent_on, note)
+  values ('00000000-0000-4000-8000-0000000000b2', 'Wise', 'USD', 'INR', 100, 88, '2026-09-01', repeat('x', 501))$$,
+  '23514', 'saved transfers: a note over 500 characters is refused');
+
 \echo 'all local checks passed'

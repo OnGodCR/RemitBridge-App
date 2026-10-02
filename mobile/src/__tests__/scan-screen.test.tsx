@@ -10,7 +10,7 @@ import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type Sc
 
 import ScanScreen from '@/app/(tabs)/index';
 import { LanguageProvider } from '@/i18n';
-import { canScan, recognize, renderRedacted } from '@/lib/receipt-scan';
+import { canScan, discardPhotoFiles, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
 let mockSavedLanguage: string | null = null;
@@ -40,6 +40,7 @@ jest.mock('@/lib/receipt-scan', () => ({
   preparePhoto: jest.fn(async () => ({ uri: 'file:///p.jpg', width: 400, height: 200, base64: 'ORIGINAL' })),
   recognize: jest.fn(),
   renderRedacted: jest.fn(() => 'REDACTED'),
+  discardPhotoFiles: jest.fn(),
 }));
 jest.mock('@/lib/receipts', () => ({ sendScan: jest.fn(), confirmScan: jest.fn(), forgetReceipt: jest.fn(async () => true) }));
 jest.mock('@/lib/open-compare', () => ({ openCompare: jest.fn() }));
@@ -125,6 +126,11 @@ it('covers personal details before showing the preview, and sends nothing yet', 
   // Words the rules covered have no tap target; the others do.
   expect(screen.queryByLabelText('Word: Maria. Tap to cover it.')).toBeNull();
   expect(screen.getByLabelText('Word: WESTERN. Tap to cover it.')).toBeTruthy();
+});
+
+it('deletes the unredacted photo files as soon as the text is read (D135)', async () => {
+  await toPreview();
+  expect(discardPhotoFiles).toHaveBeenCalledWith('file:///r.jpg', 'file:///p.jpg');
 });
 
 it('lets the person cover another word and uncover it, redrawing each time', async () => {

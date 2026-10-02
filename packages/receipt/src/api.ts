@@ -164,6 +164,11 @@ export function parseRequest(body: unknown): Parsed {
       return { ok: false, error: 'bad image' }
     }
     if (i.base64.length > LIMITS.imageBase64 || !/^[A-Za-z0-9+/]+={0,2}$/.test(i.base64)) return { ok: false, error: 'bad image' }
+    // The bytes must really be the picture they say they are (D135): a JPEG starts FF D8 FF
+    // ("/9j/" in base64), a PNG with its 8-byte signature ("iVBORw0KGgo"). Anything else
+    // could be stored in the research bucket or sent to the model under an image's name.
+    const magic = i.mediaType === 'image/jpeg' ? '/9j/' : 'iVBORw0KGgo'
+    if (!i.base64.startsWith(magic)) return { ok: false, error: 'bad image' }
     image = { mediaType: i.mediaType, base64: i.base64 }
   }
 

@@ -73,6 +73,14 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-01, late night: security pass (D135, `docs/SECURITY.md`).** Live now: email
+  confirmation on, sign-in redirects narrowed, scan-receipt and whatsapp redeployed (image
+  check, per-address limit). In code: encrypted session on the phone, Apple nonce, photo
+  files deleted after OCR, Android backup off, privacy policy updated. Waiting on Angad's
+  `supabase db push` of `20261002000000_security_hardening` (password sign-in refused via
+  a token hook, rate limits, pg_cron deletions, function grants); then switch the hook on
+  (`hook_custom_access_token_enabled`, uri `pg-functions://postgres/public/custom_access_token_hook`)
+  and run the smoke test. The legacy JWT secret was printed into the session and must be rotated.
 - **2026-10-01, night:** blurry receipts are turned back with a reason, calibrated on synthetic
   receipts at increasing blur (D131); springs and smoother motion across the app (D132); the
   "Read by AI" line removed from the confirmation screen (D133). Checked in the simulator:

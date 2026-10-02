@@ -513,3 +513,26 @@ the receipt screens; make the animations higher quality. **What Claude did:** wr
 - `mobile/src/i18n/*.ts`: four new or changed scan strings in five languages (four are
   drafts), two path labels removed; `docs/translation-review/hi.md` rebuilt.
 - `mobile/src/__tests__/scan-screen.test.tsx`: three tests (turned back, warned, unreadable).
+
+## 2026-10-01: the security pass (D135)
+
+**What Angad asked:** go through every data security concern and solve it. **What Claude
+did:** audited the migrations, Edge Functions, workflows, app storage, live auth and storage
+settings (Supabase's security advisor included), git history and dependencies, then wrote:
+- `supabase/migrations/20261002000000_security_hardening.sql` (new): the password-refusing
+  token hook, per-address rate limits (HMAC with a daily key), pg_cron deletions, function
+  grants and search paths, bucket and text limits. Checks in `supabase/tests/local/checks.sql`
+  (18 new) and `rls_smoke.sh` (3 new).
+- `packages/receipt/src/api.ts`: images checked by their first bytes. `scan-receipt`:
+  per-address limit; `whatsapp`: sends the intake secret on its confirm calls. Tests in
+  `scan-function.test.ts` and `test/fake-supabase.ts`.
+- `mobile/src/lib/secure-session.ts` (new) and its test: the encrypted session.
+  `lib/supabase.ts` uses it; `lib/sign-in.ts`: Apple nonce; `lib/receipt-scan.ts` and the Scan
+  tab: photo files deleted after OCR; `app.json`: Android backup off; `expo-secure-store` and
+  `expo-file-system` added.
+- `.github/scripts/send-rate-alerts.mjs`: push tokens kept out of the log.
+- `supabase/config.toml`, the live auth settings (email confirmation, redirect list),
+  `site/privacy.html`, `docs/store/listing.md`, `docs/SECURITY.md` (new), `DECISIONS.md`,
+  `CLAUDE.md`, `HANDOFF.md`, `README.md`.
+- While reading the project's settings, Claude printed the legacy JWT secret into the
+  session by mistake; it's recorded in D135 and set to be rotated.

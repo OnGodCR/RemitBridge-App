@@ -1,5 +1,6 @@
 import { AlphaType, ColorType, Skia, ImageFormat } from '@shopify/react-native-skia';
 import { requireOptionalNativeModule } from 'expo';
+import { File } from 'expo-file-system';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
 import {
@@ -61,6 +62,24 @@ export async function preparePhoto(uri: string, width: number, height: number): 
   const saved = await image.saveAsync({ format: SaveFormat.JPEG, compress: JPEG_QUALITY, base64: true });
   if (!saved.base64) throw new Error('no image data');
   return { uri: saved.uri, width: saved.width, height: saved.height, base64: saved.base64 };
+}
+
+/**
+ * Deletes photo files from the app's cache (D135): the camera's or library's copy and the
+ * prepared one are the receipt before redaction, names and all. Once OCR has read the text,
+ * the screens work from the image in memory, so the files go at once rather than waiting
+ * for the system to clear the cache. Never the person's own photo library: the picker
+ * hands the app a copy.
+ */
+export function discardPhotoFiles(...uris: (string | undefined)[]) {
+  for (const uri of uris) {
+    if (!uri) continue;
+    try {
+      new File(uri).delete();
+    } catch {
+      // Already gone, or never written: nothing left to delete.
+    }
+  }
 }
 
 /** ML Kit's rectangles as the left/top/width/height frames fromMlKit reads. */

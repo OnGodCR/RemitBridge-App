@@ -430,7 +430,13 @@ async function answerCheck(p: Pending, text: string, lang: Language): Promise<{ 
 
   const res = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/scan-receipt`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}` },
+    // The intake secret exempts it from scan-receipt's per-address limit (D135): every
+    // WhatsApp user's confirmation comes from this function's own address.
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+      'x-intake-secret': Deno.env.get('RECEIPT_INTAKE_SECRET') ?? '',
+    },
     body: JSON.stringify({ action: 'confirm', id: p.pending_receipt, corrections: { [field]: value }, today: today() }),
   });
   if (!res.ok) return { reply: formatReceiptFailed(lang), pending: NO_PENDING };

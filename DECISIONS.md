@@ -1392,3 +1392,36 @@ a registered entity and a D-U-N-S number, which RemitBridge doesn't have (D49). 
 the web the same day: details confirmed, the Program License Agreement accepted and the $99
 paid by Angad on his dad's account. Apple says a purchase can take up to 48 hours to process.
 The app moves to Angad's own account when he's 18 (D123).
+
+**D135. A security pass over every place sensitive data lives or moves** (Angad, 2026-10-01:
+"go through every data security concern that could possibly arise and solve it"). The whole
+list, with what stops each threat, is `docs/SECURITY.md`. What changed:
+- **No password sign-in.** Supabase's email provider takes passwords even though the app
+  never uses one, and sign-ups were auto-confirmed: anyone could register another person's
+  address with a password and later read what that person saved. Email confirmation is now
+  on (live), and `custom_access_token_hook` refuses a token for a password sign-in or a
+  session that began with one (in the migration; switched on once it's pushed). Code
+  sign-ups get a random password from Supabase, so "has a password" couldn't be the test.
+- **Sign-in redirects** go only to `remitbridge://` and Expo Go on a private network
+  (live); `exp://**` let any Expo server on the internet receive someone's sign-in.
+- **The session on the phone** is AES-256-GCM encrypted with a Keychain/Keystore key that
+  never leaves the device (`expo-secure-store`, expo-crypto's AES); a plain-text session
+  from an older build is encrypted on first read. Android backup is off.
+- **Apple sign-in** sends a one-time nonce. **Unredacted photo files** are deleted from the
+  app's cache once OCR has read them.
+- **Rate limits per network address** on what the public key can write and on
+  scan-receipt (30 scans an hour); only an HMAC of the address with a daily random key is
+  kept, for a day. The WhatsApp function and worker are exempt via the intake secret.
+- **Images** must really be JPEG or PNG (first bytes) and at most 8 MB.
+- **Promised deletions run on a clock** (pg_cron): expired receipts hourly, WhatsApp numbers
+  within the hour, rate-limit counters daily. Before, they ran only when the next receipt or
+  photo arrived.
+- Trigger functions and `is_admin()` are no longer callable anonymously; every function has
+  a fixed search_path; free-text columns are capped; push tokens are kept out of logs; the
+  privacy policy now covers route-request emails, the network address and the safeguards.
+- Found and fixed nothing in git history (one "Meta token" hit was bytes of a sample JPEG).
+  `npm audit`'s three findings are inside Expo's build tools only.
+- **An exposure of Claude's own making:** reading the project's API settings printed the
+  legacy JWT secret into the session. It isn't public, but it is treated as compromised:
+  rotating it (move functions and workflows to the new `sb_secret_` key, then Migrate,
+  Rotate and Revoke under Settings > JWT) is Angad's next step with Claude.
