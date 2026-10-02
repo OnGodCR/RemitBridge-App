@@ -127,6 +127,8 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
+      security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
 - [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
       (2026-10-01). Left:
       - Angad pushes `20261002000000_security_hardening` (`supabase db push`); then Claude
