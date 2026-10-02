@@ -10,6 +10,7 @@
 // Mail goes through Resend's API from the address auth mail already uses (D53).
 // RESEND_API_KEY is a Supabase secret; until it's set this sends nothing and says so.
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { publishableKey, secretKey } from '../_shared/keys.ts';
 
 const FROM = 'RemitBridge <RemitBridge@remitbridgelabs.org>';
 const REPLY_TO = 'remitbridgesystemlabs@gmail.com';
@@ -27,7 +28,7 @@ Deno.serve(async (req) => {
   const auth = req.headers.get('Authorization');
   if (!auth) return json({ error: 'not signed in' }, 401);
   const url = Deno.env.get('SUPABASE_URL')!;
-  const asCaller = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, {
+  const asCaller = createClient(url, publishableKey(), {
     global: { headers: { Authorization: auth } },
     auth: { persistSession: false },
   });
@@ -39,7 +40,7 @@ Deno.serve(async (req) => {
   const routeId = typeof body.route_id === 'string' ? body.route_id.toLowerCase() : '';
   if (!/^[a-z]{2}-[a-z]{2}$/.test(routeId)) return json({ error: 'route_id like "us-np" required' }, 400);
 
-  const admin = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false } });
+  const admin = createClient(url, secretKey(), { auth: { persistSession: false } });
   const { data: route } = await admin
     .from('routes')
     .select('id, status, send_country, receive_country')

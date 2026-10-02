@@ -32,9 +32,11 @@ jobs:
       - name: Anything waiting?
         id: pending
         run: |
+          # A newer sb_secret_ key goes only in the apikey header; a legacy key is also a bearer token (D137).
+          AUTH=(); [[ "$SUPABASE_SERVICE_ROLE_KEY" == sb_* ]] || AUTH=(-H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY")
           n=$(curl -fsS "$SUPABASE_URL/rest/v1/manual_observations?select=id&status=eq.pending" \
             -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" | jq length)
+            "${AUTH[@]}" | jq length)
           echo "Pending entries: $n"
           echo "n=$n" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4

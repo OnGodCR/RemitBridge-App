@@ -12,7 +12,8 @@ const url = process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 if (!url || !key) throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are needed');
 const REST = `${url}/rest/v1`;
-const H = { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
+// A newer sb_secret_ key goes only in the apikey header; a legacy key is also a bearer token (D137).
+const H = { apikey: key, ...(key.startsWith('sb_') ? {} : { Authorization: `Bearer ${key}` }), 'Content-Type': 'application/json' };
 
 const COUNTRY = {
   'us-in': { en: 'India', es: 'India', hi: 'भारत', tl: 'India', vi: 'Ấn Độ' },

@@ -1443,3 +1443,20 @@ terms be taught in a more gamified way rather than just being basic dropdowns").
   `entering` in the app (onboarding, sign-in, Compare's cards, the Scan steps, lessons) is
   now `Rise` or a spring on the view's own transform, and taps land at once (checked in the
   simulator).
+
+**D137. Off the legacy keys, so the exposed JWT secret can be revoked** (Angad, 2026-10-02:
+"change the master key"). The legacy anon and service_role keys are tokens signed with the
+JWT secret Claude printed into a session (D135), so revoking that secret switches them off.
+First, everything was made to work with Supabase's newer keys as well:
+- Edge Functions read `SUPABASE_SECRET_KEYS` / `SUPABASE_PUBLISHABLE_KEYS` when the platform
+  provides them, else the legacy values (`supabase/functions/_shared/keys.ts`).
+- The engine, the WhatsApp photo worker, the rate-alert sender and the workflows send an
+  `sb_` key only in the apikey header (it isn't a token) and a legacy key as before; the
+  GitHub secret `SUPABASE_SERVICE_ROLE_KEY` can hold either.
+- `delete-account`, `process-prices` and `notify-route-launch` no longer rely on the
+  gateway's JWT check (it only knows the legacy secret); each already checks the caller in
+  code, and all three were tested refusing no login, a forged token and the public key (401).
+- SSL enforcement is on for the database (Angad's ask, same day).
+Then: a secret key into the GitHub secret from Angad's terminal; Migrate and Rotate under
+Settings > JWT Keys; once everything runs on the new keys, disable the legacy keys and
+revoke the old secret.

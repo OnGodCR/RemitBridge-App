@@ -10,6 +10,7 @@
 // Actions: read and write, set as a Supabase secret. Until it's set, this answers
 // { dispatched: false } and the schedule picks the entry up.
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { publishableKey } from '../_shared/keys.ts';
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const WORKFLOW = 'manual-prices.yml';
@@ -26,7 +27,7 @@ Deno.serve(async (req) => {
   const auth = req.headers.get('Authorization');
   if (!auth) return json({ error: 'not signed in' }, 401);
 
-  const asCaller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+  const asCaller = createClient(Deno.env.get('SUPABASE_URL')!, publishableKey(), {
     global: { headers: { Authorization: auth } },
     auth: { persistSession: false },
   });

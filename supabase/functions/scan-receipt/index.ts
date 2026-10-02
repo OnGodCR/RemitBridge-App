@@ -26,6 +26,7 @@
 // monthly cap bounds what a flood of requests could spend. Logs never carry the text, the
 // image or any value.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
+import { secretKey } from '../_shared/keys.ts';
 
 import {
   advertisedGap,
@@ -447,7 +448,7 @@ function json(body: unknown, status = 200): Response {
 }
 
 function service(): SupabaseClient {
-  return createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {
+  return createClient(Deno.env.get('SUPABASE_URL')!, secretKey(), {
     auth: { persistSession: false },
   });
 }

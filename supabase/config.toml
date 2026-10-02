@@ -431,6 +431,18 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 [functions.whatsapp]
 verify_jwt = false
 
+# These three check the caller in their own code (delete-account asks Auth who the token
+# belongs to; the other two read is_admin() as the caller), so the gateway's check is off:
+# it only knows the legacy JWT secret, which is being retired (D137).
+[functions.delete-account]
+verify_jwt = false
+
+[functions.process-prices]
+verify_jwt = false
+
+[functions.notify-route-launch]
+verify_jwt = false
+
 # Receipt scanning (DECISIONS.md D79, D81). Scanning works without an account, and the app's
 # publishable key isn't a JWT, so the gateway can't verify one: JWT verification is off. The
 # function checks every request itself, stores nothing that identifies anyone, and the
