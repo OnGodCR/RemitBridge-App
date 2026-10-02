@@ -1483,3 +1483,21 @@ whatsapp to this account"). Built without storing phone numbers:
   bot reply to anyone; until then only development builds show it.
 - **Not built: rate alerts by WhatsApp.** Messaging someone first needs their real number,
   which the privacy rule doesn't allow to be stored; that's Angad's call.
+
+**D139. Rate alerts by WhatsApp, with the number kept encrypted** (Angad, 2026-10-02: "you
+can store numbers as long as its encrypted for whatsapp and abides by all data
+protection/privacy"). This changes the privacy rule "on WhatsApp, store only a hashed phone
+number" for one case: a chat the person has linked to their account.
+- **When it's kept:** only when someone links WhatsApp (D138), which the app explains next to
+  the button. The bot seals the number with AES-GCM under a key only the whatsapp function
+  holds (derived from WHATSAPP_HASH_SECRET with its own label, separate from the photo
+  queue's), and stores only the sealed text (`whatsapp_users.number_sealed`).
+- **When it's deleted:** unlinking (app or UNLINK), STOP, or deleting the account clears the
+  number and deletes that person's WhatsApp alerts, by trigger, so no path can leave either
+  behind. Checked locally for all three.
+- **Who can open it:** only the whatsapp function, when the "Rate alerts" workflow hands it
+  due alerts (authenticated by RECEIPT_INTAKE_SECRET). Never logged; sent only to Meta.
+- **Alerts:** `rate_alerts.channel` is 'push' or 'whatsapp'; a WhatsApp alert needs no push
+  token and is refused without a linked chat. Messages go through the approved template
+  `rate_alert` (`docs/whatsapp-templates.md`), English and Hindi.
+- The privacy policy says all of this in plain words.

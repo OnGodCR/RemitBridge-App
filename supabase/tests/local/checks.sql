@@ -477,4 +477,52 @@ delete from auth.users where id = '00000000-0000-4000-8000-0000000000c3';
 select pg_temp.ok((select user_id is null and linked_at is null from public.whatsapp_users where phone_hash = repeat('c', 64)),
   'link: deleting the account unlinks the chat');
 
+-- ---------------------------------------------------------------------------------------
+-- Rate alerts by WhatsApp, with the number sealed (D139)
+-- ---------------------------------------------------------------------------------------
+insert into auth.users (id, email) values ('00000000-0000-4000-8000-0000000000d4', 'alerts@example.org');
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000d4');
+select pg_temp.expect($$insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, channel)
+  values ('00000000-0000-4000-8000-0000000000d4', 'us-in', 500, 'bank_deposit', 47000, 'whatsapp')$$,
+  '23514', 'whatsapp alert: refused without a linked chat');
+select pg_temp.expect($$insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received)
+  values ('00000000-0000-4000-8000-0000000000d4', 'us-in', 500, 'bank_deposit', 47000)$$,
+  '23514', 'push alert: still needs a push token');
+reset role;
+insert into public.whatsapp_link_codes (code, user_id) values ('Q8R9S2', '00000000-0000-4000-8000-0000000000d4');
+set role service_role;
+select pg_temp.ok((select public.link_whatsapp('Q8R9S2', repeat('e', 64), repeat('S', 40))), 'whatsapp alert: linked with the sealed number');
+reset role;
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000d4');
+insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, channel)
+  values ('00000000-0000-4000-8000-0000000000d4', 'us-in', 500, 'bank_deposit', 1, 'whatsapp');
+select pg_temp.ok((select count(*) = 1 from public.rate_alerts where channel = 'whatsapp'), 'whatsapp alert: allowed once linked, with no push token');
+select pg_temp.ok((select count(*) = 0 from public.whatsapp_users), 'user: sees no WhatsApp rows, sealed numbers included');
+reset role;
+set role anon;
+select pg_temp.expect($$select public.link_whatsapp('Q8R9S2', repeat('e', 64), 'x')$$, '42501', 'anon: can''t link, number or not');
+reset role;
+-- Unlinking clears the number and the alerts that would go to it.
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000d4');
+select public.unlink_whatsapp();
+reset role;
+select pg_temp.ok((select number_sealed is null and user_id is null from public.whatsapp_users where phone_hash = repeat('e', 64)),
+  'whatsapp alert: unlinking deletes the sealed number');
+select pg_temp.ok((select count(*) = 0 from public.rate_alerts where user_id = '00000000-0000-4000-8000-0000000000d4' and channel = 'whatsapp'),
+  'whatsapp alert: unlinking deletes the WhatsApp alerts');
+-- STOP (the row deleted) does the same.
+insert into public.whatsapp_link_codes (code, user_id) values ('T3U4V5', '00000000-0000-4000-8000-0000000000d4');
+set role service_role;
+select public.link_whatsapp('T3U4V5', repeat('e', 64), repeat('S', 40));
+reset role;
+insert into public.rate_alerts (user_id, route_id, send_amount, delivery_method, target_received, channel)
+  values ('00000000-0000-4000-8000-0000000000d4', 'us-in', 500, 'bank_deposit', 1, 'whatsapp');
+delete from public.whatsapp_users where phone_hash = repeat('e', 64);
+select pg_temp.ok((select count(*) = 0 from public.rate_alerts where user_id = '00000000-0000-4000-8000-0000000000d4' and channel = 'whatsapp'),
+  'whatsapp alert: STOP deletes the WhatsApp alerts');
+delete from auth.users where id = '00000000-0000-4000-8000-0000000000d4';
+
 \echo 'all local checks passed'

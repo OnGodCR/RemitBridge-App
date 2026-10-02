@@ -33,3 +33,5 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # WhatsApp alerts go through the whatsapp function, which checks this (D139).
+          RECEIPT_INTAKE_SECRET: ${{ secrets.RECEIPT_INTAKE_SECRET }}

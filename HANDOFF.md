@@ -73,6 +73,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-02: rate alerts by WhatsApp (D139).** Numbers kept sealed only while a chat is
+  linked; the alert job hands WhatsApp alerts to the whatsapp function; template text in
+  `docs/whatsapp-templates.md`. Needs `supabase db push` of `20261002020000_whatsapp_alerts`.
 - **2026-10-02: WhatsApp in the app (D138).** Linking by one-time code (no number stored),
   SAVE and UNLINK in the bot, Chat on WhatsApp in Account (development builds until
   `whatsapp_live`). Needs `supabase db push` of `20261002010000_whatsapp_link`.

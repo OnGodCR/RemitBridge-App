@@ -19,8 +19,12 @@ export interface RateAlert {
   send_amount: number;
   delivery_method: DeliveryMethod;
   target_received: number;
+  /** A phone notification, or a WhatsApp message to the linked chat (D139). */
+  channel: AlertChannel;
   created_at: string;
 }
+
+export type AlertChannel = 'push' | 'whatsapp';
 
 export type TokenResult = { ok: true; token: string } | { ok: false; reason: 'denied' | 'unavailable' };
 
@@ -45,7 +49,7 @@ export async function pushToken(): Promise<TokenResult> {
   }
 }
 
-export type CreateResult = 'on' | 'signed_out' | 'denied' | 'unavailable' | 'limit' | 'error';
+export type CreateResult = 'on' | 'signed_out' | 'denied' | 'unavailable' | 'limit' | 'not_linked' | 'error';
 
 export async function createAlert(a: {
   routeId: string;
@@ -54,13 +58,16 @@ export async function createAlert(a: {
   funding: FundingMethod;
   target: number;
   language: string;
+  channel?: AlertChannel;
 }): Promise<CreateResult> {
   if (!supabase) return 'error';
   const { data } = await supabase.auth.getSession();
   const userId = data.session?.user.id;
   if (!userId) return 'signed_out';
-  const token = await pushToken();
-  if (!token.ok) return token.reason;
+  // WhatsApp needs no permission on this phone: the message goes to the linked chat.
+  const whatsapp = a.channel === 'whatsapp';
+  const token = whatsapp ? null : await pushToken();
+  if (token && !token.ok) return token.reason;
   const { error } = await supabase.from('rate_alerts').insert({
     user_id: userId,
     route_id: a.routeId,
@@ -68,10 +75,12 @@ export async function createAlert(a: {
     delivery_method: a.method,
     payment_method: a.funding,
     target_received: a.target,
-    push_token: token.token,
+    channel: whatsapp ? 'whatsapp' : 'push',
+    push_token: token?.ok ? token.token : null,
     language: ['en', 'es', 'hi', 'tl', 'vi'].includes(a.language) ? a.language : 'en',
   });
   if (!error) return 'on';
+  if (error.message.includes('link WhatsApp first')) return 'not_linked';
   return error.message.includes('at most 10') ? 'limit' : 'error';
 }
 
@@ -81,7 +90,7 @@ export async function fetchAlerts(): Promise<RateAlert[] | null> {
   if (!s.session) return null;
   const { data, error } = await supabase
     .from('rate_alerts')
-    .select('id, route_id, send_amount, delivery_method, target_received, created_at')
+    .select('id, route_id, send_amount, delivery_method, target_received, channel, created_at')
     .order('created_at', { ascending: false });
   return error ? null : (data as RateAlert[]);
 }
