@@ -1,10 +1,10 @@
 # Partner outreach: Seattle-area organizations
 
 A shortlist for D50 (no partners yet) and PRD 6.4 (the special-handling routes need a
-community partner before they can be done well). **Eight of nine are sent** (Horn of Africa
-Services 2026-09-30, the other seven 2026-10-01). El Centro de la Raza is left: its web form
-needs a phone number and answers an anti-spam question, so Angad sends it. Log each reply
-in the table at the bottom.
+community partner before they can be done well). **All nine are sent** (Horn of Africa
+Services 2026-09-30, the other eight 2026-10-01; El Centro de la Raza by Angad through its
+web form, since it needs a phone number and an anti-spam answer). Log each reply in the
+table at the bottom.
 
 Researched 2026-09-29. Every contact below was read on the organization's own site on that
 date. Use the organization's general address or form, never a staff member's personal email.
@@ -87,7 +87,8 @@ For the Office of Immigrant and Refugee Affairs:
 I'm writing because your office connects immigrant and refugee communities with resources, and sending money home is part of life for many of them. If a free tool like this belongs on your resource list, I'd be glad to share anything you need to check it first.
 ```
 
-El Centro de la Raza takes messages through its web form, so paste the standard text there.
+El Centro de la Raza takes messages through its web form, so paste the standard text there
+(sent with one added line naming its Financial Empowerment team).
 
 ## Log
 
@@ -97,7 +98,7 @@ El Centro de la Raza takes messages through its web form, so paste the standard 
 | Filipino Community of Seattle | 2026-10-01, to info@filcommsea.org | |
 | Indian American Community Services | 2026-10-01, to Contactus@iaww.org | |
 | Casa Latina | 2026-10-01, to info@casa-latina.org | |
-| El Centro de la Raza | not sent; web form (phone number and anti-spam question), Angad's | |
+| El Centro de la Raza | 2026-10-01, by Angad through the web form at elcentrodelaraza.org/contact-us (program: Financial Empowerment; reply to remitbridgesystemlabs@gmail.com) | |
 | Financial Empowerment Network of Washington | 2026-10-01, to hello@fenwa.org | |
 | Seattle Office of Immigrant and Refugee Affairs | 2026-10-01, to OIRA@seattle.gov | |
 | Kandelia | 2026-10-01, to info@kandelia.org | |
