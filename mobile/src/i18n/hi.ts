@@ -461,6 +461,24 @@ export const hi: Copy = {
     },
   },
 
+  whatsapp: {
+    title: 'WhatsApp',
+    chat: 'WhatsApp पर बात करें',
+    hello: 'नमस्ते',
+    link: 'WhatsApp जोड़ें',
+    linkSub: 'WhatsApp की तुलनाएँ इस खाते में रखें',
+    linkSent: 'WhatsApp आपके कोड के साथ खुला है। भेजें दबाएँ, फिर यहाँ वापस आएँ।',
+    linked: 'WhatsApp जुड़ा है',
+    linkedSub: (since: string) => (since ? `${since} से। हटाने के लिए टैप करें।` : 'हटाने के लिए टैप करें।'),
+    unlinkTitle: 'WhatsApp हटाएँ?',
+    unlinkBody: 'आपकी WhatsApp चैट वैसी ही रहेगी, पर वहाँ SAVE से इस खाते में कुछ नहीं जुड़ेगा।',
+    unlink: 'हटाएँ',
+    unlinked: 'WhatsApp हटा दिया गया।',
+    cancel: 'रद्द करें',
+    failed: 'यह नहीं हुआ। अपना कनेक्शन देखें और फिर कोशिश करें।',
+    devOnly: 'सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता।',
+  },
+
   alerts: {
     link: 'बेहतर होने पर बताएँ',
     intro: (amount: string, country: string) => `तब बताएँ जब ${country} को ${amount} पर कम से कम इतना मिले`,

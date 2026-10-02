@@ -83,6 +83,12 @@ check "can't register an internal install" "42501" "$(post internal_installs "$(
 check "can't call the sign-in hook" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/custom_access_token_hook" -d '{"event":{}}')"
 check "can't touch the rate limits" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_hit_for_ip" -d '{"p_bucket":"scan","p_ip":"1.2.3.4","p_max":1,"p_window_seconds":60}')"
 check "can't call a trigger function (refused, or not offered at all)" "@(42501|PGRST202)" "$(pg "${H[@]}" -X POST "$REST/rpc/handle_new_user" -d '{}')"
+# Linking WhatsApp (D138): only a signed-in person gets a code, only the bot links.
+check "can't get a WhatsApp link code" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/whatsapp_link_code" -d '{}')"
+check "can't link a WhatsApp chat" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/link_whatsapp" -d '{"p_code":"ABCDEF","p_phone_hash":"x"}')"
+check "link codes are not readable" "0" "$(count "${H[@]}" "$REST/whatsapp_link_codes?select=code")"
+check "app settings are readable (2)" "2" "$(count "${H[@]}" "$REST/app_settings?select=key")"
+check "can't change app settings" "42501" "$(post app_settings '{"key":"whatsapp_live","value":"true"}')"
 check "can't log an event as someone else" "42501" "$(post events "$(printf '{"install_id":"%s","user_id":"%s","name":"rls_test"}' "$TEST_INSTALL" "$FAKE_USER")")"
 check "can't queue a WhatsApp photo" "42501" "$(post receipt_intake "$(printf '{"phone_hash":"%s","phone_sealed":"xxxxxxxxxxxxxxxxxxxx","media_id":"rls"}' "$(printf 'a%.0s' {1..64})")")"
 check "can't take photos off the queue" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/claim_receipt_intake" -d '{"p_limit":1}')"

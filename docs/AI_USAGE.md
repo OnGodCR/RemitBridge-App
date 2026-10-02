@@ -545,3 +545,16 @@ did:** wrote `mobile/src/lib/lesson.ts`, `mobile/src/app/lesson/[id].tsx` and th
 module screen and Learn tab changes; lesson strings in five languages (four drafts); added
 `expo-haptics`. Replaced every Reanimated `entering` animation with `Rise` in
 `components/motion-views.tsx` after finding they blocked taps.
+
+## 2026-10-02: off the legacy keys, and WhatsApp in the app (D137, D138)
+
+**What Angad asked:** change the master key, turn on SSL enforcement; then add WhatsApp to the
+app, most of all linking it to an account. **What Claude did:** moved the Edge Functions
+(`supabase/functions/_shared/keys.ts`), engine (`engine/src/remitbridge_engine/keys.py`),
+worker, scripts and workflows to work with Supabase's newer keys; turned off the gateway JWT
+check on three functions that verify callers themselves; replaced the GitHub secret from
+Angad's terminal; turned on SSL enforcement. For WhatsApp: the migration
+`20261002010000_whatsapp_link.sql` and its checks; LINK, UNLINK and SAVE in `packages/bot`
+and the whatsapp function, with tests; `mobile/src/lib/whatsapp.ts`,
+`components/whatsapp-section.tsx`, the Account tab, strings in five languages (four drafts)
+and a test; the privacy policy's WhatsApp section.

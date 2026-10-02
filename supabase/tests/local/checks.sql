@@ -422,4 +422,59 @@ select pg_temp.expect($$insert into public.saved_transfers (user_id, provider_na
   values ('00000000-0000-4000-8000-0000000000b2', 'Wise', 'USD', 'INR', 100, 88, '2026-09-01', repeat('x', 501))$$,
   '23514', 'saved transfers: a note over 500 characters is refused');
 
+-- ---------------------------------------------------------------------------------------
+-- Linking WhatsApp to an account (D138)
+-- ---------------------------------------------------------------------------------------
+insert into auth.users (id, email) values ('00000000-0000-4000-8000-0000000000c3', 'linker@example.org');
+set role anon;
+select pg_temp.as_user(null);
+select pg_temp.expect($$select public.whatsapp_link_code()$$, '42501', 'anon: can''t get a link code');
+select pg_temp.expect($$select public.link_whatsapp('ABCDEF', repeat('c', 64))$$, '42501', 'anon: can''t link a chat');
+select pg_temp.ok((select count(*) = 0 from public.whatsapp_link_codes), 'anon: link codes are not readable');
+select pg_temp.ok((select value = 'false' from public.app_settings where key = 'whatsapp_live'), 'anon: app settings are readable');
+select pg_temp.expect($$insert into public.app_settings (key, value) values ('evil', 'x')$$, '42501', 'anon: can''t change app settings');
+reset role;
+
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000c3');
+create temp table link_code as select public.whatsapp_link_code() as code;
+reset role;
+grant select on link_code to authenticated, service_role;
+select pg_temp.ok((select code ~ '^[A-HJ-NP-Z2-9]{6}$' from link_code), 'link: a six-character code without look-alike letters');
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000c3');
+select pg_temp.ok((select (public.whatsapp_link_status() ->> 'linked')::boolean = false), 'link: not linked yet');
+select pg_temp.expect($$select public.link_whatsapp((select code from link_code), repeat('c', 64))$$, '42501', 'user: can''t link a chat themselves');
+-- A second code replaces the first.
+select public.whatsapp_link_code();
+reset role;
+select pg_temp.ok((select count(*) = 1 from public.whatsapp_link_codes), 'link: one live code per person');
+delete from public.whatsapp_link_codes;
+insert into public.whatsapp_link_codes (code, user_id) values ('K7P2QX', '00000000-0000-4000-8000-0000000000c3');
+set role service_role;
+select pg_temp.ok((select public.link_whatsapp('k7p2qx', repeat('c', 64))), 'link: the function links with a valid code, any case');
+select pg_temp.ok((select not public.link_whatsapp('K7P2QX', repeat('d', 64))), 'link: a code works once');
+reset role;
+select pg_temp.ok((select user_id = '00000000-0000-4000-8000-0000000000c3' from public.whatsapp_users where phone_hash = repeat('c', 64)),
+  'link: the chat row now points at the account');
+insert into public.whatsapp_link_codes (code, user_id, expires_at) values ('ZZZZZZ', '00000000-0000-4000-8000-0000000000c3', now() - interval '1 second');
+set role service_role;
+select pg_temp.ok((select not public.link_whatsapp('ZZZZZZ', repeat('d', 64))), 'link: an expired code doesn''t work');
+reset role;
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000c3');
+select pg_temp.ok((select (public.whatsapp_link_status() ->> 'linked')::boolean), 'link: the app sees it linked');
+select public.unlink_whatsapp();
+select pg_temp.ok((select (public.whatsapp_link_status() ->> 'linked')::boolean = false), 'link: unlinked from the app');
+reset role;
+-- Linked again, then the account deleted: the chat stays, unlinked.
+delete from public.whatsapp_link_codes;
+insert into public.whatsapp_link_codes (code, user_id) values ('M3N4P5', '00000000-0000-4000-8000-0000000000c3');
+set role service_role;
+select public.link_whatsapp('M3N4P5', repeat('c', 64));
+reset role;
+delete from auth.users where id = '00000000-0000-4000-8000-0000000000c3';
+select pg_temp.ok((select user_id is null and linked_at is null from public.whatsapp_users where phone_hash = repeat('c', 64)),
+  'link: deleting the account unlinks the chat');
+
 \echo 'all local checks passed'

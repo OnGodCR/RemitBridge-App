@@ -20,6 +20,7 @@ import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise } from '@/components/motion-views';
+import { WhatsAppSection } from '@/components/whatsapp-section';
 
 /**
  * Account: what's saved (comparisons, then receipts), the admin tools for admins, the
@@ -93,6 +94,8 @@ export default function AccountScreen() {
               <Button label={a.createOrSignIn} onPress={() => router.push('/sign-in')} />
             </View>
           )}
+
+          <WhatsAppSection />
 
           {canChooseLanguage ? (
             <ListGroup title={copy.language.title} cards>

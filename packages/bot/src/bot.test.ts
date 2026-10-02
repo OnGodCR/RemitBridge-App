@@ -3,7 +3,10 @@ import { computeTransferCost } from '../../formula/src/index.ts'
 import { AMOUNTS, ROUTES } from '../../../mobile/src/lib/routes.ts'
 import {
   formatCompare,
+  formatLinked,
+  formatSaveNote,
   formatSay,
+  formatUnlinked,
   formatWhy,
   MAX_AMOUNT,
   NEW_STATE,
@@ -213,5 +216,36 @@ describe('replies', () => {
       expect(formatCompare(lang, { route: india, amount: 500, checked: 500, method: 'bank_deposit', rows, now })).not.toContain('—')
       expect(formatWhy(lang, { route: india, top: row({}) })).not.toContain('—')
     }
+  })
+})
+
+describe('linking and saving (D138)', () => {
+  it('reads a link code as the app prints it, in any case', () => {
+    expect(parse('LINK k7p2qx')).toEqual({ kind: 'link', code: 'K7P2QX' })
+    expect(parse('  link K7P2QX ')).toEqual({ kind: 'link', code: 'K7P2QX' })
+    // 0, O, 1 and I are never in a code.
+    expect(parse('link K7P2Q0').kind).not.toBe('link')
+  })
+
+  it('reads UNLINK, and SAVE with or without a comparison', () => {
+    expect(parse('unlink')).toEqual({ kind: 'unlink' })
+    expect(parse('SAVE 500 to India')).toMatchObject({ kind: 'compare', amount: 500, to: 'IN', save: true })
+    expect(parse('save')).toEqual({ kind: 'save' })
+    expect(parse('save my work')).toEqual({ kind: 'save' })
+  })
+
+  it('plans a link, an unlink, and a compare that keeps its save', () => {
+    expect(plan({ kind: 'link', code: 'K7P2QX' }, NEW_STATE).action).toEqual({ type: 'link', code: 'K7P2QX' })
+    expect(plan({ kind: 'unlink' }, NEW_STATE).action).toEqual({ type: 'unlink' })
+    expect(plan(parse('save 500 to india'), NEW_STATE).action).toMatchObject({ type: 'compare', amount: 500, save: true })
+    expect(plan({ kind: 'save' }, NEW_STATE).action).toEqual({ type: 'say', say: { key: 'saveHow' } })
+  })
+
+  it('words the replies in both languages', () => {
+    expect(formatLinked('en', true)).toMatch(/^Linked\./)
+    expect(formatLinked('hi', false)).toMatch(/कोड/)
+    expect(formatUnlinked('en', false)).toMatch(/isn't linked/)
+    expect(formatSaveNote('en', true)).toMatch(/Saved/)
+    expect(formatSay('hi', { key: 'saveHow' })).toMatch(/SAVE 500 to India/)
   })
 })

@@ -217,8 +217,8 @@ export function formatSay(lang: Language, s: Say): string {
   switch (s.key) {
     case 'help':
       return hi
-        ? `RemitBridge दिखाता है कि हर कंपनी से आपके परिवार को कितना पैसा मिलेगा।\n\nरकम और देश भेजें:\n500 to India\n300 USD MXN\nUPI 500 · cash 200\n\nदूसरे जवाब:\nWHY: छिपी हुई लागत कहाँ है\nREQUEST NEPAL: नया देश जोड़ने को कहें\nSCAM: पैसे की माँग की जाँच करें\nHINDI या ENGLISH: भाषा बदलें\n\nमुफ़्त। कोई विज्ञापन नहीं, कोई कमीशन वाला सौदा नहीं।`
-        : `RemitBridge shows what your family receives with each provider.\n\nSend an amount and a country:\n500 to India\n300 USD MXN\nUPI 500 · cash 200\n\nOther replies:\nWHY: where the hidden cost is\nREQUEST NEPAL: ask us to add a country\nSCAM: check a request for money\nHINDI or ENGLISH: change language\n\nFree. No ads, no affiliate deals.`
+        ? `RemitBridge दिखाता है कि हर कंपनी से आपके परिवार को कितना पैसा मिलेगा।\n\nरकम और देश भेजें:\n500 to India\n300 USD MXN\nUPI 500 · cash 200\n\nदूसरे जवाब:\nWHY: छिपी हुई लागत कहाँ है\nREQUEST NEPAL: नया देश जोड़ने को कहें\nSCAM: पैसे की माँग की जाँच करें\nHINDI या ENGLISH: भाषा बदलें\nSAVE 500 to India: ऐप में रखें\n\nमुफ़्त। कोई विज्ञापन नहीं, कोई कमीशन वाला सौदा नहीं।`
+        : `RemitBridge shows what your family receives with each provider.\n\nSend an amount and a country:\n500 to India\n300 USD MXN\nUPI 500 · cash 200\n\nOther replies:\nWHY: where the hidden cost is\nREQUEST NEPAL: ask us to add a country\nSCAM: check a request for money\nHINDI or ENGLISH: change language\nSAVE 500 to India: keep it in the app\n\nFree. No ads, no affiliate deals.`
     case 'askAmount':
       return hi
         ? `${countryIn(lang, s.to)} कितने पैसे भेज रहे हैं? जैसे: 500 to ${countryIn('en', s.to).replace(/^the /, '')}`
@@ -258,6 +258,10 @@ export function formatSay(lang: Language, s: Say): string {
       return hi
         ? `पहले से किए गए ट्रांसफ़र की जाँच के लिए ऐप में TrueCost खोलें और अपनी रसीद भरें। यह एक्सचेंज रेट में छिपी लागत दिखाता है: ${LINK}`
         : `To check a transfer you already made, open TrueCost in the app and enter your receipt. It shows the cost hidden in the exchange rate: ${LINK}`
+    case 'saveHow':
+      return hi
+        ? `किसी तुलना को ऐप में रखने के लिए SAVE के साथ रकम और देश भेजें, जैसे: SAVE 500 to India। पहले ऐप में WhatsApp जोड़ें: Account > Link WhatsApp। ${LINK}`
+        : `To keep a comparison in the app, send SAVE with the amount and country, like: SAVE 500 to India. Link WhatsApp in the app first: Account > Link WhatsApp. ${LINK}`
     case 'nothingPending':
       return hi
         ? 'पुष्टि करने के लिए कुछ नहीं है। रकम और देश भेजें, जैसे: 500 to India'
@@ -283,4 +287,32 @@ export function formatForgotten(lang: Language): string {
   return lang === 'hi'
     ? 'हो गया। इस नंबर के बारे में हमने जो रखा था (एक बदला हुआ ID और आपकी भाषा), वह मिटा दिया गया है। फिर से शुरू करने के लिए कभी भी लिखें।'
     : "Done. We've deleted what we kept about this number: a scrambled ID and your language setting. Write any time to start again."
+}
+
+/** After LINK <code> (D138): linked, or the code didn't work. */
+export function formatLinked(lang: Language, linked: boolean): string {
+  if (lang === 'hi') {
+    return linked
+      ? 'जुड़ गया। अब यह WhatsApp आपके RemitBridge खाते से जुड़ा है। ऐप में तुलना रखने के लिए SAVE लिखें, जैसे: SAVE 500 to India। हटाने के लिए UNLINK लिखें।'
+      : 'यह कोड काम नहीं किया। कोड 10 मिनट तक चलता है। ऐप में नया कोड लें: Account > Link WhatsApp।'
+  }
+  return linked
+    ? "Linked. This WhatsApp is now connected to your RemitBridge account. To keep a comparison in the app, send SAVE with it, like: SAVE 500 to India. Reply UNLINK to undo."
+    : "That code didn't work. Codes last 10 minutes: get a new one in the app, under Account > Link WhatsApp."
+}
+
+/** After UNLINK. */
+export function formatUnlinked(lang: Language, wasLinked: boolean): string {
+  if (lang === 'hi') {
+    return wasLinked ? 'हटा दिया गया। यह WhatsApp अब आपके ऐप खाते से जुड़ा नहीं है।' : 'यह WhatsApp किसी ऐप खाते से जुड़ा नहीं है।'
+  }
+  return wasLinked ? "Unlinked. This WhatsApp isn't connected to your app account any more." : "This WhatsApp isn't linked to an app account."
+}
+
+/** Added under a comparison sent with SAVE. */
+export function formatSaveNote(lang: Language, saved: boolean): string {
+  if (lang === 'hi') {
+    return saved ? 'ऐप में Saved में रख दिया गया।' : `रखने के लिए पहले ऐप में WhatsApp जोड़ें: Account > Link WhatsApp। ${LINK}`
+  }
+  return saved ? 'Saved to your app, under Saved.' : `To save it, link WhatsApp in the app first: Account > Link WhatsApp. ${LINK}`
 }

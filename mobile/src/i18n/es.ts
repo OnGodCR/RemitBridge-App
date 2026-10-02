@@ -461,6 +461,24 @@ export const es: Copy = {
     },
   },
 
+  whatsapp: {
+    title: 'WhatsApp',
+    chat: 'Chatear por WhatsApp',
+    hello: 'Hola',
+    link: 'Vincular WhatsApp',
+    linkSub: 'Guarda en esta cuenta las comparaciones de WhatsApp',
+    linkSent: 'WhatsApp está abierto con tu código escrito. Toca enviar y luego vuelve aquí.',
+    linked: 'WhatsApp vinculado',
+    linkedSub: (since: string) => (since ? `Desde ${since}. Toca para desvincular.` : 'Toca para desvincular.'),
+    unlinkTitle: '¿Desvincular WhatsApp?',
+    unlinkBody: 'Tu chat de WhatsApp sigue igual, pero SAVE allí dejará de guardar en esta cuenta.',
+    unlink: 'Desvincular',
+    unlinked: 'WhatsApp desvinculado.',
+    cancel: 'Cancelar',
+    failed: 'No funcionó. Revisa tu conexión e inténtalo de nuevo.',
+    devOnly: 'Solo en versiones de desarrollo, hasta que el bot de WhatsApp pueda responder a todos.',
+  },
+
   alerts: {
     link: 'Avísame cuando mejore',
     intro: (amount: string, country: string) => `Avísame cuando ${amount} a ${country} reciba al menos`,
