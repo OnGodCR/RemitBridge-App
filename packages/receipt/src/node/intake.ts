@@ -75,8 +75,7 @@ async function claim(deps: IntakeDeps, limit: number): Promise<IntakeJob[]> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      apikey: deps.serviceKey,
-      Authorization: `Bearer ${deps.serviceKey}`,
+      ...keyHeaders(deps.serviceKey),
     },
     body: JSON.stringify({ p_limit: limit }),
   })
@@ -97,7 +96,7 @@ async function readPhoto(deps: IntakeDeps, job: IntakeJob): Promise<{ outcome: O
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${deps.serviceKey}`,
+        ...keyHeaders(deps.serviceKey),
         'x-intake-secret': deps.intakeSecret,
       },
       body: JSON.stringify(body),
@@ -138,4 +137,12 @@ export function fitLimits(page: OcrPage): OcrPage {
       .filter((l) => l.words.length)
       .slice(0, LIMITS.lines),
   }
+}
+
+/**
+ * The service key's headers (D137): a legacy service_role key is a token, sent as apikey and
+ * bearer; a newer sb_secret_ key goes only in the apikey header.
+ */
+function keyHeaders(key: string): Record<string, string> {
+  return key.startsWith('sb_') ? { apikey: key } : { apikey: key, Authorization: `Bearer ${key}` }
 }

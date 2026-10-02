@@ -20,6 +20,8 @@ from typing import Any, Protocol
 
 import httpx
 
+from .keys import key_headers
+
 from .models import MidMarketRate, Quote, ValidationStatus
 
 
@@ -126,11 +128,7 @@ class LocalStore:
 class SupabaseStore:
     def __init__(self, url: str, service_key: str, client: httpx.AsyncClient) -> None:
         self.rest = f"{url.rstrip('/')}/rest/v1"
-        self.headers = {
-            "apikey": service_key,
-            "Authorization": f"Bearer {service_key}",
-            "Content-Type": "application/json",
-        }
+        self.headers = {**key_headers(service_key), "Content-Type": "application/json"}
         self.client = client
 
     @classmethod

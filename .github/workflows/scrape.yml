@@ -49,9 +49,11 @@ jobs:
         if: steps.configured.outputs.ok == 'true'
         working-directory: .
         run: |
+          # A newer sb_secret_ key goes only in the apikey header; a legacy key is also a bearer token (D137).
+          AUTH=(); [[ "$SUPABASE_SERVICE_ROLE_KEY" == sb_* ]] || AUTH=(-H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY")
           n=$(curl -fsS "$SUPABASE_URL/rest/v1/routes?select=id" \
             -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" | jq length)
+            "${AUTH[@]}" | jq length)
           echo "Routes readable: $n"
           test "$n" -ge 4
       - uses: actions/checkout@v4

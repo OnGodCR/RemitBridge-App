@@ -29,6 +29,7 @@
 // Deployed with JWT verification off (supabase/config.toml), because Meta can't send a
 // Supabase token; the signature check below is what keeps strangers out.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
+import { publishableKey, secretKey } from '../_shared/keys.ts';
 
 import {
   formatCompare,
@@ -243,7 +244,7 @@ async function act(db: SupabaseClient, action: Exclude<Action, { type: 'forget' 
 
 /** Published prices only: read with the public key, so RLS decides exactly as it does for the app. */
 async function quotes(routeId: string, amount: number, method: string): Promise<QuoteRow[]> {
-  const pub = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+  const pub = createClient(Deno.env.get('SUPABASE_URL')!, publishableKey(), {
     auth: { persistSession: false },
   });
   const { data } = await pub
@@ -434,7 +435,8 @@ async function answerCheck(p: Pending, text: string, lang: Language): Promise<{ 
     // WhatsApp user's confirmation comes from this function's own address.
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+      // A publishable key goes in the apikey header; it isn't a token (D137).
+      apikey: publishableKey(),
       'x-intake-secret': Deno.env.get('RECEIPT_INTAKE_SECRET') ?? '',
     },
     body: JSON.stringify({ action: 'confirm', id: p.pending_receipt, corrections: { [field]: value }, today: today() }),
@@ -532,7 +534,7 @@ function installId(hash: string): string {
 }
 
 function service(): SupabaseClient {
-  return createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {
+  return createClient(Deno.env.get('SUPABASE_URL')!, secretKey(), {
     auth: { persistSession: false },
   });
 }

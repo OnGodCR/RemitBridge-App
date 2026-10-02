@@ -12,6 +12,8 @@ from typing import Protocol
 
 import httpx
 
+from .keys import key_headers
+
 from .models import RawResponse
 
 
@@ -47,7 +49,7 @@ class SupabaseArchive:
 
     def __init__(self, url: str, service_key: str, client: httpx.AsyncClient) -> None:
         self.base = f"{url.rstrip('/')}/storage/v1/object/{self.BUCKET}"
-        self.headers = {"Authorization": f"Bearer {service_key}", "apikey": service_key}
+        self.headers = key_headers(service_key)
         self.client = client
 
     @classmethod

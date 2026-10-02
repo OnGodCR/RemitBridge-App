@@ -8,6 +8,7 @@
 // The service-role key never leaves this function: the platform injects it. The caller
 // proves who they are with their own access token, and can only ever delete themselves.
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { secretKey } from '../_shared/keys.ts';
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -22,7 +23,7 @@ Deno.serve(async (req) => {
   if (!token) return json({ error: 'not signed in' }, 401);
 
   const url = Deno.env.get('SUPABASE_URL')!;
-  const admin = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {
+  const admin = createClient(url, secretKey(), {
     auth: { persistSession: false },
   });
 
