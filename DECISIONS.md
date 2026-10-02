@@ -1501,3 +1501,6 @@ number" for one case: a chat the person has linked to their account.
   token and is refused without a linked chat. Messages go through the approved template
   `rate_alert` (`docs/whatsapp-templates.md`), English and Hindi.
 - The privacy policy says all of this in plain words.
+- 2026-10-02, done: Angad disabled the legacy API keys and revoked the legacy HS256 secret.
+  Checked: the secret shows "revoked", the old anon key is refused as a key and as a token
+  (401), the smoke test passes 63/63, and the Manual prices workflow passes on the new key.

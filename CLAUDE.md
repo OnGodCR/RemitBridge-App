@@ -140,12 +140,9 @@ Angad does this once the app itself is finished (D117).
       (2026-10-01). Left:
       - [x] Migration pushed by Angad, sign-in hook on, smoke test 58/58 (2026-10-02).
       - [x] SSL enforcement on (2026-10-02).
-      - **Retire the exposed legacy JWT secret (D137):** everything moved to the newer keys
-        and tested live (functions, GitHub secret replaced from Angad's terminal, rate
-        alerts, manual prices and a full Scrape run); the project already signs logins with
-        an ECC key, the legacy HS256 secret listed as "previously used". Left, Angad's
-        clicks (the browser step was refused for Claude): API Keys > Legacy > Disable
-        JWT-based API keys (type "disable"), then JWT Keys > the Legacy HS256 key > Revoke.
+      - [x] **Exposed legacy JWT secret retired (D137):** everything moved to the newer keys,
+        legacy keys disabled and the HS256 secret revoked by Angad; the old key now gets 401,
+        smoke test 63/63, workflows pass on the new key. Done 2026-10-02.
       - Two-factor on every account that can reach data (Supabase, GitHub, Expo, the
         RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta), Angad's.
 
