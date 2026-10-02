@@ -114,10 +114,9 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow up on 2026-10-12
       (calendar reminder set). Log replies in `docs/outreach/permission-request.md` (D52).
-- [ ] **Partner emails** (D50): eight of nine sent from the RemitBridge Gmail (Horn of Africa
-      Services 2026-09-30, the other seven 2026-10-01). Left: El Centro de la Raza's web form
-      (it needs a phone number and answers an anti-spam question), Angad's. Log replies in
-      `docs/outreach/partners.md`.
+- [x] **Partner emails** (D50): all nine sent. Eight from the RemitBridge Gmail (Horn of
+      Africa Services 2026-09-30, the other seven 2026-10-01); El Centro de la Raza through its
+      web form by Angad, 2026-10-01. Log replies in `docs/outreach/partners.md`.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads
