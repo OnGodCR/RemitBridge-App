@@ -7,12 +7,14 @@ type Row = Record<string, unknown>
 export const tables: Record<string, Row[]> = {}
 export const storage: { bucket: string; path: string; bytes: number; contentType?: string }[] = []
 export const rpcs: { name: string; args: unknown }[] = []
+const hits = new Map<string, number>()
 let modelCalls = 0
 
 export function reset() {
   for (const k of Object.keys(tables)) delete tables[k]
   storage.length = 0
   rpcs.length = 0
+  hits.clear()
   modelCalls = 0
 }
 
@@ -28,6 +30,13 @@ export function createClient(_url: string, _key: string) {
           return { data: true, error: null }
         }
         return { data: false, error: null }
+      }
+      // Per-address limits (D135): counts hits per bucket and address, as the database does.
+      if (name === 'take_hit_for_ip') {
+        if (!args?.p_ip) return { data: true, error: null }
+        const k = `${args.p_bucket}|${args.p_ip}`
+        hits.set(k, (hits.get(k) ?? 0) + 1)
+        return { data: hits.get(k)! <= Number(args.p_max), error: null }
       }
       if (name === 'forget_expired_receipts') {
         const now = Date.now()

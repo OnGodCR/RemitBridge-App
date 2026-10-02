@@ -113,8 +113,10 @@ Account deletion: Account > Delete account.
 Contact: remitbridgesystemlabs@gmail.com
 ```
 
-Export compliance: answered in the app's config (`usesNonExemptEncryption: false`, it
-uses only standard HTTPS), so App Store Connect won't ask on each upload.
+Export compliance: answered in the app's config (`usesNonExemptEncryption: false`), so App
+Store Connect won't ask on each upload. The app uses HTTPS, and encrypts its own sign-in
+session on the phone with the operating system's AES (CryptoKit on iOS, through expo-crypto,
+D135): encryption that only protects the app's own data is exempt, so the answer stays no.
 
 ## Google Play
 

@@ -127,6 +127,17 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
+      (2026-10-01). Left:
+      - Angad pushes `20261002000000_security_hardening` (`supabase db push`); then Claude
+        switches on the sign-in hook and runs `rls_smoke.sh`.
+      - **Rotate the legacy JWT secret**, printed into a Claude session on 2026-10-01: move
+        the functions and GitHub Actions to an `sb_secret_` key, then Migrate, Rotate and
+        Revoke under Settings > JWT (Angad's clicks, with Claude).
+      - SSL enforcement on in the Supabase dashboard (Database > Settings), Angad's.
+      - Two-factor on every account that can reach data (Supabase, GitHub, Expo, the
+        RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta), Angad's.
+
 - [x] **Store listing drafted** (`docs/store/listing.md`), store build config tidied, and
       the public Supabase values set for preview and production builds (D123). Done 2026-10-01.
 - [x] **Android push notifications set up (D127):** Firebase project `remitbridge`, its Android

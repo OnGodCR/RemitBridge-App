@@ -63,6 +63,9 @@ import {
 import { checkedAmountFor, ROUTES } from '../../../mobile/src/lib/routes.ts';
 
 const DEFAULT_CAP = 2000;
+/** Per network address, per hour; generous enough for a school or office behind one address. */
+const SCANS_PER_HOUR = 30;
+const FOLLOWUPS_PER_HOUR = 200;
 const KEEP_DAYS = 30;
 const BUCKET = 'receipt-images';
 
@@ -85,6 +88,20 @@ Deno.serve(async (req) => {
   if (!parsed.ok) return json({ error: parsed.error }, 400);
 
   const db = service();
+  // Per network address (D135), so one caller can't fill the tables or spend the month's
+  // model calls. The WhatsApp function and its worker prove themselves with the intake
+  // secret and aren't limited: they share addresses across every WhatsApp user.
+  if (!fromWorker(req)) {
+    const [bucket, max] = parsed.request.action === 'scan' ? ['scan', SCANS_PER_HOUR] : ['scan_followup', FOLLOWUPS_PER_HOUR];
+    const { data: allowed, error: limitError } = await db.rpc('take_hit_for_ip', {
+      p_bucket: bucket,
+      p_ip: clientIp(req),
+      p_max: max,
+      p_window_seconds: 3600,
+    });
+    // Before the migration is live the function doesn't exist: fail open, as before.
+    if (!limitError && allowed === false) return json({ error: 'too many requests' }, 429);
+  }
   try {
     if (parsed.request.action === 'forget') {
       await forget(db, parsed.request.id);
@@ -390,6 +407,12 @@ function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClie
       return client.complete(request);
     },
   };
+}
+
+/** The caller's address, as Supabase's gateway passes it on; null if there's none. */
+function clientIp(req: Request): string | null {
+  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  return req.headers.get('cf-connecting-ip') ?? req.headers.get('x-real-ip') ?? (forwarded || null);
 }
 
 function fromWorker(req: Request): boolean {

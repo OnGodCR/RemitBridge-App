@@ -1,5 +1,6 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
+import { CryptoDigestAlgorithm, digestStringAsync, randomUUID } from 'expo-crypto';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { Platform } from 'react-native';
@@ -54,16 +55,21 @@ export async function signInWithApple(): Promise<Result> {
   if (!supabase) return 'notConnected';
   if (!(await providerEnabled('apple'))) return 'notReady';
   try {
+    // A one-time nonce (D135): Apple puts its hash in the token, and Supabase checks it
+    // against the original, so a token copied from somewhere else can't be replayed.
+    const nonce = randomUUID();
     const credential = await AppleAuthentication.signInAsync({
       requestedScopes: [
         AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
         AppleAuthentication.AppleAuthenticationScope.EMAIL,
       ],
+      nonce: await digestStringAsync(CryptoDigestAlgorithm.SHA256, nonce),
     });
     if (!credential.identityToken) return friendly('');
     const { error } = await supabase.auth.signInWithIdToken({
       provider: 'apple',
       token: credential.identityToken,
+      nonce,
     });
     return error ? friendly(error.message) : null;
   } catch (e) {

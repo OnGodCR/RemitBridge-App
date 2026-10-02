@@ -38,7 +38,8 @@ const poorPhoto = {
 }
 const redacted = redactPage(poorPhoto, detectPii(poorPhoto))
 const clean = redactPage(wu.page, detectPii(wu.page))
-const IMAGE = { mediaType: 'image/jpeg', base64: btoa('not really a jpeg') }
+/** A JPEG's first bytes (FF D8 FF), then not really a JPEG: enough for the magic-byte check. */
+const IMAGE = { mediaType: 'image/jpeg', base64: btoa('\xff\xd8\xffnot really a jpeg') }
 const TODAY = new Date().toISOString().slice(0, 10)
 
 /** The model reads every field of the Western Union receipt correctly. */
@@ -186,6 +187,38 @@ describe('a scan', () => {
   })
 })
 
+describe('limits (D135)', () => {
+  const from = (ip: string, over: Record<string, unknown> = {}) =>
+    handler(
+      new Request('https://example.supabase.co/functions/v1/scan-receipt', {
+        method: 'POST',
+        headers: { 'x-forwarded-for': `${ip}, 10.0.0.1`, ...((over.headers as Record<string, string>) ?? {}) },
+        body: JSON.stringify({ action: 'scan', page: redacted, research_consent: false, today: TODAY }),
+      }),
+    )
+
+  it('refuses a caller past 30 scans an hour, but not the next address', async () => {
+    env.GROQ_API_KEY = undefined
+    for (let i = 0; i < 30; i++) expect((await from('203.0.113.5')).status).toBe(200)
+    expect((await from('203.0.113.5')).status).toBe(429)
+    expect((await from('203.0.113.6')).status).toBe(200)
+    expect(tables.receipts).toHaveLength(31)
+  })
+
+  it('doesn’t limit the WhatsApp function and its worker, which hold the intake secret', async () => {
+    env.GROQ_API_KEY = undefined
+    for (let i = 0; i < 31; i++) expect((await from('198.51.100.1', { headers: { 'x-intake-secret': 'intake-secret' } })).status).toBe(200)
+  })
+
+  it('refuses bytes that aren’t the picture they claim to be', async () => {
+    const res = await call({ action: 'scan', page: redacted, research_consent: true, today: TODAY, image: { mediaType: 'image/jpeg', base64: btoa('<html>nope</html>') } })
+    expect(res.status).toBe(400)
+    const png = await call({ action: 'scan', page: redacted, research_consent: true, today: TODAY, image: { mediaType: 'image/png', base64: IMAGE.base64 } })
+    expect(png.status).toBe(400)
+    expect(storage).toEqual([])
+  })
+})
+
 describe('the server’s second redaction', () => {
   it('hides what the phone missed, and then doesn’t use or keep the image', async () => {
     replies.push(goodAnswer())
@@ -232,7 +265,7 @@ describe('research consent', () => {
     replies.push(goodAnswer())
     const { body } = await scan({ image: IMAGE, research_consent: true })
     expect(body.expires_at).toBeNull()
-    expect(storage).toEqual([{ bucket: 'receipt-images', path: `${body.id}.jpg`, bytes: 17, contentType: 'image/jpeg' }])
+    expect(storage).toEqual([{ bucket: 'receipt-images', path: `${body.id}.jpg`, bytes: 20, contentType: 'image/jpeg' }])
     expect(tables.receipts[0]).toMatchObject({ research_consent: true, image_retained: true, image_path: `${body.id}.jpg`, expires_at: null })
   })
 
@@ -272,7 +305,7 @@ describe('forgetting', () => {
     replies.push(goodAnswer())
     await scan()
     expect(tables.receipts.map((r) => r.id)).not.toContain('old')
-    expect(rpcs[0].name).toBe('forget_expired_receipts')
+    expect(rpcs.map((r) => r.name)).toContain('forget_expired_receipts')
   })
 })
 

@@ -149,9 +149,18 @@ enabled = true
 # in emails.
 site_url = "https://remitbridgelabs.org"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-# remitbridge:// is the app scheme (app.json); exp://** lets Expo Go receive OAuth
-# redirects during development.
-additional_redirect_urls = ["remitbridge://**", "exp://**"]
+# remitbridge:// is the app scheme (app.json). Expo Go, during development, only on this Mac or
+# a private network (D135): "exp://**" let any Expo server on the internet receive a sign-in.
+additional_redirect_urls = [
+  "remitbridge://**",
+  "exp://127.0.0.1:8081/**",
+  "exp://localhost:8081/**",
+  "exp://192.168.*.*:8081/**",
+  "exp://10.*.*.*:8081/**",
+  "exp://172.1[6-9].*.*:8081/**",
+  "exp://172.2[0-9].*.*:8081/**",
+  "exp://172.3[0-1].*.*:8081/**",
+]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # JWT issuer URL. If not set, defaults to the local API URL (http://127.0.0.1:<port>/auth/v1).
@@ -203,8 +212,10 @@ enable_signup = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
-# If enabled, users need to confirm their email address before signing in.
-enable_confirmations = false
+# If enabled, users need to confirm their email address before signing in. On (D135): with it
+# off, a sign-up with a password was confirmed at once, for any address. The app's email
+# code confirms the address as it signs in, so people see no difference.
+enable_confirmations = true
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
@@ -276,9 +287,10 @@ max_frequency = "5s"
 # uri = "pg-functions://postgres/auth/before-user-created-hook"
 
 # This hook runs before a token is issued and allows you to add additional claims based on the authentication method used.
-# [auth.hook.custom_access_token]
-# enabled = true
-# uri = "pg-functions://<database>/<schema>/<hook_name>"
+# Refuses password sign-in (D135, supabase/migrations/20261002000000_security_hardening.sql).
+[auth.hook.custom_access_token]
+enabled = true
+uri = "pg-functions://postgres/public/custom_access_token_hook"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]

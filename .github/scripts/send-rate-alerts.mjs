@@ -66,17 +66,22 @@ for (let i = 0; i < messages.length; i += 100) {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(batch),
   });
-  if (!r.ok) throw new Error(`Expo push: HTTP ${r.status} ${await r.text()}`);
+  if (!r.ok) throw new Error(`Expo push: HTTP ${r.status} ${redactTokens(await r.text())}`);
   const { data } = await r.json();
   data.forEach((ticket, j) => {
     const alert = due[i + j];
     if (ticket.status === 'ok') sent.push(alert.id);
     else if (ticket.details?.error === 'DeviceNotRegistered') gone.push(alert.id);
-    else console.log(`alert ${alert.id}: ${ticket.message}`);
+    else console.log(`alert ${alert.id}: ${redactTokens(ticket.message)}`);
   });
 }
 
 const ids = (list) => `(${list.join(',')})`;
+
+// Expo's messages can quote the phone's push token; the Actions log never shows one (D135).
+function redactTokens(text) {
+  return String(text ?? '').replace(/Expo(nent)?PushToken\[[^\]]*\]/g, 'ExpoPushToken[hidden]');
+}
 if (sent.length) {
   const r = await fetch(`${REST}/rate_alerts?id=in.${ids(sent)}`, {
     method: 'PATCH',

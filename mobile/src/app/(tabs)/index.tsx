@@ -27,7 +27,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import type { Copy } from '@/i18n/en';
 import { isoDay } from '@/lib/fx';
-import { canScan, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
+import { canScan, discardPhotoFiles, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
@@ -107,9 +107,12 @@ export default function ScanScreen() {
     if (!asset) return;
 
     setStep({ kind: 'reading' });
+    let photo: PreparedPhoto | undefined;
     try {
-      const photo = await preparePhoto(asset.uri, asset.width, asset.height);
+      photo = await preparePhoto(asset.uri, asset.width, asset.height);
       const ocr = await recognize(photo);
+      // The unredacted files aren't needed past this point (D135); the image stays in memory.
+      discardPhotoFiles(asset.uri, photo.uri);
       if (!ocr.ok) {
         const messages = { no_text: s.noText, misaligned: s.misaligned, blurry: s.tooBlurry, unavailable: s.needsBuild };
         if (ocr.reason === 'blurry') track('receipt_blurry', {});
@@ -127,6 +130,7 @@ export default function ScanScreen() {
         blurry: ocr.sharpness === 'somewhat_blurry',
       });
     } catch {
+      discardPhotoFiles(asset.uri, photo?.uri);
       setStep({ kind: 'start', message: s.failed });
     }
   };

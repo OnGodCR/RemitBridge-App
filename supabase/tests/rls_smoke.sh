@@ -79,6 +79,10 @@ check "can't make a profile (or an admin)" "42501" "$(post profiles "$(printf '{
 check "can't save a transfer" "42501" "$(post saved_transfers "$(printf '{"user_id":"%s","provider_name":"x","send_currency":"USD","receive_currency":"INR","sent":1,"quoted_rate":1,"sent_on":"2026-01-01"}' "$FAKE_USER")")"
 check "can't save a comparison" "42501" "$(post saved_comparisons "$(printf '{"user_id":"%s","route_id":"us-in","send_amount":500,"delivery_method":"upi"}' "$FAKE_USER")")"
 check "can't register an internal install" "42501" "$(post internal_installs "$(printf '{"install_id":"%s","label":"x"}' "$FAKE_USER")")"
+# Security hardening (D135): functions a stranger must not call.
+check "can't call the sign-in hook" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/custom_access_token_hook" -d '{"event":{}}')"
+check "can't touch the rate limits" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_hit_for_ip" -d '{"p_bucket":"scan","p_ip":"1.2.3.4","p_max":1,"p_window_seconds":60}')"
+check "can't call a trigger function (refused, or not offered at all)" "@(42501|PGRST202)" "$(pg "${H[@]}" -X POST "$REST/rpc/handle_new_user" -d '{}')"
 check "can't log an event as someone else" "42501" "$(post events "$(printf '{"install_id":"%s","user_id":"%s","name":"rls_test"}' "$TEST_INSTALL" "$FAKE_USER")")"
 check "can't queue a WhatsApp photo" "42501" "$(post receipt_intake "$(printf '{"phone_hash":"%s","phone_sealed":"xxxxxxxxxxxxxxxxxxxx","media_id":"rls"}' "$(printf 'a%.0s' {1..64})")")"
 check "can't take photos off the queue" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/claim_receipt_intake" -d '{"p_limit":1}')"
