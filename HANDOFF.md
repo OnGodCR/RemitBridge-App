@@ -73,6 +73,9 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-02, early: gamified Learn (D136).** Lessons with cards, quizzes, XP, combo,
+  streak and a finish screen replace the fold-out definitions; the dropped-first-tap cause
+  (Reanimated `entering` animations) found and removed app-wide.
 - **2026-10-01, late night: security pass (D135, `docs/SECURITY.md`).** Live now: email
   confirmation on, sign-in redirects narrowed, scan-receipt and whatsapp redeployed (image
   check, per-address limit). In code: encrypted session on the phone, Apple nonce, photo

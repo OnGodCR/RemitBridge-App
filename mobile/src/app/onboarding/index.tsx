@@ -1,11 +1,10 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import { LogoMark } from '@/components/brand';
 import { LanguageButton } from '@/components/language-picker';
-import { rise } from '@/components/motion';
+import { Rise } from '@/components/motion-views';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
@@ -35,33 +34,33 @@ export default function Welcome() {
       of={4}
       back={false}
       actions={
-        <Animated.View entering={rise(4)} style={styles.actions}>
+        <Rise step={4} style={styles.actions}>
           <Button label={w.getStarted} trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />
           <Button
             label={w.haveAccount}
             variant="secondary"
             onPress={() => router.push({ pathname: '/sign-in', params: { from: 'onboarding' } })}
           />
-        </Animated.View>
+        </Rise>
       }>
       <View style={styles.hero}>
         {/* First thing on the first screen, so nobody has to get through English to find it. */}
-        <Animated.View entering={rise(0)}>
+        <Rise step={0}>
           <LanguageButton />
-        </Animated.View>
-        <Animated.View entering={rise(0)}>
+        </Rise>
+        <Rise step={0}>
           <LogoMark width={88} />
-        </Animated.View>
-        <Animated.View entering={rise(1)} accessible accessibilityRole="header" accessibilityLabel={`${w.lead} ${w.accent.replace('\n', ' ')}`}>
+        </Rise>
+        <Rise step={1} accessible accessibilityRole="header" accessibilityLabel={`${w.lead} ${w.accent.replace('\n', ' ')}`}>
           <AppText style={[styles.display, { color: t.text }]}>{w.lead}</AppText>
           {/* Broken by hand: left to wrap, the green line strands "much" on its own. */}
           <AppText style={[styles.display, { color: t.primary }]}>{w.accent}</AppText>
-        </Animated.View>
-        <Animated.View entering={rise(2)}>
+        </Rise>
+        <Rise step={2}>
           <AppText style={[styles.intro, { color: t.textSecondary }]}>
             {w.intro}
           </AppText>
-        </Animated.View>
+        </Rise>
       </View>
     </Step>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Easing, Keyframe, ReduceMotion, useReducedMotion, type WithSpringConfig } from 'react-native-reanimated';
+import { Easing, ReduceMotion, useReducedMotion, type WithSpringConfig } from 'react-native-reanimated';
 
 /**
  * The app's motion vocabulary (D132). Things that move because of a touch or a choice (a
@@ -19,19 +19,12 @@ export const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
  * 0.55s on an ease-out curve, staggered 0.06 / 0.14 / 0.22 / 0.3s. Kept short and small on
  * purpose, as the site says: "anything that slides a long way reads as decoration", and
  * "past about half a second the page feels slow". Used on hero content only. Off when the
- * phone asks for reduced motion.
+ * phone asks for reduced motion. Drawn by Rise (components/motion-views.tsx).
  */
-const DELAYS = [0, 60, 140, 220, 300];
-
-export function rise(step: number) {
-  return new Keyframe({
-    0: { opacity: 0, transform: [{ translateY: 12 }] },
-    100: { opacity: 1, transform: [{ translateY: 0 }], easing: Easing.out(Easing.poly(5)) },
-  })
-    .duration(550)
-    .delay(DELAYS[Math.min(step, DELAYS.length - 1)])
-    .reduceMotion(ReduceMotion.System);
-}
+export const RISE_DELAYS = [0, 60, 140, 220, 300];
+export const RISE_DURATION = 550;
+export const RISE_DISTANCE = 12;
+export const RISE_EASING = Easing.out(Easing.poly(5));
 
 /**
  * The website's figure count-up (src/lib/useInView.js): from zero to the value over 1.1s,

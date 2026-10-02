@@ -95,9 +95,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **A blurry receipt on a real phone (D131):** the blur limits were calibrated on
       tesseract, not ML Kit; check that a shaky photo is turned back and a sharp one isn't.
 - [ ] **Apple and Google sign-in** on a real iPhone (the simulator hides Apple).
-- [ ] **Dropped first tap:** in the simulator, the first tap after a screen change sometimes
-      seemed dropped; on 2026-09-30 at least some had landed and the screenshot lagged.
-      Check on a real phone.
+- [ ] **Dropped first tap:** found and fixed 2026-10-01 (D136): Reanimated `entering`
+      animations kept views from taking taps for a few seconds; all replaced. Confirm on a real phone.
 - [ ] **WhatsApp:** text "500 to India", then send a receipt photo.
 - [ ] **Launch email:** the first real send, when a requested route goes live.
 

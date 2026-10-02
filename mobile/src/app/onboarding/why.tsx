@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import { Eyebrow } from '@/components/brand';
-import { rise, useCountUp } from '@/components/motion';
+import { useCountUp } from '@/components/motion';
+import { Rise } from '@/components/motion-views';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
@@ -33,16 +33,16 @@ export default function Why() {
       of={4}
       tone="band"
       actions={
-        <Animated.View entering={rise(4)}>
+        <Rise step={4}>
           <Button label={w.continue} variant="inverse" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/route')} />
-        </Animated.View>
+        </Rise>
       }>
-      <Animated.View entering={rise(0)} style={styles.head}>
+      <Rise step={0} style={styles.head}>
         <Eyebrow onDark>{w.eyebrow}</Eyebrow>
         <AppText accessibilityRole="header" style={[styles.heading, { color: t.heroText }]}>
           {w.heading}
         </AppText>
-      </Animated.View>
+      </Rise>
       <View style={styles.stats}>
         {STATS.map((s, i) => (
           <Stat key={s.key} stat={s} step={i + 1} />
@@ -67,7 +67,7 @@ function Stat({ stat: s, step }: { stat: (typeof STATS)[number]; step: number })
   const prefix = 'prefix' in s ? s.prefix : '';
   const final = `${prefix}${s.value.toFixed(decimals)}${s.suffix}`;
   return (
-    <Animated.View entering={rise(step)} accessible accessibilityLabel={`${final}. ${label}. ${note}`}>
+    <Rise step={step} accessible accessibilityLabel={`${final}. ${label}. ${note}`}>
       <AppText style={[styles.value, { color: t.heroText }]}>
         {prefix}
         {shown}
@@ -76,7 +76,7 @@ function Stat({ stat: s, step }: { stat: (typeof STATS)[number]; step: number })
       <AppText style={[styles.label, { color: t.heroText }]}>{label}</AppText>
       {/* The website measured its muted grey at 1.1:1 on this green; 90% white is 5.2:1. */}
       <AppText style={[styles.note, { color: t.heroText, opacity: 0.9 }]}>{note}</AppText>
-    </Animated.View>
+    </Rise>
   );
 }
 

@@ -1,7 +1,7 @@
 import { Redirect, router, Stack, useLocalSearchParams } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { MODULE_ART } from '@/components/module-art';
@@ -10,25 +10,23 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { MODULES, moduleFor, moduleTerms } from '@/data/modules';
+import { WORDS_PER_LESSON } from '@/lib/lesson';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { termIn } from '@/data/glossary-translations';
-import { markLearned, moduleProgress, useLearned } from '@/lib/learn-progress';
+import { moduleProgress, useLearned } from '@/lib/learn-progress';
 import { track } from '@/lib/track';
 import { GrowBar } from '@/components/motion-views';
 
 /**
- * One Learn module (DECISIONS.md D104): its drawing and what it covers, then its terms as
- * numbered lessons in reading order, each opening to the glossary's plain definition (so
- * the page starts as a short list, not a wall of text), then the tool that puts it to use.
- * Definitions are English in every language for now, as in the glossary.
- *
- * Progress (D107): opening a lesson counts it as learned; the bar at the top fills, the
- * number turns into a tick, and once every lesson is read the module says so and offers
- * the next one. Learn's Continue opens the module on its first unread lesson (`open`).
+ * One Learn module (DECISIONS.md D104, D136): its drawing and what it covers, how far you've
+ * got, and a lesson to start: the words are taught and quizzed in app/lesson/[id].tsx, in
+ * place of the fold-out definitions this screen used to have. Below, the module's words, a
+ * tick on each one learned; tapping a word opens it in the glossary. Then the tool that puts
+ * the module to use.
  */
 export default function ModuleScreen() {
-  const { id, open } = useLocalSearchParams<{ id: string; open?: string }>();
+  const { id } = useLocalSearchParams<{ id: string }>();
   const m = moduleFor(id);
   const learned = useLearned();
   const t = useTheme();
@@ -47,6 +45,7 @@ export default function ModuleScreen() {
   const toolTitle = tool ? (tool.title === 'compare' ? copy.tabs.compare : copy.titles[tool.title]) : null;
   const { read, total, complete } = moduleProgress(m, learned);
   const following = MODULES[MODULES.findIndex((x) => x.id === m.id) + 1];
+  const fresh = Math.min(WORDS_PER_LESSON, total - read);
 
   return (
     <>
@@ -75,11 +74,12 @@ export default function ModuleScreen() {
           </AppText>
         </View>
 
-        <ListGroup>
-          {terms.map((term, i) => (
-            <Lesson key={term.id} n={i + 1} term={term} learned={learned.has(term.id)} startOpen={term.id === open} />
-          ))}
-        </ListGroup>
+        <Button
+          variant={complete ? 'secondary' : 'primary'}
+          label={complete ? l.lesson.practice : l.lesson.start(fresh)}
+          trailingIcon="arrow.right"
+          onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id } })}
+        />
 
         {complete ? (
           <View style={[styles.done, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>
@@ -101,9 +101,15 @@ export default function ModuleScreen() {
           </View>
         ) : null}
 
+        <ListGroup title={l.lesson.words}>
+          {terms.map((term, i) => (
+            <Word key={term.id} n={i + 1} term={term} learned={learned.has(term.id)} />
+          ))}
+        </ListGroup>
+
         {tool && toolTitle ? (
           <Button
-            variant={complete ? 'secondary' : 'primary'}
+            variant="secondary"
             label={l.tryIt(toolTitle)}
             trailingIcon="arrow.right"
             // Compare is a tab: go back to the tabs and switch, rather than stacking a copy.
@@ -115,53 +121,35 @@ export default function ModuleScreen() {
   );
 }
 
-/**
- * One term: its number (a tick once learned) and name; tap to read the definition, which
- * counts it as learned, and tap again to fold it.
- */
-function Lesson({ n, term, learned, startOpen }: { n: number; term: Term; learned: boolean; startOpen: boolean }) {
+/** One of the module's words: its number (a tick once learned); opens in the glossary. */
+function Word({ n, term, learned }: { n: number; term: Term; learned: boolean }) {
   const t = useTheme();
   const copy = useCopy();
   const { language } = useLanguage();
   const shown = termIn(language.code, term);
-  const [open, setOpen] = useState(startOpen);
-  useEffect(() => {
-    if (open) markLearned(term.id);
-  }, [open, term.id]);
   return (
-    <View style={[styles.lesson, { borderBottomColor: t.border }]}>
-      <Pressable
-        onPress={() => setOpen((o) => !o)}
-        accessibilityRole="button"
-        accessibilityState={{ expanded: open }}
-        accessibilityLabel={`${n}. ${shown.term}${learned ? `, ${copy.learn.learned}` : ''}`}
-        style={({ pressed }) => [styles.lessonHead, { opacity: pressed ? 0.6 : 1 }]}>
-        <View style={[styles.number, { borderColor: t.primary, backgroundColor: learned ? t.primary : 'transparent' }]}>
-          {learned ? (
-            <SymbolView name="checkmark" size={13} weight="bold" tintColor={t.primaryForeground} fallback={null} />
-          ) : (
-            <AppText style={[styles.numberText, { color: t.primary }]}>{n}</AppText>
-          )}
-        </View>
-        <View style={styles.termText}>
-          <AppText style={[styles.term, { color: t.text }]}>{shown.term}</AppText>
-          {shown.english ? (
-            <AppText variant="small" muted>
-              {shown.english}
-            </AppText>
-          ) : null}
-        </View>
-        <SymbolView
-          pointerEvents="none"
-          name={open ? 'chevron.up' : 'chevron.down'}
-          size={15}
-          weight="semibold"
-          tintColor={t.textSecondary}
-          fallback={null}
-        />
-      </Pressable>
-      {open ? <AppText style={[styles.plain, { color: t.textSecondary }]}>{shown.plain}</AppText> : null}
-    </View>
+    <Pressable
+      onPress={() => router.push({ pathname: '/glossary', params: { term: term.id } })}
+      accessibilityRole="button"
+      accessibilityLabel={`${n}. ${learned ? `${copy.learn.learned}. ` : ''}${copy.learn.lesson.lookUp(shown.term)}`}
+      style={({ pressed }) => [styles.word, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
+      <View style={[styles.number, { borderColor: t.primary, backgroundColor: learned ? t.primary : 'transparent' }]}>
+        {learned ? (
+          <SymbolView name="checkmark" size={13} weight="bold" tintColor={t.primaryForeground} fallback={null} />
+        ) : (
+          <AppText style={[styles.numberText, { color: t.primary }]}>{n}</AppText>
+        )}
+      </View>
+      <View style={styles.termText}>
+        <AppText style={[styles.term, { color: t.text }]}>{shown.term}</AppText>
+        {shown.english ? (
+          <AppText variant="small" muted>
+            {shown.english}
+          </AppText>
+        ) : null}
+      </View>
+      <SymbolView pointerEvents="none" name="book" size={15} weight="semibold" tintColor={t.textSecondary} fallback={null} />
+    </Pressable>
   );
 }
 
@@ -169,13 +157,11 @@ const styles = StyleSheet.create({
   content: { padding: Spacing.three, gap: Spacing.four, paddingBottom: Spacing.six },
   lead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
   flex: { flex: 1, gap: 2 },
-  lesson: { borderBottomWidth: StyleSheet.hairlineWidth, paddingBottom: Spacing.two },
-  lessonHead: { minHeight: MinTapTarget + 12, flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
+  word: { minHeight: MinTapTarget + 12, flexDirection: 'row', alignItems: 'center', gap: Spacing.three, borderBottomWidth: StyleSheet.hairlineWidth },
   number: { width: 30, height: 30, borderRadius: 15, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
   numberText: { fontFamily: Fonts.bold, fontSize: 14, lineHeight: 18, fontVariant: ['tabular-nums'] },
   termText: { flex: 1, gap: 2 },
   term: { fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23, letterSpacing: -0.2 },
-  plain: { fontSize: 16, lineHeight: 23, paddingLeft: 30 + Spacing.three, paddingBottom: Spacing.two },
   progress: { gap: Spacing.two },
   track: { height: 10, borderRadius: 5, overflow: 'hidden' },
   fill: { height: 10, borderRadius: 5 },
