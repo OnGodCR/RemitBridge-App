@@ -1351,3 +1351,36 @@ the rule-based parser is now AI-written**; `docs/AI_USAGE.md` says so, and the w
   the person check it (D79); an amount received far from amount sent × rate is flagged.
 - A cash pickup is inferred, at 0.5, from a pickup charge when the receipt doesn't print the
   delivery method.
+
+**D131. A blurry receipt is turned back, with a reason** (Angad, 2026-10-01: "if a receipt is
+ever too blurry, it should tell the user so"). Before, only a photo with no text at all was
+caught; a blurry one gave garbled text that went through as if it were fine.
+- **On the phone, before anything is covered or sent** (`packages/receipt/src/quality.ts`,
+  `mobile/src/lib/receipt-scan.ts`): in each word OCR found, the steepest step from paper to
+  ink is compared with the word's contrast, which estimates the blur's width; divided by the
+  word's height, so it means the same at any photo size. The page's median word decides.
+- **Calibrated, not guessed:** 8 synthetic receipts drawn at blurs from 0 to 5 px and read
+  back with tesseract. At 0.075 or less the rules read every value; 0.075 to 0.095, 64% to
+  100%; from about 0.095, half or fewer. So 0.09 and up is "too blurry to read, take it
+  again", and 0.07 to 0.09 shows a warning on the preview but lets the person continue.
+- **Backstop after the server reads it:** if neither the rules nor the model found the amount
+  sent, the total or the amount received, the app says it couldn't read the amounts (the
+  photo may be blurry or cut off), asks for another, and deletes the stored receipt.
+- "No text found" now also says the photo may be blurry. If the pixels can't be measured, the
+  scan goes on (the backstop still applies). Thresholds come from tesseract, not the phone's
+  ML Kit: check them on real phone photos.
+
+**D132. Smoother motion** (Angad, 2026-10-01: "make all the animations higher quality").
+Springs replace fixed-time curves for things that move because of a touch or a choice
+(`SNAPPY` and `GENTLE` in `components/motion.ts`, damped just short of a bounce); fills use one
+long ease-out (`EASE_OUT`, expo). Specifically: chunky buttons now spring down onto their lip
+as a transform (before, an instant border swap that jumped); the segmented thumb springs; a
+tab arriving fades fast while it moves on a spring, with a slight scale from 98.5% after a tap;
+lists reflow on a spring; bars fill on the longer curve; each Scan step rises in instead of
+swapping in a frame. All of it still stops when the phone asks for reduced motion.
+
+**D133. The confirmation screen doesn't say who read a value** (Angad, 2026-10-01: "remove
+the read by AI thing"). The line under each value said "Read from the text" or "Read by AI";
+now it shows only what the person can act on: "You entered" for a changed value, "Not found"
+for a missing one, and "Please check" as before. Which reader found each value is still
+stored (`receipt_fields.extraction_path`) and measured by the benchmark.

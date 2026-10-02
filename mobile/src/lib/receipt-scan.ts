@@ -1,8 +1,18 @@
-import { Skia, ImageFormat } from '@shopify/react-native-skia';
+import { AlphaType, ColorType, Skia, ImageFormat } from '@shopify/react-native-skia';
 import { requireOptionalNativeModule } from 'expo';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
-import { boxesInside, fromMlKit, type Box, type MlKitResult, type OcrPage } from '@remitbridge/receipt';
+import {
+  boxesInside,
+  fromMlKit,
+  grayFromRgba,
+  sharpness,
+  textBlur,
+  type Box,
+  type MlKitResult,
+  type OcrPage,
+  type Sharpness,
+} from '@remitbridge/receipt';
 
 /**
  * The phone's half of reading a receipt (DECISIONS.md D73, D74): prepare the photo, run OCR
@@ -67,15 +77,40 @@ export function toMlKitResult(text: MlKitText): MlKitResult {
   };
 }
 
-export type OcrOutcome = { ok: true; page: OcrPage } | { ok: false; reason: 'unavailable' | 'no_text' | 'misaligned' };
+export type OcrOutcome =
+  | { ok: true; page: OcrPage; sharpness: Sharpness }
+  | { ok: false; reason: 'unavailable' | 'no_text' | 'misaligned' | 'blurry' };
 
-/** Reads the prepared photo's text, with a box for every word. */
+/**
+ * Reads the prepared photo's text, with a box for every word, and how sharp that text is
+ * (D131): a photo too blurry to read is turned back here, before anything is covered or
+ * sent, and a borderline one comes with a warning.
+ */
 export async function recognize(photo: PreparedPhoto): Promise<OcrOutcome> {
   if (!MlKit) return { ok: false, reason: 'unavailable' };
   const page = fromMlKit(toMlKitResult(await MlKit.recognizeText(photo.uri)), photo.width, photo.height);
   if (!page.lines.length) return { ok: false, reason: 'no_text' };
   if (!boxesInside(page)) return { ok: false, reason: 'misaligned' };
-  return { ok: true, page };
+  const sharp = measureSharpness(photo, page);
+  if (sharp === 'too_blurry') return { ok: false, reason: 'blurry' };
+  return { ok: true, page, sharpness: sharp };
+}
+
+/** How sharp the words OCR found are, from the photo's pixels. 'unknown' if they can't be read. */
+function measureSharpness(photo: PreparedPhoto, page: OcrPage): Sharpness {
+  try {
+    const image = Skia.Image.MakeImageFromEncoded(Skia.Data.fromBase64(photo.base64));
+    if (!image) return 'unknown';
+    const width = image.width();
+    const height = image.height();
+    const pixels = image.readPixels(0, 0, { width, height, colorType: ColorType.RGBA_8888, alphaType: AlphaType.Unpremul });
+    if (!(pixels instanceof Uint8Array)) return 'unknown';
+    // OCR's boxes are in the prepared photo's size; the decoded image is the same file.
+    return sharpness(textBlur(grayFromRgba(pixels, width, height), page));
+  } catch {
+    // A failed measurement never stops a scan; the server's reading is the backstop.
+    return 'unknown';
+  }
 }
 
 /**

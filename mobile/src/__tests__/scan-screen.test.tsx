@@ -89,10 +89,11 @@ const CONFIRMED: ConfirmResponse = {
 
 beforeEach(() => {
   jest.mocked(canScan).mockReturnValue(true);
-  jest.mocked(recognize).mockResolvedValue({ ok: true, page: PAGE });
+  jest.mocked(recognize).mockResolvedValue({ ok: true, page: PAGE, sharpness: 'sharp' });
   jest.mocked(renderRedacted).mockClear();
   jest.mocked(sendScan).mockReset();
   jest.mocked(confirmScan).mockReset();
+  jest.mocked(forgetReceipt).mockClear();
 });
 
 afterEach(() => {
@@ -200,6 +201,34 @@ it('explains a photo with no text, or one it couldn’t line up', async () => {
   jest.mocked(recognize).mockResolvedValueOnce({ ok: false, reason: 'misaligned' });
   fireEvent.press(screen.getByText('Choose a photo'));
   await screen.findByText(/nothing was covered/);
+});
+
+it('turns back a photo too blurry to read, before anything is covered or sent (D131)', async () => {
+  jest.mocked(recognize).mockResolvedValueOnce({ ok: false, reason: 'blurry' });
+  render(<ScanScreen />);
+  fireEvent.press(screen.getByText('Choose a photo'));
+  await screen.findByText(/too blurry to read/);
+  expect(screen.queryByText('Check what’s covered')).toBeNull();
+  expect(sendScan).not.toHaveBeenCalled();
+});
+
+it('warns on a slightly blurry photo, and still lets it through', async () => {
+  jest.mocked(recognize).mockResolvedValueOnce({ ok: true, page: PAGE, sharpness: 'somewhat_blurry' });
+  await toPreview();
+  expect(screen.getByText(/a little blurry/)).toBeTruthy();
+  expect(screen.getByText('Read my receipt')).toBeTruthy();
+});
+
+it('says so, and deletes the receipt, when no amount could be read at all', async () => {
+  jest.mocked(sendScan).mockResolvedValue({
+    ok: true,
+    result: { ...RESULT, fields: { send_currency: RESULT.fields.send_currency }, to_confirm: [], suspect: null },
+  });
+  await toPreview();
+  fireEvent.press(screen.getByText('Read my receipt'));
+  await screen.findByText(/couldn’t read the amounts/);
+  expect(forgetReceipt).toHaveBeenCalledWith(RESULT.id);
+  expect(screen.queryByText('Check each value')).toBeNull();
 });
 
 it('asks for camera access when it’s refused', async () => {

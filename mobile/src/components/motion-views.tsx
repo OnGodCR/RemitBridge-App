@@ -2,25 +2,23 @@ import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import Animated, {
-  Easing,
   LinearTransition,
   ReduceMotion,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
   withDelay,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
-import { rise } from '@/components/motion';
+import { EASE_OUT, GENTLE, rise } from '@/components/motion';
 import { takeSwipeDirection } from '@/lib/current-tab';
 
 /**
  * Motion for the rest of the app (D121), in the website's register (components/motion.ts):
  * short, small, ease-out, and off when the phone asks for reduced motion.
  */
-
-const EASE = Easing.out(Easing.cubic);
 
 /** Every tab body's "hide me", so the tab coming into view can hide the others. */
 const hiders = new Set<() => void>();
@@ -38,10 +36,16 @@ const hiders = new Set<() => void>();
  */
 export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; children: ReactNode }) {
   const reduced = useReducedMotion();
+  // Opacity and movement run apart: the fade is short and eased, the movement a spring, so
+  // the content is solid before it has quite settled, which looks crisp rather than ghostly.
   const progress = useSharedValue(reduced ? 1 : 0);
+  const fade = useSharedValue(reduced ? 1 : 0);
   const side = useSharedValue(0);
 
-  const hide = useCallback(() => progress.set(0), [progress]);
+  const hide = useCallback(() => {
+    progress.set(0);
+    fade.set(0);
+  }, [progress, fade]);
   useEffect(() => {
     hiders.add(hide);
     return () => {
@@ -54,20 +58,24 @@ export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; c
       const direction = takeSwipeDirection();
       if (reduced) {
         progress.set(1);
+        fade.set(1);
         return;
       }
       for (const other of hiders) if (other !== hide) other();
       side.set(direction);
-      progress.set(withTiming(1, { duration: 320, easing: EASE }));
-    }, [reduced, progress, side, hide]),
+      progress.set(withSpring(1, GENTLE));
+      fade.set(withTiming(1, { duration: 220, easing: EASE_OUT }));
+    }, [reduced, progress, fade, side, hide]),
   );
 
   const animated = useAnimatedStyle(() => {
     const p = progress.get();
     const s = side.get();
     return {
-      opacity: p,
-      transform: s ? [{ translateX: (1 - p) * -s * 28 }] : [{ translateY: (1 - p) * 10 }],
+      opacity: fade.get(),
+      // After a tap the body also grows from 98.5%, a hint of depth; after a swipe it only
+      // slides, following the finger's direction.
+      transform: s ? [{ translateX: (1 - p) * -s * 28 }] : [{ translateY: (1 - p) * 10 }, { scale: 0.985 + 0.015 * p }],
     };
   });
   return <Animated.View style={[style, animated]}>{children}</Animated.View>;
@@ -76,7 +84,10 @@ export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; c
 /** One item in a list that arrives in turn: the site's rise, staggered by its place. */
 export function RiseIn({ index, style, children }: { index: number; style?: StyleProp<ViewStyle>; children: ReactNode }) {
   return (
-    <Animated.View entering={rise(index)} layout={LinearTransition.duration(220).reduceMotion(ReduceMotion.System)} style={style}>
+    <Animated.View
+      entering={rise(index)}
+      layout={LinearTransition.springify().damping(22).stiffness(190).reduceMotion(ReduceMotion.System)}
+      style={style}>
       {children}
     </Animated.View>
   );
@@ -92,7 +103,7 @@ export function GrowBar({ fraction, delay = 0, style }: { fraction: number; dela
   const width = useSharedValue(reduced ? fraction : 0);
 
   useEffect(() => {
-    width.set(reduced ? fraction : withDelay(delay, withTiming(fraction, { duration: 700, easing: EASE })));
+    width.set(reduced ? fraction : withDelay(delay, withTiming(fraction, { duration: 800, easing: EASE_OUT })));
   }, [fraction, delay, reduced, width]);
 
   const animated = useAnimatedStyle(() => ({ width: `${width.get() * 100}%` }));
@@ -104,7 +115,7 @@ export function GrowIn({ style, children }: { style?: StyleProp<ViewStyle>; chil
   const reduced = useReducedMotion();
   const scale = useSharedValue(reduced ? 1 : 0);
   useEffect(() => {
-    if (!reduced) scale.set(withTiming(1, { duration: 650, easing: EASE }));
+    if (!reduced) scale.set(withTiming(1, { duration: 750, easing: EASE_OUT }));
   }, [reduced, scale]);
   const animated = useAnimatedStyle(() => ({ transform: [{ scaleX: scale.get() }] }));
   return <Animated.View style={[{ transformOrigin: 'left' }, style, animated]}>{children}</Animated.View>;

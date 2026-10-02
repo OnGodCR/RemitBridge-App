@@ -659,7 +659,10 @@ export const en = {
     cameraDenied: 'To take a photo, allow camera access for RemitBridge in Settings.',
     photosDenied: 'To choose a photo, allow photo access for RemitBridge in Settings.',
     reading: 'Reading the receipt on your phone…',
-    noText: 'No text found. Try again with the whole receipt flat, in good light.',
+    noText: 'No text found. The photo may be blurry. Hold the phone steady, with the whole receipt flat and in good light.',
+    tooBlurry: 'This photo is too blurry to read. Take it again: hold the phone steady, tap the receipt to focus, and use good light.',
+    bitBlurry: 'This photo is a little blurry, so some numbers may be read wrong. A sharper photo gives a better reading.',
+    unreadable: 'We couldn’t read the amounts on this receipt. The photo may be blurry or cut off. Take it again with the whole receipt in view.',
     misaligned: 'The text didn’t line up with the photo, so nothing was covered. Take the photo again.',
     failed: 'Something went wrong reading the photo. Try again.',
     previewTitle: 'Check what’s covered',
@@ -862,8 +865,6 @@ export const en = {
   },
 
   receiptPaths: {
-    parser: 'Read from the text',
-    model: 'Read by AI',
     user_corrected: 'You entered',
   },
 

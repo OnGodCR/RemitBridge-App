@@ -548,7 +548,10 @@ with your name and the date.
 | scan.cameraDenied | To take a photo, allow camera access for RemitBridge in Settings. | फ़ोटो लेने के लिए Settings में RemitBridge को कैमरे की इजाज़त दें। | |
 | scan.photosDenied | To choose a photo, allow photo access for RemitBridge in Settings. | फ़ोटो चुनने के लिए Settings में RemitBridge को फ़ोटो की इजाज़त दें। | |
 | scan.reading | Reading the receipt on your phone… | रसीद आपके फ़ोन पर पढ़ी जा रही है… | |
-| scan.noText | No text found. Try again with the whole receipt flat, in good light. | कोई लिखावट नहीं मिली। पूरी रसीद को सीधा रखकर, अच्छी रोशनी में फिर से कोशिश करें। | |
+| scan.noText | No text found. The photo may be blurry. Hold the phone steady, with the whole receipt flat and in good light. | कोई लिखावट नहीं मिली। फ़ोटो धुंधली हो सकती है। फ़ोन को स्थिर रखें, पूरी रसीद को सीधा रखें और अच्छी रोशनी में फ़ोटो लें। | |
+| scan.tooBlurry | This photo is too blurry to read. Take it again: hold the phone steady, tap the receipt to focus, and use good light. | यह फ़ोटो पढ़ने के लिए बहुत धुंधली है। फिर से लें: फ़ोन स्थिर रखें, फ़ोकस के लिए रसीद पर टैप करें और अच्छी रोशनी रखें। | |
+| scan.bitBlurry | This photo is a little blurry, so some numbers may be read wrong. A sharper photo gives a better reading. | यह फ़ोटो थोड़ी धुंधली है, इसलिए कुछ अंक गलत पढ़े जा सकते हैं। साफ़ फ़ोटो से बेहतर पढ़ाई होती है। | |
+| scan.unreadable | We couldn’t read the amounts on this receipt. The photo may be blurry or cut off. Take it again with the whole receipt in view. | हम इस रसीद की रकम नहीं पढ़ पाए। फ़ोटो धुंधली या कटी हुई हो सकती है। पूरी रसीद दिखाते हुए फिर से फ़ोटो लें। | |
 | scan.misaligned | The text didn’t line up with the photo, so nothing was covered. Take the photo again. | लिखावट फ़ोटो से मेल नहीं खाई, इसलिए कुछ भी ढका नहीं गया। फ़ोटो फिर से लें। | |
 | scan.failed | Something went wrong reading the photo. Try again. | फ़ोटो पढ़ने में कुछ गड़बड़ हुई। फिर से कोशिश करें। | |
 | scan.previewTitle | Check what’s covered | देखें कि क्या ढका गया है | |
@@ -708,8 +711,6 @@ with your name and the date.
 | receiptFields.transfer_date | Date sent | भेजने की तारीख | |
 | receiptFields.funding_method | Paid with | भुगतान का तरीका | |
 | receiptFields.delivery_method | Delivery | पैसा कैसे पहुँचा | |
-| receiptPaths.parser | Read from the text | टेक्स्ट से पढ़ा गया | |
-| receiptPaths.model | Read by AI | AI ने पढ़ा | |
 | receiptPaths.user_corrected | You entered | आपने भरा | |
 | funding.compareLabel | You pay with | आप भुगतान करेंगे | |
 | funding.compareTaxLine | Paying by {funding} adds the 1% federal tax, {tax} here. It’s in the total cost. | {funding} से भुगतान पर 1% संघीय टैक्स लगता है, यहाँ {tax}। यह कुल लागत में शामिल है। | |

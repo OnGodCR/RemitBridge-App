@@ -676,7 +676,10 @@ export const vi: Copy = {
     cameraDenied: 'Để chụp ảnh, hãy cho phép RemitBridge dùng camera trong Cài đặt.',
     photosDenied: 'Để chọn ảnh, hãy cho phép RemitBridge truy cập ảnh trong Cài đặt.',
     reading: 'Đang đọc biên lai trên điện thoại của bạn…',
-    noText: 'Không tìm thấy chữ. Hãy thử lại với cả biên lai đặt phẳng, đủ sáng.',
+    noText: 'Không tìm thấy chữ. Ảnh có thể bị mờ. Hãy cầm điện thoại thật chắc, đặt cả biên lai phẳng và đủ sáng.',
+    tooBlurry: 'Ảnh này quá mờ để đọc. Hãy chụp lại: cầm điện thoại thật chắc, chạm vào biên lai để lấy nét và chụp nơi đủ sáng.',
+    bitBlurry: 'Ảnh này hơi mờ, nên một số con số có thể bị đọc sai. Ảnh rõ hơn sẽ cho kết quả tốt hơn.',
+    unreadable: 'Chúng tôi không đọc được các số tiền trên biên lai này. Ảnh có thể bị mờ hoặc bị cắt. Hãy chụp lại sao cho thấy cả biên lai.',
     misaligned: 'Chữ không khớp với ảnh, nên chưa che gì cả. Hãy chụp lại.',
     failed: 'Có lỗi khi đọc ảnh. Hãy thử lại.',
     previewTitle: 'Kiểm tra phần đã che',
@@ -878,8 +881,6 @@ export const vi: Copy = {
   },
 
   receiptPaths: {
-    parser: 'Đọc từ chữ',
-    model: 'AI đọc',
     user_corrected: 'Bạn nhập',
   },
 

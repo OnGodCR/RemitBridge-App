@@ -73,6 +73,10 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-01, night:** blurry receipts are turned back with a reason, calibrated on synthetic
+  receipts at increasing blur (D131); springs and smoother motion across the app (D132); the
+  "Read by AI" line removed from the confirmation screen (D133). Checked in the simulator:
+  buttons, the Compare selector and the preview screens.
 - **2026-10-01, evening:** the 13 receipt extractors written by Claude at Angad's request
   (D130): 47 of 47 on the fixtures, 97.8% accuracy and 99.0% precision on 60 OCR'd synthetic
   receipts on the first run. The scan now calls the model only for what the rules miss or

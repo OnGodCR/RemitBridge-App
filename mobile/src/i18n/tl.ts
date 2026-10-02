@@ -678,7 +678,10 @@ export const tl: Copy = {
     cameraDenied: 'Para kumuha ng litrato, payagan ang camera para sa RemitBridge sa Settings.',
     photosDenied: 'Para pumili ng litrato, payagan ang photos para sa RemitBridge sa Settings.',
     reading: 'Binabasa ang resibo sa phone mo…',
-    noText: 'Walang nakitang text. Subukan ulit na nakalatag ang buong resibo, sa maliwanag.',
+    noText: 'Walang nakitang text. Baka malabo ang litrato. Hawakan nang steady ang phone, nakalatag ang buong resibo, sa maliwanag.',
+    tooBlurry: 'Masyadong malabo ang litratong ito para mabasa. Kunan ulit: hawakan nang steady ang phone, i-tap ang resibo para mag-focus, at sa maliwanag.',
+    bitBlurry: 'Medyo malabo ang litratong ito, kaya baka mali ang basa sa ilang numero. Mas malinaw na litrato, mas tamang basa.',
+    unreadable: 'Hindi namin nabasa ang mga halaga sa resibong ito. Baka malabo o putol ang litrato. Kunan ulit nang kita ang buong resibo.',
     misaligned: 'Hindi tumugma ang text sa litrato, kaya walang natakpan. Kunan ulit ang litrato.',
     failed: 'May nagkamali sa pagbasa ng litrato. Subukan ulit.',
     previewTitle: 'Tingnan kung ano ang natakpan',
@@ -880,8 +883,6 @@ export const tl: Copy = {
   },
 
   receiptPaths: {
-    parser: 'Binasa mula sa text',
-    model: 'Binasa ng AI',
     user_corrected: 'Ikaw ang naglagay',
   },
 

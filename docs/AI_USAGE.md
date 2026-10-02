@@ -496,3 +496,20 @@ receipt parser was written by Angad.
 
 **Results:** fixtures 47 of 47; 60 synthetic receipts read back with OCR, 97.8% accuracy and
 99.0% precision before the OCR fixes, all but two values after. 262 receipt tests pass.
+
+## 2026-10-01: blurry receipts, smoother motion, no "Read by AI" (D131–D133)
+
+**What Angad asked:** tell the person when a receipt is too blurry; remove "Read by AI" from
+the receipt screens; make the animations higher quality. **What Claude did:** wrote all of it.
+- `packages/receipt/src/quality.ts` and `quality.test.ts` (new): the blur measure and its
+  calibrated limits. `src/index.ts` exports it. The calibration script drew synthetic receipts
+  at increasing blur in Chrome and read them back with tesseract (run locally, not committed).
+- `mobile/src/lib/receipt-scan.ts`: measures the photo after OCR and turns back a too-blurry one.
+- `mobile/src/app/(tabs)/index.tsx`: the blur messages, the warning on the preview, the
+  "couldn't read the amounts" backstop, and each step rising in.
+- `mobile/src/components/receipt-confirm.tsx`: no "Read from the text" / "Read by AI" line.
+- `mobile/src/components/motion.ts`, `motion-views.tsx`, `ui.tsx`: springs, the button's
+  animated press, the segment thumb, the tab entrance, list reflow, bar fills.
+- `mobile/src/i18n/*.ts`: four new or changed scan strings in five languages (four are
+  drafts), two path labels removed; `docs/translation-review/hi.md` rebuilt.
+- `mobile/src/__tests__/scan-screen.test.tsx`: three tests (turned back, warned, unreadable).
