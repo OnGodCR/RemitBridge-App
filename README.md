@@ -37,8 +37,8 @@ mobile/scripts/      port-blog.mjs ports the website's blog (posts, figures, cov
 packages/formula/    The one total-cost formula (TypeScript + Python), with shared test vectors
 packages/bot/        The WhatsApp bot's logic (parser, replies in English and Hindi, receipt photo replies),
                      tested with vitest
-packages/receipt/    The receipt pipeline: redaction, the rule-based parser (its extractors are Angad's
-                     TODOs), provider templates, the model fallback, validation; fixtures and harness;
+packages/receipt/    The receipt pipeline: redaction, the rule-based parser (extract/: the 13 field
+                     extractors and their reading helpers), provider templates, the model fallback, validation; fixtures and harness;
                      the synthetic receipt generator, the benchmark scripts, and the WhatsApp photo worker
 benchmark/           Receipt reading accuracy: real and synthetic receipts with ground truth, results.md
 supabase/            Migrations, row-level security, Edge Functions (delete-account, process-prices,

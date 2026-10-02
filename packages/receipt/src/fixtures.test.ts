@@ -1,5 +1,5 @@
 /**
- * The real extractors (Angad's, extract/fields.ts) against every fixture, one test per
+ * The real extractors (extract/fields.ts) against every fixture, one test per
  * value the receipt shows. A wrong value fails. A value not read yet is skipped, so the
  * suite stays green while the TODOs are open; RECEIPT_STRICT=1 makes those fail too.
  * The parser always sees the redacted page, as it will in the app.

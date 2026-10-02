@@ -1,5 +1,5 @@
 /**
- * The parser's frame, with stand-in extractors (the real ones are Angad's TODOs): order,
+ * The parser's frame, with stand-in extractors (the real ones are tested in extract/): order,
  * template choice, and that one bad extractor can't spoil the rest.
  */
 import { describe, expect, it } from 'vitest'

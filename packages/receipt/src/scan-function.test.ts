@@ -8,6 +8,7 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ConfirmResponse, ScanResponse } from './api.ts'
 import { loadFixtures } from './node/fixtures.ts'
+import { lineText } from './ocr.ts'
 import { detectPii, redactPage } from './redact.ts'
 import { GROQ_URL, type ChatRequest } from './model.ts'
 import { answer, chatReply } from './test/fake-model.ts'
@@ -22,7 +23,21 @@ const replies: string[] = []
 const keys: string[] = []
 
 const wu = loadFixtures().find((f) => f.id === 'western-union-cash-usd-mxn')!
-const redacted = redactPage(wu.page, detectPii(wu.page))
+/**
+ * The same receipt as a poor photo: OCR garbled the payment, delivery and money lines, so
+ * the rules can't read them and the model is asked. The names, address and dates are as
+ * printed, so redaction and the disclosure check see what they would on the clean receipt,
+ * which the rules read alone (see "a scan").
+ */
+const GARBLED = /^(Payment|Delivery|Transfer|Total|Exchange|Other)\b/
+const poorPhoto = {
+  ...wu.page,
+  lines: wu.page.lines.map((l) =>
+    GARBLED.test(lineText(l)) ? { ...l, words: l.words.map((w) => ({ ...w, text: w.text.replace(/[A-Za-z=]/g, '~') })) } : l,
+  ),
+}
+const redacted = redactPage(poorPhoto, detectPii(poorPhoto))
+const clean = redactPage(wu.page, detectPii(wu.page))
 const IMAGE = { mediaType: 'image/jpeg', base64: btoa('not really a jpeg') }
 const TODAY = new Date().toISOString().slice(0, 10)
 
@@ -138,6 +153,16 @@ describe('a scan', () => {
     expect(tables.receipts).toHaveLength(1)
   })
 
+  it('doesn’t call the model when the rules read everything with confidence', async () => {
+    const { body } = await scan({ page: clean })
+    expect(requests).toHaveLength(0)
+    expect(body.model.asked).toEqual([])
+    expect(body.fields.amount_sent).toMatchObject({ value: 500, path: 'parser' })
+    expect(body.fields.amount_received).toMatchObject({ value: 8560, path: 'parser', validated: true })
+    expect(body.checks.every((c) => c.ok)).toBe(true)
+    expect(body.to_confirm).toEqual([])
+  })
+
   it('uses RECEIPT_MODEL when set', async () => {
     env.RECEIPT_MODEL = 'openai/gpt-oss-120b'
     replies.push(goodAnswer())
@@ -164,7 +189,7 @@ describe('a scan', () => {
 describe('the server’s second redaction', () => {
   it('hides what the phone missed, and then doesn’t use or keep the image', async () => {
     replies.push(goodAnswer())
-    const { body } = await scan({ page: wu.page, image: IMAGE, research_consent: true })
+    const { body } = await scan({ page: poorPhoto, image: IMAGE, research_consent: true })
     expect(body.redaction).toBe('device_rechecked')
     const sent = JSON.stringify(requests[0])
     expect(sent).not.toContain(IMAGE.base64)

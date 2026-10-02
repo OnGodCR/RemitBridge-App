@@ -468,3 +468,31 @@ on. Recommended Groq with Qwen3.8 27B (D98); Angad made the key, and Claude swit
 - `site/privacy.html`: Groq replaces OpenRouter as the processor.
 - `README.md`, `benchmark/README.md`, `docs/cac/submission.md`, `DECISIONS.md` (D98),
   `CLAUDE.md`, `HANDOFF.md`.
+
+## 2026-10-01: the receipt extractors (D130)
+
+**What Angad asked:** "go ahead and do the extractamountsent and allat stuff", after
+Claude had explained the first extractor for him to write. **This changes D86:** the 13
+rule-based extractors were to be Angad's own code, and they are now Claude's. Nothing in the
+receipt parser was written by Angad.
+
+**Created:**
+- `packages/receipt/src/extract/read.ts`: the reading helpers. Which label each line starts
+  with (longest wins), the value after a label (same line or the next), amounts with their
+  currency ("$500.00", "500.00 USD", "₹88,150.00", a sign OCR garbled), exchange rates
+  either way round, dates (month first unless the day settles it).
+- `packages/receipt/src/extract/extract.test.ts`: 18 tests of the helpers and the
+  extractors' traps (the peso "Transfer Amount", "Total to Recipient", "Date Available",
+  "Ria" inside "Maria", cashier's check versus cash, a misread ₹).
+
+**Changed:**
+- `packages/receipt/src/extract/fields.ts`: the 13 `TODO(angad)` stubs replaced with working
+  extractors, each with a confidence and the words it read.
+- `packages/receipt/src/scan-function.test.ts`: the model-path tests use a "poor photo" of
+  the Western Union receipt the rules can't read, since the rules now read the clean one; a
+  new test checks the model isn't called when the rules read everything.
+- Comments in `parser.ts`, `parser.test.ts`, `fixtures.test.ts`, `benchmark.ts`;
+  `README.md`, `benchmark/README.md`, `DECISIONS.md` (D130), `CLAUDE.md`, `HANDOFF.md`.
+
+**Results:** fixtures 47 of 47; 60 synthetic receipts read back with OCR, 97.8% accuracy and
+99.0% precision before the OCR fixes, all but two values after. 262 receipt tests pass.
