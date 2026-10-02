@@ -76,7 +76,7 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **2026-10-01, evening:** the 13 receipt extractors written by Claude at Angad's request
   (D130): 47 of 47 on the fixtures, 97.8% accuracy and 99.0% precision on 60 OCR'd synthetic
   receipts on the first run. The scan now calls the model only for what the rules miss or
-  doubt. `scan-receipt` must be redeployed to pick them up. El Centro de la Raza's site was
+  doubt. `scan-receipt` redeployed with them the same evening. El Centro de la Raza's site was
   down (connection reset from this Mac and from outside), so its form waits.
 - **2026-10-01, afternoon (accounts on hold: Angad's dad will hold Apple and Google until
   Angad is 18):** store pack in `docs/store/listing.md` and build config tidied (D123);
