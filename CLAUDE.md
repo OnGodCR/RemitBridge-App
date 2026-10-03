@@ -107,6 +107,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         Claude deploys `scan-receipt`, which must wait for it.
       - `CONTACT_EMAIL` to hello@remitbridgelabs.org once Angad confirms forwarding works;
         then Claude redeploys `whatsapp`, `process-prices` and `notify-route-launch`.
+        Forwarding set up 2026-10-03: ImprovMX (free; Angad's account, signed up with the
+        RemitBridge Gmail), alias hello@ to remitbridgesystemlabs@gmail.com, plus ImprovMX's
+        catch-all `*` (Angad to decide whether to keep it); GoDaddy DNS gained MX
+        mx1.improvmx.com (10), mx2.improvmx.com (20) and TXT `v=spf1 include:spf.improvmx.com
+        ~all`; ImprovMX shows the domain Active. Left: Angad's test email. Receiving only:
+        replying as hello@ needs sending set up later.
       - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
         "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
         `META_DOMAIN_VERIFICATION` from Meta.
