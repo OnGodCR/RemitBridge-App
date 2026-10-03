@@ -10,6 +10,8 @@ export {
   formatForgotten,
   formatLinked,
   formatNotText,
+  formatDailyLimit,
+  formatPhotoLimit,
   formatRateLimited,
   formatRequested,
   formatSaveNote,

@@ -9,6 +9,9 @@ export const storage: { bucket: string; path: string; bytes: number; contentType
 export const rpcs: { name: string; args: unknown }[] = []
 const hits = new Map<string, number>()
 let modelCalls = 0
+let modelCallsToday = 0
+/** Session tokens the fake auth accepts, and whose they are. */
+export const sessions = new Map<string, string>()
 
 export function reset() {
   for (const k of Object.keys(tables)) delete tables[k]
@@ -16,6 +19,8 @@ export function reset() {
   rpcs.length = 0
   hits.clear()
   modelCalls = 0
+  modelCallsToday = 0
+  sessions.clear()
 }
 
 export function createClient(_url: string, _key: string) {
@@ -25,11 +30,20 @@ export function createClient(_url: string, _key: string) {
       rpcs.push({ name, args })
       if (name === 'take_receipt_model_call') {
         const cap = Number(args?.p_cap)
-        if (cap > 0 && modelCalls < cap) {
+        const daily = Number(args?.p_daily_cap)
+        if (cap > 0 && modelCalls < cap && daily > 0 && modelCallsToday < daily) {
           modelCalls++
+          modelCallsToday++
           return { data: true, error: null }
         }
         return { data: false, error: null }
+      }
+      // Per-person daily counters (D140): returns the count, as the database does.
+      if (name === 'count_hit') {
+        if (!args?.p_key) return { data: 0, error: null }
+        const k = `${args.p_bucket}|${args.p_key}`
+        hits.set(k, (hits.get(k) ?? 0) + 1)
+        return { data: hits.get(k)!, error: null }
       }
       // Per-address limits (D135): counts hits per bucket and address, as the database does.
       if (name === 'take_hit_for_ip') {
@@ -45,6 +59,12 @@ export function createClient(_url: string, _key: string) {
         return { data: before - tables.receipts.length, error: null }
       }
       return { data: null, error: { message: `no rpc ${name}` } }
+    },
+    auth: {
+      getUser: async (token: string) => {
+        const id = sessions.get(token)
+        return id ? { data: { user: { id } }, error: null } : { data: { user: null }, error: { message: 'bad token' } }
+      },
     },
     storage: {
       from: (bucket: string) => ({

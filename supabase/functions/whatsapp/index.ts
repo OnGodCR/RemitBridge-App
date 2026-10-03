@@ -6,7 +6,7 @@
 // send the reply.
 //
 // What's kept about a number (PRD 5.8): a keyed hash of it, the reply language, the last
-// route and delivery method, a route waiting for YES, and a rate-limit counter. Never the
+// route and delivery method, a route waiting for YES, and rate-limit counters. Never the
 // number, a name, or an amount. The number is used only to send the reply, then dropped.
 // STOP deletes the row.
 //
@@ -36,6 +36,8 @@ import {
   formatForgotten,
   formatLinked,
   formatNotText,
+  formatDailyLimit,
+  formatPhotoLimit,
   formatRateLimited,
   formatRequested,
   formatSaveNote,
@@ -64,6 +66,13 @@ const GRAPH = `https://graph.facebook.com/${Deno.env.get('WHATSAPP_GRAPH_VERSION
 /** Messages per number per hour. One reply says so; after that, silence until the hour is up. */
 const RATE_LIMIT = 30;
 const HOUR_MS = 3600 * 1000;
+/**
+ * Per number per day (D140). Each photo can cost a model call and a worker run, so photos
+ * get their own, tighter limit; a refused photo is told so every time (the hourly limit
+ * still bounds the replies). Messages over the day's limit get one reply, then silence.
+ */
+const MESSAGES_PER_DAY = 100;
+const PHOTOS_PER_DAY = 10;
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const INTAKE_WORKFLOW = 'receipt-intake.yml';
@@ -164,12 +173,23 @@ async function handle(m: Incoming) {
     if (inWindow === RATE_LIMIT + 1) await send(m.from, formatRateLimited(state.language));
     return;
   }
+  const today = await countToday(db, 'wa_message', hash);
+  if (today > MESSAGES_PER_DAY) {
+    await save(state);
+    if (today === MESSAGES_PER_DAY + 1) await send(m.from, formatDailyLimit(state.language));
+    return;
+  }
 
   if (m.type === 'image' && m.mediaId) {
     // Off until Angad turns it on, and only with a way to start the worker (no schedule).
     if (Deno.env.get('WHATSAPP_RECEIPTS') !== 'on' || !Deno.env.get('GITHUB_DISPATCH_TOKEN') || !Deno.env.get('RECEIPT_INTAKE_SECRET')) {
       await save(state);
       await send(m.from, formatReceiptsOff(state.language));
+      return;
+    }
+    if ((await countToday(db, 'wa_photo', hash)) > PHOTOS_PER_DAY) {
+      await save(state);
+      await send(m.from, formatPhotoLimit(state.language));
       return;
     }
     // A new photo ends any checking still open on an older one.
@@ -370,6 +390,15 @@ interface Pending {
 const NO_PENDING: Pending = { pending_receipt: null, pending_field: null, pending_questions: 0 };
 
 const today = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * Counts one hit for this chat today and returns today's count. 0 if the counter can't be
+ * reached (fail open: the model's daily and monthly caps still hold).
+ */
+async function countToday(db: SupabaseClient, bucket: string, hash: string): Promise<number> {
+  const { data, error } = await db.rpc('count_hit', { p_bucket: bucket, p_key: hash, p_window_seconds: 86_400 });
+  return !error && typeof data === 'number' ? data : 0;
+}
 
 async function queuePhoto(db: SupabaseClient, hash: string, phone: string, mediaId: string, language: Language) {
   await db.rpc('forget_stale_receipt_intake');

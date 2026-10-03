@@ -729,6 +729,8 @@ export const en = {
     send: 'Read my receipt',
     sendFailed: 'That didn’t go through. Check your connection and try again.',
     notConnected: 'The app isn’t connected yet.',
+    limitHour: 'A lot of receipts were checked from this network in the last hour. Try again in an hour.',
+    limitDay: 'That’s the limit for checking receipts today. You can check more tomorrow.',
     retake: 'Use a different photo',
     toCheck: 'Please check',
     notFound: 'Not found',

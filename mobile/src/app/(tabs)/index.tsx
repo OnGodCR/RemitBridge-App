@@ -150,7 +150,8 @@ export default function ScanScreen() {
       today: isoDay(new Date()),
     });
     if (!sent.ok) {
-      setStep({ ...step, sending: false, message: sent.reason === 'not_connected' ? s.notConnected : s.sendFailed });
+      const message = { not_connected: s.notConnected, failed: s.sendFailed, limit_hour: s.limitHour, limit_day: s.limitDay }[sent.reason];
+      setStep({ ...step, sending: false, message });
       return;
     }
     // Nothing that matters could be read, by the rules or the model: almost always a blurry

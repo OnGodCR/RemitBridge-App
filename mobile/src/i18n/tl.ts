@@ -746,6 +746,8 @@ export const tl: Copy = {
     send: 'Basahin ang resibo ko',
     sendFailed: 'Hindi ito natuloy. Tingnan ang connection mo at subukan ulit.',
     notConnected: 'Hindi pa naka-connect ang app.',
+    limitHour: 'Maraming resibo ang na-check mula sa network na ito sa nakaraang oras. Subukan ulit pagkalipas ng isang oras.',
+    limitDay: 'Naabot mo na ang limit sa pag-check ng resibo ngayong araw. Puwede ka ulit bukas.',
     retake: 'Gumamit ng ibang litrato',
     toCheck: 'Pakitingnan',
     notFound: 'Hindi nakita',

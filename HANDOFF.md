@@ -73,6 +73,12 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-02, evening: limits on AI spending (D140).** App: 10 scans a day per phone, 10
+  per account, 100 per network address (plus 30 an hour). WhatsApp: 10 receipt photos and 100
+  messages a day per number (plus 30 an hour). Overall: 200 model calls a day beside 2,000 a
+  month. Needs `supabase db push` of `20261003000000_ai_limits`, then Claude deploys
+  `scan-receipt` and `whatsapp` (scan-receipt must wait for the push: its new daily cap
+  call doesn't exist before it, and the model would be skipped).
 - **2026-10-02: rate alerts by WhatsApp (D139).** Numbers kept sealed only while a chat is
   linked; the alert job hands WhatsApp alerts to the whatsapp function; template text in
   `docs/whatsapp-templates.md`. Needs `supabase db push` of `20261002020000_whatsapp_alerts`.

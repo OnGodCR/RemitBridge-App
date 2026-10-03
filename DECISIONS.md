@@ -1504,3 +1504,28 @@ number" for one case: a chat the person has linked to their account.
 - 2026-10-02, done: Angad disabled the legacy API keys and revoked the legacy HS256 secret.
   Checked: the secret shows "revoked", the old anon key is refused as a key and as a token
   (401), the smoke test passes 63/63, and the Manual prices workflow passes on the new key.
+
+**D140. Limits on AI spending, per person and per day** (Angad, 2026-10-02: "someone
+shouldnt just be able to drain all my api because theyre spamming it. set a limit on number
+of msgs maybe, and same for number of reciept uploads on the app"). Each receipt scan asks
+the model at most once; answering its follow-up questions asks it nothing. Before this, one
+person could spend the month's 2,000 model calls in a day: the app had only 30 scans an
+hour per network address, and WhatsApp only 30 messages an hour per number. Defaults picked
+on Angad's behalf:
+- **App:** 10 scans a day per phone (the app's random install ID, sent with each scan), 10 a
+  day per signed-in account across its phones, and 100 a day per network address, on top of
+  30 an hour per address. The install ID can be left out or made up, so the address limit
+  and the model caps are what bound someone set on spending. The Scan tab says which limit
+  was hit: "try again in an hour" or "you can check more tomorrow".
+- **WhatsApp:** 10 receipt photos a day per number (told so each time; the photo isn't
+  queued), and 100 messages a day per number (one reply, then silence), on top of 30 an
+  hour. The WhatsApp worker's own scans aren't counted again in scan-receipt.
+- **Overall:** 200 model calls a day (`RECEIPT_MODEL_DAILY_CAP`), beside 2,000 a month, so a
+  bad day spends at most a tenth of the month. Past either cap, receipts are still read by
+  the rules and the person types what's missing.
+- **Privacy:** the counters keep only an HMAC of the ID, number hash or address under the
+  day's random key, deleted within a day (as D135's address limits). The privacy policy
+  says so.
+- **Fail open:** if a counter can't be reached, the request goes through; the model caps
+  still hold, and they fail closed (no call without an allowance).
+

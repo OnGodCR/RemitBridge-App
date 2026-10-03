@@ -568,3 +568,14 @@ function, with tests; the WhatsApp branch in `.github/scripts/send-rate-alerts.m
 workflow's secret; the channel choice in `mobile/src/app/alert.tsx`, `lib/rate-alerts.ts`,
 `components/rate-alerts.tsx`, the link note, strings in five languages and a test;
 `docs/whatsapp-templates.md`; the privacy policy, `docs/SECURITY.md` and the review list.
+
+## 2026-10-02: limits on AI spending (D140)
+
+**What Angad asked:** stop someone draining the AI budget by spamming WhatsApp or receipt
+uploads. **What Claude did:** the migration `20261003000000_ai_limits.sql` (a per-key daily
+counter and a daily model cap) and its local checks; daily scan limits per install ID,
+account and address in `scan-receipt`, with the install ID accepted by `parseRequest`; daily
+photo and message limits in the whatsapp function and their replies in `packages/bot`
+(English and Hindi); the app's limit messages in five languages (four drafts); tests for
+all of it; the privacy policy line on counting.
+

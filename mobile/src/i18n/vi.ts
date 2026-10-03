@@ -744,6 +744,8 @@ export const vi: Copy = {
     send: 'Đọc biên lai của tôi',
     sendFailed: 'Không gửi được. Hãy kiểm tra kết nối và thử lại.',
     notConnected: 'Ứng dụng chưa được kết nối.',
+    limitHour: 'Đã có nhiều biên lai được kiểm tra từ mạng này trong một giờ qua. Hãy thử lại sau một giờ.',
+    limitDay: 'Bạn đã đạt mức tối đa kiểm tra biên lai hôm nay. Ngày mai bạn có thể kiểm tra tiếp.',
     retake: 'Dùng ảnh khác',
     toCheck: 'Vui lòng kiểm tra',
     notFound: 'Không tìm thấy',

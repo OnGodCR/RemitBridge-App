@@ -45,8 +45,11 @@ stored; values only. Images are stored only with research consent, only real JPE
 
 **Floods and abuse.** Per-address limits on everything the public key can write (events,
 route requests, saved items, rate alerts) and on the scan-receipt function (30 scans an
-hour); the model has a monthly cap. The WhatsApp function is checked by Meta's signature and
-rate-limited per number; its worker and it prove themselves with `RECEIPT_INTAKE_SECRET`.
+hour). Daily limits on what spends model calls (D140): 10 scans per phone install ID, 10 per
+account, 100 per address; on WhatsApp, 10 receipt photos and 100 messages per number. The
+model has a daily cap (200) and a monthly one (2,000), which fail closed. The WhatsApp
+function is checked by Meta's signature and rate-limited per number; its worker and it
+prove themselves with `RECEIPT_INTAKE_SECRET`.
 
 **Promised deletions not happening.** pg_cron deletes expired receipts hourly, WhatsApp
 numbers waiting for a reply every 10 minutes (and after an hour regardless), and rate-limit
