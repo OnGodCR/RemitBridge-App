@@ -83,6 +83,18 @@ tell Claude, who switches on the sign-in hook and runs the live security test.
       account deletes it and their WhatsApp alerts straight away. The app says this next to
       the Link button, and the privacy policy says it too.
 
+## 4c. Limits on AI spending (your ask, 2026-10-02; D140)
+
+- [ ] **Receipt checks in the app:** at most 10 a day from one phone, 10 a day from one
+      account (across its phones), and 100 a day from one network address, on top of 30 an
+      hour. The app says "try again in an hour" or "you can check more tomorrow".
+- [ ] **WhatsApp:** at most 10 receipt photos a day from one number (the bot says why each
+      time) and 100 messages a day (one reply, then quiet), on top of 30 an hour.
+- [ ] **The AI itself:** at most 200 calls a day and 2,000 a month in total. Past either, the
+      receipt is still read by the rules, and the person types what the rules missed.
+- [ ] **Privacy:** the counts keep only a scrambled ID that changes daily, deleted within a
+      day. The privacy policy says so.
+
 ## 5. Checked and fine (nothing to do, for your information)
 
 - [ ] Every table has row-level security; private tables (receipts, WhatsApp, the photo

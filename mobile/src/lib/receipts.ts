@@ -1,18 +1,33 @@
 import type { ConfirmRequest, ConfirmResponse, ForgetRequest, ScanRequest, ScanResponse } from '@remitbridge/receipt';
 
+import { prefs } from '@/lib/prefs';
 import { supabase } from '@/lib/supabase';
 
 /**
  * Talking to the scan-receipt Edge Function (DECISIONS.md D79, D81). What goes up is the
  * redacted text and, if the person continues, the redacted photo: never the original.
  */
-export type SendResult = { ok: true; result: ScanResponse } | { ok: false; reason: 'not_connected' | 'failed' };
+export type SendResult =
+  | { ok: true; result: ScanResponse }
+  | { ok: false; reason: 'not_connected' | 'failed' | 'limit_hour' | 'limit_day' };
 
-export async function sendScan(request: Omit<ScanRequest, 'action'>): Promise<SendResult> {
+export async function sendScan(request: Omit<ScanRequest, 'action' | 'install_id'>): Promise<SendResult> {
   if (!supabase) return { ok: false, reason: 'not_connected' };
-  const body: ScanRequest = { action: 'scan', ...request };
+  // The phone's random ID counts this phone's scans for the day (D140); nothing else uses it here.
+  const body: ScanRequest = { action: 'scan', ...request, install_id: prefs.installId() };
   const { data, error } = await supabase.functions.invoke<ScanResponse>('scan-receipt', { body });
-  if (error || !data?.id) return { ok: false, reason: 'failed' };
+  if (error) {
+    const response = (error as { context?: Response }).context;
+    if (response?.status === 429) {
+      const retry = await response
+        .json()
+        .then((b: { retry?: string }) => b.retry)
+        .catch(() => undefined);
+      return { ok: false, reason: retry === 'tomorrow' ? 'limit_day' : 'limit_hour' };
+    }
+    return { ok: false, reason: 'failed' };
+  }
+  if (!data?.id) return { ok: false, reason: 'failed' };
   return { ok: true, result: data };
 }
 

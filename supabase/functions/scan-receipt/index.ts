@@ -19,12 +19,14 @@
 // Optional:
 //   RECEIPT_MODEL               default qwen/qwen3.8-27b (D98)
 //   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
+//   RECEIPT_MODEL_DAILY_CAP     default 200 model calls a day (D140)
 //   RECEIPT_INTAKE_SECRET       lets the WhatsApp worker send channel 'whatsapp' (D94)
 //
 // Called by the app, signed in or not. The publishable key isn't a JWT, so JWT verification
-// is off (supabase/config.toml); parseRequest checks everything that arrives, and the
-// monthly cap bounds what a flood of requests could spend. Logs never carry the text, the
-// image or any value.
+// is off (supabase/config.toml); parseRequest checks everything that arrives. What a flood
+// of scans could spend is bounded per phone, per account and per network address each day,
+// and by the daily and monthly model caps (D140). Logs never carry the text, the image or
+// any value.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { secretKey } from '../_shared/keys.ts';
 
@@ -64,9 +66,19 @@ import {
 import { checkedAmountFor, ROUTES } from '../../../mobile/src/lib/routes.ts';
 
 const DEFAULT_CAP = 2000;
+const DEFAULT_DAILY_CAP = 200;
 /** Per network address, per hour; generous enough for a school or office behind one address. */
 const SCANS_PER_HOUR = 30;
 const FOLLOWUPS_PER_HOUR = 200;
+/**
+ * Scans a day (D140). A person checks a transfer or two a month, so ten a day is plenty.
+ * The install ID is the phone's own random ID and can be left out, so the address's
+ * daily limit and the model's daily cap are what bound someone set on spending.
+ */
+const SCANS_PER_DAY_PER_PHONE = 10;
+const SCANS_PER_DAY_PER_ACCOUNT = 10;
+const SCANS_PER_DAY_PER_ADDRESS = 100;
+const DAY_SECONDS = 86_400;
 const KEEP_DAYS = 30;
 const BUCKET = 'receipt-images';
 
@@ -101,7 +113,10 @@ Deno.serve(async (req) => {
       p_window_seconds: 3600,
     });
     // Before the migration is live the function doesn't exist: fail open, as before.
-    if (!limitError && allowed === false) return json({ error: 'too many requests' }, 429);
+    if (!limitError && allowed === false) return json({ error: 'too many requests', retry: 'hour' }, 429);
+    if (parsed.request.action === 'scan' && !(await underDailyLimits(db, req, parsed.request.install_id))) {
+      return json({ error: 'too many requests', retry: 'tomorrow' }, 429);
+    }
   }
   try {
     if (parsed.request.action === 'forget') {
@@ -135,7 +150,8 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
 
   const key = Deno.env.get('GROQ_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
-  const model = key ? { client: capped(groqClient(key), db, cap), model: Deno.env.get('RECEIPT_MODEL') || undefined } : null;
+  const dailyCap = Number(Deno.env.get('RECEIPT_MODEL_DAILY_CAP') ?? DEFAULT_DAILY_CAP);
+  const model = key ? { client: capped(groqClient(key), db, cap, dailyCap), model: Deno.env.get('RECEIPT_MODEL') || undefined } : null;
 
   const result = await readReceipt({ page, image, today, model, midRate });
 
@@ -397,17 +413,47 @@ async function forget(db: SupabaseClient, id: string) {
 }
 
 /**
- * The model client, gated by this month's allowance: each real call takes one from
- * receipt_model_calls first, so the cap counts calls made, not receipts scanned.
+ * The model client, gated by today's and this month's allowance: each real call takes one
+ * from both first, so the caps count calls made, not receipts scanned. Over either cap the
+ * receipt is still read, by the rules alone, and the person types what they missed.
  */
-function capped(client: ModelClient, db: SupabaseClient, cap: number): ModelClient {
+function capped(client: ModelClient, db: SupabaseClient, cap: number, dailyCap: number): ModelClient {
   return {
     complete: async (request) => {
-      const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap });
-      if (error || data !== true) throw new ModelError('this month’s model calls are used up', 'over_cap');
+      const { data, error } = await db.rpc('take_receipt_model_call', { p_cap: cap, p_daily_cap: dailyCap });
+      if (error || data !== true) throw new ModelError('today’s or this month’s model calls are used up', 'over_cap');
       return client.complete(request);
     },
   };
+}
+
+/**
+ * Today's scans for this phone, this account (when signed in) and this network address
+ * (D140). Each counts one hit; a counter that can't be reached doesn't block (fail open, as
+ * the hourly limit does), since the model caps still hold.
+ */
+async function underDailyLimits(db: SupabaseClient, req: Request, installId: string | undefined): Promise<boolean> {
+  const userId = await signedInUser(db, req);
+  const checks: [string, string | null | undefined, number][] = [
+    ['scan_day_phone', installId, SCANS_PER_DAY_PER_PHONE],
+    ['scan_day_account', userId, SCANS_PER_DAY_PER_ACCOUNT],
+    ['scan_day_address', clientIp(req), SCANS_PER_DAY_PER_ADDRESS],
+  ];
+  for (const [bucket, key, max] of checks) {
+    if (!key) continue;
+    const { data, error } = await db.rpc('count_hit', { p_bucket: bucket, p_key: key, p_window_seconds: DAY_SECONDS });
+    if (!error && typeof data === 'number' && data > max) return false;
+  }
+  return true;
+}
+
+/** The signed-in person's ID from the request's session token, or null when signed out. */
+async function signedInUser(db: SupabaseClient, req: Request): Promise<string | null> {
+  const token = req.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? '';
+  // Signed out, the app sends the publishable key, which isn't a session token.
+  if (!token.startsWith('eyJ')) return null;
+  const { data, error } = await db.auth.getUser(token);
+  return error ? null : (data.user?.id ?? null);
 }
 
 /** The caller's address, as Supabase's gateway passes it on; null if there's none. */

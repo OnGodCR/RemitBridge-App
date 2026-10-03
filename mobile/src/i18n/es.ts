@@ -744,6 +744,8 @@ export const es: Copy = {
     send: 'Leer mi recibo',
     sendFailed: 'No se pudo enviar. Revisa tu conexión e intenta de nuevo.',
     notConnected: 'La app aún no está conectada.',
+    limitHour: 'Se revisaron muchos recibos desde esta red en la última hora. Intenta de nuevo en una hora.',
+    limitDay: 'Llegaste al límite de recibos por hoy. Puedes revisar más mañana.',
     retake: 'Usar otra foto',
     toCheck: 'Revisa esto',
     notFound: 'No encontrado',

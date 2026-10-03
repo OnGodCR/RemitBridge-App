@@ -277,6 +277,20 @@ export function formatRateLimited(lang: Language): string {
   return lang === 'hi' ? 'बहुत सारे संदेश आ गए हैं। एक घंटे बाद फिर कोशिश करें।' : "That's a lot of messages. Try again in an hour."
 }
 
+/** Past the day's messages for one number (D140): sent once, then silence until tomorrow. */
+export function formatDailyLimit(lang: Language): string {
+  return lang === 'hi'
+    ? 'आज के लिए संदेशों की सीमा पूरी हो गई है। कल फिर लिखें।'
+    : "That's the limit on messages for today. Write again tomorrow."
+}
+
+/** Past the day's receipt photos for one number (D140). */
+export function formatPhotoLimit(lang: Language): string {
+  return lang === 'hi'
+    ? 'आज के लिए रसीद की फ़ोटो की सीमा (10) पूरी हो गई है। कल और भेज सकते हैं, या रकम और देश लिखें, जैसे: 500 to India'
+    : "That's 10 receipt photos today, the daily limit. You can send more tomorrow, or type an amount and a country, like: 500 to India"
+}
+
 export function formatNotText(lang: Language): string {
   return lang === 'hi'
     ? 'मैं सिर्फ़ लिखे हुए संदेश पढ़ सकता हूँ। रकम और देश भेजें, जैसे: 500 to India'

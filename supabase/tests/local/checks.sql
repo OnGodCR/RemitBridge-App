@@ -525,4 +525,42 @@ select pg_temp.ok((select count(*) = 0 from public.rate_alerts where user_id = '
   'whatsapp alert: STOP deletes the WhatsApp alerts');
 delete from auth.users where id = '00000000-0000-4000-8000-0000000000d4';
 
+-- ---------------------------------------------------------------------------------------
+-- AI limits (D140): per-person daily counters and the daily model cap
+-- ---------------------------------------------------------------------------------------
+select pg_temp.ok((select public.count_hit('scan_day_phone', 'install-1', 86400)) = 1
+                  and (select public.count_hit('scan_day_phone', 'install-1', 86400)) = 2
+                  and (select public.count_hit('scan_day_phone', 'install-2', 86400)) = 1,
+  'ai limits: count_hit counts each key on its own');
+select pg_temp.ok((select public.count_hit('scan_day_phone', '', 86400)) = 0, 'ai limits: an empty key isn''t counted');
+select pg_temp.ok(not exists (select 1 from private.rate_limit_hits where client like '%install%'),
+  'ai limits: the key is kept only as an HMAC');
+select pg_temp.ok((select private.take_hit('test2', '198.51.100.8', 1, interval '1 hour'))
+                  and not (select private.take_hit('test2', '198.51.100.8', 1, interval '1 hour')),
+  'ai limits: the address limit still refuses past its ceiling');
+delete from public.receipt_model_calls;
+select pg_temp.ok((select public.take_receipt_model_call(100, 2)) and (select public.take_receipt_model_call(100, 2))
+                  and not (select public.take_receipt_model_call(100, 2)),
+  'ai limits: the daily model cap stops at the cap');
+select pg_temp.ok((select calls = 2 from public.receipt_model_calls_daily where day = current_date)
+                  and (select calls = 2 from public.receipt_model_calls),
+  'ai limits: a refused call isn''t counted against the month');
+delete from public.receipt_model_calls_daily;
+delete from public.receipt_model_calls;
+select public.take_receipt_model_call(1, 10);
+select pg_temp.ok(not (select public.take_receipt_model_call(1, 10))
+                  and (select calls = 1 from public.receipt_model_calls_daily where day = current_date),
+  'ai limits: when the month is used up, the day''s call is given back');
+set role anon;
+select pg_temp.expect($$select public.count_hit('x', 'y', 60)$$, '42501', 'anon: can''t touch the daily counters');
+select pg_temp.expect($$select public.take_receipt_model_call(100, 100)$$, '42501', 'anon: can''t spend daily model calls');
+select pg_temp.expect($$select * from public.receipt_model_calls_daily$$, '42501', 'anon: can''t read the daily model count');
+reset role;
+set role authenticated;
+select pg_temp.expect($$select public.count_hit('x', 'y', 60)$$, '42501', 'user: can''t touch the daily counters');
+reset role;
+set role service_role;
+select pg_temp.ok((select public.count_hit('wa_photo', repeat('f', 64), 86400)) = 1, 'service role: counts a WhatsApp photo');
+reset role;
+
 \echo 'all local checks passed'

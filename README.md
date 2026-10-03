@@ -80,7 +80,7 @@ Database changes: `supabase db push`, then the RLS smoke test
 deploy with `supabase functions deploy <name> --use-api`; their secrets are listed at the
 top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
 reads `GROQ_API_KEY` (without it, receipts are read by the rules alone), and optionally
-`RECEIPT_MODEL` and `RECEIPT_MODEL_MONTHLY_CAP` (D98).
+`RECEIPT_MODEL`, `RECEIPT_MODEL_MONTHLY_CAP` (D98) and `RECEIPT_MODEL_DAILY_CAP` (default 200, D140).
 
 To set or rotate the Groq key without it ever showing on screen or in shell history: paste
 this command into a terminal without pressing Enter, copy the key from Groq's "Create API

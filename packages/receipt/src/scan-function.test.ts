@@ -12,7 +12,7 @@ import { lineText } from './ocr.ts'
 import { detectPii, redactPage } from './redact.ts'
 import { GROQ_URL, type ChatRequest } from './model.ts'
 import { answer, chatReply } from './test/fake-model.ts'
-import { reset, rpcs, storage, tables } from './test/fake-supabase.ts'
+import { reset, rpcs, sessions, storage, tables } from './test/fake-supabase.ts'
 
 const env: Record<string, string | undefined> = {}
 let handler: (req: Request) => Promise<Response>
@@ -82,6 +82,7 @@ beforeEach(() => {
     RECEIPT_INTAKE_SECRET: 'intake-secret',
     RECEIPT_MODEL: undefined,
     RECEIPT_MODEL_MONTHLY_CAP: undefined,
+    RECEIPT_MODEL_DAILY_CAP: undefined,
   })
 })
 
@@ -219,6 +220,70 @@ describe('limits (D135)', () => {
   })
 })
 
+describe('daily limits (D140)', () => {
+  const PHONE_A = '22222222-2222-4222-8222-222222222222'
+  const PHONE_B = '33333333-3333-4333-8333-333333333333'
+  const scanAs = (o: { ip?: string; install?: string; token?: string } = {}) =>
+    handler(
+      new Request('https://example.supabase.co/functions/v1/scan-receipt', {
+        method: 'POST',
+        headers: {
+          ...(o.ip ? { 'x-forwarded-for': o.ip } : {}),
+          ...(o.token ? { authorization: `Bearer ${o.token}` } : {}),
+        },
+        body: JSON.stringify({ action: 'scan', page: redacted, research_consent: false, today: TODAY, ...(o.install ? { install_id: o.install } : {}) }),
+      }),
+    )
+  const retryOf = async (res: Response) => ((await res.json()) as { retry?: string }).retry
+
+  it('allows 10 scans a day per phone, then says to come back tomorrow', async () => {
+    env.GROQ_API_KEY = undefined
+    for (let i = 0; i < 10; i++) expect((await scanAs({ install: PHONE_A })).status).toBe(200)
+    const refused = await scanAs({ install: PHONE_A })
+    expect(refused.status).toBe(429)
+    expect(await retryOf(refused)).toBe('tomorrow')
+    expect((await scanAs({ install: PHONE_B })).status).toBe(200)
+  })
+
+  it('counts a signed-in account across phones', async () => {
+    env.GROQ_API_KEY = undefined
+    sessions.set('eyJ.session.a', 'user-a')
+    for (let i = 0; i < 10; i++) {
+      expect((await scanAs({ install: i % 2 ? PHONE_A : PHONE_B, token: 'eyJ.session.a' })).status).toBe(200)
+    }
+    expect((await scanAs({ install: '44444444-4444-4444-8444-444444444444', token: 'eyJ.session.a' })).status).toBe(429)
+    // The publishable key isn't a session: no account, so only the phone counts.
+    expect((await scanAs({ install: '44444444-4444-4444-8444-444444444444', token: 'sb_publishable_x' })).status).toBe(200)
+  })
+
+  it('also counts the network address for the day, so made-up phone IDs don’t get around it', async () => {
+    env.GROQ_API_KEY = undefined
+    await scanAs({ ip: '203.0.113.9', install: PHONE_A })
+    const counted = rpcs.filter((r) => r.name === 'count_hit').map((r) => r.args as Record<string, unknown>)
+    expect(counted).toContainEqual({ p_bucket: 'scan_day_address', p_key: '203.0.113.9', p_window_seconds: 86_400 })
+    expect(counted).toContainEqual({ p_bucket: 'scan_day_phone', p_key: PHONE_A, p_window_seconds: 86_400 })
+  })
+
+  it('refuses an install ID that isn’t a UUID', async () => {
+    expect((await scanAs({ install: 'not-a-uuid' })).status).toBe(400)
+  })
+
+  it('never counts the WhatsApp worker against anyone', async () => {
+    env.GROQ_API_KEY = undefined
+    for (let i = 0; i < 11; i++) {
+      const res = await handler(
+        new Request('https://example.supabase.co/functions/v1/scan-receipt', {
+          method: 'POST',
+          headers: { 'x-intake-secret': 'intake-secret' },
+          body: JSON.stringify({ action: 'scan', page: redacted, research_consent: false, today: TODAY, channel: 'whatsapp', install_id: PHONE_A }),
+        }),
+      )
+      expect(res.status).toBe(200)
+    }
+    expect(rpcs.filter((r) => r.name === 'count_hit')).toHaveLength(0)
+  })
+})
+
 describe('the server’s second redaction', () => {
   it('hides what the phone missed, and then doesn’t use or keep the image', async () => {
     replies.push(goodAnswer())
@@ -274,6 +339,18 @@ describe('research consent', () => {
     await scan({ image: IMAGE })
     expect(JSON.stringify(requests[0])).toContain(IMAGE.base64)
     expect(storage).toEqual([])
+  })
+})
+
+describe('the daily model cap (D140)', () => {
+  it('stops model calls for the day while scans still read with the rules', async () => {
+    env.RECEIPT_MODEL_DAILY_CAP = '1'
+    replies.push(goodAnswer())
+    await scan()
+    const second = await scan()
+    expect(requests).toHaveLength(1)
+    expect(second.body.model.error).toBe('over_cap')
+    expect(rpcs.find((r) => r.name === 'take_receipt_model_call')?.args).toMatchObject({ p_daily_cap: 1 })
   })
 })
 

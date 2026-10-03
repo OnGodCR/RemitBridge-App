@@ -136,6 +136,10 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
+- [ ] **Limits on AI spending (D140):** built and tested 2026-10-02 (app: 10 scans a day per
+      phone and per account, 100 per address; WhatsApp: 10 photos and 100 messages a day per
+      number; 200 model calls a day overall). Left: Angad pushes `20261003000000_ai_limits`
+      (`supabase db push`); then Claude deploys `scan-receipt` and `whatsapp`.
 - [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
       (2026-10-01). Left:
       - [x] Migration pushed by Angad, sign-in hook on, smoke test 58/58 (2026-10-02).

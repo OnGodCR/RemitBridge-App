@@ -23,6 +23,8 @@ export interface ScanRequest {
    * The function accepts it only with the worker's secret. The app leaves it out.
    */
   channel?: 'app' | 'whatsapp'
+  /** The phone's random install ID (D140), for the daily scan limit per phone. */
+  install_id?: string
 }
 
 /** Delete a receipt now, before its 30 days are up. Anyone holding the ID may. */
@@ -142,6 +144,7 @@ export function parseRequest(body: unknown): Parsed {
   if (b.channel !== undefined && b.channel !== 'app' && b.channel !== 'whatsapp') return { ok: false, error: 'bad channel' }
   if (typeof b.research_consent !== 'boolean') return { ok: false, error: 'research_consent must be true or false' }
   if (typeof b.today !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(b.today)) return { ok: false, error: 'today must be YYYY-MM-DD' }
+  if (b.install_id !== undefined && (typeof b.install_id !== 'string' || !UUID.test(b.install_id))) return { ok: false, error: 'bad install_id' }
 
   const page = b.page as Record<string, unknown> | null
   if (!page || !isNum(page.width) || !isNum(page.height) || !Array.isArray(page.lines)) return { ok: false, error: 'bad page' }
@@ -181,6 +184,7 @@ export function parseRequest(body: unknown): Parsed {
       research_consent: b.research_consent,
       today: b.today,
       ...(b.channel === 'whatsapp' ? { channel: 'whatsapp' as const } : {}),
+      ...(typeof b.install_id === 'string' ? { install_id: b.install_id } : {}),
     },
   }
 }

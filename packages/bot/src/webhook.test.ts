@@ -422,3 +422,54 @@ describe('receipt photos', () => {
   })
 })
 
+
+// ---------------------------------------------------------------------------------------
+// Daily limits (D140): messages and, tighter, receipt photos per number
+// ---------------------------------------------------------------------------------------
+
+describe('daily limits (D140)', () => {
+  const counts = new Map<string, number>()
+  beforeEach(() => {
+    counts.clear()
+    rpcs.count_hit = (args) => {
+      const k = `${args.p_bucket}:${args.p_key}`
+      counts.set(k, (counts.get(k) ?? 0) + 1)
+      return counts.get(k)
+    }
+  })
+
+  it('counts by the keyed hash, never the number', async () => {
+    await handler(delivery('500 to india'))
+    const call = rpcCalls.find((c) => c.name === 'count_hit')
+    expect(call?.args).toMatchObject({ p_bucket: 'wa_message', p_window_seconds: 86_400 })
+    expect(call?.args.p_key).toMatch(/^[0-9a-f]{64}$/)
+    expect(JSON.stringify(rpcCalls)).not.toContain(PHONE)
+  })
+
+  it('answers the first message past the day’s limit once, then stays quiet', async () => {
+    const hash = () => (tables.whatsapp_users ?? [])[0]?.phone_hash as string
+    await handler(delivery('500 to india'))
+    counts.set(`wa_message:${hash()}`, 100)
+    await handler(delivery('500 to india'))
+    expect(sent.at(-1)?.body).toContain('limit on messages for today')
+    const before = sent.length
+    await handler(delivery('500 to india'))
+    expect(sent).toHaveLength(before)
+  })
+
+  it('turns away the 11th photo of the day without queuing it, and says why', async () => {
+    receiptsOn()
+    for (let i = 0; i < 10; i++) await handler(photo(`media_${i}`))
+    expect(tables.receipt_intake).toHaveLength(10)
+    await handler(photo('media_10'))
+    expect(tables.receipt_intake).toHaveLength(10)
+    expect(sent.at(-1)?.body).toContain('10 receipt photos today')
+  })
+
+  it('lets photos through when the counter can’t be reached (the model caps still hold)', async () => {
+    receiptsOn()
+    delete rpcs.count_hit
+    await handler(photo())
+    expect(tables.receipt_intake).toHaveLength(1)
+  })
+})
