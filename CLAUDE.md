@@ -75,8 +75,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Migration pushed 2026-10-02 (smoke test 63/63). Left: try LINK from his phone; flip
       `whatsapp_live` once Meta lifts the restriction.
 - [ ] **Rate alerts by WhatsApp (D139):** built 2026-10-02, the number kept encrypted only
-      while linked. Left: Angad pushes `20261002020000_whatsapp_alerts`; once Meta lifts the
-      restriction, create the `rate_alert` template from `docs/whatsapp-templates.md`.
+      while linked. Migration pushed 2026-10-02. Left: create the `rate_alert` template from
+      `docs/whatsapp-templates.md` in WhatsApp Manager (needs Angad signed in to Meta).
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
       `site/.well-known/apple-app-site-association`.
@@ -138,8 +138,9 @@ Angad does this once the app itself is finished (D117).
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
 - [ ] **Limits on AI spending (D140):** built and tested 2026-10-02 (app: 10 scans a day per
       phone and per account, 100 per address; WhatsApp: 10 photos and 100 messages a day per
-      number; 200 model calls a day overall). Left: Angad pushes `20261003000000_ai_limits`
-      (`supabase db push`); then Claude deploys `scan-receipt` and `whatsapp`.
+      number; 200 model calls a day overall). `whatsapp` deployed 2026-10-02 (its counters
+      fail open until the push). Left: Angad pushes `20261003000000_ai_limits` (the first
+      try hung on Supabase's US East latency, 2026-10-02); then Claude deploys `scan-receipt`.
 - [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
       (2026-10-01). Left:
       - [x] Migration pushed by Angad, sign-in hook on, smoke test 58/58 (2026-10-02).
