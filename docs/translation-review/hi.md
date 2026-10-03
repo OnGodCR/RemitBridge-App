@@ -461,7 +461,7 @@ with your name and the date.
 | tool.inUnit | {label}, in {unit} | {label}, {unit} में | |
 | tool.sliderValue | {v} percent | {v} प्रतिशत | |
 | fairRate.intro | Every point below the mid-market rate comes out of your transfer. | मिड-मार्केट रेट से हर पॉइंट नीचे का पैसा आपके ट्रांसफ़र से कटता है। | |
-| fairRate.yourTransfer | Your transfer | आपका ट्रांसफ़र | |
+| fairRate.yourTransfer | Your transfer | आपका ट्रांसफ़र | | ENDED HERE
 | fairRate.amountToSend | Amount to send | भेजने की रकम | |
 | fairRate.markup | Exchange-rate markup | एक्सचेंज रेट में मार्कअप | |
 | fairRate.drag | Drag to see what each point costs. Fees come on top. | खिसकाकर देखें कि हर पॉइंट की कीमत क्या है। फ़ीस इसके ऊपर लगती है। | |
