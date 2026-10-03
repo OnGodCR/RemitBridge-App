@@ -13,7 +13,6 @@ from typing import Protocol
 import httpx
 
 from .keys import key_headers
-
 from .models import RawResponse
 
 

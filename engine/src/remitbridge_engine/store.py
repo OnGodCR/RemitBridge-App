@@ -21,7 +21,6 @@ from typing import Any, Protocol
 import httpx
 
 from .keys import key_headers
-
 from .models import MidMarketRate, Quote, ValidationStatus
 
 
