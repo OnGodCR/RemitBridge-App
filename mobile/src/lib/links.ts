@@ -1,6 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import { Alert, Linking } from 'react-native';
 
+import { CONTACT_EMAIL } from '@/constants/site-config';
 import type { Copy } from '@/i18n/en';
 
 /** The app's own web pages (DECISIONS.md D57), served from site/ at app.remitbridgelabs.org. */
@@ -9,10 +10,11 @@ export const SITE = 'https://app.remitbridgelabs.org';
 export const LINKS = {
   privacy: `${SITE}/privacy`,
   support: `${SITE}/support`,
+  terms: `${SITE}/terms`,
 } as const;
 
-/** Where people and providers write to us (D22), including "this price looks wrong". */
-export const CONTACT = 'remitbridgesystemlabs@gmail.com';
+/** Where people and providers write to us (D22, D141), including "this price looks wrong". */
+export const CONTACT = CONTACT_EMAIL;
 
 /**
  * Starts an email to us in the phone's mail app. A phone with no mail app set up makes

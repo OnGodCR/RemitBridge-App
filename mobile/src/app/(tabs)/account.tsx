@@ -7,6 +7,7 @@ import { LanguageSheet } from '@/components/language-picker';
 import { CheckedArt, FeeMarkupArt, NoAffiliateArt, SavedArt, WrongPriceArt } from '@/components/illustrations';
 import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
+import { INCORPORATED, LEGAL_NAME } from '@/constants/site-config';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
@@ -129,7 +130,11 @@ export default function AccountScreen() {
             <ListRow icon="map" title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
             <ListRow external icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
             <ListRow external icon="questionmark.circle" title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
+            <ListRow external icon="doc.text" title={a.terms} subtitle={a.termsSub} onPress={() => openPage(LINKS.terms)} />
           </ListGroup>
+          <AppText variant="small" muted style={styles.legal}>
+            {a.copyright(LEGAL_NAME, INCORPORATED)}
+          </AppText>
 
           {__DEV__ ? (
             <ListGroup cards>
@@ -215,4 +220,5 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1 },
   content: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six },
   actions: { gap: Spacing.three },
+  legal: { textAlign: 'center' },
 });

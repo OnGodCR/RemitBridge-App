@@ -52,11 +52,18 @@ export function createClient(_url: string, _key: string) {
         hits.set(k, (hits.get(k) ?? 0) + 1)
         return { data: hits.get(k)! <= Number(args.p_max), error: null }
       }
+      // As the database does (D141): the job deletes expired receipts without an image; those
+      // with one are listed for the function, which deletes the image first.
       if (name === 'forget_expired_receipts') {
         const now = Date.now()
         const before = (tables.receipts ?? []).length
-        tables.receipts = (tables.receipts ?? []).filter((r) => !r.expires_at || Date.parse(String(r.expires_at)) > now)
+        tables.receipts = (tables.receipts ?? []).filter((r) => r.image_path || Date.parse(String(r.expires_at)) > now)
         return { data: before - tables.receipts.length, error: null }
+      }
+      if (name === 'expired_receipt_images') {
+        const now = Date.now()
+        const rows = (tables.receipts ?? []).filter((r) => r.image_path && Date.parse(String(r.expires_at)) <= now)
+        return { data: rows.map((r) => ({ id: r.id, image_path: r.image_path })), error: null }
       }
       return { data: null, error: { message: `no rpc ${name}` } }
     },

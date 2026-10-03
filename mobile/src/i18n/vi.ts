@@ -343,6 +343,10 @@ export const vi: Copy = {
     privacySub: 'Chúng tôi giữ gì, và không bao giờ làm gì',
     support: 'Hỗ trợ',
     supportSub: 'Câu hỏi, và cách liên hệ với chúng tôi',
+    terms: 'Điều khoản sử dụng',
+    termsSub: 'Các quy định khi dùng RemitBridge',
+    copyright: (name: string, incorporated: boolean) =>
+      incorporated ? `© 2026 ${name}, một tổ chức phi lợi nhuận đăng ký tại Washington` : `© 2026 ${name}`,
     admin: 'Quản trị',
     addPrice: 'Thêm giá',
     addPriceSub: 'Nhập giá đọc được trên trang của một công ty',
@@ -740,7 +744,7 @@ export const vi: Copy = {
     tapCovered: 'Do bạn che. Chạm để hiện lại.',
     consentLabel: 'Giữ biên lai này để nghiên cứu',
     consentHelp:
-      'Tắt trừ khi bạn bật. Bật: chúng tôi giữ ảnh đã che và các con số, không có gì cho biết bạn là ai, để nghiên cứu người ta thực sự trả bao nhiêu. Tắt: ảnh không bao giờ được lưu, và các con số bị xóa sau 30 ngày.',
+      'Tắt trừ khi bạn bật. Bật: chúng tôi giữ ảnh đã che và các con số trong 24 tháng, không có gì cho biết bạn là ai, để nghiên cứu người ta thực sự trả bao nhiêu. Tắt: ảnh không bao giờ được lưu, và các con số bị xóa sau 30 ngày.',
     send: 'Đọc biên lai của tôi',
     sendFailed: 'Không gửi được. Hãy kiểm tra kết nối và thử lại.',
     notConnected: 'Ứng dụng chưa được kết nối.',

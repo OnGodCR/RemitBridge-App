@@ -40,8 +40,10 @@ Keep the first message to a conversation, not a commitment:
 - for Horn of Africa Services: how families send to Somalia and Eritrea today, and
   whether they'd help source prices by hand (PRD 6.4).
 
-Things not to say (D49): RemitBridge is not a nonprofit, charity or 501(c)(3). "Free" and
-"non-commercial" are fine.
+Things not to say (D141, replacing D49): until Washington accepts the Articles
+(`INCORPORATED` in `site/site.config.json`), don't call RemitBridge Labs a nonprofit
+corporation. Never say charity, 501(c)(3) or tax-deductible until Angad says the IRS has
+approved it. "Free" and "non-commercial" are fine. The full name is RemitBridge Labs.
 
 ## Draft email
 

@@ -11,7 +11,8 @@
 //   3. stores the values, where each came from, and the two consent flags; never the text,
 //      and the image only with research consent;
 //   4. answers with the values, the checks, and what the person should confirm.
-// It also deletes a receipt on request ('forget'), and every receipt past its 30 days.
+// It also deletes a receipt on request ('forget'), and every receipt past its end: 30 days,
+// or 24 months with research consent (D141), image first.
 //
 // Secrets, set by Angad with `supabase secrets set` (never in this repo or the chat):
 //   GROQ_API_KEY                the model fallback, on Groq's free tier; without it, the
@@ -80,6 +81,8 @@ const SCANS_PER_DAY_PER_ACCOUNT = 10;
 const SCANS_PER_DAY_PER_ADDRESS = 100;
 const DAY_SECONDS = 86_400;
 const KEEP_DAYS = 30;
+/** Research receipts and their redacted images (D81, D141). */
+const RESEARCH_MONTHS = 24;
 const BUCKET = 'receipt-images';
 
 const CORS = {
@@ -137,7 +140,7 @@ Deno.serve(async (req) => {
 });
 
 async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanResponse> {
-  await db.rpc('forget_expired_receipts');
+  await forgetExpired(db);
 
   // The second line of defense (D74): anything the phone let through is hidden here, and
   // then the image, which can't be redacted here, is not used at all.
@@ -160,7 +163,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const receive = fields.receive_currency?.value;
   const routeId = ROUTES.find((r) => r.sendCurrency === send && r.receiveCurrency === receive)?.id ?? null;
   const id = crypto.randomUUID();
-  const expiresAt = request.research_consent ? null : new Date(Date.now() + KEEP_DAYS * 86_400_000).toISOString();
+  const expiresAt = expiry(request.research_consent, new Date()).toISOString();
 
   // The redacted image is stored only with research consent (D81).
   let imagePath: string | null = null;
@@ -404,6 +407,28 @@ function fieldRows(id: string, fields: ExtractedFields) {
     confidence: Math.round(f.confidence * 1000) / 1000,
     validated: f.validated,
   }));
+}
+
+/** When a receipt sent now is deleted: 30 days, or 24 months with research consent (D141). */
+export function expiry(researchConsent: boolean, now: Date): Date {
+  const end = new Date(now);
+  if (researchConsent) end.setUTCMonth(end.getUTCMonth() + RESEARCH_MONTHS);
+  else end.setTime(end.getTime() + KEEP_DAYS * 86_400_000);
+  return end;
+}
+
+/**
+ * Deletes receipts past their end. The database job deletes those without an image on its
+ * own; an image can only be deleted through the Storage API, so for those this deletes the
+ * image first and the row only once the image is gone, leaving nothing behind (D141).
+ */
+async function forgetExpired(db: SupabaseClient) {
+  const { data } = await db.rpc('expired_receipt_images', { p_limit: 100 });
+  for (const r of (data ?? []) as { id: string; image_path: string }[]) {
+    const { error } = await db.storage.from(BUCKET).remove([r.image_path]);
+    if (!error) await db.from('receipts').delete().eq('id', r.id);
+  }
+  await db.rpc('forget_expired_receipts');
 }
 
 async function forget(db: SupabaseClient, id: string) {

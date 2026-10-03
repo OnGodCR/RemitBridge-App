@@ -34,7 +34,7 @@
    "title": "What is an international remittance, and why is it more than a money transfer?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Migrant workers sent $905 billion home in 2024, and almost none of it was spare cash: it is rent, food, school fees and medicine, often a household's only income. Seen that way, a fee and a three-day delay stop being administrative details.",
@@ -217,7 +217,7 @@
    "title": "Where does a $200 transfer actually go?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Two paths a $200 transfer can take, and what each one takes out of it: correspondent banks on one, pre-funded currency pools on the other. Then we price a real US to Mexico transfer at two providers, where the bank turns out to be both cheaper and faster than the money transfer operator.",
@@ -532,7 +532,7 @@
    "title": "The advertised fee is not the true price",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Writing out the full cost as an equation. Fixed fee, percentage fee, the exchange rate markup, and the cash-out charge on the other end. The advertised number usually covers the first one and stops there.",
@@ -709,7 +709,7 @@
    "title": "Why the same transfer can cost more on one corridor than another",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Why the same $200 costs different amounts depending on where it is going. Competition, which banks talk to each other, how much of the currency is floating around, local rules, distance, and how many cash pickup points exist nearby.",
@@ -897,7 +897,7 @@
    "title": "Why families often send small amounts frequently",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Sending $40 every week instead of $300 once is about managing cash week to week and being able to react to an emergency. Fixed fees punish this pattern, since a flat $5 costs a lot more proportionally on $30 than it does on $300.",
@@ -1047,7 +1047,7 @@
    "title": "Remittances as household insurance",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "When there is a medical emergency, a job loss, a bad harvest, a storm, or political trouble, transfers from abroad tend to go up. This paper tries to put actual numbers on that pattern.",
@@ -1203,7 +1203,7 @@
    "title": "SWIFT sends the message, so who moves the money?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Three systems do three different jobs on every cross-border payment: SWIFT carries the instruction, correspondent banks move the value, and RTGS makes it final. No money ever touches SWIFT itself. Knowing which layer you are looking at is what explains a bank saying \"sent\" three days before anyone can spend it.",
@@ -1379,7 +1379,7 @@
    "title": "Correspondent banks, Vostro accounts, and the hidden chain behind a transfer",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "The banks sitting between a sender and a recipient, what Nostro and Vostro accounts are, and what each intermediary does. A longer chain means more time, more cost, and less ability to see where the money currently is.",
@@ -1526,7 +1526,7 @@
    "title": "Clearing, settlement, and finality are not the same thing",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "What each of those words means, and why an app can say \"sent\" while the receiving bank still does not have money anyone can actually spend. The gap between those two moments is where most of the confusion lives.",
@@ -1645,7 +1645,7 @@
    "title": "Why can an international transfer still take several days?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Time zones, banking hours, batch schedules, compliance checks, currency conversion, and the last step of getting cash out to a local branch. Each one adds a bit, and they stack.",
@@ -1796,7 +1796,7 @@
    "title": "How fragmented standards increase cross-border payment friction",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Different countries and banks use different message formats, so information gets dropped or retyped at every handoff. We look at the mess, and at ISO 20022, which is the current attempt to standardise it.",
@@ -1936,7 +1936,7 @@
    "title": "Why a new payment system must connect to existing banks",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Ripping out the banking infrastructure that already exists is not realistic: licensing, compliance and final settlement all sit inside it. The useful work is in building bridges that are secure and legal, which is what the stablecoin sandwich and M-Pesa both turn out to be.",
@@ -2070,7 +2070,7 @@
    "title": "Why base-layer blockchains struggle with remittance-scale traffic",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Throughput limits, block capacity, congestion, fees that jump around, and confirmation times. Many small frequent transfers turn out to be a hard traffic pattern for a base layer to handle.",
@@ -2203,7 +2203,7 @@
    "title": "Sharding explained through a remittance network",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "Doubling the shards roughly doubles the capacity, but only for transfers that stay inside one shard. A remittance has three parties by default, so it is cross-shard from the start, and adding shards makes that more likely rather than less.",
@@ -2375,7 +2375,7 @@
    "title": "Could sidechains become specialized remittance rails?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "publishedOn": "2026-08-21",
@@ -2560,7 +2560,7 @@
    "title": "Sharding vs. sidechains vs. payment channels: are we comparing equivalent systems?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "The impressive benchmark numbers for these three architectures were not measured the same way, under the same conditions, or against the same definition of a transaction. Setting them side by side compares a top speed on a closed track to an average speed in traffic, which is why published figures cannot settle which one suits a remittance workload.",
@@ -2750,7 +2750,7 @@
    "title": "How many transactions per second would a remittance network really need?",
    "author": {
     "name": "Angad Kochar",
-    "role": "RemitBridge Systems Lab",
+    "role": "RemitBridge Labs",
     "consentOn": "2026-08-21"
    },
    "abstract": "The $200 everyone divides by is a fixed benchmark, not a measured average: the real US to Mexico average is $488. Working the throughput question properly, across four demand levels and an honest market share, lands nearer 14 to 33 transactions per second than the headline 143.",

@@ -344,6 +344,10 @@ export const es: Copy = {
     privacySub: 'Qué guardamos, y qué nunca hacemos',
     support: 'Ayuda',
     supportSub: 'Preguntas, y cómo contactarnos',
+    terms: 'Términos de uso',
+    termsSub: 'Las reglas para usar RemitBridge',
+    copyright: (name: string, incorporated: boolean) =>
+      incorporated ? `© 2026 ${name}, una corporación sin fines de lucro de Washington` : `© 2026 ${name}`,
     admin: 'Administración',
     addPrice: 'Agregar un precio',
     addPriceSub: 'Registra un precio visto en el sitio de una empresa',
@@ -740,7 +744,7 @@ export const es: Copy = {
     tapCovered: 'La tapaste tú. Toca para mostrarla otra vez.',
     consentLabel: 'Guardar este recibo para investigación',
     consentHelp:
-      'Apagado a menos que lo actives. Activado: guardamos la foto tapada y las cifras, sin nada que diga quién eres, para estudiar cuánto paga la gente en realidad. Apagado: la foto nunca se guarda y las cifras se borran a los 30 días.',
+      'Apagado a menos que lo actives. Activado: guardamos la foto tapada y las cifras durante 24 meses, sin nada que diga quién eres, para estudiar cuánto paga la gente en realidad. Apagado: la foto nunca se guarda y las cifras se borran a los 30 días.',
     send: 'Leer mi recibo',
     sendFailed: 'No se pudo enviar. Revisa tu conexión e intenta de nuevo.',
     notConnected: 'La app aún no está conectada.',

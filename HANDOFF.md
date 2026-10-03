@@ -3,7 +3,7 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-09-30 (evening)
+**Last updated:** 2026-10-02 (night)
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 
@@ -57,7 +57,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   is stored. **But Meta restricted the WhatsApp account at once** (error 131031, "Business
   Account locked"; Business Support Home: "Account Restricted, Duration: Permanent" until
   business verification), so no message can be sent or answered yet. RemitBridge isn't a
-  registered business (D49), so whether and how to verify is Angad's decision.
+  registered business (D49). Update 2026-10-02: RemitBridge Labs' Articles were filed (D141);
+  once Washington accepts them, they're what Meta's verification asks for.
 - **UI pass (D101, D102), in progress:** Scan is the first tab and the app opens on it;
   Compare moved to `(tabs)/compare.tsx`; rows lead with drawn illustrations (D103, after
   Angad called the first icon tiles "too vibecoded"); shorter captions in all five languages.
@@ -73,6 +74,16 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   removed from Apple sign-in (D116); providers' terms read in a browser, Instarem cleared,
   the World Bank survey found (D115). Then, with Angad's yes: the Instarem adapter (20 of
   20 live quotes through the gate locally) and the survey's US rows in `research/` (D118).
+- **2026-10-02, night: RemitBridge Labs (D141).** The operator's public details in one file,
+  `site/site.config.json`, read by the site's new build step (`site/build.mjs`, run by
+  Vercel), the app, the functions and the engine. Footer on every page with the © line
+  (legal status gated by `INCORPORATED`), Contact and support page, new privacy policy and
+  terms (drafts pending legal review), Terms and © in the app's Account tab, the blog's
+  author name, `LICENSE` (MIT), `OWNERSHIP.md`, `CONTRIBUTING.md` (DCO). Research receipts
+  now end after 24 months: needs `20261003010000_research_retention` run in the SQL editor,
+  then `scan-receipt` deployed (not before: the new code gives research receipts an end
+  date, which the old database rule refuses). The contact email stays the Gmail until Angad
+  confirms hello@remitbridgelabs.org forwards.
 - **2026-10-02, evening: limits on AI spending (D140).** App: 10 scans a day per phone, 10
   per account, 100 per network address (plus 30 an hour). WhatsApp: 10 receipt photos and 100
   messages a day per number (plus 30 an hour). Overall: 200 model calls a day beside 2,000 a

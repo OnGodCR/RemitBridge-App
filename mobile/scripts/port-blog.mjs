@@ -112,6 +112,11 @@ for (const post of posts) {
 }
 await browser.close();
 
+// The website still credits authors to its old name; the organization is RemitBridge Labs (D141).
+for (const entry of out) {
+  if (entry.author?.role && /remitbridge systems? labs?/i.test(entry.author.role)) entry.author.role = 'RemitBridge Labs';
+}
+
 writeFileSync(join(app, 'src/data/blog.json'), JSON.stringify({ series: seriesCategories, posts: out }, null, 1) + '\n');
 writeFileSync(
   join(app, 'src/data/blog-images.ts'),

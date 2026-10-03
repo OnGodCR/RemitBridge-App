@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Support | RemitBridge</title>
-<meta name="description" content="Help with the RemitBridge app.">
+<title>Contact and support | RemitBridge</title>
+<meta name="description" content="Help with the RemitBridge app, and how to reach RemitBridge Labs.">
+<!--HEAD-->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,14 +16,29 @@
 <body>
 <header><div class="wrap"><a href="/"><img src="/favicon.svg" alt=""></a><a href="/">RemitBridge</a></div></header>
 <main class="wrap">
-<h1>Support</h1>
-<p>Questions, a price that looks wrong, or a provider or country you'd like to see? Email <a href="mailto:remitbridgesystemlabs@gmail.com">remitbridgesystemlabs@gmail.com</a>. A person reads every message.</p>
+<h1>Contact and support</h1>
+<p>Questions, a price that looks wrong, or a provider or country you'd like to see? Email <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a>. A person reads every message.</p>
+
+<h2>Who runs RemitBridge</h2>
+<p>{{LEGAL_NAME}} publishes and operates the RemitBridge app, this site and the RemitBridge WhatsApp bot.</p>
+<p><a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+{{MAILING_ADDRESS_LINE}}
 
 <h2>Where do the prices come from?</h2>
-<p>From each provider's public price calculator. Each price is checked against the mid-market exchange rate before it's shown, and shows when it was checked. A price that fails a check is held back, not shown.</p>
+<p>From four kinds of source:</p>
+<ul>
+<li>providers' public websites;</li>
+<li>provider APIs we use with the provider's permission, such as Wise's;</li>
+<li>prices entered by RemitBridge staff from a provider's public price calculator;</li>
+<li>mid-market exchange rates from Frankfurter, a public exchange-rate service.</li>
+</ul>
+<p>Each price is checked against the mid-market rate before it's shown, and shows when it was checked. A price that fails a check is held back. Prices change during the day, so one may be out of date by the time you see it.</p>
 
 <h2>Can I send money through RemitBridge?</h2>
-<p>No. RemitBridge only shows prices. It never holds or moves money. To send, go to the provider you pick.</p>
+<p>No. RemitBridge only shows prices. It never sends, holds or exchanges money. To send, go to the provider you pick.</p>
+
+<h2>How are providers ranked?</h2>
+<p>By the amount your family receives, and nothing else. No provider pays us, and there are no affiliate links.</p>
 
 <h2>Why does a price differ from what I see on the provider's site?</h2>
 <p>Rates move during the day, and some fees change with the amount or how you pay. The app shows when each price was checked. If one looks wrong, email us with the provider, route and amount.</p>
@@ -30,8 +46,6 @@
 <h2>How do I delete my account?</h2>
 <p>In the app, go to Account, then Delete account. Everything saved to your account is deleted at once. See the <a href="/privacy">privacy policy</a>.</p>
 </main>
-<footer><div class="wrap">
-<a href="/">Home</a><a href="/privacy">Privacy</a><a href="/support">Support</a><a href="https://remitbridgelabs.org">remitbridgelabs.org</a>
-</div></footer>
+<!--FOOTER-->
 </body>
 </html>
