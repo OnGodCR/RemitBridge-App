@@ -1586,3 +1586,9 @@ months** (Angad, 2026-10-02). Replaces D49.
   and three DNS records at GoDaddy (two MX, one SPF TXT), leaving every other record as it
   was. The domain had no MX before, so nothing that received mail could break. It only
   receives; sending as hello@ is a later step.
+- 2026-10-03: live. The 24-month migration was run by Angad in the SQL editor and
+  scan-receipt deployed (smoke test 67/67). hello@remitbridgelabs.org forwards (Angad's
+  test arrived, first in Spam) and sends: Gmail's "Send mail as" through Resend's SMTP with
+  a sending-only key Angad created for this domain (the permission system refused Claude
+  creating the key, as a secret write), replying from the address a message was sent to.
+  `CONTACT_EMAIL` switched to it.

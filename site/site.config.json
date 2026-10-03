@@ -1,7 +1,7 @@
 {
-  "_about": "One place for the operator's public details (DECISIONS.md D141). Read by site/build.mjs (every page's footer, the Contact section, the Meta tag), the app (mobile/src/constants/site-config.ts), the Edge Functions (supabase/functions/_shared/site-config.ts) and the engine's user agent (engine/src/remitbridge_engine/config.py). Change a value here and each picks it up on its next build, deploy or run. CONTACT_EMAIL switches to hello@remitbridgelabs.org once Angad confirms forwarding works. INCORPORATED turns true only when Washington's Secretary of State has accepted the Articles. Empty strings render nothing. Never a home address.",
+  "_about": "One place for the operator's public details (DECISIONS.md D141). Read by site/build.mjs (every page's footer, the Contact section, the Meta tag), the app (mobile/src/constants/site-config.ts), the Edge Functions (supabase/functions/_shared/site-config.ts) and the engine's user agent (engine/src/remitbridge_engine/config.py). Change a value here and each picks it up on its next build, deploy or run. CONTACT_EMAIL is hello@remitbridgelabs.org, forwarded to the RemitBridge Gmail by ImprovMX and sent from Gmail through Resend (2026-10-03). INCORPORATED turns true only when Washington's Secretary of State has accepted the Articles. Empty strings render nothing. Never a home address.",
   "LEGAL_NAME": "RemitBridge Labs",
-  "CONTACT_EMAIL": "remitbridgesystemlabs@gmail.com",
+  "CONTACT_EMAIL": "hello@remitbridgelabs.org",
   "MAILING_ADDRESS": "",
   "META_DOMAIN_VERIFICATION": "",
   "INCORPORATED": false

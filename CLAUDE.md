@@ -103,16 +103,18 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       for the operator's public details, the site build, footer, Contact, new privacy policy
       and terms (drafts, pending legal review), Terms and © in the app, `LICENSE`,
       `OWNERSHIP.md`, `CONTRIBUTING.md`, research receipts kept 24 months. Left:
-      - Angad runs `20261003010000_research_retention` (SQL editor, as with D140); then
-        Claude deploys `scan-receipt`, which must wait for it.
-      - `CONTACT_EMAIL` to hello@remitbridgelabs.org once Angad confirms forwarding works;
-        then Claude redeploys `whatsapp`, `process-prices` and `notify-route-launch`.
+      - [x] `20261003010000_research_retention` run by Angad in the SQL editor, `scan-receipt`
+        deployed, smoke test 67/67 (2026-10-03).
+      - [x] `CONTACT_EMAIL` is hello@remitbridgelabs.org (2026-10-03): site, functions
+        redeployed; the app with its next build, the engine on its next run.
         Forwarding set up 2026-10-03: ImprovMX (free; Angad's account, signed up with the
         RemitBridge Gmail), alias hello@ to remitbridgesystemlabs@gmail.com, plus ImprovMX's
         catch-all `*` (Angad to decide whether to keep it); GoDaddy DNS gained MX
         mx1.improvmx.com (10), mx2.improvmx.com (20) and TXT `v=spf1 include:spf.improvmx.com
-        ~all`; ImprovMX shows the domain Active. Left: Angad's test email. Receiving only:
-        replying as hello@ needs sending set up later.
+        ~all`; ImprovMX shows the domain Active; Angad's test arrived (in Spam at first, marked
+        not spam). Sending: Gmail "Send mail as" hello@ through smtp.resend.com:587 (TLS) with
+        a Resend key Angad created ("Gmail send-as hello", sending access, this domain only);
+        replies go from the address a message was sent to. Left: a test send from hello@.
       - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
         "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
         `META_DOMAIN_VERIFICATION` from Meta.
@@ -376,8 +378,8 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
   (`../RemitBridge-System-Labs---Website`) may be **read** for design tokens and
   the TrueCost formula. Never write to it.
 - **Contact** (scraper user agent, methodology screen, every page): `CONTACT_EMAIL` in
-  `site/site.config.json`, read everywhere (D141). hello@remitbridgelabs.org once Angad
-  confirms forwarding; until then remitbridgesystemlabs@gmail.com.
+  `site/site.config.json`, read everywhere (D141): hello@remitbridgelabs.org, which
+  forwards to remitbridgesystemlabs@gmail.com (the account behind every service).
 - **Name:** RemitBridge Labs in full; RemitBridge for short. Never "charity", "501(c)(3)" or
   "tax-deductible" until Angad says the IRS approved it; "nonprofit corporation" only once
   `INCORPORATED` is true (D141).
