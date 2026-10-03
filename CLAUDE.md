@@ -152,7 +152,10 @@ Angad does this once the app itself is finished (D117).
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts and show only in development builds until a fluent speaker reads
       each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
-      Hindi first; the bot's Hindi (D68) needs the same read. The glossary is drafted in
+      Hindi first; the bot's Hindi (D68) needs the same read. **The review is under way in
+      `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):
+      never regenerate it with `scripts/review-sheet.ts`, which rewrites the whole file and
+      would wipe the reviewer's column. Add new strings as rows by hand instead. The glossary is drafted in
       Hindi (D125); still English in Spanish, Tagalog and Vietnamese.
 
 ### Before launch
