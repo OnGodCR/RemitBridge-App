@@ -344,6 +344,10 @@ export const tl: Copy = {
     privacySub: 'Ano ang itinatago namin, at ano ang hindi namin kailanman ginagawa',
     support: 'Tulong',
     supportSub: 'Mga tanong, at paano kami makontak',
+    terms: 'Mga tuntunin ng paggamit',
+    termsSub: 'Ang mga patakaran sa paggamit ng RemitBridge',
+    copyright: (name: string, incorporated: boolean) =>
+      incorporated ? `© 2026 ${name}, isang nonprofit corporation sa Washington` : `© 2026 ${name}`,
     admin: 'Admin',
     addPrice: 'Magdagdag ng presyo',
     addPriceSub: 'Ilagay ang presyong nabasa sa site ng isang provider',
@@ -742,7 +746,7 @@ export const tl: Copy = {
     tapCovered: 'Ikaw ang nagtakip. I-tap para ipakita ulit.',
     consentLabel: 'Itabi ang resibong ito para sa research',
     consentHelp:
-      'Naka-off maliban kung i-on mo. Naka-on: itatabi namin ang natakpang litrato at ang mga halaga, walang anumang nagsasabi kung sino ka, para pag-aralan kung magkano talaga ang binabayaran ng mga tao. Naka-off: hindi kailanman itatabi ang litrato, at buburahin ang mga halaga pagkalipas ng 30 araw.',
+      'Naka-off maliban kung i-on mo. Naka-on: itatabi namin ang natakpang litrato at ang mga halaga nang 24 na buwan, walang anumang nagsasabi kung sino ka, para pag-aralan kung magkano talaga ang binabayaran ng mga tao. Naka-off: hindi kailanman itatabi ang litrato, at buburahin ang mga halaga pagkalipas ng 30 araw.',
     send: 'Basahin ang resibo ko',
     sendFailed: 'Hindi ito natuloy. Tingnan ang connection mo at subukan ulit.',
     notConnected: 'Hindi pa naka-connect ang app.',

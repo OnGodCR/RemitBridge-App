@@ -579,3 +579,47 @@ photo and message limits in the whatsapp function and their replies in `packages
 (English and Hindi); the app's limit messages in five languages (four drafts); tests for
 all of it; the privacy policy line on counting.
 
+## 2026-10-02: RemitBridge Labs (D141)
+
+**What Angad asked:** rename to RemitBridge Labs, add ownership and licensing files, put the
+operator's details and legal pages in place, prepare for Meta's verification, and make the
+privacy policy match what the code does. **What Claude created or changed:**
+
+- `site/site.config.json` (new): the operator's public details in one place: legal name,
+  contact email, mailing address, Meta tag value, and the `INCORPORATED` switch.
+- `site/build.mjs` (new): builds the site into `dist/`, filling those values into every page
+  (footer, Contact, the Meta tag); refuses unknown placeholders and bad values.
+- `site/vercel.json`: runs the build and serves `dist/`; `/contact` shows the support page.
+- `site/styles.css`: footer layout for the links and the © line.
+- `site/index.html`, `site/p.html`: the shared footer and head placeholders.
+- `site/support.html`: now "Contact and support": who runs RemitBridge, the email and
+  address, an accurate list of price sources, how ranking works.
+- `site/privacy.html`: rewritten to name RemitBridge Labs and describe the code exactly
+  (WhatsApp numbers, Groq, 30 days and 24 months, price sources, GitHub, Meta, Vercel);
+  marked "DRAFT: pending legal review".
+- `site/terms.html` (new): terms of use, marked "DRAFT: pending legal review".
+- `mobile/src/constants/site-config.ts` (new): the app's copy of the config values.
+- `mobile/src/lib/links.ts`: the contact email from the config; the Terms page link.
+- `mobile/src/app/(tabs)/account.tsx`: a Terms of use row and the © line.
+- `mobile/src/i18n/en.ts`, `es.ts`, `hi.ts`, `tl.ts`, `vi.ts`: Terms, its subtitle, the ©
+  line, and "24 months" in the research consent text (four drafts).
+- `docs/translation-review/hi.md`: regenerated with the new Hindi lines.
+- `mobile/src/data/blog.json`: author role "RemitBridge Labs" on 17 posts.
+- `mobile/scripts/port-blog.mjs`: renames the website's old author role when posts are copied.
+- `supabase/functions/_shared/site-config.ts` (new): the contact email and user agent for
+  the functions, from the config.
+- `supabase/functions/whatsapp/index.ts`, `process-prices/index.ts`: user agent from it.
+- `supabase/functions/notify-route-launch/index.ts`: reply-to address from it.
+- `engine/src/remitbridge_engine/config.py`: the scraper's contact email from the config
+  (only the address; no scraper logic changed).
+- `supabase/migrations/20261003010000_research_retention.sql` (new): every receipt has an
+  end date, 24 months for research receipts; images are deleted before their rows.
+- `supabase/functions/scan-receipt/index.ts`: research receipts end after 24 months; expired
+  images are deleted through the Storage API, then their receipts.
+- `packages/receipt/src/scan-function.test.ts`, `src/test/fake-supabase.ts`: tests for both.
+- `supabase/tests/local/checks.sql`: database checks for the 24-month rule.
+- `LICENSE`, `OWNERSHIP.md`, `CONTRIBUTING.md` (new).
+- `DECISIONS.md` (D141, D49 marked replaced), `CLAUDE.md` (open items, contact and name
+  rules), `HANDOFF.md`, `README.md`, `docs/SECURITY.md`, `docs/store/listing.md`,
+  `docs/outreach/partners.md`: updated to match.
+

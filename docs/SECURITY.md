@@ -11,8 +11,8 @@ changes. Where this file and the code disagree, the code is wrong until proven o
 | Saved transfers, comparisons, rate alerts (amounts, notes, push token) | `saved_*`, `rate_alerts` | The owner only (RLS), the service role |
 | Email address, name, sign-in identities | Supabase Auth | The owner; admins see only a count of sign-ups |
 | Route-request emails | `route_requests.notify_email` | Admins; deleted after the launch email or when a route is marked not feasible |
-| Scanned receipt values (no person, no account, no device) | `receipts`, `receipt_fields`, `receipt_comparisons` | Only whoever holds the receipt's random ID; deleted after 30 days unless research consent |
-| Redacted receipt images (research consent only) | Storage `receipt-images`, private | Service role only |
+| Scanned receipt values (no person, no account, no device) | `receipts`, `receipt_fields`, `receipt_comparisons` | Only whoever holds the receipt's random ID; deleted after 30 days, or 24 months with research consent (D141) |
+| Redacted receipt images (research consent only, deleted after 24 months, D141) | Storage `receipt-images`, private | Service role only |
 | WhatsApp numbers | As an HMAC (`whatsapp_users`); sealed with AES-GCM for at most an hour while a photo is read (`receipt_intake`); and, for a chat linked to an account, sealed with a separate key for alerts (`number_sealed`), deleted on unlink, STOP or account deletion (D139) | Opened only by the whatsapp function |
 | Usage events (random install ID) | `events` | Admins, as totals |
 | Network addresses | Never stored; an HMAC with a key that changes daily, for rate limits, deleted within a day | Nobody through the API |

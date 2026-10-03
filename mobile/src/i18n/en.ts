@@ -328,6 +328,10 @@ export const en = {
     privacySub: 'What we keep, and what we never do',
     support: 'Support',
     supportSub: 'Questions, and how to reach us',
+    terms: 'Terms of use',
+    termsSub: 'The rules for using RemitBridge',
+    copyright: (name: string, incorporated: boolean) =>
+      incorporated ? `© 2026 ${name}, a Washington nonprofit corporation` : `© 2026 ${name}`,
     admin: 'Admin',
     addPrice: 'Add a price',
     addPriceSub: 'Enter a price read from a provider’s site',
@@ -725,7 +729,7 @@ export const en = {
     tapCovered: 'Covered by you. Tap to show it again.',
     consentLabel: 'Keep this receipt for research',
     consentHelp:
-      'Off unless you turn it on. On: we keep the covered photo and the values, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days.',
+      'Off unless you turn it on. On: we keep the covered photo and the values for 24 months, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days.',
     send: 'Read my receipt',
     sendFailed: 'That didn’t go through. Check your connection and try again.',
     notConnected: 'The app isn’t connected yet.',

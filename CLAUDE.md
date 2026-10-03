@@ -60,8 +60,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       the first sends failed with error 131031 "Business Account locked"; Business Support
       Home shows the WhatsApp account (ID 1656013116119219) "Account Restricted, Duration:
       Permanent" until the business is verified (2026-10-01). Verification asks for a
-      business's legal documents, and RemitBridge isn't registered (D49), so this is
-      Angad's call. Nothing on our side needs to change once Meta lifts it.
+      business's legal documents: RemitBridge Labs' Articles were filed 2026-10-02 (D141), so
+      once Washington accepts them they can verify it, with hello@remitbridgelabs.org and the
+      `facebook-domain-verification` tag (`META_DOMAIN_VERIFICATION`). Nothing else on our
+      side needs to change once Meta lifts it.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
       enrolled and paid 2026-10-01; Apple can take up to 48 hours to process it. It must land
@@ -96,6 +98,21 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `research/world-bank-rpw/` for research. Paysend is cleared but not built: its public pages show one
       amount and one price for several ways of receiving, so its numbers can't be verified yet;
       asked press@paysend.com for a feed on 2026-10-01 (`docs/outreach/permission-request.md`). The rest: Add a price, or their permission.
+
+- [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
+      for the operator's public details, the site build, footer, Contact, new privacy policy
+      and terms (drafts, pending legal review), Terms and © in the app, `LICENSE`,
+      `OWNERSHIP.md`, `CONTRIBUTING.md`, research receipts kept 24 months. Left:
+      - Angad runs `20261003010000_research_retention` (SQL editor, as with D140); then
+        Claude deploys `scan-receipt`, which must wait for it.
+      - `CONTACT_EMAIL` to hello@remitbridgelabs.org once Angad confirms forwarding works;
+        then Claude redeploys `whatsapp`, `process-prices` and `notify-route-launch`.
+      - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
+        "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
+        `META_DOMAIN_VERIFICATION` from Meta.
+      - Legal review of `site/privacy.html` and `site/terms.html`; the written license of
+        the name and domain to RemitBridge Labs; then the site's Hindi.
+      - The DCO check, when the first outside contributor starts.
 
 ### Testing (once the features are set up)
 
@@ -163,6 +180,9 @@ Angad does this once the app itself is finished (D117).
       (D123); Angad's own sign-up (2026-10-01) stopped at the 18+ check. Claude's "About you"
       answers carry over. Left: his dad signs up, including identity verification. New personal accounts must run a
       closed test with at least 12 testers for 14 days before releasing to everyone.
+- [ ] **Stores publish as RemitBridge Labs (D141):** once incorporated, get a D-U-N-S number,
+      then convert the Apple account to an Organization (Apple Developer Support) and create
+      or convert a Google Play Organization account, so RemitBridge Labs shows as publisher.
 - [ ] **Disk space and memory.** 12 GB free on 2026-09-30; native builds and real store
       screenshots need 15–20 GB. With 8 GB of RAM, the simulator takes 1–2 minutes to boot.
 
@@ -346,7 +366,12 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - **Look:** same as the website (D18). The website repo
   (`../RemitBridge-System-Labs---Website`) may be **read** for design tokens and
   the TrueCost formula. Never write to it.
-- **Contact** (scraper user agent, methodology screen): remitbridgesystemlabs@gmail.com.
+- **Contact** (scraper user agent, methodology screen, every page): `CONTACT_EMAIL` in
+  `site/site.config.json`, read everywhere (D141). hello@remitbridgelabs.org once Angad
+  confirms forwarding; until then remitbridgesystemlabs@gmail.com.
+- **Name:** RemitBridge Labs in full; RemitBridge for short. Never "charity", "501(c)(3)" or
+  "tax-deductible" until Angad says the IRS approved it; "nonprofit corporation" only once
+  `INCORPORATED` is true (D141).
 
 ## Secrets
 

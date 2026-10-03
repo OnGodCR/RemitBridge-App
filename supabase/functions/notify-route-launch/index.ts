@@ -11,9 +11,10 @@
 // RESEND_API_KEY is a Supabase secret; until it's set this sends nothing and says so.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { publishableKey, secretKey } from '../_shared/keys.ts';
+import { CONTACT_EMAIL } from '../_shared/site-config.ts';
 
 const FROM = 'RemitBridge <RemitBridge@remitbridgelabs.org>';
-const REPLY_TO = 'remitbridgesystemlabs@gmail.com';
+const REPLY_TO = CONTACT_EMAIL;
 const SITE = 'https://app.remitbridgelabs.org';
 
 const cors = {

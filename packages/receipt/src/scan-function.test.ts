@@ -326,12 +326,24 @@ describe('scans from the WhatsApp worker', () => {
 })
 
 describe('research consent', () => {
-  it('keeps the receipt and its redacted image, with no expiry', async () => {
+  it('keeps the receipt and its redacted image for 24 months (D141)', async () => {
     replies.push(goodAnswer())
     const { body } = await scan({ image: IMAGE, research_consent: true })
-    expect(body.expires_at).toBeNull()
+    const months = (Date.parse(String(body.expires_at)) - Date.now()) / (30.44 * 86_400_000)
+    expect(months).toBeGreaterThan(23.9)
+    expect(months).toBeLessThan(24.1)
     expect(storage).toEqual([{ bucket: 'receipt-images', path: `${body.id}.jpg`, bytes: 20, contentType: 'image/jpeg' }])
-    expect(tables.receipts[0]).toMatchObject({ research_consent: true, image_retained: true, image_path: `${body.id}.jpg`, expires_at: null })
+    expect(tables.receipts[0]).toMatchObject({ research_consent: true, image_retained: true, image_path: `${body.id}.jpg`, expires_at: body.expires_at })
+  })
+
+  it('deletes an expired research receipt’s image, then the receipt, on the next scan', async () => {
+    replies.push(goodAnswer())
+    const { body } = await scan({ image: IMAGE, research_consent: true })
+    tables.receipts[0].expires_at = new Date(Date.now() - 1000).toISOString()
+    replies.push(goodAnswer())
+    await scan()
+    expect(storage).toEqual([])
+    expect(tables.receipts.map((r) => r.id)).not.toContain(body.id)
   })
 
   it('without it, the image is used for the model and never stored', async () => {

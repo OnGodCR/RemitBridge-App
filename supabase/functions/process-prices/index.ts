@@ -11,6 +11,7 @@
 // { dispatched: false } and the schedule picks the entry up.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { publishableKey } from '../_shared/keys.ts';
+import { USER_AGENT } from '../_shared/site-config.ts';
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const WORKFLOW = 'manual-prices.yml';
@@ -46,7 +47,7 @@ Deno.serve(async (req) => {
         Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
-        'User-Agent': 'RemitBridge (remitbridgesystemlabs@gmail.com)',
+        'User-Agent': USER_AGENT,
       },
       body: JSON.stringify({ ref: 'main' }),
     },

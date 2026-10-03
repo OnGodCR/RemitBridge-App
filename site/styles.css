@@ -44,3 +44,5 @@ ul { padding-left: 20px; }
 footer { border-top: 1px solid var(--border); }
 footer .wrap { padding-top: 20px; padding-bottom: 32px; display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; }
 footer a { color: var(--muted); }
+footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
+footer .legal { flex-basis: 100%; margin: 0; color: var(--muted); line-height: 1.6; }

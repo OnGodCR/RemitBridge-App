@@ -334,7 +334,7 @@ widget and QR code.
 registered.** Angad is the seller of record in the app stores and the name on the
 data license. Nothing in the app, the store listings or the docs may call
 RemitBridge a nonprofit, charity or 501(c)(3). It may say "free" and
-"non-commercial". *Answers:* PRD 13 open question 4.
+"non-commercial". *Answers:* PRD 13 open question 4. *Replaced by D141 (2026-10-02).*
 
 **D50. No partner organizations yet.** Outreach to Seattle-area organizations
 (especially for the special-handling corridors, PRD 6.4) is an open item.
@@ -1531,3 +1531,54 @@ on Angad's behalf:
 - 2026-10-02, live: the migration applied by Angad in the SQL editor (the CLI couldn't reach
   the database from his network), `whatsapp` and `scan-receipt` deployed, and the live smoke
   test passes 66/66 with the three new denials (42501).
+
+**D141. RemitBridge Labs: the operator, its public details, and research receipts kept 24
+months** (Angad, 2026-10-02). Replaces D49.
+- **Structure.** The project is being incorporated as a Washington nonprofit corporation,
+  "RemitBridge Labs" (the state stores REMITBRIDGE LABS). The Articles were filed on
+  2026-10-02 and are not accepted yet. The old names "RemitBridge Systems Lab" and
+  "RemitBridge System Labs" are retired; "RemitBridge" stays the short name (the app, the
+  logo, the WhatsApp display name). Angad owns the code, the RemitBridge name and the
+  domain. The code is MIT-licensed by him (`LICENSE`), which already covers the
+  corporation's use; the name and the domain will be licensed to RemitBridge Labs under a
+  written agreement that doesn't exist yet (`OWNERSHIP.md`). RemitBridge Labs publishes and
+  operates the app, the site and the bot, and is the party in the privacy policy and terms.
+- **Legal-status wording is gated.** `INCORPORATED` in `site/site.config.json` (false until
+  Angad says the state has accepted the Articles) switches the site footer and the app's
+  Account line from "© 2026 RemitBridge Labs" to "© 2026 RemitBridge Labs, a Washington
+  nonprofit corporation". **Never say "charity", "501(c)(3)" or "tax-deductible" anywhere
+  until Angad says the IRS has approved it.**
+- **One config file** for the operator's public details: `site/site.config.json` holds
+  `LEGAL_NAME`, `CONTACT_EMAIL`, `MAILING_ADDRESS`, `META_DOMAIN_VERIFICATION` and
+  `INCORPORATED`. The site's build (`site/build.mjs`, run by Vercel) stamps them into the
+  HTML, because Meta's domain check reads raw HTML and runs no JavaScript; the app, the Edge
+  Functions (`_shared/site-config.ts`) and the engine's user agent read the same file. No
+  home address ever goes in it.
+- **Contact email moves to hello@remitbridgelabs.org** (forwarded to the Gmail), for Meta's
+  verification to match the business to its domain. Everything reads `CONTACT_EMAIL`; the
+  value stays the Gmail until Angad confirms forwarding works, then that one value changes
+  (and the functions are redeployed). Past outreach logs keep the address they were sent from.
+- **Privacy policy and terms describe what the code does** (Angad: "the policy must describe
+  what the code actually does. Keep the features"). Both are marked "DRAFT: pending legal
+  review" and stay English-only until that review; app strings get all five languages.
+  WhatsApp numbers: hashed, except encrypted for up to an hour while a receipt photo is read
+  (D94) and while a chat is linked, for alerts (D139). Receipts: covered text, and sometimes
+  the covered photo, go to Groq with zero data retention; the text is never stored; the
+  figures are kept 30 days. Price sources: providers' public websites, provider APIs used
+  with permission (Wise), prices entered by RemitBridge staff, Frankfurter's mid-market
+  rates. Found while writing it and added: GitHub runs the WhatsApp photo reader (the
+  original photo, in memory only), Meta carries the bot's messages, Vercel hosts the site.
+- **Research receipts end after 24 months**, image and figures, instead of never
+  (`20261003010000_research_retention.sql`). Every receipt now has an end date. The hourly
+  job deletes expired receipts without an image; one with an image is deleted by
+  scan-receipt on the next scan, image first through the Storage API, row second, because
+  Supabase doesn't allow deleting Storage files from SQL and deleting only the row would
+  leave the image behind.
+- **DCO:** `CONTRIBUTING.md` requires signed-off commits. The check that enforces it (pull
+  requests and pushes to `main`) is turned on when the first outside contributor starts;
+  until then Angad is the only committer and pushes straight to `main` (D24). Claude never
+  adds a Signed-off-by line: that certification has to come from Angad.
+- **Stores:** no change now. Once incorporated, RemitBridge Labs gets a D-U-N-S number and
+  Organization developer accounts on Apple (converted from the individual one, D134) and
+  Google, so it shows as the publisher.
+

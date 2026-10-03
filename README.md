@@ -44,7 +44,8 @@ benchmark/           Receipt reading accuracy: real and synthetic receipts with 
 supabase/            Migrations, row-level security, Edge Functions (delete-account, process-prices,
                      notify-route-launch, whatsapp, scan-receipt)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks, the WhatsApp photo worker
-site/                app.remitbridgelabs.org: privacy policy, support, partner links (Vercel, root "site")
+site/                app.remitbridgelabs.org: privacy policy, terms, contact and support, partner links
+                     (Vercel, root "site"; build.mjs fills in site.config.json, the operator's details)
 docs/                PRD, manual-research list, store/listing.md (what to paste into both stores)
 research/            world-bank-rpw/: the World Bank's US remittance price survey (Q2 2016 to Q1 2025)
                      as CSV, its summary, and extract.py to rebuild both from the downloaded workbook
@@ -92,6 +93,20 @@ clipboard.
 GQ_KEY="$(pbpaste | tr -d '[:space:]')"; code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GQ_KEY" https://api.groq.com/openai/v1/models); echo "Groq says: $code (key starts ${GQ_KEY:0:4}, ${#GQ_KEY} characters)"; if [ "$code" = 200 ]; then supabase secrets set GROQ_API_KEY="$GQ_KEY" && printf %s "$GQ_KEY" | gh secret set GROQ_API_KEY; fi; unset GQ_KEY; pbcopy </dev/null
 ```
 
+### The operator's details and the site
+
+RemitBridge Labs' public details live in one file, `site/site.config.json` (D141):
+`LEGAL_NAME`, `CONTACT_EMAIL`, `MAILING_ADDRESS`, `META_DOMAIN_VERIFICATION` and
+`INCORPORATED`. The site's build stamps them into every page; the app, the Edge Functions
+and the engine read the same file. Change a value, then rebuild or redeploy what shows it:
+the site redeploys itself on push, the app with its next build, the functions with
+`supabase functions deploy`, the engine on its next run.
+
+```bash
+node site/build.mjs          # writes site/dist/, as Vercel does
+node site/build.mjs check    # checks the config and every page, writes nothing
+```
+
 More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`](mobile/README.md).
 
 ## Docs
@@ -106,4 +121,6 @@ More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`
 | [`docs/cac-gap-report.md`](docs/cac-gap-report.md) | Congressional App Challenge features: what exists, what's missing, decisions needed |
 | [`docs/SECURITY.md`](docs/SECURITY.md) | What's sensitive, the threats, and what stops each one (D135) |
 | [`docs/security-review.md`](docs/security-review.md) | The security pass as a checklist for Angad to review |
+| [`OWNERSHIP.md`](OWNERSHIP.md), [`LICENSE`](LICENSE) | Who owns what: MIT code by Angad Kochar; the name and domain, to be licensed to RemitBridge Labs |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Signing off commits (DCO) |
 | [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Per-session log of files Claude created or changed, for the CAC's AI-use disclosure |

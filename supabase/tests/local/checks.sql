@@ -563,4 +563,30 @@ set role service_role;
 select pg_temp.ok((select public.count_hit('wa_photo', repeat('f', 64), 86400)) = 1, 'service role: counts a WhatsApp photo');
 reset role;
 
+-- ---------------------------------------------------------------------------------------
+-- Research receipts end after 24 months (D141)
+-- ---------------------------------------------------------------------------------------
+set role service_role;
+insert into public.receipts (id, channel, redaction_status, research_consent, image_retained, image_path)
+  values ('80000000-0000-4000-8000-000000000001', 'app', 'device', true, true, 'r/81.jpg');
+select pg_temp.ok((select expires_at = submitted_at + interval '24 months' from public.receipts
+                    where id = '80000000-0000-4000-8000-000000000001'),
+  'research receipts: 24 months when no end is given');
+select pg_temp.ok(not exists (select 1 from public.receipts where expires_at is null),
+  'research receipts: every receipt has an end');
+select pg_temp.expect($$insert into public.receipts (channel, redaction_status, research_consent, expires_at)
+  values ('app', 'device', true, now() + interval '25 months')$$, '23514', 'research receipts: never past 24 months');
+update public.receipts set expires_at = now() - interval '1 minute' where id = '80000000-0000-4000-8000-000000000001';
+select public.forget_expired_receipts();
+select pg_temp.ok(exists (select 1 from public.receipts where id = '80000000-0000-4000-8000-000000000001'),
+  'research receipts: the job leaves one with an image for the function (its image first)');
+select pg_temp.ok((select image_path = 'r/81.jpg' from public.expired_receipt_images(10)
+                    where id = '80000000-0000-4000-8000-000000000001'),
+  'research receipts: the function is told which images to delete');
+delete from public.receipts where id = '80000000-0000-4000-8000-000000000001';
+reset role;
+set role anon;
+select pg_temp.expect($$select * from public.expired_receipt_images(10)$$, '42501', 'anon: can''t list receipt images');
+reset role;
+
 \echo 'all local checks passed'

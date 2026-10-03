@@ -16,8 +16,10 @@ Character limits are the stores' own, and every field below fits.
 | Price | Free. No in-app purchases, no ads, no subscriptions |
 | Support URL | https://app.remitbridgelabs.org/support |
 | Privacy policy URL | https://app.remitbridgelabs.org/privacy |
+| Terms of use URL | https://app.remitbridgelabs.org/terms (D141) |
 | Marketing / website URL | https://app.remitbridgelabs.org |
-| Contact email | remitbridgesystemlabs@gmail.com |
+| Contact email | `CONTACT_EMAIL` in `site/site.config.json`: hello@remitbridgelabs.org once Angad confirms its forwarding works (D141) |
+| Developer / seller name | Comes from the developer account, not from here: today Angad's dad's name (individual accounts, D134). It becomes RemitBridge Labs only with Organization accounts, which need the corporation's D-U-N-S number (D141) |
 | Copyright | 2026 Angad Kochar |
 
 ## App Store
@@ -110,7 +112,7 @@ Scan (the first tab) reads a photo of a money-transfer receipt. Any receipt phot
 Prices come from providers' public prices (Wise with written permission, Instarem's public quote endpoint) and from prices checked by hand. Each price shows its source and when it was checked.
 
 Account deletion: Account > Delete account.
-Contact: remitbridgesystemlabs@gmail.com
+Contact: hello@remitbridgelabs.org
 ```
 
 Export compliance: answered in the app's config (`usesNonExemptEncryption: false`), so App

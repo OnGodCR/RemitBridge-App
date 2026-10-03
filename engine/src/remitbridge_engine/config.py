@@ -6,11 +6,16 @@ its reasoning. Change a number here and its entry there together.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
 
 from .models import DeliveryMethod
 
-CONTACT_EMAIL = "remitbridgesystemlabs@gmail.com"
+# The contact address is set once, with the operator's other public details, in
+# site/site.config.json (DECISIONS.md D141); the site, the app and the functions read it too.
+_SITE_CONFIG = Path(__file__).resolve().parents[3] / "site" / "site.config.json"
+CONTACT_EMAIL: str = json.loads(_SITE_CONFIG.read_text(encoding="utf-8"))["CONTACT_EMAIL"]
 USER_AGENT = f"RemitBridgeResearch/0.1 (+mailto:{CONTACT_EMAIL}; non-commercial price research)"
 
 

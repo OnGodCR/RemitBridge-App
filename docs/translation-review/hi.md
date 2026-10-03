@@ -284,6 +284,9 @@ with your name and the date.
 | account.privacySub | What we keep, and what we never do | हम क्या रखते हैं, और क्या कभी नहीं करते | |
 | account.support | Support | मदद | |
 | account.supportSub | Questions, and how to reach us | सवाल, और हमसे संपर्क कैसे करें | |
+| account.terms | Terms of use | इस्तेमाल की शर्तें | |
+| account.termsSub | The rules for using RemitBridge | RemitBridge इस्तेमाल करने के नियम | |
+| account.copyright | © 2026 {name}, a Washington nonprofit corporation | © 2026 {name}, वॉशिंगटन का एक गैर-लाभकारी निगम | |
 | account.admin | Admin | एडमिन | |
 | account.addPrice | Add a price | कीमत जोड़ें | |
 | account.addPriceSub | Enter a price read from a provider’s site | किसी कंपनी की साइट पर देखी कीमत दर्ज करें | |
@@ -609,10 +612,12 @@ with your name and the date.
 | scan.tapWord | Word: {text}. Tap to cover it. | शब्द: {text}। ढकने के लिए टैप करें। | |
 | scan.tapCovered | Covered by you. Tap to show it again. | आपने ढका है। फिर से दिखाने के लिए टैप करें। | |
 | scan.consentLabel | Keep this receipt for research | यह रसीद रिसर्च के लिए रखें | |
-| scan.consentHelp | Off unless you turn it on. On: we keep the covered photo and the values, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days. | जब तक आप इसे चालू न करें, यह बंद रहता है। चालू: हम ढकी हुई फ़ोटो और रकमें रखते हैं, आपकी पहचान बताने वाली कोई चीज़ नहीं, ताकि पता चले कि लोग असल में कितना चुकाते हैं। बंद: फ़ोटो कभी नहीं रखी जाती, और रकमें 30 दिन बाद मिटा दी जाती हैं। | |
+| scan.consentHelp | Off unless you turn it on. On: we keep the covered photo and the values for 24 months, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days. | जब तक आप इसे चालू न करें, यह बंद रहता है। चालू: हम ढकी हुई फ़ोटो और रकमें 24 महीने तक रखते हैं, आपकी पहचान बताने वाली कोई चीज़ नहीं, ताकि पता चले कि लोग असल में कितना चुकाते हैं। बंद: फ़ोटो कभी नहीं रखी जाती, और रकमें 30 दिन बाद मिटा दी जाती हैं। | |
 | scan.send | Read my receipt | मेरी रसीद पढ़ें | |
 | scan.sendFailed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। इंटरनेट देखें और फिर से कोशिश करें। | |
 | scan.notConnected | The app isn’t connected yet. | ऐप अभी जुड़ा नहीं है। | |
+| scan.limitHour | A lot of receipts were checked from this network in the last hour. Try again in an hour. | पिछले एक घंटे में इस नेटवर्क से बहुत सारी रसीदें जाँची गई हैं। एक घंटे बाद फिर कोशिश करें। | |
+| scan.limitDay | That’s the limit for checking receipts today. You can check more tomorrow. | आज रसीदें जाँचने की सीमा पूरी हो गई है। कल और जाँच सकते हैं। | |
 | scan.retake | Use a different photo | दूसरी फ़ोटो इस्तेमाल करें | |
 | scan.toCheck | Please check | कृपया जाँचें | |
 | scan.notFound | Not found | नहीं मिला | |

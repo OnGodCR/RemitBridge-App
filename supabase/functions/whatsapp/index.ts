@@ -30,6 +30,7 @@
 // Supabase token; the signature check below is what keeps strangers out.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { publishableKey, secretKey } from '../_shared/keys.ts';
+import { USER_AGENT } from '../_shared/site-config.ts';
 
 import {
   formatCompare,
@@ -422,7 +423,7 @@ async function dispatchWorker() {
       Authorization: `Bearer ${token}`,
       Accept: 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'RemitBridge (remitbridgesystemlabs@gmail.com)',
+      'User-Agent': USER_AGENT,
     },
     body: JSON.stringify({ ref: 'main' }),
   });
