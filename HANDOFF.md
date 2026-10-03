@@ -76,10 +76,11 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - **2026-10-02, evening: limits on AI spending (D140).** App: 10 scans a day per phone, 10
   per account, 100 per network address (plus 30 an hour). WhatsApp: 10 receipt photos and 100
   messages a day per number (plus 30 an hour). Overall: 200 model calls a day beside 2,000 a
-  month. `whatsapp` is deployed (its counters let everything through until the push).
-  Needs `supabase db push` of `20261003000000_ai_limits` (the first try hung on Supabase's
-  US East latency), then Claude deploys `scan-receipt`, which must wait for the push: its
-  new daily cap call doesn't exist before it, and the model would be skipped.
+  month. Live: Angad ran the migration in the dashboard's SQL editor, with a row in
+  `supabase_migrations.schema_migrations` so the CLI counts it as applied (`supabase db push`
+  from his Mac kept failing with "connection reset by peer", likely his network, while
+  Supabase also reported US East latency). Both functions deployed; smoke test 66/66.
+  If `db push` keeps failing from that network, the SQL editor plus the history row works.
 - **2026-10-02: rate alerts by WhatsApp (D139).** Numbers kept sealed only while a chat is
   linked; the alert job hands WhatsApp alerts to the whatsapp function; template text in
   `docs/whatsapp-templates.md`. Needs `supabase db push` of `20261002020000_whatsapp_alerts`.
