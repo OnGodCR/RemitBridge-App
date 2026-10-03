@@ -112,9 +112,15 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         catch-all `*` (Angad to decide whether to keep it); GoDaddy DNS gained MX
         mx1.improvmx.com (10), mx2.improvmx.com (20) and TXT `v=spf1 include:spf.improvmx.com
         ~all`; ImprovMX shows the domain Active; Angad's test arrived (in Spam at first, marked
-        not spam). Sending: Gmail "Send mail as" hello@ through smtp.resend.com:587 (TLS) with
-        a Resend key Angad created ("Gmail send-as hello", sending access, this domain only);
-        replies go from the address a message was sent to. Left: a test send from hello@.
+        not spam; the second went straight to the Inbox). Sending: Gmail "Send mail as" hello@
+        through smtp.resend.com:587 (TLS) with a Resend key Angad created ("Gmail send-as
+        hello", sending access, this domain only); replies go from the address a message was
+        sent to. A reply from hello@ reached Angad's Inbox (Resend: Delivered; DKIM via
+        resend._domainkey, DMARC p=quarantine already on the domain). ImprovMX's catch-all `*`
+        alias deleted at Angad's go-ahead ("make sure everything else looks good"), so only
+        hello@ forwards. Done 2026-10-03.
+      - The website (separate repo) shows hello@ (its session, 3cc1ba5) and is being renamed
+        to RemitBridge Labs at Angad's yes (2026-10-03).
       - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
         "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
         `META_DOMAIN_VERIFICATION` from Meta.
