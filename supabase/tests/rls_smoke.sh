@@ -85,6 +85,7 @@ check "can't touch the rate limits" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/t
 check "can't touch the daily counters (D140)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/count_hit" -d '{"p_bucket":"scan_day_phone","p_key":"x","p_window_seconds":60}')"
 check "can't spend daily model calls (D140)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_receipt_model_call" -d '{"p_cap":1,"p_daily_cap":1}')"
 check "can't read the daily model count (D140)" "42501" "$(pg "${H[@]}" "$REST/receipt_model_calls_daily?select=day")"
+check "can't list receipt images to delete (D141)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/expired_receipt_images" -d '{"p_limit":1}')"
 check "can't call a trigger function (refused, or not offered at all)" "@(42501|PGRST202)" "$(pg "${H[@]}" -X POST "$REST/rpc/handle_new_user" -d '{}')"
 # Linking WhatsApp (D138): only a signed-in person gets a code, only the bot links.
 check "can't get a WhatsApp link code" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/whatsapp_link_code" -d '{}')"
