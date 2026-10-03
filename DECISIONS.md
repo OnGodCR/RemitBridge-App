@@ -1581,4 +1581,8 @@ months** (Angad, 2026-10-02). Replaces D49.
 - **Stores:** no change now. Once incorporated, RemitBridge Labs gets a D-U-N-S number and
   Organization developer accounts on Apple (converted from the individual one, D134) and
   Google, so it shows as the publisher.
-
+- 2026-10-03: forwarding for hello@remitbridgelabs.org runs through ImprovMX's free plan
+  (GoDaddy charges for forwarding). Angad made the ImprovMX account; Claude added the alias
+  and three DNS records at GoDaddy (two MX, one SPF TXT), leaving every other record as it
+  was. The domain had no MX before, so nothing that received mail could break. It only
+  receives; sending as hello@ is a later step.
