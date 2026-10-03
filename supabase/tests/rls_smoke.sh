@@ -82,6 +82,9 @@ check "can't register an internal install" "42501" "$(post internal_installs "$(
 # Security hardening (D135): functions a stranger must not call.
 check "can't call the sign-in hook" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/custom_access_token_hook" -d '{"event":{}}')"
 check "can't touch the rate limits" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_hit_for_ip" -d '{"p_bucket":"scan","p_ip":"1.2.3.4","p_max":1,"p_window_seconds":60}')"
+check "can't touch the daily counters (D140)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/count_hit" -d '{"p_bucket":"scan_day_phone","p_key":"x","p_window_seconds":60}')"
+check "can't spend daily model calls (D140)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/take_receipt_model_call" -d '{"p_cap":1,"p_daily_cap":1}')"
+check "can't read the daily model count (D140)" "42501" "$(pg "${H[@]}" "$REST/receipt_model_calls_daily?select=day")"
 check "can't call a trigger function (refused, or not offered at all)" "@(42501|PGRST202)" "$(pg "${H[@]}" -X POST "$REST/rpc/handle_new_user" -d '{}')"
 # Linking WhatsApp (D138): only a signed-in person gets a code, only the bot links.
 check "can't get a WhatsApp link code" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/whatsapp_link_code" -d '{}')"

@@ -136,11 +136,10 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
-- [ ] **Limits on AI spending (D140):** built and tested 2026-10-02 (app: 10 scans a day per
-      phone and per account, 100 per address; WhatsApp: 10 photos and 100 messages a day per
-      number; 200 model calls a day overall). `whatsapp` deployed 2026-10-02 (its counters
-      fail open until the push). Left: Angad pushes `20261003000000_ai_limits` (the first
-      try hung on Supabase's US East latency, 2026-10-02); then Claude deploys `scan-receipt`.
+- [x] **Limits on AI spending (D140):** app: 10 scans a day per phone and per account, 100
+      per address; WhatsApp: 10 photos and 100 messages a day per number; 200 model calls a
+      day overall. Migration applied by Angad in the SQL editor (the CLI's connections were
+      reset by his network), both functions deployed, smoke test 66/66. Done 2026-10-02.
 - [ ] **Security (D135, `docs/SECURITY.md`):** the code and the live auth settings are done
       (2026-10-01). Left:
       - [x] Migration pushed by Angad, sign-in hook on, smoke test 58/58 (2026-10-02).

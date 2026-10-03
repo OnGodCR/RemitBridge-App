@@ -1528,4 +1528,6 @@ on Angad's behalf:
   says so.
 - **Fail open:** if a counter can't be reached, the request goes through; the model caps
   still hold, and they fail closed (no call without an allowance).
-
+- 2026-10-02, live: the migration applied by Angad in the SQL editor (the CLI couldn't reach
+  the database from his network), `whatsapp` and `scan-receipt` deployed, and the live smoke
+  test passes 66/66 with the three new denials (42501).
