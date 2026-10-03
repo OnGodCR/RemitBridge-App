@@ -119,8 +119,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         resend._domainkey, DMARC p=quarantine already on the domain). ImprovMX's catch-all `*`
         alias deleted at Angad's go-ahead ("make sure everything else looks good"), so only
         hello@ forwards. Done 2026-10-03.
-      - The website (separate repo) shows hello@ (its session, 3cc1ba5) and is being renamed
-        to RemitBridge Labs at Angad's yes (2026-10-03).
+      - [x] The website (separate repo) shows hello@ (3cc1ba5) and is renamed to RemitBridge
+        Labs (06c37cd), live 2026-10-03. Its `notify-message` function (only the header of
+        contact-form notifications to Angad) wasn't deployed: the token Angad made lacked
+        `edge_functions_write`; Angad chose to leave it and deleted the token (2026-10-03).
+        It goes live with the website's next function deploy from an account with access.
       - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
         "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
         `META_DOMAIN_VERIFICATION` from Meta.
