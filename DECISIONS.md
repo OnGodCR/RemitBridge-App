@@ -1592,3 +1592,12 @@ months** (Angad, 2026-10-02). Replaces D49.
   a sending-only key Angad created for this domain (the permission system refused Claude
   creating the key, as a secret write), replying from the address a message was sent to.
   `CONTACT_EMAIL` switched to it.
+- 2026-10-03, Angad: **no mailing address on the site** ("Lets not put a PO box and rather
+  tell them to get in contact if there's a need for that"). `MAILING_ADDRESS` stays empty,
+  and the Contact sections (support, privacy, terms) say "Need our mailing address? Email
+  hello@remitbridgelabs.org and we'll send it." Setting a value later shows it instead.
+- 2026-10-03, Angad: he has also started filing to register RemitBridge Labs as a
+  nonprofit/charity, under review. The wording rule doesn't change until he says it's
+  approved: no "charity", "501(c)(3)" or "tax-deductible", and "nonprofit corporation" only
+  with `INCORPORATED`. A state charity registration and IRS 501(c)(3) recognition are
+  separate approvals; "tax-deductible" needs the IRS one.
