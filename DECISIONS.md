@@ -1601,3 +1601,16 @@ months** (Angad, 2026-10-02). Replaces D49.
   approved: no "charity", "501(c)(3)" or "tax-deductible", and "nonprofit corporation" only
   with `INCORPORATED`. A state charity registration and IRS 501(c)(3) recognition are
   separate approvals; "tax-deductible" needs the IRS one.
+
+**D142. Hand price checks with Claude transcribing** (Angad, 2026-10-04: "im comfortable with
+doing this since i am doing all the clicks so its not automated"). For the hand checks of
+providers whose terms forbid automated access (D52), Angad drives each provider's page
+himself, and Claude reads the numbers from screenshots of what he has on screen and fills
+the sheet. Claude flagged that these terms ban copying prices by automated tools and that
+reading the page this way could count; Angad decided it's acceptable because a person does
+every navigation and click. Limits: Claude never navigates, clicks or types on a
+provider's site, there's no schedule, and it's only the hand-check sheet. Each screenshot is
+kept as the evidence for its price. Prices still load as manual observations and pass the
+same publish gate. Fee-on-top providers (Remitly) are recorded with the amount actually
+paid (send amount plus fee), so (paid − fee) × rate matches what the page shows.
+
