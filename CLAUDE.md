@@ -211,10 +211,10 @@ Angad does this once the app itself is finished (D117).
       key's SHA-1, after the first Android build; iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
-- [ ] **Google Play developer account (D32):** Angad's dad holds it until Angad is 18
-      (D123); Angad's own sign-up (2026-10-01) stopped at the 18+ check. Claude's "About you"
-      answers carry over. Left: his dad signs up, including identity verification. New personal accounts must run a
-      closed test with at least 12 testers for 14 days before releasing to everyone.
+- [ ] **Google Play developer account (D143):** on hold for an organization account in
+      RemitBridge Labs' name (Angad, 2026-10-04), not a personal one through his dad. Needs the
+      accepted Articles and a D-U-N-S number. Organization accounts skip the personal-account
+      rule of a 12-tester, 14-day closed test.
 - [ ] **Stores publish as RemitBridge Labs (D141):** once incorporated, get a D-U-N-S number,
       then convert the Apple account to an Organization (Apple Developer Support) and create
       or convert a Google Play Organization account, so RemitBridge Labs shows as publisher.

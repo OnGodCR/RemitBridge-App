@@ -1625,3 +1625,12 @@ paid (send amount plus fee), so (paid − fee) × rate matches what the page sho
   by the Manual prices workflow (run 37189113707): published 27, quarantined 0. Hand prices
   turn stale after 24 hours (STALE_AFTER_S), so they need re-checking to stay current.
 
+**D143. Google Play waits for the RemitBridge Labs organization account** (Angad, 2026-10-04:
+"I want to register it with a nonprofit for google so lets hold off for that"). No personal
+Play account through Angad's dad; the app is published on Google Play by RemitBridge Labs as
+an organization once Washington accepts the Articles and it has a D-U-N-S number. Side
+effect: Google's 12-tester, 14-day closed test applies to new personal accounts, not
+organization ones. Google for Nonprofits (a separate program) needs the IRS 501(c)(3) letter.
+Replaces the personal-account plan in D32/D123 for Google Play only; Apple stays individual
+for now (D134), so the CAC demo isn't held up.
+
