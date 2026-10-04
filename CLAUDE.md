@@ -24,8 +24,9 @@ The rest of the documentation:
 
 Start every reply with `hi, angad`.
 
-End every reply with the open items below, as a short checklist showing what is
-done and what is not. Do this in every reply, not only when the list comes up.
+Keep the open items below current. Don't repeat the list at the end of replies: Angad
+asked on 2026-10-04 to stop ("dont regurgiate open items, just keep them in a .md file"),
+until he asks for it again. Mention only what changed.
 
 ## Keeping the docs current
 
