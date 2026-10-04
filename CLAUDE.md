@@ -63,7 +63,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       business's legal documents: RemitBridge Labs' Articles were filed 2026-10-02 (D141), so
       once Washington accepts them they can verify it, with hello@remitbridgelabs.org and the
       `facebook-domain-verification` tag (`META_DOMAIN_VERIFICATION`). Nothing else on our
-      side needs to change once Meta lifts it.
+      side needs to change once Meta lifts it. 2026-10-03: the Meta portfolio is renamed
+      RemitBridge Labs; domain verification uses a DNS TXT record on `@` at GoDaddy
+      (`facebook-domain-verification=...`, live), so the site's meta tag isn't needed. Left:
+      Angad clicks Verify in Meta, then Start verification with the accepted Articles (or
+      an EIN letter).
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
       enrolled and paid 2026-10-01; Apple can take up to 48 hours to process it. It must land
