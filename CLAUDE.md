@@ -65,9 +65,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `facebook-domain-verification` tag (`META_DOMAIN_VERIFICATION`). Nothing else on our
       side needs to change once Meta lifts it. 2026-10-03: the Meta portfolio is renamed
       RemitBridge Labs; domain verification uses a DNS TXT record on `@` at GoDaddy
-      (`facebook-domain-verification=...`, live), so the site's meta tag isn't needed. Left:
-      Angad clicks Verify in Meta, then Start verification with the accepted Articles (or
-      an EIN letter).
+      (`facebook-domain-verification=...`, live), so the site's meta tag isn't needed.
+      **remitbridgelabs.org is Verified in Meta (2026-10-04)**: the www entry was dropped
+      (www is a CNAME and can't hold the record) and its old code removed from GoDaddy; keep
+      the remaining code, which Meta re-checks. Left: Start verification with the accepted
+      Articles (or an EIN letter); confirm the portfolio email; two-factor for everyone.
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
       enrolled and paid 2026-10-01; Apple can take up to 48 hours to process it. It must land
