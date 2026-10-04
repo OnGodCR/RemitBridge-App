@@ -107,6 +107,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       `research/world-bank-rpw/` for research. Paysend is cleared but not built: its public pages show one
       amount and one price for several ways of receiving, so its numbers can't be verified yet;
       asked press@paysend.com for a feed on 2026-10-01 (`docs/outreach/permission-request.md`). The rest: Add a price, or their permission.
+      **2026-10-04: 27 hand prices live** (Remitly, Western Union, MoneyGram, Xoom, WorldRemit,
+      Ria, Xe to all four routes at $500; D142). They go stale after 24 hours, so they need a
+      regular re-check (the sheet: `RemitBridge-prices-filled-2026-10-04.csv` in Angad's
+      Downloads). Instarem showed as stale on 2026-10-04: check its Scrape runs.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
