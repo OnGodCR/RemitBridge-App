@@ -125,8 +125,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         `edge_functions_write`; Angad chose to leave it and deleted the token (2026-10-03).
         It goes live with the website's next function deploy from an account with access.
       - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
-        "await acceptance" line); `MAILING_ADDRESS` (never a home address) and
-        `META_DOMAIN_VERIFICATION` from Meta.
+        "await acceptance" line); `META_DOMAIN_VERIFICATION` from Meta.
+      - [x] No mailing address on the site (Angad, 2026-10-03): the Contact sections ask
+        people to email for it. Charity registration also filed by Angad, under review;
+        the wording rule holds until he says it's approved.
       - Legal review of `site/privacy.html` and `site/terms.html`; the written license of
         the name and domain to RemitBridge Labs; then the site's Hindi.
       - The DCO check, when the first outside contributor starts.

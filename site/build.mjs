@@ -12,7 +12,8 @@
 //   <!--FOOTER-->                the footer: links, the © line, the email and the address
 //   {{LEGAL_NAME}}               RemitBridge Labs
 //   {{CONTACT_EMAIL}}            the contact address
-//   {{MAILING_ADDRESS_LINE}}     a paragraph with the mailing address, or nothing
+//   {{MAILING_ADDRESS_LINE}}     the mailing address, or, with none set (Angad's choice,
+//                                2026-10-03), a line asking people to email for it
 // An unknown {{TOKEN}} stops the build, so a typo can't ship as text.
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
@@ -61,7 +62,9 @@ export function render(html, c) {
   const tokens = {
     LEGAL_NAME: escape(c.LEGAL_NAME),
     CONTACT_EMAIL: email,
-    MAILING_ADDRESS_LINE: address ? `<p>${escape(address)}</p>` : '',
+    MAILING_ADDRESS_LINE: address
+      ? `<p>${escape(address)}</p>`
+      : `<p>Need our mailing address? Email <a href="mailto:${email}">${email}</a> and we'll send it.</p>`,
   };
   return html
     .replace('<!--HEAD-->', head)
