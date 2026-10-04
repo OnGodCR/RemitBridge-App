@@ -1617,4 +1617,11 @@ deal goes in the promo text; where only the deal is shown, the deal is loaded, l
 first transfer only. Prices still load as manual observations and pass the
 same publish gate. Fee-on-top providers (Remitly) are recorded with the amount actually
 paid (send amount plus fee), so (paid − fee) × rate matches what the page shows.
+- 2026-10-04, first round: 27 hand prices (7 providers x 4 routes at $500, bank deposit;
+  WorldRemit doesn't offer bank deposit to Vietnam), read by Claude from Angad's screen.
+  Remitly, MoneyGram and WorldRemit pages didn't show the payment or delivery method;
+  Angad confirmed bank account to bank deposit for those. Ria Philippines and Vietnam are
+  debit card (the page's setting). Loaded by Angad in the SQL editor, run through the gate
+  by the Manual prices workflow (run 37189113707): published 27, quarantined 0. Hand prices
+  turn stale after 24 hours (STALE_AFTER_S), so they need re-checking to stay current.
 
