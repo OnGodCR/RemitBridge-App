@@ -1609,8 +1609,12 @@ himself, and Claude reads the numbers from screenshots of what he has on screen 
 the sheet. Claude flagged that these terms ban copying prices by automated tools and that
 reading the page this way could count; Angad decided it's acceptable because a person does
 every navigation and click. Limits: Claude never navigates, clicks or types on a
-provider's site, there's no schedule, and it's only the hand-check sheet. Each screenshot is
-kept as the evidence for its price. Prices still load as manual observations and pass the
+provider's site, there's no schedule, and it's only the hand-check sheet. The evidence for
+each price is its page address and check time (saving screenshots as files didn't work in
+this setup). Where a page shows a first-transfer deal next to the struck-through regular
+rate and fee, the regular price is loaded (received = (paid − fee) × regular rate) and the
+deal goes in the promo text; where only the deal is shown, the deal is loaded, labelled
+first transfer only. Prices still load as manual observations and pass the
 same publish gate. Fee-on-top providers (Remitly) are recorded with the amount actually
 paid (send amount plus fee), so (paid − fee) × rate matches what the page shows.
 
