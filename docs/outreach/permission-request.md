@@ -62,3 +62,43 @@ appears as the media contact on the company's own press releases.
 
 Follow-ups sent 2026-10-04 at Angad's request (earlier than the 2026-10-12 reminder), by Claude from the RemitBridge Gmail, as replies in each original thread: Remitly, MoneyGram, Ria, WorldRemit, Xoom (PayPal media desk), Western Union, and Xe by replying to ticket #26724746 as its auto-reply asks. Each restates the ask (light-schedule checks or a feed/API), says prices are entered by hand until then, asks for a pointer, and signs as RemitBridge Labs, hello@remitbridgelabs.org. Paysend (asked 2026-10-01) not followed up yet. Next nudge: 2026-10-12 if still silent. Ria and Xe are both Euronet companies. If neither answers, one
 follow-up to Euronet corporate communications covers both.
+
+## Round 2: shorter ask to more providers (2026-10-04)
+
+At Angad's request ("make the cold email shorter and more to the point"), sent by Claude from
+hello@remitbridgelabs.org on 2026-10-04, about 90 words instead of 220. Addresses are each
+company's own published contact (read on its site or its press releases that day). Skipped:
+Intermex (being bought by Western Union, already asked) and Sendwave (same company as
+WorldRemit, already asked).
+
+**Subject:** Listing {Provider} in a free remittance comparison app
+
+```
+Hi {Provider} team,
+
+I run RemitBridge, a free app that shows people in the US how much their family actually receives when they send money abroad. There are no ads, affiliate links or paid placements: providers are ranked only by the amount received.
+
+We'd like to include {Provider}. Do you have a rate feed or API we could use? If not, would you be okay with us checking your public prices a few times a day?
+
+Who would be the right person to talk to about this?
+
+Thanks,
+Angad Kochar
+RemitBridge Labs
+hello@remitbridgelabs.org
+app.remitbridgelabs.org
+```
+
+Instarem's version says we already read its public quote page (its terms allow it) and asks
+whether that's okay and whether it has a feed. Félix's says its prices live in WhatsApp, so
+only a feed would work. Pangea's and Taptap Send's go to support inboxes and ask to be passed
+to partnerships.
+
+| Provider | Sent to | Where it's published | Sent | Reply |
+|---|---|---|---|---|
+| Viamericas | press@viamericas.com | corporate.viamericas.com/press-media | 2026-10-04 | waiting |
+| Instarem (Nium) | press@nium.com | nium.com/contact-us, "Media inquiries" | 2026-10-04 | waiting |
+| Pangea | help@gopangea.com | pangeamoneytransfer.com/help (no press address on its site) | 2026-10-04 | waiting |
+| Félix Pago | holafelix@us.felixpago.com | felixpago.com/en/help | 2026-10-04 | waiting |
+| Taptap Send | support@taptapsend.com | help.taptapsend.com, "How do I contact Taptap Send" | 2026-10-04 | waiting |
+| BOSS Money (IDT) | william.ulrey@idt.net | IDT's own press releases (idt.net), corporate communications | 2026-10-04 | waiting |
