@@ -170,7 +170,9 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow-ups sent 2026-10-04 to
-      all seven (Angad's request); next nudge 2026-10-12 (calendar reminder set). Log replies in `docs/outreach/permission-request.md` (D52).
+      all seven (Angad's request); next nudge 2026-10-12 (calendar reminder set). Round 2
+      (shorter email, from hello@) to six more on 2026-10-04: Viamericas, Instarem, Pangea,
+      Félix Pago, Taptap Send, BOSS Money. Log replies in `docs/outreach/permission-request.md` (D52).
 - [x] **Partner emails** (D50): all nine sent. Eight from the RemitBridge Gmail (Horn of
       Africa Services 2026-09-30, the other seven 2026-10-01); El Centro de la Raza through its
       web form by Angad, 2026-10-01. Log replies in `docs/outreach/partners.md`.
