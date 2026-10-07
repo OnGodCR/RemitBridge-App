@@ -46,8 +46,8 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
   `model` input to compare them.
 - Universal links, app side: `ios.associatedDomains` and an Android intent filter in
   `app.json`, and a `p/[partner]` route that counts the visit and goes to `/`. The page's
-  "Open the app" button now opens `remitbridge://p/<partner>`. Only the
-  `apple-app-site-association` file is left, and it needs the Team ID.
+  "Open the app" button now opens `remitbridge://p/<partner>`. The
+  `apple-app-site-association` file went live 2026-10-07 (Team ID QS9F7JU6H2).
 - Disk: 12 GB free.
 - `GITHUB_DISPATCH_TOKEN` (Angad, checked against GitHub first) and `WHATSAPP_RECEIPTS=on`
   are set in Supabase. WhatsApp now needs only Meta's four values.
@@ -271,8 +271,8 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
 5. **Google brand verification** is done (verified and published 2026-09-30). The consent
    screen's app name is "RemitBridge App"; rename it to "RemitBridge" in Google Cloud →
    Google Auth Platform → Branding if you prefer (that may need a new check).
-6. **Apple Team ID** (developer.apple.com → Membership) for universal links, so partner
-   links open the app (D48). It isn't anywhere on the Mac, and Chrome isn't signed in there.
+6. **Apple Team ID:** QS9F7JU6H2 (2026-10-07), now in
+   `site/.well-known/apple-app-site-association`, so partner links can open the app (D48).
 7. **Disk:** 5.3 GB free on 2026-09-30; native builds (and so real store screenshots)
    need 15–20 GB. Most of the space is app caches in `~/Library/Caches` (17 GB): Chrome
    6.5 GB, ChatGPT Atlas 2.0 GB, Spotify 1.9 GB, and two app updaters' leftovers

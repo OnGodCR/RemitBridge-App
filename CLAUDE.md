@@ -75,7 +75,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       (or an EIN letter).
 - [ ] **Apple Developer Program ($99 a year), then the iPhone development build** (D73).
       Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
-      enrolled and paid 2026-10-01; Apple can take up to 48 hours to process it. It must land
+      enrolled and paid 2026-10-01; **active 2026-10-07** (Team ID QS9F7JU6H2, Program License
+      Agreement accepted the same day). It must land
       by about Oct 10 for the CAC demo's scan. EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
       variables created for development. Left: `eas device:create`, Developer Mode,
@@ -89,8 +90,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       while linked. Migration pushed 2026-10-02. Left: create the `rate_alert` template from
       `docs/whatsapp-templates.md` in WhatsApp Manager (needs Angad signed in to Meta).
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
-      `p/[partner]` route, 2026-09-30). Left: the Team ID (paid membership) for
-      `site/.well-known/apple-app-site-association`.
+      `p/[partner]` route, 2026-09-30). `site/.well-known/apple-app-site-association` is
+      live with Team ID QS9F7JU6H2 (read from Membership details, 2026-10-07; the site build
+      now publishes `.well-known`). Left: a partner link opening the app on the iPhone
+      development build; Android's `assetlinks.json` after the first Android build.
 - [ ] **"What you could have kept" on the receipt result (D119):** built and `scan-receipt`
       deployed 2026-10-01, all tests pass. Left: seen for real once the iPhone build can scan. It
       grows more useful as prices pile up.

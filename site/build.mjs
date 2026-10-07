@@ -21,7 +21,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const out = join(root, 'dist');
-/** Kept out of the published site. */
+/** Kept out of the published site, with every other dotfile except .well-known (Apple's
+ *  apple-app-site-association for universal links, D48). */
 const SKIP = new Set(['build.mjs', 'site.config.json', 'vercel.json', 'dist', 'node_modules', '.vercel']);
 
 export function loadConfig(text = readFileSync(join(root, 'site.config.json'), 'utf8')) {
@@ -77,7 +78,7 @@ export function render(html, c) {
 
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {
-    if (SKIP.has(name) || name.startsWith('.')) return [];
+    if (SKIP.has(name) || (name.startsWith('.') && name !== '.well-known')) return [];
     const path = join(dir, name);
     return statSync(path).isDirectory() ? files(path) : [path];
   });

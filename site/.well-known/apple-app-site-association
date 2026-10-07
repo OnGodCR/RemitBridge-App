@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["QS9F7JU6H2.org.remitbridgelabs.app"],
+        "components": [{ "/": "/p/*", "comment": "Partner links (DECISIONS.md D48)" }],
+        "appID": "QS9F7JU6H2.org.remitbridgelabs.app",
+        "paths": ["/p/*"]
+      }
+    ]
+  }
+}
