@@ -56,7 +56,7 @@ research/            world-bank-rpw/: the World Bank's US remittance price surve
 You need Node 22+ (npm workspaces) and [uv](https://docs.astral.sh/uv/) for Python.
 
 ```bash
-npm install                          # formula, bot and mobile
+npm install                          # formula, bot and mobile; then applies patches/ (patch-package)
 npm test -w @remitbridge/formula     # formula vectors (TypeScript)
 npm test -w @remitbridge/bot         # WhatsApp bot, including its webhook against a fake database
 npm test -w @remitbridge/receipt     # receipt pipeline, including the scan-receipt function against fakes
