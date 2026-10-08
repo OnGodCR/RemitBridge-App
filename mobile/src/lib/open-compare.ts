@@ -4,14 +4,12 @@ import type { DeliveryMethod } from '@/lib/routes';
 
 /**
  * Opens the Compare tab on a route, and optionally an amount and method (a saved
- * comparison, the route board, TrueCost's "compare today"). `at` is new on every call, and
- * Compare keys itself on it, so reopening the same comparison still resets the screen.
+ * comparison, the route board, TrueCost's "compare today", a scanned receipt). `at` is new
+ * on every call, and Compare keys itself on it, so reopening the same comparison still
+ * resets the screen.
  */
 export function openCompare(c: { routeId: string; amount?: number; method?: DeliveryMethod }) {
-  // dismissTo, not navigate: from a pushed screen (TrueCost, the route board) navigate only
-  // switched the tab underneath and left the pushed screen on top. dismissTo pops back to
-  // the tabs first, and from inside the tabs it just switches to Compare.
-  router.dismissTo({
+  const href = {
     pathname: '/compare',
     params: {
       route: c.routeId,
@@ -19,5 +17,12 @@ export function openCompare(c: { routeId: string; amount?: number; method?: Deli
       ...(c.method ? { method: c.method } : {}),
       at: String(Date.now()),
     },
-  });
+  } as const;
+  // From a pushed screen (TrueCost, the route board), navigate only switched the tab
+  // underneath and left the pushed screen on top, so dismissTo pops back to the tabs first.
+  // But from inside a tab (a receipt on Scan, alerts on Account) there's nothing to pop:
+  // only a stack handles dismissTo, and the root stack, already on the tabs, just set their
+  // params and stayed on the same tab (Angad, on the iPhone build, 2026-10-07).
+  if (router.canDismiss()) router.dismissTo(href);
+  else router.navigate(href);
 }

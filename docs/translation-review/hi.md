@@ -104,20 +104,13 @@ with your name and the date.
 | onboarding.route.intro | Compare opens on this route. You can change it anytime. | तुलना इसी रूट पर खुलेगी। आप इसे कभी भी बदल सकते हैं। | |
 | onboarding.route.paidIn | {country}. Paid out in {currency} | {country}। भुगतान {currency} में | |
 | onboarding.route.elsewhere | Sending somewhere else? Pick any country on Compare to ask us to add it. | कहीं और भेजते हैं? तुलना में कोई भी देश चुनें और हमसे उसे जोड़ने को कहें। | |
-| signIn.eyebrowOnboarding | Optional | ज़रूरी नहीं | |
-| signIn.eyebrowAccount | Your account | आपका खाता | |
-| signIn.leadOnboarding | Keep what you check. | जो जाँचें, उसे सँभालकर रखें। | |
-| signIn.accentOnboarding | Or skip it for now. | या अभी छोड़ दें। | |
-| signIn.leadAccount | Sign in | साइन इन करें | |
-| signIn.accentAccount | to keep your checks. | ताकि आपकी जाँचें सुरक्षित रहें। | |
-| signIn.benefits[1].title | Your comparisons, saved | आपकी तुलनाएँ, सुरक्षित | |
-| signIn.benefits[1].body | Reopen a route and amount in one tap, or a receipt you checked. | एक टैप में कोई रूट और रकम फिर से खोलें, या कोई रसीद जो आपने जाँची थी। | |
-| signIn.benefits[2].title | Private, and yours to delete | निजी, और मिटाना आपके हाथ में | |
-| signIn.benefits[2].body | Nobody else can read them. One tap in Account removes everything. | इन्हें कोई और नहीं देख सकता। खाता में एक टैप से सब मिट जाता है। | |
-| signIn.promise | We never sell data, show ads, or touch your money. | हम कभी डेटा नहीं बेचते, विज्ञापन नहीं दिखाते, और आपके पैसे को हाथ नहीं लगाते। | |
+| signIn.titleOnboarding | Want to save your checks? | अपनी जाँचें सँभालकर रखना चाहेंगे? | | CHANGED 2026-10-07: please read again
+| signIn.bodyOnboarding | With an account, the comparisons and receipts you check are still here next time. You don’t need one to compare. | खाता हो, तो आपकी जाँची हुई तुलनाएँ और रसीदें अगली बार भी यहीं मिलेंगी। तुलना करने के लिए खाते की ज़रूरत नहीं। | | CHANGED 2026-10-07: please read again
+| signIn.titleAccount | Sign in | साइन इन करें | | CHANGED 2026-10-07: please read again
+| signIn.bodyAccount | The comparisons and receipts you check will be here next time. You can delete them all from Account. | आपकी जाँची हुई तुलनाएँ और रसीदें अगली बार भी यहीं मिलेंगी। आप इन्हें खाता में जाकर कभी भी मिटा सकते हैं। | | CHANGED 2026-10-07: please read again
 | signIn.google | Continue with Google | Google से जारी रखें | |
 | signIn.email | Continue with email | ईमेल से जारी रखें | |
-| signIn.skip | Skip for now | अभी छोड़ें | |
+| signIn.skip | Not now | अभी नहीं | | CHANGED 2026-10-07: please read again
 | signIn.emailTitle | Your email | आपका ईमेल | |
 | signIn.emailIntro | We’ll send a 6-digit code. | हम 6 अंकों का कोड भेजेंगे। | |
 | signIn.emailLabel | Email address | ईमेल पता | |

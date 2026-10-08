@@ -3,13 +3,13 @@ import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
-import { DisplayTitle, Eyebrow } from '@/components/brand';
+import { SavedArt } from '@/components/illustrations';
 import { Rise } from '@/components/motion-views';
 import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
-import { Fonts, Radius, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
@@ -22,9 +22,10 @@ import { track } from '@/lib/track';
 /**
  * Sign in, and the last onboarding step (DECISIONS.md D62).
  *
- * In the website's vocabulary: an eyebrow, a two-tone title whose green line says the
- * account is optional, a divided list, and one promise set off by the green left rule the
- * site uses for callouts. The buttons carry their providers' own marks (Apple's official
+ * One picture, one question and one plain line, then the buttons. It used to stack an
+ * eyebrow, a two-tone title, a two-row benefits list and a green callout, which Angad found
+ * read as machine-made (2026-10-07); the saved-receipt drawing says "keep what you check"
+ * without the list. The buttons carry their providers' own marks (Apple's official
  * button, Google's "G" as its sign-in guidelines require on a custom button, an envelope for
  * email), because a sign-in button people recognize is one they trust.
  */
@@ -103,28 +104,16 @@ export default function SignInOptions() {
           {onboarding ? <Button label={si.skip} variant="plain" onPress={skip} /> : null}
         </Rise>
       }>
-      <Rise step={0} style={styles.head}>
-        <Eyebrow>{onboarding ? si.eyebrowOnboarding : si.eyebrowAccount}</Eyebrow>
-        <DisplayTitle
-          lead={onboarding ? si.leadOnboarding : si.leadAccount}
-          accent={onboarding ? si.accentOnboarding : si.accentAccount}
-        />
+      <Rise step={0} style={styles.art}>
+        <SavedArt size={112} />
       </Rise>
 
-      {/* A divided list, the website's way: hairline rows, bold label, one plain line. */}
-      <Rise step={1} style={[styles.list, { borderTopColor: t.border }]}>
-        {si.benefits.map((b) => (
-          <View key={b.title} style={[styles.row, { borderBottomColor: t.border }]}>
-            <AppText style={[styles.rowTitle, { color: t.text }]}>{b.title}</AppText>
-            <AppText style={{ color: t.textSecondary }}>{b.body}</AppText>
-          </View>
-        ))}
-      </Rise>
-
-      {/* The website's callout: a saturated green left edge, on the plain ground. */}
-      <Rise step={2} style={[styles.callout, { borderLeftColor: t.primary }]}>
-        <AppText style={[styles.calloutText, { color: t.text }]}>
-          {si.promise}
+      <Rise step={1} style={styles.head}>
+        <AppText accessibilityRole="header" style={[styles.heading, { color: t.text }]}>
+          {onboarding ? si.titleOnboarding : si.titleAccount}
+        </AppText>
+        <AppText style={[styles.body, { color: t.textSecondary }]}>
+          {onboarding ? si.bodyOnboarding : si.bodyAccount}
         </AppText>
       </Rise>
 
@@ -137,18 +126,14 @@ export default function SignInOptions() {
   );
 }
 
-
-
 const BUTTON_HEIGHT = 54;
 
 const styles = StyleSheet.create({
   actions: { gap: Spacing.three },
   apple: { height: BUTTON_HEIGHT, width: '100%' },
   mark: { width: 18, height: 18 },
+  art: { marginTop: Spacing.four, marginBottom: Spacing.two },
   head: { gap: Spacing.three },
-  list: { borderTopWidth: StyleSheet.hairlineWidth, marginTop: Spacing.two },
-  row: { borderBottomWidth: StyleSheet.hairlineWidth, paddingVertical: Spacing.three, gap: 3 },
-  rowTitle: { fontFamily: Fonts.bold, fontSize: 17 },
-  callout: { borderLeftWidth: 3, paddingLeft: Spacing.three, paddingVertical: Spacing.one, borderRadius: Radius.sm / 3 },
-  calloutText: { fontFamily: Fonts.semibold, fontSize: 16, lineHeight: 23 },
+  heading: { fontFamily: Fonts.bold, fontSize: 28, lineHeight: 31, letterSpacing: -0.7 },
+  body: { fontSize: 17, lineHeight: 24 },
 });
