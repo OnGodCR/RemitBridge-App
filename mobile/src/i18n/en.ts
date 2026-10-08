@@ -14,7 +14,7 @@ export const en = {
   common: {
     /** The home tab's greeting by time of day (D128), with the first name when we have it. */
     greeting: (part: 'morning' | 'afternoon' | 'evening', name?: string) => {
-      const g = { morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening' }[part];
+      const g = { morning: 'Good Morning', afternoon: 'Good Afternoon', evening: 'Good Evening' }[part];
       return name ? `${g}, ${name}!` : `${g}!`;
     },
     back: 'Back',
@@ -121,20 +121,13 @@ export const en = {
   },
 
   signIn: {
-    eyebrowOnboarding: 'Optional',
-    eyebrowAccount: 'Your account',
-    leadOnboarding: 'Keep what you check.',
-    accentOnboarding: 'Or skip it for now.',
-    leadAccount: 'Sign in',
-    accentAccount: 'to keep your checks.',
-    benefits: [
-      { title: 'Your comparisons, saved', body: 'Reopen a route and amount in one tap, or a receipt you checked.' },
-      { title: 'Private, and yours to delete', body: 'Nobody else can read them. One tap in Account removes everything.' },
-    ],
-    promise: 'We never sell data, show ads, or touch your money.',
+    titleOnboarding: 'Want to save your checks?',
+    bodyOnboarding: 'With an account, the comparisons and receipts you check are still here next time. You don’t need one to compare.',
+    titleAccount: 'Sign in',
+    bodyAccount: 'The comparisons and receipts you check will be here next time. You can delete them all from Account.',
     google: 'Continue with Google',
     email: 'Continue with email',
-    skip: 'Skip for now',
+    skip: 'Not now',
     emailTitle: 'Your email',
     emailIntro: 'We’ll send a 6-digit code.',
     emailLabel: 'Email address',
