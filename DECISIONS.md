@@ -1634,3 +1634,21 @@ organization ones. Google for Nonprofits (a separate program) needs the IRS 501(
 Replaces the personal-account plan in D32/D123 for Google Play only; Apple stays individual
 for now (D134), so the CAC demo isn't held up.
 
+**D144. Hand-checked prices stay in Compare for 7 days, as "Older prices"** (Angad,
+2026-10-07: "add all the comparisions we previously sourced to the app as well", then
+"Both": keep old hand prices visible, marked old, and re-check them). PRD 9.5 drops every
+price from the rankings at 48 hours, which suits scraped and API prices that refresh every
+few hours, but hand prices (D142) need Angad at the keyboard, so they vanished two days after
+each check. Now a new view, `compare_quotes`, adds hand-checked prices up to 7 days old, with
+`is_older` past 48 hours. Compare lists those under their own "Older prices" heading with a
+line saying to check with the provider, ranked among themselves and never above a current
+price; each card still says "Stale" and when it was checked. Only Compare uses the view:
+`latest_quotes` is unchanged, so rate alerts, the WhatsApp bot and the receipt result stay on
+the 48-hour window.
+- Found while doing it: hand prices are stored at the total paid (D142: $501.99 for $500 plus
+  a $1.99 fee), but Compare asked only for rows at exactly the checked amount, so fee-on-top
+  hand prices never matched $500 (5 of the 7 hand-checked providers on India). Compare now
+  takes each provider's price checked at up to 5% above the amount, keeps the nearest (a
+  current one before an older one), and works it out at the amount with the one formula,
+  labelled as an estimate from the checked amount, like any amount between checked ones.
+

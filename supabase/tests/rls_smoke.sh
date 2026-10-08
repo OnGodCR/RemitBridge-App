@@ -52,6 +52,7 @@ echo "--- public reads"
 check "routes are readable (4 seeded)"            "4"   "$(count "${H[@]}" "$REST/routes?select=id")"
 check "providers are readable (9: 8 seeded + Instarem)" "9"   "$(count "${H[@]}" "$REST/providers?select=id")"
 check "latest_quotes view is readable"            "200" "$(pg "${H[@]}" "$REST/latest_quotes?select=id")"
+check "compare_quotes view is readable (D144)"   "200" "$(pg "${H[@]}" "$REST/compare_quotes?select=id")"
 
 echo "--- private reads return nothing"
 check "no quarantined or rejected quotes visible" "0" "$(count "${H[@]}" "$REST/quotes?select=id&validation_status=neq.published")"

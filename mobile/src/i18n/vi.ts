@@ -199,6 +199,8 @@ export const vi: Copy = {
     mostToFamily: 'Gia đình nhận nhiều nhất',
     promotion: 'Khuyến mãi',
     firstTransferOffers: 'Ưu đãi cho lần gửi đầu tiên',
+    olderPrices: 'Giá cũ hơn',
+    olderNote: 'Được kiểm tra thủ công hơn hai ngày trước. Giá thay đổi mỗi ngày, nên hãy kiểm tra với nhà cung cấp trước khi gửi.',
     save: 'Lưu so sánh này',
     saved: 'Đã lưu. Xem danh sách của bạn',
     alreadySaved: 'Đã lưu từ trước. Xem danh sách của bạn',

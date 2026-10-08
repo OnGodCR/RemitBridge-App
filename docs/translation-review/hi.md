@@ -157,6 +157,8 @@ with your name and the date.
 | compare.mostToFamily | Most to your family | परिवार को सबसे ज़्यादा | |
 | compare.promotion | Promotion | ऑफ़र | |
 | compare.firstTransferOffers | First-transfer offers | पहली बार भेजने के ऑफ़र | |
+| compare.olderPrices | Older prices | पुरानी कीमतें | | NEW 2026-10-07: please read
+| compare.olderNote | Checked by hand more than two days ago. Prices change every day, so check with the provider before you send. | दो दिन से ज़्यादा पहले हाथ से जाँची गईं। कीमतें रोज़ बदलती हैं, इसलिए भेजने से पहले कंपनी से पक्का कर लें। | | NEW 2026-10-07: please read
 | compare.save | Save this comparison | यह तुलना सहेजें | |
 | compare.saved | Saved. See your saved list | सहेज ली गई। अपनी सूची देखें | |
 | compare.alreadySaved | Already saved. See your saved list | पहले से सहेजी हुई है। अपनी सूची देखें | |

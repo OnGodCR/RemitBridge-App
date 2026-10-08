@@ -5,8 +5,8 @@ import { type DeliveryMethod } from '@/lib/routes';
 import { supabase } from '@/lib/supabase';
 
 /**
- * A row of the `latest_quotes` view: the newest published quote per provider, no older
- * than 48 hours. Every cost figure was computed by the engine with the one formula
+ * A row of the `compare_quotes` view (D144): the newest published quote per provider, no
+ * older than 48 hours, or 7 days for a hand-checked one (`is_older` past 48 hours). Every cost figure was computed by the engine with the one formula
  * (packages/formula). The app only recomputes for an amount that wasn't checked, with
  * the same formula (atAmount below), and labels the result as an estimate.
  */
@@ -34,6 +34,8 @@ export interface LatestQuote {
   source: 'scraper' | 'api' | 'manual' | 'partner';
   captured_at: string;
   is_stale: boolean;
+  /** Past 48 hours: only hand-checked prices get here, and they're listed apart (D144). */
+  is_older?: boolean;
 }
 
 /** A quote as shown for the amount the person typed. */
@@ -84,6 +86,8 @@ export type QuotesResult =
       kind: 'ok';
       standing: LatestQuote[];
       promotional: LatestQuote[];
+      /** Hand-checked prices more than 48 hours old, ranked apart (D144). */
+      older: LatestQuote[];
       /** Set when the network failed and these are the prices kept from the last visit. */
       savedAt?: string;
     };
@@ -95,23 +99,58 @@ export async function fetchQuotes(
 ): Promise<QuotesResult> {
   if (!supabase) return { kind: 'not_connected' };
   const key = `rb.quotes.${routeId}.${amount}.${method}`;
-  const { data, error } = await supabase
-    .from('latest_quotes')
-    .select('*')
-    .eq('route_id', routeId)
-    .eq('send_amount', amount)
-    .eq('delivery_method', method);
+  // Up to 5% above the checked amount: hand prices are stored at the total paid, so $500
+  // with a $1.99 fee on top is a $501.99 row (D142). The one formula then works it out at
+  // the amount asked for, labelled as an estimate (atAmount).
+  const query = (view: 'compare_quotes' | 'latest_quotes') =>
+    supabase!
+      .from(view)
+      .select('*')
+      .eq('route_id', routeId)
+      .eq('delivery_method', method)
+      .gte('send_amount', amount)
+      .lt('send_amount', amount * NEAR);
+  let { data, error } = await query('compare_quotes');
+  // Until the compare_quotes migration is applied, PostgREST doesn't know the view
+  // (PGRST205); latest_quotes has the same columns but is_older, so Compare still works.
+  if (error?.code === 'PGRST205') ({ data, error } = await query('latest_quotes'));
   if (error) return fromCache(key) ?? { kind: 'error', message: error.message };
-  remember(key, (data ?? []) as LatestQuote[]);
-  return { kind: 'ok', ...rank((data ?? []) as LatestQuote[]) };
+  const rows = nearest((data ?? []) as LatestQuote[], amount);
+  remember(key, rows);
+  return { kind: 'ok', ...rank(rows) };
+}
+
+/** How far above the checked amount a price still counts as checked at it. */
+const NEAR = 1.05;
+
+/**
+ * One price per provider and way of paying: a current one over an older one, then the one
+ * checked nearest the amount, then the newest.
+ */
+export function nearest(rows: LatestQuote[], amount: number): LatestQuote[] {
+  const best = new Map<string, LatestQuote>();
+  const better = (a: LatestQuote, b: LatestQuote) => {
+    if (!!a.is_older !== !!b.is_older) return !a.is_older;
+    const da = Math.abs(Number(a.send_amount) - amount);
+    const db = Math.abs(Number(b.send_amount) - amount);
+    if (da !== db) return da < db;
+    return a.captured_at > b.captured_at;
+  };
+  for (const q of rows) {
+    const key = `${q.provider_id}|${q.payment_method}`;
+    const held = best.get(key);
+    if (!held || better(q, held)) best.set(key, q);
+  }
+  return [...best.values()];
 }
 
 /**
  * The last prices loaded for each route, amount and method, kept on the phone (PRD 14.10:
  * senders are often on older phones and slow connections). When the network fails,
  * Compare shows these, labelled with when they were loaded, instead of nothing. The same
- * rules as the view apply on the way out: nothing older than 48 hours, and "stale" is
- * worked out again from the check time, since it was computed when they were loaded.
+ * rules as the view apply on the way out: nothing older than 48 hours (7 days if checked by
+ * hand), and "stale" and "older" are worked out again from the check time, since they were
+ * computed when they were loaded.
  */
 function remember(key: string, rows: LatestQuote[]) {
   try {
@@ -121,15 +160,18 @@ function remember(key: string, rows: LatestQuote[]) {
   }
 }
 
+const HOUR = 3600 * 1000;
+
 function fromCache(key: string): QuotesResult | null {
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return null;
     const { at, rows } = JSON.parse(raw) as { at: string; rows: LatestQuote[] };
     const now = Date.now();
+    const age = (q: LatestQuote) => now - new Date(q.captured_at).getTime();
     const fresh = rows
-      .filter((q) => now - new Date(q.captured_at).getTime() < 48 * 3600 * 1000)
-      .map((q) => ({ ...q, is_stale: now - new Date(q.captured_at).getTime() > 24 * 3600 * 1000 }));
+      .filter((q) => age(q) < (q.source === 'manual' ? 7 * 24 : 48) * HOUR)
+      .map((q) => ({ ...q, is_stale: age(q) > 24 * HOUR, is_older: age(q) > 48 * HOUR }));
     return { kind: 'ok', ...rank(fresh), savedAt: at };
   } catch {
     return null;
@@ -139,24 +181,28 @@ function fromCache(key: string): QuotesResult | null {
 /**
  * Ranked by amount received, never by fee (PRD 5.1). Promotional first-transfer rates are
  * ranked apart from standing rates (PRD 9.7 check 6), so a one-time offer can't sit on
- * top of the list as if it were the ongoing price.
+ * top of the list as if it were the ongoing price. Hand-checked prices more than 48 hours
+ * old are ranked apart too (D144), so a price from days ago can't outrank a current one.
  */
-export function rank(quotes: LatestQuote[]): { standing: LatestQuote[]; promotional: LatestQuote[] } {
+export function rank(quotes: LatestQuote[]): { standing: LatestQuote[]; promotional: LatestQuote[]; older: LatestQuote[] } {
   const byReceived = (a: LatestQuote, b: LatestQuote) => b.amount_received - a.amount_received;
+  const current = quotes.filter((q) => !q.is_older);
   return {
-    standing: quotes.filter((q) => !q.is_promotional).sort(byReceived),
-    promotional: quotes.filter((q) => q.is_promotional).sort(byReceived),
+    standing: current.filter((q) => !q.is_promotional).sort(byReceived),
+    promotional: current.filter((q) => q.is_promotional).sort(byReceived),
+    older: quotes.filter((q) => q.is_older).sort(byReceived),
   };
 }
 
 /**
- * One quote for the detail screen, by id. From `latest_quotes` first, which is what Compare
- * listed; if it has aged out of that 48-hour window since, from `quotes`, where the public
+ * One quote for the detail screen, by id. From `compare_quotes` first, which is what
+ * Compare listed; if it has aged out of that view since, from `quotes`, where the public
  * policy still shows it because it was published (PRD 9.7). 'missing' when neither has it.
  */
 export async function fetchQuote(id: number): Promise<LatestQuote | 'missing' | 'error'> {
   if (!supabase) return 'error';
-  const latest = await supabase.from('latest_quotes').select('*').eq('id', id).maybeSingle();
+  let latest = await supabase.from('compare_quotes').select('*').eq('id', id).maybeSingle();
+  if (latest.error?.code === 'PGRST205') latest = await supabase.from('latest_quotes').select('*').eq('id', id).maybeSingle();
   if (latest.error) return 'error';
   if (latest.data) return numeric(latest.data as LatestQuote);
   const old = await supabase
