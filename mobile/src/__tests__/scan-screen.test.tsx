@@ -5,6 +5,7 @@
  * deleted. Also: Expo Go, errors, and Hindi.
  */
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { Alert } from 'react-native';
 
 import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type ScanResponse } from '@remitbridge/receipt';
 
@@ -14,6 +15,7 @@ import { canScan, discardPhotoFiles, recognize, renderRedacted } from '@/lib/rec
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 
 let mockSavedLanguage: string | null = null;
+let mockAiConsent = true;
 jest.mock('@/lib/current-tab', () => ({ useTabFocus: () => undefined, currentTab: () => '/' }));
 // The tab's entrance needs navigation focus, which this test renders without.
 jest.mock('@/components/motion-views', () => {
@@ -21,7 +23,16 @@ jest.mock('@/components/motion-views', () => {
   const { View } = require('react-native');
   return { FocusRise: View, Rise: View, RiseIn: View, GrowIn: View, GrowBar: View };
 });
-jest.mock('@/lib/prefs', () => ({ prefs: { language: () => mockSavedLanguage, setLanguage: () => undefined } }));
+jest.mock('@/lib/prefs', () => ({
+  prefs: {
+    language: () => mockSavedLanguage,
+    setLanguage: () => undefined,
+    aiConsent: () => mockAiConsent,
+    setAiConsent: () => {
+      mockAiConsent = true;
+    },
+  },
+}));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('@/lib/auth', () => ({ useAuth: () => ({ session: null }) }));
 jest.mock('@/lib/name', () => ({ firstName: () => null }));
@@ -99,6 +110,7 @@ beforeEach(() => {
 
 afterEach(() => {
   mockSavedLanguage = null;
+  mockAiConsent = true;
 });
 
 async function toPreview() {
@@ -252,4 +264,23 @@ it('speaks Hindi when Hindi is chosen', async () => {
   );
   expect(screen.getByText('फ़ोटो लें')).toBeTruthy();
   await waitFor(() => expect(screen.getByText('फ़ोटो चुनें')).toBeTruthy());
+});
+
+it('asks once before anything can reach the AI model, and sends nothing on "Not now"', async () => {
+  mockAiConsent = false;
+  jest.mocked(sendScan).mockResolvedValue({ ok: true, result: RESULT });
+  const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+  await toPreview();
+  expect(screen.getByText('An AI may read it')).toBeTruthy();
+
+  fireEvent.press(screen.getByText('Read my receipt'));
+  expect(alert).toHaveBeenCalledWith('Send to an AI service?', expect.stringContaining('Groq'), expect.any(Array));
+  const [decline, allow] = alert.mock.calls[0][2]!;
+  expect(decline.text).toBe('Not now');
+  expect(jest.mocked(sendScan)).not.toHaveBeenCalled();
+
+  allow.onPress!();
+  await screen.findByText('Check each value');
+  expect(jest.mocked(sendScan)).toHaveBeenCalledTimes(1);
+  alert.mockRestore();
 });

@@ -1652,3 +1652,23 @@ the 48-hour window.
   current one before an older one), and works it out at the amount with the one formula,
   labelled as an estimate from the checked amount, like any amount between checked ones.
 
+**D145. Apple's privacy rules, checked before submission** (Angad, 2026-10-08: "check that
+all the apple conditions are met with the privacy policy and everything"). Already met: the
+privacy policy in App Store Connect and in the app, in-app account deletion, Sign in with
+Apple beside Google, purpose strings for the camera and photos, no tracking, and a privacy
+manifest assembled at build time from every library's own. Two gaps, fixed:
+- **Third-party AI (guideline 5.1.2(i)):** Apple wants personal data sent to a third-party
+  AI disclosed and permitted first. The covered receipt text (sometimes the covered photo)
+  can reach Groq's model when the rules miss a figure (D98), and the app never said so. Now
+  the scan preview says it every time ("An AI may read it"), and the first send asks once,
+  Allow or Not now; Not now sends nothing. The choice is kept on the phone. The privacy
+  policy says the same.
+- **Sign in with Apple on deletion:** Apple asks apps to revoke a person's Sign in with Apple
+  grant when they delete their account. Deleting an Apple account now opens Apple's sheet
+  for a one-time code; delete-account swaps it for a token and revokes it through Apple's
+  REST API, then deletes the account. Backing out of the sheet cancels; a failed or
+  unconfigured revocation never blocks the deletion. No Apple token is stored. Needs a Sign
+  in with Apple key from the developer account and four `APPLE_*` secrets, set by Angad.
+- The App Store privacy answers (`docs/store/listing.md`) gained the phone number kept while
+  WhatsApp is linked, the email on a route request, and the random install ID.
+

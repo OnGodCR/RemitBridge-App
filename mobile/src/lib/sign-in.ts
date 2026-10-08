@@ -79,6 +79,20 @@ export async function signInWithApple(): Promise<Result> {
 }
 
 /**
+ * A fresh authorization code from Apple's sheet, for deleting an account that signed in with
+ * Apple: the server swaps it for a token and revokes it, as Apple asks (D145). 'closed' when
+ * the person backs out; null when there's no code to be had (no Apple sign-in on this phone).
+ */
+export async function appleAuthorizationCode(): Promise<string | null | 'closed'> {
+  try {
+    const credential = await AppleAuthentication.signInAsync({ requestedScopes: [] });
+    return credential.authorizationCode ?? null;
+  } catch (e) {
+    return (e as { code?: string }).code === 'ERR_REQUEST_CANCELED' ? 'closed' : null;
+  }
+}
+
+/**
  * Google's own sign-in sheet (D129) shows "RemitBridge App" and no web address; the browser
  * flow below shows our Supabase project's address. Native needs the app build (Expo Go has
  * no Google module) and a Google client for the platform: the iPhone one exists; Android's

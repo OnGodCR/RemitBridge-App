@@ -82,17 +82,34 @@ Tracking: **No**. The app doesn't track people across other companies' apps or w
 
 | Data type (Apple's name) | Collected | Linked to the person | Used for tracking | Purposes |
 |---|---|---|---|---|
-| Contact Info: Email Address | Yes, with an account | Yes | No | App Functionality |
+| Contact Info: Email Address | Yes, with an account; or given on a route request (deleted once the launch email is sent) | Yes | No | App Functionality |
+| Contact Info: Phone Number (only while WhatsApp is linked, encrypted) | Yes | Yes | No | App Functionality |
 | Contact Info: Name | Yes, if given or shared by Apple/Google | Yes | No | App Functionality |
 | Financial Info: Other Financial Info (saved transfers, receipt values) | Yes | Yes for saved items; No for scanned receipts | No | App Functionality, Analytics (receipt totals) |
 | User Content: Photos or Videos (the covered receipt photo, kept only with "Keep for research") | Yes | No | No | App Functionality, Other Purposes (research totals) |
 | User Content: Other User Content (saved comparisons, notes) | Yes | Yes | No | App Functionality |
-| Identifiers: User ID (account) | Yes | Yes | No | App Functionality |
+| Identifiers: User ID (account, and the random install ID) | Yes | Yes | No | App Functionality, Analytics |
 | Identifiers: Device ID (notification token, for rate alerts) | Yes | Yes | No | App Functionality |
 | Usage Data: Product Interaction | Yes | Yes when signed in | No | Analytics |
 
 Not collected: location, contacts, browsing or search history, health, sensitive info,
 diagnostics, purchases, advertising data.
+
+Checked against Apple's rules on 2026-10-08 (D145):
+
+- **Third-party AI (5.1.2(i)):** the covered receipt text, and sometimes the covered photo,
+  can go to Groq's model. The scan screen says so every time, and the app asks once, with
+  Allow / Not now, before the first receipt is sent. The policy says the same.
+- **Account deletion (5.1.1(v)):** in the app, Account > Delete account. For Sign in with
+  Apple accounts, the app gets a fresh code from Apple's sheet and the server revokes the
+  grant through Apple's REST API (needs the `APPLE_*` secrets).
+- **Sign in with Apple (4.8):** offered alongside Google and email, first in the list.
+- **Privacy manifest:** the build assembles the app's PrivacyInfo.xcprivacy from every
+  library's own (React Native's "Privacy Manifest Aggregation"); the app's own code calls no
+  required-reason API directly. Tracking: none, so no App Tracking Transparency prompt.
+- **Permissions:** camera and photos only when scanning, notifications only when turning
+  on an alert, each with a purpose string; no location, microphone or contacts.
+- **Privacy policy:** linked in App Store Connect and in the app (Account > Privacy policy).
 
 ### Age rating
 
@@ -107,7 +124,7 @@ RemitBridge is a free information tool. It compares the cost of sending money fr
 
 No account is needed: open the app, go to Compare, and prices load for the US to India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and only saves comparisons, receipt checks and rate alerts.
 
-Scan (the first tab) reads a photo of a money-transfer receipt. Any receipt photo from a money-transfer provider works; personal details are covered on the phone before anything is sent.
+Scan (the first tab) reads a photo of a money-transfer receipt. Any receipt photo from a money-transfer provider works; personal details are covered on the phone before anything is sent. When our own rules can't read a figure, the covered text (and sometimes the covered photo) goes to Groq's AI model with zero data retention; the app asks permission before the first receipt is sent.
 
 Prices come from providers' public prices (Wise with written permission, Instarem's public quote endpoint) and from prices checked by hand. Each price shows its source and when it was checked.
 

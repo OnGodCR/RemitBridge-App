@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Platform, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
@@ -17,6 +17,7 @@ import { useAuth } from '@/lib/auth';
 import { announce } from '@/lib/announce';
 import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
 import { fullName, saveName } from '@/lib/name';
+import { appleAuthorizationCode } from '@/lib/sign-in';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
@@ -49,7 +50,23 @@ export default function AccountScreen() {
   const deleteAccount = async () => {
     if (!supabase) return;
     setBusy(true);
-    const { error } = await supabase.functions.invoke('delete-account', { method: 'POST' });
+    // Signed in with Apple: Apple's sheet gives a one-time code, and the server uses it to
+    // revoke RemitBridge's access to the Apple Account (D145). Backing out of the sheet
+    // cancels the deletion; without a code the account is still deleted.
+    let apple_code: string | undefined;
+    const providers = (session?.user.app_metadata?.providers as string[] | undefined) ?? [session?.user.app_metadata?.provider];
+    if (Platform.OS === 'ios' && providers.includes('apple')) {
+      const code = await appleAuthorizationCode();
+      if (code === 'closed') {
+        setBusy(false);
+        return;
+      }
+      apple_code = code ?? undefined;
+    }
+    const { error } = await supabase.functions.invoke('delete-account', {
+      method: 'POST',
+      ...(apple_code ? { body: { apple_code } } : {}),
+    });
     setBusy(false);
     if (error) {
       Alert.alert(a.deleteFailedTitle, a.deleteFailedBody);

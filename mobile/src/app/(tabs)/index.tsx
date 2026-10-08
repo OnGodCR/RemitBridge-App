@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import { SymbolView } from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
 
 import {
   detectPii,
@@ -30,6 +30,7 @@ import { canScan, discardPhotoFiles, preparePhoto, recognize, renderRedacted, ty
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
+import { prefs } from '@/lib/prefs';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise, Rise } from '@/components/motion-views';
@@ -138,6 +139,24 @@ export default function ScanScreen() {
     const hidden = toggleWord(step.hidden, line, word);
     if (hidden === step.hidden) return;
     setStep({ ...step, hidden, redacted: renderRedacted(step.photo, redactionBoxes(step.page, hidden)) });
+  };
+
+  // Before the first receipt goes out, ask once whether it may go to the AI model (Apple
+  // 5.1.2(i) wants explicit permission before personal data reaches a third-party AI; D145).
+  // The covered text only reaches Groq when the rules miss a figure, but it can't be known
+  // in advance, so the question comes first. "Not now" sends nothing.
+  const askThenSend = () => {
+    if (prefs.aiConsent()) return void send();
+    Alert.alert(s.aiAskTitle, s.aiBody, [
+      { text: s.aiDecline, style: 'cancel' },
+      {
+        text: s.aiAllow,
+        onPress: () => {
+          prefs.setAiConsent();
+          void send();
+        },
+      },
+    ]);
   };
 
   const send = async () => {
@@ -298,9 +317,19 @@ export default function ScanScreen() {
             </AppText>
           </Card>
 
+          {/* Said every time, not only in the one-time question: who may read it (D145). */}
+          <View style={[styles.aiNote, { borderLeftColor: t.primary }]} accessible>
+            <AppText variant="label" style={{ color: t.text }}>
+              {s.aiTitle}
+            </AppText>
+            <AppText variant="small" muted>
+              {s.aiBody}
+            </AppText>
+          </View>
+
           {step.message ? <AppText style={{ color: t.destructive }}>{step.message}</AppText> : null}
           <View style={styles.buttons}>
-            <Button label={s.send} onPress={send} loading={step.sending} />
+            <Button label={s.send} onPress={askThenSend} loading={step.sending} />
             <Button label={s.retake} variant="plain" disabled={step.sending} onPress={() => setStep({ kind: 'start' })} />
           </View>
         </>
@@ -402,6 +431,7 @@ function StepBody({ rise, children }: { rise: boolean; children: React.ReactNode
 const styles = StyleSheet.create({
   greeting: { borderLeftWidth: 4, paddingLeft: Spacing.three, paddingVertical: Spacing.one },
   blurNote: { borderLeftWidth: 4, borderRadius: Radius.sm, padding: Spacing.three },
+  aiNote: { borderLeftWidth: 3, paddingLeft: Spacing.three, paddingVertical: Spacing.one, gap: Spacing.one },
   greetingText: { fontFamily: Fonts.extrabold, fontSize: 28, lineHeight: 34, letterSpacing: -0.4 },
   heroSub: { fontSize: 17, lineHeight: 24 },
   fill: { flex: 1 },

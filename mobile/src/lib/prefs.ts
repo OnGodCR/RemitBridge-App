@@ -12,6 +12,7 @@ const KEYS = {
   homeRoute: 'rb.homeRoute',
   installId: 'rb.installId',
   language: 'rb.language',
+  aiConsent: 'rb.aiConsent',
 } as const;
 
 function get(key: string): string | null {
@@ -39,6 +40,9 @@ export const prefs = {
   /** The language picked in the app, if any; otherwise the phone's language decides. */
   language: () => get(KEYS.language),
   setLanguage: (code: string) => set(KEYS.language, code),
+  /** Said yes, once, to receipt text going to the AI model (Apple 5.1.2(i); D145). */
+  aiConsent: () => get(KEYS.aiConsent) === '1',
+  setAiConsent: () => set(KEYS.aiConsent, '1'),
   installId: (): string => {
     let id = get(KEYS.installId);
     if (!id) {

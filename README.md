@@ -82,6 +82,9 @@ deploy with `supabase functions deploy <name> --use-api`; their secrets are list
 top of each function and are set with `supabase secrets set`, never committed. `scan-receipt`
 reads `GROQ_API_KEY` (without it, receipts are read by the rules alone), and optionally
 `RECEIPT_MODEL`, `RECEIPT_MODEL_MONTHLY_CAP` (D98) and `RECEIPT_MODEL_DAILY_CAP` (default 200, D140).
+`delete-account` revokes Sign in with Apple grants (D145) with `APPLE_TEAM_ID`,
+`APPLE_KEY_ID`, `APPLE_PRIVATE_KEY` (the .p8 file's text) and `APPLE_CLIENT_ID`; without
+them it still deletes the account.
 
 To set or rotate the Groq key without it ever showing on screen or in shell history: paste
 this command into a terminal without pressing Enter, copy the key from Groq's "Create API

@@ -588,7 +588,7 @@ with your name and the date.
 | scan.steps[1] | Snap the receipt | रसीद की फ़ोटो लें | |
 | scan.steps[2] | Your details get covered | आपकी जानकारी ढक दी जाती है | |
 | scan.steps[3] | See the real cost | असली खर्च देखें | |
-| scan.privacy | Read on your phone. Names and numbers are covered before anything is sent to our database. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। हमारे डेटाबेस में कुछ भी भेजने से पहले नाम और नंबर ढक दिए जाते हैं। | |
+| scan.privacy | Read on your phone. Names and numbers are covered before anything leaves it. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। फ़ोन से कुछ भी जाने से पहले नाम और नंबर ढक दिए जाते हैं। | |
 | scan.takePhoto | Take a photo | फ़ोटो लें | |
 | scan.choosePhoto | Choose a photo | फ़ोटो चुनें | |
 | scan.needsBuild | Scanning needs the full build of the app. It doesn’t work in Expo Go. | स्कैन करने के लिए ऐप का पूरा वर्ज़न चाहिए। यह Expo Go में काम नहीं करता। | |
@@ -609,6 +609,11 @@ with your name and the date.
 | scan.consentLabel | Keep this receipt for research | यह रसीद रिसर्च के लिए रखें | |
 | scan.consentHelp | Off unless you turn it on. On: we keep the covered photo and the values for 24 months, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days. | जब तक आप इसे चालू न करें, यह बंद रहता है। चालू: हम ढकी हुई फ़ोटो और रकमें 24 महीने तक रखते हैं, आपकी पहचान बताने वाली कोई चीज़ नहीं, ताकि पता चले कि लोग असल में कितना चुकाते हैं। बंद: फ़ोटो कभी नहीं रखी जाती, और रकमें 30 दिन बाद मिटा दी जाती हैं। | |
 | scan.send | Read my receipt | मेरी रसीद पढ़ें | |
+| scan.aiTitle | An AI may read it | इसे AI पढ़ सकता है | | NEW 2026-10-08
+| scan.aiBody | When our own rules can’t read a figure, we send the covered text, and sometimes the covered photo, to Groq, an AI company. Groq doesn’t keep it or learn from it. | जब हमारे अपने नियम कोई रकम नहीं पढ़ पाते, तो हम ढका हुआ टेक्स्ट, और कभी-कभी ढकी हुई फ़ोटो, Groq नाम की एक AI कंपनी को भेजते हैं। Groq इसे न रखता है, न इससे सीखता है। | | NEW 2026-10-08
+| scan.aiAskTitle | Send to an AI service? | AI सेवा को भेजें? | | NEW 2026-10-08
+| scan.aiAllow | Allow | अनुमति दें | | NEW 2026-10-08
+| scan.aiDecline | Not now | अभी नहीं | | NEW 2026-10-08
 | scan.sendFailed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। इंटरनेट देखें और फिर से कोशिश करें। | |
 | scan.notConnected | The app isn’t connected yet. | ऐप अभी जुड़ा नहीं है। | |
 | scan.limitHour | A lot of receipts were checked from this network in the last hour. Try again in an hour. | पिछले एक घंटे में इस नेटवर्क से बहुत सारी रसीदें जाँची गई हैं। एक घंटे बाद फिर कोशिश करें। | |

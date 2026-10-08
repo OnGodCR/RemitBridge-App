@@ -200,6 +200,12 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [ ] **Sign in with Apple key for account deletion (D145):** the code is in (delete-account
+      revokes the Apple grant). Left, Angad's: in developer.apple.com > Keys, create a key with
+      Sign in with Apple (primary App ID org.remitbridgelabs.app), download the .p8 once, and
+      set `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY`, `APPLE_CLIENT_ID` in Supabase
+      from his terminal. Until then deletion works and logs "not_configured".
+
 - [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
 - [x] **Limits on AI spending (D140):** app: 10 scans a day per phone and per account, 100
