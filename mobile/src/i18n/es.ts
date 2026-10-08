@@ -200,6 +200,8 @@ export const es: Copy = {
     mostToFamily: 'Más para tu familia',
     promotion: 'Promoción',
     firstTransferOffers: 'Ofertas para el primer envío',
+    olderPrices: 'Precios anteriores',
+    olderNote: 'Revisados a mano hace más de dos días. Los precios cambian cada día, así que confírmalos con el proveedor antes de enviar.',
     save: 'Guardar esta comparación',
     saved: 'Guardada. Ver tu lista',
     alreadySaved: 'Ya estaba guardada. Ver tu lista',

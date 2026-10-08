@@ -184,6 +184,8 @@ export const en = {
     mostToFamily: 'Most to your family',
     promotion: 'Promotion',
     firstTransferOffers: 'First-transfer offers',
+    olderPrices: 'Older prices',
+    olderNote: 'Checked by hand more than two days ago. Prices change every day, so check with the provider before you send.',
     save: 'Save this comparison',
     saved: 'Saved. See your saved list',
     alreadySaved: 'Already saved. See your saved list',

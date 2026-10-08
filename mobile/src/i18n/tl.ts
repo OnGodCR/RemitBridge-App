@@ -200,6 +200,8 @@ export const tl: Copy = {
     mostToFamily: 'Pinakamalaki sa pamilya mo',
     promotion: 'Promo',
     firstTransferOffers: 'Mga alok sa unang padala',
+    olderPrices: 'Mas lumang presyo',
+    olderNote: 'Sinuri nang mano-mano mahigit dalawang araw na ang nakalipas. Nagbabago ang presyo araw-araw, kaya tingnan muna sa provider bago magpadala.',
     save: 'I-save ang pagkumparang ito',
     saved: 'Na-save. Tingnan ang listahan mo',
     alreadySaved: 'Naka-save na. Tingnan ang listahan mo',

@@ -299,7 +299,8 @@ function Results({
     return {
       standing: at(result.standing),
       promotional: at(result.promotional),
-      otherMethods: result.standing.length + result.promotional.length > 0,
+      older: at(result.older),
+      otherMethods: result.standing.length + result.promotional.length + result.older.length > 0,
     };
   }, [result, amount, funding]);
 
@@ -318,11 +319,12 @@ function Results({
     );
   }
 
-  const { standing, promotional, otherMethods } = shown!;
-  if (standing.length === 0 && promotional.length === 0 && otherMethods) {
+  const { standing, promotional, older, otherMethods } = shown!;
+  const none = standing.length === 0 && promotional.length === 0 && older.length === 0;
+  if (none && otherMethods) {
     return <Notice title={copy.payment[funding]} body={copy.funding.compareNone} />;
   }
-  if (standing.length === 0 && promotional.length === 0) {
+  if (none) {
     if (result.savedAt) {
       return <Notice title={copy.compare.errorTitle} body={copy.compare.offlineNothing} />;
     }
@@ -343,8 +345,9 @@ function Results({
   ) : null;
   const open = (q: ShownQuote) =>
     router.push({ pathname: '/quote/[id]', params: { id: String(q.id), amount: String(amount), funding } });
-  const tax = (standing[0] ?? promotional[0]).tax;
-  const receive = (standing[0] ?? promotional[0]).receive_currency;
+  const first = standing[0] ?? promotional[0] ?? older[0];
+  const tax = first.tax;
+  const receive = first.receive_currency;
   const received = standing.map((q) => q.amount_received);
   return (
     <View style={styles.results}>
@@ -356,7 +359,7 @@ function Results({
       ) : null}
       {tax > 0 ? (
         <AppText variant="small" muted>
-          {copy.funding.compareTaxLine(fundingWord(funding, copy, language), money(tax, (standing[0] ?? promotional[0]).send_currency))}
+          {copy.funding.compareTaxLine(fundingWord(funding, copy, language), money(tax, first.send_currency))}
         </AppText>
       ) : null}
       {standing.map((q, i) => (
@@ -377,6 +380,21 @@ function Results({
           </AppText>
           {promotional.map((q) => (
             <QuoteCard key={q.id} quote={q} highlight={copy.compare.promotion} onPress={() => open(q)} />
+          ))}
+        </>
+      ) : null}
+      {/* Hand-checked prices past 48 hours (D144): below everything current, ranked among
+          themselves, each card still saying "Stale" and when it was checked. */}
+      {older.length > 0 ? (
+        <>
+          <AppText variant="heading" style={styles.promoHeading}>
+            {copy.compare.olderPrices}
+          </AppText>
+          <AppText variant="small" muted>
+            {copy.compare.olderNote}
+          </AppText>
+          {older.map((q) => (
+            <QuoteCard key={q.id} quote={q} highlight={q.is_promotional ? copy.compare.promotion : undefined} onPress={() => open(q)} />
           ))}
         </>
       ) : null}

@@ -118,7 +118,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       **2026-10-04: 27 hand prices live** (Remitly, Western Union, MoneyGram, Xoom, WorldRemit,
       Ria, Xe to all four routes at $500; D142). They go stale after 24 hours, so they need a
       regular re-check (the sheet: `RemitBridge-prices-filled-2026-10-04.csv` in Angad's
-      Downloads). Instarem showed as stale on 2026-10-04: check its Scrape runs.
+      Downloads). Instarem showed as stale on 2026-10-04 (fresh again 2026-10-07).
+      **D144 (2026-10-07):** hand prices now stay 7 days in Compare as "Older prices", and
+      fee-on-top hand prices match $500 at last. Left: Angad runs
+      `20261007000000_compare_quotes.sql` in the SQL editor (the app falls back to
+      `latest_quotes` until then), smoke test; then a fresh round of hand checks.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
