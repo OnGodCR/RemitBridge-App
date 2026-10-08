@@ -79,8 +79,13 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Agreement accepted the same day). It must land
       by about Oct 10 for the CAC demo's scan. EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
-      variables created for development. Left: `eas device:create`, Developer Mode,
-      `eas build --profile development --platform ios`, all Angad's (Apple sign-in).
+      variables created for development. 2026-10-07: Angad signed in to Apple from
+      `eas build`, which registered `org.remitbridgelabs.app` (Associated Domains, Push,
+      Sign in with Apple), made the distribution certificate, the ad hoc profile with his
+      iPhone (UDID ...801E) and an APNs key, all stored on EAS, so later builds need no
+      Apple sign-in. The first build failed on ML Kit's `Text` clashing with SwiftUI's
+      (patched, `patches/`); the second build (ad0d3252) finished 2026-10-07. Left: install it on
+      the iPhone, Developer Mode, then a real scan.
 - [ ] **WhatsApp in the app (D138):** built 2026-10-02: link a chat to an account with a
       one-time code (no number stored), SAVE from WhatsApp into Saved, UNLINK, Chat on
       WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
