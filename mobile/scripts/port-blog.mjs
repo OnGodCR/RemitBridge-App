@@ -14,7 +14,7 @@
  * this one; WEBSITE_REPO overrides that.
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,6 +25,8 @@ const site = process.env.WEBSITE_REPO ?? join(app, '..', '..', 'RemitBridge-Syst
 const LIVE = 'https://www.remitbridgelabs.org';
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const assets = join(app, 'assets', 'blog');
+/** Covers for posts the website has no photo for (assets/blog-covers/CREDITS.md). */
+const appCovers = join(app, 'assets', 'blog-covers');
 
 /**
  * No yellow in the app (D105). The website draws series 4 (Cost, speed, failure) in
@@ -84,6 +86,12 @@ for (const post of posts) {
     const name = `cover-${post.id}.jpg`;
     // 1200 wide is plenty for a phone and keeps the app small.
     execFileSync('sips', ['-Z', '1200', '-s', 'format', 'jpeg', '-s', 'formatOptions', '70', join(site, 'src/assets', coverFiles[post.id]), '--out', join(assets, name)], { stdio: 'ignore' });
+    images[`cover-${post.id}`] = name;
+    entry.cover = `cover-${post.id}`;
+  } else if (existsSync(join(appCovers, `cover-${post.id}.jpg`))) {
+    // Already cropped and sized; the website's own photo replaces it once there is one.
+    const name = `cover-${post.id}.jpg`;
+    copyFileSync(join(appCovers, name), join(assets, name));
     images[`cover-${post.id}`] = name;
     entry.cover = `cover-${post.id}`;
   }
