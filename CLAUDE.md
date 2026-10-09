@@ -243,9 +243,14 @@ Angad does this once the app itself is finished (D117).
       first Android build and a run on a real Android phone (ML Kit, Skia redaction, Google
       sign-in, notifications); `site/.well-known/assetlinks.json` with the signing key's
       SHA-256 (EAS's key, plus Play App Signing's once on Play); Play screenshots and the
-      1024x500 feature graphic; the Play account (D143).
+      1024x500 feature graphic; the Play account (D143). **2026-10-08: the first Android
+      build (development, bc602593) compiled on the first try**, signed with a keystore EAS
+      made (SHA-256 5D:02:45:...:E3:AC, SHA-1 89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05,
+      read from the APK's v2 signing block). `assetlinks.json` is live with that SHA-256; add
+      Play App Signing's SHA-256 once the app is on Play.
 - [ ] **Native Google sign-in on Android (D129):** an Android OAuth client with the signing
-      key's SHA-1, after the first Android build; iPhone is set up (2026-10-01).
+      key's SHA-1 (EAS key: 89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05; Play's
+      too, later), then the app's Android native path; iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D143):** on hold for an organization account in
