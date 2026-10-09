@@ -231,6 +231,13 @@ Angad does this once the app itself is finished (D117).
 - [x] **Android push notifications set up (D127):** Firebase project `remitbridge`, its Android
       app wired in, and the FCM V1 key uploaded to EAS by Angad. Done 2026-10-01. A real
       Android notification waits on an Android build.
+- [ ] **Android readiness (2026-10-08):** never built or run on Android before today. Fixed:
+      broad photo permissions blocked (Play's photo/video policy; the system photo picker needs
+      none) and an email route to deletion on /support (Play's deletion-URL rule). Left: the
+      first Android build and a run on a real Android phone (ML Kit, Skia redaction, Google
+      sign-in, notifications); `site/.well-known/assetlinks.json` with the signing key's
+      SHA-256 (EAS's key, plus Play App Signing's once on Play); Play screenshots and the
+      1024x500 feature graphic; the Play account (D143).
 - [ ] **Native Google sign-in on Android (D129):** an Android OAuth client with the signing
       key's SHA-1, after the first Android build; iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
