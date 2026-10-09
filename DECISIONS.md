@@ -1705,3 +1705,13 @@ white header with the bridge mark and links to Support, Privacy, Terms and the w
 /app page, and the website's dark ink footer. Privacy, terms and support become a white
 sheet on a mint band, with green-dot lists and ruled section breaks. Light only, like the
 website; the old dark-mode tokens are gone.
+
+**D148. The document pages get a layout, and a green hero** (Angad, 2026-10-09: "make the
+UI for support, Terms and privacy policy better", then "I don't like the minty background,
+just stick with the green"). `docLayout()` in `site/build.mjs` lays out any page with
+`<main class="wrap">` at build time, so the HTML stays a plain run of headings to edit and
+nothing needs script: the title and date sit in a green hero (the green the header used to
+be), each h2 gets an id and a number, a contents list built from the h2s sits beside the
+sheet on wide screens and marks the section being read, and privacy's "In short" becomes a
+summary card. The fonts load all five weights the website loads (400 to 800), with its
+heading rule and no synthesised bold.
