@@ -34,7 +34,7 @@ export const en = {
     noMailBody: (address: string) => `This phone has no email app set up. Write to us at ${address} from any email.`,
   },
 
-  tabs: { scan: 'Scan', compare: 'Compare', tools: 'Tools', learn: 'Learn', account: 'Account' },
+  tabs: { scan: 'Scan', compare: 'Compare', tools: 'Tools', learn: 'Learn', account: 'Account', whatsapp: 'WhatsApp' },
 
   /** Native header titles of the pushed screens. */
   titles: {
@@ -465,6 +465,26 @@ export const en = {
     devOnly: 'Development builds only, until the WhatsApp bot can reply to everyone.',
   },
 
+
+  /** The WhatsApp tab (D147): the bot, what to send it, and linking it to an account. */
+  whatsappTab: {
+    lead: 'Compare prices in a chat',
+    sub: 'Text the RemitBridge bot and get today’s prices back in seconds. It works for anyone with WhatsApp, with no app to install, so you can share it with family.',
+    tryTitle: 'Things to send',
+    tries: [
+      { send: '500 to India', does: 'What each provider gives your family today' },
+      { send: 'A receipt photo', does: 'What a transfer you made really cost' },
+      { send: 'WHY', does: 'Where the hidden cost is' },
+      { send: 'SCAM', does: 'Check a message asking for money' },
+      { send: 'HINDI', does: 'Replies in Hindi' },
+    ],
+    linkTitle: 'Link it to your account',
+    linkWhy: 'Then SAVE 500 to India keeps a comparison in Saved, and rate alerts can come by WhatsApp.',
+    signInToLink: 'Sign in to link WhatsApp',
+    soon: 'Coming soon. The bot is waiting for Meta to open it to everyone.',
+    privacy: 'We keep a scrambled ID instead of your number. The privacy policy has the details.',
+  },
+
   alerts: {
     link: 'Tell me when it’s better',
     intro: (amount: string, country: string) => `Alert me when ${amount} to ${country} gets at least`,
@@ -484,7 +504,7 @@ export const en = {
     viaPush: 'Notification',
     viaWhatsApp: 'WhatsApp',
     byWhatsApp: 'by WhatsApp',
-    notLinked: 'Link WhatsApp in Account first, then choose it here.',
+    notLinked: 'Link WhatsApp on the WhatsApp tab first, then choose it here.',
     yours: 'Your alerts',
     row: (amount: string, country: string, target: string) => `${amount} to ${country}: ${target} or more`,
     deleteNamed: (name: string) => `Delete alert: ${name}`,

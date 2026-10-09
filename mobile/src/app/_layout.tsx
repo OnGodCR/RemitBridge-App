@@ -88,6 +88,9 @@ function Navigator() {
       </Stack.Protected>
       <Stack.Protected guard={onboarded}>
         <Stack.Screen name="(tabs)" />
+        {/* Account left the bottom bar for WhatsApp (D147): pushed from the button at the
+            top right of every tab, with its own back button in the green band. */}
+        <Stack.Screen name="account" />
         <Stack.Screen name="fair-rate" options={{ ...pushed, title: titles.fairRate }} />
         <Stack.Screen name="scam-check" options={{ ...pushed, title: titles.scamCheck }} />
         <Stack.Screen name="true-cost" options={{ ...pushed, title: titles.trueCost }} />
@@ -108,7 +111,7 @@ function Navigator() {
         <Stack.Screen name="routes" options={{ ...pushed, title: titles.routeBoard }} />
         <Stack.Screen name="request-route" options={{ ...pushed, title: titles.askForRoute }} />
       </Stack.Protected>
-      {/* Reachable from onboarding and from the Account tab. */}
+      {/* Reachable from onboarding and from Account. */}
       <Stack.Screen name="sign-in" />
       {/* Price entry (D54). The screen is hidden from everyone else, and RLS refuses the
           insert anyway: the guard is convenience, the policy is the protection. */}

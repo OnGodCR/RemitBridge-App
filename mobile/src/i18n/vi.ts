@@ -29,7 +29,7 @@ export const vi: Copy = {
     noMailBody: (address) => `Điện thoại này chưa cài ứng dụng email. Hãy viết cho chúng tôi tại ${address} từ bất kỳ email nào.`,
   },
 
-  tabs: { scan: 'Quét', compare: 'So sánh', tools: 'Công cụ', learn: 'Tìm hiểu', account: 'Tài khoản' },
+  tabs: { scan: 'Quét', compare: 'So sánh', tools: 'Công cụ', learn: 'Tìm hiểu', account: 'Tài khoản', whatsapp: 'WhatsApp' },
 
   titles: {
     scan: 'Quét biên lai',
@@ -478,6 +478,26 @@ export const vi: Copy = {
     devOnly: 'Chỉ trong bản phát triển, cho đến khi bot WhatsApp trả lời được mọi người.',
   },
 
+
+  /** The WhatsApp tab (D147): the bot, what to send it, and linking it to an account. */
+  whatsappTab: {
+    lead: 'So sánh giá ngay trong cuộc trò chuyện',
+    sub: 'Nhắn tin cho bot RemitBridge và nhận giá hôm nay chỉ trong vài giây. Ai có WhatsApp cũng dùng được, không cần cài ứng dụng, nên bạn có thể chia sẻ với gia đình.',
+    tryTitle: 'Những gì có thể gửi',
+    tries: [
+      { send: '500 to India', does: 'Mỗi nhà cung cấp giúp gia đình bạn nhận được bao nhiêu hôm nay' },
+      { send: 'Ảnh biên lai', does: 'Chi phí thật của một lần chuyển tiền bạn đã làm' },
+      { send: 'WHY', does: 'Chi phí ẩn nằm ở đâu' },
+      { send: 'SCAM', does: 'Kiểm tra tin nhắn đòi tiền' },
+      { send: 'HINDI', does: 'Trả lời bằng tiếng Hindi' },
+    ],
+    linkTitle: 'Liên kết với tài khoản của bạn',
+    linkWhy: 'Sau đó, SAVE 500 to India sẽ lưu so sánh vào mục Đã lưu, và cảnh báo tỷ giá có thể gửi qua WhatsApp.',
+    signInToLink: 'Đăng nhập để liên kết WhatsApp',
+    soon: 'Sắp ra mắt. Bot đang chờ Meta mở cho tất cả mọi người.',
+    privacy: 'Chúng tôi lưu một mã đã mã hóa thay cho số điện thoại của bạn. Chi tiết có trong chính sách quyền riêng tư.',
+  },
+
   alerts: {
     link: 'Báo tôi khi tốt hơn',
     intro: (amount: string, country: string) => `Báo tôi khi gửi ${amount} đến ${country} nhận được ít nhất`,
@@ -497,7 +517,7 @@ export const vi: Copy = {
     viaPush: 'Thông báo',
     viaWhatsApp: 'WhatsApp',
     byWhatsApp: 'qua WhatsApp',
-    notLinked: 'Hãy liên kết WhatsApp trong Tài khoản trước, rồi chọn ở đây.',
+    notLinked: 'Hãy liên kết WhatsApp ở thẻ WhatsApp trước, rồi chọn ở đây.',
     yours: 'Cảnh báo của bạn',
     row: (amount: string, country: string, target: string) => `${amount} đến ${country}: ${target} trở lên`,
     deleteNamed: (name: string) => `Xóa cảnh báo: ${name}`,
