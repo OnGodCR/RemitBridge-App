@@ -210,6 +210,13 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [ ] **A logo next to emails from hello@ (parked 2026-10-09):** Gmail shows a blank avatar for
+      hello@remitbridgelabs.org because the address has no Google account photo. A Google
+      account for hello@ already exists ("username is taken"); signing in needs a reset code
+      (sent to hello@, which forwards to the RemitBridge Gmail) and Google then asked for a
+      phone number that has hit its limit. Retry later, or use a different number; then
+      upload `RemitBridge-profile-picture.png` (Angad's Downloads) as its photo.
+
 - [x] **Sign in with Apple key for account deletion (D145):** delete-account revokes the
       Apple grant. Key VN43KBGHT6 (Sign in with Apple, org.remitbridgelabs.app) created by
       Angad; all four `APPLE_*` secrets set from his terminal; Apple accepted the signed client
