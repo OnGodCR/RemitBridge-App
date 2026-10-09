@@ -269,13 +269,10 @@ async function act(
       return `${reply}\n\n${formatSaveNote(lang, saved)}`;
     }
     case 'link': {
-      // The number is kept sealed with the link, so the alerts the person turns on can reach
-      // them (D139); unlinking, STOP or deleting the account clears it.
-      const { data, error } = await db.rpc('link_whatsapp', {
-        p_code: action.code,
-        p_phone_hash: hash,
-        p_number_sealed: await seal(phone, LINKED_NUMBER),
-      });
+      // Only the keyed hash is linked. The number used to be kept sealed with the link so
+      // WhatsApp rate alerts could reach the person (D139); alerts are push-only now (D148),
+      // so there is nothing to keep it for.
+      const { data, error } = await db.rpc('link_whatsapp', { p_code: action.code, p_phone_hash: hash });
       const linked = !error && data === true;
       if (linked) await track(db, hash, 'whatsapp_linked', {});
       return formatLinked(lang, linked);

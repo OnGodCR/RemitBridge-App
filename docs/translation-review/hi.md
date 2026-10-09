@@ -410,13 +410,13 @@ with your name and the date.
 | whatsapp.unlinked | WhatsApp unlinked. | WhatsApp हटा दिया गया। | |
 | whatsapp.cancel | Cancel | रद्द करें | |
 | whatsapp.failed | That didn’t work. Check your connection and try again. | यह नहीं हुआ। अपना कनेक्शन देखें और फिर कोशिश करें। | |
-| whatsapp.linkNote | Linking keeps your WhatsApp number encrypted, only to send alerts you turn on. Unlink and it’s deleted. | जोड़ने पर आपका WhatsApp नंबर एन्क्रिप्ट करके रखा जाता है, सिर्फ़ आपके चालू किए अलर्ट भेजने के लिए। हटाते ही वह मिट जाता है। | |
+| whatsapp.linkNote | Linking doesn’t store your number, only a scrambled ID, and only until you unlink. | जोड़ने पर आपका नंबर नहीं रखा जाता, सिर्फ़ उससे बना एक बदला हुआ ID, और वह भी तभी तक जब तक आप हटा न दें। | | CHANGED 2026-10-09: please read again
 | whatsapp.devOnly | Development builds only, until the WhatsApp bot can reply to everyone. | सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता। | |
 | whatsappTab.lead | Compare prices in a chat | चैट में कीमतों की तुलना करें | | NEW 2026-10-09
 | whatsappTab.sub | Text the RemitBridge bot and get today’s prices back in seconds. It works for anyone with WhatsApp, with no app to install, so you can share it with family. | RemitBridge बॉट को मैसेज भेजें और कुछ ही सेकंड में आज की कीमतें पाएँ। यह WhatsApp वाले हर व्यक्ति के लिए काम करता है, कोई ऐप इंस्टॉल किए बिना, इसलिए आप इसे परिवार के साथ शेयर कर सकते हैं। | | NEW 2026-10-09
 | whatsappTab.tryTitle | Things to send | क्या भेजें | | NEW 2026-10-09
 | whatsappTab.linkTitle | Link it to your account | इसे अपने खाते से जोड़ें | | NEW 2026-10-09
-| whatsappTab.linkWhy | Then SAVE 500 to India keeps a comparison in Saved, and rate alerts can come by WhatsApp. | फिर SAVE 500 to India से तुलना "सहेजा गया" में रहेगी, और रेट अलर्ट WhatsApp पर आ सकते हैं। | | NEW 2026-10-09
+| whatsappTab.linkWhy | Then SAVE 500 to India keeps a comparison in Saved. | फिर SAVE 500 to India से तुलना "सहेजा गया" में रहेगी। | | NEW 2026-10-09
 | whatsappTab.signInToLink | Sign in to link WhatsApp | WhatsApp जोड़ने के लिए साइन इन करें | | NEW 2026-10-09
 | whatsappTab.soon | Coming soon. The bot is waiting for Meta to open it to everyone. | जल्द ही। बॉट को सबके लिए खोलने के लिए Meta की मंज़ूरी का इंतज़ार है। | | NEW 2026-10-09
 | whatsappTab.privacy | We keep a scrambled ID instead of your number. The privacy policy has the details. | हम आपके नंबर की जगह उससे बना एक बदला हुआ ID रखते हैं। पूरी जानकारी निजता नीति में है। | | NEW 2026-10-09
@@ -444,11 +444,7 @@ with your name and the date.
 | alerts.unavailable | Notifications need the full app on a phone. | सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए। | |
 | alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले सहेजा गया में एक मिटाएँ। | |
 | alerts.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें। | |
-| alerts.via | Tell me by | मुझे बताएँ | |
-| alerts.viaPush | Notification | सूचना | |
-| alerts.viaWhatsApp | WhatsApp | WhatsApp | |
 | alerts.byWhatsApp | by WhatsApp | WhatsApp पर | |
-| alerts.notLinked | Link WhatsApp on the WhatsApp tab first, then choose it here. | पहले WhatsApp टैब में WhatsApp जोड़ें, फिर यहाँ चुनें। | | CHANGED 2026-10-09: please read again
 | alerts.yours | Your alerts | आपके अलर्ट | |
 | alerts.row | {amount} to {country}: {target} or more | {country} को {amount}: {target} या ज़्यादा | |
 | alerts.deleteNamed | Delete alert: {name} | अलर्ट मिटाएँ: {name} | |

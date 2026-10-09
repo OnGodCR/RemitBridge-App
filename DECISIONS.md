@@ -1732,3 +1732,14 @@ restyling the stock one. The bot's replies now say "the WhatsApp tab > Link What
   looking "very weird"). `components/icon.tsx` maps each SF name to its Material Symbol,
   with a test that fails when an icon has no Android match.
 
+**D148. Rate alerts are push notifications only; a linked WhatsApp keeps no number** (Angad,
+2026-10-09: "lets configure rate alerts to only be push notifications"). A WhatsApp alert is a
+message RemitBridge starts, which Meta charges for and which needs a payment method and an
+approved template; replies to people who write to the bot are free. So the alert screen no
+longer offers "Tell me by WhatsApp", and the bot's LINK no longer seals the number: it was kept
+only so those alerts could reach the person (D139), and with nothing to send there's no reason
+to hold it. A linked chat is now just the keyed hash tied to an account, for SAVE. The
+WhatsApp tab, the link note, the privacy policy and the App Store answers say so. The D139
+sending code stays in place, unused, if WhatsApp alerts ever come back; any number sealed
+before today should be cleared with one SQL line (Angad's to run). Supersedes D139.
+
