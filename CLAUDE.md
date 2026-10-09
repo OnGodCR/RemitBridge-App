@@ -84,8 +84,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Sign in with Apple), made the distribution certificate, the ad hoc profile with his
       iPhone (UDID ...801E) and an APNs key, all stored on EAS, so later builds need no
       Apple sign-in. The first build failed on ML Kit's `Text` clashing with SwiftUI's
-      (patched, `patches/`); the second build (ad0d3252) finished 2026-10-07. Left: install it on
-      the iPhone, Developer Mode, then a real scan.
+      (patched, `patches/`); the second build (ad0d3252) finished 2026-10-07. Installed on Angad's
+      iPhone; **a real receipt scanned end to end, 2026-10-08** ("it all works").
 - [ ] **WhatsApp in the app (D138):** built 2026-10-02: link a chat to an account with a
       one-time code (no number stored), SAVE from WhatsApp into Saved, UNLINK, Chat on
       WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
@@ -120,9 +120,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       regular re-check (the sheet: `RemitBridge-prices-filled-2026-10-04.csv` in Angad's
       Downloads). Instarem showed as stale on 2026-10-04 (fresh again 2026-10-07).
       **D144 (2026-10-07):** hand prices now stay 7 days in Compare as "Older prices", and
-      fee-on-top hand prices match $500 at last. Left: Angad runs
-      `20261007000000_compare_quotes.sql` in the SQL editor (the app falls back to
-      `latest_quotes` until then), smoke test; then a fresh round of hand checks.
+      fee-on-top hand prices match $500 at last. `20261007000000_compare_quotes.sql` run by
+      Angad in the SQL editor 2026-10-08, smoke test 68/68; $500 to India now lists 9
+      providers (Wise and Instarem current, 7 hand-checked under Older prices). The Oct 4
+      prices leave Compare on Oct 11. Left: a fresh round of hand checks.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
@@ -160,7 +161,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 ### Testing (once the features are set up)
 
-- [ ] **Scan a real receipt** on the iPhone development build.
+- [x] **Scan a real receipt** on the iPhone development build. Done 2026-10-08 (Angad).
 - [ ] **A blurry receipt on a real phone (D131):** the blur limits were calibrated on
       tesseract, not ML Kit; check that a shaky photo is turned back and a sharp one isn't.
 - [ ] **Apple and Google sign-in** on a real iPhone (the simulator hides Apple).
