@@ -95,17 +95,18 @@ export async function appleAuthorizationCode(): Promise<string | null | 'closed'
 /**
  * Google's own sign-in sheet (D129) shows "RemitBridge App" and no web address; the browser
  * flow below shows our Supabase project's address. Native needs the app build (Expo Go has
- * no Google module) and a Google client for the platform: the iPhone one exists; Android's
- * needs the signing key's fingerprint from the first Android build, so Android stays on the
- * browser until then.
+ * no Google module) and a Google client for the platform. iPhone: the iOS client. Android:
+ * only the web client is passed, and Google matches the app by package name and signing
+ * key's SHA-1, registered as an Android client in the same Google Cloud project. Android
+ * went native on 2026-10-09, when the browser round trip crashed the first Android build on
+ * the way back from Google's page.
  */
 const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
 const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID;
 const nativeGoogle =
   Constants.executionEnvironment !== ExecutionEnvironment.StoreClient &&
-  Platform.OS === 'ios' &&
   !!GOOGLE_WEB_CLIENT_ID &&
-  !!GOOGLE_IOS_CLIENT_ID;
+  ((Platform.OS === 'ios' && !!GOOGLE_IOS_CLIENT_ID) || Platform.OS === 'android');
 
 export async function signInWithGoogle(): Promise<Result> {
   if (!supabase) return 'notConnected';
@@ -135,8 +136,13 @@ async function signInWithGoogleNative(): Promise<Result> {
     '@react-native-google-signin/google-signin'
   );
   // The web client is the token's audience, so Supabase (which trusts it) accepts it.
-  GoogleSignin.configure({ webClientId: GOOGLE_WEB_CLIENT_ID, iosClientId: GOOGLE_IOS_CLIENT_ID });
+  GoogleSignin.configure({
+    webClientId: GOOGLE_WEB_CLIENT_ID,
+    ...(Platform.OS === 'ios' ? { iosClientId: GOOGLE_IOS_CLIENT_ID } : {}),
+  });
   try {
+    // Android needs Google Play services for the sheet; without them, say so plainly.
+    if (Platform.OS === 'android') await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     const response = await GoogleSignin.signIn();
     if (!isSuccessResponse(response)) return 'closed';
     const token = response.data.idToken;
