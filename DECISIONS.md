@@ -1753,5 +1753,5 @@ takes it out), because scanned receipts carry no account or device ID on the ser
 server-side total would need one. US dollars only, which is every route's sending currency
 today. The privacy policy says the total stays on the phone. It doesn't follow a person to a
 new phone or across reinstalls; an account-backed total would need receipts tied to accounts,
-which D78 and the policy rule out for now.
+which the privacy policy rules out for now.
 
