@@ -200,11 +200,11 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
-- [ ] **Sign in with Apple key for account deletion (D145):** the code is in (delete-account
-      revokes the Apple grant). Left, Angad's: in developer.apple.com > Keys, create a key with
-      Sign in with Apple (primary App ID org.remitbridgelabs.app), download the .p8 once, and
-      set `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY`, `APPLE_CLIENT_ID` in Supabase
-      from his terminal. Until then deletion works and logs "not_configured".
+- [x] **Sign in with Apple key for account deletion (D145):** delete-account revokes the
+      Apple grant. Key VN43KBGHT6 (Sign in with Apple, org.remitbridgelabs.app) created by
+      Angad; all four `APPLE_*` secrets set from his terminal; Apple accepted the signed client
+      secret (a dummy code got `invalid_grant`, not `invalid_client`). Done 2026-10-08. Left:
+      one real deletion of an Apple-signed-in test account on the iPhone build.
 
 - [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
