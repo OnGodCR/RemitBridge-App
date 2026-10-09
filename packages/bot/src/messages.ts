@@ -260,8 +260,8 @@ export function formatSay(lang: Language, s: Say): string {
         : `To check a transfer you already made, open TrueCost in the app and enter your receipt. It shows the cost hidden in the exchange rate: ${LINK}`
     case 'saveHow':
       return hi
-        ? `किसी तुलना को ऐप में रखने के लिए SAVE के साथ रकम और देश भेजें, जैसे: SAVE 500 to India। पहले ऐप में WhatsApp जोड़ें: Account > Link WhatsApp। ${LINK}`
-        : `To keep a comparison in the app, send SAVE with the amount and country, like: SAVE 500 to India. Link WhatsApp in the app first: Account > Link WhatsApp. ${LINK}`
+        ? `किसी तुलना को ऐप में रखने के लिए SAVE के साथ रकम और देश भेजें, जैसे: SAVE 500 to India। पहले ऐप में WhatsApp जोड़ें: WhatsApp टैब > Link WhatsApp। ${LINK}`
+        : `To keep a comparison in the app, send SAVE with the amount and country, like: SAVE 500 to India. Link WhatsApp in the app first: the WhatsApp tab > Link WhatsApp. ${LINK}`
     case 'nothingPending':
       return hi
         ? 'पुष्टि करने के लिए कुछ नहीं है। रकम और देश भेजें, जैसे: 500 to India'
@@ -308,11 +308,11 @@ export function formatLinked(lang: Language, linked: boolean): string {
   if (lang === 'hi') {
     return linked
       ? 'जुड़ गया। अब यह WhatsApp आपके RemitBridge खाते से जुड़ा है। ऐप में तुलना रखने के लिए SAVE लिखें, जैसे: SAVE 500 to India। हटाने के लिए UNLINK लिखें।'
-      : 'यह कोड काम नहीं किया। कोड 10 मिनट तक चलता है। ऐप में नया कोड लें: Account > Link WhatsApp।'
+      : 'यह कोड काम नहीं किया। कोड 10 मिनट तक चलता है। ऐप में नया कोड लें: WhatsApp टैब > Link WhatsApp।'
   }
   return linked
     ? "Linked. This WhatsApp is now connected to your RemitBridge account. To keep a comparison in the app, send SAVE with it, like: SAVE 500 to India. Reply UNLINK to undo."
-    : "That code didn't work. Codes last 10 minutes: get a new one in the app, under Account > Link WhatsApp."
+    : "That code didn't work. Codes last 10 minutes: get a new one in the app, on the WhatsApp tab > Link WhatsApp."
 }
 
 /** After UNLINK. */
@@ -326,7 +326,7 @@ export function formatUnlinked(lang: Language, wasLinked: boolean): string {
 /** Added under a comparison sent with SAVE. */
 export function formatSaveNote(lang: Language, saved: boolean): string {
   if (lang === 'hi') {
-    return saved ? 'ऐप में Saved में रख दिया गया।' : `रखने के लिए पहले ऐप में WhatsApp जोड़ें: Account > Link WhatsApp। ${LINK}`
+    return saved ? 'ऐप में Saved में रख दिया गया।' : `रखने के लिए पहले ऐप में WhatsApp जोड़ें: WhatsApp टैब > Link WhatsApp। ${LINK}`
   }
-  return saved ? 'Saved to your app, under Saved.' : `To save it, link WhatsApp in the app first: Account > Link WhatsApp. ${LINK}`
+  return saved ? 'Saved to your app, under Saved.' : `To save it, link WhatsApp in the app first: the WhatsApp tab > Link WhatsApp. ${LINK}`
 }

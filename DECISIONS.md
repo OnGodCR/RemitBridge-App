@@ -1715,3 +1715,20 @@ be), each h2 gets an id and a number, a contents list built from the h2s sits be
 sheet on wide screens and marks the section being read, and privacy's "In short" becomes a
 summary card. The fonts load all five weights the website loads (400 to 800), with its
 heading rule and no synthesised bold.
+
+**D147. WhatsApp gets a tab; Account moves to the top right; Android gets its own tab bar**
+(Angad, 2026-10-09, after his first look at the Android build: the bot is "a major feature",
+and the stock Android bar "just doesn't have that feel"). Android's bottom bar holds five tabs
+at most, so of three options he chose to move Account out of it: the tabs are Scan, Compare,
+WhatsApp, Tools, Learn, and Account is a round button at the top right of every tab (the
+name's first letter when signed in), opening Account as a pushed screen with its own back
+button. The WhatsApp tab says what the bot does and that it needs no app, opens the chat,
+lists the bot's commands, links a chat to an account, and says "coming soon" to everyone
+until `app_settings.whatsapp_live`. iPhone keeps the system tab bar; Android draws its own
+(flat, hairline on top, no Material pill, the colour easing between tabs), chosen over
+restyling the stock one. The bot's replies now say "the WhatsApp tab > Link WhatsApp".
+- Same day, found on Android: every icon was a bare SF Symbol name, which draws nothing on
+  Android, so Android had no checkmarks, arrows or back buttons (the likely cause of Learn
+  looking "very weird"). `components/icon.tsx` maps each SF name to its Material Symbol,
+  with a test that fails when an icon has no Android match.
+
