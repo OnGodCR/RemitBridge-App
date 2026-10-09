@@ -150,8 +150,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         contact-form notifications to Angad) wasn't deployed: the token Angad made lacked
         `edge_functions_write`; Angad chose to leave it and deleted the token (2026-10-03).
         It goes live with the website's next function deploy from an account with access.
-      - `INCORPORATED` to true once Washington accepts the Articles (and `OWNERSHIP.md`'s
-        "await acceptance" line); `META_DOMAIN_VERIFICATION` from Meta.
+      - [x] `INCORPORATED` is true (Angad has the certificate, 2026-10-08; D146), with
+        entity-only liability terms; `OWNERSHIP.md` updated. The website (separate repo)
+        has no privacy policy, terms or © line yet: handed to a website session.
+      - [ ] Meta business verification submitted 2026-10-08 as an Institution, "in review"
+        (about 2 business days).
       - [x] No mailing address on the site (Angad, 2026-10-03): the Contact sections ask
         people to email for it. Charity registration also filed by Angad, under review;
         the wording rule holds until he says it's approved.

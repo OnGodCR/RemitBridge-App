@@ -1672,3 +1672,25 @@ manifest assembled at build time from every library's own. Two gaps, fixed:
 - The App Store privacy answers (`docs/store/listing.md`) gained the phone number kept while
   WhatsApp is linked, the email on a route request, and the random install ID.
 
+**D146. RemitBridge Labs is incorporated; claims go to it alone** (Angad, 2026-10-08: he has
+the certificate; "make sure they can only sue this legal entity and not me or my parents"). Washington accepted
+the Articles (Meta lists the business as REMITBRIDGE LABS), so `INCORPORATED` is true: the
+site, the footer and the app say "RemitBridge Labs, a Washington nonprofit corporation"
+(never "charity", "501(c)(3)" or "tax-deductible" until the IRS approves, D141). The terms
+now say:
+- the agreement is with RemitBridge Labs and no one else, a legal entity separate from the
+  people who found, run, work or volunteer for, contribute to or support it, and their
+  families;
+- claims relating to RemitBridge may be brought only against RemitBridge Labs, none of those
+  people is personally liable, and each can enforce that clause as if they'd signed;
+- liability is capped at $50, no indirect or consequential damages, one year to bring a
+  claim, Washington courts only, and a severability clause.
+The privacy policy names RemitBridge Labs as the one responsible for the data. These clauses
+do what contract terms can: courts can still hold a person liable for their own acts, or
+look past a corporation that isn't kept separate (its own bank account, records and
+decisions). The lawyer reviewing the drafts should confirm them. Two things that make the
+separation real are outside this repo: the app is still published from an individual Apple
+account in Angad's dad's name, and the code, name and domain are still owned by Angad
+personally (OWNERSHIP.md). The store listing now says to publish only after the Apple account
+is converted to an organization (which needs a D-U-N-S number).
+

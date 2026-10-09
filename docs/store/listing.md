@@ -19,8 +19,8 @@ Character limits are the stores' own, and every field below fits.
 | Terms of use URL | https://app.remitbridgelabs.org/terms (D141) |
 | Marketing / website URL | https://app.remitbridgelabs.org |
 | Contact email | `CONTACT_EMAIL` in `site/site.config.json`: hello@remitbridgelabs.org once Angad confirms its forwarding works (D141) |
-| Developer / seller name | Comes from the developer account, not from here: today Angad's dad's name (individual accounts, D134). It becomes RemitBridge Labs only with Organization accounts, which need the corporation's D-U-N-S number (D141) |
-| Copyright | 2026 Angad Kochar |
+| Developer / seller name | Comes from the developer account, not from here: today Angad's dad's name (individual accounts, D134). It becomes RemitBridge Labs only with Organization accounts, which need the corporation's D-U-N-S number (D141, D146). Publish only after the conversion, so the seller is the corporation, not a person |
+| Copyright | 2026 RemitBridge Labs |
 
 ## App Store
 
