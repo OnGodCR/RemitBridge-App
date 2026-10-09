@@ -2,7 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 
 import type { FundingMethod } from '@remitbridge/formula';
 
@@ -132,7 +132,7 @@ export default function AlertScreen() {
           <Button label={a.yours} variant="secondary" trailingIcon="arrow.right" onPress={() => router.replace('/saved')} />
         </View>
       ) : (
-        <Button label={a.turnOn} icon={<SymbolView name="bell.fill" size={17} tintColor={t.primaryForeground} fallback={null} />} loading={state === 'busy'} onPress={turnOn} />
+        <Button label={a.turnOn} icon={<Icon name="bell.fill" size={17} tintColor={t.primaryForeground} fallback={null} />} loading={state === 'busy'} onPress={turnOn} />
       )}
       {message ? <AppText style={{ color: t.destructive }}>{message}</AppText> : null}
     </ScrollView>
@@ -157,7 +157,7 @@ function Step({ icon, label, onPress }: { icon: 'minus' | 'plus'; label: string;
           marginTop: pressed ? 4 : 0,
         },
       ]}>
-      <SymbolView name={icon} size={22} weight="bold" tintColor={t.primary} fallback={null} />
+      <Icon name={icon} size={22} weight="bold" tintColor={t.primary} fallback={null} />
     </Pressable>
   );
 }

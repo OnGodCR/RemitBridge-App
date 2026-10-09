@@ -1,4 +1,4 @@
-import { SymbolView, type SFSymbol } from 'expo-symbols';
+import { Icon, type SFSymbol } from '@/components/icon';
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
 
@@ -169,7 +169,7 @@ function Lead({ art, icon }: { art?: ReactNode; icon?: SFSymbol }) {
   if (!icon) return null;
   return (
     <View style={[styles.symbol, { backgroundColor: t.accent }]} accessible={false} importantForAccessibility="no-hide-descendants">
-      <SymbolView pointerEvents="none" name={icon} size={size} weight="medium" tintColor={t.accentForeground} fallback={null} />
+      <Icon pointerEvents="none" name={icon} size={size} weight="medium" tintColor={t.accentForeground} fallback={null} />
     </View>
   );
 }
@@ -179,7 +179,7 @@ export function Arrow({ external }: { external?: boolean }) {
   const t = useTheme();
   const size = useIconSize(17);
   return (
-    <SymbolView
+    <Icon
       pointerEvents="none"
       name={external ? 'arrow.up.right' : 'arrow.right'}
       size={size}

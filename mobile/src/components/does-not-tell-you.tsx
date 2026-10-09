@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -25,7 +25,7 @@ export function DoesNotTellYou({ items }: { items: string[] }) {
         <AppText variant="heading" style={{ color: t.accentForeground }}>
           {copy.limitsBlock.heading}
         </AppText>
-        <SymbolView
+        <Icon
           pointerEvents="none"
           name={open ? 'chevron.up' : 'chevron.down'}
           size={13}

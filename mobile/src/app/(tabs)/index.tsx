@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, View, type LayoutChangeEvent } from 'react-native';
@@ -243,13 +243,13 @@ export default function ScanScreen() {
             <View style={styles.buttons}>
               <Button
                 label={s.takePhoto}
-                icon={<SymbolView pointerEvents="none" name="camera.fill" size={18} tintColor={t.primaryForeground} fallback={null} />}
+                icon={<Icon pointerEvents="none" name="camera.fill" size={18} tintColor={t.primaryForeground} fallback={null} />}
                 onPress={() => pick('camera')}
               />
               <Button
                 label={s.choosePhoto}
                 variant="secondary"
-                icon={<SymbolView pointerEvents="none" name="photo.on.rectangle" size={18} tintColor={t.text} fallback={null} />}
+                icon={<Icon pointerEvents="none" name="photo.on.rectangle" size={18} tintColor={t.text} fallback={null} />}
                 onPress={() => pick('library')}
               />
             </View>
@@ -271,7 +271,7 @@ export default function ScanScreen() {
           </View>
 
           <View style={styles.privacy}>
-            <SymbolView name="lock.shield" size={22} tintColor={t.primary} fallback={null} />
+            <Icon name="lock.shield" size={22} tintColor={t.primary} fallback={null} />
             <AppText muted style={styles.flex}>
               {s.privacy}
             </AppText>

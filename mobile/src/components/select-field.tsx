@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useState } from 'react';
 import { FlatList, Modal, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -89,7 +89,7 @@ export function SelectField({
           <AppText variant="label" style={styles.fieldName} numberOfLines={large ? 2 : 1}>
             {current.short ?? current.name}
           </AppText>
-          <SymbolView
+          <Icon
             pointerEvents="none"
             name="chevron.down"
             size={icon}
@@ -110,7 +110,7 @@ export function SelectField({
               accessibilityLabel={copy.common.close}
               hitSlop={8}
               style={styles.close}>
-              <SymbolView
+              <Icon
                 pointerEvents="none"
                 name="xmark"
                 size={icon + 4}
@@ -122,7 +122,7 @@ export function SelectField({
             <AppText variant="heading">{title}</AppText>
           </View>
           <View style={[styles.search, { backgroundColor: t.card, borderColor: t.border }]}>
-            <SymbolView
+            <Icon
               pointerEvents="none"
               name="magnifyingglass"
               size={icon + 2}
@@ -178,7 +178,7 @@ export function SelectField({
                   </AppText>
                   <View style={styles.check}>
                     {selected ? (
-                      <SymbolView
+                      <Icon
                         pointerEvents="none"
                         name="checkmark"
                         size={15}

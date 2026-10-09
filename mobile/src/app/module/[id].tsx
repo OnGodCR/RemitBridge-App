@@ -1,5 +1,5 @@
 import { Redirect, router, Stack, useLocalSearchParams } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -85,7 +85,7 @@ export default function ModuleScreen() {
           <View style={[styles.done, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>
             <View style={styles.doneHead}>
               <View style={[styles.tick, { backgroundColor: t.primary }]}>
-                <SymbolView name="checkmark" size={14} weight="bold" tintColor={t.primaryForeground} fallback={null} />
+                <Icon name="checkmark" size={14} weight="bold" tintColor={t.primaryForeground} fallback={null} />
               </View>
               <AppText style={[styles.doneTitle, { color: t.accentForeground }]}>{l.moduleDone}</AppText>
             </View>
@@ -135,7 +135,7 @@ function Word({ n, term, learned }: { n: number; term: Term; learned: boolean })
       style={({ pressed }) => [styles.word, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
       <View style={[styles.number, { borderColor: t.primary, backgroundColor: learned ? t.primary : 'transparent' }]}>
         {learned ? (
-          <SymbolView name="checkmark" size={13} weight="bold" tintColor={t.primaryForeground} fallback={null} />
+          <Icon name="checkmark" size={13} weight="bold" tintColor={t.primaryForeground} fallback={null} />
         ) : (
           <AppText style={[styles.numberText, { color: t.primary }]}>{n}</AppText>
         )}
@@ -148,7 +148,7 @@ function Word({ n, term, learned }: { n: number; term: Term; learned: boolean })
           </AppText>
         ) : null}
       </View>
-      <SymbolView pointerEvents="none" name="book" size={15} weight="semibold" tintColor={t.textSecondary} fallback={null} />
+      <Icon pointerEvents="none" name="book" size={15} weight="semibold" tintColor={t.textSecondary} fallback={null} />
     </Pressable>
   );
 }

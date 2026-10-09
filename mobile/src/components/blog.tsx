@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { Fragment, type ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
@@ -205,7 +205,7 @@ export function PostBlock({ block, series }: { block: BlogBlock; series: BlogPos
           {(block.items ?? []).map((item) => (
             <View key={item} style={styles.listItem}>
               {block.icon ? (
-                <SymbolView
+                <Icon
                   name={block.icon === 'pro' ? 'checkmark' : 'xmark'}
                   size={15}
                   weight="semibold"

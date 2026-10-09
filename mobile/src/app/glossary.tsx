@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
@@ -54,7 +54,7 @@ export default function GlossaryScreen() {
         keyExtractor={(x) => x.id}
         ListHeaderComponent={
           <View style={[styles.search, { backgroundColor: t.card, borderColor: t.border }]}>
-            <SymbolView
+            <Icon
               pointerEvents="none"
               name="magnifyingglass"
               size={iconSize}
