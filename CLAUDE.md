@@ -153,8 +153,13 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       - [x] `INCORPORATED` is true (Angad has the certificate, 2026-10-08; D146), with
         entity-only liability terms; `OWNERSHIP.md` updated. The website (separate repo)
         has no privacy policy, terms or © line yet: handed to a website session.
-      - [ ] Meta business verification submitted 2026-10-08 as an Institution, "in review"
-        (about 2 business days).
+      - [x] Meta business verification submitted 2026-10-08 as an Institution; **Meta emailed
+        "Verification successful for REMITBRIDGE LABS" the same evening.** Next for WhatsApp:
+        request a review of the restriction in Business Support Home, then a real number.
+      - [ ] **D-U-N-S (D&B case #11089990):** requested through Apple's tool 2026-10-08. D&B's
+        iResearch team (research@iresearch.dnb.com) asked the same night, within 72 hours, for
+        the certificate plus their Business Information Form (BIR_FORM_USA.docx). Angad
+        replies to that email from hello@ with both; then the Apple account conversion.
       - [x] No mailing address on the site (Angad, 2026-10-03): the Contact sections ask
         people to email for it. Charity registration also filed by Angad, under review;
         the wording rule holds until he says it's approved.
@@ -186,7 +191,8 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow-ups sent 2026-10-04 to
-      all seven (Angad's request); next nudge 2026-10-12 (calendar reminder set). Round 2
+      all seven (Angad's request); next nudge 2026-10-12 (calendar reminder set). Xe Care
+      redirected us to data@xe.com (2026-10-06); emailed them 2026-10-08. Round 2
       (shorter email, from hello@) to six more on 2026-10-04: Viamericas, Instarem, Pangea,
       Félix Pago, Taptap Send, BOSS Money. Log replies in `docs/outreach/permission-request.md` (D52).
 - [x] **Partner emails** (D50): all nine sent. Eight from the RemitBridge Gmail (Horn of
