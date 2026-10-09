@@ -757,6 +757,11 @@ export const vi: Copy = {
     consentHelp:
       'Tắt trừ khi bạn bật. Bật: chúng tôi giữ ảnh đã che và các con số trong 24 tháng, không có gì cho biết bạn là ai, để nghiên cứu người ta thực sự trả bao nhiêu. Tắt: ảnh không bao giờ được lưu, và các con số bị xóa sau 30 ngày.',
     send: 'Đọc biên lai của tôi',
+    /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
+    savingsAcross: (n: number) =>
+      n === 1 ? 'Trên biên lai bạn đã quét bằng điện thoại này, so với giá rẻ nhất chúng tôi có.' : `Trên ${n} biên lai bạn đã quét bằng điện thoại này, so với giá rẻ nhất chúng tôi có cho từng biên lai.`,
+    savingsNone: (n: number) =>
+      n === 1 ? 'Biên lai bạn đã quét vốn đã là mức rẻ nhất trong các giá chúng tôi có.' : `Cả ${n} biên lai bạn đã quét đều đã là mức rẻ nhất trong các giá chúng tôi có.`,
     aiTitle: 'AI có thể đọc biên lai này',
     aiBody: 'Khi quy tắc của chúng tôi không đọc được một con số, chúng tôi gửi phần chữ đã che, và đôi khi cả ảnh đã che, đến Groq, một công ty AI. Groq không lưu lại và không dùng để học.',
     aiAskTitle: 'Gửi đến dịch vụ AI?',

@@ -1743,3 +1743,15 @@ WhatsApp tab, the link note, the privacy policy and the App Store answers say so
 sending code stays in place, unused, if WhatsApp alerts ever come back; any number sealed
 before today should be cleared with one SQL line (Angad's to run). Supersedes D139.
 
+**D149. A savings counter on the Scan tab, kept on the phone** (Angad, 2026-10-09: "a savings
+counter in the app (the total of 'what you could have kept' across all scans)"). Each
+confirmed scan adds its "could have kept" (D119) to a running total, shown at the top of Scan
+in the same mint box as the receipt result's figure: the total, and how many receipts it
+covers; if every receipt was already the cheapest we had, it says that instead. It's kept
+in the app's local storage, one entry per receipt (never counted twice; deleting the receipt
+takes it out), because scanned receipts carry no account or device ID on the server, and a
+server-side total would need one. US dollars only, which is every route's sending currency
+today. The privacy policy says the total stays on the phone. It doesn't follow a person to a
+new phone or across reinstalls; an account-backed total would need receipts tied to accounts,
+which D78 and the policy rule out for now.
+

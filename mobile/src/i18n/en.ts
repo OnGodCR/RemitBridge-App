@@ -742,6 +742,11 @@ export const en = {
     consentHelp:
       'Off unless you turn it on. On: we keep the covered photo and the values for 24 months, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days.',
     send: 'Read my receipt',
+    /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
+    savingsAcross: (n: number) =>
+      n === 1 ? 'Across the receipt you scanned on this phone, against the cheapest price we had for it.' : `Across the ${n} receipts you scanned on this phone, against the cheapest price we had for each.`,
+    savingsNone: (n: number) =>
+      n === 1 ? 'The receipt you scanned was already the cheapest we had prices for.' : `All ${n} receipts you scanned were already the cheapest we had prices for.`,
     aiTitle: 'An AI may read it',
     aiBody: 'When our own rules can’t read a figure, we send the covered text, and sometimes the covered photo, to Groq, an AI company. Groq doesn’t keep it or learn from it.',
     aiAskTitle: 'Send to an AI service?',

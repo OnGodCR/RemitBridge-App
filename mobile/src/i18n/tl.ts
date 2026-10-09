@@ -759,6 +759,11 @@ export const tl: Copy = {
     consentHelp:
       'Naka-off maliban kung i-on mo. Naka-on: itatabi namin ang natakpang litrato at ang mga halaga nang 24 na buwan, walang anumang nagsasabi kung sino ka, para pag-aralan kung magkano talaga ang binabayaran ng mga tao. Naka-off: hindi kailanman itatabi ang litrato, at buburahin ang mga halaga pagkalipas ng 30 araw.',
     send: 'Basahin ang resibo ko',
+    /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
+    savingsAcross: (n: number) =>
+      n === 1 ? 'Sa resibong na-scan mo sa phone na ito, kumpara sa pinakamurang presyong hawak namin.' : `Sa ${n} resibong na-scan mo sa phone na ito, kumpara sa pinakamurang presyong hawak namin para sa bawat isa.`,
+    savingsNone: (n: number) =>
+      n === 1 ? 'Ang resibong na-scan mo ay pinakamura na sa mga presyong hawak namin.' : `Lahat ng ${n} resibong na-scan mo ay pinakamura na sa mga presyong hawak namin.`,
     aiTitle: 'Puwedeng basahin ito ng AI',
     aiBody: 'Kapag hindi mabasa ng sarili naming mga patakaran ang isang halaga, ipinapadala namin ang natakpang text, at minsan ang natakpang litrato, sa Groq, isang kompanya ng AI. Hindi ito itinatago ng Groq at hindi rin ginagamit para matuto.',
     aiAskTitle: 'Ipadala sa isang AI service?',
