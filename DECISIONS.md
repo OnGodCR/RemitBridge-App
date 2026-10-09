@@ -1694,3 +1694,14 @@ account in Angad's dad's name, and the code, name and domain are still owned by 
 personally (OWNERSHIP.md). The store listing now says to publish only after the Apple account
 is converted to an organization (which needs a D-U-N-S number).
 
+
+**D147. The app's site takes the website's look, on white** (Angad, 2026-10-09: "make all
+the website on app.remitbridge.org much more aesthetic as well. Stick with the consistent
+color scheme"). The landing page leaves the dark ink of D59 for white, matching the
+website's /app page, which he had just asked to be white: the glow is a faint green, the
+phone frame stays dark, the TrueCost figure loses its amber (one green, no third accent),
+and the closing section sits on the website's mint. Every page gets the website's sticky
+white header with the bridge mark and links to Support, Privacy, Terms and the website's
+/app page, and the website's dark ink footer. Privacy, terms and support become a white
+sheet on a mint band, with green-dot lists and ruled section breaks. Light only, like the
+website; the old dark-mode tokens are gone.
