@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui';
@@ -41,7 +41,7 @@ export function ChoiceList<T extends string>({
               {o.label}
             </AppText>
             {selected ? (
-              <SymbolView name="checkmark" size={15} weight="semibold" tintColor={t.primary} fallback={<AppText style={{ color: t.primary }}>✓</AppText>} />
+              <Icon name="checkmark" size={15} weight="semibold" tintColor={t.primary} fallback={<AppText style={{ color: t.primary }}>✓</AppText>} />
             ) : null}
           </Pressable>
         );

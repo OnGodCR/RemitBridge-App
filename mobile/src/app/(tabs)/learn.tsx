@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useCallback, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -76,7 +76,7 @@ export default function LearnScreen() {
             </View>
             {stats.xp ? (
               <View style={styles.stats} accessible accessibilityLabel={l.lesson.streakLine(stats.streak, stats.xp)}>
-                <SymbolView name={stats.streak ? 'flame.fill' : 'bolt.fill'} size={16} tintColor={t.heroText} fallback={null} />
+                <Icon name={stats.streak ? 'flame.fill' : 'bolt.fill'} size={16} tintColor={t.heroText} fallback={null} />
                 <AppText style={[styles.statsText, { color: t.heroText }]}>{l.lesson.streakLine(stats.streak, stats.xp)}</AppText>
               </View>
             ) : null}

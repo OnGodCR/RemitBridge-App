@@ -1,6 +1,6 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import { FlagSlot } from '@/components/flag';
@@ -100,7 +100,7 @@ export function SavedComparisons() {
               accessibilityLabel={sv.deleteNamed(name)}
               hitSlop={4}
               style={({ pressed }) => [styles.delete, { opacity: pressed ? 0.6 : 1 }]}>
-              <SymbolView pointerEvents="none" name="trash" size={iconSize} tintColor={t.textSecondary} fallback={null} />
+              <Icon pointerEvents="none" name="trash" size={iconSize} tintColor={t.textSecondary} fallback={null} />
             </Pressable>
           </ListItem>
         );

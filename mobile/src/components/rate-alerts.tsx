@@ -1,5 +1,5 @@
 import { useFocusEffect } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useCallback, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
@@ -78,7 +78,7 @@ export function RateAlerts() {
                   {x.channel === 'whatsapp' ? `${copy.delivery[x.delivery_method]} · ${a.byWhatsApp}` : copy.delivery[x.delivery_method]}
                 </AppText>
               </View>
-              <SymbolView
+              <Icon
                 pointerEvents="none"
                 name={x.channel === 'whatsapp' ? 'message.fill' : 'bell.fill'}
                 size={iconSize}
@@ -92,7 +92,7 @@ export function RateAlerts() {
               accessibilityLabel={a.deleteNamed(name)}
               hitSlop={4}
               style={({ pressed }) => [styles.delete, { opacity: pressed ? 0.6 : 1 }]}>
-              <SymbolView pointerEvents="none" name="trash" size={iconSize} tintColor={t.textSecondary} fallback={null} />
+              <Icon pointerEvents="none" name="trash" size={iconSize} tintColor={t.textSecondary} fallback={null} />
             </Pressable>
           </ListItem>
         );

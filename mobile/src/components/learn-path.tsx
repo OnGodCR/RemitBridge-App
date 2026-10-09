@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
@@ -139,7 +139,7 @@ function Node({
               </Ring>
               {complete ? (
                 <View style={[styles.badge, { backgroundColor: t.primary, borderColor: t.background }]}>
-                  <SymbolView name="checkmark" size={14} weight="bold" tintColor={t.primaryForeground} fallback={null} />
+                  <Icon name="checkmark" size={14} weight="bold" tintColor={t.primaryForeground} fallback={null} />
                 </View>
               ) : null}
             </View>

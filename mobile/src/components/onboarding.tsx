@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import type { ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -68,7 +68,7 @@ function BackButton({ light }: { light?: boolean }) {
       hitSlop={8}
       style={styles.back}>
       {/* The native symbol view would swallow the touch; let the Pressable have it. */}
-      <SymbolView
+      <Icon
         pointerEvents="none"
         name="chevron.left"
         tintColor={light ? t.heroText : t.text}

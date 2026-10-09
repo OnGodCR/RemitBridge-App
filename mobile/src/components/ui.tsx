@@ -1,4 +1,4 @@
-import { SymbolView, type SFSymbol } from 'expo-symbols';
+import { Icon, type SFSymbol } from '@/components/icon';
 import { useEffect, useState, type ReactNode } from 'react';
 import {
   ActivityIndicator,
@@ -266,7 +266,7 @@ export function Button({
               {label}
             </AppText>
             {trailingIcon ? (
-              <SymbolView pointerEvents="none" name={trailingIcon} size={iconSize} weight="bold" tintColor={fg} fallback={null} />
+              <Icon pointerEvents="none" name={trailingIcon} size={iconSize} weight="bold" tintColor={fg} fallback={null} />
             ) : null}
           </View>
         )}
@@ -305,10 +305,10 @@ export function TextLink({
       accessibilityState={{ busy }}
       hitSlop={6}
       style={({ pressed }) => [styles.link, { opacity: pressed || busy ? 0.6 : 1 }]}>
-      {icon ? <SymbolView pointerEvents="none" name={icon} size={iconSize} weight="semibold" tintColor={t.primary} fallback={null} /> : null}
+      {icon ? <Icon pointerEvents="none" name={icon} size={iconSize} weight="semibold" tintColor={t.primary} fallback={null} /> : null}
       <AppText style={[styles.linkLabel, { color: t.primary }]}>{label}</AppText>
       {arrow ? (
-        <SymbolView
+        <Icon
           pointerEvents="none"
           name={external ? 'arrow.up.right' : 'arrow.right'}
           size={iconSize - 1}

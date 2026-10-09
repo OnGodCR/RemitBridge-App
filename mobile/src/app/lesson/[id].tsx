@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useMemo, useReducer, useState, type ReactNode } from 'react';
 import { AccessibilityInfo, Pressable, ScrollView, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
@@ -179,14 +179,14 @@ function TopBar({ progress, combo, stepLabel }: { progress: number; combo: numbe
         accessibilityRole="button"
         accessibilityLabel={copy.learn.lesson.close}
         style={({ pressed }) => [styles.close, { opacity: pressed ? 0.5 : 1 }]}>
-        <SymbolView name="xmark" size={20} weight="bold" tintColor={t.textSecondary} fallback={null} />
+        <Icon name="xmark" size={20} weight="bold" tintColor={t.textSecondary} fallback={null} />
       </Pressable>
       <View accessible accessibilityRole="progressbar" accessibilityLabel={stepLabel} style={[styles.track, { backgroundColor: t.muted }]}>
         <Animated.View style={[styles.trackFill, { backgroundColor: t.primary }, fill]} />
       </View>
       {combo >= 2 ? (
         <Animated.View style={[styles.combo, popStyle]} accessible accessibilityLabel={copy.learn.lesson.inARow(combo)}>
-          <SymbolView name="flame.fill" size={18} tintColor={t.primary} fallback={null} />
+          <Icon name="flame.fill" size={18} tintColor={t.primary} fallback={null} />
           <AppText style={[styles.comboText, { color: t.primary }]}>{combo}</AppText>
         </Animated.View>
       ) : (
@@ -208,7 +208,7 @@ function Teach({ term }: { term: Term }) {
   return (
     <>
       <View style={[styles.tag, { backgroundColor: t.accent }]}>
-        <SymbolView name="sparkles" size={14} tintColor={t.accentForeground} fallback={null} />
+        <Icon name="sparkles" size={14} tintColor={t.accentForeground} fallback={null} />
         <AppText style={[styles.tagText, { color: t.accentForeground }]}>{copy.learn.lesson.newWord}</AppText>
       </View>
       <View style={styles.wordHead}>
@@ -250,7 +250,7 @@ function Ask({
     <>
       {question.retry ? (
         <View style={[styles.tag, { backgroundColor: t.muted }]}>
-          <SymbolView name="arrow.counterclockwise" size={13} tintColor={t.textSecondary} fallback={null} />
+          <Icon name="arrow.counterclockwise" size={13} tintColor={t.textSecondary} fallback={null} />
           <AppText style={[styles.tagText, { color: t.textSecondary }]}>{l.again}</AppText>
         </View>
       ) : null}
@@ -336,7 +336,7 @@ function Option({ label, long, state, onPress }: { label: string; long: boolean;
       <View pointerEvents="none" style={[styles.optionLip, { backgroundColor: rim }]} />
       <Animated.View style={[styles.option, long && styles.optionLong, { backgroundColor: bg, borderColor: border }, face]}>
         <AppText style={[long ? styles.optionTextLong : styles.optionText, { color: fg }]}>{label}</AppText>
-        {right ? <SymbolView name="checkmark.circle.fill" size={22} tintColor={fg} fallback={null} /> : null}
+        {right ? <Icon name="checkmark.circle.fill" size={22} tintColor={fg} fallback={null} /> : null}
       </Animated.View>
     </Pressable>
   );
@@ -378,7 +378,7 @@ function Feedback({
         { backgroundColor: correct ? t.accent : t.card, borderTopColor: correct ? t.primary : t.border, paddingBottom: bottom + Spacing.three },
       ]}>
       <View style={styles.feedbackHead}>
-        <SymbolView
+        <Icon
           name={correct ? 'checkmark.circle.fill' : 'arrow.uturn.left.circle.fill'}
           size={28}
           tintColor={correct ? t.primary : t.textSecondary}
@@ -478,7 +478,7 @@ function Tile({ icon, label, value }: { icon: 'bolt.fill' | 'scope' | 'flame.fil
         {label}
       </AppText>
       <View style={styles.tileValue}>
-        <SymbolView name={icon} size={18} tintColor={t.primary} fallback={null} />
+        <Icon name={icon} size={18} tintColor={t.primary} fallback={null} />
         <AppText style={[styles.tileNumber, { color: t.text }]}>{value}</AppText>
       </View>
     </View>
@@ -504,7 +504,7 @@ function Celebration() {
         <BurstDot key={i} angle={angle} progress={burst} color={i % 2 ? t.moneyMarkup : t.primary} />
       ))}
       <Animated.View style={[styles.badge, { backgroundColor: t.primary, borderBottomColor: t.primaryDeep }, badge]}>
-        <SymbolView name="checkmark" size={54} weight="heavy" tintColor={t.primaryForeground} fallback={null} />
+        <Icon name="checkmark" size={54} weight="heavy" tintColor={t.primaryForeground} fallback={null} />
       </Animated.View>
     </View>
   );

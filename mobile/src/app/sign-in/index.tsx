@@ -1,7 +1,7 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useEffect, useState } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
@@ -98,7 +98,7 @@ export default function SignInOptions() {
               white, as their own guidelines ask. */}
           <Button
             label={si.email}
-            icon={<SymbolView pointerEvents="none" name="envelope.fill" size={17} tintColor={t.primaryForeground} fallback={null} />}
+            icon={<Icon pointerEvents="none" name="envelope.fill" size={17} tintColor={t.primaryForeground} fallback={null} />}
             onPress={() => router.push({ pathname: '/sign-in/email', params: { from } })}
           />
           {onboarding ? <Button label={si.skip} variant="plain" onPress={skip} /> : null}

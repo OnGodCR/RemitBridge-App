@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { Icon } from '@/components/icon';
 import { useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -38,9 +38,9 @@ export function LanguageButton({ onDark }: { onDark?: boolean }) {
         accessibilityHint={copy.language.pick}
         hitSlop={6}
         style={({ pressed }) => [styles.button, { opacity: pressed ? 0.6 : 1 }]}>
-        <SymbolView pointerEvents="none" name="globe" size={icon} tintColor={color} fallback={null} />
+        <Icon pointerEvents="none" name="globe" size={icon} tintColor={color} fallback={null} />
         <AppText style={[styles.buttonLabel, { color }]}>{language.name}</AppText>
-        <SymbolView pointerEvents="none" name="chevron.down" size={icon - 4} weight="semibold" tintColor={color} fallback={null} />
+        <Icon pointerEvents="none" name="chevron.down" size={icon - 4} weight="semibold" tintColor={color} fallback={null} />
       </Pressable>
       <LanguageSheet visible={open} onClose={() => setOpen(false)} />
     </>
@@ -76,7 +76,7 @@ export function LanguageSheet({ visible, onClose }: { visible: boolean; onClose:
             accessibilityLabel={copy.common.close}
             hitSlop={8}
             style={styles.close}>
-            <SymbolView pointerEvents="none" name="xmark" size={icon} weight="semibold" tintColor={t.text} fallback={null} />
+            <Icon pointerEvents="none" name="xmark" size={icon} weight="semibold" tintColor={t.text} fallback={null} />
           </Pressable>
           <AppText variant="heading" accessibilityRole="header">
             {copy.language.pick}
@@ -107,7 +107,7 @@ export function LanguageSheet({ visible, onClose }: { visible: boolean; onClose:
                   ) : null}
                 </View>
                 {selected ? (
-                  <SymbolView pointerEvents="none" name="checkmark" size={icon} weight="bold" tintColor={t.primary} fallback={null} />
+                  <Icon pointerEvents="none" name="checkmark" size={icon} weight="bold" tintColor={t.primary} fallback={null} />
                 ) : null}
               </Pressable>
             );

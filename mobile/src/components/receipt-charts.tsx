@@ -1,4 +1,4 @@
-import { SymbolView, type SFSymbol } from 'expo-symbols';
+import { Icon, type SFSymbol } from '@/components/icon';
 import { useState } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 
@@ -211,7 +211,7 @@ export function StatusLine({ tone, text }: { tone: 'good' | 'warn' | 'neutral'; 
   const color = tone === 'good' ? t.primary : tone === 'warn' ? t.text : t.textSecondary;
   return (
     <View style={styles.status}>
-      <SymbolView name={icon} size={22} tintColor={color} fallback={null} />
+      <Icon name={icon} size={22} tintColor={color} fallback={null} />
       <AppText style={[styles.statusText, { color: t.text }]}>{text}</AppText>
     </View>
   );
@@ -224,7 +224,7 @@ export function Chips({ items, icon }: { items: string[]; icon: SFSymbol }) {
     <View style={styles.chips}>
       {items.map((x) => (
         <View key={x} style={[styles.chip, { backgroundColor: t.muted, borderColor: t.border }]}>
-          <SymbolView name={icon} size={12} weight="bold" tintColor={t.textSecondary} fallback={null} />
+          <Icon name={icon} size={12} weight="bold" tintColor={t.textSecondary} fallback={null} />
           <AppText variant="small" style={{ color: t.text }}>
             {x}
           </AppText>
