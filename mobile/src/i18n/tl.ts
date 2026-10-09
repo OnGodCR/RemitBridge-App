@@ -30,7 +30,7 @@ export const tl: Copy = {
     noMailBody: (address) => `Walang naka-set up na email app sa phone na ito. Sumulat sa ${address} gamit ang kahit anong email.`,
   },
 
-  tabs: { scan: 'I-scan', compare: 'Ikumpara', tools: 'Tools', learn: 'Matuto', account: 'Account' },
+  tabs: { scan: 'I-scan', compare: 'Ikumpara', tools: 'Tools', learn: 'Matuto', account: 'Account', whatsapp: 'WhatsApp' },
 
   titles: {
     scan: 'I-scan ang resibo',
@@ -479,6 +479,26 @@ export const tl: Copy = {
     devOnly: 'Sa development builds lang, hanggang makasagot ang WhatsApp bot sa lahat.',
   },
 
+
+  /** The WhatsApp tab (D147): the bot, what to send it, and linking it to an account. */
+  whatsappTab: {
+    lead: 'Magkumpara ng presyo sa chat',
+    sub: 'I-text ang RemitBridge bot at makuha ang mga presyo ngayon sa loob ng ilang segundo. Gumagana ito sa sinumang may WhatsApp, walang app na kailangang i-install, kaya puwede mo itong ibahagi sa pamilya.',
+    tryTitle: 'Mga puwedeng ipadala',
+    tries: [
+      { send: '500 to India', does: 'Kung magkano ang matatanggap ng pamilya mo sa bawat provider ngayon' },
+      { send: 'Litrato ng resibo', does: 'Ang totoong gastos ng padalang ginawa mo' },
+      { send: 'WHY', does: 'Kung nasaan ang nakatagong gastos' },
+      { send: 'SCAM', does: 'Suriin ang mensaheng humihingi ng pera' },
+      { send: 'HINDI', does: 'Mga sagot sa Hindi' },
+    ],
+    linkTitle: 'I-link ito sa account mo',
+    linkWhy: 'Pagkatapos, ang SAVE 500 to India ay magtatabi ng pagkumpara sa Naka-save, at puwedeng dumating sa WhatsApp ang mga rate alert.',
+    signInToLink: 'Mag-sign in para i-link ang WhatsApp',
+    soon: 'Malapit na. Hinihintay pa ng bot na buksan ito ng Meta para sa lahat.',
+    privacy: 'Nagtatabi kami ng naka-scramble na ID sa halip na numero mo. Nasa privacy policy ang mga detalye.',
+  },
+
   alerts: {
     link: 'Sabihan ako kapag mas maganda',
     intro: (amount: string, country: string) => `Sabihan ako kapag ang ${amount} papuntang ${country} ay makakatanggap ng hindi bababa sa`,
@@ -498,7 +518,7 @@ export const tl: Copy = {
     viaPush: 'Notification',
     viaWhatsApp: 'WhatsApp',
     byWhatsApp: 'sa WhatsApp',
-    notLinked: 'I-link muna ang WhatsApp sa Account, saka ito piliin dito.',
+    notLinked: 'I-link muna ang WhatsApp sa WhatsApp tab, saka ito piliin dito.',
     yours: 'Ang alerts mo',
     row: (amount: string, country: string, target: string) => `${amount} papuntang ${country}: ${target} o higit pa`,
     deleteNamed: (name: string) => `Burahin ang alert: ${name}`,

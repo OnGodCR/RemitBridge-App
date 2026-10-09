@@ -20,12 +20,12 @@ import {
 } from '@/lib/whatsapp';
 
 /**
- * Account's WhatsApp rows (DECISIONS.md D138): chat with the bot (its number under the
- * row), and, signed in, link this account's WhatsApp so "SAVE 500 to India" there lands in
- * Saved. Shown to everyone once the bot can reply to anyone (app_settings.whatsapp_live);
+ * The WhatsApp rows (DECISIONS.md D138), on the WhatsApp tab since D147: chat with the bot
+ * (its number under the row; the tab passes chat={false} and shows its own button), and,
+ * signed in, link this account's WhatsApp so "SAVE 500 to India" there lands in Saved. Shown to everyone once the bot can reply to anyone (app_settings.whatsapp_live);
  * until then only in development builds, for testing with Meta's test number.
  */
-export function WhatsAppSection() {
+export function WhatsAppSection({ chat = true, title }: { chat?: boolean; title?: string } = {}) {
   const copy = useCopy();
   const w = copy.whatsapp;
   const { language } = useLanguage();
@@ -97,14 +97,16 @@ export function WhatsAppSection() {
 
   return (
     <>
-      <ListGroup title={w.title} cards>
-        <ListRow
-          external
-          icon="message"
-          title={w.chat}
-          subtitle={formatNumber(settings.number)}
-          onPress={() => openChat(settings.number, w.hello)}
-        />
+      <ListGroup title={title ?? w.title} cards>
+        {chat ? (
+          <ListRow
+            external
+            icon="message"
+            title={w.chat}
+            subtitle={formatNumber(settings.number)}
+            onPress={() => openChat(settings.number, w.hello)}
+          />
+        ) : null}
         {session && status ? (
           status.linked ? (
             <ListRow icon="link" title={w.linked} subtitle={w.linkedSub(since)} onPress={confirmUnlink} />

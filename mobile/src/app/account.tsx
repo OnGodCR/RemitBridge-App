@@ -20,9 +20,7 @@ import { fullName, saveName } from '@/lib/name';
 import { appleAuthorizationCode } from '@/lib/sign-in';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
-import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise } from '@/components/motion-views';
-import { WhatsAppSection } from '@/components/whatsapp-section';
 
 /**
  * Account: what's saved (comparisons, then receipts), the admin tools for admins, the
@@ -30,7 +28,6 @@ import { WhatsAppSection } from '@/components/whatsapp-section';
  * (D63); actions that change the account stay buttons, because they aren't places to go.
  */
 export default function AccountScreen() {
-  useTabFocus('/account');
   const t = useTheme();
   const copy = useCopy();
   const a = copy.account;
@@ -80,7 +77,7 @@ export default function AccountScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <HeroHeader title={a.title}>
+        <HeroHeader title={a.title} onBack={() => router.back()}>
           {session ? (
             <AppText style={{ color: t.heroMuted }}>{session.user.email ?? a.signedInApple}</AppText>
           ) : null}
@@ -112,8 +109,6 @@ export default function AccountScreen() {
               <Button label={a.createOrSignIn} onPress={() => router.push('/sign-in')} />
             </View>
           )}
-
-          <WhatsAppSection />
 
           {canChooseLanguage ? (
             <ListGroup title={copy.language.title} cards>

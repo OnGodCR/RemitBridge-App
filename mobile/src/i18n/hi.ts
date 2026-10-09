@@ -30,7 +30,7 @@ export const hi: Copy = {
     noMailBody: (address) => `इस फ़ोन में कोई ईमेल ऐप सेट नहीं है। किसी भी ईमेल से ${address} पर लिखें।`,
   },
 
-  tabs: { scan: 'स्कैन', compare: 'तुलना', tools: 'टूल', learn: 'जानें', account: 'खाता' },
+  tabs: { scan: 'स्कैन', compare: 'तुलना', tools: 'टूल', learn: 'जानें', account: 'खाता', whatsapp: 'WhatsApp' },
 
   titles: {
     scan: 'रसीद स्कैन करें',
@@ -479,6 +479,26 @@ export const hi: Copy = {
     devOnly: 'सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता।',
   },
 
+
+  /** The WhatsApp tab (D147): the bot, what to send it, and linking it to an account. */
+  whatsappTab: {
+    lead: 'चैट में कीमतों की तुलना करें',
+    sub: 'RemitBridge बॉट को मैसेज भेजें और कुछ ही सेकंड में आज की कीमतें पाएँ। यह WhatsApp वाले हर व्यक्ति के लिए काम करता है, कोई ऐप इंस्टॉल किए बिना, इसलिए आप इसे परिवार के साथ शेयर कर सकते हैं।',
+    tryTitle: 'क्या भेजें',
+    tries: [
+      { send: '500 to India', does: 'आज हर कंपनी से आपके परिवार को कितना मिलेगा' },
+      { send: 'रसीद की फ़ोटो', does: 'आपके किए गए ट्रांसफ़र की असली लागत' },
+      { send: 'WHY', does: 'छिपी हुई लागत कहाँ है' },
+      { send: 'SCAM', does: 'पैसे माँगने वाले मैसेज की जाँच करें' },
+      { send: 'HINDI', does: 'जवाब हिंदी में' },
+    ],
+    linkTitle: 'इसे अपने खाते से जोड़ें',
+    linkWhy: 'फिर SAVE 500 to India से तुलना "सहेजा गया" में रहेगी, और रेट अलर्ट WhatsApp पर आ सकते हैं।',
+    signInToLink: 'WhatsApp जोड़ने के लिए साइन इन करें',
+    soon: 'जल्द ही। बॉट को सबके लिए खोलने के लिए Meta की मंज़ूरी का इंतज़ार है।',
+    privacy: 'हम आपके नंबर की जगह उससे बना एक बदला हुआ ID रखते हैं। पूरी जानकारी निजता नीति में है।',
+  },
+
   alerts: {
     link: 'बेहतर होने पर बताएँ',
     intro: (amount: string, country: string) => `तब बताएँ जब ${country} को ${amount} पर कम से कम इतना मिले`,
@@ -498,7 +518,7 @@ export const hi: Copy = {
     viaPush: 'सूचना',
     viaWhatsApp: 'WhatsApp',
     byWhatsApp: 'WhatsApp पर',
-    notLinked: 'पहले Account में WhatsApp जोड़ें, फिर यहाँ चुनें।',
+    notLinked: 'पहले WhatsApp टैब में WhatsApp जोड़ें, फिर यहाँ चुनें।',
     yours: 'आपके अलर्ट',
     row: (amount: string, country: string, target: string) => `${country} को ${amount}: ${target} या ज़्यादा`,
     deleteNamed: (name: string) => `अलर्ट मिटाएँ: ${name}`,

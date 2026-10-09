@@ -29,7 +29,7 @@ export const es: Copy = {
     noMailBody: (address) => `Este teléfono no tiene una app de correo configurada. Escríbenos a ${address} desde cualquier correo.`,
   },
 
-  tabs: { scan: 'Escanear', compare: 'Comparar', tools: 'Herramientas', learn: 'Aprender', account: 'Cuenta' },
+  tabs: { scan: 'Escanear', compare: 'Comparar', tools: 'Herramientas', learn: 'Aprender', account: 'Cuenta', whatsapp: 'WhatsApp' },
 
   titles: {
     scan: 'Escanear un recibo',
@@ -479,6 +479,26 @@ export const es: Copy = {
     devOnly: 'Solo en versiones de desarrollo, hasta que el bot de WhatsApp pueda responder a todos.',
   },
 
+
+  /** The WhatsApp tab (D147): the bot, what to send it, and linking it to an account. */
+  whatsappTab: {
+    lead: 'Compara precios en un chat',
+    sub: 'Escribe al bot de RemitBridge y recibe los precios de hoy en segundos. Funciona para cualquiera con WhatsApp, sin instalar ninguna app, así que puedes compartirlo con tu familia.',
+    tryTitle: 'Qué puedes enviar',
+    tries: [
+      { send: '500 to India', does: 'Lo que cada proveedor le da hoy a tu familia' },
+      { send: 'Una foto del recibo', does: 'Lo que de verdad costó un envío que hiciste' },
+      { send: 'WHY', does: 'Dónde está el costo oculto' },
+      { send: 'SCAM', does: 'Revisa un mensaje que te pide dinero' },
+      { send: 'HINDI', does: 'Respuestas en hindi' },
+    ],
+    linkTitle: 'Vincúlalo a tu cuenta',
+    linkWhy: 'Así, SAVE 500 to India guarda una comparación en Guardado, y las alertas de tipo de cambio pueden llegar por WhatsApp.',
+    signInToLink: 'Inicia sesión para vincular WhatsApp',
+    soon: 'Muy pronto. El bot está esperando que Meta lo abra para todos.',
+    privacy: 'Guardamos un ID codificado en lugar de tu número. La política de privacidad tiene los detalles.',
+  },
+
   alerts: {
     link: 'Avísame cuando mejore',
     intro: (amount: string, country: string) => `Avísame cuando ${amount} a ${country} reciba al menos`,
@@ -498,7 +518,7 @@ export const es: Copy = {
     viaPush: 'Notificación',
     viaWhatsApp: 'WhatsApp',
     byWhatsApp: 'por WhatsApp',
-    notLinked: 'Primero vincula WhatsApp en Cuenta y luego elígelo aquí.',
+    notLinked: 'Primero vincula WhatsApp en la pestaña WhatsApp y luego elígelo aquí.',
     yours: 'Tus alertas',
     row: (amount: string, country: string, target: string) => `${amount} a ${country}: ${target} o más`,
     deleteNamed: (name: string) => `Borrar alerta: ${name}`,
