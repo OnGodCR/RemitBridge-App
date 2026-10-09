@@ -91,9 +91,15 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
       Migration pushed 2026-10-02 (smoke test 63/63). Left: try LINK from his phone; flip
       `whatsapp_live` once Meta lifts the restriction.
-- [ ] **Rate alerts by WhatsApp (D139):** built 2026-10-02, the number kept encrypted only
-      while linked. Migration pushed 2026-10-02. Left: create the `rate_alert` template from
-      `docs/whatsapp-templates.md` in WhatsApp Manager (needs Angad signed in to Meta).
+- [x] **Rate alerts by WhatsApp (D139): dropped for push-only (D148, 2026-10-09).** No
+      template or Meta payment method needed; LINK keeps no number. Left: Angad clears any
+      number sealed before then (`update public.whatsapp_users set number_sealed = null;`).
+- [ ] **WhatsApp going live (2026-10-09):** the account is **Approved** and the business
+      **Verified** (restriction lifted). Meta app: RemitBridge, App ID 1004249319342214 (no
+      icon yet; needed before Live). A test "500 to India" was delivered but the whatsapp
+      function got **no call**: check the webhook's `messages` subscription and use Meta's
+      Test button. Then: a real number (Angad's thinking Google Voice), app icon, app Live,
+      `whatsapp_live` on.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). `site/.well-known/apple-app-site-association` is
       live with Team ID QS9F7JU6H2 (read from Membership details, 2026-10-07; the site build

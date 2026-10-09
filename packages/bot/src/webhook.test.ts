@@ -242,8 +242,8 @@ describe('linking to an app account (D138)', () => {
     await handler(delivery('link k7p2qx'))
     const args = rpcCalls.find((c) => c.name === 'link_whatsapp')?.args
     expect(args).toMatchObject({ p_code: 'K7P2QX', p_phone_hash: hashOf() })
-    // The number goes to the database sealed (D139), never as it is.
-    expect(typeof args?.p_number_sealed).toBe('string')
+    // Only the keyed hash is linked: alerts are push-only (D148), so no number is kept.
+    expect(args?.p_number_sealed).toBeUndefined()
     expect(sent.at(-1)?.body).toMatch(/^Linked\./)
     expect(JSON.stringify(rpcCalls)).not.toContain(PHONE)
   })
@@ -300,23 +300,20 @@ describe('rate alerts by WhatsApp (D139)', () => {
     expect(templates).toEqual([])
   })
 
-  it('opens the linked chat’s sealed number and sends the approved template', async () => {
+  it('has no number to send to since alerts went push-only (D148), so nothing goes out', async () => {
     env.RECEIPT_INTAKE_SECRET = 'intake-secret'
-    // Link through the bot, so the number is sealed exactly as in real use.
+    // Link through the bot, exactly as in real use: only the hash is stored now.
     rpcs.link_whatsapp = (args) => {
-      tables.whatsapp_users = [{ phone_hash: args.p_phone_hash, user_id: 'user-1', number_sealed: args.p_number_sealed }]
+      tables.whatsapp_users = [{ phone_hash: args.p_phone_hash, user_id: 'user-1', number_sealed: args.p_number_sealed ?? null }]
       return true
     }
     await handler(delivery('LINK K7P2QX'))
+    expect(tables.whatsapp_users[0].number_sealed).toBeNull()
     expect(JSON.stringify(tables.whatsapp_users)).not.toContain(PHONE)
 
-    const res = await sendAlerts({ alerts: [alert, { ...alert, id: 8, user_id: 'not-linked' }] }, 'intake-secret')
-    expect(await res.json()).toEqual({ sent: [7], failed: [8] })
-    expect(templates).toHaveLength(1)
-    expect(templates[0].to).toBe(PHONE)
-    expect(templates[0].template.name).toBe('rate_alert')
-    expect(templates[0].template.language.code).toBe('en_US')
-    expect(templates[0].template.components[0].parameters.map((p) => p.text)).toEqual(alert.params)
+    const res = await sendAlerts({ alerts: [alert] }, 'intake-secret')
+    expect(await res.json()).toEqual({ sent: [], failed: [7] })
+    expect(templates).toEqual([])
   })
 })
 

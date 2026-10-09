@@ -1,18 +1,17 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon } from '@/components/icon';
 
 import type { FundingMethod } from '@remitbridge/formula';
 
-import { AppText, Button, Segmented } from '@/components/ui';
+import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, useCopy, useLanguage } from '@/i18n';
 import { money } from '@/lib/format';
-import { createAlert, startingTarget, targetStep, type AlertChannel, type CreateResult } from '@/lib/rate-alerts';
-import { linkStatus } from '@/lib/whatsapp';
+import { createAlert, startingTarget, targetStep, type CreateResult } from '@/lib/rate-alerts';
 import type { DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
 
@@ -41,17 +40,6 @@ export default function AlertScreen() {
   const [target, setTarget] = useState(() => startingTarget(best));
   const [state, setState] = useState<'idle' | 'busy' | CreateResult>('idle');
   const country = countryIn(copy, (p.route ?? '').split('-')[1] ?? '');
-  // WhatsApp is offered once this account has a linked chat (D139).
-  const [whatsAppLinked, setWhatsAppLinked] = useState(false);
-  const [channel, setChannel] = useState<AlertChannel>('push');
-  useEffect(() => {
-    let live = true;
-    linkStatus().then((s) => live && setWhatsAppLinked(!!s?.linked));
-    return () => {
-      live = false;
-    };
-  }, []);
-
   const turnOn = async () => {
     setState('busy');
     const result = await createAlert({
@@ -61,7 +49,8 @@ export default function AlertScreen() {
       funding: p.funding ?? 'bank_account',
       target,
       language: language.code,
-      channel,
+      // Push only (D148): WhatsApp alerts would be messages we start, which Meta charges for.
+      channel: 'push',
     });
     if (result === 'signed_out') {
       setState('idle');
@@ -82,11 +71,9 @@ export default function AlertScreen() {
         ? a.unavailable
         : state === 'limit'
           ? a.limit
-          : state === 'not_linked'
-            ? a.notLinked
-            : state === 'error'
-              ? a.failed
-              : null;
+          : state === 'error'
+            ? a.failed
+            : null;
 
   return (
     <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
@@ -111,20 +98,6 @@ export default function AlertScreen() {
       <AppText variant="small" muted style={styles.center}>
         {a.often}
       </AppText>
-
-      {whatsAppLinked && state !== 'on' ? (
-        <View style={styles.via}>
-          <AppText variant="label">{a.via}</AppText>
-          <Segmented
-            options={[
-              { value: 'push', label: a.viaPush },
-              { value: 'whatsapp', label: a.viaWhatsApp },
-            ]}
-            value={channel}
-            onChange={setChannel}
-          />
-        </View>
-      ) : null}
 
       {state === 'on' ? (
         <View style={[styles.done, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>
