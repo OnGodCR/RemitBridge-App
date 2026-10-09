@@ -244,6 +244,10 @@ Angad does this once the app itself is finished (D117).
 - [x] **Android push notifications set up (D127):** Firebase project `remitbridge`, its Android
       app wired in, and the FCM V1 key uploaded to EAS by Angad. Done 2026-10-01. A real
       Android notification waits on an Android build.
+- [ ] **D147 (2026-10-09): WhatsApp tab, Account top-right, Android's own tab bar, Android
+      icons.** Built and pushed; Hindi rows added by hand; bot wording deployed. Left: Angad
+      checks both phones (Learn on Android especially); a preview (release) Android build to
+      judge real smoothness, since development builds run unoptimized JavaScript.
 - [ ] **Android readiness (2026-10-08):** never built or run on Android before today. Fixed:
       broad photo permissions blocked (Play's photo/video policy; the system photo picker needs
       none) and an email route to deletion on /support (Play's deletion-URL rule). Left: the
