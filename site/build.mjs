@@ -11,6 +11,8 @@
 //   <!--HEAD-->                  Meta's domain verification tag, when the value is set
 //   <!--FOOTER-->                the footer: links, the © line, the email and the address
 //   {{LEGAL_NAME}}               RemitBridge Labs
+//   {{LEGAL_ENTITY}}             RemitBridge Labs, a Washington nonprofit corporation (the
+//                                name alone until INCORPORATED)
 //   {{CONTACT_EMAIL}}            the contact address
 //   {{MAILING_ADDRESS_LINE}}     the mailing address, or, with none set (Angad's choice,
 //                                2026-10-03), a line asking people to email for it
@@ -43,9 +45,14 @@ export function loadConfig(text = readFileSync(join(root, 'site.config.json'), '
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-/** "© 2026 RemitBridge Labs", plus the legal status only once the state has accepted it. */
+/** "RemitBridge Labs, a Washington nonprofit corporation", the status only once the state has accepted it. */
+export function legalEntity(c) {
+  return `${c.LEGAL_NAME}${c.INCORPORATED ? ', a Washington nonprofit corporation' : ''}`;
+}
+
+/** "© 2026 RemitBridge Labs, a Washington nonprofit corporation". */
 export function copyrightLine(c) {
-  return `© 2026 ${c.LEGAL_NAME}${c.INCORPORATED ? ', a Washington nonprofit corporation' : ''}`;
+  return `© 2026 ${legalEntity(c)}`;
 }
 
 export function render(html, c) {
@@ -62,6 +69,7 @@ export function render(html, c) {
   ].join('\n');
   const tokens = {
     LEGAL_NAME: escape(c.LEGAL_NAME),
+    LEGAL_ENTITY: escape(legalEntity(c)),
     CONTACT_EMAIL: email,
     MAILING_ADDRESS_LINE: address
       ? `<p>${escape(address)}</p>`
