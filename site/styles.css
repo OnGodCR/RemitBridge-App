@@ -12,8 +12,12 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--background); color: var(--foreground);
-  font: 16px/1.65 "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font: 16px/1.65 "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis-weight: none; -webkit-font-smoothing: antialiased;
 }
+/* The website's heading rule: bold, tracked in, tight leading. */
+h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; }
+p { text-wrap: pretty; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
 
 /* Header: white, sticky, blurred, like the website's. */
@@ -33,23 +37,54 @@ header nav a.cta:hover { color: var(--primary-foreground); filter: brightness(1.
 header nav a.cta { white-space: nowrap; }
 @media (max-width: 600px) { header nav a:not(.cta) { display: none; } header nav a.cta { padding: 7px 14px; font-size: 13px; } }
 
-/* Document pages: a white sheet on a mint band. */
-body:not(.landing) { background: linear-gradient(var(--accent) 0 300px, var(--background) 300px); }
-main.wrap {
-  max-width: 760px; margin: 48px auto 72px; padding: 48px 56px 56px;
+/* Document pages, as laid out by docLayout() in build.mjs: a green hero (the green the
+   header used to be; Angad preferred it to mint, 2026-10-09) with the title,
+   then a contents list beside a white sheet. */
+.doc-hero { background: var(--primary); color: var(--primary-foreground); padding: 56px 0 120px; }
+.doc-hero .wrap { max-width: 1080px; }
+.doc-hero .eyebrow { color: rgba(255, 255, 255, 0.7); }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary); margin: 0 0 12px; }
+.doc-hero h1 { font-size: clamp(34px, 6vw, 56px); margin: 0; }
+.doc-hero .updated { margin: 14px 0 0; color: rgba(255, 255, 255, 0.8); font-size: 15px; }
+.doc { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: start; margin-top: -80px; padding-bottom: 80px; }
+.toc { position: sticky; top: 88px; padding-top: 112px; font-size: 14px; }
+.toc p { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border); }
+.toc li { margin: 0; padding: 0; }
+.toc li::before { display: none; }
+.toc a { display: block; padding: 6px 0 6px 14px; margin-left: -2px; border-left: 2px solid transparent; color: var(--muted); text-decoration: none; line-height: 1.35; }
+.toc a:hover { color: var(--foreground); }
+.toc a.on { color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+.sheet {
+  min-width: 0; padding: 40px 56px 56px;
   background: var(--card); border: 1px solid var(--border); border-radius: 24px;
   box-shadow: 0 1px 2px rgba(28, 32, 36, 0.04), 0 20px 50px rgba(20, 112, 90, 0.08);
 }
-@media (max-width: 640px) { main.wrap { margin: 24px 12px 48px; padding: 32px 20px 36px; border-radius: 18px; } }
-h1 { font-size: clamp(30px, 5vw, 42px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800; margin: 0 0 10px; }
-main.wrap > h1 + p.muted { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); margin: 0 0 28px; }
-h2 { font-size: 20px; letter-spacing: -0.3px; font-weight: 700; margin: 40px 0 10px; padding-top: 28px; border-top: 1px solid var(--border); }
+.sheet > :first-child { margin-top: 0; }
+.sheet h2 { scroll-margin-top: 88px; display: flex; align-items: baseline; gap: 14px; }
+.sheet h2 .num { font-size: 13px; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.sheet > h2:first-child, .sheet > .summary:first-child h2 { border-top: 0; padding-top: 0; }
+.summary { background: var(--accent); border-radius: 16px; padding: 24px 28px 12px; margin: 0 0 8px; }
+.summary h2 { border-top: 0; padding-top: 0; margin-top: 0; }
+.doc.solo { grid-template-columns: minmax(0, 760px); justify-content: center; }
+@media (max-width: 900px) {
+  .doc { grid-template-columns: 1fr; margin-top: -72px; }
+  .toc { display: none; }
+  .doc-hero { padding: 40px 0 104px; }
+}
+@media (max-width: 640px) {
+  .sheet { padding: 28px 20px 32px; border-radius: 18px; }
+  .doc.wrap { padding: 0 10px; }
+  .summary { padding: 18px 18px 6px; }
+}
+h1 { font-size: clamp(30px, 5vw, 42px); margin: 0 0 10px; }
+h2 { font-size: 20px; margin: 40px 0 10px; padding-top: 28px; border-top: 1px solid var(--border); }
 h3 { font-size: 16px; margin: 24px 0 6px; }
 p, li { color: var(--foreground); }
 .muted { color: var(--muted); }
 a { color: var(--primary); text-underline-offset: 3px; }
 ul { padding-left: 0; list-style: none; }
-main li { position: relative; padding-left: 22px; margin: 8px 0; }
+main li, .sheet li { position: relative; padding-left: 22px; margin: 8px 0; }
 main li::before { content: ""; position: absolute; left: 4px; top: 0.68em; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); }
 .card {
   background: var(--accent); border: 1px solid var(--border); border-radius: 16px;

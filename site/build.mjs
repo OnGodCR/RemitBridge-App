@@ -84,6 +84,46 @@ export function render(html, c) {
     });
 }
 
+/**
+ * The document pages (privacy, terms, support) as written are a plain run of headings and
+ * text, which is how they should be edited. This lays them out at build time, so it holds
+ * without script: the title and date move into a mint hero above the sheet, every h2 gets
+ * an id and a number, and a contents list built from those headings sits beside the text
+ * on wide screens. A page that opens with "In short" gets that list as a summary card.
+ * Pages without <main class="wrap"> (the landing page, partner links) pass through.
+ */
+const slug = (t) => t.toLowerCase().replace(/<[^>]+>/g, '').replace(/&[a-z]+;|['’]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+export function docLayout(html) {
+  const m = html.match(/<main class="wrap">\n?<h1>(.*?)<\/h1>\n?(?:<p class="muted">(.*?)<\/p>\n?)?([\s\S]*?)<\/main>/);
+  if (!m) return html;
+  const [whole, title, updated, body] = m;
+  const heads = [];
+  let n = 0;
+  let content = body.replace(/<h2>(.*?)<\/h2>/g, (_, text) => {
+    n += 1;
+    const id = slug(text);
+    heads.push({ id, text, n });
+    return `<h2 id="${id}"><span class="num">${String(n).padStart(2, '0')}</span>${text}</h2>`;
+  });
+  content = content.replace(/(<h2 id="in-short">[\s\S]*?<\/h2>\n?<ul>[\s\S]*?<\/ul>)/, '<section class="summary">$1</section>');
+  const eyebrow = /support/i.test(title) ? 'Help' : /privacy|terms/i.test(title) ? 'Legal' : 'RemitBridge';
+  const toc = heads.map((h) => `<li><a href="#${h.id}">${h.text}</a></li>`).join('');
+  return html.replace(whole, [
+    '<div class="doc-hero"><div class="wrap">',
+    `<p class="eyebrow">${eyebrow}</p><h1>${title}</h1>`,
+    updated ? `<p class="updated">${updated}</p>` : '',
+    '</div></div>',
+    heads.length ? '<div class="doc wrap">' : '<div class="doc solo wrap">',
+    heads.length && `<aside class="toc" aria-label="On this page"><p>On this page</p><ol>${toc}</ol></aside>`,
+    `<main class="sheet">${content}</main>`,
+    '</div>',
+    // Highlights the section being read. Only a class changes; without script the list
+    // still works as plain links.
+    `<script>(function(){var l=document.querySelectorAll('.toc a');if(!('IntersectionObserver'in window))return;var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){l.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+x.target.id)})}})},{rootMargin:'-80px 0px -70% 0px'});document.querySelectorAll('.sheet h2[id]').forEach(function(h){o.observe(h)})})()</script>`,
+  ].filter(Boolean).join('\n'));
+}
+
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {
     if (SKIP.has(name) || (name.startsWith('.') && name !== '.well-known')) return [];
@@ -105,7 +145,7 @@ function build({ write }) {
       if (!html.includes('<!--HEAD-->') || !html.includes('<!--FOOTER-->')) {
         throw new Error(`${relative(root, path)}: needs <!--HEAD--> and <!--FOOTER-->`);
       }
-      const page = render(html, config);
+      const page = docLayout(render(html, config));
       if (write) {
         mkdirSync(dirname(target), { recursive: true });
         writeFileSync(target, page);
