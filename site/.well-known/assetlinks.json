@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.remitbridgelabs.app",
+      "sha256_cert_fingerprints": [
+        "5D:02:45:77:2B:AB:0D:D3:65:84:93:EC:54:60:53:1F:03:35:7B:FC:95:2E:E6:34:7B:59:63:9E:D0:37:E3:AC"
+      ]
+    }
+  }
+]
