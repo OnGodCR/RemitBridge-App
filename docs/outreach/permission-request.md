@@ -58,7 +58,7 @@ appears as the media contact on the company's own press releases.
 | WorldRemit (Zepz) | corpcomms@worldremit.com | page: zepz.io, press contact | 2026-09-28 | waiting |
 | Ria (Euronet) | comms@riafinancial.com | release: Euronet's Ria press releases (e.g. the Sikhona acquisition) | 2026-09-28 | waiting |
 | Paysend | press@paysend.com | release: "Media enquiries" on Paysend's own press release (paysend.com/news/rebrand-launch, read 2026-10-01); no partnerships address is published | 2026-10-01, by Claude at Angad's request | waiting. Its terms don't forbid reading the pages, so this one asks for a feed or endpoint instead: the public pages show one amount and one price for several ways of receiving (docs/MANUAL_RESEARCH.md). |
-| Xe (Euronet) | Xe Help Centre request form (help.xe.com/hc/en-gb/requests/new); no press or partnerships email is published | Xe's contact page lists only chat (needs an account) and phone | 2026-09-28 | waiting (2026-09-28: request received, reference 26724746, no answer yet) |
+| Xe (Euronet) | Xe Help Centre request form (help.xe.com/hc/en-gb/requests/new); no press or partnerships email is published | Xe's contact page lists only chat (needs an account) and phone | 2026-09-28 | redirected (2026-10-06: Xe Care, Federico, ticket #26851453, said API questions go to data@xe.com or +1 416 214-5606 option 1, 9:00-5:00 EST; 2026-10-08: Claude emailed data@xe.com from hello@ asking for a Xe Money Transfer quote feed, a nonprofit tier, or permission for light checks of public quotes, signed as RemitBridge Labs, a Washington nonprofit corporation) |
 
 Follow-ups sent 2026-10-04 at Angad's request (earlier than the 2026-10-12 reminder), by Claude from the RemitBridge Gmail, as replies in each original thread: Remitly, MoneyGram, Ria, WorldRemit, Xoom (PayPal media desk), Western Union, and Xe by replying to ticket #26724746 as its auto-reply asks. Each restates the ask (light-schedule checks or a feed/API), says prices are entered by hand until then, asks for a pointer, and signs as RemitBridge Labs, hello@remitbridgelabs.org. Paysend (asked 2026-10-01) not followed up yet. Next nudge: 2026-10-12 if still silent. Ria and Xe are both Euronet companies. If neither answers, one
 follow-up to Euronet corporate communications covers both.
@@ -102,3 +102,19 @@ to partnerships.
 | Félix Pago | holafelix@us.felixpago.com | felixpago.com/en/help | 2026-10-04 | waiting |
 | Taptap Send | support@taptapsend.com | help.taptapsend.com, "How do I contact Taptap Send" | 2026-10-04 | waiting |
 | BOSS Money (IDT) | william.ulrey@idt.net | IDT's own press releases (idt.net), corporate communications | 2026-10-04 | waiting |
+
+## From 2026-10-08: signing as an incorporated nonprofit
+
+RemitBridge Labs is a Washington nonprofit corporation (D146). Emails now sign:
+
+```
+Angad Kochar
+Founder, RemitBridge Labs
+A Washington nonprofit corporation
+hello@remitbridgelabs.org
+https://app.remitbridgelabs.org
+```
+
+and say "I run RemitBridge Labs, a Washington nonprofit corporation" where the old template
+said "I run RemitBridge". Never "charity", "501(c)(3)" or "tax-deductible" (D141).
+
