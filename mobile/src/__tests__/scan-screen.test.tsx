@@ -13,6 +13,7 @@ import ScanScreen from '@/app/(tabs)/index';
 import { LanguageProvider } from '@/i18n';
 import { canScan, discardPhotoFiles, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
+import { forgetSaving, recordSaving } from '@/lib/savings';
 
 let mockSavedLanguage: string | null = null;
 let mockAiConsent = true;
@@ -55,6 +56,11 @@ jest.mock('@/lib/receipt-scan', () => ({
 }));
 jest.mock('@/lib/receipts', () => ({ sendScan: jest.fn(), confirmScan: jest.fn(), forgetReceipt: jest.fn(async () => true) }));
 jest.mock('@/lib/open-compare', () => ({ openCompare: jest.fn() }));
+jest.mock('@/lib/savings', () => ({
+  recordSaving: jest.fn(),
+  forgetSaving: jest.fn(),
+  savingsSummary: () => ({ count: 0, total: 0 }),
+}));
 
 const PAGE = pageFromLines(['WESTERN UNION', 'Sender: Maria Lopez', 'Transfer Amount $500.00', 'Total to Recipient 8,560.00 MXN']);
 
@@ -188,6 +194,10 @@ it('goes from the answers to the result, and deletes the receipt on request', as
   fireEvent.press(screen.getByText('Delete this receipt now'));
   await screen.findByText('Deleted.');
   expect(forgetReceipt).toHaveBeenCalledWith(RESULT.id);
+  // The savings counter (D149): nothing to add with no prices to compare, and a deleted
+  // receipt is taken back out.
+  expect(recordSaving).not.toHaveBeenCalled();
+  expect(forgetSaving).toHaveBeenCalledWith(RESULT.id);
 });
 
 it('keeps the answers and says so when confirming fails', async () => {

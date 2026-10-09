@@ -20,6 +20,7 @@ import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-hea
 import { ScanHero, StepCost, StepCover, StepSnap } from '@/components/illustrations';
 import { ReceiptConfirm, type Answers } from '@/components/receipt-confirm';
 import { ReceiptResult } from '@/components/receipt-result';
+import { SavingsCard } from '@/components/savings-card';
 import { AppText, Button, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
@@ -31,6 +32,7 @@ import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
 import { useAuth } from '@/lib/auth';
 import { firstName } from '@/lib/name';
 import { prefs } from '@/lib/prefs';
+import { forgetSaving, recordSaving } from '@/lib/savings';
 import { track } from '@/lib/track';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise, Rise } from '@/components/motion-views';
@@ -205,12 +207,18 @@ export default function ScanScreen() {
       corrected: Object.keys(answers).length,
       compared: done.confirmed.comparison.quote !== null,
     });
+    // Into the savings counter (D149), on this phone only.
+    const best = done.confirmed.best.best;
+    if (best) recordSaving(step.result.id, best.could_keep, best.currency);
     setStep({ kind: 'result', id: step.result.id, confirmed: done.confirmed, deleted: false });
   };
 
   const forget = async () => {
     if (step.kind !== 'result') return;
-    if (await forgetReceipt(step.id)) setStep({ ...step, deleted: true });
+    if (await forgetReceipt(step.id)) {
+      forgetSaving(step.id);
+      setStep({ ...step, deleted: true });
+    }
   };
 
   const steps = [StepSnap, StepCover, StepCost];
@@ -238,6 +246,7 @@ export default function ScanScreen() {
               {copy.common.greeting(partOfDay(), name ?? undefined)}
             </AppText>
           </View>
+          <SavingsCard />
           <View style={styles.capture}>
             <ScanHero />
             <View style={styles.buttons}>

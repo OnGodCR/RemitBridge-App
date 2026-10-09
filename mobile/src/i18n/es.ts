@@ -757,6 +757,11 @@ export const es: Copy = {
     consentHelp:
       'Apagado a menos que lo actives. Activado: guardamos la foto tapada y las cifras durante 24 meses, sin nada que diga quién eres, para estudiar cuánto paga la gente en realidad. Apagado: la foto nunca se guarda y las cifras se borran a los 30 días.',
     send: 'Leer mi recibo',
+    /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
+    savingsAcross: (n: number) =>
+      n === 1 ? 'En el recibo que escaneaste en este teléfono, frente al precio más bajo que teníamos.' : `En los ${n} recibos que escaneaste en este teléfono, frente al precio más bajo que teníamos para cada uno.`,
+    savingsNone: (n: number) =>
+      n === 1 ? 'El recibo que escaneaste ya era el más barato de los precios que teníamos.' : `Los ${n} recibos que escaneaste ya eran los más baratos de los precios que teníamos.`,
     aiTitle: 'Puede leerlo una IA',
     aiBody: 'Cuando nuestras propias reglas no pueden leer una cifra, enviamos el texto tapado, y a veces la foto tapada, a Groq, una empresa de IA. Groq no lo guarda ni aprende de él.',
     aiAskTitle: '¿Enviar a un servicio de IA?',
