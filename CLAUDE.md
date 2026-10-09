@@ -255,9 +255,13 @@ Angad does this once the app itself is finished (D117).
       made (SHA-256 5D:02:45:...:E3:AC, SHA-1 89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05,
       read from the APK's v2 signing block). `assetlinks.json` is live with that SHA-256; add
       Play App Signing's SHA-256 once the app is on Play.
-- [ ] **Native Google sign-in on Android (D129):** an Android OAuth client with the signing
-      key's SHA-1 (EAS key: 89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05; Play's
-      too, later), then the app's Android native path; iPhone is set up (2026-10-01).
+- [ ] **Native Google sign-in on Android (D129):** the browser flow crashed the Android build
+      on the way back from Google (2026-10-09), so Android now uses the native sheet (7906dc8).
+      Android OAuth client "RemitBridge Android (EAS key)" created by Claude with Angad's yes in
+      Google Cloud project remittances-benchmarking (package org.remitbridgelabs.app, SHA-1
+      89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05), 2026-10-09. Left: confirm
+      on Angad's Android; add a second Android client with Play App Signing's SHA-1 once on
+      Play. iPhone is set up (2026-10-01).
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D143):** on hold for an organization account in
