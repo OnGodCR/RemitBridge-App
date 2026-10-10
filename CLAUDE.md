@@ -237,6 +237,9 @@ Angad does this once the app itself is finished (D117).
       (sent to hello@, which forwards to the RemitBridge Gmail) and Google then asked for a
       phone number that has hit its limit. Retry later, or use a different number; then
       upload `RemitBridge-profile-picture.png` (Angad's Downloads) as its photo.
+      2026-10-10: the taken name is an unfinished Google Workspace signup for the domain
+      ("Workspace account is not active"; the admin console loops). Fix: Google's
+      no-admin-access form to delete it, then a free account via "use your existing email".
 
 - [x] **Sign in with Apple key for account deletion (D145):** delete-account revokes the
       Apple grant. Key VN43KBGHT6 (Sign in with Apple, org.remitbridgelabs.app) created by
