@@ -207,9 +207,9 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with
-      the date in `mobile/src/i18n/languages.ts`. **D151 (2026-10-10):** Spanish, Tagalog and
-      Vietnamese ship before that, marked Draft, with "We need volunteers" in Account; Hindi
-      stays in development builds until its reviewer finishes. Her first notes are applied
+      the date in `mobile/src/i18n/languages.ts`. **D151 (2026-10-10):** all four ship in store
+      builds before that, marked Draft, with "We need volunteers" in Account (Hindi too, at
+      Angad's word the same day). Her first notes are applied
       (सहेज → सेव, 10 flagged lines; rows marked CHANGED 2026-10-10 in `hi.md`).
       Hindi first; the bot's Hindi (D68) needs the same read. **The review is under way in
       `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):
@@ -290,6 +290,9 @@ Angad does this once the app itself is finished (D117).
       89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05), 2026-10-09. Left: confirm
       on Angad's Android; add a second Android client with Play App Signing's SHA-1 once on
       Play. iPhone is set up (2026-10-01).
+- [ ] **Learn redrawn (D152, 2026-10-10):** zigzag path with side cards, walked trail, a
+      flag at the top, one-row header, the newest post in Library. Checked in a web render
+      only; left: Angad looks on both phones.
 - [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
       them into `site/screens/` (D59).
 - [ ] **Google Play developer account (D143):** on hold for an organization account in
