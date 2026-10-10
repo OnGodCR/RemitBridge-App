@@ -1770,3 +1770,14 @@ now. What follows from that, recorded so it isn't forgotten:
   exemption reaching back to the start.
 `docs/nonprofit-setup.md` marks the two as not doing.
 
+
+**D149. The landing page matches the website's /app page** (Angad, 2026-10-10: "update the
+app.remitbridge.org page to look like this as well"). Same hero (two tilted phones: Rate
+history behind, TrueCost in front), the same five story steps in the same order and words
+(Tools, Fair rate, TrueCost, Rate history, Scam check), then the same "Everything in the
+app" section on green: a phone whose tab bar switches Scan, Compare, Tools, Learn and
+Account, each feature a row, and all 21 features listed beside it under their tabs, every
+pick moving the phone and the list together. It is static HTML with lucide's icons inlined
+and a few lines of script, since this site has no framework. The two pages share no code (this
+repo never imports from the website), so a feature added to the app goes into both lists.
+The closing section is white.
