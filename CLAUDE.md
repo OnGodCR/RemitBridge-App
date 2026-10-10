@@ -216,9 +216,15 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
-- [ ] **Nonprofit setup: `docs/nonprofit-setup.md`** (2026-10-10): only the EIN and the
-      bylaws (D150); no bank account or 501(c)(3) for now. Yearly: Washington's annual report,
-      and an accountant's check on a federal return.
+- [ ] **Nonprofit setup: `docs/nonprofit-setup.md`** (2026-10-10): only the bylaws (D150);
+      the EIN put off the same day (nothing needs it yet); no bank account or 501(c)(3).
+      Left: the bylaws and board consent read, officers chosen, three signatures. Yearly:
+      Washington's annual report, and an accountant's check on a federal return.
+- [x] **Corporate documents in Drive** (2026-10-10): the RemitBridge Google Drive (not
+      Angad's personal one) has "RemitBridge Labs" with 00 Read me first, then 01 Corporate
+      records, 02 Registrations and accounts, 03 Policies, 04 App store and launch, 05 Brand,
+      06 Prices and research, 07 Costs and receipts. No passwords or keys in it. Signed bylaws,
+      the CP 575 (if the EIN happens) and the D-U-N-S letter go into 01 and 02 when they exist.
 - [ ] **Launch checklist: `docs/launch-checklist.md`** (2026-10-10), everything left before
       each store submission, with who does what. The D-U-N-S number gates both stores.
 
