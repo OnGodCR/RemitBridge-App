@@ -33,7 +33,9 @@ Meta business verification, D-U-N-S requested (case #11089990).
 
 ## 2. Organize the board: this month
 
-- [ ] **Bylaws** (doing, D150): how directors are chosen, officers, meetings, voting, conflicts of
+- [ ] **Bylaws** (doing, D150; drafted 2026-10-10 as a Claude Doc, "RemitBridge Labs Bylaws",
+      with the first board consent as "RemitBridge Labs Board Consent"; both await a
+      lawyer's read, the officer choices and three signatures): how directors are chosen, officers, meetings, voting, conflicts of
       interest. Washington doesn't file them, but the IRS application asks about them and
       banks ask to see them.
 - [ ] **First board meeting** (can be a short written consent signed by all three
