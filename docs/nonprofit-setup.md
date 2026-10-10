@@ -1,7 +1,7 @@
 # RemitBridge Labs: setting up the nonprofit
 
 What's left to run RemitBridge Labs as a Washington nonprofit corporation, as of
-2026-10-10. **Angad's decision (D150): only the EIN and the bylaws.** No bank account and no
+2026-10-10. **Angad's decision (D150): only the bylaws for now; the EIN is put off too.** No bank account and no
 501(c)(3) application for now; those sections are kept below, marked not doing, so the
 reasons and the deadlines aren't lost if that changes. None of this is legal or tax advice: a lawyer or accountant who
 works with nonprofits should check it, and the IRS and Washington pages linked are the
@@ -9,9 +9,13 @@ authority. Store-launch items live in `launch-checklist.md`.
 
 Done: Articles of Incorporation filed and accepted (UBI 606 303 260, effective 2026-10-08;
 directors Angad Kochar, Rahul Kochar, Vinti Bang Kochar; Rahul is the registered agent),
-Meta business verification, D-U-N-S requested (case #11089990).
+Meta business verification, D-U-N-S requested (case #11089990). Every document is in the
+RemitBridge Google Drive, folder "RemitBridge Labs" (sorted into seven folders, 2026-10-10).
 
-## 1. EIN (federal tax ID): today
+## 1. EIN (federal tax ID): put off (Angad, 2026-10-10)
+
+Not now: no store, Meta or D&B needs one. Do it when something asks for it (a bank, the
+IRS, a grant, hiring). The steps, for then:
 
 - [ ] Apply at **irs.gov/ein** → "Apply online now" (free; only on irs.gov, never a paid
       look-alike site). Hours (Eastern): Mon–Fri 6 a.m.–1 a.m., Sat 6 a.m.–9 p.m., Sun 6 p.m.–

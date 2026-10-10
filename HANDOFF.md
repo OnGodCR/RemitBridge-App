@@ -3,7 +3,22 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-02 (night)
+**Last updated:** 2026-10-10 (see the section just below; the older status after it is kept for history)
+
+## 2026-10-10: where things stand
+
+- **What's left before the stores:** `docs/launch-checklist.md`. The D-U-N-S number (D&B
+  case #11089990) gates both store accounts.
+- **The corporation:** `docs/nonprofit-setup.md`. Only the bylaws for now (D150); the EIN is
+  put off. The bylaws and first board consent are drafted as Claude Docs, unsigned.
+- **Documents:** the RemitBridge Google Drive (signed in as the RemitBridge Gmail, not
+  Angad's personal account, which is the one the Drive connector reaches) holds "RemitBridge
+  Labs": a read-me, then seven folders (corporate records, registrations, policies, store and
+  launch, brand, prices, costs). No passwords or keys go there.
+- **Builds:** iPhone development build installed and a real receipt scanned (2026-10-08);
+  Android development build runs on Angad's phone; an Android preview APK exists (801115b4).
+- **WhatsApp:** business verified; the webhook isn't receiving messages yet (check Configure
+  Webhooks in the Meta app), then a real number.
 
 ## Status: every MVP screen is built; the database needs one push, and there are no prices yet
 

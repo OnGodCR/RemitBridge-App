@@ -1769,6 +1769,12 @@ now. What follows from that, recorded so it isn't forgotten:
 - If he changes his mind on 501(c)(3), filing within 27 months of 2026-10-08 keeps the
   exemption reaching back to the start.
 `docs/nonprofit-setup.md` marks the two as not doing.
+Later the same day the EIN was put off too (Angad: "lets not set it up for now"), after
+asking why it's needed: nothing in front of us needs one (neither store, Meta or D&B asks),
+and it mainly matters for a bank account, 501(c)(3) or hiring. So only the bylaws go ahead
+now; the EIN steps stay in `docs/nonprofit-setup.md` for when something asks for it. The
+corporation's documents are kept in the RemitBridge Google Drive, folder "RemitBridge Labs"
+(set up 2026-10-10).
 
 
 **D149. The landing page matches the website's /app page** (Angad, 2026-10-10: "update the
