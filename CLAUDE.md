@@ -206,8 +206,11 @@ Angad does this once the app itself is finished (D117).
       web form by Angad, 2026-10-01. Log replies in `docs/outreach/partners.md`.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
-      are Claude's drafts and show only in development builds until a fluent speaker reads
-      each, agrees in writing, and is named with the date in `mobile/src/i18n/languages.ts`.
+      are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with
+      the date in `mobile/src/i18n/languages.ts`. **D151 (2026-10-10):** Spanish, Tagalog and
+      Vietnamese ship before that, marked Draft, with "We need volunteers" in Account; Hindi
+      stays in development builds until its reviewer finishes. Her first notes are applied
+      (सहेज → सेव, 10 flagged lines; rows marked CHANGED 2026-10-10 in `hi.md`).
       Hindi first; the bot's Hindi (D68) needs the same read. **The review is under way in
       `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):
       never regenerate it with `scripts/review-sheet.ts`, which rewrites the whole file and

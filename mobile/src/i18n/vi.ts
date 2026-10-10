@@ -101,8 +101,11 @@ export const vi: Copy = {
     pick: 'Chọn ngôn ngữ',
     draft: 'Bản nháp',
     draftNote:
-      'Bản dịch nháp chỉ hiện trong bản thử nghiệm, cho đến khi một người nói ngôn ngữ đó kiểm tra và đồng ý đứng tên chịu trách nhiệm.',
+      'Bản dịch nháp chưa được người thông thạo ngôn ngữ đó kiểm tra, nên có thể có từ chưa đúng.',
     improve: 'Có chỗ nào dịch chưa đúng? Hãy cho chúng tôi biết',
+    volunteerTitle: 'Cần tình nguyện viên',
+    volunteerBody:
+      'Bản tiếng Tây Ban Nha, tiếng Tagalog và tiếng Việt của chúng tôi là bản nháp, chưa được người thông thạo kiểm tra. Nếu bạn giỏi một trong các thứ tiếng này, hãy giúp chúng tôi kiểm tra.',
   },
 
   onboarding: {

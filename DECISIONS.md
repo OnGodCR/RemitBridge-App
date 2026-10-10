@@ -1787,3 +1787,22 @@ pick moving the phone and the list together. It is static HTML with lucide's ico
 and a few lines of script, since this site has no framework. The two pages share no code (this
 repo never imports from the website), so a feature added to the app goes into both lists.
 The closing section is white.
+
+**D151. Spanish, Tagalog and Vietnamese ship before a review, marked Draft; Hindi takes its
+reviewer's fixes** (Angad, 2026-10-10: "for now, add tagalog, spanish and vietnamese. in the
+account section specifically state that we need volunteers who can go through this"). This
+changes D69 for those three: release builds now offer them, still labeled Draft in the
+picker, with a note that no fluent speaker has checked them. Account's Language section gets
+a "We need volunteers" row that emails hello@ (subject "Translation volunteer"). Hindi stays
+in development builds, because its review is under way and its reviewer can finish it; once
+she signs off, her name and date go in `languages.ts` as before. A volunteer who reviews one
+of the three is named there the same way, and the Draft label then goes. The risk accepted:
+a draft could say something slightly wrong about money, so the numbers stay untranslated
+(US format) and the "Something reads wrong? Tell us" row stays beside each.
+Hindi fixes from Angad's mother's notes, the same day: सहेज (save) becomes सेव everywhere
+(her request), and the lines she flagged are rewritten: Step {step} of {of}, What it
+should be, Where do you send money?, Most to your family (it lacked "money"), Upfront fee,
+Live, the account line, the glossary count and XP earned. Search (खोजें) and Sources (स्रोत)
+were already spelled the standard way, so they're unchanged and noted back to her.
+"Your comparisons, saved" was removed from the app on 2026-10-07.
+

@@ -102,8 +102,11 @@ export const es: Copy = {
     pick: 'Elige un idioma',
     draft: 'Borrador',
     draftNote:
-      'Las traducciones en borrador solo aparecen en versiones de prueba, hasta que alguien que habla el idioma las revise y acepte respaldarlas.',
+      'Las traducciones en borrador aún no las revisa alguien que hable el idioma con fluidez, así que algunas palabras pueden sonar mal.',
     improve: '¿Algo suena mal? Avísanos',
+    volunteerTitle: 'Buscamos voluntarios',
+    volunteerBody:
+      'Nuestro español, tagalo y vietnamita son borradores que aún no revisa un hablante con fluidez. Si hablas bien alguno, ayúdanos a revisarlo.',
   },
 
   onboarding: {

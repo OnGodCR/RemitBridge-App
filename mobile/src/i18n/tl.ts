@@ -102,8 +102,11 @@ export const tl: Copy = {
     pick: 'Pumili ng wika',
     draft: 'Draft',
     draftNote:
-      'Makikita lang ang mga draft na salin sa test build, hanggang may taong nagsasalita ng wikang iyon na sumuri at pumayag na ilagay ang pangalan niya rito.',
+      'Hindi pa nasusuri ng matatas na nagsasalita ang mga draft na salin, kaya baka may mga salitang mali ang dating.',
     improve: 'May maling salin? Sabihin mo sa amin',
+    volunteerTitle: 'Kailangan namin ng mga boluntaryo',
+    volunteerBody:
+      'Draft pa ang aming Spanish, Tagalog at Vietnamese, at wala pang matatas na nagsasalita ang sumuri. Kung magaling ka sa isa, tulungan mo kaming suriin ito.',
   },
 
   onboarding: {

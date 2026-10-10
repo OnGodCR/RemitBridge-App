@@ -86,8 +86,11 @@ export const en = {
     pick: 'Choose a language',
     draft: 'Draft',
     draftNote:
-      'Draft translations show only in test builds, until a speaker of the language has checked them and agreed to stand behind them.',
+      'Draft translations haven’t been checked by a fluent speaker yet, so some words may read wrong.',
     improve: 'Something reads wrong? Tell us',
+    volunteerTitle: 'We need volunteers',
+    volunteerBody:
+      'Our Spanish, Tagalog and Vietnamese are drafts no fluent speaker has checked yet. If you speak one well, help us check it.',
   },
 
   onboarding: {
