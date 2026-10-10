@@ -7,9 +7,9 @@
  * next. Until then a language shows only in development builds, marked as a draft, so
  * reviewers can read it in the app itself before they sign.
  *
- * The exception (Angad, 2026-10-10, D151): Spanish, Tagalog and Vietnamese ship before a
- * review, still marked Draft, with a call for volunteer reviewers on the Account screen.
- * Hindi doesn't: its review is under way, so it waits for its reviewer.
+ * The exception (Angad, 2026-10-10, D151): every language ships before its review, still
+ * marked Draft, with a call for volunteer reviewers on the Account screen. Hindi's review is
+ * under way; the others have no reviewer yet.
  */
 export type LanguageCode = 'en' | 'hi' | 'es' | 'tl' | 'vi';
 
@@ -28,7 +28,7 @@ export interface Language {
 
 export const LANGUAGES: Language[] = [
   { code: 'en', name: 'English', english: 'English', locale: 'en-US', reviewer: null },
-  { code: 'hi', name: 'हिन्दी', english: 'Hindi', locale: 'hi-IN', reviewer: null },
+  { code: 'hi', name: 'हिन्दी', english: 'Hindi', locale: 'hi-IN', reviewer: null, draftInRelease: true },
   { code: 'es', name: 'Español', english: 'Spanish', locale: 'es-US', reviewer: null, draftInRelease: true },
   { code: 'tl', name: 'Tagalog', english: 'Filipino (Tagalog)', locale: 'fil-PH', reviewer: null, draftInRelease: true },
   { code: 'vi', name: 'Tiếng Việt', english: 'Vietnamese', locale: 'vi-VN', reviewer: null, draftInRelease: true },

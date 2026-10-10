@@ -3,12 +3,14 @@ import { Icon } from '@/components/icon';
 import { useCallback, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { PostCard } from '@/components/blog';
 import { HeroHeader } from '@/components/hero-header';
 import { GlossaryArt, ObservatoryArt, RemitBenchArt, RouteBoardArt } from '@/components/illustrations';
-import { LearnPath } from '@/components/learn-path';
+import { LearnPath, Ring } from '@/components/learn-path';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { AppText, Button, Segmented } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
+import { POSTS } from '@/data/blog';
 import { TERMS } from '@/data/glossary';
 import { MODULES, type Module } from '@/data/modules';
 import { useTheme } from '@/hooks/use-theme';
@@ -16,9 +18,14 @@ import { useCopy } from '@/i18n';
 import { nextStep, useLearnStats, useLearned } from '@/lib/learn-progress';
 import { openPage } from '@/lib/links';
 import { useTabFocus } from '@/lib/current-tab';
-import { FocusRise, GrowBar } from '@/components/motion-views';
+import { FocusRise } from '@/components/motion-views';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
+
+/** The newest post written in full, for the top of Library. */
+const LATEST =
+  [...POSTS].filter((p) => p.body).sort((a, b) => (b.publishedOn ?? '').localeCompare(a.publishedOn ?? '') || b.id - a.id)[0] ??
+  POSTS[0];
 
 /**
  * Learn (DECISIONS.md D33, D58, D104, D107, D111), in two parts under a fixed green band:
@@ -69,17 +76,27 @@ export default function LearnScreen() {
         />
         {part === 'modules' ? (
           <>
-            <View style={styles.progress}>
-              <AppText style={[styles.progressText, { color: t.heroText }]}>{next ? l.progress(done, total) : l.allDone}</AppText>
-              <View style={[styles.bar, { backgroundColor: t.heroMuted, opacity: 0.25 }]} />
-              <GrowBar fraction={done / total} delay={150} style={[styles.bar, styles.fillBar, { backgroundColor: t.heroText }]} />
-            </View>
-            {stats.xp ? (
-              <View style={styles.stats} accessible accessibilityLabel={l.lesson.streakLine(stats.streak, stats.xp)}>
-                <Icon name={stats.streak ? 'flame.fill' : 'bolt.fill'} size={16} tintColor={t.heroText} fallback={null} />
-                <AppText style={[styles.statsText, { color: t.heroText }]}>{l.lesson.streakLine(stats.streak, stats.xp)}</AppText>
+            {/* One row instead of three (2026-10-10): how far you've got as a ring, with the
+                count and the streak beside it. */}
+            <View
+              style={styles.summary}
+              accessible
+              accessibilityLabel={[next ? l.progress(done, total) : l.allDone, stats.xp ? l.lesson.streakLine(stats.streak, stats.xp) : null]
+                .filter(Boolean)
+                .join('. ')}>
+              <Ring progress={done / total} color={t.heroText} track={t.heroText} trackOpacity={0.22} size={58} stroke={6}>
+                <AppText style={[styles.percent, { color: t.heroText }]}>{`${Math.round((done / total) * 100)}%`}</AppText>
+              </Ring>
+              <View style={styles.summaryText}>
+                <AppText style={[styles.progressText, { color: t.heroText }]}>{next ? l.progress(done, total) : l.allDone}</AppText>
+                {stats.xp ? (
+                  <View style={styles.stats}>
+                    <Icon name={stats.streak ? 'flame.fill' : 'bolt.fill'} size={15} tintColor={t.heroMuted} fallback={null} />
+                    <AppText style={[styles.statsText, { color: t.heroMuted }]}>{l.lesson.streakLine(stats.streak, stats.xp)}</AppText>
+                  </View>
+                ) : null}
               </View>
-            ) : null}
+            </View>
             {next ? (
               <Button
                 label={`${done ? l.continue : l.start}: ${l.modules[next.module.id].title}`}
@@ -99,9 +116,10 @@ export default function LearnScreen() {
         </ScrollView>
       ) : (
         <ScrollView contentContainerStyle={styles.body}>
-          {/* The website's blog, in the app (D106). */}
-          <ListGroup title={copy.titles.blog} cards>
-            <ListRow icon="newspaper" title={l.blog} subtitle={l.blogSub} onPress={() => router.push('/blog')} />
+          {/* The website's blog, in the app (D106), led by its newest post with its cover. */}
+          <ListGroup title={l.latestPost} cards>
+            <PostCard post={LATEST} />
+            <ListRow icon="newspaper" title={l.allPosts} subtitle={l.blogSub} onPress={() => router.push('/blog')} />
           </ListGroup>
 
           <ListGroup title={l.deeper} cards>
@@ -126,10 +144,10 @@ const styles = StyleSheet.create({
   fill: { flex: 1 },
   path: { paddingHorizontal: Spacing.three, paddingTop: Spacing.two, paddingBottom: Spacing.six + Spacing.five },
   body: { padding: Spacing.three, paddingTop: Spacing.four, gap: Spacing.five, paddingBottom: Spacing.six + Spacing.five },
-  progress: { gap: Spacing.two },
-  progressText: { fontFamily: Fonts.semibold, fontSize: 16, lineHeight: 21 },
+  summary: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
+  summaryText: { flex: 1, gap: 2 },
+  percent: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 18 },
+  progressText: { fontFamily: Fonts.bold, fontSize: 17, lineHeight: 22 },
   stats: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  statsText: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 20 },
-  bar: { height: 8, borderRadius: 4 },
-  fillBar: { position: 'absolute', left: 0, bottom: 0, minWidth: 8 },
+  statsText: { fontFamily: Fonts.semibold, fontSize: 14, lineHeight: 19 },
 });

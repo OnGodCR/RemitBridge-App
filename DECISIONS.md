@@ -1805,4 +1805,27 @@ should be, Where do you send money?, Most to your family (it lacked "money"), Up
 Live, the account line, the glossary count and XP earned. Search (खोजें) and Sources (स्रोत)
 were already spelled the standard way, so they're unchanged and noted back to her.
 "Your comparisons, saved" was removed from the app on 2026-10-07.
+Later the same day Angad moved Hindi to the store versions too ("move all of these to the
+full build, not just the dev build"): all five languages ship, every one but English marked
+Draft until its reviewer signs.
+
+**D152. Learn's path, redrawn** (Angad, 2026-10-10: "the UI of the learn tab just isnt
+aethetically pleasing enough. make it better"). Kept: the Duolingo-style path climbing from
+module 1 at the bottom (D107, D111), the chunky nodes and Continue. Changed:
+- Nodes alternate left and right, each with its label card beside it on the open side, so
+  every row uses the full width. Before, the labels sat under the nodes in one column down
+  the middle, and the gentle swing (kept narrow after Angad found a wide swing off-centre on
+  2026-10-01) made the path read as a straight line.
+- Each card shows "Module N", the name, a small progress bar and the count. A started
+  module's card gets a green left edge.
+- The trail is solid green where you've walked it and dotted beyond. Modules not yet
+  started sit back a little, and the one you're up to has a soft pulse (still when the phone
+  asks for less motion).
+- The solid mint mountain is replaced with a sky that deepens to mint, soft clouds, a faint
+  far ridge and the same hills at the foot. A flag at the top marks the finish.
+- The header's three rows (count, bar, streak) become one: a percent ring with the count and
+  the streak beside it.
+- Library opens with the newest full post as a card with its cover, above "All posts".
+It was checked in a web render of the app at phone size, in light and dark. The simulator
+wouldn't boot on this Mac, so the check on a real phone is still Angad's.
 

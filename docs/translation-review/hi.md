@@ -1,8 +1,9 @@
 # Hindi review sheet
 
-The app's Hindi is Claude's draft (DECISIONS.md D69). It ships to the App Store only after a
-fluent Hindi speaker has read every line below and agreed in writing. Their name and the
-date then go in `mobile/src/i18n/languages.ts`.
+The app's Hindi is Claude's draft (DECISIONS.md D69). Since 2026-10-10 it ships in the store
+versions marked "Draft" (D151). The label comes off once a fluent Hindi speaker has read
+every line below and agreed in writing; their name and the date then go in
+`mobile/src/i18n/languages.ts`.
 
 ## For the reviewer
 
@@ -347,6 +348,7 @@ with your name and the date.
 | learn.moduleDone | Module complete | मॉड्यूल पूरा हुआ | |
 | learn.nextModule | Next: {title} | अगला: {title} | |
 | learn.nodeLabel | Module {n}: {title}. {read} of {total} learned. | मॉड्यूल {n}: {title}। {total} में से {read} सीखे। | |
+| learn.moduleN | Module {n} | मॉड्यूल {n} | | NEW 2026-10-10
 | learn.learned | Learned | सीख लिया | |
 | learn.upNext | Up next | आगे | |
 | learn.howItWorks | How it works | यह कैसे काम करता है | |
@@ -365,6 +367,8 @@ with your name and the date.
 | learn.website | On the website | वेबसाइट पर | |
 | learn.blog | Blog | ब्लॉग | |
 | learn.blogSub | Stories and explainers | कहानियाँ और समझाने वाले लेख | |
+| learn.latestPost | Latest post | नई पोस्ट | | NEW 2026-10-10
+| learn.allPosts | All posts | सभी पोस्ट | | NEW 2026-10-10
 | learn.papers | Research papers | रिसर्च पेपर | |
 | learn.papersSub | The lab’s published work | लैब का प्रकाशित काम | |
 | learn.workshops | Workshops | वर्कशॉप | |
