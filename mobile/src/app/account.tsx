@@ -11,7 +11,7 @@ import { INCORPORATED, LEGAL_NAME } from '@/constants/site-config';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
-import { offeredLanguages } from '@/i18n/languages';
+import { languagesNeedingReview, offeredLanguages } from '@/i18n/languages';
 import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
 import { announce } from '@/lib/announce';
@@ -34,6 +34,7 @@ export default function AccountScreen() {
   const { language } = useLanguage();
   const [languageOpen, setLanguageOpen] = useState(false);
   const canChooseLanguage = offeredLanguages().length > 1;
+  const needVolunteers = languagesNeedingReview().length > 0;
   const { session, signOut, resetOnboarding } = useAuth();
   const [busy, setBusy] = useState(false);
   const isAdmin = useIsAdmin();
@@ -120,6 +121,16 @@ export default function AccountScreen() {
                   title={copy.language.improve}
                   subtitle={CONTACT}
                   onPress={() => writeToUs(copy, `Translation: ${language.english}`)}
+                />
+              ) : null}
+              {/* D151: the drafts released before a review ask for the people who can check them. */}
+              {needVolunteers ? (
+                <ListRow
+                  external
+                  icon="person.2"
+                  title={copy.language.volunteerTitle}
+                  subtitle={copy.language.volunteerBody}
+                  onPress={() => writeToUs(copy, 'Translation volunteer')}
                 />
               ) : null}
             </ListGroup>

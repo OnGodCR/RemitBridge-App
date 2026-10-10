@@ -38,7 +38,7 @@ with your name and the date.
 | common.to | To | कहाँ | |
 | common.theUS | the US | अमेरिका | |
 | common.notConnected | Not connected. | सर्वर से जुड़ा नहीं है। | |
-| common.stepOf | Step {step} of {of} | चरण {step}, कुल {of} | |
+| common.stepOf | Step {step} of {of} | चरण {step} / {of} | | CHANGED 2026-10-10: from your notes, please read again
 | common.noMailTitle | Email us | हमें ईमेल करें | |
 | common.noMailBody | This phone has no email app set up. Write to us at {address} from any email. | इस फ़ोन में कोई ईमेल ऐप सेट नहीं है। किसी भी ईमेल से {address} पर लिखें। | |
 | tabs.scan | Scan | स्कैन | |
@@ -55,7 +55,7 @@ with your name and the date.
 | titles.rateHistory | Rate history | रेट का इतिहास | |
 | titles.glossary | Glossary | शब्दकोश | |
 | titles.blog | Blog | ब्लॉग | |
-| titles.saved | Saved | सहेजा गया | |
+| titles.saved | Saved | सेव किए गए | | CHANGED 2026-10-10: from your notes, please read again
 | titles.alert | Rate alert | रेट अलर्ट | |
 | titles.remitbench | RemitBench | RemitBench | |
 | titles.quote | Quote | कीमत | |
@@ -82,8 +82,10 @@ with your name and the date.
 | language.title | Language | भाषा | |
 | language.pick | Choose a language | भाषा चुनें | |
 | language.draft | Draft | ड्राफ़्ट | |
-| language.draftNote | Draft translations show only in test builds, until a speaker of the language has checked them and agreed to stand behind them. | ड्राफ़्ट अनुवाद सिर्फ़ टेस्ट वाले ऐप में दिखते हैं, जब तक उस भाषा को बोलने वाला कोई व्यक्ति उन्हें जाँचकर उनकी ज़िम्मेदारी लेने को तैयार न हो। | |
+| language.draftNote | Draft translations show only in test builds, until a speaker of the language has checked them and agreed to stand behind them. | ड्राफ़्ट अनुवाद अभी किसी जानकार ने नहीं जाँचे हैं, इसलिए कुछ शब्द गलत लग सकते हैं। | | CHANGED 2026-10-10: from your notes, please read again
 | language.improve | Something reads wrong? Tell us | कुछ ठीक नहीं लग रहा? हमें बताएँ | |
+| language.volunteerTitle | We need volunteers | हमें वॉलंटियर चाहिए | | NEW 2026-10-10
+| language.volunteerBody | Our Spanish, Tagalog and Vietnamese are drafts no fluent speaker has checked yet. If you speak one well, help us check it. | ऐप की स्पैनिश, टागालॉग और वियतनामी अभी ड्राफ़्ट हैं, जिन्हें किसी जानकार ने नहीं जाँचा। अगर आप इनमें से कोई भाषा अच्छी तरह जानते हैं, तो जाँचने में हमारी मदद करें। | | NEW 2026-10-10
 | onboarding.welcome.lead | Sending money home | घर पैसे भेजना | |
 | onboarding.welcome.accent | shouldn’t cost this much | इतना महँगा नहीं होना चाहिए | |
 | onboarding.welcome.intro | RemitBridge shows what a transfer really costs, and which provider leaves your family the most. | RemitBridge दिखाता है कि पैसे भेजने में असल में कितना खर्च होता है, और किस कंपनी से आपके परिवार को सबसे ज़्यादा पैसा मिलता है। | |
@@ -95,13 +97,13 @@ with your name and the date.
 | onboarding.why.flowsNote | Money migrant workers send to family in other countries. | प्रवासी मज़दूर दूसरे देशों में अपने परिवार को जो पैसा भेजते हैं। | |
 | onboarding.why.costLabel | Average cost to send | भेजने की औसत लागत | |
 | onboarding.why.costNote | The global average on a $200 transfer. | $200 भेजने पर दुनिया भर का औसत। | |
-| onboarding.why.targetLabel | What it should be | इतनी होनी चाहिए | |
+| onboarding.why.targetLabel | What it should be | लागत इतनी होनी चाहिए | | CHANGED 2026-10-10: from your notes, please read again
 | onboarding.why.targetNote | The UN target the world agreed to hit by 2030. | संयुक्त राष्ट्र का लक्ष्य, जिसे दुनिया ने 2030 तक पाने पर सहमति दी है। | |
 | onboarding.why.sources | Sources: {list}. | स्रोत: {list}। | |
 | onboarding.why.continue | Continue | आगे बढ़ें | |
 | onboarding.route.eyebrow | Your route | आपका रूट | |
-| onboarding.route.lead | Where do you | आप पैसे | |
-| onboarding.route.accent | send money? | कहाँ भेजते हैं? | |
+| onboarding.route.lead | Where do you | आप किस देश में | | CHANGED 2026-10-10: from your notes, please read again
+| onboarding.route.accent | send money? | पैसे भेजते हैं? | | CHANGED 2026-10-10: from your notes, please read again
 | onboarding.route.intro | Compare opens on this route. You can change it anytime. | तुलना इसी रूट पर खुलेगी। आप इसे कभी भी बदल सकते हैं। | |
 | onboarding.route.paidIn | {country}. Paid out in {currency} | {country}। भुगतान {currency} में | |
 | onboarding.route.elsewhere | Sending somewhere else? Pick any country on Compare to ask us to add it. | कहीं और भेजते हैं? तुलना में कोई भी देश चुनें और हमसे उसे जोड़ने को कहें। | |
@@ -153,21 +155,21 @@ with your name and the date.
 | compare.whereRoutesStand | See where each route stands | हर रूट की स्थिति देखें | |
 | compare.offlineTitle | You’re offline | आप ऑफ़लाइन हैं | |
 | compare.offlineBody | These are the prices from your last visit, loaded {ago}. Pull down to try again. | ये आपकी पिछली बार की कीमतें हैं, {ago} लोड की गई थीं। फिर कोशिश करने के लिए नीचे खींचें। | |
-| compare.offlineNothing | You seem to be offline, and there are no saved prices for this choice yet. | लगता है आप ऑफ़लाइन हैं, और इस चुनाव के लिए अभी कोई सहेजी हुई कीमत नहीं है। | |
+| compare.offlineNothing | You seem to be offline, and there are no saved prices for this choice yet. | लगता है आप ऑफ़लाइन हैं, और इस चुनाव के लिए अभी कोई सेव की हुई कीमत नहीं है। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | compare.summary | {low} to {high} arrives, depending on the provider. | कंपनी के हिसाब से {low} से {high} तक पहुँचते हैं। | |
-| compare.mostToFamily | Most to your family | परिवार को सबसे ज़्यादा | |
+| compare.mostToFamily | Most to your family | परिवार को सबसे ज़्यादा पैसे | | CHANGED 2026-10-10: from your notes, please read again
 | compare.promotion | Promotion | ऑफ़र | |
 | compare.firstTransferOffers | First-transfer offers | पहली बार भेजने के ऑफ़र | |
 | compare.olderPrices | Older prices | पुरानी कीमतें | | NEW 2026-10-07: please read
 | compare.olderNote | Checked by hand more than two days ago. Prices change every day, so check with the provider before you send. | दो दिन से ज़्यादा पहले हाथ से जाँची गईं। कीमतें रोज़ बदलती हैं, इसलिए भेजने से पहले कंपनी से पक्का कर लें। | | NEW 2026-10-07: please read
-| compare.save | Save this comparison | यह तुलना सहेजें | |
-| compare.saved | Saved. See your saved list | सहेज ली गई। अपनी सूची देखें | |
-| compare.alreadySaved | Already saved. See your saved list | पहले से सहेजी हुई है। अपनी सूची देखें | |
-| compare.saveFailed | Couldn’t save. Try again | सहेजी नहीं जा सकी। फिर कोशिश करें | |
-| compare.savedSpoken | Saved to your account. | आपके खाते में सहेज ली गई। | |
-| compare.alreadySpoken | Already saved. | पहले से सहेजी हुई है। | |
-| compare.signInToSaveTitle | Sign in to save comparisons | तुलनाएँ सहेजने के लिए साइन इन करें | |
-| compare.signInToSaveBody | Saved comparisons open in one tap, on any phone you sign in on. | सहेजी हुई तुलनाएँ एक टैप में खुलती हैं, किसी भी फ़ोन पर जहाँ आप साइन इन करें। | |
+| compare.save | Save this comparison | यह तुलना सेव करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.saved | Saved. See your saved list | सेव हो गई। अपनी सूची देखें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.alreadySaved | Already saved. See your saved list | पहले से सेव है। अपनी सूची देखें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.saveFailed | Couldn’t save. Try again | सेव नहीं हो सकी। फिर कोशिश करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.savedSpoken | Saved to your account. | आपके खाते में सेव हो गई। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.alreadySpoken | Already saved. | पहले से सेव है। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.signInToSaveTitle | Sign in to save comparisons | तुलनाएँ सेव करने के लिए साइन इन करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.signInToSaveBody | Saved comparisons open in one tap, on any phone you sign in on. | सेव की हुई तुलनाएँ एक टैप में खुलती हैं, किसी भी फ़ोन पर जहाँ आप साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | quote.arrives | arrives | पहुँचेंगे | |
 | quote.cost | cost | लागत | |
 | quote.sources.scraper | Public calculator | सार्वजनिक कैलकुलेटर | |
@@ -189,7 +191,7 @@ with your name and the date.
 | quoteDetail.estimatedFull | Estimated from the {amount} check, with the same fee and rate. | {amount} की जाँच से अनुमान, वही फ़ीस और वही रेट लेकर। | |
 | quoteDetail.promo | A first-transfer offer. Later transfers usually cost more, so it’s ranked apart from standing prices. | पहली बार भेजने का ऑफ़र। बाद में भेजना आमतौर पर महँगा पड़ता है, इसलिए इसे आम कीमतों से अलग दिखाया गया है। | |
 | quoteDetail.whereMoneyGoes | Where the money goes | पैसा कहाँ जाता है | |
-| quoteDetail.upfrontFee | Upfront fee | दिखने वाली फ़ीस | |
+| quoteDetail.upfrontFee | Upfront fee | भेजने की फ़ीस | | CHANGED 2026-10-10: from your notes, please read again
 | quoteDetail.markup | Exchange-rate markup | एक्सचेंज रेट में मार्कअप | |
 | quoteDetail.rateNote | Their rate {theirs} vs. mid-market {mid} {pair} | उनका रेट {theirs}, मिड-मार्केट {mid} {pair} | |
 | quoteDetail.betterThanMid | Better than the reference rate. That is a daily rate, and live rates move during the day. | संदर्भ रेट से बेहतर। वह रोज़ का रेट है, और लाइव रेट दिन भर बदलते रहते हैं। | |
@@ -245,7 +247,7 @@ with your name and the date.
 | board.lede | Where RemitBridge checks prices, and where people have asked us to. Requests decide what we add next. | RemitBridge कहाँ-कहाँ कीमतें जाँचता है, और लोगों ने हमसे कहाँ के लिए कहा है। माँगों से तय होता है कि आगे क्या जुड़ेगा। | |
 | board.failed | The board didn’t load. Pull down to try again. | बोर्ड लोड नहीं हुआ। फिर कोशिश करने के लिए नीचे खींचें। | |
 | board.countsFailed | Request counts didn’t load, so requested routes aren’t shown. | माँगों की गिनती लोड नहीं हुई, इसलिए माँगे गए रूट नहीं दिख रहे। | |
-| board.stages.live.title | Live | चालू | |
+| board.stages.live.title | Live | उपलब्ध | | CHANGED 2026-10-10: from your notes, please read again
 | board.stages.live.about | Prices checked and published. | कीमतें जाँचकर प्रकाशित की गईं। | |
 | board.stages.building.title | Being built | तैयार हो रहा है | |
 | board.stages.building.about | We’re setting up price checks. | हम कीमतों की जाँच तैयार कर रहे हैं। | |
@@ -262,15 +264,15 @@ with your name and the date.
 | board.ask | Ask for a route | नया रूट माँगें | |
 | account.yourName | Your name | आपका नाम | |
 | account.namePlaceholder | What should we call you? | हम आपको क्या कहें? | |
-| account.nameSaved | Name saved. | नाम सहेज लिया गया। | |
+| account.nameSaved | Name saved. | नाम सेव हो गया। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | account.title | Account | खाता | |
 | account.signedInApple | Signed in with Apple | Apple से साइन इन किया गया | |
-| account.optional | An account is optional. It keeps what you save, on any phone you use. | खाता बनाना ज़रूरी नहीं है। इसमें आपका सहेजा हुआ सब रहता है, किसी भी फ़ोन पर। | |
+| account.optional | An account is optional. It keeps what you save, on any phone you use. | खाता बनाना ज़रूरी नहीं है। खाता हो तो आपकी सेव की हुई चीज़ें किसी भी फ़ोन पर मिलेंगी। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | account.createOrSignIn | Create account or sign in | खाता बनाएँ या साइन इन करें | |
 | account.signOut | Sign out | साइन आउट करें | |
 | account.deleteAccount | Delete account | खाता मिटाएँ | |
 | account.deleteTitle | Delete your account? | क्या आप अपना खाता मिटाना चाहते हैं? | |
-| account.deleteBody | Your saved comparisons and receipts go with it. | आपकी सहेजी हुई तुलनाएँ और रसीदें भी इसके साथ मिट जाएँगी। | |
+| account.deleteBody | Your saved comparisons and receipts go with it. | आपकी सेव की हुई तुलनाएँ और रसीदें भी इसके साथ मिट जाएँगी। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | account.deleteFailedTitle | Couldn’t delete your account | आपका खाता नहीं मिटाया जा सका | |
 | account.deleteFailedBody | Try again in a moment. | थोड़ी देर बाद फिर कोशिश करें। | |
 | account.about | About | जानकारी | |
@@ -290,10 +292,10 @@ with your name and the date.
 | account.metricsSub | Usage, funnel and impact, with definitions | इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ | |
 | account.replay | Replay onboarding (dev only) | शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में) | |
 | saved.rowSub | Comparisons and receipt checks | तुलनाएँ और रसीद जाँचें | |
-| saved.signedOut | Sign in to save comparisons and receipt checks, and open them again on any phone. | तुलनाएँ और रसीद जाँचें सहेजने के लिए साइन इन करें, और उन्हें किसी भी फ़ोन पर फिर खोलें। | |
-| saved.seeAll | Your saved comparisons | आपकी सहेजी तुलनाएँ | |
+| saved.signedOut | Sign in to save comparisons and receipt checks, and open them again on any phone. | तुलनाएँ और रसीद जाँचें सेव करने के लिए साइन इन करें, और उन्हें किसी भी फ़ोन पर फिर खोलें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| saved.seeAll | Your saved comparisons | आपकी सेव की हुई तुलनाएँ | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | saved.comparisons | Your comparisons | आपकी तुलनाएँ | |
-| saved.comparisonsEmpty | Save a comparison on Compare to reopen it here in one tap. | तुलना में कोई तुलना सहेजें, ताकि उसे यहाँ से एक टैप में फिर खोल सकें। | |
+| saved.comparisonsEmpty | Save a comparison on Compare to reopen it here in one tap. | तुलना में कोई तुलना सेव करें, ताकि उसे यहाँ से एक टैप में फिर खोल सकें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | saved.comparePrices | Compare prices | कीमतों की तुलना करें | |
 | saved.opensToday | Opens Compare with today’s prices | आज की कीमतों के साथ तुलना खोलता है | |
 | saved.deleteNamed | Delete {name} | {name} मिटाएँ | |
@@ -301,7 +303,7 @@ with your name and the date.
 | saved.comparisonDeleted | Comparison deleted. | तुलना मिटा दी गई। | |
 | saved.amountTo | {amount} to {country} | {country} के लिए {amount} | |
 | saved.checks | Your checks | आपकी जाँचें | |
-| saved.checksEmpty | Receipts you check with TrueCost and save show up here. | TrueCost से जाँचकर सहेजी गई रसीदें यहाँ दिखती हैं। | |
+| saved.checksEmpty | Receipts you check with TrueCost and save show up here. | TrueCost से जाँचकर सेव की गई रसीदें यहाँ दिखती हैं। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | saved.checkReceipt | Check a receipt | रसीद जाँचें | |
 | saved.deleteCheckTitle | Delete this check? | क्या यह जाँच मिटानी है? | |
 | saved.checkDeleted | Check deleted. | जाँच मिटा दी गई। | |
@@ -356,7 +358,7 @@ with your name and the date.
 | learn.noAffiliateBody | Nobody pays to rank. We never touch your money. | ऊपर दिखने के लिए कोई पैसे नहीं देता। हम आपके पैसे को कभी हाथ नहीं लगाते। | |
 | learn.wrongPrice | Wrong price? | कीमत गलत है? | |
 | learn.deeper | Go deeper | और गहराई से | |
-| learn.glossarySub | {n} terms, in plain English | {n} शब्द, आसान भाषा में | |
+| learn.glossarySub | {n} terms, in plain English | {n} शब्दों के मतलब, आसान भाषा में | | CHANGED 2026-10-10: from your notes, please read again
 | learn.routeBoardSub | Routes we check, and ones people want | हम कौन से रूट जाँचते हैं, और लोग कौन से चाहते हैं | |
 | learn.remitbenchSub | Our research testbed, still being built | हमारा रिसर्च टेस्टबेड, अभी बन रहा है | |
 | learn.observatorySub | Early results from receipts people shared | लोगों की साझा की गई रसीदों से शुरुआती नतीजे | |
@@ -387,7 +389,7 @@ with your name and the date.
 | learn.lesson.xp | +{n} XP | +{n} XP | |
 | learn.lesson.done | Lesson complete! | पाठ पूरा हुआ! | |
 | learn.lesson.practiceDone | Practice complete! | अभ्यास पूरा हुआ! | |
-| learn.lesson.xpLabel | XP earned | मिले XP | |
+| learn.lesson.xpLabel | XP earned | कमाए गए XP | | CHANGED 2026-10-10: from your notes, please read again
 | learn.lesson.accuracyLabel | Accuracy | सटीकता | |
 | learn.lesson.streakLabel | Day streak | लगातार दिन | |
 | learn.lesson.streakDays | {n} days | {n} दिन | |
@@ -416,7 +418,7 @@ with your name and the date.
 | whatsappTab.sub | Text the RemitBridge bot and get today’s prices back in seconds. It works for anyone with WhatsApp, with no app to install, so you can share it with family. | RemitBridge बॉट को मैसेज भेजें और कुछ ही सेकंड में आज की कीमतें पाएँ। यह WhatsApp वाले हर व्यक्ति के लिए काम करता है, कोई ऐप इंस्टॉल किए बिना, इसलिए आप इसे परिवार के साथ शेयर कर सकते हैं। | | NEW 2026-10-09
 | whatsappTab.tryTitle | Things to send | क्या भेजें | | NEW 2026-10-09
 | whatsappTab.linkTitle | Link it to your account | इसे अपने खाते से जोड़ें | | NEW 2026-10-09
-| whatsappTab.linkWhy | Then SAVE 500 to India keeps a comparison in Saved. | फिर SAVE 500 to India से तुलना "सहेजा गया" में रहेगी। | | NEW 2026-10-09
+| whatsappTab.linkWhy | Then SAVE 500 to India keeps a comparison in Saved. | फिर SAVE 500 to India से तुलना "सेव किए गए" में रहेगी। | | NEW 2026-10-09 CHANGED 2026-10-10: सहेज → सेव, as you asked
 | whatsappTab.signInToLink | Sign in to link WhatsApp | WhatsApp जोड़ने के लिए साइन इन करें | | NEW 2026-10-09
 | whatsappTab.soon | Coming soon. The bot is waiting for Meta to open it to everyone. | जल्द ही। बॉट को सबके लिए खोलने के लिए Meta की मंज़ूरी का इंतज़ार है। | | NEW 2026-10-09
 | whatsappTab.privacy | We keep a scrambled ID instead of your number. The privacy policy has the details. | हम आपके नंबर की जगह उससे बना एक बदला हुआ ID रखते हैं। पूरी जानकारी निजता नीति में है। | | NEW 2026-10-09
@@ -437,12 +439,12 @@ with your name and the date.
 | alerts.less | Lower target | लक्ष्य कम करें | |
 | alerts.more | Higher target | लक्ष्य बढ़ाएँ | |
 | alerts.turnOn | Turn on alert | अलर्ट चालू करें | |
-| alerts.on | Alert on. You’ll find it in Saved. | अलर्ट चालू है। यह सहेजा गया में मिलेगा। | |
+| alerts.on | Alert on. You’ll find it in Saved. | अलर्ट चालू है। यह "सेव किए गए" में मिलेगा। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | alerts.signInTitle | Sign in for alerts | अलर्ट के लिए साइन इन करें | |
 | alerts.signInBody | Alerts are kept with your free account, so they reach this phone. | अलर्ट आपके मुफ़्त खाते के साथ रखे जाते हैं, ताकि वे इस फ़ोन तक पहुँचें। | |
 | alerts.denied | Notifications are off for RemitBridge. Turn them on in Settings to get alerts. | RemitBridge की सूचनाएँ बंद हैं। अलर्ट पाने के लिए सेटिंग्स में चालू करें। | |
 | alerts.unavailable | Notifications need the full app on a phone. | सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए। | |
-| alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले सहेजा गया में एक मिटाएँ। | |
+| alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले "सेव किए गए" में से एक मिटाएँ। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | alerts.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें। | |
 | alerts.byWhatsApp | by WhatsApp | WhatsApp पर | |
 | alerts.yours | Your alerts | आपके अलर्ट | |
@@ -512,17 +514,17 @@ with your name and the date.
 | trueCost.better | Your rate was better than mid-market. That usually means a first-transfer promotion. | आपका रेट मिड-मार्केट से बेहतर था। आमतौर पर इसका मतलब पहली बार भेजने का ऑफ़र होता है। | |
 | trueCost.source | Mid-market rate from {source}: {rate}, for {day}. It’s a daily reference, so rates on the day may have moved. | मिड-मार्केट रेट {source} से: {rate}, {day} का। यह रोज़ का संदर्भ है, इसलिए उस दिन रेट बदला भी हो सकता है। | |
 | trueCost.compareToday | Compare what {amount} gets today | आज {amount} पर कितना मिलता है, तुलना करें | |
-| trueCost.keep | Keep this check | यह जाँच सहेजें | |
+| trueCost.keep | Keep this check | यह जाँच सेव करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | trueCost.provider | Provider | कंपनी | |
 | trueCost.optional | Optional | ज़रूरी नहीं | |
 | trueCost.providerPlaceholder | e.g. Remitly | जैसे Remitly | |
 | trueCost.notNamed | Not named | नाम नहीं दिया | |
-| trueCost.saveToAccount | Save to my account | मेरे खाते में सहेजें | |
-| trueCost.savedToAccount | Saved to your account. | आपके खाते में सहेज ली गई। | |
-| trueCost.createToSave | Create an account to save checks | जाँचें सहेजने के लिए खाता बनाएँ | |
+| trueCost.saveToAccount | Save to my account | मेरे खाते में सेव करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| trueCost.savedToAccount | Saved to your account. | आपके खाते में सेव हो गई। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| trueCost.createToSave | Create an account to save checks | जाँचें सेव करने के लिए खाता बनाएँ | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | trueCost.errors.notConnected | Not connected. | सर्वर से जुड़ा नहीं है। | |
-| trueCost.errors.signedOut | Sign in to save checks. | जाँचें सहेजने के लिए साइन इन करें। | |
-| trueCost.errors.failed | Couldn’t save. Try again. | सहेजी नहीं जा सकी। फिर कोशिश करें। | |
+| trueCost.errors.signedOut | Sign in to save checks. | जाँचें सेव करने के लिए साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| trueCost.errors.failed | Couldn’t save. Try again. | सेव नहीं हो सकी। फिर कोशिश करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | yearlyCost.intro | The same transfer, all year. What does it add up to? | वही ट्रांसफ़र, पूरे साल। कुल कितना बनता है? | |
 | yearlyCost.yourTransfers | Your transfers | आपके ट्रांसफ़र | |
 | yearlyCost.amountEach | Amount each time | हर बार की रकम | |
