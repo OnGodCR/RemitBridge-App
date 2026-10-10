@@ -216,6 +216,9 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
+- [ ] **Launch checklist: `docs/launch-checklist.md`** (2026-10-10), everything left before
+      each store submission, with who does what. The D-U-N-S number gates both stores.
+
 - [ ] **A logo next to emails from hello@ (parked 2026-10-09):** Gmail shows a blank avatar for
       hello@remitbridgelabs.org because the address has no Google account photo. A Google
       account for hello@ already exists ("username is taken"); signing in needs a reset code
