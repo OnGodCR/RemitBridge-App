@@ -1755,3 +1755,18 @@ today. The privacy policy says the total stays on the phone. It doesn't follow a
 new phone or across reinstalls; an account-backed total would need receipts tied to accounts,
 which the privacy policy rules out for now.
 
+**D150. RemitBridge Labs gets an EIN and bylaws, not a bank account or 501(c)(3)** (Angad,
+2026-10-10: "we are not doing bank account and 501c3, we only need bylaws and ein"). The EIN
+(through the IRS online application, with his dad as responsible party) and the bylaws (with a
+first board consent) go ahead; a bank account and the Form 1023-EZ application don't, for
+now. What follows from that, recorded so it isn't forgotten:
+- The wording rule stays as it is: never "charity", "501(c)(3)" or "tax-deductible" (D141).
+- RemitBridge's costs stay on family cards. That weakens the money separation D146 relies
+  on, so each cost's receipt should be kept and, ideally, the board consent should say the
+  family pays them on the corporation's behalf.
+- Without tax exemption, the corporation likely files a federal corporate return each year
+  even with no income; an accountant should confirm before spring 2027.
+- If he changes his mind on 501(c)(3), filing within 27 months of 2026-10-08 keeps the
+  exemption reaching back to the start.
+`docs/nonprofit-setup.md` marks the two as not doing.
+
