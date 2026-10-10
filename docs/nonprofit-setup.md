@@ -1,7 +1,9 @@
 # RemitBridge Labs: setting up the nonprofit
 
-What's left to run RemitBridge Labs properly as a Washington nonprofit corporation, in
-order, as of 2026-10-10. None of this is legal or tax advice: a lawyer or accountant who
+What's left to run RemitBridge Labs as a Washington nonprofit corporation, as of
+2026-10-10. **Angad's decision (D150): only the EIN and the bylaws.** No bank account and no
+501(c)(3) application for now; those sections are kept below, marked not doing, so the
+reasons and the deadlines aren't lost if that changes. None of this is legal or tax advice: a lawyer or accountant who
 works with nonprofits should check it, and the IRS and Washington pages linked are the
 authority. Store-launch items live in `launch-checklist.md`.
 
@@ -31,7 +33,7 @@ Meta business verification, D-U-N-S requested (case #11089990).
 
 ## 2. Organize the board: this month
 
-- [ ] **Bylaws**: how directors are chosen, officers, meetings, voting, conflicts of
+- [ ] **Bylaws** (doing, D150): how directors are chosen, officers, meetings, voting, conflicts of
       interest. Washington doesn't file them, but the IRS application asks about them and
       banks ask to see them.
 - [ ] **First board meeting** (can be a short written consent signed by all three
@@ -42,18 +44,22 @@ Meta business verification, D-U-N-S requested (case #11089990).
 - [ ] Who signs: Angad is under 18, so an adult officer (his dad or mom) signs contracts,
       the bank account and store agreements until he turns 18.
 
-## 3. Bank account: after the EIN
+## 3. Bank account: NOT DOING (D150)
 
-- [ ] A business (nonprofit) checking account in RemitBridge Labs' name. Banks usually ask
+Not opening one for now. Costs stay with Angad's family; keep receipts for each one.
+- [ ] (If it changes) A business (nonprofit) checking account in RemitBridge Labs' name. Banks usually ask
       for the EIN letter, the Articles, the bylaws or a board resolution, and the signers'
       IDs. Many have free accounts for nonprofits.
 - [ ] From then on, every RemitBridge cost (Apple's $99, Google's $25, the IRS fee, any
       future services) is paid from it, not personal cards. Keeping money separate is what
       keeps the corporation separate from the family (D146).
 
-## 4. Federal tax exemption (501(c)(3)): when ready
+## 4. Federal tax exemption (501(c)(3)): NOT DOING (D150)
 
-- [ ] Check eligibility for **Form 1023-EZ** (IRS eligibility worksheet in the form's
+Not applying for now. So "charity", "501(c)(3)" and "tax-deductible" stay off everything
+(D141), donations can't be described as deductible, and the 27-month window below is the
+only reason to revisit it sooner.
+- [ ] (If it changes) Check eligibility for **Form 1023-EZ** (IRS eligibility worksheet in the form's
       instructions; roughly: expected gross receipts of $50,000 a year or less for the next
       three years, and assets of $250,000 or less). Filed online at pay.gov, $275 fee
       (2026; confirm on irs.gov). If not eligible, the full Form 1023.
@@ -65,9 +71,10 @@ Meta business verification, D-U-N-S requested (case #11089990).
 
 - [ ] **Washington annual report** with the Secretary of State, due by the end of the
       anniversary month (October), from 2027. Small fee.
-- [ ] **IRS Form 990-N** (the e-Postcard, for small exempt organizations), once exempt:
-      due by the 15th day of the 5th month after the year ends (May 15 for a December
-      year).
+- [ ] **A federal return.** Without a 501(c)(3), the 990-N e-Postcard doesn't apply; a
+      corporation that isn't tax-exempt generally files a corporate return (Form 1120)
+      each year, even with no income. Ask an accountant once, before the first one would be
+      due (spring 2027 for a December year).
 - [ ] Before asking the public for donations, check whether Washington's **charitable
       organization registration** (Secretary of State, Charities Program) applies.
 

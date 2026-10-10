@@ -216,8 +216,9 @@ Angad does this once the app itself is finished (D117).
 
 ### Before launch
 
-- [ ] **Nonprofit setup: `docs/nonprofit-setup.md`** (2026-10-10): EIN, bylaws and first
-      board meeting, bank account, 501(c)(3) (Form 1023-EZ), yearly filings.
+- [ ] **Nonprofit setup: `docs/nonprofit-setup.md`** (2026-10-10): only the EIN and the
+      bylaws (D150); no bank account or 501(c)(3) for now. Yearly: Washington's annual report,
+      and an accountant's check on a federal return.
 - [ ] **Launch checklist: `docs/launch-checklist.md`** (2026-10-10), everything left before
       each store submission, with who does what. The D-U-N-S number gates both stores.
 
