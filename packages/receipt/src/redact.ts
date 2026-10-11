@@ -17,6 +17,13 @@
  *
  * Words the rules hide can't be shown again; the person can hide any other word by hand
  * ('manual'). Hidden words become HIDDEN in the text, and solid boxes on the image.
+ *
+ * What they leave alone (2026-10-11, after a real receipt came back mostly black): a label
+ * word inside a sentence ("...contact the sender", "Recipient may receive less due to
+ * fees..."), so the required fine print and whatever follows it stay readable; headings
+ * like "Customer Receipt" or "Customer Service"; the label's own words ("Sender name:");
+ * and toll-free and CFPB numbers, which are the provider's, not the person's.
+ * `scripts/redaction-report.ts` measures both sides on the fixtures and synthetic receipts.
  */
 import { lineText, unionBox, wordOffsets } from './ocr.ts'
 import { GENERIC } from './templates.ts'
@@ -64,7 +71,19 @@ const LABELED = /^[^:]{1,30}:/
 
 /** Labels that introduce a person or a place. The ambiguous ones need a colon. */
 const PERSON_LABEL =
-  /\b(?:sender|sent by|recipient|receiver|beneficiary|remitter|payee|pay to|customer|address|dear|remitente|beneficiario|destinatario|direcci[oó]n)\b\s*:?|\b(?:from|to|name|nombre)\s*:/i
+  /\b(?:sender|sent by|recipient|receiver|beneficiary|remitter|payee|pay to|customer|address|dear|remitente|beneficiario|destinatario|direcci[oó]n)(?:'s)?(?:\s+(?:full\s+)?(?:name|address|nombre|direcci[oó]n))?\b\s*:?|\b(?:from|to|name|nombre)\s*:/i
+/** Words after a person label that make it a heading, not a person: "Customer Receipt". */
+const HEADING_AFTER = /^\s*(?:receipt|copy|service|services|care|support|signature|agreement|id\b|number|no\.|#)/i
+/** Words that mark a sentence, which names and addresses don't contain. */
+const PROSE_WORDS =
+  'may|will|can|cannot|must|should|does|did|is|are|was|were|be|been|the|a|an|due|if|when|for|with|your|you|our|we|us|this|that|these|those|receive|receives|received|fees|any|not|of|by|or|and|has|have|please|within'
+const PROSE_LOWER = new RegExp(`\\b(?:${PROSE_WORDS})\\b`)
+const PROSE_ANY = new RegExp(`\\b(?:${PROSE_WORDS})\\b`, 'gi')
+/** A sentence: a lowercase function word ("...may receive less"), or two of them in any case
+ * (all-caps fine print). One capitalized one is a name or a place: "Can Tho", "May Lin". */
+function isProse(s: string): boolean {
+  return PROSE_LOWER.test(s) || (s.match(PROSE_ANY) ?? []).length >= 2
+}
 const ADDRESS_LABEL = /\b(?:address|direcci[oó]n)\b/i
 /** Labels that introduce an account or a transaction ID. */
 const ID_LABEL =
@@ -76,6 +95,10 @@ const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g
 const UPI_HANDLE = /\b[\w.-]{2,}@[a-z]{2,}\b/gi
 const PHONE_US = /(?:\+?1[\s.-]?)?\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}\b/g
 const PHONE_INTL = /\+\d[\d\s-]{7,16}\d/g
+/** US toll-free numbers belong to a business, never to a person. */
+const TOLL_FREE = /^(?:\+?1[\s.-]?)?\(?(?:800|833|844|855|866|877|888)\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+/** A line that's the provider's or the regulator's contact details. */
+const BUSINESS_CONTACT = /consumer financial protection|consumerfinance\.gov|customer service|customer care|call us|contact us|help ?line|support/i
 const CARD_RUN = /\b(?:\d[ -]?){12,18}\d\b/g
 // OCR often reads a row of asterisks as a mix of *, +, x and dots ("**+*4118").
 const MASKED_CARD = /(?:[*xX•#+·.]*[*xX•#+][*xX•#+·.]*[\s-]?){1,4}(?<=[*xX•#+·.]{2}[\s-]?)\d{2,4}\b/g
@@ -129,6 +152,10 @@ export function detectPii(page: OcrPage): Redaction[] {
     if (!l) return false
     const t = lineText(l)
     return (
+      // A name, a city or an address line is short and isn't a sentence.
+      t.split(/\s+/).length <= 6 &&
+      !isProse(t) &&
+      !BUSINESS_CONTACT.test(t) &&
       !isAmountText(t) &&
       !startsWithFieldLabel(t) &&
       !FIELD_WORD.test(t) &&
@@ -148,8 +175,9 @@ export function detectPii(page: OcrPage): Redaction[] {
     // Patterns anywhere.
     matchAll(i, text, EMAIL, 'email')
     matchAll(i, text, UPI_HANDLE, 'account')
-    matchAll(i, text, PHONE_US, 'phone')
-    matchAll(i, text, PHONE_INTL, 'phone')
+    const personalPhone = (m: string) => !TOLL_FREE.test(m.trim()) && !BUSINESS_CONTACT.test(text)
+    matchAll(i, text, PHONE_US, 'phone', personalPhone)
+    matchAll(i, text, PHONE_INTL, 'phone', personalPhone)
     matchAll(i, text, CARD_RUN, 'card', (m) => {
       const d = m.replace(/\D/g, '')
       return d.length >= 13 && d.length <= 19 && luhn(d)
@@ -160,6 +188,7 @@ export function detectPii(page: OcrPage): Redaction[] {
     words.forEach((w, j) => {
       const t = w.text.replace(/^[#:([]+|[):,;\]]+$/g, '')
       if (t === HIDDEN || DATE_WORD.test(t) || MONEY.test(t)) return
+      if (TOLL_FREE.test(t) || (BUSINESS_CONTACT.test(text) && /^[\d-]+$/.test(t))) return
       const nextToCurrency = CURRENCY_WORD.test(words[j - 1]?.text ?? '') || CURRENCY_WORD.test(words[j + 1]?.text ?? '')
       if (/^[\d-]+$/.test(t) && digitCount(t) >= 7 && !nextToCurrency) hide(i, j, 'long_number')
       else if (/^[A-Za-z]{0,4}\d{6,}[A-Za-z0-9]*$/.test(t) && /[A-Za-z]/.test(t)) hide(i, j, 'long_number')
@@ -176,8 +205,15 @@ export function detectPii(page: OcrPage): Redaction[] {
     // under it that carry on (a city under a name, an address's second line), up to the
     // next amount or label.
     const person = PERSON_LABEL.exec(text)
-    if (person) {
-      const rest = text.slice(person.index + person[0].length)
+    // A label starts its line or ends in a colon; inside a sentence ("contact the sender")
+    // it's just a word. And what follows a real label is a name or a place, not a sentence
+    // or a heading word.
+    const atStart = person && !/[A-Za-z]/.test(text.slice(0, person.index))
+    const colon = person && /:\s*$/.test(person[0])
+    const after = person ? text.slice(person.index + person[0].length) : ''
+    const isLabel = person && (atStart || colon) && !HEADING_AFTER.test(after) && !(isProse(after) && !colon)
+    if (person && isLabel) {
+      const rest = after
       // "Recipient gets 8,600.00", "Total to Recipient", "Recipient receives": a field.
       if (!isAmountText(rest) && !FIELD_WORD.test(rest) && !FIELD_WORD.test(text.slice(0, person.index))) {
         if (rest.trim()) hideSpan(i, person.index + person[0].length, text.length, 'labeled')

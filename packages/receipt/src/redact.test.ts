@@ -78,6 +78,36 @@ describe('leaves amounts, rates, dates and labels alone', () => {
   })
 })
 
+describe('leaves the fine print readable (2026-10-11: a real receipt came back mostly black)', () => {
+  it('reads label words inside sentences as words, and hides nothing under them', () => {
+    const lines = [
+      'Recipient may receive less due to fees charged by the',
+      "recipient's bank and foreign taxes.",
+      'For questions or complaints about Western Union, contact the sender',
+      'Consumer Financial Protection Bureau 855-411-2372',
+      'RECIPIENT MAY RECEIVE LESS DUE TO FEES',
+    ]
+    expect(redacted(...lines)).toEqual(lines)
+  })
+
+  it('keeps headings and toll-free numbers', () => {
+    const lines = ['Customer Receipt', 'Customer Service: 1-800-325-6000', 'at 1-800-325-6000 or westernunion.com/help.']
+    expect(redacted(...lines)).toEqual(lines)
+  })
+
+  it('hides the name but not the label words', () => {
+    expect(redacted('Sender name: Maria Lopez')).toEqual([`Sender name: ${HIDDEN} ${HIDDEN}`])
+  })
+
+  it('still hides a city under a name, even one that starts with a common word', () => {
+    expect(redacted('Receiver: Nguyen Thi Lan', 'Can Tho')).toEqual([`Receiver: ${HIDDEN} ${HIDDEN} ${HIDDEN}`, `${HIDDEN} ${HIDDEN}`])
+  })
+
+  it('still hides a personal phone number', () => {
+    expect(redacted('Phone: (206) 555-0107')[0]).not.toContain('555-0107')
+  })
+})
+
 describe('the fixtures', () => {
   for (const f of loadFixtures()) {
     it(`${f.id}: every personal detail is gone and every amount is still there`, () => {

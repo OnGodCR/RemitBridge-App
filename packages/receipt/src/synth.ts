@@ -219,6 +219,30 @@ export interface SynthOptions {
  * reading always passes the receipt checks: amount received = (sent − fee − tax) × rate −
  * pickup charge, rounded as the receiving currency prints it.
  */
+/** Fine print in the shape of Regulation E's model forms, with a provider's own notes. */
+const FINE_PRINT = [
+  "Recipient may receive less due to fees charged by the recipient's bank and foreign taxes.",
+  "Your state regulator oversees this business and may help the sender with a problem.",
+  'Please keep this receipt. The sender may need it to report a problem later.',
+  'The recipient will receive the funds once the transfer is complete.',
+  'Thank you for sending with us. Open 24 hours a day, 1-800-555-0250.',
+  'Customer copy',
+]
+
+/** Breaks text into lines of at most `width` characters, at spaces. */
+function wrap(text: string, width = 52): string[] {
+  const out: string[] = []
+  let line = ''
+  for (const word of text.split(' ')) {
+    if (line && line.length + 1 + word.length > width) {
+      out.push(line)
+      line = word
+    } else line = line ? `${line} ${word}` : word
+  }
+  if (line) out.push(line)
+  return out
+}
+
 export function synthesize(seed: number, options: SynthOptions = {}): SynthReceipt {
   const r = rng(seed)
   const asOf = options.asOf ?? '2026-09-30'
@@ -351,12 +375,20 @@ export function synthesize(seed: number, options: SynthOptions = {}): SynthRecei
     disclosures.push('cancellation')
   }
   if (r.chance(0.6)) {
-    lines.push(`For questions or complaints about ${provider.name}, contact us at 1-800-555-0${r.int(100, 199)}.`)
+    lines.push(`For questions or complaints about ${provider.name}, contact us at 1-800-555-0${r.int(200, 299)}.`)
     disclosures.push('provider_contact')
   }
   if (r.chance(0.5)) {
     lines.push('Consumer Financial Protection Bureau 855-411-2372 consumerfinance.gov/sending-money')
     disclosures.push('cfpb_contact')
+  }
+
+  // The fine print real receipts carry, wrapped the way OCR splits it into lines
+  // (2026-10-11). Its label words in sentences ("the sender", "Recipient may receive...")
+  // once blacked out whole paragraphs on a real receipt. Picked by seed, without the random
+  // stream, so every other value of a seed stays as it was.
+  for (const [i, text] of FINE_PRINT.entries()) {
+    if ((seed + i) % 3 !== 0) lines.push(...wrap(text.replace('{provider}', provider.name)))
   }
 
   const expected: Partial<FieldValues> = {
