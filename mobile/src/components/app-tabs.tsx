@@ -1,6 +1,4 @@
 import type { AndroidSymbol } from 'expo-symbols';
-import type { ComponentProps } from 'react';
-import { Tabs } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useEffect } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
@@ -19,7 +17,8 @@ import { useCopy } from '@/i18n';
  * iPhone keeps the system tab bar. Android draws its own (Angad, 2026-10-09: the stock
  * Material bar "just doesn't have that feel"): flat on the card colour with a hairline
  * on top, no pill behind the icon, and the colour easing between tabs instead of
- * snapping, which is what the iPhone bar does.
+ * snapping, which is what the iPhone bar does. Android's tabs are pages in a native pager
+ * (pager-tabs.tsx, 2026-10-11), so swiping between them follows the finger.
  */
 const TABS: { name: string; label: 'scan' | 'compare' | 'whatsapp' | 'tools' | 'learn'; sf: SFSymbol; md: AndroidSymbol }[] = [
   // Scan opens the app (D101): a real receipt is a better first step than a sum.
@@ -53,17 +52,26 @@ function IosTabs() {
   );
 }
 
+/** Loaded on Android only: the native pager isn't in builds made for iPhone before it. */
+const PagerTabs: typeof import('@/components/pager-tabs').PagerTabs | null =
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  Platform.OS === 'android' ? require('@/components/pager-tabs').PagerTabs : null;
+
 function AndroidTabs() {
+  if (!PagerTabs) return null;
   return (
-    <Tabs screenOptions={{ headerShown: false, animation: 'none' }} tabBar={(props) => <CleanTabBar {...props} />}>
+    <PagerTabs tabBar={(props: BarProps) => <CleanTabBar {...props} />}>
       {TABS.map((tab) => (
-        <Tabs.Screen key={tab.name} name={tab.name} />
+        <PagerTabs.Screen key={tab.name} name={tab.name} />
       ))}
-    </Tabs>
+    </PagerTabs>
   );
 }
 
-type BarProps = Parameters<NonNullable<ComponentProps<typeof Tabs>['tabBar']>>[0];
+type BarProps = {
+  state: { index: number; routes: { key: string; name: string; params?: object }[] };
+  navigation: { emit: (e: { type: 'tabPress'; target: string; canPreventDefault: true }) => { defaultPrevented: boolean }; navigate: (name: string, params?: object) => void };
+};
 
 function CleanTabBar({ state, navigation }: BarProps) {
   const t = useTheme();

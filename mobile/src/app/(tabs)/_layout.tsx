@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import AppTabs from '@/components/app-tabs';
@@ -17,6 +17,9 @@ let dx = 0;
  * 2026-10-01). The swipe has to be clearly sideways: a gesture that starts vertical is left
  * to the scroll view, and a short or slow drag does nothing, so reading and scrolling stay
  * as they were. Built once: it depends on nothing that renders.
+ *
+ * iPhone only since 2026-10-11: Android's tabs are pages in a native pager
+ * (components/pager-tabs.tsx), which follows the finger itself.
  */
 const swipe = Gesture.Pan()
   .runOnJS(true)
@@ -41,6 +44,7 @@ const swipe = Gesture.Pan()
   });
 
 export default function TabsLayout() {
+  if (Platform.OS === 'android') return <AppTabs />;
   return (
     <GestureDetector gesture={swipe}>
       <View style={styles.fill} collapsable={false}>

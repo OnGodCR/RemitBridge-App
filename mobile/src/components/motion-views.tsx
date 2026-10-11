@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, type ReactNode } from 'react';
-import { type StyleProp, type ViewProps, type ViewStyle } from 'react-native';
+import { Platform, View, type StyleProp, type ViewProps, type ViewStyle } from 'react-native';
 import Animated, {
   LinearTransition,
   ReduceMotion,
@@ -35,6 +35,13 @@ const hiders = new Set<() => void>();
  * from a pushed screen, the body was never hidden, so it simply stays.
  */
 export function FocusRise({ style, children }: { style?: StyleProp<ViewStyle>; children: ReactNode }) {
+  // Android's tabs are pages in a pager (pager-tabs.tsx): the swipe itself brings a tab in,
+  // and hiding the tabs you leave would blank the pages beside you mid-swipe.
+  if (Platform.OS === 'android') return <View style={style}>{children}</View>;
+  return <FocusRiseAnimated style={style}>{children}</FocusRiseAnimated>;
+}
+
+function FocusRiseAnimated({ style, children }: { style?: StyleProp<ViewStyle>; children: ReactNode }) {
   const reduced = useReducedMotion();
   // Opacity and movement run apart: the fade is short and eased, the movement a spring, so
   // the content is solid before it has quite settled, which looks crisp rather than ghostly.
