@@ -160,16 +160,6 @@ export default function AccountScreen() {
           </AppText>
 
           {__DEV__ ? (
-            <ListGroup cards>
-              <ListRow
-                icon="doc.text.magnifyingglass"
-                title={copy.devPreview.row}
-                subtitle={copy.devPreview.intro}
-                onPress={() => router.push('/dev/receipt-preview')}
-              />
-            </ListGroup>
-          ) : null}
-          {__DEV__ ? (
             <Button
               label={a.replay}
               variant="plain"

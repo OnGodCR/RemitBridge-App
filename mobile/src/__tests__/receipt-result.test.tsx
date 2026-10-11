@@ -66,8 +66,8 @@ const expected = computeTransferCost({ sent: 509.99, fee: 4.99, transferTax: 5, 
 describe('true cost', () => {
   it('is the one formula’s total, with the tax on its own line', () => {
     open(confirmed());
-    // The answer at the top, the headline in the details, and the cash-vs-bank bars.
-    expect(screen.getAllByText(money(expected.totalCost, 'USD')).length).toBe(3);
+    // The answer at the top, and the cash-vs-bank bars in the details.
+    expect(screen.getAllByText(money(expected.totalCost, 'USD')).length).toBe(2);
     expect(screen.getAllByText('Federal remittance tax').length).toBe(2); // the cost bar's legend and the section
     expect(screen.getAllByText('$5.00').length).toBeGreaterThan(0);
     expect(screen.getByText(money(expected.markupCost, 'USD'))).toBeTruthy();
@@ -212,13 +212,15 @@ describe('a small transfer', () => {
 });
 
 describe('at a glance (D153)', () => {
-  it('shows only the cost with a plain mark, and the two things to do, until asked for more', () => {
+  it('shows the cost with a plain mark, its parts, and the two things to do, until asked for more', () => {
     const onAnother = jest.fn();
     render(<ReceiptResult confirmed={confirmed()} onAnother={onAnother} />);
     expect(screen.getByText('This transfer cost you')).toBeTruthy();
     expect(screen.getByText(/^About average: 5\.\d% of what you sent$/)).toBeTruthy();
     expect(screen.getByText('Compare this route today')).toBeTruthy();
-    expect(screen.queryByText('Where the cost came from')).toBeNull();
+    expect(screen.getByText('Where the cost came from')).toBeTruthy();
+    expect(screen.getByText('What arrived')).toBeTruthy();
+    expect(screen.queryByText('Advertised vs. paid')).toBeNull();
     expect(screen.queryByText('What this does not tell you')).toBeNull();
     fireEvent.press(screen.getByText('Scan another receipt'));
     expect(onAnother).toHaveBeenCalled();

@@ -369,6 +369,9 @@ with your name and the date.
 | learn.blogSub | Stories and explainers | कहानियाँ और समझाने वाले लेख | |
 | learn.latestPost | Latest post | नई पोस्ट | | NEW 2026-10-10
 | learn.allPosts | All posts | सभी पोस्ट | | NEW 2026-10-10
+| learn.assignmentTitle | Now put it to use | अब इसे काम में लाएँ | | NEW 2026-10-11
+| learn.assignmentBody | Read a post that uses the words you just learned. | एक पोस्ट पढ़ें जिसमें आपके अभी सीखे शब्द हैं। | | NEW 2026-10-11
+| learn.usesWords | Uses 1 word you know / Uses {n} words you know | आपका जाना 1 शब्द इसमें है / आपके जाने {n} शब्द इसमें हैं | | NEW 2026-10-11
 | learn.papers | Research papers | रिसर्च पेपर | |
 | learn.papersSub | The lab’s published work | लैब का प्रकाशित काम | |
 | learn.workshops | Workshops | वर्कशॉप | |
@@ -756,13 +759,6 @@ with your name and the date.
 | result.limits[2] | Fees charged at your family’s end | परिवार की तरफ़ ली गई फ़ीस | | CHANGED 2026-10-11: shorter, please read again
 | result.limits[3] | Rate moves during the day | दिन में रेट का बदलना | | CHANGED 2026-10-11: shorter, please read again
 | result.limits[4] | Whether an item was missing, or just cut off | कुछ छूटा था या बस फ़ोटो में कटा | | CHANGED 2026-10-11: shorter, please read again
-| devPreview.title | Receipt preview | रसीद का पूर्वावलोकन | |
-| devPreview.row | Preview the receipt screens | रसीद वाली स्क्रीन देखें | |
-| devPreview.intro | Made-up receipts, to check these screens before the full build can scan. Development builds only. | बनावटी रसीदें, ताकि पूरा बिल्ड स्कैन कर सके उससे पहले ये स्क्रीन जाँची जा सकें। सिर्फ़ डेवलपमेंट बिल्ड में। | |
-| devPreview.check | Check | जाँच | |
-| devPreview.result | Result | नतीजा | |
-| devPreview.today | Today | आज | |
-| devPreview.none | No match | कोई मेल नहीं | |
 | observatory.intro | What people really paid, from receipts they chose to share. | लोगों ने असल में कितना चुकाया, उन रसीदों से जो उन्होंने साझा कीं। | |
 | observatory.early | Early results | शुरुआती नतीजे | |
 | observatory.sample | {n} shared receipts since {since} | {n} साझा रसीदें, {since} से | |

@@ -6,6 +6,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { MODULE_ART } from '@/components/module-art';
 import { ListGroup } from '@/components/list-row';
+import { ReadingAssignment } from '@/components/reading-assignment';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
@@ -80,6 +81,9 @@ export default function ModuleScreen() {
           trailingIcon="arrow.right"
           onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id } })}
         />
+
+        {/* The module's last step: a post that puts its words to use (2026-10-11). */}
+        {complete ? <ReadingAssignment module={m} learned={learned} /> : null}
 
         {complete ? (
           <View style={[styles.done, { backgroundColor: t.accent, borderLeftColor: t.primary }]}>

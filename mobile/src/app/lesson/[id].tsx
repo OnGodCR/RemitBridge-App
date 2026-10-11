@@ -18,6 +18,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { GENTLE, SNAPPY } from '@/components/motion';
+import { ReadingAssignment } from '@/components/reading-assignment';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
@@ -25,7 +26,7 @@ import { termIn } from '@/data/glossary-translations';
 import { moduleFor } from '@/data/modules';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
-import { markLearned, recordLesson, useLearned, type LearnStats } from '@/lib/learn-progress';
+import { markLearned, moduleProgress, recordLesson, useLearned, type LearnStats } from '@/lib/learn-progress';
 import {
   accuracy,
   buildLesson,
@@ -111,7 +112,7 @@ function Lesson({ moduleId, practice, steps }: { moduleId: string; practice: boo
     <View style={[styles.fill, { backgroundColor: t.background, paddingTop: insets.top + Spacing.two }]}>
       <StatusBar style="auto" />
       {done && stats ? (
-        <Finish practice={practice} xp={state.xp} accuracyPct={accuracy(state)} learned={state.learned.length} stats={stats} />
+        <Finish moduleId={moduleId} practice={practice} xp={state.xp} accuracyPct={accuracy(state)} learned={state.learned.length} stats={stats} />
       ) : (
         <>
           <TopBar progress={lessonProgress(state)} combo={state.combo} stepLabel={l.progressLabel(state.index + 1, state.steps.length)} />
@@ -439,11 +440,29 @@ function Arrive({
 // The end
 // ---------------------------------------------------------------------------------------
 
-function Finish({ practice, xp, accuracyPct, learned, stats }: { practice: boolean; xp: number; accuracyPct: number; learned: number; stats: LearnStats }) {
+function Finish({
+  moduleId,
+  practice,
+  xp,
+  accuracyPct,
+  learned,
+  stats,
+}: {
+  moduleId: string;
+  practice: boolean;
+  xp: number;
+  accuracyPct: number;
+  learned: number;
+  stats: LearnStats;
+}) {
   const t = useTheme();
   const copy = useCopy();
   const l = copy.learn.lesson;
   const insets = useSafeAreaInsets();
+  // A lesson that finishes its module ends with that module's reading assignment.
+  const known = useLearned();
+  const m = moduleFor(moduleId);
+  const finished = m && moduleProgress(m, known).complete;
   return (
     <View style={[styles.fill, styles.finish, { paddingBottom: insets.bottom + Spacing.three }]}>
       <View style={styles.finishTop}>
@@ -460,7 +479,12 @@ function Finish({ practice, xp, accuracyPct, learned, stats }: { practice: boole
           <Tile icon="flame.fill" label={l.streakLabel} value={l.streakDays(stats.streak)} />
         </Arrive>
       </View>
-      <Arrive from={14} delay={320}>
+      {finished && m ? (
+        <Arrive from={14} delay={320}>
+          <ReadingAssignment module={m} learned={known} />
+        </Arrive>
+      ) : null}
+      <Arrive from={14} delay={finished ? 420 : 320}>
         <Button label={l.continue} onPress={() => router.back()} />
       </Arrive>
     </View>

@@ -432,6 +432,9 @@ export const es: Copy = {
     blogSub: 'Historias y explicaciones',
     latestPost: 'Lo más reciente',
     allPosts: 'Todas las entradas',
+    assignmentTitle: 'Ahora ponlo en práctica',
+    assignmentBody: 'Lee una entrada que usa las palabras que acabas de aprender.',
+    usesWords: (n) => (n === 1 ? 'Usa 1 palabra que conoces' : `Usa ${n} palabras que conoces`),
     papers: 'Investigaciones',
     papersSub: 'Los trabajos publicados del laboratorio',
     workshops: 'Talleres',
@@ -899,15 +902,6 @@ export const es: Copy = {
     ],
   },
 
-  devPreview: {
-    title: 'Vista previa del recibo',
-    row: 'Ver las pantallas del recibo',
-    intro: 'Recibos inventados, para revisar estas pantallas antes de que la versión completa pueda escanear. Solo en versiones de desarrollo.',
-    check: 'Revisar',
-    result: 'Resultado',
-    today: 'Hoy',
-    none: 'Sin datos',
-  },
 
   observatory: {
     intro: 'Lo que la gente pagó de verdad, según recibos que decidieron compartir.',

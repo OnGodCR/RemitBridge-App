@@ -416,6 +416,9 @@ export const en = {
     blogSub: 'Stories and explainers',
     latestPost: 'Latest post',
     allPosts: 'All posts',
+    assignmentTitle: 'Now put it to use',
+    assignmentBody: 'Read a post that uses the words you just learned.',
+    usesWords: (n: number) => (n === 1 ? 'Uses 1 word you know' : `Uses ${n} words you know`),
     papers: 'Research papers',
     papersSub: 'The lab’s published work',
     workshops: 'Workshops',
@@ -883,15 +886,6 @@ export const en = {
     ],
   },
 
-  devPreview: {
-    title: 'Receipt preview',
-    row: 'Preview the receipt screens',
-    intro: 'Made-up receipts, to check these screens before the full build can scan. Development builds only.',
-    check: 'Check',
-    result: 'Result',
-    today: 'Today',
-    none: 'No match',
-  },
 
   observatory: {
     intro: 'What people really paid, from receipts they chose to share.',

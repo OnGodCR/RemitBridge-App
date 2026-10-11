@@ -148,9 +148,12 @@ async function signInWithGoogleNative(): Promise<Result> {
     const token = response.data.idToken;
     if (!token) return friendly('');
     const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token });
+    // The real reason, for the developer's log; the person sees the friendly message.
+    if (error) console.warn('[google sign-in] Supabase refused the token:', error.message);
     return error ? friendly(error.message) : null;
   } catch (e) {
     if (isErrorWithCode(e) && (e.code === statusCodes.SIGN_IN_CANCELLED || e.code === statusCodes.IN_PROGRESS)) return 'closed';
+    console.warn('[google sign-in] failed:', isErrorWithCode(e) ? `code ${e.code}` : '', String(e));
     return friendly(String(e));
   }
 }

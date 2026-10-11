@@ -22,7 +22,8 @@ import { ROUTES, type DeliveryMethod } from '@/lib/routes';
  * people who won't read a report (Angad, 2026-10-11: "nobody who is using the app will be
  * able to digest these words"): what the transfer cost, with a low, average or high mark,
  * and what they could have saved. Then the two things to do next, Compare and scan
- * another. Everything else waits under "Show the details", in six parts:
+ * another, with the cost's parts and what arrived as two bars between (2026-10-11: two
+ * answers alone looked too blank). Everything else waits under "Show the details":
  *   - the true cost: the number, where it sits against the UN target and the world
  *     average, what it was made of, and what arrived of what could have;
  *   - what you could have kept: the cheapest way we had prices for (D119);
@@ -124,26 +125,10 @@ export function ReceiptResult({
         <StatusLine tone="good" text={s.bestShort} />
       ) : null}
 
-      <View style={styles.actions}>
-        {compare ? <Button label={s.compare} onPress={compare} /> : null}
-        <Button label={copy.scan.another} variant={compare ? 'secondary' : 'primary'} onPress={onAnother} />
-      </View>
-
-      <TextLink label={details ? s.hideDetails : s.showDetails} arrow={false} icon={details ? 'chevron.up' : 'chevron.down'} onPress={() => setDetails((d) => !d)} />
-
-      {details ? (
-        <>
-      {/* 1. True cost */}
+      {/* Where the cost came from and what arrived, as two bars (Angad, 2026-10-11: two
+          answers alone looked too blank). */}
       {cost ? (
         <>
-          <Answer label={s.title} value={money(cost.totalCost, from)} note={s.pctOfSent(pct(cost.totalCostPct, 2))} />
-          <CostScale
-            you={cost.totalCostPct}
-            world={FIGURES.globalCostPct}
-            target={FIGURES.targetPct}
-            labels={{ you: s.scaleYou(pct(cost.totalCostPct, 1)), world: s.scaleWorld(FIGURES.globalCostPct), target: s.scaleTarget(FIGURES.targetPct) }}
-            label={s.scaleLabel(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)}
-          />
           <Section title={s.costTitle}>
             <SplitBar
               label={[
@@ -178,6 +163,28 @@ export function ReceiptResult({
             />
             <SourceNote>{s.source(mid!.source, rate(mid!.rate), dayIn(language, mid!.date))}</SourceNote>
           </Section>
+        </>
+      ) : null}
+
+      <View style={styles.actions}>
+        {compare ? <Button label={s.compare} onPress={compare} /> : null}
+        <Button label={copy.scan.another} variant={compare ? 'secondary' : 'primary'} onPress={onAnother} />
+      </View>
+
+      <TextLink label={details ? s.hideDetails : s.showDetails} arrow={false} icon={details ? 'chevron.up' : 'chevron.down'} onPress={() => setDetails((d) => !d)} />
+
+      {details ? (
+        <>
+      {/* 1. Against the world average and the UN target */}
+      {cost ? (
+        <>
+          <CostScale
+            you={cost.totalCostPct}
+            world={FIGURES.globalCostPct}
+            target={FIGURES.targetPct}
+            labels={{ you: s.scaleYou(pct(cost.totalCostPct, 1)), world: s.scaleWorld(FIGURES.globalCostPct), target: s.scaleTarget(FIGURES.targetPct) }}
+            label={s.scaleLabel(pct(cost.totalCostPct, 2), FIGURES.globalCostPct, FIGURES.targetPct)}
+          />
         </>
       ) : null}
 
