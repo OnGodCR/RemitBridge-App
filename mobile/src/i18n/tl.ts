@@ -810,6 +810,14 @@ export const tl: Copy = {
   },
 
   result: {
+    costLabel: 'Ang nagastos mo sa padalang ito',
+    verdictLow: (pct) => `Mababa: ${pct} ng ipinadala mo`,
+    verdictAverage: (pct) => `Halos karaniwan: ${pct} ng ipinadala mo`,
+    verdictHigh: (pct) => `Mataas: ${pct} ng ipinadala mo`,
+    savedLabel: (provider) => `Sa ${provider}, puwede kang nakatipid ng`,
+    bestShort: 'Nakuha mo ang pinakamagandang presyong nakita namin.',
+    showDetails: 'Ipakita ang detalye',
+    hideDetails: 'Itago ang detalye',
     title: 'Magkano talaga ang nagastos sa padalang ito',
     fee: 'Fee na nakikita',
     tax: 'Federal na remittance tax',

@@ -793,6 +793,14 @@ export const en = {
   },
 
   result: {
+    costLabel: 'This transfer cost you',
+    verdictLow: (pct: string) => `Low: ${pct} of what you sent`,
+    verdictAverage: (pct: string) => `About average: ${pct} of what you sent`,
+    verdictHigh: (pct: string) => `High: ${pct} of what you sent`,
+    savedLabel: (provider: string) => `With ${provider}, you could have saved`,
+    bestShort: 'You got the best price we found.',
+    showDetails: 'Show the details',
+    hideDetails: 'Hide the details',
     title: 'What this transfer really cost',
     fee: 'Fee you could see',
     tax: 'Federal remittance tax',

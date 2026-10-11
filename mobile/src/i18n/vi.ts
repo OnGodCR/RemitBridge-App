@@ -808,6 +808,14 @@ export const vi: Copy = {
   },
 
   result: {
+    costLabel: 'Lần chuyển này tốn của bạn',
+    verdictLow: (pct) => `Thấp: ${pct} số tiền bạn gửi`,
+    verdictAverage: (pct) => `Gần mức trung bình: ${pct} số tiền bạn gửi`,
+    verdictHigh: (pct) => `Cao: ${pct} số tiền bạn gửi`,
+    savedLabel: (provider) => `Với ${provider}, bạn có thể đã tiết kiệm`,
+    bestShort: 'Bạn đã có giá tốt nhất chúng tôi tìm thấy.',
+    showDetails: 'Xem chi tiết',
+    hideDetails: 'Ẩn chi tiết',
     title: 'Chi phí thực của lần chuyển này',
     fee: 'Phí bạn thấy được',
     tax: 'Thuế chuyển tiền liên bang',

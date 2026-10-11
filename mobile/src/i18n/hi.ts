@@ -809,6 +809,14 @@ export const hi: Copy = {
   },
 
   result: {
+    costLabel: 'इस ट्रांसफ़र में आपका खर्च',
+    verdictLow: (pct) => `कम: भेजी रकम का ${pct}`,
+    verdictAverage: (pct) => `औसत के आसपास: भेजी रकम का ${pct}`,
+    verdictHigh: (pct) => `ज़्यादा: भेजी रकम का ${pct}`,
+    savedLabel: (provider) => `${provider} से आप इतना बचा सकते थे`,
+    bestShort: 'आपको हमारी देखी सबसे अच्छी कीमत मिली।',
+    showDetails: 'पूरी जानकारी देखें',
+    hideDetails: 'जानकारी छिपाएँ',
     title: 'इस ट्रांसफ़र पर असल में कितना खर्च हुआ',
     fee: 'दिखने वाली फ़ीस',
     tax: 'संघीय रेमिटेंस टैक्स',

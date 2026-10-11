@@ -48,7 +48,7 @@ export default function ReceiptPreview() {
           onConfirm={() => setPart('result')}
         />
       ) : (
-        <ReceiptResult confirmed={part === 'result' ? SAMPLE_RESULT : part === 'today' ? SAMPLE_RESULT_TODAY : SAMPLE_RESULT_NONE} />
+        <ReceiptResult confirmed={part === 'result' ? SAMPLE_RESULT : part === 'today' ? SAMPLE_RESULT_TODAY : SAMPLE_RESULT_NONE} onAnother={() => undefined} />
       )}
     </ScrollView>
   );
