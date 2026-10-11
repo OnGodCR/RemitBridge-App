@@ -131,10 +131,14 @@ export async function signInWithGoogle(): Promise<Result> {
 
 async function signInWithGoogleNative(): Promise<Result> {
   if (!supabase) return 'notConnected';
-  // Loaded only here: importing it in Expo Go, which lacks the native module, would crash.
-  const { GoogleSignin, isErrorWithCode, isSuccessResponse, statusCodes } = await import(
-    '@react-native-google-signin/google-signin'
-  );
+  // Required only here: loading it in Expo Go, which lacks the native module, would crash
+  // (and Expo Go never gets here: nativeGoogle is false there). A plain require, not
+  // import(): in development, import() made a separate bundle whose module numbers went
+  // stale after a reload, and sign-in failed with "Requiring unknown module" (2026-10-11).
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { GoogleSignin, isErrorWithCode, isSuccessResponse, statusCodes } = require(
+    '@react-native-google-signin/google-signin',
+  ) as typeof import('@react-native-google-signin/google-signin');
   // The web client is the token's audience, so Supabase (which trusts it) accepts it.
   GoogleSignin.configure({
     webClientId: GOOGLE_WEB_CLIENT_ID,
