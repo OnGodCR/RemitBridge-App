@@ -431,6 +431,9 @@ export const vi: Copy = {
     blogSub: 'Câu chuyện và bài giải thích',
     latestPost: 'Bài mới nhất',
     allPosts: 'Tất cả bài viết',
+    assignmentTitle: 'Giờ hãy áp dụng',
+    assignmentBody: 'Đọc một bài có dùng những từ bạn vừa học.',
+    usesWords: (n) => (n === 1 ? 'Dùng 1 từ bạn đã biết' : `Dùng ${n} từ bạn đã biết`),
     papers: 'Bài nghiên cứu',
     papersSub: 'Các công trình đã công bố của phòng nghiên cứu',
     workshops: 'Hội thảo',
@@ -898,15 +901,6 @@ export const vi: Copy = {
     ],
   },
 
-  devPreview: {
-    title: 'Xem trước biên lai',
-    row: 'Xem trước các màn hình biên lai',
-    intro: 'Biên lai giả, để kiểm tra các màn hình này trước khi bản đầy đủ có thể quét. Chỉ có trong bản phát triển.',
-    check: 'Kiểm tra',
-    result: 'Kết quả',
-    today: 'Hôm nay',
-    none: 'Không khớp',
-  },
 
   observatory: {
     intro: 'Số tiền mọi người thực sự đã trả, từ các biên lai họ chọn chia sẻ.',

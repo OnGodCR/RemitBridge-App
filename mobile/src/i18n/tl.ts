@@ -432,6 +432,9 @@ export const tl: Copy = {
     blogSub: 'Mga kuwento at paliwanag',
     latestPost: 'Pinakabagong post',
     allPosts: 'Lahat ng post',
+    assignmentTitle: 'Gamitin mo na ito',
+    assignmentBody: 'Magbasa ng post na gumagamit ng mga salitang natutunan mo.',
+    usesWords: (n) => (n === 1 ? 'Gumagamit ng 1 salitang alam mo' : `Gumagamit ng ${n} salitang alam mo`),
     papers: 'Research papers',
     papersSub: 'Mga nailathalang gawa ng lab',
     workshops: 'Workshops',
@@ -900,15 +903,6 @@ export const tl: Copy = {
     ],
   },
 
-  devPreview: {
-    title: 'Silip sa resibo',
-    row: 'Silipin ang mga screen ng resibo',
-    intro: 'Mga gawa-gawang resibo, para masuri ang mga screen na ito bago makapag-scan ang buong build. Sa development builds lang.',
-    check: 'Suriin',
-    result: 'Resulta',
-    today: 'Ngayon',
-    none: 'Walang tugma',
-  },
 
   observatory: {
     intro: 'Ang talagang ibinayad ng mga tao, mula sa mga resibong piniling ibahagi.',
