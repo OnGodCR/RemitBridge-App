@@ -22,6 +22,20 @@ export const DEFAULT_MODEL = 'qwen/qwen3.8-27b'
 
 export const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 
+/**
+ * Whether Qwen thinks before it answers. Off (D98): thinking spends more of the free tier's
+ * tokens. It's a setting since 2026-10-11, when a $9.99 fee came back as $999.99, so the
+ * benchmark can measure whether thinking reads receipts better within the free limits
+ * (RECEIPT_REASONING=default) before scans use it.
+ */
+export type Reasoning = 'none' | 'default'
+export const DEFAULT_REASONING: Reasoning = 'none'
+
+/** RECEIPT_REASONING as a Reasoning, or undefined for the default. */
+export function reasoningFrom(value: string | undefined): Reasoning | undefined {
+  return value === 'none' || value === 'default' ? value : undefined
+}
+
 type TextPart = { type: 'text'; text: string }
 type ImagePart = { type: 'image_url'; image_url: { url: string } }
 
@@ -30,9 +44,8 @@ export interface ChatRequest {
   model: string
   messages: [{ role: 'system'; content: string }, { role: 'user'; content: (TextPart | ImagePart)[] }]
   response_format: { type: 'json_schema'; json_schema: { name: string; strict: true; schema: Record<string, unknown> } }
-  /** Groq's switch for Qwen's thinking. Off: the answer is a reading, not a puzzle, and
-   *  thinking would spend the free tier's tokens. */
-  reasoning_effort: 'none'
+  /** Groq's switch for Qwen's thinking (see Reasoning). */
+  reasoning_effort: Reasoning
   /** Groq requires parsed or hidden with a JSON schema; hidden returns the answer alone. */
   reasoning_format: 'hidden'
   temperature: number
@@ -80,6 +93,7 @@ export interface ModelInput {
   /** Today as YYYY-MM-DD. */
   today: string
   model?: string
+  reasoning?: Reasoning
 }
 
 /**
@@ -149,6 +163,7 @@ export function numberedText(page: OcrPage): string {
 }
 
 export function buildRequest(input: ModelInput): ChatRequest {
+  const reasoning = input.reasoning ?? DEFAULT_REASONING
   const content: (TextPart | ImagePart)[] = []
   if (input.image) {
     content.push({ type: 'image_url', image_url: { url: `data:${input.image.mediaType};base64,${input.image.base64}` } })
@@ -164,12 +179,12 @@ export function buildRequest(input: ModelInput): ChatRequest {
       { role: 'user', content },
     ],
     response_format: { type: 'json_schema', json_schema: { name: 'receipt_fields', strict: true, schema: answerSchema(input.fields) } },
-    reasoning_effort: 'none',
+    reasoning_effort: reasoning,
     reasoning_format: 'hidden',
     temperature: 0,
-    // An answer is about 40 tokens a field. Groq counts what's asked for against the free
-    // tier's tokens a minute, so this stays near what an answer can use.
-    max_tokens: 1500,
+    // An answer is about 40 tokens a field. Groq counts what's asked for against the tokens
+    // a minute, so this stays near what an answer can use; thinking needs room on top.
+    max_tokens: reasoning === 'none' ? 1500 : 6000,
   }
 }
 

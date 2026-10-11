@@ -144,7 +144,10 @@ async function signInWithGoogleNative(): Promise<Result> {
     // Android needs Google Play services for the sheet; without them, say so plainly.
     if (Platform.OS === 'android') await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     const response = await GoogleSignin.signIn();
-    if (!isSuccessResponse(response)) return 'closed';
+    if (!isSuccessResponse(response)) {
+      console.warn('[google sign-in] no account came back:', response.type);
+      return 'closed';
+    }
     const token = response.data.idToken;
     if (!token) return friendly('');
     const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token });

@@ -19,6 +19,7 @@
 //                               rules alone (D98)
 // Optional:
 //   RECEIPT_MODEL               default qwen/qwen3.8-27b (D98)
+//   RECEIPT_REASONING           none (default) or default, the model's thinking
 //   RECEIPT_MODEL_MONTHLY_CAP   default 2000 model calls a month
 //   RECEIPT_MODEL_DAILY_CAP     default 200 model calls a day (D140)
 //   RECEIPT_INTAKE_SECRET       lets the WhatsApp worker send channel 'whatsapp' (D94)
@@ -41,6 +42,7 @@ import {
   missingDisclosures,
   ModelError,
   groqClient,
+  reasoningFrom,
   parseRequest,
   readReceipt,
   receiptCost,
@@ -154,7 +156,7 @@ async function scan(db: SupabaseClient, request: ScanRequest): Promise<ScanRespo
   const key = Deno.env.get('GROQ_API_KEY');
   const cap = Number(Deno.env.get('RECEIPT_MODEL_MONTHLY_CAP') ?? DEFAULT_CAP);
   const dailyCap = Number(Deno.env.get('RECEIPT_MODEL_DAILY_CAP') ?? DEFAULT_DAILY_CAP);
-  const model = key ? { client: capped(groqClient(key), db, cap, dailyCap), model: Deno.env.get('RECEIPT_MODEL') || undefined } : null;
+  const model = key ? { client: capped(groqClient(key), db, cap, dailyCap), model: Deno.env.get('RECEIPT_MODEL') || undefined, reasoning: reasoningFrom(Deno.env.get('RECEIPT_REASONING')) } : null;
 
   const result = await readReceipt({ page, image, today, model, midRate });
 
