@@ -227,7 +227,10 @@ export default function ScanScreen() {
     <View style={[styles.fill, { backgroundColor: t.background }]}>
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-        <HeroHeader title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}>
+        {/* Back to the start from any later step (Angad, 2026-10-11: "add a go back"). */}
+        <HeroHeader
+          title={step.kind === 'start' ? s.heroTitle : copy.titles.scan}
+          onBack={step.kind === 'start' || step.kind === 'reading' ? undefined : () => setStep({ kind: 'start' })}>
           {/* Full white, not the muted tint: it's the instruction, so it gets full contrast. */}
           {step.kind === 'start' ? <AppText style={[styles.heroSub, { color: t.heroText }]}>{s.heroSub}</AppText> : null}
         </HeroHeader>
@@ -356,16 +359,14 @@ export default function ScanScreen() {
       ) : null}
 
       {step.kind === 'result' ? (
-        <>
-          <ReceiptResult confirmed={step.confirmed} />
-          <View style={styles.buttons}>
-            {step.deleted ? <AppText muted>{s.deleted}</AppText> : <Button label={s.deleteNow} variant="secondary" onPress={forget} />}
-            <Button label={s.another} variant="plain" onPress={() => setStep({ kind: 'start' })} />
-          </View>
-        </>
+        <ReceiptResult
+          confirmed={step.confirmed}
+          onAnother={() => setStep({ kind: 'start' })}
+          footer={step.deleted ? <AppText muted>{s.deleted}</AppText> : <Button label={s.deleteNow} variant="plain" onPress={forget} />}
+        />
       ) : null}
 
-      {step.kind === 'start' || step.kind === 'result' ? <DoesNotTellYou items={s.limits} /> : null}
+      {step.kind === 'start' ? <DoesNotTellYou items={s.limits} /> : null}
       </StepBody>
         </FocusRise>
       </ScrollView>

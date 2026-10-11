@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { receiptCost, taxCheck, valuesFrom, type ConfirmResponse } from '@remitbridge/receipt';
@@ -17,7 +18,11 @@ import { formatValue, fundingWord } from '@/lib/receipt-format';
 import { ROUTES, type DeliveryMethod } from '@/lib/routes';
 
 /**
- * The scan result (Phase 3, item 2; Phase 6), mostly as charts (D126), in six parts:
+ * The scan result (Phase 3, item 2; Phase 6; D153). Two answers first, in a few words, for
+ * people who won't read a report (Angad, 2026-10-11: "nobody who is using the app will be
+ * able to digest these words"): what the transfer cost, with a low, average or high mark,
+ * and what they could have saved. Then the two things to do next, Compare and scan
+ * another. Everything else waits under "Show the details", in six parts:
  *   - the true cost: the number, where it sits against the UN target and the world
  *     average, what it was made of, and what arrived of what could have;
  *   - what you could have kept: the cheapest way we had prices for (D119);
@@ -26,8 +31,19 @@ import { ROUTES, type DeliveryMethod } from '@/lib/routes';
  *   - the standard disclosures not found on the receipt (D95), never as a finding;
  *   - next time: Compare, opened on the same route and amount.
  */
-export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
+export function ReceiptResult({
+  confirmed,
+  onAnother,
+  footer,
+}: {
+  confirmed: ConfirmResponse;
+  /** Scan another receipt. */
+  onAnother: () => void;
+  /** Shown at the end of the details (deleting the receipt). */
+  footer?: React.ReactNode;
+}) {
   const t = useTheme();
+  const [details, setDetails] = useState(false);
   const copy = useCopy();
   const { language } = useLanguage();
   const s = copy.result;
@@ -68,9 +84,55 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
   };
 
   const reason = confirmed.comparison.reason;
+  const b = confirmed.best.best;
+  const compare = route
+    ? () =>
+        openCompare({
+          routeId: route.id,
+          amount: v.amount_sent,
+          method: route.deliveryMethods.includes(v.delivery_method as DeliveryMethod) ? (v.delivery_method as DeliveryMethod) : undefined,
+        })
+    : null;
+  // Low at or under the UN target, high above the world average.
+  const verdict = cost
+    ? cost.totalCostPct <= FIGURES.targetPct
+      ? { tone: 'good' as const, text: s.verdictLow(pct(cost.totalCostPct, 1)) }
+      : cost.totalCostPct <= FIGURES.globalCostPct
+        ? { tone: 'neutral' as const, text: s.verdictAverage(pct(cost.totalCostPct, 1)) }
+        : { tone: 'warn' as const, text: s.verdictHigh(pct(cost.totalCostPct, 1)) }
+    : null;
 
   return (
     <>
+      {/* The two answers. */}
+      {cost && verdict ? (
+        <View style={styles.answers}>
+          <Answer label={s.costLabel} value={money(cost.totalCost, from)} />
+          <StatusLine tone={verdict.tone} text={verdict.text} />
+        </View>
+      ) : (
+        <AppText muted>{mid ? s.missing : s.noMid}</AppText>
+      )}
+      {b && b.could_keep > 0 ? (
+        <View style={[styles.kept, { backgroundColor: t.accent, borderLeftColor: t.primary }]} accessible accessibilityLiveRegion="polite">
+          <AppText variant="label" style={{ color: t.accentForeground }}>
+            {s.savedLabel(b.provider_name)}
+          </AppText>
+          <AppText style={[styles.keptValue, { color: t.primary }]}>{money(b.could_keep, from)}</AppText>
+        </View>
+      ) : b ? (
+        <StatusLine tone="good" text={s.bestShort} />
+      ) : null}
+
+      <View style={styles.actions}>
+        {compare ? <Button label={s.compare} onPress={compare} /> : null}
+        <Button label={copy.scan.another} variant={compare ? 'secondary' : 'primary'} onPress={onAnother} />
+      </View>
+
+      <TextLink label={details ? s.hideDetails : s.showDetails} arrow={false} icon={details ? 'chevron.up' : 'chevron.down'} onPress={() => setDetails((d) => !d)} />
+
+      {details ? (
+        <>
       {/* 1. True cost */}
       {cost ? (
         <>
@@ -117,9 +179,7 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
             <SourceNote>{s.source(mid!.source, rate(mid!.rate), dayIn(language, mid!.date))}</SourceNote>
           </Section>
         </>
-      ) : (
-        <AppText muted>{mid ? s.missing : s.noMid}</AppText>
-      )}
+      ) : null}
 
       {/* 2. What you could have kept (D119) */}
       <Section title={s.keptTitle}>
@@ -187,27 +247,13 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
         )}
       </Section>
 
-      {/* 6. Next time */}
-      <Section title={s.nextTitle}>
-        {route ? (
-          <Button
-            label={s.compare}
-            variant="secondary"
-            onPress={() =>
-              openCompare({
-                routeId: route.id,
-                amount: v.amount_sent,
-                method: route.deliveryMethods.includes(v.delivery_method as DeliveryMethod) ? (v.delivery_method as DeliveryMethod) : undefined,
-              })
-            }
-          />
-        ) : (
-          <>
-            <AppText muted>{s.notCovered}</AppText>
-            <TextLink label={s.routeBoard} onPress={() => router.push('/routes')} />
-          </>
-        )}
-      </Section>
+      {/* 6. A route we don't check yet: where to ask for it. */}
+      {route ? null : (
+        <Section title={s.nextTitle}>
+          <AppText muted>{s.notCovered}</AppText>
+          <TextLink label={s.routeBoard} onPress={() => router.push('/routes')} />
+        </Section>
+      )}
 
       {/* What was used, for the record. */}
       <SourceNote>
@@ -220,6 +266,9 @@ export function ReceiptResult({ confirmed }: { confirmed: ConfirmResponse }) {
           .join(' · ')}
       </SourceNote>
       <DoesNotTellYou items={s.limits} />
+      {footer}
+        </>
+      ) : null}
     </>
   );
 }
@@ -291,6 +340,8 @@ function BestOptionView({
 }
 
 const styles = StyleSheet.create({
+  answers: { gap: Spacing.two },
+  actions: { gap: Spacing.two },
   kept: { borderLeftWidth: 4, borderRadius: 12, padding: Spacing.three, gap: Spacing.one },
   keptValue: { fontFamily: Fonts.extrabold, fontSize: 34, lineHeight: 40, fontVariant: ['tabular-nums'] },
   rule: { borderLeftWidth: 3, paddingLeft: Spacing.three, gap: Spacing.one },

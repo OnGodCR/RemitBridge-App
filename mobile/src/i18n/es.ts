@@ -808,6 +808,14 @@ export const es: Copy = {
   },
 
   result: {
+    costLabel: 'Este envío te costó',
+    verdictLow: (pct) => `Bajo: ${pct} de lo que enviaste`,
+    verdictAverage: (pct) => `Cerca del promedio: ${pct} de lo que enviaste`,
+    verdictHigh: (pct) => `Alto: ${pct} de lo que enviaste`,
+    savedLabel: (provider) => `Con ${provider}, podrías haber ahorrado`,
+    bestShort: 'Tuviste el mejor precio que encontramos.',
+    showDetails: 'Ver los detalles',
+    hideDetails: 'Ocultar los detalles',
     title: 'Lo que realmente costó este envío',
     fee: 'Comisión visible',
     tax: 'Impuesto federal a las remesas',

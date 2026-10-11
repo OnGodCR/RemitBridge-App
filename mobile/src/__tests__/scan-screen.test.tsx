@@ -189,7 +189,9 @@ it('goes from the answers to the result, and deletes the receipt on request', as
   fireEvent.press(screen.getByText('Amount received'));
   fireEvent.press(screen.getByText('Use MX$8,600.00'));
   fireEvent.press(screen.getByText('See what it cost'));
-  await screen.findByText('What this transfer really cost');
+  await screen.findByText('This transfer cost you');
+  // Deleting lives with the details, under the two answers (D153).
+  fireEvent.press(screen.getByText('Show the details'));
   expect(jest.mocked(confirmScan).mock.calls[0][1]).toEqual({ amount_received: 8600 });
   fireEvent.press(screen.getByText('Delete this receipt now'));
   await screen.findByText('Deleted.');

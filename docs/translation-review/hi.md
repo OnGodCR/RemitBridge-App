@@ -665,6 +665,14 @@ with your name and the date.
 | confirm.currencyPlaceholder | e.g. USD | जैसे USD | |
 | confirm.editing | Change: {field} | बदलें: {field} | |
 | result.title | What this transfer really cost | इस ट्रांसफ़र पर असल में कितना खर्च हुआ | |
+| result.costLabel | This transfer cost you | इस ट्रांसफ़र में आपका खर्च | | NEW 2026-10-11
+| result.verdictLow | Low: {pct} of what you sent | कम: भेजी रकम का {pct} | | NEW 2026-10-11
+| result.verdictAverage | About average: {pct} of what you sent | औसत के आसपास: भेजी रकम का {pct} | | NEW 2026-10-11
+| result.verdictHigh | High: {pct} of what you sent | ज़्यादा: भेजी रकम का {pct} | | NEW 2026-10-11
+| result.savedLabel | With {provider}, you could have saved | {provider} से आप इतना बचा सकते थे | | NEW 2026-10-11
+| result.bestShort | You got the best price we found. | आपको हमारी देखी सबसे अच्छी कीमत मिली। | | NEW 2026-10-11
+| result.showDetails | Show the details | पूरी जानकारी देखें | | NEW 2026-10-11
+| result.hideDetails | Hide the details | जानकारी छिपाएँ | | NEW 2026-10-11
 | result.fee | Fee you could see | दिखने वाली फ़ीस | |
 | result.tax | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
 | result.markup | Hidden in the rate ({pct} markup) | रेट में छिपा ({pct} मार्कअप) | |
