@@ -241,7 +241,8 @@ Angad does this once the app itself is finished (D117).
       ("Workspace account is not active"; the admin console loops). Fix: Google's
       no-admin-access form to delete it, then a free account via "use your existing email".
       Filed 2026-10-10: case #76360017 (CNAME `76360017` -> google.com added at GoDaddy;
-      delete it once the case closes); knowledge-test reply sent from angadkochar2000@gmail.com.
+      Google asked to keep it until the case closes); knowledge-test passed 2026-10-11, now
+      asking Google to delete the org on their side.
 
 - [x] **Sign in with Apple key for account deletion (D145):** delete-account revokes the
       Apple grant. Key VN43KBGHT6 (Sign in with Apple, org.remitbridgelabs.app) created by

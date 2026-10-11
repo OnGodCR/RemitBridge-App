@@ -1155,10 +1155,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_en_copy",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "copy"
+      "norm_label": "copy",
+      "id": "mobile_src_i18n_en_copy"
     },
     {
       "label": "LanguageState",
@@ -1181,10 +1181,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_language",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "language"
+      "norm_label": "language",
+      "id": "mobile_src_i18n_languages_language"
     },
     {
       "label": "Tree",
@@ -1402,10 +1402,10 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_languagecode",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "languagecode"
+      "norm_label": "languagecode",
+      "id": "mobile_src_i18n_languages_languagecode"
     },
     {
       "label": "LocalStore",
@@ -6066,10 +6066,10 @@
       "source_location": "L38",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_isreviewed",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "isreviewed()"
+      "norm_label": "isreviewed()",
+      "id": "mobile_src_i18n_languages_isreviewed"
     },
     {
       "label": "languagesNeedingReview()",
@@ -6078,10 +6078,10 @@
       "source_location": "L51",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_languagesneedingreview",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "languagesneedingreview()"
+      "norm_label": "languagesneedingreview()",
+      "id": "mobile_src_i18n_languages_languagesneedingreview"
     },
     {
       "label": "offeredLanguages()",
@@ -6090,10 +6090,10 @@
       "source_location": "L46",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_offeredlanguages",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "offeredlanguages()"
+      "norm_label": "offeredlanguages()",
+      "id": "mobile_src_i18n_languages_offeredlanguages"
     },
     {
       "label": "codes()",
@@ -6102,10 +6102,10 @@
       "source_location": "L3",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_tests_languages_test_codes",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "codes()"
+      "norm_label": "codes()",
+      "id": "mobile_src_tests_languages_test_codes"
     },
     {
       "label": ".create_run()",
@@ -7350,10 +7350,10 @@
       "source_location": "L35",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_app_tabs_learn_learnscreen",
       "community": 37,
       "community_name": "account.tsx",
-      "norm_label": "learnscreen()"
+      "norm_label": "learnscreen()",
+      "id": "mobile_src_app_tabs_learn_learnscreen"
     },
     {
       "label": "ToolsScreen()",
@@ -9570,10 +9570,10 @@
       "source_location": "L300",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_cloud",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "cloud()"
+      "norm_label": "cloud()",
+      "id": "mobile_src_components_learn_path_cloud"
     },
     {
       "label": "Halo()",
@@ -9582,10 +9582,10 @@
       "source_location": "L215",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_halo",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "halo()"
+      "norm_label": "halo()",
+      "id": "mobile_src_components_learn_path_halo"
     },
     {
       "label": "LearnBackdrop()",
@@ -9594,10 +9594,10 @@
       "source_location": "L254",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_learnbackdrop",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "learnbackdrop()"
+      "norm_label": "learnbackdrop()",
+      "id": "mobile_src_components_learn_path_learnbackdrop"
     },
     {
       "label": "LearnPath()",
@@ -9606,10 +9606,10 @@
       "source_location": "L43",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_learnpath",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "learnpath()"
+      "norm_label": "learnpath()",
+      "id": "mobile_src_components_learn_path_learnpath"
     },
     {
       "label": "Node()",
@@ -9618,10 +9618,10 @@
       "source_location": "L124",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_node",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "node()"
+      "norm_label": "node()",
+      "id": "mobile_src_components_learn_path_node"
     },
     {
       "label": "Ring()",
@@ -9630,10 +9630,10 @@
       "source_location": "L312",
       "_callable": true,
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_ring",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "ring()"
+      "norm_label": "ring()",
+      "id": "mobile_src_components_learn_path_ring"
     },
     {
       "label": "moduleProgress()",
@@ -14267,10 +14267,10 @@
       "source_file": "docs/translation-review/hi.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "docs_translation_review_hi",
       "community": 111,
       "community_name": "Hindi review sheet",
-      "norm_label": "hi.md"
+      "norm_label": "hi.md",
+      "id": "docs_translation_review_hi"
     },
     {
       "label": "For the reviewer",
@@ -14278,10 +14278,10 @@
       "source_file": "docs/translation-review/hi.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "docs_translation_review_hi_for_the_reviewer",
       "community": 111,
       "community_name": "Hindi review sheet",
-      "norm_label": "for the reviewer"
+      "norm_label": "for the reviewer",
+      "id": "docs_translation_review_hi_for_the_reviewer"
     },
     {
       "label": "Hindi review sheet",
@@ -14289,10 +14289,10 @@
       "source_file": "docs/translation-review/hi.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "docs_translation_review_hi_hindi_review_sheet",
       "community": 111,
       "community_name": "Hindi review sheet",
-      "norm_label": "hindi review sheet"
+      "norm_label": "hindi review sheet",
+      "id": "docs_translation_review_hi_hindi_review_sheet"
     },
     {
       "label": "expo-linking",
@@ -18238,10 +18238,10 @@
       "source_file": "mobile/src/i18n/en.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_en",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "en.ts"
+      "norm_label": "en.ts",
+      "id": "mobile_src_i18n_en"
     },
     {
       "label": "en",
@@ -18249,10 +18249,10 @@
       "source_file": "mobile/src/i18n/en.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "mobile_src_i18n_en_en",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "en"
+      "norm_label": "en",
+      "id": "mobile_src_i18n_en_en"
     },
     {
       "label": "es.ts",
@@ -18260,10 +18260,10 @@
       "source_file": "mobile/src/i18n/es.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_es",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "es.ts"
+      "norm_label": "es.ts",
+      "id": "mobile_src_i18n_es"
     },
     {
       "label": "es",
@@ -18271,10 +18271,10 @@
       "source_file": "mobile/src/i18n/es.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "mobile_src_i18n_es_es",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "es"
+      "norm_label": "es",
+      "id": "mobile_src_i18n_es_es"
     },
     {
       "label": "hi.ts",
@@ -18282,10 +18282,10 @@
       "source_file": "mobile/src/i18n/hi.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_hi",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "hi.ts"
+      "norm_label": "hi.ts",
+      "id": "mobile_src_i18n_hi"
     },
     {
       "label": "hi",
@@ -18293,10 +18293,10 @@
       "source_file": "mobile/src/i18n/hi.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "mobile_src_i18n_hi_hi",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "hi"
+      "norm_label": "hi",
+      "id": "mobile_src_i18n_hi_hi"
     },
     {
       "label": "tl.ts",
@@ -18304,10 +18304,10 @@
       "source_file": "mobile/src/i18n/tl.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_tl",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "tl.ts"
+      "norm_label": "tl.ts",
+      "id": "mobile_src_i18n_tl"
     },
     {
       "label": "tl",
@@ -18315,10 +18315,10 @@
       "source_file": "mobile/src/i18n/tl.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "mobile_src_i18n_tl_tl",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "tl"
+      "norm_label": "tl",
+      "id": "mobile_src_i18n_tl_tl"
     },
     {
       "label": "vi.ts",
@@ -18326,10 +18326,10 @@
       "source_file": "mobile/src/i18n/vi.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_vi",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "vi.ts"
+      "norm_label": "vi.ts",
+      "id": "mobile_src_i18n_vi"
     },
     {
       "label": "vi",
@@ -18337,10 +18337,10 @@
       "source_file": "mobile/src/i18n/vi.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "mobile_src_i18n_vi_vi",
       "community": 25,
       "community_name": "review-sheet.ts",
-      "norm_label": "vi"
+      "norm_label": "vi",
+      "id": "mobile_src_i18n_vi_vi"
     },
     {
       "label": "i18n.test.tsx",
@@ -18909,10 +18909,10 @@
       "source_file": "mobile/src/i18n/languages.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "languages.ts"
+      "norm_label": "languages.ts",
+      "id": "mobile_src_i18n_languages"
     },
     {
       "label": "LANGUAGES",
@@ -18920,10 +18920,10 @@
       "source_file": "mobile/src/i18n/languages.ts",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "mobile_src_i18n_languages_languages",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "languages"
+      "norm_label": "languages",
+      "id": "mobile_src_i18n_languages_languages"
     },
     {
       "label": "languages.test.ts",
@@ -18931,10 +18931,10 @@
       "source_file": "mobile/src/__tests__/languages.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_tests_languages_test",
       "community": 29,
       "community_name": "languages.ts",
-      "norm_label": "languages.test.ts"
+      "norm_label": "languages.test.ts",
+      "id": "mobile_src_tests_languages_test"
     },
     {
       "label": "Any",
@@ -23273,10 +23273,10 @@
       "source_file": "mobile/src/components/learn-path.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "learn-path.tsx"
+      "norm_label": "learn-path.tsx",
+      "id": "mobile_src_components_learn_path"
     },
     {
       "label": "CLOUDS",
@@ -23284,10 +23284,10 @@
       "source_file": "mobile/src/components/learn-path.tsx",
       "source_location": "L243",
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_clouds",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "clouds"
+      "norm_label": "clouds",
+      "id": "mobile_src_components_learn_path_clouds"
     },
     {
       "label": "styles",
@@ -23295,10 +23295,10 @@
       "source_file": "mobile/src/components/learn-path.tsx",
       "source_location": "L359",
       "_origin": "ast",
-      "id": "mobile_src_components_learn_path_styles",
       "community": 63,
       "community_name": "learn-path.tsx",
-      "norm_label": "styles"
+      "norm_label": "styles",
+      "id": "mobile_src_components_learn_path_styles"
     },
     {
       "label": "MODULE_ART",
@@ -24824,10 +24824,10 @@
       "source_file": "mobile/src/app/(tabs)/learn.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "mobile_src_app_tabs_learn",
       "community": 76,
       "community_name": "i18n/index.tsx",
-      "norm_label": "learn.tsx"
+      "norm_label": "learn.tsx",
+      "id": "mobile_src_app_tabs_learn"
     },
     {
       "label": "styles",
@@ -24835,10 +24835,10 @@
       "source_file": "mobile/src/app/(tabs)/learn.tsx",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "mobile_src_app_tabs_learn_styles",
       "community": 76,
       "community_name": "i18n/index.tsx",
-      "norm_label": "styles"
+      "norm_label": "styles",
+      "id": "mobile_src_app_tabs_learn_styles"
     },
     {
       "label": "tools.tsx",
@@ -26369,10 +26369,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "decisions",
       "community": 85,
       "community_name": "README.md",
-      "norm_label": "decisions.md"
+      "norm_label": "decisions.md",
+      "id": "decisions"
     },
     {
       "label": "AI_USAGE.md",
@@ -26477,7 +26477,7 @@
       "label": "Git",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L507",
+      "source_location": "L509",
       "_origin": "ast",
       "id": "claude_git",
       "community": 86,
@@ -26488,7 +26488,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L515",
+      "source_location": "L517",
       "_origin": "ast",
       "id": "claude_graphify",
       "community": 86,
@@ -26510,7 +26510,7 @@
       "label": "Product rules that are also code rules",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L409",
+      "source_location": "L411",
       "_origin": "ast",
       "id": "claude_product_rules_that_are_also_code_rules",
       "community": 86,
@@ -26532,7 +26532,7 @@
       "label": "Secrets",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L495",
+      "source_location": "L497",
       "_origin": "ast",
       "id": "claude_secrets",
       "community": 86,
@@ -26543,7 +26543,7 @@
       "label": "Stack",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L468",
+      "source_location": "L470",
       "_origin": "ast",
       "id": "claude_stack",
       "community": 86,
@@ -26565,7 +26565,7 @@
       "label": "Words and voice",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L447",
+      "source_location": "L449",
       "_origin": "ast",
       "id": "claude_words_and_voice",
       "community": 86,
@@ -26578,10 +26578,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L326",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_angad_s_answers_on_partners_structure_and_prices",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: angad's answers on partners, structure, and prices"
+      "norm_label": "2026-09-28: angad's answers on partners, structure, and prices",
+      "id": "decisions_2026_09_28_angad_s_answers_on_partners_structure_and_prices"
     },
     {
       "label": "2026-09-28: during the first build slice",
@@ -26589,10 +26589,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L208",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_during_the_first_build_slice",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: during the first build slice"
+      "norm_label": "2026-09-28: during the first build slice",
+      "id": "decisions_2026_09_28_during_the_first_build_slice"
     },
     {
       "label": "2026-09-28: first round, after reading PRD v0.4",
@@ -26600,10 +26600,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_first_round_after_reading_prd_v0_4",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: first round, after reading prd v0.4"
+      "norm_label": "2026-09-28: first round, after reading prd v0.4",
+      "id": "decisions_2026_09_28_first_round_after_reading_prd_v0_4"
     },
     {
       "label": "2026-09-28: onboarding and the Compare controls",
@@ -26611,10 +26611,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L256",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_onboarding_and_the_compare_controls",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: onboarding and the compare controls"
+      "norm_label": "2026-09-28: onboarding and the compare controls",
+      "id": "decisions_2026_09_28_onboarding_and_the_compare_controls"
     },
     {
       "label": "2026-09-28: second round",
@@ -26622,10 +26622,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_second_round",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: second round"
+      "norm_label": "2026-09-28: second round",
+      "id": "decisions_2026_09_28_second_round"
     },
     {
       "label": "2026-09-28: third round",
@@ -26633,10 +26633,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L144",
       "_origin": "ast",
-      "id": "decisions_2026_09_28_third_round",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-28: third round"
+      "norm_label": "2026-09-28: third round",
+      "id": "decisions_2026_09_28_third_round"
     },
     {
       "label": "2026-09-30: accessibility and languages",
@@ -26644,10 +26644,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L541",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_accessibility_and_languages",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: accessibility and languages"
+      "norm_label": "2026-09-30: accessibility and languages",
+      "id": "decisions_2026_09_30_accessibility_and_languages"
     },
     {
       "label": "2026-09-30: Phase 3 defaults",
@@ -26655,10 +26655,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L729",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_phase_3_defaults",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: phase 3 defaults"
+      "norm_label": "2026-09-30: phase 3 defaults",
+      "id": "decisions_2026_09_30_phase_3_defaults"
     },
     {
       "label": "2026-09-30: Phase 4 defaults",
@@ -26666,10 +26666,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L824",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_phase_4_defaults",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: phase 4 defaults"
+      "norm_label": "2026-09-30: phase 4 defaults",
+      "id": "decisions_2026_09_30_phase_4_defaults"
     },
     {
       "label": "2026-09-30: Phase 5, receipt photos on WhatsApp",
@@ -26677,10 +26677,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L845",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_phase_5_receipt_photos_on_whatsapp",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: phase 5, receipt photos on whatsapp"
+      "norm_label": "2026-09-30: phase 5, receipt photos on whatsapp",
+      "id": "decisions_2026_09_30_phase_5_receipt_photos_on_whatsapp"
     },
     {
       "label": "2026-09-30: Phase 6, the disclosure check and the observatory",
@@ -26688,10 +26688,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L881",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_phase_6_the_disclosure_check_and_the_observatory",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: phase 6, the disclosure check and the observatory"
+      "norm_label": "2026-09-30: phase 6, the disclosure check and the observatory",
+      "id": "decisions_2026_09_30_phase_6_the_disclosure_check_and_the_observatory"
     },
     {
       "label": "2026-09-30: the Congressional App Challenge build",
@@ -26699,10 +26699,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L596",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_the_congressional_app_challenge_build",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: the congressional app challenge build"
+      "norm_label": "2026-09-30: the congressional app challenge build",
+      "id": "decisions_2026_09_30_the_congressional_app_challenge_build"
     },
     {
       "label": "2026-09-30: the first automated prices",
@@ -26710,10 +26710,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L761",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_the_first_automated_prices",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: the first automated prices"
+      "norm_label": "2026-09-30: the first automated prices",
+      "id": "decisions_2026_09_30_the_first_automated_prices"
     },
     {
       "label": "2026-09-30: The receipt model",
@@ -26721,10 +26721,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L796",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_the_receipt_model",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: the receipt model"
+      "norm_label": "2026-09-30: the receipt model",
+      "id": "decisions_2026_09_30_the_receipt_model"
     },
     {
       "label": "2026-09-30: The receipt model, again",
@@ -26732,10 +26732,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L930",
       "_origin": "ast",
-      "id": "decisions_2026_09_30_the_receipt_model_again",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-09-30: the receipt model, again"
+      "norm_label": "2026-09-30: the receipt model, again",
+      "id": "decisions_2026_09_30_the_receipt_model_again"
     },
     {
       "label": "2026-10-01: Order of the go-live",
@@ -26743,10 +26743,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L961",
       "_origin": "ast",
-      "id": "decisions_2026_10_01_order_of_the_go_live",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-10-01: order of the go-live"
+      "norm_label": "2026-10-01: order of the go-live",
+      "id": "decisions_2026_10_01_order_of_the_go_live"
     },
     {
       "label": "2026-10-01: The remittance tax, checked",
@@ -26754,10 +26754,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L914",
       "_origin": "ast",
-      "id": "decisions_2026_10_01_the_remittance_tax_checked",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-10-01: the remittance tax, checked"
+      "norm_label": "2026-10-01: the remittance tax, checked",
+      "id": "decisions_2026_10_01_the_remittance_tax_checked"
     },
     {
       "label": "2026-10-01: WhatsApp parked, and the app's look",
@@ -26765,10 +26765,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L972",
       "_origin": "ast",
-      "id": "decisions_2026_10_01_whatsapp_parked_and_the_app_s_look",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "2026-10-01: whatsapp parked, and the app's look"
+      "norm_label": "2026-10-01: whatsapp parked, and the app's look",
+      "id": "decisions_2026_10_01_whatsapp_parked_and_the_app_s_look"
     },
     {
       "label": "Decisions",
@@ -26776,10 +26776,10 @@
       "source_file": "DECISIONS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "decisions_decisions",
       "community": 87,
       "community_name": "Decisions",
-      "norm_label": "decisions"
+      "norm_label": "decisions",
+      "id": "decisions_decisions"
     },
     {
       "label": "Before launch",
@@ -26807,7 +26807,7 @@
       "label": "Done",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L319",
+      "source_location": "L321",
       "_origin": "ast",
       "id": "claude_done",
       "community": 88,
@@ -26862,7 +26862,7 @@
       "label": "Watching and later",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L308",
+      "source_location": "L310",
       "_origin": "ast",
       "id": "claude_watching_and_later",
       "community": 88,
@@ -37142,9 +37142,9 @@
       "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages_languagesneedingreview",
-      "target": "mobile_src_i18n_languages_isreviewed",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_isreviewed"
     },
     {
       "relation": "calls",
@@ -37154,9 +37154,9 @@
       "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages_languagesneedingreview",
-      "target": "mobile_src_i18n_languages_offeredlanguages",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_offeredlanguages"
     },
     {
       "relation": "calls",
@@ -37166,9 +37166,9 @@
       "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages_offeredlanguages",
-      "target": "mobile_src_i18n_languages_isreviewed",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_isreviewed"
     },
     {
       "relation": "calls",
@@ -51806,9 +51806,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_list_row_listgroup",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_list_row_listgroup"
     },
     {
       "relation": "imports",
@@ -51818,9 +51818,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_list_row_listrow",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_list_row_listrow"
     },
     {
       "relation": "imports",
@@ -51830,9 +51830,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_ui_apptext",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_apptext"
     },
     {
       "relation": "imports",
@@ -51842,9 +51842,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_ui_button",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_button"
     },
     {
       "relation": "imports",
@@ -51854,9 +51854,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_ui_segmented",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_segmented"
     },
     {
       "relation": "imports",
@@ -51866,9 +51866,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_constants_theme_fonts",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_fonts"
     },
     {
       "relation": "imports",
@@ -51878,9 +51878,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_constants_theme_spacing",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_spacing"
     },
     {
       "relation": "imports",
@@ -51890,9 +51890,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_blog_posts",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_blog_posts"
     },
     {
       "relation": "imports",
@@ -51902,9 +51902,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_glossary_terms",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_glossary_terms"
     },
     {
       "relation": "imports",
@@ -51914,9 +51914,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_modules_module",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules_module"
     },
     {
       "relation": "imports",
@@ -51926,9 +51926,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_modules_modules",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules_modules"
     },
     {
       "relation": "imports",
@@ -51938,9 +51938,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme_usetheme"
     },
     {
       "relation": "imports",
@@ -51950,9 +51950,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_i18n_index_usecopy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_index_usecopy"
     },
     {
       "relation": "imports",
@@ -51962,9 +51962,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_learn_progress_nextstep",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress_nextstep"
     },
     {
       "relation": "imports",
@@ -51974,9 +51974,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_learn_progress_uselearned",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress_uselearned"
     },
     {
       "relation": "imports",
@@ -51986,9 +51986,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_learn_progress_uselearnstats",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress_uselearnstats"
     },
     {
       "relation": "imports",
@@ -51998,9 +51998,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_links_openpage",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_links_openpage"
     },
     {
       "relation": "imports",
@@ -52010,9 +52010,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_icon_icon",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_icon_icon"
     },
     {
       "relation": "imports",
@@ -52022,9 +52022,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_current_tab_usetabfocus",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_current_tab_usetabfocus"
     },
     {
       "relation": "imports",
@@ -52034,9 +52034,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_motion_views_focusrise",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_motion_views_focusrise"
     },
     {
       "relation": "imports",
@@ -52046,9 +52046,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_blog_postcard",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_blog_postcard"
     },
     {
       "relation": "imports",
@@ -52058,9 +52058,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_hero_header_heroheader",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_hero_header_heroheader"
     },
     {
       "relation": "imports",
@@ -52070,9 +52070,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_illustrations_glossaryart",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_illustrations_glossaryart"
     },
     {
       "relation": "imports",
@@ -52082,9 +52082,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_illustrations_observatoryart",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_illustrations_observatoryart"
     },
     {
       "relation": "imports",
@@ -52094,9 +52094,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_illustrations_remitbenchart",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_illustrations_remitbenchart"
     },
     {
       "relation": "imports",
@@ -52106,9 +52106,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_illustrations_routeboardart",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_illustrations_routeboardart"
     },
     {
       "relation": "imports",
@@ -52118,9 +52118,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_learn_path_learnpath",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_learnpath"
     },
     {
       "relation": "imports",
@@ -52130,9 +52130,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_learn_path_ring",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_ring"
     },
     {
       "relation": "imports",
@@ -54002,9 +54002,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_icon_icon",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_icon_icon"
     },
     {
       "relation": "imports",
@@ -54014,9 +54014,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_module_art_module_art",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_module_art_module_art"
     },
     {
       "relation": "imports",
@@ -54026,9 +54026,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_ui_apptext",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui_apptext"
     },
     {
       "relation": "imports",
@@ -54038,9 +54038,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_constants_theme_fonts",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_fonts"
     },
     {
       "relation": "imports",
@@ -54050,9 +54050,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_constants_theme_spacing",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme_spacing"
     },
     {
       "relation": "imports",
@@ -54062,9 +54062,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_data_modules_module",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules_module"
     },
     {
       "relation": "imports",
@@ -54074,9 +54074,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_data_modules_moduleid",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules_moduleid"
     },
     {
       "relation": "imports",
@@ -54086,9 +54086,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_hooks_use_theme_usetheme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme_usetheme"
     },
     {
       "relation": "imports",
@@ -54098,9 +54098,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_i18n_index_usecopy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_index_usecopy"
     },
     {
       "relation": "imports",
@@ -54110,9 +54110,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_lib_learn_progress_moduleprogress",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress_moduleprogress"
     },
     {
       "relation": "imports",
@@ -57350,9 +57350,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_en",
-      "target": "mobile_src_lib_routes_delivery_labels",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes_delivery_labels"
     },
     {
       "relation": "imports",
@@ -57362,9 +57362,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_es",
-      "target": "mobile_src_i18n_en_copy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_copy"
     },
     {
       "relation": "imports",
@@ -57374,9 +57374,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_hi",
-      "target": "mobile_src_i18n_en_copy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_copy"
     },
     {
       "relation": "imports",
@@ -57542,9 +57542,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_tl",
-      "target": "mobile_src_i18n_en_copy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_copy"
     },
     {
       "relation": "imports",
@@ -57554,9 +57554,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_vi",
-      "target": "mobile_src_i18n_en_copy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_copy"
     },
     {
       "relation": "imports",
@@ -58574,9 +58574,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_tests_languages_test",
-      "target": "mobile_src_i18n_languages_languagesneedingreview",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_languagesneedingreview"
     },
     {
       "relation": "imports",
@@ -58586,9 +58586,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_tests_languages_test",
-      "target": "mobile_src_i18n_languages_offeredlanguages",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_offeredlanguages"
     },
     {
       "relation": "imports",
@@ -69890,9 +69890,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "ref_expo_router",
-      "confidence_score": 1.0
+      "target": "ref_expo_router"
     },
     {
       "relation": "imports_from",
@@ -69902,9 +69902,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_list_row",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_list_row"
     },
     {
       "relation": "imports_from",
@@ -69914,9 +69914,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_ui",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui"
     },
     {
       "relation": "imports_from",
@@ -69926,9 +69926,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_constants_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme"
     },
     {
       "relation": "imports_from",
@@ -69938,9 +69938,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_blog",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_blog"
     },
     {
       "relation": "imports_from",
@@ -69950,9 +69950,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_glossary",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_glossary"
     },
     {
       "relation": "imports_from",
@@ -69962,9 +69962,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_data_modules",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules"
     },
     {
       "relation": "imports_from",
@@ -69974,9 +69974,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme"
     },
     {
       "relation": "imports_from",
@@ -69986,9 +69986,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_i18n_index",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_index"
     },
     {
       "relation": "imports_from",
@@ -69998,9 +69998,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_learn_progress",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress"
     },
     {
       "relation": "imports_from",
@@ -70010,9 +70010,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_links",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_links"
     },
     {
       "relation": "imports_from",
@@ -70022,9 +70022,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_icon",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_icon"
     },
     {
       "relation": "imports_from",
@@ -70034,9 +70034,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_lib_current_tab",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_current_tab"
     },
     {
       "relation": "imports_from",
@@ -70046,9 +70046,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_motion_views",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_motion_views"
     },
     {
       "relation": "imports_from",
@@ -70058,9 +70058,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_blog",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_blog"
     },
     {
       "relation": "imports_from",
@@ -70070,9 +70070,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_hero_header",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_hero_header"
     },
     {
       "relation": "imports_from",
@@ -70082,9 +70082,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_illustrations",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_illustrations"
     },
     {
       "relation": "imports_from",
@@ -70094,9 +70094,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_components_learn_path",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path"
     },
     {
       "relation": "imports_from",
@@ -71366,9 +71366,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_icon",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_icon"
     },
     {
       "relation": "imports_from",
@@ -71378,9 +71378,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_module_art",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_module_art"
     },
     {
       "relation": "imports_from",
@@ -71390,9 +71390,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_ui",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_ui"
     },
     {
       "relation": "imports_from",
@@ -71402,9 +71402,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_constants_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_constants_theme"
     },
     {
       "relation": "imports_from",
@@ -71414,9 +71414,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_data_modules",
-      "confidence_score": 1.0
+      "target": "mobile_src_data_modules"
     },
     {
       "relation": "imports_from",
@@ -71426,9 +71426,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_hooks_use_theme",
-      "confidence_score": 1.0
+      "target": "mobile_src_hooks_use_theme"
     },
     {
       "relation": "imports_from",
@@ -71438,9 +71438,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_i18n_index",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_index"
     },
     {
       "relation": "imports_from",
@@ -71450,9 +71450,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_lib_learn_progress",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_learn_progress"
     },
     {
       "relation": "imports_from",
@@ -73250,9 +73250,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_en",
-      "target": "mobile_src_lib_routes",
-      "confidence_score": 1.0
+      "target": "mobile_src_lib_routes"
     },
     {
       "relation": "imports_from",
@@ -73262,9 +73262,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_es",
-      "target": "mobile_src_i18n_en",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en"
     },
     {
       "relation": "imports_from",
@@ -73274,9 +73274,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_hi",
-      "target": "mobile_src_i18n_en",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en"
     },
     {
       "relation": "imports_from",
@@ -73406,9 +73406,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_tl",
-      "target": "mobile_src_i18n_en",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en"
     },
     {
       "relation": "imports_from",
@@ -73418,9 +73418,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_vi",
-      "target": "mobile_src_i18n_en",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en"
     },
     {
       "relation": "imports_from",
@@ -74174,9 +74174,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_tests_languages_test",
-      "target": "mobile_src_i18n_languages",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages"
     },
     {
       "relation": "imports_from",
@@ -78701,7 +78701,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L308",
+      "source_location": "L310",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_open_items",
@@ -78712,7 +78712,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L319",
+      "source_location": "L321",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_open_items",
@@ -78756,7 +78756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L409",
+      "source_location": "L411",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78767,7 +78767,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L447",
+      "source_location": "L449",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78789,7 +78789,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L468",
+      "source_location": "L470",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78800,7 +78800,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L495",
+      "source_location": "L497",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78811,7 +78811,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L507",
+      "source_location": "L509",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78822,7 +78822,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L515",
+      "source_location": "L517",
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude_remitbridge_app",
@@ -78869,9 +78869,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions",
-      "target": "decisions_decisions",
-      "confidence_score": 1.0
+      "target": "decisions_decisions"
     },
     {
       "relation": "contains",
@@ -78880,9 +78880,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_first_round_after_reading_prd_v0_4",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_first_round_after_reading_prd_v0_4"
     },
     {
       "relation": "contains",
@@ -78891,9 +78891,9 @@
       "source_location": "L144",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_third_round",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_third_round"
     },
     {
       "relation": "contains",
@@ -78902,9 +78902,9 @@
       "source_location": "L208",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_during_the_first_build_slice",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_during_the_first_build_slice"
     },
     {
       "relation": "contains",
@@ -78913,9 +78913,9 @@
       "source_location": "L256",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_onboarding_and_the_compare_controls",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_onboarding_and_the_compare_controls"
     },
     {
       "relation": "contains",
@@ -78924,9 +78924,9 @@
       "source_location": "L326",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_angad_s_answers_on_partners_structure_and_prices",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_angad_s_answers_on_partners_structure_and_prices"
     },
     {
       "relation": "contains",
@@ -78935,9 +78935,9 @@
       "source_location": "L541",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_accessibility_and_languages",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_accessibility_and_languages"
     },
     {
       "relation": "contains",
@@ -78946,9 +78946,9 @@
       "source_location": "L596",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_the_congressional_app_challenge_build",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_the_congressional_app_challenge_build"
     },
     {
       "relation": "contains",
@@ -78957,9 +78957,9 @@
       "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_28_second_round",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_28_second_round"
     },
     {
       "relation": "contains",
@@ -78968,9 +78968,9 @@
       "source_location": "L729",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_phase_3_defaults",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_phase_3_defaults"
     },
     {
       "relation": "contains",
@@ -78979,9 +78979,9 @@
       "source_location": "L761",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_the_first_automated_prices",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_the_first_automated_prices"
     },
     {
       "relation": "contains",
@@ -78990,9 +78990,9 @@
       "source_location": "L796",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_the_receipt_model",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_the_receipt_model"
     },
     {
       "relation": "contains",
@@ -79001,9 +79001,9 @@
       "source_location": "L824",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_phase_4_defaults",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_phase_4_defaults"
     },
     {
       "relation": "contains",
@@ -79012,9 +79012,9 @@
       "source_location": "L845",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_phase_5_receipt_photos_on_whatsapp",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_phase_5_receipt_photos_on_whatsapp"
     },
     {
       "relation": "contains",
@@ -79023,9 +79023,9 @@
       "source_location": "L881",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_phase_6_the_disclosure_check_and_the_observatory",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_phase_6_the_disclosure_check_and_the_observatory"
     },
     {
       "relation": "contains",
@@ -79034,9 +79034,9 @@
       "source_location": "L914",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_10_01_the_remittance_tax_checked",
-      "confidence_score": 1.0
+      "target": "decisions_2026_10_01_the_remittance_tax_checked"
     },
     {
       "relation": "contains",
@@ -79045,9 +79045,9 @@
       "source_location": "L930",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_09_30_the_receipt_model_again",
-      "confidence_score": 1.0
+      "target": "decisions_2026_09_30_the_receipt_model_again"
     },
     {
       "relation": "contains",
@@ -79056,9 +79056,9 @@
       "source_location": "L961",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_10_01_order_of_the_go_live",
-      "confidence_score": 1.0
+      "target": "decisions_2026_10_01_order_of_the_go_live"
     },
     {
       "relation": "contains",
@@ -79067,9 +79067,9 @@
       "source_location": "L972",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions_decisions",
-      "target": "decisions_2026_10_01_whatsapp_parked_and_the_app_s_look",
-      "confidence_score": 1.0
+      "target": "decisions_2026_10_01_whatsapp_parked_and_the_app_s_look"
     },
     {
       "relation": "contains",
@@ -80882,9 +80882,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "docs_translation_review_hi",
-      "target": "docs_translation_review_hi_hindi_review_sheet",
-      "confidence_score": 1.0
+      "target": "docs_translation_review_hi_hindi_review_sheet"
     },
     {
       "relation": "contains",
@@ -80893,9 +80893,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "docs_translation_review_hi_hindi_review_sheet",
-      "target": "docs_translation_review_hi_for_the_reviewer",
-      "confidence_score": 1.0
+      "target": "docs_translation_review_hi_for_the_reviewer"
     },
     {
       "relation": "contains",
@@ -85579,9 +85579,9 @@
       "source_location": "L143",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_app_tabs_learn_styles",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_tabs_learn_styles"
     },
     {
       "relation": "contains",
@@ -85590,9 +85590,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_app_tabs_learn",
-      "target": "mobile_src_app_tabs_learn_learnscreen",
-      "confidence_score": 1.0
+      "target": "mobile_src_app_tabs_learn_learnscreen"
     },
     {
       "relation": "contains",
@@ -86558,9 +86558,9 @@
       "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_node",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_node"
     },
     {
       "relation": "contains",
@@ -86569,9 +86569,9 @@
       "source_location": "L215",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_halo",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_halo"
     },
     {
       "relation": "contains",
@@ -86580,9 +86580,9 @@
       "source_location": "L243",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_clouds",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_clouds"
     },
     {
       "relation": "contains",
@@ -86591,9 +86591,9 @@
       "source_location": "L254",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_learnbackdrop",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_learnbackdrop"
     },
     {
       "relation": "contains",
@@ -86602,9 +86602,9 @@
       "source_location": "L300",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_cloud",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_cloud"
     },
     {
       "relation": "contains",
@@ -86613,9 +86613,9 @@
       "source_location": "L312",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_ring",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_ring"
     },
     {
       "relation": "contains",
@@ -86624,9 +86624,9 @@
       "source_location": "L359",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_styles",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_styles"
     },
     {
       "relation": "contains",
@@ -86635,9 +86635,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_components_learn_path",
-      "target": "mobile_src_components_learn_path_learnpath",
-      "confidence_score": 1.0
+      "target": "mobile_src_components_learn_path_learnpath"
     },
     {
       "relation": "contains",
@@ -88186,9 +88186,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_en",
-      "target": "mobile_src_i18n_en_en",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_en"
     },
     {
       "relation": "contains",
@@ -88197,9 +88197,9 @@
       "source_location": "L968",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_en",
-      "target": "mobile_src_i18n_en_copy",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_en_copy"
     },
     {
       "relation": "contains",
@@ -88208,9 +88208,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_es",
-      "target": "mobile_src_i18n_es_es",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_es_es"
     },
     {
       "relation": "contains",
@@ -88219,9 +88219,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_hi",
-      "target": "mobile_src_i18n_hi_hi",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_hi_hi"
     },
     {
       "relation": "contains",
@@ -88384,9 +88384,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_languagecode",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_languagecode"
     },
     {
       "relation": "contains",
@@ -88395,9 +88395,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_language",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_language"
     },
     {
       "relation": "contains",
@@ -88406,9 +88406,9 @@
       "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_languages",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_languages"
     },
     {
       "relation": "contains",
@@ -88417,9 +88417,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_isreviewed",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_isreviewed"
     },
     {
       "relation": "contains",
@@ -88428,9 +88428,9 @@
       "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_offeredlanguages",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_offeredlanguages"
     },
     {
       "relation": "contains",
@@ -88439,9 +88439,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_languages",
-      "target": "mobile_src_i18n_languages_languagesneedingreview",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_languages_languagesneedingreview"
     },
     {
       "relation": "contains",
@@ -88450,9 +88450,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_tl",
-      "target": "mobile_src_i18n_tl_tl",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_tl_tl"
     },
     {
       "relation": "contains",
@@ -88461,9 +88461,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_i18n_vi",
-      "target": "mobile_src_i18n_vi_vi",
-      "confidence_score": 1.0
+      "target": "mobile_src_i18n_vi_vi"
     },
     {
       "relation": "contains",
@@ -90859,9 +90859,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "mobile_src_tests_languages_test",
-      "target": "mobile_src_tests_languages_test_codes",
-      "confidence_score": 1.0
+      "target": "mobile_src_tests_languages_test_codes"
     },
     {
       "relation": "contains",
@@ -100491,9 +100491,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "decisions",
-      "target": "docs_prd",
-      "confidence_score": 1.0
+      "target": "docs_prd"
     },
     {
       "relation": "references",
@@ -101599,5 +101599,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c42f36aa91750e19d9139bafe63269e51b9f656c"
+  "built_at_commit": "8f70902f47a3fee1296a77acfec3c3735974f05c"
 }

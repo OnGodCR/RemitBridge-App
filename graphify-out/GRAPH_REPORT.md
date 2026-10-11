@@ -1,7 +1,7 @@
 # Graph Report - RemitBridge-App  (2026-10-10)
 
 ## Corpus Check
-- 401 files · ~841,400 words
+- 401 files · ~841,422 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c42f36aa`
+- Built from commit: `8f70902f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -187,8 +187,8 @@
   packages/receipt/src/harness.ts → mobile/src/dev/receipt-samples.ts
 - `readAnswer()` --indirect_call--> `field()`  [INFERRED]
   packages/receipt/src/model.ts → mobile/src/dev/receipt-samples.ts
-- `FieldValues` --references--> `DeliveryMethod`  [EXTRACTED]
-  packages/receipt/src/types.ts → mobile/src/lib/routes.ts
+- `State` --references--> `DeliveryMethod`  [EXTRACTED]
+  packages/bot/src/plan.ts → mobile/src/lib/routes.ts
 
 ## Import Cycles
 - None detected.
@@ -636,9 +636,9 @@ Nodes (3): reactCompiler, typedRoutes, experiments
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `expo-router` connect `expo-router` to `(tabs)/_layout.tsx`, `track`, `account.tsx`, `saved-checks.tsx`, `lesson/[id].tsx`, `motion-views.tsx`, `whatsapp-section.tsx`, `i18n/index.tsx`, `modules.ts`, `onboarding/_layout.tsx`, `compare.tsx`, `blog.tsx`, `receipt-preview.tsx`, `plugins`, `admin.tsx`, `sign-in/_layout.tsx`, `useTheme`, `callback.tsx`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `useTheme()` connect `useTheme` to `track`, `metrics.tsx`, `account.tsx`, `saved-checks.tsx`, `lesson/[id].tsx`, `illustrations.tsx`, `motion-views.tsx`, `i18n/index.tsx`, `expo-router`, `formula/src/index.ts`, `compare.tsx`, `blog.tsx`, `receipt-preview.tsx`, `admin.tsx`, `receipt-scan.ts`, `learn-path.tsx`?**
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Why does `useTheme()` connect `useTheme` to `track`, `metrics.tsx`, `account.tsx`, `saved-checks.tsx`, `lesson/[id].tsx`, `illustrations.tsx`, `motion-views.tsx`, `i18n/index.tsx`, `expo-router`, `formula/src/index.ts`, `compare.tsx`, `blog.tsx`, `receipt-preview.tsx`, `admin.tsx`, `receipt-scan.ts`, `learn-path.tsx`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Why does `plugins` connect `plugins` to `expo-router`, `expo`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **What connects `Talking to Angad`, `Keeping the docs current`, `Features to set up` to the rest of the system?**
