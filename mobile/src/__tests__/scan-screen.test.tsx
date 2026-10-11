@@ -211,7 +211,7 @@ it('keeps the answers and says so when confirming fails', async () => {
   fireEvent.press(screen.getByText('Amount received'));
   fireEvent.press(screen.getByText('This is right'));
   fireEvent.press(screen.getByText('See what it cost'));
-  await screen.findByText(/has been deleted/);
+  await screen.findByText(/was deleted/);
   expect(screen.getByText('Check each value')).toBeTruthy();
 });
 
@@ -230,14 +230,14 @@ it('explains a photo with no text, or one it couldn’t line up', async () => {
   await screen.findByText(/No text found/);
   jest.mocked(recognize).mockResolvedValueOnce({ ok: false, reason: 'misaligned' });
   fireEvent.press(screen.getByText('Choose a photo'));
-  await screen.findByText(/nothing was covered/);
+  await screen.findByText(/Something went wrong\. Take the photo again/);
 });
 
 it('turns back a photo too blurry to read, before anything is covered or sent (D131)', async () => {
   jest.mocked(recognize).mockResolvedValueOnce({ ok: false, reason: 'blurry' });
   render(<ScanScreen />);
   fireEvent.press(screen.getByText('Choose a photo'));
-  await screen.findByText(/too blurry to read/);
+  await screen.findByText(/Too blurry/);
   expect(screen.queryByText('Check what’s covered')).toBeNull();
   expect(sendScan).not.toHaveBeenCalled();
 });
@@ -245,7 +245,7 @@ it('turns back a photo too blurry to read, before anything is covered or sent (D
 it('warns on a slightly blurry photo, and still lets it through', async () => {
   jest.mocked(recognize).mockResolvedValueOnce({ ok: true, page: PAGE, sharpness: 'somewhat_blurry' });
   await toPreview();
-  expect(screen.getByText(/a little blurry/)).toBeTruthy();
+  expect(screen.getByText(/A bit blurry/)).toBeTruthy();
   expect(screen.getByText('Read my receipt')).toBeTruthy();
 });
 
@@ -256,7 +256,7 @@ it('says so, and deletes the receipt, when no amount could be read at all', asyn
   });
   await toPreview();
   fireEvent.press(screen.getByText('Read my receipt'));
-  await screen.findByText(/couldn’t read the amounts/);
+  await screen.findByText(/Couldn’t read the amounts/);
   expect(forgetReceipt).toHaveBeenCalledWith(RESULT.id);
   expect(screen.queryByText('Check each value')).toBeNull();
 });
@@ -264,7 +264,7 @@ it('says so, and deletes the receipt, when no amount could be read at all', asyn
 it('asks for camera access when it’s refused', async () => {
   render(<ScanScreen />);
   fireEvent.press(screen.getByText('Take a photo'));
-  await screen.findByText(/allow camera access/);
+  await screen.findByText(/Allow camera access/);
 });
 
 it('speaks Hindi when Hindi is chosen', async () => {

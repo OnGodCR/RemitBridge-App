@@ -48,14 +48,14 @@ describe('the observatory', () => {
     expect(screen.getByText('Western Union · United States → Mexico · 7 receipts')).toBeTruthy();
     expect(screen.getByText('4.25%')).toBeTruthy();
     expect(screen.getByText('3 of 5 compared got a worse rate than advertised that day')).toBeTruthy();
-    expect(screen.getByText('6 were paid in cash or similar. The 1% tax matched on 5; no tax line was found on 1.')).toBeTruthy();
+    expect(screen.getByText('6 paid in cash or similar. Tax matched on 5, missing on 1.')).toBeTruthy();
     expect(screen.getByText('the CFPB’s contact details: 4 of 12')).toBeTruthy();
   });
 
   it('shows no breakdown while there are fewer receipts than a group needs', async () => {
     fetchMock.mockResolvedValue({ ...DATA, receipts: 3, groups: [], tax: null, disclosures_missing: {} });
     render(<ObservatoryScreen />);
-    await waitFor(() => expect(screen.getByText(/Not enough receipts have been shared yet/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/Not enough receipts yet/)).toBeTruthy());
     expect(screen.queryByText('By provider and route')).toBeNull();
   });
 

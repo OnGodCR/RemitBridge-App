@@ -72,14 +72,14 @@ describe('true cost', () => {
     expect(screen.getAllByText('$5.00').length).toBeGreaterThan(0);
     expect(screen.getByText(money(expected.markupCost, 'USD'))).toBeTruthy();
     // The charts say the same in words, for VoiceOver.
-    expect(screen.getByLabelText(/This transfer cost 5\.\d+% of what was sent\. The world average is 6\.36%; the UN target is 3%\./)).toBeTruthy();
-    expect(screen.getByLabelText(/^MX\$8,560\.00 arrived\. At the mid-market rate with no fee, MX\$9,026\.82 would have\./)).toBeTruthy();
-    expect(screen.getByText(/Mid-market rate from Frankfurter: 1 USD = 17\.7 MXN, for Sep 28, 2026/)).toBeTruthy();
+    expect(screen.getByLabelText(/This cost 5\.\d+%\. World average 6\.36%, UN target 3%\./)).toBeTruthy();
+    expect(screen.getByLabelText(/^MX\$8,560\.00 arrived, of MX\$9,026\.82 possible\./)).toBeTruthy();
+    expect(screen.getByText(/Mid-market rate: 1 USD = 17\.7 MXN \(Frankfurter, Sep 28, 2026\)/)).toBeTruthy();
   });
 
   it('says why when the day’s mid-market rate couldn’t be loaded', () => {
     open(confirmed({ mid: null }));
-    expect(screen.getAllByText(/couldn’t be loaded/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Couldn’t load that day’s mid-market rate/).length).toBeGreaterThan(0);
   });
 });
 
@@ -111,26 +111,26 @@ describe('what you could have kept (D119)', () => {
     open(confirmed({ best: best() }));
     expect(screen.getByText('With Ria, you could have kept')).toBeTruthy();
     expect(screen.getAllByText('$12.68')).toHaveLength(2); // at the top, and in the details
-    expect(screen.getByText(/your family would have received MX\$8,710\.00/)).toBeTruthy();
+    expect(screen.getByText(/Your family would have received MX\$8,710\.00/)).toBeTruthy();
     expect(screen.getByLabelText('Your cost $23.60. Ria: $10.92.')).toBeTruthy();
-    expect(screen.getByText(/within a day of your transfer/)).toBeTruthy();
-    expect(screen.getByText('Compared with: Ria, Western Union. We don’t have prices from every provider yet.')).toBeTruthy();
+    expect(screen.getByText(/^Prices checked /)).toBeTruthy();
+    expect(screen.getByText('Compared with: Ria, Western Union.')).toBeTruthy();
   });
 
   it('says plainly when today’s prices stand in, when the amount was estimated, and a bank payment', () => {
     open(confirmed({ best: best({ when: 'today', estimated: true, checked_amount: 200, paid_from: 'bank_account' }) }));
-    expect(screen.getByText(/We don’t have prices from Sep 28, 2026, so these are today’s/)).toBeTruthy();
-    expect(screen.getByText(/the price for \$200, the nearest amount we check/)).toBeTruthy();
-    expect(screen.getByText(/That’s paying from a bank account/)).toBeTruthy();
+    expect(screen.getByText(/No prices from Sep 28, 2026, so these are today’s/)).toBeTruthy();
+    expect(screen.getByText(/Estimated from the \$200 price/)).toBeTruthy();
+    expect(screen.getByText(/Paying from a bank account usually costs less/)).toBeTruthy();
   });
 
   it('says so when the receipt already had the best price, and why when there is nothing to compare', () => {
     open(confirmed({ best: best({ provider_name: 'Western Union', same_provider: true, could_keep: 0 }) }));
-    expect(screen.getByText('You already had the best price we found: Western Union.')).toBeTruthy();
+    expect(screen.getByText('Western Union was already the best price we found.')).toBeTruthy();
     expect(screen.queryByText(/, you could have kept/)).toBeNull();
     screen.unmount();
     open(confirmed());
-    expect(screen.getByText(/nothing fair to compare with/)).toBeTruthy();
+    expect(screen.getByText(/No prices yet for this kind of transfer/)).toBeTruthy();
   });
 });
 
@@ -139,13 +139,13 @@ describe('advertised vs. paid', () => {
     open(confirmed());
     expect(screen.getByLabelText('Mid-market rate 1 USD = 17.7 MXN. Advertised 1 USD = 17.3 MXN. Your receipt 1 USD = 17.2 MXN.')).toBeTruthy();
     expect(screen.getByText(/Advertised price checked Sep 28/)).toBeTruthy();
-    expect(screen.getByText('The rate you got cost $2.82 more than the advertised one.')).toBeTruthy();
+    expect(screen.getByText('Your rate cost $2.82 more than advertised.')).toBeTruthy();
   });
 
   it.each([
-    ['no_quote', /no price from this provider checked within a day/],
-    ['not_tracked', /don’t check this provider’s prices/],
-    ['no_route', /don’t check prices on this route yet/],
+    ['no_quote', /No price from this provider that day/],
+    ['not_tracked', /don’t check this provider yet/],
+    ['no_route', /don’t check this route yet/],
     ['missing_values', /date, amount or rate is missing/],
   ] as const)('says plainly when there’s nothing to compare (%s)', (reason, text) => {
     open(confirmed({ comparison: { quote: null, gap: null, reason } }));
@@ -156,22 +156,22 @@ describe('advertised vs. paid', () => {
 describe('the tax check', () => {
   it('confirms a correct 1% and shows the bank-funded equivalent', () => {
     open(confirmed());
-    expect(screen.getByText('This one was paid by cash. 1% of $500.00 is $5.00, and the receipt shows $5.00.')).toBeTruthy();
-    expect(screen.getByLabelText(`Paid from a bank account instead, the same transfer would have cost ${money(expected.totalCost - 5, 'USD')} in total, $5.00 less.`)).toBeTruthy();
+    expect(screen.getByText('Paid by cash. 1% of $500.00 is $5.00. The receipt shows $5.00.')).toBeTruthy();
+    expect(screen.getByLabelText(`From a bank account: ${money(expected.totalCost - 5, 'USD')} total, $5.00 less.`)).toBeTruthy();
     expect(screen.getByText('From a bank account')).toBeTruthy();
-    expect(screen.getByText(/proposed rules do/)).toBeTruthy();
+    expect(screen.getByText(/proposed rules/)).toBeTruthy();
   });
 
   it('says a tax line wasn’t found, without implying anything', () => {
     const { tax: _tax, ...noTax } = WU;
     open(confirmed({}, noTax));
-    expect(screen.getByText('This one was paid by cash. 1% of $500.00 is $5.00. No tax line was found on this receipt.')).toBeTruthy();
+    expect(screen.getByText('Paid by cash. 1% of $500.00 is $5.00. No tax line found.')).toBeTruthy();
   });
 
   it('says the tax doesn’t apply to a card payment', () => {
     open(confirmed({}, { ...WU, funding_method: 'debit_card', tax: undefined }));
-    expect(screen.getByText('This one was paid by debit card, so the tax doesn’t apply.')).toBeTruthy();
-    expect(screen.queryByText(/proposed rules do/)).toBeNull();
+    expect(screen.getByText('Paid by debit card, so no tax applies.')).toBeTruthy();
+    expect(screen.queryByText(/proposed rules/)).toBeNull();
   });
 });
 
@@ -194,12 +194,12 @@ describe('standard disclosures', () => {
     expect(screen.getByText('Not found on this receipt')).toBeTruthy();
     expect(screen.getByText('your rights if there’s an error')).toBeTruthy();
     expect(screen.getByText('the CFPB’s contact details')).toBeTruthy();
-    expect(screen.getByText(/doesn’t mean the provider left anything out/)).toBeTruthy();
+    expect(screen.getByText(/so this isn’t proof/)).toBeTruthy();
   });
 
   it('says so when everything was found', () => {
     open(confirmed());
-    expect(screen.getByText('Every standard item was found on this receipt.')).toBeTruthy();
+    expect(screen.getByText('Every standard item was found.')).toBeTruthy();
     expect(screen.getByText('What this does not tell you')).toBeTruthy();
   });
 });
@@ -207,7 +207,7 @@ describe('standard disclosures', () => {
 describe('a small transfer', () => {
   it('says the tax doesn’t apply to $15 or less', () => {
     open(confirmed({ fields: fields({ ...WU, amount_sent: 12, fee: 2, tax: undefined, amount_received: 206.4 }) }));
-    expect(screen.getByText('This was a transfer of $15 or less, so the tax doesn’t apply.')).toBeTruthy();
+    expect(screen.getByText('$15 or less, so no tax applies.')).toBeTruthy();
   });
 });
 
