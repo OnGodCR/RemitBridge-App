@@ -83,7 +83,7 @@ describe('TrueCost with a funding method', () => {
     fill();
     const plain = computeTransferCost({ sent: 200, fee: 5, quotedRate: 17.2, midRate: 17.7 });
     expect(screen.getByText(money(plain.totalCost, 'USD'))).toBeTruthy();
-    expect(screen.queryByText(/federal tax/)).toBeNull();
+    expect(screen.queryByText(/1% tax/)).toBeNull();
   });
 
   it('adds and explains the 1% for cash, in the total cost', () => {
@@ -91,7 +91,7 @@ describe('TrueCost with a funding method', () => {
     fireEvent.press(screen.getByText('Cash'));
     const taxed = computeTransferCost({ sent: 201.95, fee: 5, transferTax: 1.95, quotedRate: 17.2, midRate: 17.7 });
     expect(screen.getByText(money(taxed.totalCost, 'USD'))).toBeTruthy();
-    expect(screen.getByText('Paid by cash, so a 1% federal tax of $1.95 is added. It’s in the total cost.')).toBeTruthy();
+    expect(screen.getByText('Paid by cash, so the 1% tax ($1.95) is included.')).toBeTruthy();
     expect(screen.getByText('Federal remittance tax')).toBeTruthy();
   });
 });

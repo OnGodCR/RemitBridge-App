@@ -64,7 +64,7 @@ it('links by opening WhatsApp with a one-time code typed in', async () => {
   });
   expect(newLinkCode).toHaveBeenCalled();
   expect(openChat).toHaveBeenCalledWith('15551845383', 'LINK K7P2QX');
-  expect(screen.getByText(/Press send, then come back/)).toBeTruthy();
+  expect(screen.getByText(/Press send in WhatsApp, then come back/)).toBeTruthy();
 });
 
 it('shows a linked chat, and unlinks after asking', async () => {

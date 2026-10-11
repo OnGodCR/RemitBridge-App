@@ -41,7 +41,7 @@ with your name and the date.
 | common.notConnected | Not connected. | सर्वर से जुड़ा नहीं है। | |
 | common.stepOf | Step {step} of {of} | चरण {step} / {of} | | CHANGED 2026-10-10: from your notes, please read again
 | common.noMailTitle | Email us | हमें ईमेल करें | |
-| common.noMailBody | This phone has no email app set up. Write to us at {address} from any email. | इस फ़ोन में कोई ईमेल ऐप सेट नहीं है। किसी भी ईमेल से {address} पर लिखें। | |
+| common.noMailBody | No email app on this phone. Write to {address}. | इस फ़ोन में ईमेल ऐप नहीं है। {address} पर लिखें। | | CHANGED 2026-10-11: shorter, please read again
 | tabs.scan | Scan | स्कैन | |
 | tabs.compare | Compare | तुलना | |
 | tabs.tools | Tools | टूल | |
@@ -83,35 +83,35 @@ with your name and the date.
 | language.title | Language | भाषा | |
 | language.pick | Choose a language | भाषा चुनें | |
 | language.draft | Draft | ड्राफ़्ट | |
-| language.draftNote | Draft translations show only in test builds, until a speaker of the language has checked them and agreed to stand behind them. | ड्राफ़्ट अनुवाद अभी किसी जानकार ने नहीं जाँचे हैं, इसलिए कुछ शब्द गलत लग सकते हैं। | | CHANGED 2026-10-10: from your notes, please read again
+| language.draftNote | Not yet checked by a fluent speaker. | अभी किसी जानकार ने नहीं जाँचा। | | CHANGED 2026-10-10: from your notes, please read again CHANGED 2026-10-11: shorter, please read again
 | language.improve | Something reads wrong? Tell us | कुछ ठीक नहीं लग रहा? हमें बताएँ | |
 | language.volunteerTitle | We need volunteers | हमें वॉलंटियर चाहिए | | NEW 2026-10-10
-| language.volunteerBody | Our Spanish, Tagalog and Vietnamese are drafts no fluent speaker has checked yet. If you speak one well, help us check it. | ऐप की स्पैनिश, टागालॉग और वियतनामी अभी ड्राफ़्ट हैं, जिन्हें किसी जानकार ने नहीं जाँचा। अगर आप इनमें से कोई भाषा अच्छी तरह जानते हैं, तो जाँचने में हमारी मदद करें। | | NEW 2026-10-10
+| language.volunteerBody | Speak one of our languages well? Help us check the drafts. | हमारी कोई भाषा अच्छी तरह जानते हैं? ड्राफ़्ट जाँचने में मदद करें। | | NEW 2026-10-10 CHANGED 2026-10-11: shorter, please read again
 | onboarding.welcome.lead | Sending money home | घर पैसे भेजना | |
 | onboarding.welcome.accent | shouldn’t cost this much | इतना महँगा नहीं होना चाहिए | |
-| onboarding.welcome.intro | RemitBridge shows what a transfer really costs, and which provider leaves your family the most. | RemitBridge दिखाता है कि पैसे भेजने में असल में कितना खर्च होता है, और किस कंपनी से आपके परिवार को सबसे ज़्यादा पैसा मिलता है। | |
+| onboarding.welcome.intro | See what a transfer really costs, and who gives your family the most. | देखें कि ट्रांसफ़र असल में कितने का पड़ता है, और कौन आपके परिवार को सबसे ज़्यादा देता है। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.welcome.getStarted | Get started | शुरू करें | |
 | onboarding.welcome.haveAccount | I already have an account | मेरा खाता पहले से है | |
 | onboarding.why.eyebrow | Why it matters | यह क्यों ज़रूरी है | |
 | onboarding.why.heading | The world takes a cut of every dollar sent home. | घर भेजे गए हर डॉलर में से दुनिया अपना हिस्सा काट लेती है। | |
 | onboarding.why.flowsLabel | Sent home each year | हर साल घर भेजे जाते हैं | |
-| onboarding.why.flowsNote | Money migrant workers send to family in other countries. | प्रवासी मज़दूर दूसरे देशों में अपने परिवार को जो पैसा भेजते हैं। | |
+| onboarding.why.flowsNote | From workers abroad to their families. | विदेश में काम करने वालों से उनके परिवारों तक। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.why.costLabel | Average cost to send | भेजने की औसत लागत | |
-| onboarding.why.costNote | The global average on a $200 transfer. | $200 भेजने पर दुनिया भर का औसत। | |
+| onboarding.why.costNote | Global average on $200. | $200 पर दुनिया का औसत। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.why.targetLabel | What it should be | लागत इतनी होनी चाहिए | | CHANGED 2026-10-10: from your notes, please read again
-| onboarding.why.targetNote | The UN target the world agreed to hit by 2030. | संयुक्त राष्ट्र का लक्ष्य, जिसे दुनिया ने 2030 तक पाने पर सहमति दी है। | |
+| onboarding.why.targetNote | The UN goal for 2030. | 2030 के लिए संयुक्त राष्ट्र का लक्ष्य। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.why.sources | Sources: {list}. | स्रोत: {list}। | |
 | onboarding.why.continue | Continue | आगे बढ़ें | |
 | onboarding.route.eyebrow | Your route | आपका रूट | |
 | onboarding.route.lead | Where do you | आप किस देश में | | CHANGED 2026-10-10: from your notes, please read again
 | onboarding.route.accent | send money? | पैसे भेजते हैं? | | CHANGED 2026-10-10: from your notes, please read again
-| onboarding.route.intro | Compare opens on this route. You can change it anytime. | तुलना इसी रूट पर खुलेगी। आप इसे कभी भी बदल सकते हैं। | |
+| onboarding.route.intro | You can change it anytime. | इसे कभी भी बदल सकते हैं। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.route.paidIn | {country}. Paid out in {currency} | {country}। भुगतान {currency} में | |
-| onboarding.route.elsewhere | Sending somewhere else? Pick any country on Compare to ask us to add it. | कहीं और भेजते हैं? तुलना में कोई भी देश चुनें और हमसे उसे जोड़ने को कहें। | |
+| onboarding.route.elsewhere | Somewhere else? Ask for it on Compare. | कहीं और भेजते हैं? तुलना में उसे माँगें। | | CHANGED 2026-10-11: shorter, please read again
 | signIn.titleOnboarding | Want to save your checks? | अपनी जाँचें सँभालकर रखना चाहेंगे? | | CHANGED 2026-10-07: please read again
-| signIn.bodyOnboarding | With an account, the comparisons and receipts you check are still here next time. You don’t need one to compare. | खाता हो, तो आपकी जाँची हुई तुलनाएँ और रसीदें अगली बार भी यहीं मिलेंगी। तुलना करने के लिए खाते की ज़रूरत नहीं। | | CHANGED 2026-10-07: please read again
+| signIn.bodyOnboarding | Keep your checks for next time. Comparing works without one. | अपनी जाँचें अगली बार के लिए रखें। तुलना बिना खाते के भी होती है। | | CHANGED 2026-10-07: please read again CHANGED 2026-10-11: shorter, please read again
 | signIn.titleAccount | Sign in | साइन इन करें | | CHANGED 2026-10-07: please read again
-| signIn.bodyAccount | The comparisons and receipts you check will be here next time. You can delete them all from Account. | आपकी जाँची हुई तुलनाएँ और रसीदें अगली बार भी यहीं मिलेंगी। आप इन्हें खाता में जाकर कभी भी मिटा सकते हैं। | | CHANGED 2026-10-07: please read again
+| signIn.bodyAccount | Keep your checks for next time. Delete them anytime. | अपनी जाँचें अगली बार के लिए रखें। जब चाहें मिटा दें। | | CHANGED 2026-10-07: please read again CHANGED 2026-10-11: shorter, please read again
 | signIn.google | Continue with Google | Google से जारी रखें | |
 | signIn.email | Continue with email | ईमेल से जारी रखें | |
 | signIn.skip | Not now | अभी नहीं | | CHANGED 2026-10-07: please read again
@@ -124,11 +124,11 @@ with your name and the date.
 | signIn.codeLabel | 6-digit code | 6 अंकों का कोड | |
 | signIn.resendIn | Resend in {s}s | {s} सेकंड में फिर भेजें | |
 | signIn.resend | Resend code | कोड फिर भेजें | |
-| signIn.errors.notReady | This sign-in option isn’t set up yet. Try another, or skip for now. | साइन इन का यह तरीका अभी तैयार नहीं है। कोई दूसरा तरीका आज़माएँ, या अभी छोड़ दें। | |
-| signIn.errors.notOpen | Email sign-in isn’t open yet. Try another option, or skip for now. | ईमेल से साइन इन अभी शुरू नहीं हुआ है। कोई दूसरा तरीका आज़माएँ, या अभी छोड़ दें। | |
-| signIn.errors.rateLimit | Too many tries. Wait a minute and try again. | बहुत ज़्यादा कोशिशें हो गईं। एक मिनट रुककर फिर कोशिश करें। | |
-| signIn.errors.badCode | That code didn’t work. Check it or send a new one. | यह कोड काम नहीं किया। इसे जाँचें या नया कोड मँगाएँ। | |
-| signIn.errors.offline | No connection. Check your internet and try again. | इंटरनेट नहीं है। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
+| signIn.errors.notReady | This option isn’t ready yet. Try another. | यह तरीका अभी तैयार नहीं है। दूसरा आज़माएँ। | | CHANGED 2026-10-11: shorter, please read again
+| signIn.errors.notOpen | Email sign-in isn’t open yet. Try another. | ईमेल से साइन इन अभी शुरू नहीं हुआ। दूसरा तरीका आज़माएँ। | | CHANGED 2026-10-11: shorter, please read again
+| signIn.errors.rateLimit | Too many tries. Wait a minute. | बहुत बार कोशिश हुई। एक मिनट रुकें। | | CHANGED 2026-10-11: shorter, please read again
+| signIn.errors.badCode | Wrong code. Try again or get a new one. | कोड गलत है। फिर कोशिश करें या नया मँगाएँ। | | CHANGED 2026-10-11: shorter, please read again
+| signIn.errors.offline | No connection. Try again. | इंटरनेट नहीं है। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | signIn.errors.notConnected | Not connected. | सर्वर से जुड़ा नहीं है। | |
 | signIn.errors.generic | Something went wrong. Try again. | कुछ गड़बड़ हो गई। फिर से कोशिश करें। | |
 | select.searchLabel | Search: {title} | खोजें: {title} | |
@@ -152,17 +152,17 @@ with your name and the date.
 | compare.errorTitle | Prices didn’t load | कीमतें लोड नहीं हुईं | |
 | compare.errorBody | Check your connection and try again. | अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
 | compare.noPricesTitle | No checked prices yet | अभी जाँची हुई कीमतें नहीं हैं | |
-| compare.noPricesBody | This route is still being set up. Prices show here once they pass our checks, and never before. | यह रूट अभी तैयार हो रहा है। कीमतें हमारी जाँच पास करने के बाद ही यहाँ दिखती हैं, उससे पहले कभी नहीं। | |
+| compare.noPricesBody | This route is being set up. | यह रूट अभी तैयार हो रहा है। | | CHANGED 2026-10-11: shorter, please read again
 | compare.whereRoutesStand | See where each route stands | हर रूट की स्थिति देखें | |
 | compare.offlineTitle | You’re offline | आप ऑफ़लाइन हैं | |
-| compare.offlineBody | These are the prices from your last visit, loaded {ago}. Pull down to try again. | ये आपकी पिछली बार की कीमतें हैं, {ago} लोड की गई थीं। फिर कोशिश करने के लिए नीचे खींचें। | |
-| compare.offlineNothing | You seem to be offline, and there are no saved prices for this choice yet. | लगता है आप ऑफ़लाइन हैं, और इस चुनाव के लिए अभी कोई सेव की हुई कीमत नहीं है। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.offlineBody | Prices from your last visit, {ago}. | आपकी पिछली विज़िट की कीमतें, {ago}। | | CHANGED 2026-10-11: shorter, please read again
+| compare.offlineNothing | You’re offline, and nothing is saved for this yet. | आप ऑफ़लाइन हैं, और इसके लिए अभी कुछ सेव नहीं है। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | compare.summary | {low} to {high} arrives, depending on the provider. | कंपनी के हिसाब से {low} से {high} तक पहुँचते हैं। | |
 | compare.mostToFamily | Most to your family | परिवार को सबसे ज़्यादा पैसे | | CHANGED 2026-10-10: from your notes, please read again
 | compare.promotion | Promotion | ऑफ़र | |
 | compare.firstTransferOffers | First-transfer offers | पहली बार भेजने के ऑफ़र | |
 | compare.olderPrices | Older prices | पुरानी कीमतें | | NEW 2026-10-07: please read
-| compare.olderNote | Checked by hand more than two days ago. Prices change every day, so check with the provider before you send. | दो दिन से ज़्यादा पहले हाथ से जाँची गईं। कीमतें रोज़ बदलती हैं, इसलिए भेजने से पहले कंपनी से पक्का कर लें। | | NEW 2026-10-07: please read
+| compare.olderNote | Checked over 2 days ago. Confirm with the provider. | 2 दिन से ज़्यादा पहले जाँची गईं। कंपनी से पक्का कर लें। | | NEW 2026-10-07: please read CHANGED 2026-10-11: shorter, please read again
 | compare.save | Save this comparison | यह तुलना सेव करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | compare.saved | Saved. See your saved list | सेव हो गई। अपनी सूची देखें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | compare.alreadySaved | Already saved. See your saved list | पहले से सेव है। अपनी सूची देखें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
@@ -170,7 +170,7 @@ with your name and the date.
 | compare.savedSpoken | Saved to your account. | आपके खाते में सेव हो गई। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | compare.alreadySpoken | Already saved. | पहले से सेव है। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | compare.signInToSaveTitle | Sign in to save comparisons | तुलनाएँ सेव करने के लिए साइन इन करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
-| compare.signInToSaveBody | Saved comparisons open in one tap, on any phone you sign in on. | सेव की हुई तुलनाएँ एक टैप में खुलती हैं, किसी भी फ़ोन पर जहाँ आप साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| compare.signInToSaveBody | Open them in one tap, on any phone. | किसी भी फ़ोन पर एक टैप में खोलें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | quote.arrives | arrives | पहुँचेंगे | |
 | quote.cost | cost | लागत | |
 | quote.sources.scraper | Public calculator | सार्वजनिक कैलकुलेटर | |
@@ -189,13 +189,13 @@ with your name and the date.
 | quote.opensDetail | Opens the full breakdown | पूरा हिसाब खोलता है | |
 | quoteDetail.heading | {amount} to {country} · {method} | {country} के लिए {amount} · {method} | |
 | quoteDetail.totalLine | arrives · {cost} total cost ({pct}) | पहुँचेंगे · कुल लागत {cost} ({pct}) | |
-| quoteDetail.estimatedFull | Estimated from the {amount} check, with the same fee and rate. | {amount} की जाँच से अनुमान, वही फ़ीस और वही रेट लेकर। | |
-| quoteDetail.promo | A first-transfer offer. Later transfers usually cost more, so it’s ranked apart from standing prices. | पहली बार भेजने का ऑफ़र। बाद में भेजना आमतौर पर महँगा पड़ता है, इसलिए इसे आम कीमतों से अलग दिखाया गया है। | |
+| quoteDetail.estimatedFull | Estimated from the {amount} price. | {amount} की कीमत से अनुमान। | | CHANGED 2026-10-11: shorter, please read again
+| quoteDetail.promo | First-transfer offer. Later ones usually cost more. | पहले ट्रांसफ़र का ऑफ़र। बाद वाले आमतौर पर महँगे होते हैं। | | CHANGED 2026-10-11: shorter, please read again
 | quoteDetail.whereMoneyGoes | Where the money goes | पैसा कहाँ जाता है | |
 | quoteDetail.upfrontFee | Upfront fee | भेजने की फ़ीस | | CHANGED 2026-10-10: from your notes, please read again
 | quoteDetail.markup | Exchange-rate markup | एक्सचेंज रेट में मार्कअप | |
 | quoteDetail.rateNote | Their rate {theirs} vs. mid-market {mid} {pair} | उनका रेट {theirs}, मिड-मार्केट {mid} {pair} | |
-| quoteDetail.betterThanMid | Better than the reference rate. That is a daily rate, and live rates move during the day. | संदर्भ रेट से बेहतर। वह रोज़ का रेट है, और लाइव रेट दिन भर बदलते रहते हैं। | |
+| quoteDetail.betterThanMid | Better than the daily mid-market rate. | रोज़ के मिड-मार्केट रेट से बेहतर। | | CHANGED 2026-10-11: shorter, please read again
 | quoteDetail.pickupCharge | Pickup charge | पिकअप शुल्क | |
 | quoteDetail.pickupNote | Charged where the money is collected | पैसा लेने की जगह पर लिया जाता है | |
 | quoteDetail.totalCost | Total cost | कुल लागत | |
@@ -210,22 +210,22 @@ with your name and the date.
 | quoteDetail.midFrom | Mid-market rate from | मिड-मार्केट रेट का स्रोत | |
 | quoteDetail.recent | Recent prices | हाल की कीमतें | |
 | quoteDetail.arrivingFrom | {currency} arriving from {amount} | {amount} भेजने पर पहुँचने वाले {currency} | |
-| quoteDetail.oneCheck | One check so far. The line fills in as {provider} is checked on more days. | अभी तक एक ही जाँच हुई है। जैसे-जैसे {provider} को और दिनों जाँचा जाएगा, रेखा भरती जाएगी। | |
+| quoteDetail.oneCheck | One check of {provider} so far. | {provider} की अब तक एक ही जाँच। | | CHANGED 2026-10-11: shorter, please read again
 | quoteDetail.recentFailed | Recent prices didn’t load. | हाल की कीमतें लोड नहीं हुईं। | |
 | quoteDetail.isFair | Is this rate fair? | क्या यह रेट सही है? | |
 | quoteDetail.isFairSub | See what the mid-market rate would give you | देखें कि मिड-मार्केट रेट पर कितना मिलता | |
 | quoteDetail.looksWrong | This price looks wrong | यह कीमत गलत लग रही है | |
 | quoteDetail.looksWrongSub | Tell us, and we’ll check it again | हमें बताएँ, हम इसे फिर जाँचेंगे | |
-| quoteDetail.limits[1] | Whether this provider is available where you live | यह कंपनी आपके इलाके में काम करती है या नहीं | |
-| quoteDetail.limits[2] | Fees for paying by card, if you do | कार्ड से भुगतान करने पर लगने वाली फ़ीस | |
-| quoteDetail.limits[3] | What the provider charges at other amounts | दूसरी रकमों पर कंपनी कितना लेती है | |
-| quoteDetail.limits[4] | How the rate moves before you send | भेजने से पहले रेट कैसे बदलता है | |
-| quoteDetail.loadFailed | This price didn’t load. Check your connection and try again. | यह कीमत लोड नहीं हुई। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
+| quoteDetail.limits[1] | If it’s available where you live | क्या यह आपके इलाके में मिलता है | | CHANGED 2026-10-11: shorter, please read again
+| quoteDetail.limits[2] | Card fees, if you pay by card | कार्ड से भरने पर उसकी फ़ीस | | CHANGED 2026-10-11: shorter, please read again
+| quoteDetail.limits[3] | Prices at other amounts | दूसरी रकमों पर कीमत | | CHANGED 2026-10-11: shorter, please read again
+| quoteDetail.limits[4] | Rate changes before you send | भेजने से पहले रेट में बदलाव | | CHANGED 2026-10-11: shorter, please read again
+| quoteDetail.loadFailed | This price didn’t load. Try again. | यह कीमत लोड नहीं हुई। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | quoteDetail.gone | This price is no longer published. | यह कीमत अब प्रकाशित नहीं है। | |
 | request.eyebrow | Not covered yet | अभी उपलब्ध नहीं | |
 | request.lead | {from} to {to} | {from} से {to} | |
 | request.accent | isn’t a route we check yet. | का रूट हम अभी नहीं जाँचते। | |
-| request.lede | We only show prices we’ve checked ourselves. Requests decide which routes we add next. | हम सिर्फ़ वही कीमतें दिखाते हैं जो हमने खुद जाँची हैं। माँगों से तय होता है कि आगे कौन से रूट जुड़ेंगे। | |
+| request.lede | Requests decide which routes we add next. | अगला कौन-सा रूट जुड़ेगा, यह माँगों से तय होता है। | | CHANGED 2026-10-11: shorter, please read again
 | request.nobody | Nobody has asked for it yet. | अभी तक किसी ने यह नहीं माँगा है। | |
 | request.asked | {n} people have asked for it. | {n} लोगों ने यह माँगा है। | |
 | request.howArrive | How should the money arrive? | पैसा कैसे पहुँचना चाहिए? | |
@@ -235,9 +235,9 @@ with your name and the date.
 | request.wallet | Wallet | वॉलेट | |
 | request.emailMe | Email me when it’s live (optional) | शुरू होने पर मुझे ईमेल करें (ज़रूरी नहीं) | |
 | request.emailLabel | Email address, optional | ईमेल पता, ज़रूरी नहीं | |
-| request.emailHelp | One email when the route launches. Then we delete your address. | रूट शुरू होने पर सिर्फ़ एक ईमेल। उसके बाद हम आपका पता मिटा देंगे। | |
+| request.emailHelp | One email at launch. Then we delete it. | शुरू होने पर एक ईमेल। फिर पता मिटा देंगे। | | CHANGED 2026-10-11: shorter, please read again
 | request.emailBad | That doesn’t look like an email address. | यह ईमेल पता सही नहीं लग रहा। | |
-| request.failed | That didn’t go through. Try again in a moment. | यह नहीं भेजा जा सका। थोड़ी देर बाद फिर कोशिश करें। | |
+| request.failed | That didn’t go through. Try again. | यह नहीं हो पाया। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | request.ask | Ask for this route | यह रूट माँगें | |
 | request.counted | Thanks. Your request is counted. | धन्यवाद। आपकी माँग गिन ली गई है। | |
 | request.already | You’ve asked for this route already. It’s counted. | आप यह रूट पहले ही माँग चुके हैं। वह गिनी जा चुकी है। | |
@@ -245,9 +245,9 @@ with your name and the date.
 | request.seeAll | See every requested route | माँगे गए सभी रूट देखें | |
 | request.alreadyChecked | We already check this route. | यह रूट हम पहले से जाँचते हैं। | |
 | request.compareIt | Compare it | तुलना करें | |
-| board.lede | Where RemitBridge checks prices, and where people have asked us to. Requests decide what we add next. | RemitBridge कहाँ-कहाँ कीमतें जाँचता है, और लोगों ने हमसे कहाँ के लिए कहा है। माँगों से तय होता है कि आगे क्या जुड़ेगा। | |
+| board.lede | Routes we check, and routes people asked for. | जिन रूट की हम जाँच करते हैं, और जो लोगों ने माँगे हैं। | | CHANGED 2026-10-11: shorter, please read again
 | board.failed | The board didn’t load. Pull down to try again. | बोर्ड लोड नहीं हुआ। फिर कोशिश करने के लिए नीचे खींचें। | |
-| board.countsFailed | Request counts didn’t load, so requested routes aren’t shown. | माँगों की गिनती लोड नहीं हुई, इसलिए माँगे गए रूट नहीं दिख रहे। | |
+| board.countsFailed | Request counts didn’t load. | माँगों की गिनती लोड नहीं हुई। | | CHANGED 2026-10-11: shorter, please read again
 | board.stages.live.title | Live | उपलब्ध | | CHANGED 2026-10-10: from your notes, please read again
 | board.stages.live.about | Prices checked and published. | कीमतें जाँचकर प्रकाशित की गईं। | |
 | board.stages.building.title | Being built | तैयार हो रहा है | |
@@ -258,7 +258,7 @@ with your name and the date.
 | board.stages.requested.about | Asked for by people using RemitBridge. | RemitBridge इस्तेमाल करने वालों ने इसे माँगा है। | |
 | board.stages.not_feasible.title | Not feasible | संभव नहीं | |
 | board.stages.not_feasible.about | We looked, and can’t cover it for now. | हमने देखा, और अभी हम इसे नहीं जोड़ सकते। | |
-| board.noRequests | No requests yet. Pick any country on Compare to ask for it. | अभी कोई माँग नहीं है। तुलना में कोई भी देश चुनकर उसे माँगें। | |
+| board.noRequests | No requests yet. | अभी कोई माँग नहीं। | | CHANGED 2026-10-11: shorter, please read again
 | board.fromCountry | From {country} | {country} से | |
 | board.requests | {n} requests | {n} माँगें | |
 | board.opensCompare | Opens Compare on this route | इस रूट पर तुलना खोलता है | |
@@ -268,7 +268,7 @@ with your name and the date.
 | account.nameSaved | Name saved. | नाम सेव हो गया। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | account.title | Account | खाता | |
 | account.signedInApple | Signed in with Apple | Apple से साइन इन किया गया | |
-| account.optional | An account is optional. It keeps what you save, on any phone you use. | खाता बनाना ज़रूरी नहीं है। खाता हो तो आपकी सेव की हुई चीज़ें किसी भी फ़ोन पर मिलेंगी। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| account.optional | Optional. Keeps what you save on any phone. | ज़रूरी नहीं। आपकी सेव की हुई चीज़ें हर फ़ोन पर रहती हैं। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | account.createOrSignIn | Create account or sign in | खाता बनाएँ या साइन इन करें | |
 | account.signOut | Sign out | साइन आउट करें | |
 | account.deleteAccount | Delete account | खाता मिटाएँ | |
@@ -293,10 +293,10 @@ with your name and the date.
 | account.metricsSub | Usage, funnel and impact, with definitions | इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ | |
 | account.replay | Replay onboarding (dev only) | शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में) | |
 | saved.rowSub | Comparisons and receipt checks | तुलनाएँ और रसीद जाँचें | |
-| saved.signedOut | Sign in to save comparisons and receipt checks, and open them again on any phone. | तुलनाएँ और रसीद जाँचें सेव करने के लिए साइन इन करें, और उन्हें किसी भी फ़ोन पर फिर खोलें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| saved.signedOut | Sign in to keep comparisons and receipts. | तुलनाएँ और रसीदें रखने के लिए साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | saved.seeAll | Your saved comparisons | आपकी सेव की हुई तुलनाएँ | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | saved.comparisons | Your comparisons | आपकी तुलनाएँ | |
-| saved.comparisonsEmpty | Save a comparison on Compare to reopen it here in one tap. | तुलना में कोई तुलना सेव करें, ताकि उसे यहाँ से एक टैप में फिर खोल सकें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| saved.comparisonsEmpty | Save one on Compare to see it here. | तुलना में एक सेव करें, वह यहाँ दिखेगी। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | saved.comparePrices | Compare prices | कीमतों की तुलना करें | |
 | saved.opensToday | Opens Compare with today’s prices | आज की कीमतों के साथ तुलना खोलता है | |
 | saved.deleteNamed | Delete {name} | {name} मिटाएँ | |
@@ -304,7 +304,7 @@ with your name and the date.
 | saved.comparisonDeleted | Comparison deleted. | तुलना मिटा दी गई। | |
 | saved.amountTo | {amount} to {country} | {country} के लिए {amount} | |
 | saved.checks | Your checks | आपकी जाँचें | |
-| saved.checksEmpty | Receipts you check with TrueCost and save show up here. | TrueCost से जाँचकर सेव की गई रसीदें यहाँ दिखती हैं। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
+| saved.checksEmpty | Receipts you save show up here. | सेव की गई रसीदें यहाँ दिखती हैं। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | saved.checkReceipt | Check a receipt | रसीद जाँचें | |
 | saved.deleteCheckTitle | Delete this check? | क्या यह जाँच मिटानी है? | |
 | saved.checkDeleted | Check deleted. | जाँच मिटा दी गई। | |
@@ -355,7 +355,7 @@ with your name and the date.
 | learn.feeMarkup | Fee + hidden markup | फ़ीस + छिपा मार्कअप | |
 | learn.feeMarkupBody | The fee, plus what’s hidden in the rate. | फ़ीस, और रेट में छिपा खर्च। | |
 | learn.checkedOnly | Checked prices only | सिर्फ़ जाँची हुई कीमतें | |
-| learn.checkedOnlyBody | Every price passes our checks, or it isn’t shown. Mid-market rates from Frankfurter. | हर कीमत हमारी जाँच पास करती है, नहीं तो दिखाई नहीं जाती। मिड-मार्केट रेट Frankfurter से। | |
+| learn.checkedOnlyBody | Every price passes our checks, or it isn’t shown. | हर कीमत हमारी जाँच से गुज़रती है, वरना दिखती नहीं। | | CHANGED 2026-10-11: shorter, please read again
 | learn.noAffiliate | No affiliate deals | किसी कंपनी से कोई सौदा नहीं | |
 | learn.noAffiliateBody | Nobody pays to rank. We never touch your money. | ऊपर दिखने के लिए कोई पैसे नहीं देता। हम आपके पैसे को कभी हाथ नहीं लगाते। | |
 | learn.wrongPrice | Wrong price? | कीमत गलत है? | |
@@ -407,25 +407,25 @@ with your name and the date.
 | whatsapp.hello | Hi | नमस्ते | |
 | whatsapp.link | Link WhatsApp | WhatsApp जोड़ें | |
 | whatsapp.linkSub | Save comparisons from WhatsApp to this account | WhatsApp की तुलनाएँ इस खाते में रखें | |
-| whatsapp.linkSent | WhatsApp is open with your code typed in. Press send, then come back here. | WhatsApp आपके कोड के साथ खुला है। भेजें दबाएँ, फिर यहाँ वापस आएँ। | |
+| whatsapp.linkSent | Press send in WhatsApp, then come back. | WhatsApp में भेजें दबाएँ, फिर यहाँ लौटें। | | CHANGED 2026-10-11: shorter, please read again
 | whatsapp.linked | WhatsApp linked | WhatsApp जुड़ा है | |
 | whatsapp.linkedSub | Since {since}. Tap to unlink. | {since} से। हटाने के लिए टैप करें। | |
 | whatsapp.unlinkTitle | Unlink WhatsApp? | WhatsApp हटाएँ? | |
-| whatsapp.unlinkBody | Your WhatsApp chat stays as it is, but SAVE there will stop adding to this account. | आपकी WhatsApp चैट वैसी ही रहेगी, पर वहाँ SAVE से इस खाते में कुछ नहीं जुड़ेगा। | |
+| whatsapp.unlinkBody | SAVE in WhatsApp will stop adding to this account. | WhatsApp में SAVE इस खाते में जोड़ना बंद कर देगा। | | CHANGED 2026-10-11: shorter, please read again
 | whatsapp.unlink | Unlink | हटाएँ | |
 | whatsapp.unlinked | WhatsApp unlinked. | WhatsApp हटा दिया गया। | |
 | whatsapp.cancel | Cancel | रद्द करें | |
-| whatsapp.failed | That didn’t work. Check your connection and try again. | यह नहीं हुआ। अपना कनेक्शन देखें और फिर कोशिश करें। | |
-| whatsapp.linkNote | Linking doesn’t store your number, only a scrambled ID, and only until you unlink. | जोड़ने पर आपका नंबर नहीं रखा जाता, सिर्फ़ उससे बना एक बदला हुआ ID, और वह भी तभी तक जब तक आप हटा न दें। | | CHANGED 2026-10-09: please read again
+| whatsapp.failed | That didn’t work. Try again. | यह नहीं हुआ। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
+| whatsapp.linkNote | We keep a scrambled ID, never your number. | हम एक बदला हुआ ID रखते हैं, आपका नंबर कभी नहीं। | | CHANGED 2026-10-09: please read again CHANGED 2026-10-11: shorter, please read again
 | whatsapp.devOnly | Development builds only, until the WhatsApp bot can reply to everyone. | सिर्फ़ डेवलपमेंट बिल्ड में, जब तक WhatsApp बॉट सबको जवाब नहीं दे सकता। | |
 | whatsappTab.lead | Compare prices in a chat | चैट में कीमतों की तुलना करें | | NEW 2026-10-09
-| whatsappTab.sub | Text the RemitBridge bot and get today’s prices back in seconds. It works for anyone with WhatsApp, with no app to install, so you can share it with family. | RemitBridge बॉट को मैसेज भेजें और कुछ ही सेकंड में आज की कीमतें पाएँ। यह WhatsApp वाले हर व्यक्ति के लिए काम करता है, कोई ऐप इंस्टॉल किए बिना, इसलिए आप इसे परिवार के साथ शेयर कर सकते हैं। | | NEW 2026-10-09
+| whatsappTab.sub | Text our bot. Get today’s prices in seconds. No app needed. | हमारे बॉट को मैसेज करें। सेकंडों में आज की कीमतें पाएँ। कोई ऐप नहीं चाहिए। | | NEW 2026-10-09 CHANGED 2026-10-11: shorter, please read again
 | whatsappTab.tryTitle | Things to send | क्या भेजें | | NEW 2026-10-09
 | whatsappTab.linkTitle | Link it to your account | इसे अपने खाते से जोड़ें | | NEW 2026-10-09
-| whatsappTab.linkWhy | Then SAVE 500 to India keeps a comparison in Saved. | फिर SAVE 500 to India से तुलना "सेव किए गए" में रहेगी। | | NEW 2026-10-09 CHANGED 2026-10-10: सहेज → सेव, as you asked
+| whatsappTab.linkWhy | Then SAVE 500 to India adds it to Saved. | फिर SAVE 500 to India उसे "सेव किए गए" में जोड़ देगा। | | NEW 2026-10-09 CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
 | whatsappTab.signInToLink | Sign in to link WhatsApp | WhatsApp जोड़ने के लिए साइन इन करें | | NEW 2026-10-09
-| whatsappTab.soon | Coming soon. The bot is waiting for Meta to open it to everyone. | जल्द ही। बॉट को सबके लिए खोलने के लिए Meta की मंज़ूरी का इंतज़ार है। | | NEW 2026-10-09
-| whatsappTab.privacy | We keep a scrambled ID instead of your number. The privacy policy has the details. | हम आपके नंबर की जगह उससे बना एक बदला हुआ ID रखते हैं। पूरी जानकारी निजता नीति में है। | | NEW 2026-10-09
+| whatsappTab.soon | Coming soon. | जल्द आ रहा है। | | NEW 2026-10-09 CHANGED 2026-10-11: shorter, please read again
+| whatsappTab.privacy | We keep a scrambled ID, never your number. | हम एक बदला हुआ ID रखते हैं, आपका नंबर कभी नहीं। | | NEW 2026-10-09 CHANGED 2026-10-11: shorter, please read again
 | whatsappTab.tries[1].send | 500 to India | 500 to India | | NEW 2026-10-09
 | whatsappTab.tries[1].does | What each provider gives your family today | आज हर कंपनी से आपके परिवार को कितना मिलेगा | | NEW 2026-10-09
 | whatsappTab.tries[2].send | A receipt photo | रसीद की फ़ोटो | | NEW 2026-10-09
@@ -439,23 +439,23 @@ with your name and the date.
 | alerts.link | Tell me when it’s better | बेहतर होने पर बताएँ | |
 | alerts.intro | Alert me when {amount} to {country} gets at least | तब बताएँ जब {country} को {amount} पर कम से कम इतना मिले | |
 | alerts.today | Today’s best: {amount} from {provider} | आज सबसे अच्छा: {provider} से {amount} | |
-| alerts.often | One notification when a price reaches this, then at most once a day while it stays there. | कीमत यहाँ पहुँचने पर एक सूचना, फिर जब तक वैसी रहे, दिन में ज़्यादा से ज़्यादा एक। | |
+| alerts.often | One alert when it hits, then at most once a day. | पहुँचने पर एक अलर्ट, फिर दिन में ज़्यादा से ज़्यादा एक। | | CHANGED 2026-10-11: shorter, please read again
 | alerts.less | Lower target | लक्ष्य कम करें | |
 | alerts.more | Higher target | लक्ष्य बढ़ाएँ | |
 | alerts.turnOn | Turn on alert | अलर्ट चालू करें | |
 | alerts.on | Alert on. You’ll find it in Saved. | अलर्ट चालू है। यह "सेव किए गए" में मिलेगा। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | alerts.signInTitle | Sign in for alerts | अलर्ट के लिए साइन इन करें | |
-| alerts.signInBody | Alerts are kept with your free account, so they reach this phone. | अलर्ट आपके मुफ़्त खाते के साथ रखे जाते हैं, ताकि वे इस फ़ोन तक पहुँचें। | |
-| alerts.denied | Notifications are off for RemitBridge. Turn them on in Settings to get alerts. | RemitBridge की सूचनाएँ बंद हैं। अलर्ट पाने के लिए सेटिंग्स में चालू करें। | |
+| alerts.signInBody | Alerts need a free account. | अलर्ट के लिए मुफ़्त खाता चाहिए। | | CHANGED 2026-10-11: shorter, please read again
+| alerts.denied | Turn on notifications in Settings to get alerts. | अलर्ट पाने के लिए सेटिंग्स में नोटिफ़िकेशन चालू करें। | | CHANGED 2026-10-11: shorter, please read again
 | alerts.unavailable | Notifications need the full app on a phone. | सूचनाओं के लिए फ़ोन पर पूरा ऐप चाहिए। | |
-| alerts.limit | You have 10 alerts, the most there can be. Delete one in Saved first. | आपके 10 अलर्ट हैं, जो अधिकतम है। पहले "सेव किए गए" में से एक मिटाएँ। | | CHANGED 2026-10-10: सहेज → सेव, as you asked
-| alerts.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। अपना कनेक्शन जाँचें और फिर कोशिश करें। | |
+| alerts.limit | You have 10 alerts, the most. Delete one in Saved. | आपके 10 अलर्ट हैं, जो अधिकतम है। "सेव किए गए" में से एक मिटाएँ। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
+| alerts.failed | That didn’t go through. Try again. | यह नहीं हो पाया। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | alerts.byWhatsApp | by WhatsApp | WhatsApp पर | |
 | alerts.yours | Your alerts | आपके अलर्ट | |
 | alerts.row | {amount} to {country}: {target} or more | {country} को {amount}: {target} या ज़्यादा | |
 | alerts.deleteNamed | Delete alert: {name} | अलर्ट मिटाएँ: {name} | |
 | alerts.deleted | Alert deleted. | अलर्ट मिटा दिया गया। | |
-| alerts.none | No prices yet for this amount, so there’s nothing to compare an alert against. | इस रकम के लिए अभी कोई कीमत नहीं है, इसलिए अलर्ट की तुलना के लिए कुछ नहीं है। | |
+| alerts.none | No prices for this amount yet. | इस रकम के लिए अभी कोई कीमत नहीं। | | CHANGED 2026-10-11: shorter, please read again
 | blog.written | {n} of {total} written in full so far | {total} में से {n} पूरे लिखे जा चुके हैं | |
 | blog.shown | {n} of {total} posts | {total} में से {n} लेख | |
 | blog.all | All | सभी | |
@@ -465,31 +465,31 @@ with your name and the date.
 | blog.series.series4 | Cost, speed, failure | लागत, रफ़्तार, गड़बड़ी | |
 | blog.series.series5 | Connecting it up | सब कुछ जोड़ना | |
 | blog.summaryOnly | Summary only | सिर्फ़ सारांश | |
-| blog.notYet | The full post is still being written. This is its summary. | पूरा लेख अभी लिखा जा रहा है। यह उसका सारांश है। | |
+| blog.notYet | Full post coming. Here’s the summary. | पूरी पोस्ट जल्द आएगी। अभी सारांश पढ़ें। | | CHANGED 2026-10-11: shorter, please read again
 | blog.keepReading | Keep reading | आगे पढ़ें | |
 | blog.englishOnly | Posts are in English. | लेख अंग्रेज़ी में हैं। | |
 | glossary.searchPlaceholder | Search {n} terms | {n} शब्दों में खोजें | |
 | glossary.searchLabel | Search the glossary | शब्दकोश में खोजें | |
 | glossary.noMatch | No term matches “{q}”. | “{q}” से कोई शब्द नहीं मिला। | |
-| glossary.englishOnly | Definitions are in English until a translation is checked. | अनुवाद जाँचे जाने तक परिभाषाएँ अंग्रेज़ी में हैं। | |
+| glossary.englishOnly | Definitions are in English for now. | परिभाषाएँ अभी अंग्रेज़ी में हैं। | | CHANGED 2026-10-11: shorter, please read again
 | remitbench.englishOnly | This research page is only in English for now. | रिसर्च का यह पेज अभी सिर्फ़ अंग्रेज़ी में है। | |
 | limitsBlock.heading | What this does not tell you | यह आपको क्या नहीं बताता | |
 | tool.inUnit | {label}, in {unit} | {label}, {unit} में | |
 | tool.sliderValue | {v} percent | {v} प्रतिशत | |
-| fairRate.intro | Every point below the mid-market rate comes out of your transfer. | मिड-मार्केट रेट से हर पॉइंट नीचे का पैसा आपके ट्रांसफ़र से कटता है। | |
+| fairRate.intro | Each point of markup comes out of your transfer. | मार्कअप का हर पॉइंट आपके ट्रांसफ़र से कटता है। | | CHANGED 2026-10-11: shorter, please read again
 | fairRate.yourTransfer | Your transfer | आपका ट्रांसफ़र | | ENDED HERE
 | fairRate.amountToSend | Amount to send | भेजने की रकम | |
 | fairRate.markup | Exchange-rate markup | एक्सचेंज रेट में मार्कअप | |
-| fairRate.drag | Drag to see what each point costs. Fees come on top. | खिसकाकर देखें कि हर पॉइंट की कीमत क्या है। फ़ीस इसके ऊपर लगती है। | |
-| fairRate.rateFailed | Couldn’t get the mid-market rate. Check your connection and try again. | मिड-मार्केट रेट नहीं मिल सका। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
+| fairRate.drag | Drag to see the cost. Fees are extra. | खर्च देखने के लिए खिसकाएँ। फ़ीस अलग है। | | CHANGED 2026-10-11: shorter, please read again
+| fairRate.rateFailed | Couldn’t get the rate. Try again. | रेट नहीं मिला। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | fairRate.theyReceive | With a {pct} markup, they’d receive | {pct} मार्कअप पर उन्हें मिलेंगे | |
 | fairRate.atMid | At the mid-market rate: {amount} | मिड-मार्केट रेट पर: {amount} | |
 | fairRate.midRate | Mid-market rate | मिड-मार्केट रेट | |
 | fairRate.withMarkup | Rate with this markup | इस मार्कअप के साथ रेट | |
 | fairRate.lost | Lost to the markup | मार्कअप में गए | |
 | fairRate.worth | Worth, in what you sent | आपकी भेजी रकम में इसकी कीमत | |
-| fairRate.source | Mid-market rate from {source}, for {day}. It’s a daily reference, not a live rate, and no provider offers it exactly. | मिड-मार्केट रेट {source} से, {day} का। यह रोज़ का संदर्भ है, लाइव रेट नहीं, और कोई कंपनी ठीक यही रेट नहीं देती। | |
-| trueCost.intro | Type in your receipt. See the cost hidden in the rate. | अपनी रसीद भरें। रेट में छिपी लागत देखें। | |
+| fairRate.source | Mid-market rate: {source}, {day}. | मिड-मार्केट रेट: {source}, {day}। | | CHANGED 2026-10-11: shorter, please read again
+| trueCost.intro | Type in your receipt to see the hidden cost. | छिपा खर्च देखने के लिए अपनी रसीद भरें। | | CHANGED 2026-10-11: shorter, please read again
 | trueCost.currencies | Currencies | मुद्राएँ | |
 | trueCost.sent | Sent | भेजी | |
 | trueCost.received | Received | पहुँची | |
@@ -505,18 +505,18 @@ with your name and the date.
 | trueCost.dateSent | Date sent | भेजने की तारीख़ | |
 | trueCost.dateHint | Optional. Blank means today. | ज़रूरी नहीं। खाली छोड़ें तो आज की तारीख़। | |
 | trueCost.datePlaceholder | MM/DD/YYYY | MM/DD/YYYY | |
-| trueCost.badDate | Enter a date like 9/28/2026, not in the future. | 9/28/2026 जैसी तारीख़ लिखें, जो आगे की न हो। | |
+| trueCost.badDate | Enter a past date, like 9/28/2026. | पिछली तारीख डालें, जैसे 9/28/2026। | | CHANGED 2026-10-11: shorter, please read again
 | trueCost.feeTooBig | The fee can’t be more than the amount sent. | फ़ीस भेजी गई रकम से ज़्यादा नहीं हो सकती। | |
-| trueCost.rateFailed | Couldn’t get the mid-market rate for that day. Check your connection and try again. | उस दिन का मिड-मार्केट रेट नहीं मिल सका। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
+| trueCost.rateFailed | Couldn’t get that day’s rate. Try again. | उस दिन का रेट नहीं मिला। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | trueCost.reallyCost | This transfer really cost | इस ट्रांसफ़र की असली लागत | |
-| trueCost.costNote | {pct} of what you sent. The world average is {world}%; the UN target is {target}%. | आपकी भेजी रकम का {pct}। दुनिया का औसत {world}% है; संयुक्त राष्ट्र का लक्ष्य {target}% है। | |
+| trueCost.costNote | {pct} of what you sent. World average {world}%, UN target {target}%. | भेजी रकम का {pct}। दुनिया का औसत {world}%, संयुक्त राष्ट्र का लक्ष्य {target}%। | | CHANGED 2026-10-11: shorter, please read again
 | trueCost.feeSeen | Fee you could see | दिखने वाली फ़ीस | |
 | trueCost.hidden | Hidden in the rate ({pct} markup) | रेट में छिपा ({pct} मार्कअप) | |
 | trueCost.atPickup | Charged at pickup | पिकअप पर लिया गया | |
 | trueCost.theyReceived | They received | उन्हें मिले | |
 | trueCost.atMid | At mid-market, with no fee | मिड-मार्केट रेट पर, बिना फ़ीस के | |
-| trueCost.better | Your rate was better than mid-market. That usually means a first-transfer promotion. | आपका रेट मिड-मार्केट से बेहतर था। आमतौर पर इसका मतलब पहली बार भेजने का ऑफ़र होता है। | |
-| trueCost.source | Mid-market rate from {source}: {rate}, for {day}. It’s a daily reference, so rates on the day may have moved. | मिड-मार्केट रेट {source} से: {rate}, {day} का। यह रोज़ का संदर्भ है, इसलिए उस दिन रेट बदला भी हो सकता है। | |
+| trueCost.better | Better than mid-market. Often a first-transfer offer. | मिड-मार्केट से बेहतर। अक्सर पहले ट्रांसफ़र का ऑफ़र। | | CHANGED 2026-10-11: shorter, please read again
+| trueCost.source | Mid-market rate: {rate} ({source}, {day}). | मिड-मार्केट रेट: {rate} ({source}, {day})। | | CHANGED 2026-10-11: shorter, please read again
 | trueCost.compareToday | Compare what {amount} gets today | आज {amount} पर कितना मिलता है, तुलना करें | |
 | trueCost.keep | Keep this check | यह जाँच सेव करें | | CHANGED 2026-10-10: सहेज → सेव, as you asked
 | trueCost.provider | Provider | कंपनी | |
@@ -533,7 +533,7 @@ with your name and the date.
 | yearlyCost.yourTransfers | Your transfers | आपके ट्रांसफ़र | |
 | yearlyCost.amountEach | Amount each time | हर बार की रकम | |
 | yearlyCost.yourCost | Your total cost | आपकी कुल लागत | |
-| yearlyCost.yourCostHint | Fee plus markup, as a % of what you send. TrueCost can work it out. | फ़ीस और मार्कअप, भेजी रकम के % में। TrueCost इसे निकाल सकता है। | |
+| yearlyCost.yourCostHint | Fee plus markup, as a %. TrueCost can work it out. | फ़ीस और मार्कअप, % में। TrueCost इसे निकाल सकता है। | | CHANGED 2026-10-11: shorter, please read again
 | yearlyCost.optional | Optional | ज़रूरी नहीं | |
 | yearlyCost.weekly | Weekly | हर हफ़्ते | |
 | yearlyCost.fortnightly | 2 weeks | हर 2 हफ़्ते | |
@@ -548,35 +548,35 @@ with your name and the date.
 | yearlyCost.atYourCost | At your cost ({pct}) | आपकी लागत पर ({pct}) | |
 | yearlyCost.atGlobal | At the global average ({pct}) | दुनिया के औसत पर ({pct}) | |
 | yearlyCost.atTarget | At the UN target ({target}%) | संयुक्त राष्ट्र के लक्ष्य पर ({target}%) | |
-| yearlyCost.source | Global average: {global}, for sending $200. Target: {target}. Your own figure is multiplied as entered; costs vary with the amount and the provider. | दुनिया का औसत: {global}, $200 भेजने पर। लक्ष्य: {target}। आपका अपना आँकड़ा जैसा लिखा वैसा ही गुणा किया गया है; लागत रकम और कंपनी के हिसाब से बदलती है। | |
-| rateHistory.intro | The mid-market rate, day by day. Up means each dollar buys more. | मिड-मार्केट रेट, दिन-ब-दिन। ऊपर जाए तो हर डॉलर में ज़्यादा मिलता है। | |
+| yearlyCost.source | Global average {global} on $200. UN target {target}. | $200 पर दुनिया का औसत {global}। संयुक्त राष्ट्र का लक्ष्य {target}। | | CHANGED 2026-10-11: shorter, please read again
+| rateHistory.intro | The mid-market rate, day by day. | मिड-मार्केट रेट, दिन-ब-दिन। | | CHANGED 2026-10-11: shorter, please read again
 | rateHistory.pair | Pair | मुद्राएँ | |
-| rateHistory.failed | Couldn’t load the history. Check your connection and try again. | इतिहास लोड नहीं हुआ। अपना कनेक्शन जाँचकर फिर कोशिश करें। | |
+| rateHistory.failed | Couldn’t load. Try again. | लोड नहीं हुआ। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | rateHistory.notEnough | Not enough days published for this pair yet. | इन मुद्राओं के लिए अभी पर्याप्त दिनों के रेट प्रकाशित नहीं हुए हैं। | |
 | rateHistory.perOne | {to} per 1 {from} | 1 {from} पर {to} | |
 | rateHistory.latest | Latest ({day}) | सबसे नया ({day}) | |
 | rateHistory.change | Change since {day} | {day} से बदलाव | |
 | rateHistory.highest | Highest | सबसे ज़्यादा | |
 | rateHistory.lowest | Lowest | सबसे कम | |
-| rateHistory.source | {n} daily reference rates from {source}, which aggregates central bank publications. Providers’ rates sit below these by their markup. | {source} से {n} दिनों के संदर्भ रेट, जो केंद्रीय बैंकों के प्रकाशनों को जोड़ता है। कंपनियों के रेट इनसे उनके मार्कअप जितने नीचे होते हैं। | |
+| rateHistory.source | {n} daily rates from {source}. Providers pay out less, by their markup. | {source} से {n} दिन के रेट। कंपनियाँ अपने मार्कअप जितना कम देती हैं। | | CHANGED 2026-10-11: shorter, please read again
 | chart.label | {unit}, {n} days from {first} to {last}. Low {low}, high {high}. | {unit}, {first} से {last} तक {n} दिन। सबसे कम {low}, सबसे ज़्यादा {high}। | |
 | scamCheck.intro | Eight quick questions. Your answers stay on your phone. | आठ छोटे सवाल। आपके जवाब आपके फ़ोन पर ही रहते हैं। | |
-| scamCheck.questions.payment-method.ask | Have you been asked to pay with a gift card, cryptocurrency, a crypto ATM, or a wire to someone you have never met in person? | क्या आपसे गिफ़्ट कार्ड, क्रिप्टोकरेंसी, क्रिप्टो ATM, या किसी ऐसे व्यक्ति को वायर ट्रांसफ़र से पैसे माँगे गए हैं जिनसे आप कभी आमने-सामने नहीं मिले? | |
-| scamCheck.questions.payment-method.why | These are hard to reverse and hard to trace, which is exactly why scammers ask for them. No legitimate business or government agency demands payment this way. | ऐसे भुगतान वापस लेना और उनका पता लगाना मुश्किल होता है, इसीलिए धोखेबाज़ इन्हें माँगते हैं। कोई भी असली कंपनी या सरकारी विभाग इस तरह भुगतान नहीं माँगता। | |
-| scamCheck.questions.urgency.ask | Are you being rushed, or told to keep this transfer to yourself? | क्या आप पर जल्दी करने का दबाव है, या कहा जा रहा है कि इस ट्रांसफ़र के बारे में किसी को न बताएँ? | |
-| scamCheck.questions.urgency.why | Pressure and secrecy exist to stop you asking someone you trust. Real institutions give you time and put things in writing. | दबाव और राज़दारी इसलिए होती है ताकि आप किसी भरोसेमंद से न पूछें। असली संस्थाएँ आपको समय देती हैं और सब कुछ लिखकर देती हैं। | |
-| scamCheck.questions.prize.ask | Do you have to send money first in order to receive a prize, a lottery win, or an inheritance? | क्या इनाम, लॉटरी या विरासत पाने के लिए आपको पहले पैसे भेजने हैं? | |
-| scamCheck.questions.prize.why | A real prize never costs money to collect. The fee is the scam. | असली इनाम लेने के लिए कभी पैसे नहीं देने पड़ते। वह फ़ीस ही धोखा है। | |
-| scamCheck.questions.romance.ask | Is the person asking for money someone you have only ever met online? | क्या पैसे माँगने वाला व्यक्ति कोई ऐसा है जिसे आप सिर्फ़ ऑनलाइन जानते हैं? | |
-| scamCheck.questions.romance.why | Someone you have never met in person asking for a transfer is among the most common patterns the FTC records, however long you have been talking and however well you feel you know them. | जिससे आप कभी आमने-सामने नहीं मिले, उसका पैसे माँगना FTC के दर्ज किए सबसे आम मामलों में से है, चाहे आप कितने भी समय से बात कर रहे हों और उसे कितना भी अच्छी तरह जानते हों। | |
-| scamCheck.questions.imposter.ask | Did someone contact you saying they are from the government, your bank, or a company, and that money has to move right now? | क्या किसी ने खुद को सरकार, आपके बैंक या किसी कंपनी का बताकर कहा कि पैसा अभी भेजना होगा? | |
-| scamCheck.questions.imposter.why | Agencies do not demand transfers by phone. Hang up and call the organization back on a number you looked up yourself, not one they gave you. | सरकारी विभाग फ़ोन पर पैसे नहीं माँगते। फ़ोन काट दें और उस संस्था को खुद ढूँढे हुए नंबर पर फ़ोन करें, उनके दिए नंबर पर नहीं। | |
-| scamCheck.questions.overpayment.ask | Did someone pay you too much and ask you to send the difference back? | क्या किसी ने आपको ज़्यादा पैसे दिए और बाकी रकम वापस भेजने को कहा? | |
-| scamCheck.questions.overpayment.why | The original payment reverses later and the money you sent back is gone. This is classic overpayment fraud. | असली भुगतान बाद में वापस हो जाता है और आपका लौटाया पैसा चला जाता है। यह ज़्यादा भुगतान वाला आम धोखा है। | |
-| scamCheck.questions.emergency.ask | Did you get a sudden message that a relative is in trouble somewhere and needs money quickly and quietly? | क्या अचानक कोई संदेश आया कि कोई रिश्तेदार कहीं मुसीबत में है और उसे चुपचाप, जल्दी पैसे चाहिए? | |
-| scamCheck.questions.emergency.why | The family emergency is scripted, and the "tell nobody" is part of the script. Verify with the person directly, or with other family, before anything moves. | परिवार की यह मुसीबत गढ़ी हुई कहानी होती है, और "किसी को मत बताना" भी उसी का हिस्सा है। पैसे भेजने से पहले सीधे उस व्यक्ति से, या परिवार के दूसरे लोगों से पक्का कर लें। | |
-| scamCheck.questions.mule.ask | Does a job, a prize, or a new friend involve you receiving money and passing it on to someone else? | क्या किसी नौकरी, इनाम या नए दोस्त के ज़रिए आपसे पैसे लेकर किसी और को आगे भेजने को कहा जा रहा है? | |
-| scamCheck.questions.mule.why | Moving money for someone else is how money mules are recruited. It can make you part of laundering somebody else’s fraud, with real legal consequences, even if you did not know. | किसी और के लिए पैसा आगे भेजना "मनी म्यूल" बनाने का तरीका है। इससे आप किसी और के धोखे की रकम छिपाने में शामिल हो सकते हैं, और इसके असली कानूनी नतीजे होते हैं, भले ही आपको पता न हो। | |
+| scamCheck.questions.payment-method.ask | Were you asked to pay with a gift card, crypto, or a wire to someone you’ve never met? | क्या आपसे गिफ़्ट कार्ड, क्रिप्टो, या किसी अनजान को वायर से भुगतान करने को कहा गया? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.payment-method.why | These can’t be reversed or traced. Real businesses never ask for them. | ये वापस नहीं होते और इनका पता नहीं चलता। असली कंपनियाँ ऐसा कभी नहीं माँगतीं। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.urgency.ask | Are you being rushed, or told to keep it secret? | क्या आपको जल्दी करने या बात छिपाने को कहा जा रहा है? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.urgency.why | Pressure and secrecy stop you from asking someone you trust. | दबाव और राज़ इसलिए होते हैं ताकि आप किसी भरोसेमंद से न पूछें। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.prize.ask | Do you have to pay first to get a prize, lottery win, or inheritance? | क्या इनाम, लॉटरी या विरासत पाने के लिए पहले पैसे भरने हैं? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.prize.why | A real prize never costs money. The fee is the scam. | असली इनाम के लिए कभी पैसे नहीं देने पड़ते। फ़ीस ही धोखा है। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.romance.ask | Have you only ever met this person online? | क्या आप इस व्यक्ति से सिर्फ़ ऑनलाइन ही मिले हैं? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.romance.why | Online-only contacts asking for money is one of the most common scams. | सिर्फ़ ऑनलाइन जान-पहचान वाले का पैसे माँगना सबसे आम धोखों में है। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.imposter.ask | Did someone claiming to be the government, your bank, or a company say money must move now? | क्या सरकार, बैंक या किसी कंपनी के नाम पर किसी ने कहा कि पैसे अभी भेजने हैं? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.imposter.why | Hang up. Call back on a number you look up yourself. | फ़ोन काटें। खुद ढूँढे नंबर पर वापस कॉल करें। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.overpayment.ask | Did someone overpay you and ask for the difference back? | क्या किसी ने ज़्यादा भुगतान करके बाकी लौटाने को कहा? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.overpayment.why | Their payment bounces later. The money you sent is gone. | उनका भुगतान बाद में लौट जाता है। आपका भेजा पैसा चला जाता है। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.emergency.ask | Did a sudden message say a relative needs money fast and quietly? | क्या अचानक मैसेज आया कि किसी रिश्तेदार को जल्दी और चुपचाप पैसे चाहिए? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.emergency.why | Call the person or your family before you send. | भेजने से पहले उस व्यक्ति या परिवार को फ़ोन करें। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.mule.ask | Are you being asked to receive money and pass it on? | क्या आपसे पैसे लेकर आगे भेजने को कहा जा रहा है? | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.questions.mule.why | That makes you a money mule, which can mean legal trouble. | इससे आप "मनी म्यूल" बन जाते हैं, जिससे कानूनी मुसीबत हो सकती है। | | CHANGED 2026-10-11: shorter, please read again
 | scamCheck.yes | Yes | हाँ | |
 | scamCheck.unsure | I’m not sure | पक्का नहीं पता | |
 | scamCheck.no | No | नहीं | |
@@ -591,76 +591,76 @@ with your name and the date.
 | scamCheck.slowDown | Slow down and check this properly. | धीरे चलें और इसे ठीक से जाँचें। | |
 | scamCheck.worthChecking | Worth checking before you send | भेजने से पहले जाँच लेना अच्छा रहेगा | |
 | scamCheck.noSigns | None of the common warning signs | आम खतरे के कोई संकेत नहीं | |
-| scamCheck.flaggedBody | The most serious thing you said yes to scores {top}/10. A sign that serious is close to proof on its own, and money sent this way is rarely recoverable. Talk to someone you trust first. | जिस सबसे गंभीर बात पर आपने हाँ कहा, उसका स्कोर {top}/10 है। इतना गंभीर संकेत अपने आप में लगभग सबूत है, और इस तरह भेजा गया पैसा शायद ही कभी वापस मिलता है। पहले किसी भरोसेमंद व्यक्ति से बात करें। | |
-| scamCheck.unsureBody | Nothing here is a definite warning sign, but you weren’t sure about {n}. Being unsure is a reason to slow down. Find out for certain first. | यहाँ कुछ भी पक्का खतरे का संकेत नहीं है, लेकिन {n} सवालों पर आप पक्के नहीं थे। शक होना धीरे चलने की वजह है। पहले पूरी तरह पता कर लें। | |
-| scamCheck.clearBody | You said no to all eight. That’s not a guarantee: this list isn’t everything, and new scams appear all the time. If something still feels wrong, wait a day and ask someone you trust. | आपने आठों पर नहीं कहा। यह कोई गारंटी नहीं है: यह सूची सब कुछ नहीं बताती, और नए धोखे आते रहते हैं। अगर फिर भी कुछ ठीक न लगे, तो एक दिन रुकें और किसी भरोसेमंद से पूछें। | |
+| scamCheck.flaggedBody | Your most serious answer scores {top}/10. Money sent this way is rarely recovered. (Or, for a less serious one: It’s a warning, not proof.) Talk to someone you trust first. | आपके सबसे गंभीर जवाब का स्कोर {top}/10 है। ऐसे भेजा पैसा शायद ही वापस मिलता है। (कम गंभीर होने पर: यह चेतावनी है, सबूत नहीं।) पहले किसी भरोसेमंद से बात करें। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.unsureBody | You weren’t sure about {n}. Find out for certain first. | आप {n} के बारे में पक्के नहीं थे। पहले पक्का पता करें। | | CHANGED 2026-10-11: shorter, please read again
+| scamCheck.clearBody | No common warning signs. If it still feels wrong, wait a day and ask someone you trust. | कोई आम चेतावनी संकेत नहीं। फिर भी गड़बड़ लगे तो एक दिन रुकें और किसी भरोसेमंद से पूछें। | | CHANGED 2026-10-11: shorter, please read again
 | scamCheck.saidYes | You said yes | आपने हाँ कहा | |
 | scamCheck.wasUnsure | You weren’t sure | आप पक्के नहीं थे | |
 | scamCheck.ifSent | If money already went | अगर पैसा जा चुका है | |
-| scamCheck.step1 | 1. Contact your transfer provider now and ask them to stop or reverse it. | 1. अभी अपनी ट्रांसफ़र कंपनी से संपर्क करें और उसे रोकने या वापस करने को कहें। | |
+| scamCheck.step1 | 1. Call your transfer provider now. Ask them to stop it. | 1. अभी अपनी ट्रांसफ़र कंपनी को फ़ोन करें। उसे रोकने को कहें। | | CHANGED 2026-10-11: shorter, please read again
 | scamCheck.step2Before | 2. Report it to the FTC at  | 2. FTC को यहाँ शिकायत करें:  | |
 | scamCheck.step2After | . | । | |
 | scamCheck.step3Before | 3. File a complaint with the  | 3.  | |
 | scamCheck.step3After | , which takes money-transfer complaints. |  के पास शिकायत दर्ज करें, जो पैसे भेजने से जुड़ी शिकायतें लेता है। | |
-| scamCheck.note | The risk numbers are our own reading of how strongly each sign points to fraud on its own, drawn from FTC and CFPB guidance. They aren’t a published statistic or your odds of being defrauded. This is education, not legal or financial advice, and we can’t recover money or step in with a company. | खतरे के ये अंक हमारी अपनी समझ हैं कि हर संकेत अपने आप में धोखे की ओर कितना इशारा करता है, जो FTC और CFPB की सलाह पर आधारित है। ये कोई प्रकाशित आँकड़ा या आपके साथ धोखा होने की संभावना नहीं हैं। यह जानकारी है, कानूनी या वित्तीय सलाह नहीं, और हम पैसा वापस नहीं दिला सकते या किसी कंपनी के साथ दखल नहीं दे सकते। | |
+| scamCheck.note | Risk scores are our own reading of FTC and CFPB guidance. Not legal advice. We can’t recover money. | जोखिम स्कोर FTC और CFPB की सलाह पर हमारी अपनी समझ है। यह कानूनी सलाह नहीं है। हम पैसे वापस नहीं दिला सकते। | | CHANGED 2026-10-11: shorter, please read again
 | scamCheck.again | Start again | फिर से शुरू करें | |
 | scan.heroTitle | What did your transfer really cost? | आपके ट्रांसफ़र पर असल में कितना खर्च हुआ? | |
-| scan.heroSub | Scan the receipt. See the fee and the hidden markup. | रसीद स्कैन करें। फ़ीस और रेट में छिपा मार्कअप देखें। | |
+| scan.heroSub | Snap your receipt. See the hidden cost. | रसीद की फ़ोटो लें। छिपा खर्च देखें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.steps[1] | Snap the receipt | रसीद की फ़ोटो लें | |
 | scan.steps[2] | Your details get covered | आपकी जानकारी ढक दी जाती है | |
 | scan.steps[3] | See the real cost | असली खर्च देखें | |
-| scan.privacy | Read on your phone. Names and numbers are covered before anything leaves it. | रसीद आपके फ़ोन पर ही पढ़ी जाती है। फ़ोन से कुछ भी जाने से पहले नाम और नंबर ढक दिए जाते हैं। | |
+| scan.privacy | Your name and numbers are covered on your phone. | आपका नाम और नंबर आपके फ़ोन पर ही ढक दिए जाते हैं। | | CHANGED 2026-10-11: shorter, please read again
 | scan.takePhoto | Take a photo | फ़ोटो लें | |
 | scan.choosePhoto | Choose a photo | फ़ोटो चुनें | |
 | scan.needsBuild | Scanning needs the full build of the app. It doesn’t work in Expo Go. | स्कैन करने के लिए ऐप का पूरा वर्ज़न चाहिए। यह Expo Go में काम नहीं करता। | |
-| scan.cameraDenied | To take a photo, allow camera access for RemitBridge in Settings. | फ़ोटो लेने के लिए Settings में RemitBridge को कैमरे की इजाज़त दें। | |
-| scan.photosDenied | To choose a photo, allow photo access for RemitBridge in Settings. | फ़ोटो चुनने के लिए Settings में RemitBridge को फ़ोटो की इजाज़त दें। | |
+| scan.cameraDenied | Allow camera access in Settings. | सेटिंग्स में कैमरा की अनुमति दें। | | CHANGED 2026-10-11: shorter, please read again
+| scan.photosDenied | Allow photo access in Settings. | सेटिंग्स में फ़ोटो की अनुमति दें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.reading | Reading the receipt on your phone… | रसीद आपके फ़ोन पर पढ़ी जा रही है… | |
-| scan.noText | No text found. The photo may be blurry. Hold the phone steady, with the whole receipt flat and in good light. | कोई लिखावट नहीं मिली। फ़ोटो धुंधली हो सकती है। फ़ोन को स्थिर रखें, पूरी रसीद को सीधा रखें और अच्छी रोशनी में फ़ोटो लें। | |
-| scan.tooBlurry | This photo is too blurry to read. Take it again: hold the phone steady, tap the receipt to focus, and use good light. | यह फ़ोटो पढ़ने के लिए बहुत धुंधली है। फिर से लें: फ़ोन स्थिर रखें, फ़ोकस के लिए रसीद पर टैप करें और अच्छी रोशनी रखें। | |
-| scan.bitBlurry | This photo is a little blurry, so some numbers may be read wrong. A sharper photo gives a better reading. | यह फ़ोटो थोड़ी धुंधली है, इसलिए कुछ अंक गलत पढ़े जा सकते हैं। साफ़ फ़ोटो से बेहतर पढ़ाई होती है। | |
-| scan.unreadable | We couldn’t read the amounts on this receipt. The photo may be blurry or cut off. Take it again with the whole receipt in view. | हम इस रसीद की रकम नहीं पढ़ पाए। फ़ोटो धुंधली या कटी हुई हो सकती है। पूरी रसीद दिखाते हुए फिर से फ़ोटो लें। | |
-| scan.misaligned | The text didn’t line up with the photo, so nothing was covered. Take the photo again. | लिखावट फ़ोटो से मेल नहीं खाई, इसलिए कुछ भी ढका नहीं गया। फ़ोटो फिर से लें। | |
+| scan.noText | No text found. Try again in good light. | कोई लिखावट नहीं मिली। अच्छी रोशनी में फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
+| scan.tooBlurry | Too blurry. Hold steady and try again. | बहुत धुंधली है। फ़ोन स्थिर रखकर फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
+| scan.bitBlurry | A bit blurry. Some numbers may be wrong. | थोड़ी धुंधली है। कुछ अंक गलत हो सकते हैं। | | CHANGED 2026-10-11: shorter, please read again
+| scan.unreadable | Couldn’t read the amounts. Show the whole receipt. | रकम पढ़ी नहीं जा सकीं। पूरी रसीद दिखाएँ। | | CHANGED 2026-10-11: shorter, please read again
+| scan.misaligned | Something went wrong. Take the photo again. | कुछ गड़बड़ हुई। फ़ोटो फिर से लें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.failed | Something went wrong reading the photo. Try again. | फ़ोटो पढ़ने में कुछ गड़बड़ हुई। फिर से कोशिश करें। | |
 | scan.previewTitle | Check what’s covered | देखें कि क्या ढका गया है | |
-| scan.previewHelp | Black boxes cover personal details. Tap any other word to cover it too, and tap it again to show it. | काले डिब्बे निजी जानकारी ढकते हैं। किसी और शब्द को ढकने के लिए उस पर टैप करें, और दोबारा दिखाने के लिए फिर टैप करें। | |
+| scan.previewHelp | Black boxes hide your details. Tap a word to hide or show it. | काले डिब्बे आपकी जानकारी छिपाते हैं। किसी शब्द को छिपाने या दिखाने के लिए टैप करें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.covered | {n} items covered | {n} चीज़ें ढकी गईं | |
 | scan.tapWord | Word: {text}. Tap to cover it. | शब्द: {text}। ढकने के लिए टैप करें। | |
 | scan.tapCovered | Covered by you. Tap to show it again. | आपने ढका है। फिर से दिखाने के लिए टैप करें। | |
 | scan.consentLabel | Keep this receipt for research | यह रसीद रिसर्च के लिए रखें | |
-| scan.consentHelp | Off unless you turn it on. On: we keep the covered photo and the values for 24 months, with nothing that says who you are, to study what people really pay. Off: the photo is never stored, and the values are deleted after 30 days. | जब तक आप इसे चालू न करें, यह बंद रहता है। चालू: हम ढकी हुई फ़ोटो और रकमें 24 महीने तक रखते हैं, आपकी पहचान बताने वाली कोई चीज़ नहीं, ताकि पता चले कि लोग असल में कितना चुकाते हैं। बंद: फ़ोटो कभी नहीं रखी जाती, और रकमें 30 दिन बाद मिटा दी जाती हैं। | |
+| scan.consentHelp | Off: we never keep the photo. On: we keep the covered photo for 24 months, for research. | बंद: फ़ोटो कभी नहीं रखी जाती। चालू: ढकी हुई फ़ोटो 24 महीने रिसर्च के लिए रखी जाती है। | | CHANGED 2026-10-11: shorter, please read again
 | scan.send | Read my receipt | मेरी रसीद पढ़ें | |
-| scan.savingsAcross | Across the receipt you scanned on this phone, against the cheapest price we had for it. / Across the {n} receipts you scanned on this phone, against the cheapest price we had for each. | इस फ़ोन पर स्कैन की गई रसीद में, हमारे पास मौजूद सबसे कम कीमत के मुकाबले। / इस फ़ोन पर स्कैन की गई {n} रसीदों में, हर एक के लिए हमारे पास मौजूद सबसे कम कीमत के मुकाबले। | | NEW 2026-10-09 (one receipt / several)
-| scan.savingsNone | The receipt you scanned was already the cheapest we had prices for. / All {n} receipts you scanned were already the cheapest we had prices for. | आपकी स्कैन की गई रसीद पहले से ही हमारे पास मौजूद सबसे सस्ती कीमत थी। / आपकी स्कैन की गई सभी {n} रसीदें पहले से ही हमारे पास मौजूद सबसे सस्ती कीमतें थीं। | | NEW 2026-10-09 (one receipt / several)
+| scan.savingsAcross | From 1 receipt on this phone. / From {n} receipts on this phone. | इस फ़ोन की 1 रसीद से। / इस फ़ोन की {n} रसीदों से। | | NEW 2026-10-09 (one receipt / several) CHANGED 2026-10-11: shorter, please read again
+| scan.savingsNone | Your receipt was already the cheapest. / All {n} receipts were already the cheapest. | आपकी रसीद पहले से सबसे सस्ती थी। / सभी {n} रसीदें पहले से सबसे सस्ती थीं। | | NEW 2026-10-09 (one receipt / several) CHANGED 2026-10-11: shorter, please read again
 | scan.aiTitle | An AI may read it | इसे AI पढ़ सकता है | | NEW 2026-10-08
-| scan.aiBody | When our own rules can’t read a figure, we send the covered text, and sometimes the covered photo, to Groq, an AI company. Groq doesn’t keep it or learn from it. | जब हमारे अपने नियम कोई रकम नहीं पढ़ पाते, तो हम ढका हुआ टेक्स्ट, और कभी-कभी ढकी हुई फ़ोटो, Groq नाम की एक AI कंपनी को भेजते हैं। Groq इसे न रखता है, न इससे सीखता है। | | NEW 2026-10-08
+| scan.aiBody | If our rules can’t read a number, we send the covered receipt to Groq, an AI service. Groq doesn’t keep it. | अगर हमारे नियम कोई अंक नहीं पढ़ पाते, तो हम ढकी हुई रसीद Groq नाम की AI सेवा को भेजते हैं। Groq उसे नहीं रखता। | | NEW 2026-10-08 CHANGED 2026-10-11: shorter, please read again
 | scan.aiAskTitle | Send to an AI service? | AI सेवा को भेजें? | | NEW 2026-10-08
 | scan.aiAllow | Allow | अनुमति दें | | NEW 2026-10-08
 | scan.aiDecline | Not now | अभी नहीं | | NEW 2026-10-08
-| scan.sendFailed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। इंटरनेट देखें और फिर से कोशिश करें। | |
+| scan.sendFailed | That didn’t go through. Try again. | यह नहीं हो पाया। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.notConnected | The app isn’t connected yet. | ऐप अभी जुड़ा नहीं है। | |
-| scan.limitHour | A lot of receipts were checked from this network in the last hour. Try again in an hour. | पिछले एक घंटे में इस नेटवर्क से बहुत सारी रसीदें जाँची गई हैं। एक घंटे बाद फिर कोशिश करें। | |
-| scan.limitDay | That’s the limit for checking receipts today. You can check more tomorrow. | आज रसीदें जाँचने की सीमा पूरी हो गई है। कल और जाँच सकते हैं। | |
+| scan.limitHour | Too many scans from this network. Try again in an hour. | इस नेटवर्क से बहुत स्कैन हुए। एक घंटे बाद कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
+| scan.limitDay | That’s today’s limit. Try again tomorrow. | आज की सीमा पूरी हुई। कल फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | scan.retake | Use a different photo | दूसरी फ़ोटो इस्तेमाल करें | |
 | scan.toCheck | Please check | कृपया जाँचें | |
 | scan.notFound | Not found | नहीं मिला | |
 | scan.deleteNow | Delete this receipt now | यह रसीद अभी मिटाएँ | |
 | scan.deleted | Deleted. | मिटा दी गई। | |
 | scan.another | Scan another receipt | दूसरी रसीद स्कैन करें | |
-| scan.limits[1] | Whether every value was read right. Check each one against your receipt. | क्या हर रकम सही पढ़ी गई। हर एक को अपनी रसीद से मिलाकर देखें। | |
-| scan.limits[2] | Anything printed only on the back of the receipt, or written by hand. | जो सिर्फ़ रसीद के पीछे छपा हो, या हाथ से लिखा हो। | |
-| scan.limits[3] | Fees your family paid when the money arrived, unless the receipt shows them. | पैसा पहुँचने पर आपके परिवार ने जो फ़ीस दी, जब तक वह रसीद पर न लिखी हो। | |
+| scan.limits[1] | Whether every value was read right | क्या हर रकम सही पढ़ी गई | | CHANGED 2026-10-11: shorter, please read again
+| scan.limits[2] | Anything on the back, or handwritten | रसीद के पीछे या हाथ से लिखा कुछ | | CHANGED 2026-10-11: shorter, please read again
+| scan.limits[3] | Fees your family paid on arrival | पैसा पहुँचने पर परिवार की दी फ़ीस | | CHANGED 2026-10-11: shorter, please read again
 | confirm.title | Check each value | हर रकम जाँचें | |
-| confirm.help | Tap a value, on the photo or in the list, to change it. Values marked “Please check” need your answer. | किसी रकम को बदलने के लिए उस पर टैप करें, फ़ोटो पर या सूची में। जिन पर “कृपया जाँचें” लिखा है, उनका जवाब आपसे चाहिए। | |
+| confirm.help | Tap a value to fix it. | ठीक करने के लिए किसी रकम पर टैप करें। | | CHANGED 2026-10-11: shorter, please read again
 | confirm.left | {n} to check | {n} जाँचनी बाकी हैं | |
 | confirm.ready | See what it cost | देखें कितना खर्च हुआ | |
-| confirm.failed | That didn’t go through. Check your connection and try again. | यह नहीं हो पाया। इंटरनेट देखें और फिर से कोशिश करें। | |
-| confirm.expired | This receipt has been deleted, so it can’t be checked. Scan it again. | यह रसीद मिटा दी गई है, इसलिए जाँची नहीं जा सकती। इसे फिर से स्कैन करें। | |
+| confirm.failed | That didn’t go through. Try again. | यह नहीं हो पाया। फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
+| confirm.expired | This receipt was deleted. Scan it again. | यह रसीद मिट चुकी है। इसे फिर स्कैन करें। | | CHANGED 2026-10-11: shorter, please read again
 | confirm.looksRight | This is right | यह सही है | |
 | confirm.save | Save | सेव करें | |
 | confirm.useSuggestion | Use {value} | {value} इस्तेमाल करें | |
 | confirm.suggestion | The other numbers suggest {value}. | बाकी रकमों के हिसाब से यह {value} होना चाहिए। | |
-| confirm.invalid | That doesn’t look right for {field}. Check it and try again. | {field} के लिए यह सही नहीं लगता। जाँचकर फिर से कोशिश करें। | |
+| confirm.invalid | Check {field} and try again. | {field} जाँचें और फिर कोशिश करें। | | CHANGED 2026-10-11: shorter, please read again
 | confirm.datePlaceholder | MM/DD/YYYY | MM/DD/YYYY | |
 | confirm.currencyPlaceholder | e.g. USD | जैसे USD | |
 | confirm.editing | Change: {field} | बदलें: {field} | |
@@ -677,20 +677,20 @@ with your name and the date.
 | result.tax | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
 | result.markup | Hidden in the rate ({pct} markup) | रेट में छिपा ({pct} मार्कअप) | |
 | result.pickup | Charged at pickup | पिकअप पर लिया गया | |
-| result.betterThanMid | The rate was better than mid-market. That usually means a first-transfer promotion. | रेट मिड-मार्केट से बेहतर था। अक्सर इसका मतलब पहले ट्रांसफ़र का ऑफ़र होता है। | |
-| result.source | Mid-market rate from {source}: {rate}, for {day}. It’s a daily reference, so rates on the day may have moved. | मिड-मार्केट रेट {source} से: {rate}, {day} के लिए। यह दिन का एक संदर्भ रेट है, इसलिए उस दिन रेट बदल सकता है। | |
-| result.noMid | The mid-market rate for that day couldn’t be loaded, so the cost hidden in the rate can’t be worked out. | उस दिन का मिड-मार्केट रेट नहीं मिल पाया, इसलिए रेट में छिपी लागत का हिसाब नहीं हो सकता। | |
-| result.missing | Some values are missing, so the total cost can’t be worked out. | कुछ रकमें नहीं मिलीं, इसलिए कुल लागत का हिसाब नहीं हो सकता। | |
+| result.betterThanMid | Better than mid-market. Often a first-transfer offer. | मिड-मार्केट से बेहतर। अक्सर पहले ट्रांसफ़र का ऑफ़र। | | CHANGED 2026-10-11: shorter, please read again
+| result.source | Mid-market rate: {rate} ({source}, {day}). | मिड-मार्केट रेट: {rate} ({source}, {day})। | | CHANGED 2026-10-11: shorter, please read again
+| result.noMid | Couldn’t load that day’s mid-market rate. | उस दिन का मिड-मार्केट रेट लोड नहीं हुआ। | | CHANGED 2026-10-11: shorter, please read again
+| result.missing | Some values are missing. | कुछ रकमें नहीं मिलीं। | | CHANGED 2026-10-11: shorter, please read again
 | result.advertisedTitle | Advertised vs. paid | दिखाया गया रेट बनाम चुकाया गया | |
-| result.gapMore | The rate you got cost {gap} more than the advertised one. | आपको मिले रेट की वजह से दिखाए गए रेट से {gap} ज़्यादा खर्च हुआ। | |
-| result.gapLess | The rate you got was better than the advertised one, by {gap}. | आपको मिला रेट दिखाए गए रेट से {gap} बेहतर था। | |
-| result.gapSame | The rate you got matches the advertised one. | आपको मिला रेट दिखाए गए रेट जैसा ही है। | |
-| result.notTracked | We don’t check this provider’s prices, so there’s no advertised price to compare with. | हम इस कंपनी की कीमतें नहीं जाँचते, इसलिए मिलाने के लिए कोई दिखाया गया रेट नहीं है। | |
-| result.noRoute | We don’t check prices on this route yet, so there’s no advertised price to compare with. | हम अभी इस रूट की कीमतें नहीं जाँचते, इसलिए मिलाने के लिए कोई दिखाया गया रेट नहीं है। | |
-| result.noQuote | We have no price from this provider checked within a day of this transfer, so there’s nothing to compare with. | इस ट्रांसफ़र के एक दिन के अंदर इस कंपनी की कोई जाँची हुई कीमत हमारे पास नहीं है, इसलिए मिलाने को कुछ नहीं है। | |
-| result.missingValues | The receipt’s date, amount or rate is missing, so it can’t be compared. | रसीद की तारीख, रकम या रेट नहीं मिला, इसलिए मिलाया नहीं जा सकता। | |
+| result.gapMore | Your rate cost {gap} more than advertised. | आपका रेट विज्ञापन से {gap} महँगा पड़ा। | | CHANGED 2026-10-11: shorter, please read again
+| result.gapLess | Your rate beat the advertised one by {gap}. | आपका रेट विज्ञापन से {gap} बेहतर था। | | CHANGED 2026-10-11: shorter, please read again
+| result.gapSame | Your rate matches the advertised one. | आपका रेट विज्ञापन वाले जैसा ही है। | | CHANGED 2026-10-11: shorter, please read again
+| result.notTracked | We don’t check this provider yet. | हम अभी इस कंपनी की जाँच नहीं करते। | | CHANGED 2026-10-11: shorter, please read again
+| result.noRoute | We don’t check this route yet. | हम अभी इस रूट की जाँच नहीं करते। | | CHANGED 2026-10-11: shorter, please read again
+| result.noQuote | No price from this provider that day. | उस दिन इस कंपनी की कोई कीमत नहीं। | | CHANGED 2026-10-11: shorter, please read again
+| result.missingValues | The date, amount or rate is missing. | तारीख, रकम या रेट नहीं मिला। | | CHANGED 2026-10-11: shorter, please read again
 | result.pctOfSent | {pct} of what you sent | भेजी गई रकम का {pct} | |
-| result.scaleLabel | This transfer cost {pct} of what was sent. The world average is {world}%; the UN target is {target}%. | इस ट्रांसफ़र का खर्च भेजी गई रकम का {pct} रहा। दुनिया का औसत {world}% है; UN का लक्ष्य {target}% है। | |
+| result.scaleLabel | This cost {pct}. World average {world}%, UN target {target}%. | खर्च {pct}। दुनिया का औसत {world}%, संयुक्त राष्ट्र का लक्ष्य {target}%। | | CHANGED 2026-10-11: shorter, please read again
 | result.scaleYou | This one {pct} | यह {pct} | |
 | result.scaleWorld | World {n}% | दुनिया {n}% | |
 | result.scaleTarget | UN target {n}% | UN लक्ष्य {n}% | |
@@ -698,7 +698,7 @@ with your name and the date.
 | result.arrivedTitle | What arrived | क्या पहुँचा | |
 | result.arrivedGot | {got} of {possible} | {possible} में से {got} | |
 | result.arrivedLost | {lost} lost | {lost} गए | |
-| result.arrivedLabel | {got} arrived. At the mid-market rate with no fee, {possible} would have. {lost} was lost. | {got} पहुँचे। मिड-मार्केट रेट पर, बिना फ़ीस के, {possible} पहुँचते। {lost} गए। | |
+| result.arrivedLabel | {got} arrived, of {possible} possible. {lost} lost. | {possible} में से {got} पहुँचे। {lost} कटे। | | CHANGED 2026-10-11: shorter, please read again
 | result.keptYou | Your cost | आपका खर्च | |
 | result.keptBarsLabel | Your cost {you}. {provider}: {theirs}. | आपका खर्च {you}। {provider}: {theirs}। | |
 | result.rateMid | Mid-market | मिड-मार्केट | |
@@ -709,37 +709,37 @@ with your name and the date.
 | result.notFound | Not found on this receipt | इस रसीद पर नहीं मिला | |
 | result.keptTitle | What you could have kept | आप कितना बचा सकते थे | |
 | result.keptLabel | With {provider}, you could have kept | {provider} से भेजने पर आप बचा सकते थे | |
-| result.keptNote | Sending the same amount, your family would have received {received}. | उतनी ही रकम भेजने पर आपके परिवार को {received} मिलते। | |
-| result.keptBest | You already had the best price we found: {provider}. | आपको पहले से ही हमारा पाया सबसे अच्छा दाम मिला: {provider}। | |
-| result.keptAsGood | Your price was as good as or better than every price we had for the same kind of transfer. | उसी तरह के ट्रांसफ़र के लिए हमारे पास जितने दाम थे, आपका दाम उन सब जितना या उनसे बेहतर था। | |
-| result.keptThatDay | Prices checked {time}, within a day of your transfer. | दाम {time} जाँचे गए, आपके ट्रांसफ़र के एक दिन के अंदर। | |
-| result.keptToday | We don’t have prices from {day}, so these are today’s, checked {time}. Rates move, so treat this as a guide to next time. | हमारे पास {day} के दाम नहीं हैं, इसलिए ये आज के हैं, {time} जाँचे गए। रेट बदलते रहते हैं, इसे अगली बार के लिए एक अंदाज़ा समझें। | |
-| result.keptEstimated | Worked out from the price for {amount}, the nearest amount we check. | {amount} के दाम से निकाला गया, जो हमारी जाँची गई सबसे नज़दीकी रकम है। | |
-| result.keptBank | That’s paying from a bank account. You paid by card, and paying from your bank account usually costs less. | यह बैंक खाते से भुगतान करने पर है। आपने कार्ड से भुगतान किया, और बैंक खाते से भुगतान आम तौर पर सस्ता पड़ता है। | |
-| result.keptCompared | Compared with: {names}. We don’t have prices from every provider yet. | इनसे तुलना की गई: {names}। हमारे पास अभी हर प्रदाता के दाम नहीं हैं। | |
-| result.keptNoPrices | We have no prices yet for the same kind of transfer on this route (the same way of paying and of receiving), so there’s nothing fair to compare with. | इस रूट पर उसी तरह के ट्रांसफ़र (भुगतान और पैसे पाने का वही तरीका) के दाम अभी हमारे पास नहीं हैं, इसलिए सही तुलना करने को कुछ नहीं है। | |
-| result.keptNoRoute | We don’t check prices on this route yet, so there’s nothing to compare with. | हम अभी इस रूट के दाम नहीं जाँचते, इसलिए तुलना करने को कुछ नहीं है। | |
-| result.keptMissing | The receipt’s amount or rate is missing, so it can’t be compared. | रसीद की रकम या रेट नहीं मिला, इसलिए तुलना नहीं हो सकती। | |
-| result.keptNoMid | Without that day’s mid-market rate, the costs can’t be measured the same way, so there’s no comparison. | उस दिन के मिड-मार्केट रेट के बिना खर्च एक जैसे नहीं मापे जा सकते, इसलिए तुलना नहीं है। | |
+| result.keptNote | Your family would have received {received}. | आपके परिवार को {received} मिलते। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptBest | {provider} was already the best price we found. | {provider} पहले से हमारी देखी सबसे अच्छी कीमत थी। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptAsGood | No cheaper price found. | इससे सस्ती कीमत नहीं मिली। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptThatDay | Prices checked {time}. | कीमतें {time} को जाँची गईं। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptToday | No prices from {day}, so these are today’s ({time}). | {day} की कीमतें नहीं हैं, इसलिए ये आज की हैं ({time})। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptEstimated | Estimated from the {amount} price. | {amount} की कीमत से अनुमान। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptBank | Paying from a bank account usually costs less than a card. | बैंक खाते से भरना आमतौर पर कार्ड से सस्ता पड़ता है। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptCompared | Compared with: {names}. | इनसे तुलना की: {names}। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptNoPrices | No prices yet for this kind of transfer. | इस तरह के ट्रांसफ़र की अभी कोई कीमत नहीं। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptNoRoute | We don’t check this route yet. | हम अभी इस रूट की जाँच नहीं करते। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptMissing | The amount or rate is missing. | रकम या रेट नहीं मिला। | | CHANGED 2026-10-11: shorter, please read again
+| result.keptNoMid | Couldn’t compare without that day’s rate. | उस दिन के रेट के बिना तुलना नहीं हो सकी। | | CHANGED 2026-10-11: shorter, please read again
 | result.taxTitle | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
-| result.taxMatches | This one was paid by {funding}. 1% of {amount} is {expected}, and the receipt shows {found}. | यह {funding} से भेजा गया। {amount} का 1% {expected} है, और रसीद पर {found} लिखा है। | |
-| result.taxNotFound | This one was paid by {funding}. 1% of {amount} is {expected}. No tax line was found on this receipt. | यह {funding} से भेजा गया। {amount} का 1% {expected} है। इस रसीद पर टैक्स की कोई लाइन नहीं मिली। | |
-| result.taxDiffers | This one was paid by {funding}. 1% of {amount} is {expected}. The receipt shows {found}. | यह {funding} से भेजा गया। {amount} का 1% {expected} है। रसीद पर {found} लिखा है। | |
-| result.taxNotTaxed | This one was paid by {funding}, so the tax doesn’t apply. | यह {funding} से भेजा गया, इसलिए यह टैक्स नहीं लगता। | |
-| result.taxBefore | This transfer was made before the tax started. | यह ट्रांसफ़र टैक्स शुरू होने से पहले हुआ था। | |
-| result.taxUnknown | The receipt doesn’t say how it was paid for, so the tax can’t be checked. | रसीद पर नहीं लिखा कि भुगतान कैसे हुआ, इसलिए टैक्स जाँचा नहीं जा सकता। | |
+| result.taxMatches | Paid by {funding}. 1% of {amount} is {expected}. The receipt shows {found}. | {funding} से भुगतान। {amount} का 1% {expected} है। रसीद में {found} है। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxNotFound | Paid by {funding}. 1% of {amount} is {expected}. No tax line found. | {funding} से भुगतान। {amount} का 1% {expected} है। टैक्स की लाइन नहीं मिली। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxDiffers | Paid by {funding}. 1% of {amount} is {expected}, but the receipt shows {found}. | {funding} से भुगतान। {amount} का 1% {expected} है, पर रसीद में {found} है। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxNotTaxed | Paid by {funding}, so no tax applies. | {funding} से भुगतान, इसलिए टैक्स नहीं लगता। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxBefore | Sent before the tax started. | टैक्स शुरू होने से पहले भेजा गया। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxUnknown | Payment method unknown, so the tax can’t be checked. | भुगतान का तरीका पता नहीं, इसलिए टैक्स जाँचा नहीं जा सकता। | | CHANGED 2026-10-11: shorter, please read again
 | result.taxPaidBy | Paid by {funding} | {funding} से भुगतान | |
 | result.taxFromBank | From a bank account | बैंक खाते से | |
-| result.taxBank | Paid from a bank account instead, the same transfer would have cost {total} in total, {tax} less. | अगर यही पैसा बैंक खाते से भेजा जाता, तो कुल खर्च {total} होता, यानी {tax} कम। | |
-| result.taxAssumption | We take 1% of the transfer amount, before fees, as the IRS’s proposed rules do. Those rules aren’t final yet. | हम फ़ीस से पहले की ट्रांसफ़र रकम का 1% लेते हैं, जैसा IRS के प्रस्तावित नियम कहते हैं। ये नियम अभी अंतिम नहीं हैं। | |
-| result.taxSmall | This was a transfer of $15 or less, so the tax doesn’t apply. | यह $15 या उससे कम का ट्रांसफ़र था, इसलिए टैक्स नहीं लगता। | |
+| result.taxBank | From a bank account: {total} total, {tax} less. | बैंक खाते से: कुल {total}, {tax} कम। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxAssumption | 1% of the amount sent, per the IRS’s proposed rules. | भेजी रकम का 1%, IRS के प्रस्तावित नियमों के हिसाब से। | | CHANGED 2026-10-11: shorter, please read again
+| result.taxSmall | $15 or less, so no tax applies. | $15 या कम, इसलिए टैक्स नहीं लगता। | | CHANGED 2026-10-11: shorter, please read again
 | result.nextTitle | Next time | अगली बार | |
 | result.compare | Compare this route today | आज यह रूट मिलाएँ | |
 | result.notCovered | We don’t check this route yet. | हम अभी यह रूट नहीं जाँचते। | |
 | result.routeBoard | See which routes we check | देखें हम कौन से रूट जाँचते हैं | |
 | result.disclosuresTitle | Standard disclosures | ज़रूरी जानकारियाँ | |
-| result.disclosuresAll | Every standard item was found on this receipt. | इस रसीद पर हर ज़रूरी जानकारी मिली। | |
-| result.disclosuresNote | A photo can cut off part of a receipt, and small print can be hard to read, so this doesn’t mean the provider left anything out. | फ़ोटो में रसीद का कुछ हिस्सा छूट सकता है और छोटे अक्षर पढ़ना मुश्किल हो सकता है, इसलिए इसका मतलब यह नहीं कि कंपनी ने कुछ छोड़ा। | |
+| result.disclosuresAll | Every standard item was found. | हर ज़रूरी जानकारी मिली। | | CHANGED 2026-10-11: shorter, please read again
+| result.disclosuresNote | A photo can miss small print, so this isn’t proof. | फ़ोटो में छोटे अक्षर छूट सकते हैं, इसलिए यह सबूत नहीं है। | | CHANGED 2026-10-11: shorter, please read again
 | result.disclosureItems.transfer_amount | transfer amount | भेजी गई रकम | |
 | result.disclosureItems.fees | fees | फ़ीस | |
 | result.disclosureItems.taxes | taxes | टैक्स | |
@@ -752,10 +752,10 @@ with your name and the date.
 | result.disclosureItems.cancellation | how to cancel | रद्द करने का तरीका | |
 | result.disclosureItems.provider_contact | the provider’s contact details | कंपनी से संपर्क की जानकारी | |
 | result.disclosureItems.cfpb_contact | the CFPB’s contact details | CFPB से संपर्क की जानकारी | |
-| result.limits[1] | Whether each value was read right, unless you checked it. | हर वैल्यू सही पढ़ी गई या नहीं, जब तक आपने उसे जाँचा न हो। | |
-| result.limits[2] | What your family was charged at their end, beyond what the receipt shows. | आपके परिवार से उनकी तरफ़ क्या लिया गया, रसीद में जो दिखता है उसके अलावा। | |
-| result.limits[3] | The rate at the minute you sent: the mid-market rate is a daily reference. | भेजने के समय का रेट: मिड-मार्केट रेट दिन भर का संदर्भ है। | |
-| result.limits[4] | Whether a disclosure was missing from the receipt, or only from the photo. | कोई जानकारी रसीद से गायब थी या सिर्फ़ फ़ोटो से। | |
+| result.limits[1] | Whether each value was read right | क्या हर रकम सही पढ़ी गई | | CHANGED 2026-10-11: shorter, please read again
+| result.limits[2] | Fees charged at your family’s end | परिवार की तरफ़ ली गई फ़ीस | | CHANGED 2026-10-11: shorter, please read again
+| result.limits[3] | Rate moves during the day | दिन में रेट का बदलना | | CHANGED 2026-10-11: shorter, please read again
+| result.limits[4] | Whether an item was missing, or just cut off | कुछ छूटा था या बस फ़ोटो में कटा | | CHANGED 2026-10-11: shorter, please read again
 | devPreview.title | Receipt preview | रसीद का पूर्वावलोकन | |
 | devPreview.row | Preview the receipt screens | रसीद वाली स्क्रीन देखें | |
 | devPreview.intro | Made-up receipts, to check these screens before the full build can scan. Development builds only. | बनावटी रसीदें, ताकि पूरा बिल्ड स्कैन कर सके उससे पहले ये स्क्रीन जाँची जा सकें। सिर्फ़ डेवलपमेंट बिल्ड में। | |
@@ -766,7 +766,7 @@ with your name and the date.
 | observatory.intro | What people really paid, from receipts they chose to share. | लोगों ने असल में कितना चुकाया, उन रसीदों से जो उन्होंने साझा कीं। | |
 | observatory.early | Early results | शुरुआती नतीजे | |
 | observatory.sample | {n} shared receipts since {since} | {n} साझा रसीदें, {since} से | |
-| observatory.tooFew | Not enough receipts have been shared yet. Numbers show once there are at least {min}, so no single receipt can be picked out. | अभी काफ़ी रसीदें साझा नहीं हुईं। कम से कम {min} होने पर ही आँकड़े दिखते हैं, ताकि कोई एक रसीद पहचानी न जा सके। | |
+| observatory.tooFew | Not enough receipts yet. Numbers show at {min}. | अभी काफ़ी रसीदें नहीं हैं। {min} होने पर आँकड़े दिखेंगे। | | CHANGED 2026-10-11: shorter, please read again
 | observatory.groupsTitle | By provider and route | कंपनी और रूट के हिसाब से | |
 | observatory.noGroups | No provider and route has {min} shared receipts yet. | अभी किसी कंपनी और रूट की {min} साझा रसीदें नहीं हैं। | |
 | observatory.receipts | {n} receipts | {n} रसीदें | |
@@ -774,11 +774,11 @@ with your name and the date.
 | observatory.medianMarkup | Typical exchange-rate markup | आम एक्सचेंज-रेट मार्कअप | |
 | observatory.paidMore | {k} of {of} compared got a worse rate than advertised that day | तुलना की गई {of} में से {k} को उस दिन के विज्ञापित रेट से खराब रेट मिला | |
 | observatory.taxTitle | Federal remittance tax | संघीय रेमिटेंस टैक्स | |
-| observatory.taxLine | {taxed} were paid in cash or similar. The 1% tax matched on {matches}; no tax line was found on {notFound}. | {taxed} का भुगतान नकद या उस जैसे तरीके से हुआ। {matches} पर 1% टैक्स मेल खाया; {notFound} पर टैक्स की लाइन नहीं मिली। | |
+| observatory.taxLine | {taxed} paid in cash or similar. Tax matched on {matches}, missing on {notFound}. | {taxed} नकद या ऐसे ही भरे गए। टैक्स {matches} पर मिला, {notFound} पर नहीं मिला। | | CHANGED 2026-10-11: shorter, please read again
 | observatory.disclosuresTitle | Standard disclosures not found | ज़रूरी जानकारियाँ जो नहीं मिलीं | |
 | observatory.disclosureLine | {item}: {n} of {total} | {item}: {total} में से {n} | |
 | observatory.noneMissing | Every standard item was found on every shared receipt. | हर साझा रसीद पर हर ज़रूरी जानकारी मिली। | |
-| observatory.method | Only receipts people chose to share for research count. A provider and route shows once it has {min}. “Typical” is the median. | सिर्फ़ वही रसीदें गिनी जाती हैं जो लोगों ने रिसर्च के लिए साझा कीं। कोई कंपनी और रूट {min} रसीदें होने पर दिखता है। “आम” का मतलब माध्यिका (median) है। | |
+| observatory.method | Shared receipts only, shown at {min} or more. “Typical” is the median. | सिर्फ़ साझा रसीदें, {min} या ज़्यादा होने पर। "आम" यानी मीडियन। | | CHANGED 2026-10-11: shorter, please read again
 | observatory.loadFailed | The results couldn’t load. | नतीजे लोड नहीं हो सके। | |
 | observatory.limits[1] | What most people pay: people who scan and share receipts aren’t a random sample. | ज़्यादातर लोग कितना चुकाते हैं: रसीद स्कैन और साझा करने वाले लोग कोई रैंडम नमूना नहीं हैं। | |
 | observatory.limits[2] | Anything about one person or one transfer. Only totals are shown. | किसी एक व्यक्ति या एक ट्रांसफ़र के बारे में कुछ भी। सिर्फ़ कुल आँकड़े दिखाए जाते हैं। | |
@@ -798,10 +798,10 @@ with your name and the date.
 | receiptFields.delivery_method | Delivery | पैसा कैसे पहुँचा | |
 | receiptPaths.user_corrected | You entered | आपने भरा | |
 | funding.compareLabel | You pay with | आप भुगतान करेंगे | |
-| funding.compareTaxLine | Paying by {funding} adds the 1% federal tax, {tax} here. It’s in the total cost. | {funding} से भुगतान पर 1% संघीय टैक्स लगता है, यहाँ {tax}। यह कुल लागत में शामिल है। | |
+| funding.compareTaxLine | Paying by {funding} adds the 1% tax: {tax}. | {funding} से भरने पर 1% टैक्स जुड़ता है: {tax}। | | CHANGED 2026-10-11: shorter, please read again
 | funding.compareNone | No prices checked yet for paying this way. | इस तरह भुगतान के लिए अभी कोई जाँची हुई कीमत नहीं है। | |
 | funding.trueCostLabel | You paid with | आपने भुगतान किया | |
-| funding.trueCostTaxLine | Paid by {funding}, so a 1% federal tax of {tax} is added. It’s in the total cost. | {funding} से भुगतान हुआ, इसलिए {tax} का 1% संघीय टैक्स जुड़ता है। यह कुल लागत में शामिल है। | |
+| funding.trueCostTaxLine | Paid by {funding}, so the 1% tax ({tax}) is included. | {funding} से भुगतान, इसलिए 1% टैक्स ({tax}) शामिल है। | | CHANGED 2026-10-11: shorter, please read again
 | glossary.remittance.term | Remittance | रेमिटेंस (घर भेजा गया पैसा) | |
 | glossary.remittance.plain | Money a person working in one country sends to family or friends in another. Usually regular, usually small amounts, usually spent on essentials like food, rent, school and medicine. | एक देश में काम करने वाला व्यक्ति दूसरे देश में अपने परिवार या दोस्तों को जो पैसा भेजता है। आम तौर पर नियमित, आम तौर पर छोटी रकम, और आम तौर पर खाने, किराए, पढ़ाई और दवा जैसी ज़रूरतों पर खर्च होता है। | |
 | glossary.corridor.term | Corridor | कॉरिडोर | |
