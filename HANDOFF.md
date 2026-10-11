@@ -3,7 +3,20 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-10 (see the section just below; the older status after it is kept for history)
+**Last updated:** 2026-10-11 (see the sections just below; the older status after them is kept for history)
+
+## 2026-10-11: Android feedback
+
+Angad tried the Android preview and asked for five things; all are built and pushed
+(D153-D156):
+- **The scan result** opens on two answers (what it cost, what could have been saved) and
+  two buttons (Compare, Scan another). Everything else is behind "Show the details". Each
+  step after the first has a back arrow.
+- **154 strings** are shorter, in all five languages.
+- **Android tabs** are pages in a native pager (`components/pager-tabs.tsx`), so a swipe
+  follows the finger. New Android builds: development d41936d6, preview a5686cd5.
+- **Redaction** leaves fine print, headings and toll-free numbers readable. Measure it
+  with `node packages/receipt/scripts/redaction-report.ts`.
 
 ## 2026-10-10: where things stand
 

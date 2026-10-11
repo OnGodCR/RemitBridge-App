@@ -293,6 +293,13 @@ Angad does this once the app itself is finished (D117).
       89:8B:A7:E9:14:CC:23:31:65:AA:3D:1C:9D:9B:06:2C:E2:87:F1:05), 2026-10-09. Left: confirm
       on Angad's Android; add a second Android client with Play App Signing's SHA-1 once on
       Play. iPhone is set up (2026-10-01).
+- [ ] **Angad's Android feedback, 2026-10-11 (D153-D156), all built and pushed:** the
+      receipt result as two answers and two buttons, with details behind a toggle and a back
+      arrow; 154 strings shortened in five languages; Android tabs in a native pager; the
+      redaction rules leaving fine print, headings and toll-free numbers alone
+      (`scan-receipt` redeployed). Left: Angad tries the new Android builds (development
+      d41936d6, preview a5686cd5) for the swipe, and a real receipt for the black boxes; the
+      iPhone needs a new build for the pager module only when its JS next updates past this.
 - [ ] **Learn redrawn (D152, 2026-10-10):** zigzag path with side cards, walked trail, a
       flag at the top, one-row header, the newest post in Library. Checked in a web render
       only; left: Angad looks on both phones.
@@ -458,6 +465,8 @@ of a label. Color comes
 from the website's vocabulary: a brand-green header band, mint tints, and a green
 left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 
+- Fewer words (D154): one fact per line. An explanation goes behind "Show the details" or into
+  "What this does not tell you", not under every figure.
 - American English is the source. Every string lives in `mobile/src/i18n/en.ts`, never
   inline in a screen; each other language is a full copy, shipped only once reviewed (D69).
 - Use the terminology table in PRD 14.4: *mid-market rate*, *exchange-rate

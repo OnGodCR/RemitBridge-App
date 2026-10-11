@@ -1829,3 +1829,51 @@ module 1 at the bottom (D107, D111), the chunky nodes and Continue. Changed:
 It was checked in a web render of the app at phone size, in light and dark. The simulator
 wouldn't boot on this Mac, so the check on a real phone is still Angad's.
 
+**D153. The receipt result leads with two answers** (Angad, 2026-10-11: "after scanning a
+reciept, there's too much text to digest and nobody who is using the app will be able to
+digest these words. think about the audience and fix this"; "add a go back or option to
+scan another reciept"). The result opens with:
+- what the transfer cost, marked low (at or under the UN's 3%), about average (up to the
+  world's 6.36%) or high;
+- what could have been saved, and with whom.
+Then Compare this route today and Scan another receipt. The six detailed sections, with
+every source, limit and the delete button, sit behind "Show the details". Every step after
+the first has a back arrow to the start. The audience is people sending money home, often
+in a second language, who want the answer more than the method.
+
+**D154. Fewer words everywhere** (Angad, 2026-10-11: "there's just too much text and too
+many warnings everywhere. Reduce the amount of text everywhere on the app."). 154 strings
+were shortened in all five languages, keeping each fact and dropping its explanation.
+- Source lines still name the source and the day, as CLAUDE.md requires, in a parenthesis
+  instead of a sentence.
+- "What this does not tell you" stays on every tool, collapsed as before, with shorter
+  items.
+- New copy follows the same bar: one fact per line. If a note needs explaining, it goes
+  behind details or into the limits list.
+The Hindi rows are marked CHANGED 2026-10-11 for the reviewer.
+
+**D155. Android's tabs are pages in a native pager** (Angad, 2026-10-11: swiping between
+tabs "way too choppy"). The swipe used to change tabs only after the finger lifted, so
+nothing followed the finger. On Android the tabs now sit in react-native-pager-view, behind
+a small custom navigator on expo-router's useNavigationBuilder (components/pager-tabs.tsx),
+with the same bottom bar. Tabs load when shown or next to the one shown.
+- iPhone keeps its native tab bar and the old swipe; a pager there would mean giving up
+  the system bar Angad likes.
+- The tab entrance animation is off on Android, since it hid the tabs beside you.
+- Native code, so it needs new Android builds.
+
+**D156. Redaction leaves the fine print alone** (Angad, 2026-10-11: "the thing that adds
+the black box is covering up way too much. fix this by making the classification model
+better and feeding more data"). The redaction is rules, not a trained model, so "better"
+meant tighter rules, measured on more data.
+- A label like "sender" or "customer" now counts only at the start of a line or before a
+  colon, and never when what follows reads as a sentence.
+- The lines hidden under a label must be short.
+- Headings ("Customer Receipt") and toll-free or CFPB numbers stay readable.
+- The synthetic receipts now carry Regulation E-style fine print, and
+  `packages/receipt/scripts/redaction-report.ts` measures both sides. Personal words
+  missed: 0. Words hidden that should show: 5.4% before, 2.1% after, the rest being the
+  made-up people's own addresses.
+- A screenshot of a real over-covered receipt is the next best data, if Angad can share
+  one with the personal details already covered.
+
