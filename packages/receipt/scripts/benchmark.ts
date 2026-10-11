@@ -23,7 +23,7 @@ import { parseArgs } from 'node:util'
 import { formatResults, MODES, showsWord, summarize, type Mode, type ReceiptRun } from '../src/benchmark.ts'
 import { checkDisclosures } from '../src/disclosures.ts'
 import { scoreFields, valuesOf } from '../src/harness.ts'
-import { DEFAULT_MODEL, groqClient } from '../src/model.ts'
+import { DEFAULT_MODEL, groqClient, reasoningFrom } from '../src/model.ts'
 import { loadFixtures, type Fixture } from '../src/node/fixtures.ts'
 import { pageText } from '../src/ocr.ts'
 import { parseReceipt } from '../src/parser.ts'
@@ -64,6 +64,7 @@ if (!receipts.length) {
 
 const key = process.env.GROQ_API_KEY
 const modelName = process.env.RECEIPT_MODEL || DEFAULT_MODEL
+const reasoning = reasoningFrom(process.env.RECEIPT_REASONING)
 const wanted = args.modes.split(',').map((m) => m.trim()) as Mode[]
 const skipped: { mode: Mode; why: string }[] = []
 const modes = wanted.filter((m) => {
@@ -138,7 +139,7 @@ async function readOne(f: Fixture, mode: Mode): Promise<ReceiptRun> {
     page,
     image: imageFor(f),
     today,
-    model: { client: client!, model: modelName },
+    model: { client: client!, model: modelName, reasoning },
     mode: mode === 'model' ? 'model' : 'combined',
     midRate: async () => f.midRate ?? null,
   })
