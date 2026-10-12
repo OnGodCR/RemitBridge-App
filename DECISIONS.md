@@ -1961,8 +1961,16 @@ This replaces D159's parser-first routing. D159's knowledge, suggestions table, 
 and limits carry over.
 
 
-**D161. The WhatsApp agent falls back across free providers, and uses fewer tokens**
-(Angad, 2026-10-12: "lets go with what you suggested"). Cloudflare's free tier holds about
+**D162. Every page gets the website's pointer backdrop** (Angad, 2026-10-12: "add the cursor
+background to the .app and also to the app page on the website"). The website's Backdrop,
+rebuilt without React and injected by `site/build.mjs` into every page: the bridge mark
+tiled at 6% behind everything, and a soft green light that follows the pointer. Green bands
+(`data-band`: the landing's feature section, the document pages' hero) carry their own white
+light, and the page light stands down inside one, so only one glows at a time. No light on
+touch screens or under reduced motion. The landing's old fixed glows are hidden in its favour.
+
+**D163. The WhatsApp agent falls back across free providers, and uses fewer tokens**
+(written as D161, renumbered: D160 and D161 were already taken) (Angad, 2026-10-12: "lets go with what you suggested"). Cloudflare's free tier holds about
 80 conversations a day, so each model call now tries, in order:
 1. Cloudflare Workers AI, gpt-oss-120b, while the day's 80 have room;
 2. Groq, `openai/gpt-oss-120b`;
@@ -1982,10 +1990,29 @@ Not done: several Groq accounts to multiply the limits (against Groq's terms; An
 Asked Groq for a nonprofit tier instead (email drafted for Angad).
 The privacy policy now names Groq for WhatsApp messages too.
 
-**D162. Every page gets the website's pointer backdrop** (Angad, 2026-10-12: "add the cursor
-background to the .app and also to the app page on the website"). The website's Backdrop,
-rebuilt without React and injected by `site/build.mjs` into every page: the bridge mark
-tiled at 6% behind everything, and a soft green light that follows the pointer. Green bands
-(`data-band`: the landing's feature section, the document pages' hero) carry their own white
-light, and the page light stands down inside one, so only one glows at a time. No light on
-touch screens or under reduced motion. The landing's old fixed glows are hidden in its favour.
+**D164. Legal audit, Angad's list of six** (Angad, 2026-10-12: "Audit my app for legal
+exposure and fix every issue"). Each item checked against the code first:
+- **Age check at account creation (COPPA): added.** The sign-in screen, the one way into
+  every account (Apple, Google, email), first asks the year of birth, in the FTC's neutral
+  form (no hint of the cutoff). 13 or under by year (a 13 could still be 12) is told
+  accounts are for 13 and up; the phone keeps `rb.ageGate` = ok or blocked so going back
+  can't change it. The year is never stored or sent. Comparing needs no account, so no one
+  loses the app. Privacy and terms say so. 13, not 18, because both policies already said 13
+  and RemitBridge moves no money.
+- **Fonts: self-hosted.** The site loaded Plus Jakarta Sans from Google on every page; it
+  now serves the five weights itself (`site/fonts/`, with the SIL Open Font License), from
+  the app's own font package. The app already bundled its fonts. The built site makes no
+  outside requests.
+- **Session replay: none exists.** No replay, analytics or tracking SDK in the app or the
+  site; metrics are first-party (D31) and record no screens or keystrokes. Nothing to turn off.
+- **Unsubscribe and address in marketing email: no marketing email exists.** Besides sign-in
+  codes, the only email is the one-time route launch notice the person asked for, after
+  which their address is deleted, so there is no list to leave. It now signs with the legal
+  name and prints `MAILING_ADDRESS` automatically once one is set (empty by Angad's choice,
+  2026-10-03). If RemitBridge ever sends newsletters, they need both.
+- **Renewal terms by a subscribe button: no subscriptions exist.** The app is free, with no
+  in-app purchases.
+- **DMCA designated agent: not registered; Angad's call.** Registration is an account on the
+  Copyright Office's DMCA directory and a fee (Angad's to do), it publishes a postal address,
+  and it protects only content users post publicly, which RemitBridge doesn't host. The terms
+  gained a Copyright section saying how to send a notice to hello@.

@@ -11,7 +11,7 @@
 // RESEND_API_KEY is a Supabase secret; until it's set this sends nothing and says so.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { publishableKey, secretKey } from '../_shared/keys.ts';
-import { CONTACT_EMAIL } from '../_shared/site-config.ts';
+import { CONTACT_EMAIL, LEGAL_NAME, MAILING_ADDRESS } from '../_shared/site-config.ts';
 
 const FROM = 'RemitBridge <RemitBridge@remitbridgelabs.org>';
 const REPLY_TO = CONTACT_EMAIL;
@@ -87,7 +87,9 @@ Deno.serve(async (req) => {
           '',
           'This is the only email we’ll send you about it, and your address has been deleted from your request.',
           '',
-          'RemitBridge',
+          // The sender's legal name, and its postal address once site.config.json has one.
+          LEGAL_NAME,
+          ...(MAILING_ADDRESS ? [MAILING_ADDRESS] : []),
           REPLY_TO,
         ].join('\n'),
       }),

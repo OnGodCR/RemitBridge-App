@@ -6,5 +6,9 @@ import site from '../../../site/site.config.json' with { type: 'json' };
 /** Where people write to us, and the address our requests give as a contact. */
 export const CONTACT_EMAIL: string = site.CONTACT_EMAIL;
 
+/** The legal name, and its postal address once one is set (empty for now, by Angad's choice). */
+export const LEGAL_NAME: string = site.LEGAL_NAME;
+export const MAILING_ADDRESS: string = site.MAILING_ADDRESS;
+
 /** The User-Agent on requests the functions make. */
 export const USER_AGENT = `RemitBridge (${CONTACT_EMAIL})`;

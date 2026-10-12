@@ -115,6 +115,9 @@ with your name and the date.
 | signIn.google | Continue with Google | Google से जारी रखें | |
 | signIn.email | Continue with email | ईमेल से जारी रखें | |
 | signIn.skip | Not now | अभी नहीं | | CHANGED 2026-10-07: please read again
+| signIn.birthYear | Year you were born | आपके जन्म का साल | | NEW 2026-10-12
+| signIn.continue | Continue | आगे बढ़ें | | NEW 2026-10-12
+| signIn.tooYoung | Accounts are for people 13 and older. Comparing prices works without one. | खाता 13 साल या उससे ज़्यादा उम्र वालों के लिए है। दाम की तुलना बिना खाते के भी होती है। | | NEW 2026-10-12
 | signIn.emailTitle | Your email | आपका ईमेल | |
 | signIn.emailIntro | We’ll send a 6-digit code. | हम 6 अंकों का कोड भेजेंगे। | |
 | signIn.emailLabel | Email address | ईमेल पता | |

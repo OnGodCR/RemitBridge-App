@@ -91,7 +91,7 @@ export function groqChatClient(token: string, model: string, fetchImpl: typeof f
 }
 
 /**
- * Several providers as one (D161): each call goes to the first, and on any error (a daily
+ * Several providers as one (D163): each call goes to the first, and on any error (a daily
  * limit's 429, a timeout, an outage) to the next. Only when all fail does the call throw,
  * and the bot falls back to its plain replies.
  */

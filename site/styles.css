@@ -3,6 +3,13 @@
    green, the dark ink footer. Light only, like the website. The legal and support pages
    are a white sheet on a mint band, because these are the pages app stores and partners
    open and they should look cared for, not like a bare document. */
+/* Plus Jakarta Sans, served from this site (SIL Open Font License, fonts/OFL.txt) so no page
+   asks Google for anything. */
+@font-face { font-family: "Plus Jakarta Sans"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/PlusJakartaSans_400Regular.ttf") format("truetype"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/PlusJakartaSans_500Medium.ttf") format("truetype"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/PlusJakartaSans_600SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/PlusJakartaSans_700Bold.ttf") format("truetype"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; font-style: normal; font-display: swap; src: url("/fonts/PlusJakartaSans_800ExtraBold.ttf") format("truetype"); }
 :root {
   --background: #f9fafb; --foreground: #1c2024; --card: #ffffff; --muted: #5b6470;
   --border: #e4e7eb; --primary: #14705a; --primary-foreground: #ffffff; --accent: #e8f2ee;
