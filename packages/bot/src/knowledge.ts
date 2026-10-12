@@ -45,6 +45,13 @@ export const FAQ: Entry[] = [
   { id: 'privacy', kind: 'faq', title: 'Privacy', text: 'We keep a scrambled ID instead of your phone number. Receipt photos have your personal details covered before they are read. You can send FORGET at any time to delete what we keep.', link: `${APP}/privacy`, words: ['privacy', 'data', 'number', 'delete', 'forget', 'safe', 'store'] },
   { id: 'countries', kind: 'faq', title: 'Which countries', text: 'We check prices from the US to 26 countries, including India, Mexico, the Philippines, Vietnam, Kenya, Nigeria, Pakistan and Brazil. Ask for any other country and we count the request.', link: APP, words: ['countries', 'country', 'routes', 'which', 'where'] },
   { id: 'suggest', kind: 'faq', title: 'Suggestions', text: 'You can suggest a feature or a provider right here: just write it, and it goes to the team.', link: APP, words: ['suggest', 'idea', 'feature', 'feedback', 'improve'] },
+  { id: 'funding', kind: 'faq', title: 'How RemitBridge is paid for', text: 'RemitBridge doesn\'t make money. It has no ads, no affiliate fees and no paid placements. RemitBridge Labs is a nonprofit, and the app runs on free services.', link: APP, words: ['money', 'free', 'cost', 'pay', 'paid', 'business', 'funded', 'catch'] },
+  { id: 'account', kind: 'faq', title: 'Accounts', text: 'You don\'t need an account to compare prices or use this bot. An account only keeps the comparisons, receipts and alerts you save, on any phone.', link: APP, words: ['account', 'sign', 'login', 'register', 'without'] },
+  { id: 'download', kind: 'faq', title: 'Getting the app', text: 'The RemitBridge app is on its way to the App Store and Google Play. Until then, this WhatsApp bot gives the same checked prices.', link: APP, words: ['download', 'app', 'install', 'store', 'iphone', 'android', 'play'] },
+  { id: 'languages', kind: 'faq', title: 'Languages', text: 'Send HINDI to get replies in Hindi, and ENGLISH to switch back. The app is in English, with Hindi, Spanish, Tagalog and Vietnamese on the way.', link: APP, words: ['hindi', 'language', 'spanish', 'english', 'tagalog', 'vietnamese'] },
+  { id: 'delivery', kind: 'faq', title: 'Ways to receive money', text: 'Bank deposit puts the money in a bank account. UPI is India\'s instant payment system, paid to a UPI ID. Cash pickup is collected in person at an agent\'s shop. A mobile wallet is an account on a phone, like GCash or M-Pesa.', link: `${SITE}/glossary`, words: ['upi', 'cash', 'pickup', 'wallet', 'bank', 'deposit', 'receive', 'gcash', 'mpesa'] },
+  { id: 'weekend', kind: 'faq', title: 'Rates on weekends', text: 'Mid-market reference rates are published on working days. Over a weekend the last weekday\'s rate stands, while providers can still change their own rates, so comparisons can look different.', link: `${SITE}/rate-history`, words: ['weekend', 'saturday', 'sunday', 'holiday', 'different', 'changed'] },
+  { id: 'fx', kind: 'faq', title: 'FX', text: 'FX means foreign exchange: changing one currency into another, like dollars into rupees. The exchange rate is how many of one you get for the other.', link: `${SITE}/glossary`, words: ['fx', 'forex', 'foreign', 'exchange', 'currency'] },
   { id: 'advice', kind: 'faq', title: 'Advice', text: 'RemitBridge shows prices and explains costs. It isn\'t financial advice, and it can\'t help with a transfer you already sent: contact your provider for that.', link: `${APP}/support`, words: ['advice', 'should', 'help', 'problem', 'stuck', 'refund', 'cancel'] },
 ]
 
@@ -62,7 +69,14 @@ export const POSTS: Entry[] = (blog.posts as Post[]).map((p) => ({
 export const ALL: Entry[] = [...FAQ, ...FEATURES, ...GLOSSARY, ...POSTS]
 
 const STOP = new Set(['the', 'a', 'an', 'is', 'are', 'to', 'of', 'and', 'or', 'in', 'on', 'for', 'my', 'me', 'i', 'you', 'it', 'do', 'does', 'what', 'how', 'can', 'with', 'this', 'that', 'be', 'your', 'from', 'at', 'by', 'about', 'there'])
-const tokens = (s: string) => s.toLowerCase().replace(/[^a-z0-9ऀ-ॿ\s-]/g, ' ').split(/\s+/).filter((w) => w.length > 1 && !STOP.has(w))
+/** Lowercase words, with a plural's "s" dropped so "stablecoins" finds "stablecoin". */
+const tokens = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0900-\u097f\s-]/g, ' ')
+    .split(/[\s-]+/)
+    .filter((w) => w.length > 1 && !STOP.has(w))
+    .map((w) => (w.length > 4 && w.endsWith('s') && !w.endsWith('ss') ? w.slice(0, -1) : w))
 
 /**
  * The entries most likely to answer a question: words in common, with a title or listed
@@ -75,7 +89,7 @@ export function retrieve(question: string, max = 4): Entry[] {
   const scored = ALL.map((e) => {
     let score = 0
     for (const w of tokens(e.title)) if (q.has(w)) score += 3
-    for (const w of e.words ?? []) if (q.has(w)) score += 3
+    for (const w of new Set(tokens((e.words ?? []).join(' ')))) if (q.has(w)) score += 3
     for (const w of new Set(tokens(e.text))) if (q.has(w)) score += 1
     // Features and short answers first when they tie with a post.
     if (e.kind === 'faq' || e.kind === 'feature') score += 0.5
