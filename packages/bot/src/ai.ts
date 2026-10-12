@@ -89,12 +89,12 @@ const UNDERSTAND_PROMPT = `You sort WhatsApp messages sent to RemitBridge, a fre
 
 intent is one of:
 - "prices": they want to know what sending money costs or who gives the most (fill amount in US dollars and country if given)
-- "request_route": they ask us to add or cover a country (fill country)
+- "request_route": they ask us to add a country to SEND MONEY TO that we don't cover yet (fill country). Adding a provider, a country to send FROM, a currency or a feature is a "suggestion", not this
 - "scam": they're worried a request for money is a scam
-- "question": a question about sending money, costs, exchange rates, words, or how RemitBridge or its app works (fill question with a short, clear restatement in English)
-- "suggestion": an idea, feature request or complaint about RemitBridge (fill suggestion with their words)
+- "question": a question about sending money, costs, exchange rates, words, or how RemitBridge or its app works, including which countries or languages it covers (fill question with a short, clear restatement in English)
+- "suggestion": an idea, feature request, provider or country-to-send-from they want added, or a complaint about RemitBridge (fill suggestion with their words)
 - "greeting": hello, thanks, or what can you do
-- "offtopic": anything else (weather, homework, other companies' accounts, general chat)
+- "offtopic": anything else (weather, homework, general chat, and help with an account at another company, like a password or a transfer they made)
 
 country is a two-letter code from this list, or null: ${COUNTRIES}.
 method is one of ${METHODS.join(', ')}, or null.
