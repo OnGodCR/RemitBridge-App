@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { answer, checkAnswer, cloudflareClient, readUnderstood, refine, stripThinking, understand, type AiClient } from './ai.ts'
+import { answer, chainClient, checkAnswer, cloudflareClient, groqChatClient, readUnderstood, refine, stripThinking, understand, type AiClient } from './ai.ts'
 import { retrieve } from './knowledge.ts'
 
 /** A model that always says the same thing, and remembers what it was asked. */
@@ -112,5 +112,46 @@ describe('the Cloudflare client', () => {
   it('throws on an error status, so the bot falls back', async () => {
     const fetchFake = (async () => new Response('busy', { status: 429 })) as unknown as typeof fetch
     await expect(cloudflareClient('a', 't', undefined, fetchFake).chat([], { maxTokens: 1 })).rejects.toThrow('429')
+  })
+})
+
+describe('the provider chain', () => {
+  const failing = (status: number): AiClient & { calls: number } => {
+    const c = {
+      calls: 0,
+      async chat() {
+        c.calls++
+        throw new Error(`model service: HTTP ${status}`)
+      },
+    }
+    return c
+  }
+
+  it('moves to the next provider when one is out, and stays there for the conversation', async () => {
+    const cloudflare = failing(429)
+    const groq = fake('{"reply":"hi"}')
+    const failed: number[] = []
+    const chain = chainClient([cloudflare, groq], (i) => failed.push(i))
+    expect(await chain.chat([], { maxTokens: 10 })).toBe('{"reply":"hi"}')
+    expect(await chain.chat([], { maxTokens: 10 })).toBe('{"reply":"hi"}')
+    expect(cloudflare.calls).toBe(1)
+    expect(failed).toEqual([0])
+    expect(chain.used()).toBe(1)
+  })
+
+  it('throws when every provider is out, so the plain bot answers', async () => {
+    await expect(chainClient([failing(429), failing(503)]).chat([], { maxTokens: 1 })).rejects.toThrow('503')
+    await expect(chainClient([]).chat([], { maxTokens: 1 })).rejects.toThrow('no model providers')
+  })
+
+  it('calls Groq with low reasoning effort', async () => {
+    const calls: { url: string; body: Record<string, unknown> }[] = []
+    const fetchFake = (async (url: string, init: RequestInit) => {
+      calls.push({ url, body: JSON.parse(String(init.body)) })
+      return new Response(JSON.stringify({ choices: [{ message: { content: '{"reply":"ok"}' } }] }))
+    }) as unknown as typeof fetch
+    expect(await groqChatClient('tok', 'openai/gpt-oss-120b', fetchFake).chat([{ role: 'user', content: 'hi' }], { maxTokens: 50 })).toBe('{"reply":"ok"}')
+    expect(calls[0].url).toBe('https://api.groq.com/openai/v1/chat/completions')
+    expect(calls[0].body).toMatchObject({ model: 'openai/gpt-oss-120b', reasoning_effort: 'low', max_tokens: 50 })
   })
 })

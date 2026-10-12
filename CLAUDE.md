@@ -112,9 +112,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       not Groq; it understands the message and picks what to show, answers from our content
       with links, and logs feature suggestions for Angad. The model never writes a number.
       **Live 2026-10-12 (D159):** Cloudflare Workers AI, Qwen3 30B-A3B, secrets set by
-      Angad, suggestions migration run (smoke test 70/70), `whatsapp` v27 deployed. Left:
-      Angad's live test (a question, a suggestion, a new country, off topic), then the
-      weekly email of suggestions and app links (`/open/...`, needs builds) later.
+      Angad, suggestions migration run (smoke test 70/70), `whatsapp` v27 deployed. Since
+      then an agent with tools (D160, v28), and **D161 (v29): Cloudflare gpt-oss-120b, then
+      Groq gpt-oss-120b, then Groq gpt-oss-20b, then the plain bot; about 30% fewer tokens.**
+      Left: Angad's live test (a question, a suggestion, a new country, off topic); Angad
+      sends the Groq nonprofit-tier email; the weekly email of suggestions and app links
+      (`/open/...`, needs builds) later.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
