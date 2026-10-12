@@ -350,6 +350,8 @@ export const vi: Copy = {
     addPriceSub: 'Nhập giá đọc được trên trang của một công ty',
     metrics: 'Số liệu',
     metricsSub: 'Mức sử dụng, hành trình và tác động, kèm định nghĩa',
+    suggestions: 'Góp ý',
+    suggestionsSub: 'Những gì mọi người đề xuất qua WhatsApp',
     replay: 'Xem lại phần giới thiệu (chỉ khi phát triển)',
   },
 

@@ -351,6 +351,8 @@ export const tl: Copy = {
     addPriceSub: 'Ilagay ang presyong nabasa sa site ng isang provider',
     metrics: 'Metrics',
     metricsSub: 'Paggamit, mga hakbang, at epekto, may mga depinisyon',
+    suggestions: 'Mga mungkahi',
+    suggestionsSub: 'Ang hiniling ng mga tao sa WhatsApp',
     replay: 'Ulitin ang intro (dev lang)',
   },
 

@@ -335,6 +335,8 @@ export const en = {
     addPriceSub: 'Enter a price read from a provider’s site',
     metrics: 'Metrics',
     metricsSub: 'Usage, funnel and impact, with definitions',
+    suggestions: 'Suggestions',
+    suggestionsSub: 'What people asked for on WhatsApp',
     replay: 'Replay onboarding (dev only)',
   },
 

@@ -351,6 +351,8 @@ export const hi: Copy = {
     addPriceSub: 'किसी कंपनी की साइट पर देखी कीमत दर्ज करें',
     metrics: 'आँकड़े',
     metricsSub: 'इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ',
+    suggestions: 'सुझाव',
+    suggestionsSub: 'WhatsApp पर लोगों ने क्या माँगा',
     replay: 'शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में)',
   },
 
