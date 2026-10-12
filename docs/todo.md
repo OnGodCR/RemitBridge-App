@@ -36,7 +36,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 ## Content (Angad)
 
 - [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
-- [ ] **Fresh hand-checked prices**: a new round in Add a price; India at $200 shows only Wise and Instarem.
+- [ ] **Hand-checked prices with ChatGPT**: paste `docs/outreach/chatgpt-price-checks.md` into a ChatGPT project, then do a round ($200 and $500 to India, Mexico, the Philippines, Vietnam first); you click, it reads your screenshots and writes the SQL (D167).
 
 ## Legal, accounts and money (Angad)
 
