@@ -6,7 +6,10 @@
 export { normalize, parse, type Command, type Language } from './parse.ts'
 export { MAX_AMOUNT, NEW_STATE, plan, type Action, type Say, type State } from './plan.ts'
 export {
+  formatAnswer,
   formatCompare,
+  formatOffTopic,
+  formatSuggestThanks,
   formatForgotten,
   formatLinked,
   formatNotText,
@@ -33,3 +36,5 @@ export {
   readReceiptReply,
   type ReceiptReply,
 } from './receipt.ts'
+export { answer, checkAnswer, cloudflareClient, DEFAULT_AI_MODEL, readUnderstood, stripThinking, understand, type AiClient, type Answer, type ChatMessage, type Understood } from './ai.ts'
+export { retrieve, type Entry } from './knowledge.ts'

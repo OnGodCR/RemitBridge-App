@@ -1,0 +1,41 @@
+name: WhatsApp bot model test
+
+# Scores candidate models for the WhatsApp bot's model (D159) on the 150 labelled messages in
+# packages/bot/eval/messages.json. Manual only: it uses Cloudflare Workers AI's free daily
+# allowance, which the bot shares. Needs the CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_AI_TOKEN
+# Actions secrets. The results are the run's summary and an eval-results.md artifact.
+
+on:
+  workflow_dispatch:
+    inputs:
+      models:
+        description: "Models, space-separated (blank for the two candidates)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+      EVAL_OUT: ${{ runner.temp }}/eval-results.md
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Test
+        run: node packages/bot/scripts/eval-ai.ts ${{ inputs.models }} > /dev/null
+      - name: Summary
+        if: always()
+        run: cat "$EVAL_OUT" >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: ${{ runner.temp }}/eval-results.md

@@ -26,6 +26,12 @@
 // WHATSAPP_HASH_SECRET), read by the worker (.github/workflows/receipt-intake.yml), and
 // answered here when the worker posts ?intake=done. The number is deleted with the row.
 //
+// The model (D159, docs/whatsapp-ai-scope.md), off until both of these are set. It's asked
+// only about messages the parser can't read, with the text alone (never the number):
+//   CLOUDFLARE_ACCOUNT_ID     the Cloudflare account that runs Workers AI
+//   CLOUDFLARE_AI_TOKEN       an API token limited to Workers AI
+// Optional: WHATSAPP_AI_MODEL (default in packages/bot/src/ai.ts), WHATSAPP_AI_DAILY_CAP.
+//
 // Deployed with JWT verification off (supabase/config.toml), because Meta can't send a
 // Supabase token; the signature check below is what keeps strangers out.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
@@ -33,6 +39,13 @@ import { publishableKey, secretKey } from '../_shared/keys.ts';
 import { USER_AGENT } from '../_shared/site-config.ts';
 
 import {
+  answer,
+  cloudflareClient,
+  formatAnswer,
+  formatOffTopic,
+  formatSuggestThanks,
+  understand,
+  type AiClient,
   formatCompare,
   formatForgotten,
   formatLinked,
@@ -74,6 +87,11 @@ const HOUR_MS = 3600 * 1000;
  */
 const MESSAGES_PER_DAY = 100;
 const PHOTOS_PER_DAY = 10;
+/** Model calls a day: for one number, and for everyone, which keeps inside Cloudflare's free
+ * daily allowance (about 20 neurons a call of its 10,000; D159). Past either, the bot simply
+ * answers without the model, as it did before. */
+const MODEL_CALLS_PER_NUMBER = 20;
+const MODEL_CALLS_PER_DAY = Number(Deno.env.get('WHATSAPP_AI_DAILY_CAP') ?? 400);
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const INTAKE_WORKFLOW = 'receipt-intake.yml';
@@ -219,7 +237,38 @@ async function handle(m: Incoming) {
     pending = NO_PENDING;
   }
 
-  const { action, state: update } = plan(parse(m.text), state);
+  const text = m.text;
+  let command = parse(text);
+  // What the parser can't read goes to the model, when it's set up and under its limits.
+  if (command.kind === 'unknown') {
+    const model = await modelFor(db, hash);
+    const understood = model ? await tryModel(() => understand(model, text)) : null;
+    const lang = (understood && 'language' in understood && understood.language) || state.language;
+    if (understood?.kind === 'command') command = understood.command;
+    else if (understood?.kind === 'ask') {
+      const second = await modelFor(db, hash);
+      const answered = second ? await tryModel(() => answer(second, understood.question, lang)) : null;
+      if (answered) {
+        await save(state);
+        await send(m.from, formatAnswer(lang, answered));
+        await track(db, hash, 'whatsapp_ai', { intent: 'answer' });
+        return;
+      }
+    } else if (understood?.kind === 'suggest') {
+      await db.from('suggestions').insert({ text: understood.text, language: lang, source: 'whatsapp' });
+      await save(state);
+      await send(m.from, formatSuggestThanks(lang));
+      await track(db, hash, 'whatsapp_ai', { intent: 'suggestion' });
+      return;
+    } else if (understood?.kind === 'offtopic') {
+      await save(state);
+      await send(m.from, formatOffTopic(lang));
+      await track(db, hash, 'whatsapp_ai', { intent: 'offtopic' });
+      return;
+    }
+  }
+
+  const { action, state: update } = plan(command, state);
   if (action.type === 'forget') {
     await db.from('whatsapp_users').delete().eq('phone_hash', hash);
     await db.from('receipt_intake').delete().eq('phone_hash', hash);
@@ -386,6 +435,29 @@ interface Pending {
   pending_questions: number;
 }
 const NO_PENDING: Pending = { pending_receipt: null, pending_field: null, pending_questions: 0 };
+
+/**
+ * The model client, if it's set up and both daily limits have room; each call counts one hit
+ * for this number and one for everyone. Null means: answer without it.
+ */
+async function modelFor(db: SupabaseClient, hash: string): Promise<AiClient | null> {
+  const account = Deno.env.get('CLOUDFLARE_ACCOUNT_ID');
+  const token = Deno.env.get('CLOUDFLARE_AI_TOKEN');
+  if (!account || !token) return null;
+  if ((await countToday(db, 'wa_ai', hash)) > MODEL_CALLS_PER_NUMBER) return null;
+  if ((await countToday(db, 'wa_ai_all', 'all')) > MODEL_CALLS_PER_DAY) return null;
+  return cloudflareClient(account, token, Deno.env.get('WHATSAPP_AI_MODEL') || undefined);
+}
+
+/** A model call that can't break a reply: any error or timeout is logged and treated as "no answer". */
+async function tryModel<T>(call: () => Promise<T | null>): Promise<T | null> {
+  try {
+    return await call();
+  } catch (e) {
+    console.warn('whatsapp model call failed:', String(e));
+    return null;
+  }
+}
 
 const today = () => new Date().toISOString().slice(0, 10);
 

@@ -1,0 +1,826 @@
+[
+ {
+  "text": "how much would it cost to send 300 dollars to my mom in india",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 300,
+  "id": 1
+ },
+ {
+  "text": "whats the cheapest way to send money to mexico",
+  "intent": "prices",
+  "country": "MX",
+  "id": 2
+ },
+ {
+  "text": "i want to send $1200 to the philippines which company is best",
+  "intent": "prices",
+  "country": "PH",
+  "amount": 1200,
+  "id": 3
+ },
+ {
+  "text": "vietnam 750 bucks how much arrives",
+  "intent": "prices",
+  "country": "VN",
+  "amount": 750,
+  "id": 4
+ },
+ {
+  "text": "send money nigeria cheapest",
+  "intent": "prices",
+  "country": "NG",
+  "id": 5
+ },
+ {
+  "text": "rates for kenya today?",
+  "intent": "prices",
+  "country": "KE",
+  "id": 6
+ },
+ {
+  "text": "how much will my brother get in pakistan if i send two hundred",
+  "intent": "prices",
+  "country": "PK",
+  "amount": 200,
+  "id": 7
+ },
+ {
+  "text": "best rate usd to inr right now",
+  "intent": "prices",
+  "country": "IN",
+  "id": 8
+ },
+ {
+  "text": "is wise or instarem cheaper for brazil",
+  "intent": "prices",
+  "country": "BR",
+  "id": 9
+ },
+ {
+  "text": "gonna send 1k to colombia, who gives the most pesos",
+  "intent": "prices",
+  "country": "CO",
+  "amount": 1000,
+  "id": 10
+ },
+ {
+  "text": "bangladesh taka rate",
+  "intent": "prices",
+  "country": "BD",
+  "id": 11
+ },
+ {
+  "text": "how many cedis for 400 dollars",
+  "intent": "prices",
+  "country": "GH",
+  "amount": 400,
+  "id": 12
+ },
+ {
+  "text": "sending to my wife in guatemala, 600, compare please",
+  "intent": "prices",
+  "country": "GT",
+  "amount": 600,
+  "id": 13
+ },
+ {
+  "text": "nepal 250",
+  "intent": "prices",
+  "country": "NP",
+  "amount": 250,
+  "id": 14
+ },
+ {
+  "text": "whats it cost to wire money to egypt",
+  "intent": "prices",
+  "country": "EG",
+  "id": 15
+ },
+ {
+  "text": "cheapest transfer to sri lanka for 500",
+  "intent": "prices",
+  "country": "LK",
+  "amount": 500,
+  "id": 16
+ },
+ {
+  "text": "i need to send 80 dollars to haiti",
+  "intent": "prices",
+  "country": "HT",
+  "amount": 80,
+  "id": 17
+ },
+ {
+  "text": "money to peru which app is best",
+  "intent": "prices",
+  "country": "PE",
+  "id": 18
+ },
+ {
+  "text": "south korea won rate for 2000 usd",
+  "intent": "prices",
+  "country": "KR",
+  "amount": 2000,
+  "id": 19
+ },
+ {
+  "text": "ukraine transfer prices",
+  "intent": "prices",
+  "country": "UA",
+  "id": 20
+ },
+ {
+  "text": "can i send to jamaica cheap",
+  "intent": "prices",
+  "country": "JM",
+  "id": 21
+ },
+ {
+  "text": "dominican republic 350 dollars",
+  "intent": "prices",
+  "country": "DO",
+  "amount": 350,
+  "id": 22
+ },
+ {
+  "text": "china rmb how much for 1500",
+  "intent": "prices",
+  "country": "CN",
+  "amount": 1500,
+  "id": 23
+ },
+ {
+  "text": "ethiopia birr 100",
+  "intent": "prices",
+  "country": "ET",
+  "amount": 100,
+  "id": 24
+ },
+ {
+  "text": "uganda money transfer compare",
+  "intent": "prices",
+  "country": "UG",
+  "id": 25
+ },
+ {
+  "text": "honduras lempiras 300",
+  "intent": "prices",
+  "country": "HN",
+  "amount": 300,
+  "id": 26
+ },
+ {
+  "text": "nicaragua 200 cordobas how much",
+  "intent": "prices",
+  "country": "NI",
+  "id": 27
+ },
+ {
+  "text": "india mein 500 dollar bhejne ka kitna lagega",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 500,
+  "id": 28
+ },
+ {
+  "text": "mujhe india paisa bhejna hai sabse sasta kaun hai",
+  "intent": "prices",
+  "country": "IN",
+  "id": 29
+ },
+ {
+  "text": "भारत में 1000 डॉलर भेजने पर कितना मिलेगा",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 1000,
+  "id": 30
+ },
+ {
+  "text": "pakistan paisa bhejna hai 300",
+  "intent": "prices",
+  "country": "PK",
+  "amount": 300,
+  "id": 31
+ },
+ {
+  "text": "sendin 500 to indai",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 500,
+  "id": 32
+ },
+ {
+  "text": "mexcio 200 dolars",
+  "intent": "prices",
+  "country": "MX",
+  "amount": 200,
+  "id": 33
+ },
+ {
+  "text": "phillipines cheapest remittance",
+  "intent": "prices",
+  "country": "PH",
+  "id": 34
+ },
+ {
+  "text": "how much do i lose sending 1000 to india with fees",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 1000,
+  "id": 35
+ },
+ {
+  "text": "who gives the best exchange rate for rupees",
+  "intent": "prices",
+  "country": "IN",
+  "id": 36
+ },
+ {
+  "text": "compare upi transfer to india 500",
+  "intent": "prices",
+  "country": "IN",
+  "amount": 500,
+  "id": 37
+ },
+ {
+  "text": "cash pickup in mexico prices",
+  "intent": "prices",
+  "country": "MX",
+  "id": 38
+ },
+ {
+  "text": "i get paid friday and want to send half my check ($900) to manila",
+  "intent": "prices",
+  "country": "PH",
+  "amount": 900,
+  "id": 39
+ },
+ {
+  "text": "what will 5k get in vietnam",
+  "intent": "prices",
+  "country": "VN",
+  "amount": 5000,
+  "id": 40
+ },
+ {
+  "text": "can you add somalia",
+  "intent": "request_route",
+  "country": "SO",
+  "id": 41
+ },
+ {
+  "text": "please cover cuba i send there every month",
+  "intent": "request_route",
+  "country": "CU",
+  "id": 42
+ },
+ {
+  "text": "do you guys do afghanistan? please add it",
+  "intent": "request_route",
+  "country": "AF",
+  "id": 43
+ },
+ {
+  "text": "add venezuela pls",
+  "intent": "request_route",
+  "country": "VE",
+  "id": 44
+ },
+ {
+  "text": "I want eritrea on the app",
+  "intent": "request_route",
+  "country": "ER",
+  "id": 45
+ },
+ {
+  "text": "when will you support el salvador",
+  "intent": "request_route",
+  "country": "SV",
+  "id": 46
+ },
+ {
+  "text": "please add ecuador",
+  "intent": "request_route",
+  "country": "EC",
+  "id": 47
+ },
+ {
+  "text": "you should add somalia, lots of us send there",
+  "intent": "request_route",
+  "country": "SO",
+  "id": 48
+ },
+ {
+  "text": "cuba isnt on your list, can you add it",
+  "intent": "request_route",
+  "country": "CU",
+  "id": 49
+ },
+ {
+  "text": "request venezuela route",
+  "intent": "request_route",
+  "country": "VE",
+  "id": 50
+ },
+ {
+  "text": "someone on facebook says im their girlfriend and needs $500 for a plane ticket, is this real",
+  "intent": "scam",
+  "id": 51
+ },
+ {
+  "text": "a man called saying he's from the IRS and i must pay with gift cards",
+  "intent": "scam",
+  "id": 52
+ },
+ {
+  "text": "got a text that i won a lottery but need to pay a fee first",
+  "intent": "scam",
+  "id": 53
+ },
+ {
+  "text": "my nephew messaged from a new number saying he's in jail and needs money quietly",
+  "intent": "scam",
+  "id": 54
+ },
+ {
+  "text": "is it a scam if someone overpaid me and wants the difference back",
+  "intent": "scam",
+  "id": 55
+ },
+ {
+  "text": "a job offer wants me to receive money and send it on to someone else",
+  "intent": "scam",
+  "id": 56
+ },
+ {
+  "text": "someone wants me to pay in bitcoin at a crypto atm",
+  "intent": "scam",
+  "id": 57
+ },
+ {
+  "text": "is this a scam? bank called and said move money to a safe account now",
+  "intent": "scam",
+  "id": 58
+ },
+ {
+  "text": "online friend asking for money for medical bills, i've never met them",
+  "intent": "scam",
+  "id": 59
+ },
+ {
+  "text": "they told me to keep the transfer secret from my family",
+  "intent": "scam",
+  "id": 60
+ },
+ {
+  "text": "kya yeh fraud hai? kisi ne lottery jeetne ke liye fees maangi",
+  "intent": "scam",
+  "id": 61
+ },
+ {
+  "text": "how do i know if a money request is a scam",
+  "intent": "scam",
+  "id": 62
+ },
+ {
+  "text": "what is the mid-market rate",
+  "intent": "question",
+  "id": 63
+ },
+ {
+  "text": "what does exchange rate markup mean",
+  "intent": "question",
+  "id": 64
+ },
+ {
+  "text": "why does my family get less than google says",
+  "intent": "question",
+  "id": 65
+ },
+ {
+  "text": "how do you make money if the app is free",
+  "intent": "question",
+  "id": 66
+ },
+ {
+  "text": "is remitbridge safe to use",
+  "intent": "question",
+  "id": 67
+ },
+ {
+  "text": "do you keep my phone number",
+  "intent": "question",
+  "id": 68
+ },
+ {
+  "text": "how are the companies ranked",
+  "intent": "question",
+  "id": 69
+ },
+ {
+  "text": "where do your prices come from",
+  "intent": "question",
+  "id": 70
+ },
+ {
+  "text": "can you send the money for me",
+  "intent": "question",
+  "id": 71
+ },
+ {
+  "text": "which countries do you cover",
+  "intent": "question",
+  "id": 72
+ },
+ {
+  "text": "what is a remittance",
+  "intent": "question",
+  "id": 73
+ },
+ {
+  "text": "what is a corridor",
+  "intent": "question",
+  "id": 74
+ },
+ {
+  "text": "how does the receipt scan work",
+  "intent": "question",
+  "id": 75
+ },
+ {
+  "text": "what does total cost mean",
+  "intent": "question",
+  "id": 76
+ },
+ {
+  "text": "what's swift",
+  "intent": "question",
+  "id": 77
+ },
+ {
+  "text": "what is kyc",
+  "intent": "question",
+  "id": 78
+ },
+ {
+  "text": "how long does a transfer take usually",
+  "intent": "question",
+  "id": 79
+ },
+ {
+  "text": "why do some transfers get stopped",
+  "intent": "question",
+  "id": 80
+ },
+ {
+  "text": "what is a correspondent bank",
+  "intent": "question",
+  "id": 81
+ },
+ {
+  "text": "what are stablecoins",
+  "intent": "question",
+  "id": 82
+ },
+ {
+  "text": "how do i set up a rate alert",
+  "intent": "question",
+  "id": 83
+ },
+ {
+  "text": "can i use the app without an account",
+  "intent": "question",
+  "id": 84
+ },
+ {
+  "text": "how do i delete my data",
+  "intent": "question",
+  "id": 85
+ },
+ {
+  "text": "is there an app i can download",
+  "intent": "question",
+  "id": 86
+ },
+ {
+  "text": "what is upi",
+  "intent": "question",
+  "id": 87
+ },
+ {
+  "text": "what is cash pickup",
+  "intent": "question",
+  "id": 88
+ },
+ {
+  "text": "do you have hindi",
+  "intent": "question",
+  "id": 89
+ },
+ {
+  "text": "what is a hidden fee",
+  "intent": "question",
+  "id": 90
+ },
+ {
+  "text": "who runs remitbridge",
+  "intent": "question",
+  "id": 91
+ },
+ {
+  "text": "is this a nonprofit",
+  "intent": "question",
+  "id": 92
+ },
+ {
+  "text": "why is the rate different on the weekend",
+  "intent": "question",
+  "id": 93
+ },
+ {
+  "text": "what does fx mean",
+  "intent": "question",
+  "id": 94
+ },
+ {
+  "text": "how do i check if a rate is fair",
+  "intent": "question",
+  "id": 95
+ },
+ {
+  "text": "what's the difference between fee and markup",
+  "intent": "question",
+  "id": 96
+ },
+ {
+  "text": "markup kya hota hai",
+  "intent": "question",
+  "id": 97
+ },
+ {
+  "text": "mid market rate ka matlab kya hai",
+  "intent": "question",
+  "id": 98
+ },
+ {
+  "text": "how do i learn more about sending money",
+  "intent": "question",
+  "id": 99
+ },
+ {
+  "text": "can you explain how money moves between banks",
+  "intent": "question",
+  "id": 100
+ },
+ {
+  "text": "what's a money transfer operator",
+  "intent": "question",
+  "id": 101
+ },
+ {
+  "text": "is crypto cheaper for remittances",
+  "intent": "question",
+  "id": 102
+ },
+ {
+  "text": "you should add Ria to the comparison",
+  "intent": "suggestion",
+  "id": 103
+ },
+ {
+  "text": "please add Remitly prices for every country",
+  "intent": "suggestion",
+  "id": 104
+ },
+ {
+  "text": "it would be nice to have a dark mode",
+  "intent": "suggestion",
+  "id": 105
+ },
+ {
+  "text": "can you add a calculator for euros too",
+  "intent": "suggestion",
+  "id": 106
+ },
+ {
+  "text": "make the app in spanish please",
+  "intent": "suggestion",
+  "id": 107
+ },
+ {
+  "text": "add sending from canada",
+  "intent": "suggestion",
+  "id": 108
+ },
+ {
+  "text": "would love notifications when the rate is good for pakistan",
+  "intent": "suggestion",
+  "id": 109
+ },
+ {
+  "text": "the font is too small for my parents",
+  "intent": "suggestion",
+  "id": 110
+ },
+ {
+  "text": "add western union cash pickup prices",
+  "intent": "suggestion",
+  "id": 111
+ },
+ {
+  "text": "feature idea: show how long each transfer takes",
+  "intent": "suggestion",
+  "id": 112
+ },
+ {
+  "text": "you guys should add tagalog",
+  "intent": "suggestion",
+  "id": 113
+ },
+ {
+  "text": "please let me compare sending from the UK",
+  "intent": "suggestion",
+  "id": 114
+ },
+ {
+  "text": "add a widget for the home screen",
+  "intent": "suggestion",
+  "id": 115
+ },
+ {
+  "text": "it would help to save my favorite route",
+  "intent": "suggestion",
+  "id": 116
+ },
+ {
+  "text": "can you show bank fees on the receiving side too",
+  "intent": "suggestion",
+  "id": 117
+ },
+ {
+  "text": "suggestion: weekly email with the best rate",
+  "intent": "suggestion",
+  "id": 118
+ },
+ {
+  "text": "app keeps logging me out, please fix",
+  "intent": "suggestion",
+  "id": 119
+ },
+ {
+  "text": "add zelle and venmo",
+  "intent": "suggestion",
+  "id": 120
+ },
+ {
+  "text": "please add more providers, only two show up",
+  "intent": "suggestion",
+  "id": 121
+ },
+ {
+  "text": "would be cool to see a chart of rates over a year",
+  "intent": "suggestion",
+  "id": 122
+ },
+ {
+  "text": "hi",
+  "intent": "greeting",
+  "id": 123
+ },
+ {
+  "text": "hello",
+  "intent": "greeting",
+  "id": 124
+ },
+ {
+  "text": "hey there",
+  "intent": "greeting",
+  "id": 125
+ },
+ {
+  "text": "thanks!",
+  "intent": "greeting",
+  "id": 126
+ },
+ {
+  "text": "thank you so much",
+  "intent": "greeting",
+  "id": 127
+ },
+ {
+  "text": "what can you do",
+  "intent": "greeting",
+  "id": 128
+ },
+ {
+  "text": "good morning",
+  "intent": "greeting",
+  "id": 129
+ },
+ {
+  "text": "namaste",
+  "intent": "greeting",
+  "id": 130
+ },
+ {
+  "text": "ok thanks",
+  "intent": "greeting",
+  "id": 131
+ },
+ {
+  "text": "who are you",
+  "intent": "greeting",
+  "id": 132
+ },
+ {
+  "text": "what's the weather in chicago",
+  "intent": "offtopic",
+  "id": 133
+ },
+ {
+  "text": "write my english essay about the civil war",
+  "intent": "offtopic",
+  "id": 134
+ },
+ {
+  "text": "who will win the super bowl",
+  "intent": "offtopic",
+  "id": 135
+ },
+ {
+  "text": "tell me a joke",
+  "intent": "offtopic",
+  "id": 136
+ },
+ {
+  "text": "what's 2+2",
+  "intent": "offtopic",
+  "id": 137
+ },
+ {
+  "text": "can you reset my western union password",
+  "intent": "offtopic",
+  "id": 138
+ },
+ {
+  "text": "how do i invest in stocks",
+  "intent": "offtopic",
+  "id": 139
+ },
+ {
+  "text": "best restaurants near me",
+  "intent": "offtopic",
+  "id": 140
+ },
+ {
+  "text": "translate this to french: good night",
+  "intent": "offtopic",
+  "id": 141
+ },
+ {
+  "text": "what is the meaning of life",
+  "intent": "offtopic",
+  "id": 142
+ },
+ {
+  "text": "recommend a good movie",
+  "intent": "offtopic",
+  "id": 143
+ },
+ {
+  "text": "how do i fix my car's brakes",
+  "intent": "offtopic",
+  "id": 144
+ },
+ {
+  "text": "can you check my bank balance",
+  "intent": "offtopic",
+  "id": 145
+ },
+ {
+  "text": "help me with my python code",
+  "intent": "offtopic",
+  "id": 146
+ },
+ {
+  "text": "who is the president",
+  "intent": "offtopic",
+  "id": 147
+ },
+ {
+  "text": "write a poem about my mom",
+  "intent": "offtopic",
+  "id": 148
+ },
+ {
+  "text": "is bitcoin going up tomorrow",
+  "intent": "offtopic",
+  "id": 149
+ },
+ {
+  "text": "give me a recipe for biryani",
+  "intent": "offtopic",
+  "id": 150
+ }
+]
