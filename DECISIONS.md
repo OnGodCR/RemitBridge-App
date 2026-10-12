@@ -2035,3 +2035,15 @@ matches the app (Scan, Compare, WhatsApp, Tools, Learn; Account behind the avata
 WhatsApp group from the app's own copy, and picking a feature that has a screenshot shows
 it in the phone. The observatory screenshot ("0 shared receipts") is left out: an empty
 state reads as an unused feature. Same change on the website's /app page.
+
+**D165. Wise breaks a tie between the two mid-market rate sources** (Angad, 2026-10-12:
+"Add a third source"). Mexico published no prices from Oct 9 and India none from Oct 12,
+because Frankfurter (the central bank's once-a-weekday fixing) and open.er-api drifted more
+than 0.5% apart while the peso and the rupee moved. The rule stays strict: when the two
+disagree, the engine asks Wise's comparison API, which marks its own quote as the mid-market
+rate and prices it live, for that one pair. If Wise agrees within 0.5% with exactly one of
+the two, that source is used and all three rates are kept as checks; if it agrees with
+neither, isn't available, or stops calling its rate mid-market (a markup above zero), the
+pair is held as before. Pairs that agree never touch Wise, so it sees a few requests a run
+at most, within the use Wise approved (D91). Loosening the limit to 1.5% was the other
+option and was turned down: it would let a bigger gap into published total costs.
