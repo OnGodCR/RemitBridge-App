@@ -37,4 +37,5 @@ export {
   type ReceiptReply,
 } from './receipt.ts'
 export { answer, checkAnswer, cloudflareClient, DEFAULT_AI_MODEL, DEFAULT_ANSWER_MODEL, readUnderstood, stripThinking, understand, type AiClient, type Answer, type ChatMessage, type Understood } from './ai.ts'
-export { retrieve, type Entry } from './knowledge.ts'
+export { CORE, isOurLink, retrieve, type Entry } from './knowledge.ts'
+export { readTurn, runAgent, strayLinks, strayNumbers, type AgentContext, type AgentResult, type ToolSpec } from './agent.ts'
