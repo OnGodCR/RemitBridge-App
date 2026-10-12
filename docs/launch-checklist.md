@@ -73,8 +73,8 @@ signing keys, universal links and Android App Links, build settings for producti
 - [ ] **Play Console forms** from `docs/store/listing.md`: store listing, Data safety,
       content rating, target audience (18+), financial features ("none"), account
       deletion URL. *Angad*, Claude checks.
-- [ ] **Phone screenshots and the 1024 × 500 feature graphic.** Screenshots can come from
-      Angad's Android; Claude makes the graphic. *Both.*
+- [ ] **Phone screenshots** from Angad's Android. *Angad.* The 1024 × 500 feature graphic
+      is done (`docs/store/play-feature-graphic.png`, 2026-10-12).
 - [ ] **Production build and submit**: Claude runs `eas build --profile production
       --platform android` (an .aab); the first upload goes through Play Console by hand,
       later ones with `eas submit` and a Play service-account key that Angad creates.

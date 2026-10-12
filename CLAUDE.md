@@ -138,8 +138,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       say the parser is AI-written (`docs/AI_USAGE.md`).
 - [ ] **Wise and Instarem on 26 routes (D158, 2026-10-11):** 22 new Tier 2 routes; migration run
       by Angad, and the first run published 179 prices (Wise 99, Instarem 80). 23 routes live.
-      Left: the Dominican Republic, Nicaragua and Uganda published nothing on the first run, so
-      check why if they're still building after the next one.
+      2026-10-12: the Dominican Republic and Nicaragua are live with prices. Uganda is still
+      building: its three rate sources are 2.6% apart (Frankfurter 4,075, open.er-api 4,027,
+      Wise 4,135), so D166 rightly holds it. Left: a rule for thin currencies, if Angad wants one.
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
       2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its
@@ -159,8 +160,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       providers (Wise and Instarem current, 7 hand-checked under Older prices). The Oct 4
       prices leave Compare on Oct 11. Left: a fresh round of hand checks.
       **D166 (2026-10-12):** Mexico (from Oct 9) and India (from Oct 12) published nothing
-      because Frankfurter and open.er-api drifted past 0.5%; Wise now breaks the tie. Left:
-      confirm both routes are back after the run started 2026-10-12.
+      because Frankfurter and open.er-api drifted past 0.5%; Wise now breaks the tie. Mexico
+      came back at 17:51 UTC. India is still held: all three disagree (Frankfurter 96.24,
+      open.er-api 96.96 and stale, Wise 95.73; Wise is 0.53% from Frankfurter). Left: see if
+      India returns on its own by 2026-10-13; if not, consider 0.6% when Wise is one of the two.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
