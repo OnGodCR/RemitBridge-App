@@ -20,10 +20,13 @@
 import { RECEIVING } from '../../../mobile/src/lib/countries.ts'
 import type { DeliveryMethod } from '../../../mobile/src/lib/routes.ts'
 import { DELIVERY_LABELS, routeFor } from '../../../mobile/src/lib/routes.ts'
-import { retrieve, type Entry } from './knowledge.ts'
+import { CORE, isOurLink, retrieve, type Entry } from './knowledge.ts'
 import { findPlaces, normalize, type Command, type Language } from './parse.ts'
 
+/** Sorts messages: small and fast, and 97% right on the test set (D159). */
 export const DEFAULT_AI_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8'
+/** Writes answers: a much stronger open model, used only when there's something to say. */
+export const DEFAULT_ANSWER_MODEL = '@cf/openai/gpt-oss-120b'
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
@@ -93,7 +96,7 @@ intent is one of:
 - "scam": they're worried a request for money is a scam
 - "question": a question about sending money, costs, exchange rates, words, or how RemitBridge or its app works, including which countries or languages it covers (fill question with a short, clear restatement in English)
 - "suggestion": an idea, feature request, provider or country-to-send-from they want added, or a complaint about RemitBridge (fill suggestion with their words)
-- "greeting": hello, thanks, or what can you do
+- "greeting": hello, thanks, how are you, or what can you do (fill question with their words)
 - "offtopic": anything else (weather, homework, general chat, and help with an account at another company, like a password or a transfer they made)
 
 country is a two-letter code from this list, or null: ${COUNTRIES}.
@@ -150,7 +153,8 @@ export function readUnderstood(raw: string): Understood | null {
     case 'scam':
       return { kind: 'command', command: { kind: 'scam' } }
     case 'greeting':
-      return { kind: 'command', command: { kind: 'help' } }
+      // Small talk gets a reply in the model's own words (answer() with the basics), not the menu.
+      return { kind: 'ask', question: words(o.question) ?? 'Hello! What can you do?', language }
     case 'question': {
       const question = words(o.question)
       return question ? { kind: 'ask', question, language } : null
@@ -168,44 +172,57 @@ export function readUnderstood(raw: string): Understood | null {
 
 export interface Answer {
   text: string
-  /** The link to send under it: the best note's. */
-  link: string
+  /** A link to send under it (the best note's), or null when the reply has one already or none fits. */
+  link: string | null
 }
 
-const ANSWER_PROMPT = (lang: Language) => `You answer questions for RemitBridge, a free service that compares the cost of sending money from the US. Answer ONLY from the notes below. If the notes don't answer the question, reply exactly: NO_ANSWER
+const ANSWER_PROMPT = (lang: Language) => `You are RemitBridge's WhatsApp assistant. RemitBridge is a free nonprofit service that compares the cost of sending money from the US. Reply to the message warmly and briefly, like a helpful person, ${lang === 'hi' ? 'in simple Hindi (Devanagari)' : 'in English'}.
+
+Use the notes below for anything about RemitBridge, its app, its links, prices, rates or words. A note marked "today" holds live figures from RemitBridge's database: quote them exactly when asked. For a general question about sending money abroad that the notes don't cover, give a short, general explanation in plain words. If the message isn't about sending money or RemitBridge, reply exactly: NO_ANSWER
 
 Rules:
-- At most three short sentences, plain everyday words, ${lang === 'hi' ? 'in simple Hindi (Devanagari)' : 'in English'}.
-- No numbers, prices or rates unless they appear in the notes word for word.
-- No links, no lists, no emoji, no greetings.
+- At most three or four short sentences. No lists, no emoji.
+- No numbers, prices, fees or rates unless they appear in the notes word for word.
+- A link only if it appears in the notes, written out in full.
 - Never tell someone what to do with their money; explain, don't advise.
+- Never claim to send money, see their account, or contact a provider for them.
 /no_think`
 
-/** Answers a question from our notes, or null when the notes don't cover it or the answer fails a check. */
-export async function answer(client: AiClient, question: string, lang: Language): Promise<Answer | null> {
-  const notes = retrieve(question)
-  if (!notes.length) return null
+/**
+ * Replies to a question or small talk in the model's words, from the basics plus the notes
+ * that match. Null when it's off topic or the reply fails a check (the caller falls back).
+ */
+export async function answer(client: AiClient, question: string, lang: Language, live: Entry[] = []): Promise<Answer | null> {
+  const matched = retrieve(question)
+  // Live figures from our database (today's mid-market rate on a route) come first.
+  const notes = [...live, ...CORE, ...matched]
   const raw = await client.chat(
     [
       { role: 'system', content: ANSWER_PROMPT(lang) },
-      { role: 'user', content: `Notes:\n${notes.map((n) => `- ${n.title}: ${n.text}`).join('\n')}\n\nQuestion: ${question}` },
+      { role: 'user', content: `Notes:\n${notes.map((n) => `- ${n.title}: ${n.text} (${n.link})`).join('\n')}\n\nMessage: ${question}` },
     ],
-    { maxTokens: 300 },
+    { maxTokens: 350 },
   )
   const text = raw.trim()
   if (!text || text.includes('NO_ANSWER')) return null
-  return checkAnswer(text, notes) ? { text, link: notes[0].link } : null
+  if (!checkAnswer(text, notes)) return null
+  // Point to the best-matching note unless the reply already carries a link.
+  const link = /https?:\/\//.test(text) ? null : (matched[0]?.link ?? null)
+  return { text, link }
 }
 
 const NUMBER = /\d[\d,.]*/g
 
 /**
- * The model's answer may only use numbers that are in the notes it was given, may not
- * carry links (we add the one link ourselves), and must fit on a phone screen.
+ * The model's reply may only use numbers that are in the notes it was given, may only link
+ * to our own sites, and must fit on a phone screen.
  */
 export function checkAnswer(text: string, notes: Entry[]): boolean {
-  if (text.length > 600) return false
-  if (/https?:\/\/|www\.|\.(com|org|net)\b/i.test(text)) return false
-  const allowed = new Set(notes.flatMap((n) => `${n.title} ${n.text}`.match(NUMBER) ?? []).map((n) => n.replace(/[,.]$/, '')))
-  return (text.match(NUMBER) ?? []).every((n) => allowed.has(n.replace(/[,.]$/, '')))
+  if (text.length > 700) return false
+  const links = text.match(/https?:\/\/[^\s)]+/g) ?? []
+  if (links.some((l) => !isOurLink(l.replace(/[.,;:]+$/, '')))) return false
+  if (/\bwww\.(?!remitbridgelabs\.org)/i.test(text)) return false
+  const noLinks = text.replace(/https?:\/\/[^\s)]+/g, '')
+  const allowed = new Set(notes.flatMap((n) => `${n.title} ${n.text}`.replace(/https?:\/\/[^\s)]+/g, '').match(NUMBER) ?? []).map((n) => n.replace(/[,.]$/, '')))
+  return (noLinks.match(NUMBER) ?? []).every((n) => allowed.has(n.replace(/[,.]$/, '')))
 }

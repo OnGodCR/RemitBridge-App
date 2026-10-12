@@ -12,6 +12,18 @@ on:
         description: "Models, space-separated (blank for the two candidates)"
         required: false
         default: ""
+      answer_model:
+        description: "Model that writes answers (blank: the same model)"
+        required: false
+        default: ""
+      only:
+        description: "Only messages of this intent, e.g. question (blank: all)"
+        required: false
+        default: ""
+      limit:
+        description: "At most this many messages (blank: all)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -24,6 +36,9 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
       EVAL_OUT: eval-results.md
+      EVAL_ANSWER_MODEL: ${{ inputs.answer_model }}
+      EVAL_ONLY: ${{ inputs.only }}
+      EVAL_LIMIT: ${{ inputs.limit }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

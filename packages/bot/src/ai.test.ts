@@ -38,7 +38,8 @@ describe('understanding a message', () => {
     })
     expect(readUnderstood('{"intent":"suggestion","suggestion":"add Ria please"}')).toEqual({ kind: 'suggest', text: 'add Ria please', language: 'en' })
     expect(readUnderstood('{"intent":"scam"}')).toEqual({ kind: 'command', command: { kind: 'scam' } })
-    expect(readUnderstood('{"intent":"greeting"}')).toEqual({ kind: 'command', command: { kind: 'help' } })
+    // Small talk is answered in the model's words, not with the menu.
+    expect(readUnderstood('{"intent":"greeting","question":"how are you"}')).toEqual({ kind: 'ask', question: 'how are you', language: 'en' })
     expect(readUnderstood('{"intent":"offtopic","language":"en"}')).toEqual({ kind: 'offtopic', language: 'en' })
   })
 
@@ -79,9 +80,10 @@ describe('answering from our notes only', () => {
     expect(a?.link).toMatch(/^https:\/\/(www|app)\.remitbridgelabs\.org/)
   })
 
-  it('gives up rather than guess when the notes don’t cover it', async () => {
+  it('gives up on anything off topic, and always has the basics to answer from', async () => {
     expect(await answer(fake('NO_ANSWER'), 'what is the mid-market rate', 'en')).toBeNull()
-    expect(await answer(fake('anything'), 'qwertyuiop', 'en')).toBeNull()
+    const site = await answer(fake('Our website is https://www.remitbridgelabs.org, with the blog and tools.'), 'give me the link to your website', 'en')
+    expect(site).toEqual({ text: 'Our website is https://www.remitbridgelabs.org, with the blog and tools.', link: null })
   })
 
   it('refuses an answer with a number the notes don’t have, a link, or too many words', () => {
@@ -89,7 +91,8 @@ describe('answering from our notes only', () => {
     expect(checkAnswer('We cover 26 countries, including India and Kenya.', notes)).toBe(true)
     expect(checkAnswer('We cover 140 countries.', notes)).toBe(false)
     expect(checkAnswer('See https://example.com for more.', notes)).toBe(false)
-    expect(checkAnswer('x'.repeat(601), notes)).toBe(false)
+    expect(checkAnswer('Our blog is at https://www.remitbridgelabs.org/blog.', notes)).toBe(true)
+    expect(checkAnswer('x'.repeat(701), notes)).toBe(false)
   })
 })
 
