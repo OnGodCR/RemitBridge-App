@@ -108,6 +108,15 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       function got **no call**: check the webhook's `messages` subscription and use Meta's
       Test button. Then: a real number (Angad's thinking Google Voice), app icon, app Live,
       `whatsapp_live` on.
+- [ ] **An AI model in the WhatsApp bot (scoped 2026-10-11, `docs/whatsapp-ai-scope.md`):** free,
+      not Groq; it understands the message and picks what to show, answers from our content
+      with links, and logs feature suggestions for Angad. The model never writes a number.
+      Proposed: Cloudflare Workers AI (free daily allowance, doesn't train on our data), Qwen3
+      30B-A3B vs Gemma 4 26B on a 150-message test set. Waiting on Angad's four answers at the
+      end of the scope.
+- [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
+      once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
+      no longer happens, per Angad.
 - [ ] **Universal links** (D48): the app side is in (the associated domain, the
       `p/[partner]` route, 2026-09-30). `site/.well-known/apple-app-site-association` is
       live with Team ID QS9F7JU6H2 (read from Membership details, 2026-10-07; the site build
