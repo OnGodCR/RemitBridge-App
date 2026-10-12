@@ -73,7 +73,7 @@ describe('true cost', () => {
     expect(screen.getByText(money(expected.markupCost, 'USD'))).toBeTruthy();
     // The charts say the same in words, for VoiceOver.
     expect(screen.getByLabelText(/This cost 5\.\d+%\. World average 6\.36%, UN target 3%\./)).toBeTruthy();
-    expect(screen.getByLabelText(/^MX\$8,560\.00 arrived, of MX\$9,026\.82 possible\./)).toBeTruthy();
+    expect(screen.getByLabelText(/^MXN\s8,560\.00 arrived, of MXN\s9,026\.82 possible\./)).toBeTruthy();
     expect(screen.getByText(/Mid-market rate: 1 USD = 17\.7 MXN \(Frankfurter, Sep 28, 2026\)/)).toBeTruthy();
   });
 
@@ -111,7 +111,7 @@ describe('what you could have kept (D119)', () => {
     open(confirmed({ best: best() }));
     expect(screen.getByText('With Ria, you could have kept')).toBeTruthy();
     expect(screen.getAllByText('$12.68')).toHaveLength(2); // at the top, and in the details
-    expect(screen.getByText(/Your family would have received MX\$8,710\.00/)).toBeTruthy();
+    expect(screen.getByText(/Your family would have received MXN\s8,710\.00/)).toBeTruthy();
     expect(screen.getByLabelText('Your cost $23.60. Ria: $10.92.')).toBeTruthy();
     expect(screen.getByText(/^Prices checked /)).toBeTruthy();
     expect(screen.getByText('Compared with: Ria, Western Union.')).toBeTruthy();
