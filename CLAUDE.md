@@ -94,6 +94,14 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [x] **Rate alerts by WhatsApp (D139): dropped for push-only (D148, 2026-10-09).** No
       template or Meta payment method needed; LINK keeps no number. Left: Angad clears any
       number sealed before then (`update public.whatsapp_users set number_sealed = null;`).
+- [ ] **WhatsApp on its real number (2026-10-11):** Google Voice +1 601-980-1089, Phone Number ID
+      1401205103074407, in the new messaging account "RemitBridge Labs" (2494223487766004).
+      Webhooks subscribed on that account (the toggle was off, which is why the test number's
+      message never reached us), `remitbridge-bot` given full access, `WHATSAPP_PHONE_NUMBER_ID`
+      set, `app_settings.whatsapp_number` = 16019801089. Angad's "500 to India" and "500 to
+      Vietnam" got replies. Left: a message from someone who isn't an admin of the Meta app
+      (to rule out development-mode limits), the app icon and Live mode in Meta, the display
+      name review, then `whatsapp_live` on.
 - [ ] **WhatsApp going live (2026-10-09):** the account is **Approved** and the business
       **Verified** (restriction lifted). Meta app: RemitBridge, App ID 1004249319342214 (no
       icon yet; needed before Live). A test "500 to India" was delivered but the whatsapp
