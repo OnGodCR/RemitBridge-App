@@ -45,10 +45,10 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 - [ ] **Two-factor everywhere**: Supabase, GitHub, Expo, the RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
-- [ ] **Send the Groq email**: the nonprofit-tier request drafted on 2026-10-12.
+- [x] **Send the Groq email**: sent by Angad, 2026-10-12. Watch hello@ for Groq's answer.
 - [ ] **Clear old sealed WhatsApp numbers**: run `update public.whatsapp_users set number_sealed = null;` in the SQL editor (D148).
 - [ ] **Renumber duplicate decisions**: D160 and D163 are each used twice; say yes and Claude renumbers.
-- [ ] **hello@ profile photo**: waiting on Google case #76360017, then upload the logo.
+- [ ] **hello@ profile photo**: Google case #76360017; Angad confirmed freeing the domain on 2026-10-12, so Google is deleting the unfinished Workspace. Then make a free Google account for hello@ and upload the logo.
 
 ## Translations
 
