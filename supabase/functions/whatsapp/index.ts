@@ -26,12 +26,12 @@
 // WHATSAPP_HASH_SECRET), read by the worker (.github/workflows/receipt-intake.yml), and
 // answered here when the worker posts ?intake=done. The number is deleted with the row.
 //
-// The model (D159, docs/whatsapp-ai-scope.md), off until both of these are set. It's asked
-// only about messages the parser can't read, with the text alone (never the number):
-//   CLOUDFLARE_ACCOUNT_ID     the Cloudflare account that runs Workers AI
-//   CLOUDFLARE_AI_TOKEN       an API token limited to Workers AI
-// Optional: WHATSAPP_AI_MODEL (sorts messages) and WHATSAPP_AI_ANSWER_MODEL (writes answers),
-// defaults in packages/bot/src/ai.ts; WHATSAPP_AI_DAILY_CAP.
+// The model (D159-D161, docs/whatsapp-ai-scope.md) gets the message text alone, never the
+// number. Providers in order, each used while the one before is out (D161):
+//   CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_AI_TOKEN   Workers AI (WHATSAPP_AI_ANSWER_MODEL,
+//                                                capped at WHATSAPP_AI_DAILY_CAP a day)
+//   GROQ_API_KEY                                 Groq's gpt-oss-120b, then gpt-oss-20b
+// With none of them, or all out, the plain bot answers.
 //
 // Deployed with JWT verification off (supabase/config.toml), because Meta can't send a
 // Supabase token; the signature check below is what keeps strangers out.
@@ -40,8 +40,10 @@ import { publishableKey, secretKey } from '../_shared/keys.ts';
 import { USER_AGENT } from '../_shared/site-config.ts';
 
 import {
+  chainClient,
   cloudflareClient,
   DEFAULT_ANSWER_MODEL,
+  groqChatClient,
   findPlaces,
   MAX_AMOUNT,
   normalize,
@@ -95,11 +97,12 @@ const HOUR_MS = 3600 * 1000;
  */
 const MESSAGES_PER_DAY = 100;
 const PHOTOS_PER_DAY = 10;
-/** Agent conversations a day (D160), for one number and for everyone. One conversation is a
- * few model calls, about 100-120 of Cloudflare's 10,000 free daily neurons, so 80 keeps
- * inside the allowance. Past either cap the plain bot answers, as it did before. */
+/** Agent conversations a day (D160, D161). One number gets 25 in all. Cloudflare takes the
+ * first 80 of the day (a conversation is about 100-120 of its 10,000 free daily neurons);
+ * after that Groq's free models answer until their own daily limits, then the plain bot. */
 const MODEL_CALLS_PER_NUMBER = 25;
-const MODEL_CALLS_PER_DAY = Number(Deno.env.get('WHATSAPP_AI_DAILY_CAP') ?? 80);
+const CLOUDFLARE_PER_DAY = Number(Deno.env.get('WHATSAPP_AI_DAILY_CAP') ?? 80);
+const GROQ_MODELS = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'];
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const INTAKE_WORKFLOW = 'receipt-intake.yml';
@@ -262,12 +265,12 @@ async function handle(m: Incoming) {
     if (model) {
       const touched: { route?: Route; method?: string } = {};
       const lastCountry = state.lastRoute ? (ROUTES.find((r) => r.id === state.lastRoute)?.country ?? null) : null;
-      const result = await tryModel(() => runAgent(model, agentTools(db, hash, touched), text, { language: state.language, lastCountry }));
+      const result = await tryModel(() => runAgent(model.client, agentTools(db, hash, touched), text, { language: state.language, lastCountry }));
       if (result) {
         const next: State = touched.route ? { ...state, lastRoute: touched.route.id, lastMethod: (touched.method ?? null) as State['lastMethod'] } : state;
         await save(next);
         await send(m.from, result.text);
-        await track(db, hash, 'whatsapp_ai', { tools: result.tools.join(',') || 'none' });
+        await track(db, hash, 'whatsapp_ai', { tools: result.tools.join(',') || 'none', provider: model.names[model.client.used()] ?? 'none' });
         return;
       }
     }
@@ -443,16 +446,28 @@ interface Pending {
 const NO_PENDING: Pending = { pending_receipt: null, pending_field: null, pending_questions: 0 };
 
 /**
- * The model client, if it's set up and both daily limits have room; each call counts one hit
- * for this number and one for everyone. Null means: answer without it.
+ * The model client, if one is set up and this number has room today; each call counts one hit
+ * for this number. Null means: answer without it.
  */
-async function modelFor(db: SupabaseClient, hash: string, model?: string): Promise<AiClient | null> {
+async function modelFor(db: SupabaseClient, hash: string, model?: string) {
+  const providers = await providersFor(db, model ?? (Deno.env.get('WHATSAPP_AI_MODEL') || undefined));
+  if (!providers.length) return null;
+  if ((await countToday(db, 'wa_ai', hash)) > MODEL_CALLS_PER_NUMBER) return null;
+  const client = chainClient(providers.map((p) => p.client), (i, e) => console.warn(`whatsapp model ${providers[i].name} failed:`, String(e)));
+  return { client, names: providers.map((p) => p.name) };
+}
+
+/** The providers to try, in order (D161). Cloudflare only while its daily share has room. */
+async function providersFor(db: SupabaseClient, cloudflareModel?: string): Promise<{ name: string; client: AiClient }[]> {
+  const list: { name: string; client: AiClient }[] = [];
   const account = Deno.env.get('CLOUDFLARE_ACCOUNT_ID');
   const token = Deno.env.get('CLOUDFLARE_AI_TOKEN');
-  if (!account || !token) return null;
-  if ((await countToday(db, 'wa_ai', hash)) > MODEL_CALLS_PER_NUMBER) return null;
-  if ((await countToday(db, 'wa_ai_all', 'all')) > MODEL_CALLS_PER_DAY) return null;
-  return cloudflareClient(account, token, model ?? (Deno.env.get('WHATSAPP_AI_MODEL') || undefined));
+  if (account && token && (await countToday(db, 'wa_ai_all', 'all')) <= CLOUDFLARE_PER_DAY) {
+    list.push({ name: 'cloudflare', client: cloudflareClient(account, token, cloudflareModel) });
+  }
+  const groq = Deno.env.get('GROQ_API_KEY');
+  if (groq) for (const m of GROQ_MODELS) list.push({ name: m, client: groqChatClient(groq, m) });
+  return list;
 }
 
 /**
@@ -481,14 +496,13 @@ function agentTools(db: SupabaseClient, hash: string, touched: { route?: Route; 
   return [
     {
       name: 'get_prices',
-      about:
-        "Today's checked prices to send money from the US to a country, ranked by how much arrives, with each provider's fee, exchange rate, hidden markup and total cost, and the mid-market rate. Use for any question about cost, rates, fees, providers or how much arrives.",
-      args: { country: 'country name or 2-letter code', amount: 'US dollars to send (default 500)', method: `optional: ${Object.keys(DELIVERY_LABELS).join(', ')}` },
+      about: "Today's checked prices from the US, most received first: each provider's fee, rate, cost hidden in the rate, total cost; plus the mid-market rate. For any cost, rate, fee or provider question.",
+      args: { country: 'name or 2-letter code', amount: 'USD, default 500', method: `optional, ${Object.keys(DELIVERY_LABELS).join('/')}` },
       run: async (args) => {
         const country = countryOf(args.country);
         if (!country) return { error: 'Which country? Ask the person.' };
         const route = routeFor('US', country.code);
-        if (!route) return { country: country.name, covered: false, note: 'We do not check prices to this country yet. Offer to count a request (request_route).' };
+        if (!route) return { country: country.name, covered: false, note: 'Not covered yet. Offer request_route.' };
         const amount = typeof args.amount === 'number' && args.amount > 0 ? Math.min(args.amount, MAX_AMOUNT) : 500;
         const method = route.deliveryMethods.find((d) => d === args.method) ?? route.deliveryMethods[0];
         touched.route = route;
@@ -498,50 +512,41 @@ function agentTools(db: SupabaseClient, hash: string, touched: { route?: Route; 
         const { standing, promotions } = rankFor(rows, amount);
         await track(db, hash, 'comparison_run', { route: route.id, checked_amount: checked, method, quotes: standing.length });
         const cur = route.receiveCurrency;
-        if (!standing.length) return { country: route.country, covered: true, amount: usd(amount), method: DELIVERY_LABELS[method], providers: [], note: 'No checked prices yet for this amount and way of receiving.' };
+        if (!standing.length) return { country: route.country, amount: usd(amount), method: DELIVERY_LABELS[method], providers: [], note: 'No checked prices yet.' };
         const newest = standing.map((q) => q.captured_at).sort().at(-1)!;
+        // One line per provider: far fewer tokens than repeating JSON keys (D161).
+        const others = route.deliveryMethods.filter((d) => d !== method).map((d) => DELIVERY_LABELS[d]);
         return {
-          country: route.country,
-          amount_sent: usd(amount),
-          way_of_receiving: DELIVERY_LABELS[method],
-          other_ways: route.deliveryMethods.filter((d) => d !== method).map((d) => DELIVERY_LABELS[d]),
-          mid_market_rate: rate(standing[0].mid_market_rate, cur),
+          sent: `${usd(amount)} to ${route.country}, ${DELIVERY_LABELS[method]}`,
+          ...(others.length ? { other_ways: others.join(', ') } : {}),
+          mid_market: rate(standing[0].mid_market_rate, cur),
           checked: ago(newest),
-          estimated_from: standing[0].basedOn ? usd(standing[0].basedOn) : null,
-          providers: standing.map((q, i) => {
+          ...(standing[0].basedOn ? { estimated_from: usd(standing[0].basedOn) } : {}),
+          providers: standing.map((q) => {
             const c = computeTransferCost({ sent: amount, fee: q.fee, quotedRate: q.offered_rate, midRate: q.mid_market_rate, pickupCharge: q.pickup_charge });
-            return {
-              rank: i + 1,
-              provider: q.provider_name,
-              family_receives: money(q.amount_received, cur),
-              fee: usd(q.fee),
-              their_rate: rate(q.offered_rate, cur),
-              hidden_in_rate: usd(Math.max(0, c.markupCost)),
-              total_cost: `${usd(c.totalCost)} (${q.total_cost_pct.toFixed(1)}%)`,
-              delivery: q.delivery_time ?? 'not stated',
-            };
+            return `${q.provider_name}: receives ${money(q.amount_received, cur)}; fee ${usd(q.fee)}; rate ${q.offered_rate.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${cur} per USD; hidden in rate ${usd(Math.max(0, c.markupCost))}; total ${usd(c.totalCost)} (${q.total_cost_pct.toFixed(1)}%)${q.delivery_time ? `; ${q.delivery_time}` : ''}`;
           }),
-          first_transfer_offers_not_shown: promotions,
-          full_list: 'https://app.remitbridgelabs.org',
+          ...(promotions ? { first_transfer_offers_not_shown: promotions } : {}),
+          all: 'https://app.remitbridgelabs.org',
         };
       },
     },
     {
       name: 'get_routes',
-      about: 'The countries we check prices to from the US, and the ways money can arrive in each.',
+      about: 'The countries we cover from the US, and how money can arrive in each.',
       args: {},
       run: async () => ({ countries: ROUTES.map((r) => `${r.country} (${r.deliveryMethods.map((d) => DELIVERY_LABELS[d]).join(', ')})`), count: ROUTES.length }),
     },
     {
       name: 'search_knowledge',
-      about: "RemitBridge's own explanations: money-transfer words (glossary), how the app and its tools work, privacy, the blog. Use to explain a term or a feature, or to find a link.",
+      about: 'Our notes: money-transfer terms, how the app and tools work, privacy, the blog. To explain something or find a link.',
       args: { query: 'what to look up' },
-      run: async (args) => ({ results: retrieve(String(args.query ?? ''), 4).map((e) => ({ title: e.title, text: e.text, link: e.link })) }),
+      run: async (args) => ({ results: retrieve(String(args.query ?? ''), 3).map((e) => `${e.title}: ${e.text}${e.link ? ` ${e.link}` : ''}`) }),
     },
     {
       name: 'request_route',
-      about: "Counts the person's request for a country we don't cover yet. Requests decide which countries we add next.",
-      args: { country: 'country name or 2-letter code' },
+      about: "Counts a request for a country we don't cover; requests decide what we add next.",
+      args: { country: 'name or 2-letter code' },
       run: async (args) => {
         const country = countryOf(args.country);
         if (!country) return { error: 'Unknown country.' };
@@ -554,7 +559,7 @@ function agentTools(db: SupabaseClient, hash: string, touched: { route?: Route; 
     },
     {
       name: 'save_suggestion',
-      about: 'Passes an idea, a provider to add, a feature request or a complaint to the RemitBridge team.',
+      about: 'Passes an idea, provider, feature request or complaint to the team.',
       args: { text: 'the suggestion, in their words' },
       run: async (args) => {
         const text = String(args.text ?? '').trim().slice(0, 1000);

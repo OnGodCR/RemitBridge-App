@@ -38,23 +38,28 @@ export interface AiClient {
   chat(messages: ChatMessage[], options: { maxTokens: number }): Promise<string>
 }
 
-/** Workers AI's OpenAI-compatible chat endpoint, with a timeout so a slow model can't hold a reply. */
-export function cloudflareClient(
-  accountId: string,
+/**
+ * Any OpenAI-compatible chat endpoint (Cloudflare Workers AI, Groq), with a timeout so a slow
+ * model can't hold a reply. `extra` carries provider-specific settings, such as Groq's
+ * reasoning effort for gpt-oss.
+ */
+export function openAiClient(
+  url: string,
   token: string,
-  model = DEFAULT_AI_MODEL,
+  model: string,
   fetchImpl: typeof fetch = fetch,
   timeoutMs = 9000,
+  extra: Record<string, unknown> = {},
 ): AiClient {
   return {
     async chat(messages, { maxTokens }) {
       const ctrl = new AbortController()
       const timer = setTimeout(() => ctrl.abort(), timeoutMs)
       try {
-        const res = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1/chat/completions`, {
+        const res = await fetchImpl(url, {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: 0 }),
+          body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: 0, ...extra }),
           signal: ctrl.signal,
         })
         if (!res.ok) throw new Error(`model service: HTTP ${res.status}`)
@@ -65,6 +70,51 @@ export function cloudflareClient(
       } finally {
         clearTimeout(timer)
       }
+    },
+  }
+}
+
+/** Workers AI's OpenAI-compatible chat endpoint. */
+export function cloudflareClient(
+  accountId: string,
+  token: string,
+  model = DEFAULT_AI_MODEL,
+  fetchImpl: typeof fetch = fetch,
+  timeoutMs = 9000,
+): AiClient {
+  return openAiClient(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1/chat/completions`, token, model, fetchImpl, timeoutMs)
+}
+
+/** Groq's endpoint, for its free gpt-oss models (low reasoning effort, to spare the daily tokens). */
+export function groqChatClient(token: string, model: string, fetchImpl: typeof fetch = fetch, timeoutMs = 9000): AiClient {
+  return openAiClient('https://api.groq.com/openai/v1/chat/completions', token, model, fetchImpl, timeoutMs, { reasoning_effort: 'low' })
+}
+
+/**
+ * Several providers as one (D161): each call goes to the first, and on any error (a daily
+ * limit's 429, a timeout, an outage) to the next. Only when all fail does the call throw,
+ * and the bot falls back to its plain replies.
+ */
+export function chainClient(clients: AiClient[], onFail: (index: number, error: unknown) => void = () => {}): AiClient & { used: () => number } {
+  // A provider that failed once is skipped for the rest of the conversation, so a long
+  // conversation doesn't wait on the same 429 at every step.
+  let start = 0
+  return {
+    used: () => start,
+    async chat(messages, options) {
+      let last: unknown = new Error('no model providers configured')
+      for (let i = start; i < clients.length; i++) {
+        try {
+          const text = await clients[i].chat(messages, options)
+          start = i
+          return text
+        } catch (e) {
+          onFail(i, e)
+          last = e
+        }
+      }
+      start = clients.length
+      throw last
     },
   }
 }

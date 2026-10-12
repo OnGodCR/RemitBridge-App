@@ -1961,6 +1961,27 @@ This replaces D159's parser-first routing. D159's knowledge, suggestions table, 
 and limits carry over.
 
 
+**D161. The WhatsApp agent falls back across free providers, and uses fewer tokens**
+(Angad, 2026-10-12: "lets go with what you suggested"). Cloudflare's free tier holds about
+80 conversations a day, so each model call now tries, in order:
+1. Cloudflare Workers AI, gpt-oss-120b, while the day's 80 have room;
+2. Groq, `openai/gpt-oss-120b`;
+3. Groq, `openai/gpt-oss-20b`;
+4. the plain bot (parser and templates).
+A provider that errors (a 429 at its daily limit, a timeout, an outage) is skipped for the
+rest of that conversation. Groq's limits are per model, so the bot's two models never eat
+into the receipt model's (Qwen3.8 27B) budget. Groq runs with `reasoning_effort: low`, and
+the existing `GROQ_API_KEY` (Zero Data Retention on) serves both. Each answer records which
+provider wrote it (`whatsapp_ai`, `provider`). The 25 a number a day still covers all
+providers.
+Tokens: the system prompt is about 30% shorter, and `get_prices` gives one line per provider
+in place of repeated JSON keys, so a price conversation takes about 30% fewer tokens
+(roughly 2,800 to 2,000). On Groq's 200,000 tokens a day per model, that is about 100
+conversations on each.
+Not done: several Groq accounts to multiply the limits (against Groq's terms; Angad agreed).
+Asked Groq for a nonprofit tier instead (email drafted for Angad).
+The privacy policy now names Groq for WhatsApp messages too.
+
 **D162. Every page gets the website's pointer backdrop** (Angad, 2026-10-12: "add the cursor
 background to the .app and also to the app page on the website"). The website's Backdrop,
 rebuilt without React and injected by `site/build.mjs` into every page: the bridge mark

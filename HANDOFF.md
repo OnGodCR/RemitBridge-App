@@ -5,6 +5,13 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-11 (see the sections just below; the older status after them is kept for history)
 
+## 2026-10-12: the WhatsApp agent's fallbacks (D161)
+
+`whatsapp` v29: each model call tries Cloudflare (gpt-oss-120b, the first 80 conversations a
+day), then Groq's gpt-oss-120b and gpt-oss-20b on the existing `GROQ_API_KEY`, then the plain
+bot. A failed provider is skipped for the rest of the conversation. The prompt and the price
+tool's output are about 30% smaller. The privacy policy names Groq for bot messages.
+
 ## 2026-10-11: Android feedback
 
 Angad tried the Android preview and asked for five things; all are built and pushed
