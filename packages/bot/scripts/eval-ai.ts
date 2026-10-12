@@ -22,7 +22,13 @@ interface Labelled {
   amount?: number
 }
 
-const messages: Labelled[] = JSON.parse(readFileSync(new URL('../eval/messages.json', import.meta.url), 'utf8'))
+const all: Labelled[] = JSON.parse(readFileSync(new URL('../eval/messages.json', import.meta.url), 'utf8'))
+// EVAL_ONLY=question keeps one kind; EVAL_LIMIT=15 keeps the first few (to spare the free allowance).
+const messages = all
+  .filter((m) => !process.env.EVAL_ONLY || m.intent === process.env.EVAL_ONLY)
+  .slice(0, Number(process.env.EVAL_LIMIT) || undefined)
+/** The model that writes answers; by default the one that sorts. */
+const answerModel = process.env.EVAL_ANSWER_MODEL || null
 const account = process.env.CLOUDFLARE_ACCOUNT_ID
 const token = process.env.CLOUDFLARE_AI_TOKEN
 if (!account || !token) {
@@ -57,6 +63,7 @@ const median = (xs: number[]) => (xs.length ? [...xs].sort((a, b) => a - b)[Math
 const report: string[] = ['# WhatsApp bot model test', '', `Run ${new Date().toISOString().slice(0, 16)}Z on ${messages.length} labelled messages.`, '']
 report.push('| Model | Intent right | Country right | Amount right | Questions answered | Errors | Median time |', '|---|---:|---:|---:|---:|---:|---:|')
 const misses: string[] = []
+const samples: string[] = []
 
 for (const model of models) {
   const client: AiClient = cloudflareClient(account, token, model, fetch, 20_000)
@@ -84,7 +91,9 @@ for (const model of models) {
       const q = u.value?.kind === 'ask' ? u.value.question : m.text
       // Null when the notes don't cover it, or the model's text failed a check: either way
       // the person gets the plain reply, never an unchecked one.
-      const a = await timed(() => answer(client, q, 'en'))
+      const writer = answerModel ? cloudflareClient(account!, token!, answerModel, fetch, 30_000) : client
+      const a = await timed(() => answer(writer, q, 'en'))
+      if (a.value) samples.push(`${model}${answerModel ? ` + ${answerModel}` : ''} #${m.id} "${m.text}" → ${a.value.text}${a.value.link ? ` (${a.value.link})` : ''}`)
       if (a.value) answered++
       else misses.push(`${model} #${m.id} "${m.text}": question not answered${a.error ? ` (${a.error})` : ''}`)
       if (a.error) errors++
@@ -95,7 +104,8 @@ for (const model of models) {
   )
 }
 
-report.push('', 'Pass bar (scope): at least 95% intent right, no invented numbers (enforced by the checks), under 4 s.', '', '## Misses', '', ...misses.map((m) => `- ${m}`))
+if (answerModel) report.push('', `Answers written by \`${answerModel}\`.`)
+report.push('', 'Pass bar (scope): at least 95% intent right, no invented numbers (enforced by the checks), under 4 s.', '', '## Misses', '', ...misses.map((m) => `- ${m}`), '', '## Sample answers', '', ...samples.map((m) => `- ${m}`))
 const out = report.join('\n')
 writeFileSync(process.env.EVAL_OUT ?? 'eval-results.md', out)
 console.log(out)

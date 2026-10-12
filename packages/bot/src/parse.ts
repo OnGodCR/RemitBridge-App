@@ -194,7 +194,11 @@ export function findPlaces(s: string): { from?: string; to?: string } {
   }
   hits.sort((a, b) => a.at - b.at)
   const from = hits.find((h) => h.marker === 'from') ?? hits.find((h) => h.sending && h.marker !== 'to')
-  const to = hits.find((h) => h.marker === 'to' && h !== from) ?? hits.find((h) => !h.sending && h !== from)
+  // Money goes to a receiving country: "rate for usa to india" is to India, not the US.
+  const to =
+    hits.find((h) => h.marker === 'to' && h !== from && !h.sending) ??
+    hits.find((h) => !h.sending && h !== from) ??
+    hits.find((h) => h.marker === 'to' && h !== from)
   return { from: from?.code, to: to?.code }
 }
 
@@ -204,4 +208,15 @@ export function findMethod(s: string): DeliveryMethod | undefined {
     if (names.some((n) => padded.includes(` ${normalize(n)} `))) return method
   }
   return undefined
+}
+
+/**
+ * A message shaped like a question, with no amount: "what is the mid-market rate for india",
+ * "why is the rate lower on weekends". These go to the model first (D159), which can still
+ * send a plain price question back to the price templates; "500 to India" never does.
+ */
+export function isQuestion(text: string): boolean {
+  const s = normalize(text)
+  if (findAmount(s) !== undefined) return false
+  return /\?\s*$/.test(text.trim()) || /^(what|whats|why|how|is|are|does|do|can|could|should|which|who|when|where|tell|explain|kya|kaise|kyun|kyon|kitna|kaun)\b/.test(s)
 }

@@ -8,6 +8,7 @@ import {
   formatSay,
   formatUnlinked,
   formatWhy,
+  isQuestion,
   MAX_AMOUNT,
   NEW_STATE,
   parse,
@@ -250,3 +251,17 @@ describe('linking and saving (D138)', () => {
     expect(formatSay('hi', { key: 'saveHow' })).toMatch(/SAVE 500 to India/)
   })
 })
+
+describe('questions and places (D159)', () => {
+  it('reads "for usa to india" as money going to India', () => {
+    expect(parse('what is the middle market rate for usa to india')).toMatchObject({ kind: 'compare', to: 'IN' })
+  })
+
+  it('sends question-shaped messages without an amount to the model first', () => {
+    for (const t of ['what is the middle market rate for usa to india', 'why is the rate lower on weekends', 'kya UPI se bhej sakte hain', 'cheapest for mexico?']) {
+      expect(isQuestion(t)).toBe(true)
+    }
+    for (const t of ['500 to India', 'how much for 300 to mexico', 'mexico']) expect(isQuestion(t)).toBe(false)
+  })
+})
+

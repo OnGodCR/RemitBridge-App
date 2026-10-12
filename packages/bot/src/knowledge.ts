@@ -66,7 +66,22 @@ export const POSTS: Entry[] = (blog.posts as Post[]).map((p) => ({
   link: `${SITE}/blog/${p.slug}`,
 }))
 
+/**
+ * The basics, sent with every question so the model can always say who we are and where
+ * things are, whatever the question matched ("give me your website" matches no feature).
+ */
+export const CORE: Entry[] = [
+  { id: 'core:about', kind: 'faq', title: 'About RemitBridge', text: 'RemitBridge Labs, a Washington nonprofit corporation, makes a free app and this WhatsApp bot that compare what it costs to send money from the US to 26 countries, ranked by how much your family receives. It never sends or holds money.', link: SITE },
+  { id: 'core:links', kind: 'faq', title: 'Where to find us', text: `Website: ${SITE}. The app's page: ${APP}. Blog: ${SITE}/blog. Privacy policy: ${APP}/privacy. Help and contact: ${APP}/support. Email: hello@remitbridgelabs.org.`, link: SITE },
+  { id: 'core:bot', kind: 'faq', title: 'What this bot does', text: 'Send an amount and a country, like "500 to India", for today\'s checked prices. Send a receipt photo to see what a transfer really cost. Send WHY for the hidden cost, SCAM to check a request for money, HINDI for Hindi replies, or just ask a question or suggest something.', link: APP },
+]
+
 export const ALL: Entry[] = [...FAQ, ...FEATURES, ...GLOSSARY, ...POSTS]
+
+/** Every link the bot may send: our two sites, and anything under them. */
+export function isOurLink(url: string): boolean {
+  return /^https:\/\/(www\.remitbridgelabs\.org|app\.remitbridgelabs\.org|remitbridgelabs\.org)(\/[\w\-./?=&#%]*)?$/.test(url)
+}
 
 const STOP = new Set(['the', 'a', 'an', 'is', 'are', 'to', 'of', 'and', 'or', 'in', 'on', 'for', 'my', 'me', 'i', 'you', 'it', 'do', 'does', 'what', 'how', 'can', 'with', 'this', 'that', 'be', 'your', 'from', 'at', 'by', 'about', 'there'])
 /** Lowercase words, with a plural's "s" dropped so "stablecoins" finds "stablecoin". */

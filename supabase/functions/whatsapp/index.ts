@@ -30,7 +30,8 @@
 // only about messages the parser can't read, with the text alone (never the number):
 //   CLOUDFLARE_ACCOUNT_ID     the Cloudflare account that runs Workers AI
 //   CLOUDFLARE_AI_TOKEN       an API token limited to Workers AI
-// Optional: WHATSAPP_AI_MODEL (default in packages/bot/src/ai.ts), WHATSAPP_AI_DAILY_CAP.
+// Optional: WHATSAPP_AI_MODEL (sorts messages) and WHATSAPP_AI_ANSWER_MODEL (writes answers),
+// defaults in packages/bot/src/ai.ts; WHATSAPP_AI_DAILY_CAP.
 //
 // Deployed with JWT verification off (supabase/config.toml), because Meta can't send a
 // Supabase token; the signature check below is what keeps strangers out.
@@ -41,6 +42,11 @@ import { USER_AGENT } from '../_shared/site-config.ts';
 import {
   answer,
   cloudflareClient,
+  DEFAULT_ANSWER_MODEL,
+  findPlaces,
+  isQuestion,
+  normalize,
+  type Entry,
   formatAnswer,
   formatOffTopic,
   formatSuggestThanks,
@@ -75,6 +81,7 @@ import {
   type State,
 } from '../../../packages/bot/src/index.ts';
 import { deserializeValue, FIELD_NAMES, type ConfirmResponse, type FieldName, type ScanResponse } from '../../../packages/receipt/src/index.ts';
+import { routeFor } from '../../../mobile/src/lib/routes.ts';
 
 const GRAPH = `https://graph.facebook.com/${Deno.env.get('WHATSAPP_GRAPH_VERSION') ?? 'v23.0'}`;
 /** Messages per number per hour. One reply says so; after that, silence until the hour is up. */
@@ -239,15 +246,18 @@ async function handle(m: Incoming) {
 
   const text = m.text;
   let command = parse(text);
-  // What the parser can't read goes to the model, when it's set up and under its limits.
-  if (command.kind === 'unknown') {
+  // What the parser can't read goes to the model, when it's set up and under its limits, and
+  // so does anything shaped like a question with no amount ("what's the mid-market rate for
+  // india"): the model can still hand a plain price question back to the price templates.
+  if (command.kind === 'unknown' || (isQuestion(text) && command.kind === 'compare' && command.amount === undefined)) {
     const model = await modelFor(db, hash);
     const understood = model ? await tryModel(() => understand(model, text)) : null;
     const lang = (understood && 'language' in understood && understood.language) || state.language;
     if (understood?.kind === 'command') command = understood.command;
     else if (understood?.kind === 'ask') {
-      const second = await modelFor(db, hash);
-      const answered = second ? await tryModel(() => answer(second, understood.question, lang)) : null;
+      const second = await modelFor(db, hash, Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL);
+      const live = await liveNotes(text);
+      const answered = second ? await tryModel(() => answer(second, understood.question, lang, live)) : null;
       if (answered) {
         await save(state);
         await send(m.from, formatAnswer(lang, answered));
@@ -440,13 +450,40 @@ const NO_PENDING: Pending = { pending_receipt: null, pending_field: null, pendin
  * The model client, if it's set up and both daily limits have room; each call counts one hit
  * for this number and one for everyone. Null means: answer without it.
  */
-async function modelFor(db: SupabaseClient, hash: string): Promise<AiClient | null> {
+async function modelFor(db: SupabaseClient, hash: string, model?: string): Promise<AiClient | null> {
   const account = Deno.env.get('CLOUDFLARE_ACCOUNT_ID');
   const token = Deno.env.get('CLOUDFLARE_AI_TOKEN');
   if (!account || !token) return null;
   if ((await countToday(db, 'wa_ai', hash)) > MODEL_CALLS_PER_NUMBER) return null;
   if ((await countToday(db, 'wa_ai_all', 'all')) > MODEL_CALLS_PER_DAY) return null;
-  return cloudflareClient(account, token, Deno.env.get('WHATSAPP_AI_MODEL') || undefined);
+  return cloudflareClient(account, token, model ?? (Deno.env.get('WHATSAPP_AI_MODEL') || undefined));
+}
+
+/**
+ * Today's figures for a route the question names: the mid-market rate and the most that
+ * arrives for $500, from the same published prices Compare shows. Numbers in these notes
+ * are the only live ones the model may quote (checkAnswer).
+ */
+async function liveNotes(text: string): Promise<Entry[]> {
+  const { to } = findPlaces(normalize(text));
+  const route = to ? routeFor('US', to) : undefined;
+  if (!route) return [];
+  const method = route.deliveryMethods[0];
+  const rows = (await quotes(route.id, 500, method)).filter((q) => !q.is_promotional);
+  if (!rows.length) return [];
+  const top = [...rows].sort((a, b) => b.amount_received - a.amount_received)[0];
+  const day = new Date(top.captured_at).toISOString().slice(0, 10);
+  const cur = route.receiveCurrency;
+  const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 4 });
+  return [
+    {
+      id: `live:${route.id}`,
+      kind: 'faq',
+      title: `Today, US dollars to ${route.country}`,
+      text: `Mid-market rate today: 1 USD = ${fmt(top.mid_market_rate)} ${cur} (checked ${day}). For $500 by ${method.replace('_', ' ')}, the most arrives with ${top.provider_name}: ${fmt(top.amount_received)} ${cur}. Send "500 to ${route.country}" for every provider.`,
+      link: 'https://app.remitbridgelabs.org',
+    },
+  ];
 }
 
 /** A model call that can't break a reply: any error or timeout is logged and treated as "no answer". */

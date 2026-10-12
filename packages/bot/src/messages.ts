@@ -332,8 +332,8 @@ export function formatSaveNote(lang: Language, saved: boolean): string {
 }
 
 /** A question the model answered from our notes (ai.ts), with the one link that goes with it. */
-export function formatAnswer(lang: Language, a: { text: string; link: string }): string {
-  return `${a.text}\n\n${lang === 'hi' ? 'और जानें' : 'More'}: ${a.link}`
+export function formatAnswer(lang: Language, a: { text: string; link: string | null }): string {
+  return a.link ? `${a.text}\n\n${lang === 'hi' ? 'और जानें' : 'More'}: ${a.link}` : a.text
 }
 
 /** A suggestion saved for the team. */
