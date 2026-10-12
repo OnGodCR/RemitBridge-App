@@ -9,8 +9,9 @@ import httpx
 import pytest
 import respx
 
-from remitbridge_engine.adapters.instarem import API, InstaremAdapter
+from remitbridge_engine.adapters.instarem import API, CURRENCIES, InstaremAdapter
 from remitbridge_engine.archive import LocalArchive
+from remitbridge_engine.config import ROUTES_BY_ID
 from remitbridge_engine.http import PoliteClient
 from remitbridge_engine.models import (
     DeliveryMethod,
@@ -69,11 +70,11 @@ def test_standing_fees_come_off_the_amount_sent_before_the_rate():
 
 def test_every_route_is_a_bank_deposit_paid_from_a_bank_account():
     reqs = InstaremAdapter().requests()
-    assert {r.route_id for r in reqs} == set(PAIRS)
+    assert {r.route_id for r in reqs} == {rid for rid, r in ROUTES_BY_ID.items() if r.receive_currency in CURRENCIES}
     assert {(r.delivery_method, r.payment_method) for r in reqs} == {
         (DeliveryMethod.BANK_DEPOSIT, PaymentMethod.BANK_ACCOUNT)
     }
-    assert len(reqs) == 20
+    assert len(reqs) == 19 * 5  # the 19 currencies Instarem quotes from the US x the 5-amount grid
 
 
 def test_an_answer_for_another_pair_amount_or_country_is_refused():
@@ -141,7 +142,7 @@ async def test_a_full_run_publishes_all_four_routes_through_the_gate(tmp_path, n
     route = respx.get(API).mock(side_effect=answer)
     store = LocalStore(tmp_path / "store.json")
     report = await run_adapter(
-        InstaremAdapter(),
+        _FourRoutes(),
         store=store,
         archive=LocalArchive(tmp_path / "archive"),
         http=PoliteClient(sleep=no_sleep),
@@ -157,3 +158,11 @@ async def test_a_full_run_publishes_all_four_routes_through_the_gate(tmp_path, n
     assert not any(q["is_promotional"] for q in quotes)
     assert len(list((tmp_path / "archive").rglob("*.gz"))) == 20
     assert len(no_sleep.calls) >= 19 and min(no_sleep.calls) > InstaremAdapter.meta.min_delay_s - 0.5
+
+
+class _FourRoutes(InstaremAdapter):
+    """The adapter on the four routes the saved answers cover."""
+
+    def corridors(self):
+        return [c for c in super().corridors() if c.route_id in PAIRS]
+

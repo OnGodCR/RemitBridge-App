@@ -11,6 +11,7 @@ import respx
 
 from remitbridge_engine.adapters.wise import API, WiseAdapter, _delivery
 from remitbridge_engine.archive import LocalArchive
+from remitbridge_engine.config import ROUTES_BY_ID
 from remitbridge_engine.http import PoliteClient
 from remitbridge_engine.models import (
     DeliveryMethod,
@@ -60,11 +61,11 @@ def test_reads_wise_own_quote_and_nothing_else(route, fee, rate, received):
 
 def test_every_route_is_a_bank_deposit_paid_from_a_bank_account():
     reqs = WiseAdapter().requests()
-    assert {r.route_id for r in reqs} == set(PAIRS)
+    assert {r.route_id for r in reqs} == set(ROUTES_BY_ID)
     assert {(r.delivery_method, r.payment_method) for r in reqs} == {
         (DeliveryMethod.BANK_DEPOSIT, PaymentMethod.BANK_ACCOUNT)
     }
-    assert len(reqs) == 20  # 4 routes x the 5-amount grid
+    assert len(reqs) == 26 * 5  # every route (D158) x the 5-amount grid
 
 
 def test_an_answer_for_another_pair_or_amount_is_refused():
@@ -130,7 +131,7 @@ async def test_a_full_run_publishes_all_four_routes_through_the_gate(tmp_path, n
     route = respx.get(API).mock(side_effect=answer)
     store = LocalStore(tmp_path / "store.json")
     report = await run_adapter(
-        WiseAdapter(),
+        _FourRoutes(),
         store=store,
         archive=LocalArchive(tmp_path / "archive"),
         http=PoliteClient(sleep=no_sleep),
@@ -148,3 +149,11 @@ async def test_a_full_run_publishes_all_four_routes_through_the_gate(tmp_path, n
     # Considerate: requests are spaced by the adapter's delay. The client sleeps for what's
     # left of it since the previous request, so each sleep is a hair under 5 seconds.
     assert len(no_sleep.calls) >= 19 and min(no_sleep.calls) > WiseAdapter.meta.min_delay_s - 0.5
+
+
+class _FourRoutes(WiseAdapter):
+    """The adapter on the four routes the saved answers cover."""
+
+    def corridors(self):
+        return [c for c in super().corridors() if c.route_id in PAIRS]
+

@@ -93,7 +93,7 @@ async def _health(args) -> int:
 
 
 async def _fx(args) -> int:
-    rates = await fetch_mid_market("USD", sorted({r.receive_currency for r in C.TIER1_ROUTES}))
+    rates = await fetch_mid_market("USD", sorted({r.receive_currency for r in C.ALL_ROUTES}))
     for ccy, r in rates.items():
         if isinstance(r, FxUnavailable):
             print(f"USD/{ccy}: HELD  {r}")

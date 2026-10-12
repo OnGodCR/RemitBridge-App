@@ -67,7 +67,7 @@ Short modules explain exchange rates, fees, markups and scams in plain words, wi
 WHAT REMITBRIDGE DOES NOT DO
 RemitBridge never moves money. There is no "send" button, no affiliate links and no advertising. Comparing prices needs no account.
 
-Routes today: the US to India, Mexico, the Philippines and Vietnam, with more on request.
+Routes today: the US to 26 countries (India, Mexico, the Philippines, Vietnam, and 22 more where Wise or Instarem publish prices; D158), with more on request.
 ```
 
 **What's New** (first version):
@@ -121,7 +121,7 @@ specific pages only). Result: **4+**.
 ```
 RemitBridge is a free information tool. It compares the cost of sending money from the US to family abroad and never moves money: there is no send button, no payments and no affiliate links.
 
-No account is needed: open the app, go to Compare, and prices load for the US to India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and only saves comparisons, receipt checks and rate alerts.
+No account is needed: open the app, go to Compare, and prices load for the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and only saves comparisons, receipt checks and rate alerts.
 
 Scan (the first tab) reads a photo of a money-transfer receipt. Any receipt photo from a money-transfer provider works; personal details are covered on the phone before anything is sent. When our own rules can't read a figure, the covered text (and sometimes the covered photo) goes to Groq's AI model with zero data retention; the app asks permission before the first receipt is sent.
 

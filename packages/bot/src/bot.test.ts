@@ -90,11 +90,12 @@ describe('plan', () => {
   })
 
   it('offers to count a request for a route we don’t cover, and files it on YES', () => {
-    const first = plan(parse('500 USD NPR'), s())
-    expect(first.action).toEqual({ type: 'say', say: { key: 'notCovered', from: 'US', to: 'NP' } })
-    expect(first.state).toEqual({ pendingRequest: 'US-NP' })
-    const yes = plan(parse('yes'), s({ pendingRequest: 'US-NP' }))
-    expect(yes.action).toEqual({ type: 'request', from: 'US', to: 'NP' })
+    // Somalia: no provider we read prices it from the US (D158).
+    const first = plan(parse('500 USD SOS'), s())
+    expect(first.action).toEqual({ type: 'say', say: { key: 'notCovered', from: 'US', to: 'SO' } })
+    expect(first.state).toEqual({ pendingRequest: 'US-SO' })
+    const yes = plan(parse('yes'), s({ pendingRequest: 'US-SO' }))
+    expect(yes.action).toEqual({ type: 'request', from: 'US', to: 'SO' })
     expect(yes.state).toEqual({ pendingRequest: null })
     expect(plan(parse('yes'), s()).action).toEqual({ type: 'say', say: { key: 'nothingPending' } })
   })
