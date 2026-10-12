@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { answer, checkAnswer, cloudflareClient, readUnderstood, stripThinking, understand, type AiClient } from './ai.ts'
+import { answer, checkAnswer, cloudflareClient, readUnderstood, refine, stripThinking, understand, type AiClient } from './ai.ts'
 import { retrieve } from './knowledge.ts'
 
 /** A model that always says the same thing, and remembers what it was asked. */
@@ -47,6 +47,18 @@ describe('understanding a message', () => {
     await understand(model, 'hi there')
     expect(model.asked[0]).toContain('hi there')
     expect(model.asked[0]).not.toMatch(/\+?\d{10,}/)
+  })
+
+  it('counts a suggestion to add a country we don’t cover as a route request, and leaves the rest', () => {
+    const suggest = (text: string) => ({ kind: 'suggest' as const, text, language: 'en' as const })
+    expect(refine(suggest('please cover cuba i send there every month'), 'please cover cuba i send there every month')).toEqual({
+      kind: 'command',
+      command: { kind: 'request', from: 'US', to: 'CU' },
+    })
+    // Kenya is covered, Canada is a country to send from, Ria is a provider: suggestions.
+    for (const text of ['add cash pickup for kenya', 'add sending from canada', 'please add Ria']) {
+      expect(refine(suggest(text), text)?.kind).toBe('suggest')
+    }
   })
 
   it('reads past Qwen’s thinking', () => {
