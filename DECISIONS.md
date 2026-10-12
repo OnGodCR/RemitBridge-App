@@ -1877,3 +1877,15 @@ meant tighter rules, measured on more data.
 - A screenshot of a real over-covered receipt is the next best data, if Angad can share
   one with the personal details already covered.
 
+**D157. The receipt model thinks before it answers** (Angad, 2026-10-11: "if think increased
+accuracy than why wouldnt we want to turn it on?", then set RECEIPT_REASONING=default himself).
+Groq has one vision model, qwen/qwen3.8-27b, and RemitBridge stays on its free tier (no paid
+plan), so the lever left was Qwen's thinking, off since D98 to save tokens. Two pairs of
+benchmark runs (20 synthetic receipts each, free tier):
+- precision (values read right) 94.3% on vs 93.2% off;
+- about twice the time per receipt;
+- accuracy swung with how many receipts the rate limit let through, so it doesn't measure
+  thinking.
+The gain is small and the cost is time and free-tier tokens. Angad chose the gain, and he can
+turn it off with RECEIPT_REASONING=none.
+
