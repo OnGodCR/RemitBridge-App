@@ -63,6 +63,20 @@ appears as the media contact on the company's own press releases.
 Follow-ups sent 2026-10-04 at Angad's request (earlier than the 2026-10-12 reminder), by Claude from the RemitBridge Gmail, as replies in each original thread: Remitly, MoneyGram, Ria, WorldRemit, Xoom (PayPal media desk), Western Union, and Xe by replying to ticket #26724746 as its auto-reply asks. Each restates the ask (light-schedule checks or a feed/API), says prices are entered by hand until then, asks for a pointer, and signs as RemitBridge Labs, hello@remitbridgelabs.org. Paysend (asked 2026-10-01) not followed up yet. Next nudge: 2026-10-12 if still silent. Ria and Xe are both Euronet companies. If neither answers, one
 follow-up to Euronet corporate communications covers both.
 
+**Second follow-ups, 2026-10-11** (Angad: "send follow-up emails to every single one of the
+companies"), sent by Claude from hello@remitbridgelabs.org as replies in each existing
+thread, after checking that none had replied: Remitly, MoneyGram, Western Union, Xoom (PayPal
+media desk), WorldRemit, Ria, Paysend, Xe (data@xe.com), Viamericas, Instarem, Pangea,
+Félix Pago, Taptap Send and BOSS Money. 14 in all; Wise already said yes. Each says RemitBridge
+Labs is now a Washington nonprofit corporation, asks for a rate feed or API or an okay for
+light checks of public prices, and asks for the right person. The variations:
+- Paysend: its pages can't be verified, so a feed or endpoint.
+- Félix: prices only in WhatsApp, so a feed.
+- Instarem: says we read its public quote page and are about to cover more of its countries.
+- Pangea and Taptap Send: asks the support inbox to pass it on.
+Next step if still silent by 2026-10-25: stop emailing press desks and look for a named
+partnerships person (LinkedIn or the company's site) for each.
+
 ## Round 2: shorter ask to more providers (2026-10-04)
 
 At Angad's request ("make the cold email shorter and more to the point"), sent by Claude from
