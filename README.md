@@ -73,6 +73,12 @@ Builds run on EAS, in the cloud: `cd mobile && npx eas-cli@latest init` once, se
 variables for the `development` environment, then
 `npx eas-cli@latest build --profile development --platform ios`.
 
+For the iOS simulator on an Apple Silicon Mac, use `--profile simulator`. Google ships ML
+Kit without Apple Silicon simulator code, so that profile leaves it out
+(`mobile/scripts/simulator-build.mjs`, run as EAS's pre-install hook): every screen works
+except reading a receipt. The website's screenshots in `site/screens/` and the App Store's in
+`docs/store/screenshots/` came from that build (iPhone 18 Pro, light mode, 9:41).
+
 Migrations can be tested on a throwaway Postgres before they're pushed:
 `supabase/tests/local_migrations.sh` (set `PG_BIN` to your Postgres `bin` folder).
 
