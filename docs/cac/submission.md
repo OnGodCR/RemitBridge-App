@@ -57,6 +57,10 @@ the Philippines and Vietnam, and community organizations in the Seattle area tha
 - **Receipt reading:** on-device text recognition (Google ML Kit) and redaction (Skia); a
   rule-based parser; a vision model (Qwen3.8, on Groq) only for values the rules
   couldn't read, and only ever on the redacted receipt.
+- **WhatsApp bot:** fixed commands and a parser first; for other messages, an open AI model
+  (OpenAI's gpt-oss, on Cloudflare Workers AI or Groq) works out what the person is asking
+  and answers from RemitBridge's own content. It never writes a number: prices come only
+  from checked data, and any reply with a number in it is refused.
 - **One formula:** a single total-cost formula, written once in TypeScript and once in
   Python, both held to the same test cases so no two screens can disagree.
 
@@ -88,6 +92,8 @@ scanner. Short version for the form:
   benchmark and the WhatsApp bot.
 - The app itself uses an AI model (Qwen3.8) to read receipt values the rules miss. It only
   ever sees a redacted receipt.
+- The WhatsApp bot uses an AI model (gpt-oss) to understand messages its rules can't. It
+  gets only the message text, never the phone number, and it isn't allowed to write prices.
 
 *(Check the form for its exact AI-use rules before submitting.)*
 
