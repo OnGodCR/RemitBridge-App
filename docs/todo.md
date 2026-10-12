@@ -13,7 +13,7 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab`, then fill every form from `docs/store/listing.md`.
+- [ ] **Play Console**: upload the production `.aab` (EAS build eb1d1d43, versionCode 2, built 2026-10-12; no advertising-ID permission), then fill every form from `docs/store/listing.md`.
 - [ ] **Android phone screenshots**: 2 to 8 from your Samsung (long side at most twice the short side).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
