@@ -26,8 +26,8 @@
 // WHATSAPP_HASH_SECRET), read by the worker (.github/workflows/receipt-intake.yml), and
 // answered here when the worker posts ?intake=done. The number is deleted with the row.
 //
-// The model (D159-D161, docs/whatsapp-ai-scope.md) gets the message text alone, never the
-// number. Providers in order, each used while the one before is out (D161):
+// The model (D159, D160, D163, docs/whatsapp-ai-scope.md) gets the message text alone, never the
+// number. Providers in order, each used while the one before is out (D163):
 //   CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_AI_TOKEN   Workers AI (WHATSAPP_AI_ANSWER_MODEL,
 //                                                capped at WHATSAPP_AI_DAILY_CAP a day)
 //   GROQ_API_KEY                                 Groq's gpt-oss-120b, then gpt-oss-20b
@@ -97,7 +97,7 @@ const HOUR_MS = 3600 * 1000;
  */
 const MESSAGES_PER_DAY = 100;
 const PHOTOS_PER_DAY = 10;
-/** Agent conversations a day (D160, D161). One number gets 25 in all. Cloudflare takes the
+/** Agent conversations a day (D160, D163). One number gets 25 in all. Cloudflare takes the
  * first 80 of the day (a conversation is about 100-120 of its 10,000 free daily neurons);
  * after that Groq's free models answer until their own daily limits, then the plain bot. */
 const MODEL_CALLS_PER_NUMBER = 25;
@@ -457,7 +457,7 @@ async function modelFor(db: SupabaseClient, hash: string, model?: string) {
   return { client, names: providers.map((p) => p.name) };
 }
 
-/** The providers to try, in order (D161). Cloudflare only while its daily share has room. */
+/** The providers to try, in order (D163). Cloudflare only while its daily share has room. */
 async function providersFor(db: SupabaseClient, cloudflareModel?: string): Promise<{ name: string; client: AiClient }[]> {
   const list: { name: string; client: AiClient }[] = [];
   const account = Deno.env.get('CLOUDFLARE_ACCOUNT_ID');
@@ -514,7 +514,7 @@ function agentTools(db: SupabaseClient, hash: string, touched: { route?: Route; 
         const cur = route.receiveCurrency;
         if (!standing.length) return { country: route.country, amount: usd(amount), method: DELIVERY_LABELS[method], providers: [], note: 'No checked prices yet.' };
         const newest = standing.map((q) => q.captured_at).sort().at(-1)!;
-        // One line per provider: far fewer tokens than repeating JSON keys (D161).
+        // One line per provider: far fewer tokens than repeating JSON keys (D163).
         const others = route.deliveryMethods.filter((d) => d !== method).map((d) => DELIVERY_LABELS[d]);
         return {
           sent: `${usd(amount)} to ${route.country}, ${DELIVERY_LABELS[method]}`,

@@ -5,7 +5,13 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-11 (see the sections just below; the older status after them is kept for history)
 
-## 2026-10-12: the WhatsApp agent's fallbacks (D161)
+## 2026-10-12: legal audit (D164)
+
+Sign-in asks the year of birth before a phone's first account (nothing stored but a pass or
+block flag on the phone); the site serves its own fonts; the launch email signs with the legal
+name. No session replay, marketing email or subscriptions exist. The DMCA agent is Angad's call.
+
+## 2026-10-12: the WhatsApp agent's fallbacks (D163)
 
 `whatsapp` v29: each model call tries Cloudflare (gpt-oss-120b, the first 80 conversations a
 day), then Groq's gpt-oss-120b and gpt-oss-20b on the existing `GROQ_API_KEY`, then the plain

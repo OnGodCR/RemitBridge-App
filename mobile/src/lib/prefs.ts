@@ -13,6 +13,7 @@ const KEYS = {
   installId: 'rb.installId',
   language: 'rb.language',
   aiConsent: 'rb.aiConsent',
+  ageGate: 'rb.ageGate',
 } as const;
 
 function get(key: string): string | null {
@@ -43,6 +44,15 @@ export const prefs = {
   /** Said yes, once, to receipt text going to the AI model (Apple 5.1.2(i); D145). */
   aiConsent: () => get(KEYS.aiConsent) === '1',
   setAiConsent: () => set(KEYS.aiConsent, '1'),
+  /**
+   * The account age check (COPPA): 'ok' or 'blocked', once per phone, so going back can't
+   * change the answer. Only this flag is kept; the year itself is never stored or sent.
+   */
+  ageGate: (): 'ok' | 'blocked' | null => {
+    const v = get(KEYS.ageGate);
+    return v === 'ok' || v === 'blocked' ? v : null;
+  },
+  setAgeGate: (v: 'ok' | 'blocked') => set(KEYS.ageGate, v),
   installId: (): string => {
     let id = get(KEYS.installId);
     if (!id) {

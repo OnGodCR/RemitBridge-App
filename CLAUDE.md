@@ -113,7 +113,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       with links, and logs feature suggestions for Angad. The model never writes a number.
       **Live 2026-10-12 (D159):** Cloudflare Workers AI, Qwen3 30B-A3B, secrets set by
       Angad, suggestions migration run (smoke test 70/70), `whatsapp` v27 deployed. Since
-      then an agent with tools (D160, v28), and **D161 (v29): Cloudflare gpt-oss-120b, then
+      then an agent with tools (D160, v28), and **D163 (v29): Cloudflare gpt-oss-120b, then
       Groq gpt-oss-120b, then Groq gpt-oss-20b, then the plain bot; about 30% fewer tokens.**
       Left: Angad's live test (a question, a suggestion, a new country, off topic); Angad
       sends the Groq nonprofit-tier email; the weekly email of suggestions and app links
@@ -277,6 +277,12 @@ Angad does this once the app itself is finished (D117).
       secret (a dummy code got `invalid_grant`, not `invalid_client`). Done 2026-10-08. Left:
       one real deletion of an Apple-signed-in test account on the iPhone build.
 
+- [ ] **Legal audit (D164, 2026-10-12):** age check, self-hosted fonts and the email's
+      sign-off done; no replay, marketing email or subscriptions exist. Left: see the age
+      screen on a phone (built, not yet seen on a device); Angad decides on a DMCA agent
+      (an account and fee at the Copyright Office's DMCA directory, and a public postal
+      address; only matters if users ever post public content); the store age ratings
+      should say the app isn't for children.
 - [ ] **Security review (Angad):** read `docs/security-review.md`, every change from the
       security pass in plain words, and tick or comment on each (Angad hadn't seen it, 2026-10-01).
 - [x] **Limits on AI spending (D140):** app: 10 scans a day per phone and per account, 100
