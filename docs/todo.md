@@ -2,8 +2,9 @@
 
 Everything still open, in one place (Angad, 2026-10-12: "make a list of exactly everything
 we need to do"). CAC work is left out on purpose. The RemitBridge pane reads this file, so
-tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items and
-`docs/launch-checklist.md`.
+tick items here (`- [x]`) as they land. A `(due YYYY-MM-DD)` after a title puts it in the
+pane's Due group, and Claude's own dated items go into Claude's instructions every session.
+Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
@@ -63,7 +64,9 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 
 ## Claude, waiting on something
 
-- [ ] **India's prices**: held since 2026-10-12 morning (three rate sources disagree); check 2026-10-13, then decide on a 0.6% rule with Wise.
+- [ ] **Check on D&B** (due 2026-10-16): search the RemitBridge inbox for case #11089990; if D&B hasn't answered, draft a short status email for Angad to send from hello@.
+- [ ] **Chase D&B** (due 2026-10-22): two weeks since the request, Apple's point to escalate; if still nothing, draft a firmer email to research@iresearch.dnb.com for Angad.
+- [ ] **India's prices** (due 2026-10-13): held since 2026-10-12 morning (three rate sources disagree); check whether it's back, then put a 0.6% rule with Wise to Angad if not.
 - [ ] **Uganda's prices**: held, its sources are 2.6% apart; needs a rule for thin currencies if you want one.
 - [ ] **Play App Signing follow-up**: add the SHA-256 to `assetlinks.json` and a second Android Google sign-in client, once you send the keys.
 - [ ] **Receipt scanning accuracy**: revisit with more real receipts.
