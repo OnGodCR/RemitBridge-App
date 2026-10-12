@@ -1,6 +1,6 @@
 # Launch checklist: App Store and Google Play
 
-Everything left before RemitBridge can be submitted to each store, as of 2026-10-10.
+Everything left before RemitBridge can be submitted to each store, as of 2026-10-12.
 Who does each: **Angad** (needs his sign-in, his phone or a decision), **Claude**, or
 **both**. Tick items here as they land; CLAUDE.md's open items point here.
 
@@ -31,11 +31,19 @@ signing keys, universal links and Android App Links, build settings for producti
 - [ ] **Paste the listing** from `docs/store/listing.md`: description, keywords, URLs,
       category, App Privacy answers, age rating, review notes, a review phone number;
       availability **US only**. *Angad*, Claude checks.
-- [ ] **6.9-inch iPhone screenshots** (1320 × 2868, six). Angad's iPhone is smaller, and
-      the simulator is too slow on this Mac. Options: borrow a Pro Max / Plus iPhone for
-      ten minutes, or Claude builds framed screenshots from smaller real ones. *Decide.*
+- [x] **6.9-inch iPhone screenshots** (1320 × 2868, six): done 2026-10-12 in
+      `docs/store/screenshots/iphone-6.9/`, real simulator shots scaled 9.45% (same shape).
+      Scan, Compare, the quote, Yearly cost, Learn, WhatsApp.
 - [ ] **Production build and submit**: Claude runs `eas build --profile production
       --platform ios`; Angad runs `eas submit -p ios` and signs in to Apple once. *Both.*
+- [x] **Checked 2026-10-12 (Claude):** expo-doctor 21/21 after bringing 12 packages to SDK
+      57's patch versions; app type check, lint and 156 tests pass; Info.plist purpose
+      strings specific; export compliance answered; Sign in with Apple, account deletion and
+      the AI-consent prompt in place; review notes link a sample receipt
+      (`/review/sample-receipt.jpg`) and explain the age screen.
+- [ ] **App Store provisioning profile**: the production build needs one, and making it
+      needs Angad's Apple sign-in once (`eas build --profile production --platform ios`
+      asks). Best done after the organization conversion, so it's made for the final team.
 - [ ] **Real-phone checks on the iPhone build**: Sign in with Apple and Google; delete an
       Apple-signed-in test account; a blurry receipt is turned back (D131); a rate alert
       arrives as a notification; the new tabs, Account button and savings counter. *Angad.*

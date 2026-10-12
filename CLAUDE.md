@@ -115,9 +115,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Angad, suggestions migration run (smoke test 70/70), `whatsapp` v27 deployed. Since
       then an agent with tools (D160, v28), and **D163 (v29): Cloudflare gpt-oss-120b, then
       Groq gpt-oss-120b, then Groq gpt-oss-20b, then the plain bot; about 30% fewer tokens.**
-      Left: Angad's live test (a question, a suggestion, a new country, off topic); Angad
-      sends the Groq nonprofit-tier email; the weekly email of suggestions and app links
-      (`/open/...`, needs builds) later.
+      2026-10-12: the agent writes like a person (prompt rules plus `humanize()`), and
+      receipt replies are short blocks; the tax lines no longer contradict; pesos show as
+      MXN; a fee read twice as a pickup charge is dropped (whatsapp, scan-receipt deployed).
+      Left: Angad's live test (a question, a suggestion, a new country, off topic, a
+      receipt); the Hindi read of the changed bot lines; Angad sends the Groq nonprofit-tier
+      email; the weekly email of suggestions and app links (`/open/...`, needs builds) later.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
@@ -155,6 +158,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Angad in the SQL editor 2026-10-08, smoke test 68/68; $500 to India now lists 9
       providers (Wise and Instarem current, 7 hand-checked under Older prices). The Oct 4
       prices leave Compare on Oct 11. Left: a fresh round of hand checks.
+      **D166 (2026-10-12):** Mexico (from Oct 9) and India (from Oct 12) published nothing
+      because Frankfurter and open.er-api drifted past 0.5%; Wise now breaks the tie. Left:
+      confirm both routes are back after the run started 2026-10-12.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
@@ -279,7 +285,7 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Legal audit (D164, 2026-10-12):** age check, self-hosted fonts and the email's
       sign-off done; no replay, marketing email or subscriptions exist. Left: see the age
-      screen on a phone (built, not yet seen on a device); Angad decides on a DMCA agent
+      screen on a phone (seen working on the simulator 2026-10-12); Angad decides on a DMCA agent
       (an account and fee at the Copyright Office's DMCA directory, and a public postal
       address; only matters if users ever post public content); the store age ratings
       should say the app isn't for children.
@@ -336,8 +342,11 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Learn redrawn (D152, 2026-10-10):** zigzag path with side cards, walked trail, a
       flag at the top, one-row header, the newest post in Library. Checked in a web render
       only; left: Angad looks on both phones.
-- [ ] **Store screenshots from a development build** (no Expo Go dev button); also swap
-      them into `site/screens/` (D59).
+- [ ] **Screenshots (2026-10-12):** 15 of Angad's 18 for the website's /app page are in
+      `site/screens/` (the `simulator` build profile), and six 6.9-inch App
+      Store shots in `docs/store/screenshots/iphone-6.9/`. Left: the three scan shots (covered
+      receipt, "Check each value", the result) from Angad's iPhone, since the simulator build
+      has no ML Kit; the sample receipt is at `site/review/sample-receipt.jpg`.
 - [ ] **Google Play developer account (D143):** on hold for an organization account in
       RemitBridge Labs' name (Angad, 2026-10-04), not a personal one through his dad. Needs the
       accepted Articles and a D-U-N-S number. Organization accounts skip the personal-account
