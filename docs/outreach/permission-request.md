@@ -132,3 +132,14 @@ https://app.remitbridgelabs.org
 and say "I run RemitBridge Labs, a Washington nonprofit corporation" where the old template
 said "I run RemitBridge". Never "charity", "501(c)(3)" or "tax-deductible" (D141).
 
+## 2026-10-12: inbox check
+
+- **Xoom (PayPal):** the 2026-10-11 follow-up to mediarelations@paypal.com **bounced**. PayPal's
+  media desk now runs through Asana, which answered "Your email could not be delivered ...
+  contact the recipient via an alternative channel". Next: the contact form on
+  newsroom.paypal-corp.com/contact, or a named PayPal or Xoom partnerships contact.
+- **No other provider has replied** to the 2026-10-11 follow-ups yet.
+- **Groq** (nonprofit-tier request, 2026-10-12) sent only an automatic reply: Developer Tier
+  onboarding is paused for capacity, and only dedicated enterprise deployments are being
+  discussed. No nonprofit tier on offer; the free tier stays (free-tier only, per Angad).
+

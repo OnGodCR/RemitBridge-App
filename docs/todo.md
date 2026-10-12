@@ -45,7 +45,7 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 - [ ] **Two-factor everywhere**: Supabase, GitHub, Expo, the RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
-- [x] **Send the Groq email**: sent by Angad, 2026-10-12. Watch hello@ for Groq's answer.
+- [x] **Send the Groq email**: sent 2026-10-12; Groq's automatic reply says no new tiers for now (enterprise only).
 - [ ] **Clear old sealed WhatsApp numbers**: run `update public.whatsapp_users set number_sealed = null;` in the SQL editor (D148).
 - [ ] **Renumber duplicate decisions**: D160 and D163 are each used twice; say yes and Claude renumbers.
 - [ ] **hello@ profile photo**: Google case #76360017; Angad confirmed freeing the domain on 2026-10-12, so Google is deleting the unfinished Workspace. Then make a free Google account for hello@ and upload the logo.
@@ -59,6 +59,7 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 ## Outreach
 
 - [ ] **Provider permissions**: if still silent by 2026-10-25, find a named partnerships contact at each (log in `docs/outreach/permission-request.md`).
+- [ ] **Xoom by another route**: the follow-up to PayPal's media desk bounced on 2026-10-11 (now an Asana inbox); use the newsroom contact form or find a named contact.
 
 ## Claude, waiting on something
 
