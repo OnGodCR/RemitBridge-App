@@ -72,7 +72,9 @@ signing keys, universal links and Android App Links, build settings for producti
       a second Android sign-in client with the SHA-1. *Both.*
 - [ ] **Play Console forms** from `docs/store/listing.md`: store listing, Data safety,
       content rating, target audience (18+), financial features ("none"), account
-      deletion URL. *Angad*, Claude checks.
+      deletion URL, app access, advertising ID ("no"), release notes. All drafted
+      2026-10-12, with the 512 × 512 icon (`docs/store/play-icon-512.png`). *Angad*, Claude
+      checks.
 - [ ] **Phone screenshots** from Angad's Android. *Angad.* The 1024 × 500 feature graphic
       is done (`docs/store/play-feature-graphic.png`, 2026-10-12).
 - [ ] **Production build and submit**: Claude runs `eas build --profile production
