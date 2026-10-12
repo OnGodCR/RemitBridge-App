@@ -49,7 +49,22 @@ TIER1_ROUTES: tuple[RouteConfig, ...] = (
         (DeliveryMethod.BANK_DEPOSIT, DeliveryMethod.CASH_PICKUP, DeliveryMethod.HOME_DELIVERY),
     ),
 )
-ROUTES_BY_ID = {r.id: r for r in TIER1_ROUTES}
+
+# Tier 2 (D158, 2026-10-11): every other country Wise or Instarem prices from the US, checked
+# that day with one request per currency to each. Bank deposit only: that's all either quotes.
+# Mirrors mobile/src/lib/routes.ts and supabase/migrations/20261011000000_wise_instarem_routes.sql.
+_TIER2 = (
+    ("CN", "CNY"), ("GT", "GTQ"), ("HN", "HNL"), ("DO", "DOP"), ("ET", "ETB"), ("KE", "KES"),
+    ("NG", "NGN"), ("PK", "PKR"), ("BD", "BDT"), ("KR", "KRW"), ("UA", "UAH"), ("CO", "COP"),
+    ("PE", "PEN"), ("NI", "NIO"), ("JM", "JMD"), ("HT", "HTG"), ("BR", "BRL"), ("GH", "GHS"),
+    ("NP", "NPR"), ("LK", "LKR"), ("EG", "EGP"), ("UG", "UGX"),
+)
+TIER2_ROUTES: tuple[RouteConfig, ...] = tuple(
+    RouteConfig("US", "USD", country, currency, 2, (DeliveryMethod.BANK_DEPOSIT,))
+    for country, currency in _TIER2
+)
+ALL_ROUTES: tuple[RouteConfig, ...] = TIER1_ROUTES + TIER2_ROUTES
+ROUTES_BY_ID = {r.id: r for r in ALL_ROUTES}
 
 # PRD 9.11. Kept small on purpose: every amount multiplies request volume.
 AMOUNT_GRID: tuple[int, ...] = (100, 200, 500, 1000, 2000)

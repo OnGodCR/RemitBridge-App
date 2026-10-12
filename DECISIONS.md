@@ -1886,6 +1886,24 @@ benchmark runs (20 synthetic receipts each, free tier):
 - about twice the time per receipt;
 - accuracy swung with how many receipts the rate limit let through, so it doesn't measure
   thinking.
-The gain is small and the cost is time and free-tier tokens. Angad chose the gain, and he can
-turn it off with RECEIPT_REASONING=none.
+The gain is small and the cost is time and free-tier tokens. Angad turned it on, then the
+same evening chose no thinking after all ("lets proceed with the no thining mode for groq"):
+RECEIPT_REASONING is unset, so the default (none) applies. The setting stays for a later
+measurement on real receipts.
+
+**D158. Wise and Instarem on every route they price; everyone else by hand on a few** (Angad,
+2026-10-11: "Now that we have instarem and WISE's API, let's go ahead and set that up for every
+single route since we have infinite data for them, and for all the other ones we will just
+focus on manual scraping w a few"). One request per currency to each, that day:
+- Wise's Comparison API prices 22 more countries from USD, Instarem's quote endpoint 15 of
+  them, and both mid-market sources cover all 22.
+- They join the first four as Tier 2 routes, bank deposit only, which is all either quotes.
+- Somalia, Eritrea, Cuba, Afghanistan and Venezuela had neither, and El Salvador and Ecuador
+  use dollars, so they stay request-only.
+- Wise goes from 20 requests a run to 130, about 11 minutes at its 5-second spacing; Instarem
+  to 95. Still one request at a time, four runs a day.
+- A route goes live on its own when its first checked price is published (a trigger on
+  quotes). The first four, published since 2026-09-30, had never left "building" and are
+  set live.
+- The other providers stay hand-checked (D142) on a few routes, not all 26.
 

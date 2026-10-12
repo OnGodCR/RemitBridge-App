@@ -53,7 +53,8 @@ class WiseAdapter(Adapter):
             "\"The current documentation is correct and you can use it. If you are a "
             "considerate user it shouldn't be a problem.\""
         ),
-        # Considerate: one request at a time, well spaced. 20 requests a run, 4 runs a day.
+        # Considerate: one request at a time, well spaced. 130 requests a run (26 routes, 5
+        # amounts), about 11 minutes at this spacing, 4 runs a day (D158; it was 20 a run).
         min_delay_s=5.0,
     )
     source = Source.API

@@ -159,12 +159,12 @@ describe('whatsapp webhook', () => {
   })
 
   it('counts a request for a route we don’t cover after YES', async () => {
-    await handler(delivery('500 USD NPR'))
+    await handler(delivery('500 USD SOS'))
     expect(sent[0].body).toContain('Reply YES')
     await handler(delivery('yes'))
-    expect(sent[1].body).toContain('Your request for Nepal is counted')
+    expect(sent[1].body).toContain('Your request for Somalia is counted')
     expect(tables.route_requests).toHaveLength(1)
-    expect(tables.route_requests[0]).toMatchObject({ send_country: 'US', receive_country: 'NP', source: 'whatsapp' })
+    expect(tables.route_requests[0]).toMatchObject({ send_country: 'US', receive_country: 'SO', source: 'whatsapp' })
     expect(JSON.stringify(tables.route_requests)).not.toContain(PHONE)
   })
 

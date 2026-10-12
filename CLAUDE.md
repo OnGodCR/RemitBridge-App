@@ -112,6 +112,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       on the fixtures, 97.8% on 60 OCR'd synthetic receipts before the OCR fixes. The model
       now reads only what the rules miss or doubt. Done 2026-10-01. The CAC write-up must
       say the parser is AI-written (`docs/AI_USAGE.md`).
+- [ ] **Wise and Instarem on 26 routes (D158, 2026-10-11):** 22 new Tier 2 routes in the engine,
+      the app and `20261011000000_wise_instarem_routes.sql`. Left: Angad runs that migration in
+      the SQL editor before the next Scrape run (every 6 hours at :17; a run before it would
+      try to save prices for routes the database doesn't know), then a Scrape run to publish.
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
       2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its

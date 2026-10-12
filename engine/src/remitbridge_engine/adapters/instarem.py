@@ -37,6 +37,13 @@ MAX_AGE = timedelta(hours=6)
 # Currencies Instarem pays out in whole units.
 NO_DECIMALS = {"VND"}
 
+# What Instarem quotes from the US (checked 2026-10-11, one request each; D158). Its endpoint
+# answers 400 for the rest (HNL, ETB, UAH, NIO, JMD, HTG, EGP), which would count as failures.
+CURRENCIES = {
+    "INR", "MXN", "PHP", "VND", "CNY", "GTQ", "DOP", "KES", "NGN", "PKR", "BDT", "KRW", "COP",
+    "PEN", "BRL", "GHS", "NPR", "LKR", "UGX",
+}
+
 # Every field this adapter reads. The fingerprint covers these and nothing else, so a field
 # Instarem adds or drops elsewhere in the response isn't drift.
 READ = (
@@ -68,7 +75,11 @@ class InstaremAdapter(Adapter):
     strategies = (Strategy.JSON_ENDPOINT,)
 
     def corridors(self) -> list[RouteSupport]:
-        return [RouteSupport(route_id, (DeliveryMethod.BANK_DEPOSIT,)) for route_id in ROUTES_BY_ID]
+        return [
+            RouteSupport(route_id, (DeliveryMethod.BANK_DEPOSIT,))
+            for route_id, route in ROUTES_BY_ID.items()
+            if route.receive_currency in CURRENCIES
+        ]
 
     async def fetch_quote(self, http: PoliteClient, strategy: Strategy, req: QuoteRequest) -> RawResponse:
         r = await http.get(
