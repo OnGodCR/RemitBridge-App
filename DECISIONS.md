@@ -1706,7 +1706,7 @@ white header with the bridge mark and links to Support, Privacy, Terms and the w
 sheet on a mint band, with green-dot lists and ruled section breaks. Light only, like the
 website; the old dark-mode tokens are gone.
 
-**D148. The document pages get a layout, and a green hero** (Angad, 2026-10-09: "make the
+**D160. The document pages get a layout, and a green hero** (numbered D148 when written; renumbered, as another D148 landed the same day) (Angad, 2026-10-09: "make the
 UI for support, Terms and privacy policy better", then "I don't like the minty background,
 just stick with the green"). `docLayout()` in `site/build.mjs` lays out any page with
 `<main class="wrap">` at build time, so the HTML stays a plain run of headings to edit and
@@ -1777,7 +1777,7 @@ corporation's documents are kept in the RemitBridge Google Drive, folder "RemitB
 (set up 2026-10-10).
 
 
-**D149. The landing page matches the website's /app page** (Angad, 2026-10-10: "update the
+**D161. The landing page matches the website's /app page** (first written as D149; renumbered for the same reason) (Angad, 2026-10-10: "update the
 app.remitbridge.org page to look like this as well"). Same hero (two tilted phones: Rate
 history behind, TrueCost in front), the same five story steps in the same order and words
 (Tools, Fair rate, TrueCost, Rate history, Scam check), then the same "Everything in the
@@ -1960,3 +1960,11 @@ should just be the ai making its own decisions and responding with its own natur
 This replaces D159's parser-first routing. D159's knowledge, suggestions table, privacy text
 and limits carry over.
 
+
+**D162. Every page gets the website's pointer backdrop** (Angad, 2026-10-12: "add the cursor
+background to the .app and also to the app page on the website"). The website's Backdrop,
+rebuilt without React and injected by `site/build.mjs` into every page: the bridge mark
+tiled at 6% behind everything, and a soft green light that follows the pointer. Green bands
+(`data-band`: the landing's feature section, the document pages' hero) carry their own white
+light, and the page light stands down inside one, so only one glows at a time. No light on
+touch screens or under reduced motion. The landing's old fixed glows are hidden in its favour.

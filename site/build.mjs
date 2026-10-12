@@ -76,6 +76,8 @@ export function render(html, c) {
       : `<p>Need our mailing address? Email <a href="mailto:${email}">${email}</a> and we'll send it.</p>`,
   };
   return html
+    .replace(/<body([^>]*)>/, `<body$1>\n${BACKDROP}`)
+    .replace('</body>', `${BACKDROP_SCRIPT}\n</body>`)
     .replace('<!--HEAD-->', head)
     .replace('<!--FOOTER-->', footer)
     .replace(/\{\{([A-Z_]+)\}\}/g, (whole, name) => {
@@ -110,7 +112,7 @@ export function docLayout(html) {
   const eyebrow = /support/i.test(title) ? 'Help' : /privacy|terms/i.test(title) ? 'Legal' : 'RemitBridge';
   const toc = heads.map((h) => `<li><a href="#${h.id}">${h.text}</a></li>`).join('');
   return html.replace(whole, [
-    '<div class="doc-hero"><div class="wrap">',
+    '<div class="doc-hero" data-band><div class="wrap">',
     `<p class="eyebrow">${eyebrow}</p><h1>${title}</h1>`,
     updated ? `<p class="updated">${updated}</p>` : '',
     '</div></div>',
@@ -123,6 +125,27 @@ export function docLayout(html) {
     `<script>(function(){var l=document.querySelectorAll('.toc a');if(!('IntersectionObserver'in window))return;var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){l.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+x.target.id)})}})},{rootMargin:'-80px 0px -70% 0px'});document.querySelectorAll('.sheet h2[id]').forEach(function(h){o.observe(h)})})()</script>`,
   ].filter(Boolean).join('\n'));
 }
+
+/**
+ * The website's backdrop (remitbridgelabs.org src/components/Backdrop.jsx), rebuilt without
+ * React and added to every page: the bridge mark tiled faintly behind everything, and a soft
+ * green light that follows the pointer. Green bands (`data-band`) carry their own white light,
+ * and the page light stands down while the pointer is inside one, so only one glows at a time.
+ * Moving the pointer writes custom properties and nothing else. No light on touch screens or
+ * under reduced motion, where it would only sit where you tapped.
+ */
+const BACKDROP = `<div class="backdrop" aria-hidden="true"><svg><defs><pattern id="bridges" width="120" height="90" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" transform="translate(36 30) scale(1.05)"><path d="M2 17Q24 3 46 17"/><path d="M14 30v-6q10-9 20 0v6"/></g></pattern></defs><rect width="100%" height="100%" fill="url(#bridges)"/></svg><div class="light"></div></div>`;
+
+const BACKDROP_SCRIPT = `<script>(function(){
+if(!matchMedia('(hover: hover)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var page=document.querySelector('.backdrop'),bands=[].slice.call(document.querySelectorAll('[data-band]')),p=null,f=0;
+function inside(r){return p&&p.x>=r.left&&p.x<=r.right&&p.y>=r.top&&p.y<=r.bottom}
+function paint(){f=0;var inBand=false;bands.forEach(function(b){var r=b.getBoundingClientRect(),lit=inside(r);inBand=inBand||lit;b.style.setProperty('--lit',lit?1:0);if(lit){b.style.setProperty('--x',p.x-r.left+'px');b.style.setProperty('--y',p.y-r.top+'px')}});
+page.style.setProperty('--lit',inBand?0:1);if(!inBand){page.style.setProperty('--x',p.x+'px');page.style.setProperty('--y',p.y+'px')}}
+function go(){if(p&&!f)f=requestAnimationFrame(paint)}
+addEventListener('pointermove',function(e){p={x:e.clientX,y:e.clientY};go()},{passive:true});
+addEventListener('scroll',go,{passive:true});
+})()</script>`;
 
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {
