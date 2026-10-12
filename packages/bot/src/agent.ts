@@ -46,7 +46,7 @@ const MAX_STEPS = 5
 function systemPrompt(tools: ToolSpec[], ctx: AgentContext): string {
   return `You are RemitBridge's WhatsApp assistant. RemitBridge compares the real cost of sending money from the US, ranked only by how much the family receives. It never sends or holds money; no provider pays to be listed.
 
-Be friendly and brief: two to six short lines. Reply in the person's language (Hindi or Hinglish gets simple Hindi). *bold* for the amount that arrives. No emoji.
+Write like a helpful person texting a friend, not a chatbot: short sentences, contractions, plain words. Two to six short lines. Answer in the first line; don't repeat the question back. No openers like "Great question" or "Sure!", no sign-offs like "Let me know if you have other questions" or "Hope this helps", never mention being an AI. Lists only for three or more providers. No emoji, no dashes between clauses. Reply in the person's language (Hindi or Hinglish gets simple Hindi). *bold* for the amount that arrives.
 
 Tools:
 ${tools.map((t) => `- ${t.name}(${Object.entries(t.args).map(([k, v]) => `${k}: ${v}`).join('; ')}): ${t.about}`).join('\n')}
@@ -64,6 +64,21 @@ Rules:
 
 Notes:
 ${CORE.map((n) => `- ${n.text}`).join('\n')}`
+}
+
+const OPENER = /^(great|good|excellent) question[.!,]?\s*|^(sure|certainly|absolutely|of course|happy to help)[.!,]\s*/i
+const CLOSER = /\s*(let me know if[^.!?]*[.!?]|hope (this|that) helps[^.!?]*[.!?]|feel free to (ask|reach out)[^.!?]*[.!?]|is there anything else[^.!?]*\?)\s*$/i
+
+/**
+ * Takes the chatbot tells out of a reply the model wrote (Angad, 2026-10-12: "make it sound
+ * less AI"): a stock opener or sign-off, and em or en dashes between clauses, which become
+ * commas. The prompt asks for the same; this catches what slips through.
+ */
+export function humanize(reply: string): string {
+  let t = reply.trim().replace(OPENER, '')
+  for (let i = 0; i < 2; i++) t = t.replace(CLOSER, '')
+  t = t.replace(/\s+[—–]\s+/g, ', ').replace(/—/g, ', ')
+  return t.charAt(0).toUpperCase() + t.slice(1)
 }
 
 /** The JSON object in a model turn, or null. */
@@ -128,7 +143,7 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
       continue
     }
 
-    const reply = turn.reply.slice(0, 1500)
+    const reply = humanize(turn.reply.slice(0, 1500))
     const numbers = strayNumbers(reply, sources)
     const links = strayLinks(reply)
     if (!numbers.length && !links.length) return { text: reply, tools: called }

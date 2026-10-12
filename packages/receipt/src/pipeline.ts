@@ -5,11 +5,15 @@
  * (in the worker, Phase 5), and the benchmark calls it in each of its modes.
  */
 import { mergeFields, fieldsForModel } from './merge.ts'
+import { pageText } from './ocr.ts'
 import { askModel, ModelError, type ModelClient, type Reasoning } from './model.ts'
 import { parseReceipt, type ParseOptions } from './parser.ts'
 import { templateFor } from './templates.ts'
 import type { ExtractedFields, FieldName, OcrPage, ParsedFields } from './types.ts'
 import { validateReceipt, type Validation } from './validate.ts'
+
+/** A line for a fee charged to the recipient: Reg E's "Other Fees", or a pickup or payout fee. */
+const RECIPIENT_FEE_LINE = /other\s+fees?|recipient\s+fees?|(pick\s*-?\s*up|payout|pay-out|collection)\s+(fee|charge)s?/i
 
 export interface ReadInput {
   /** The redacted page. */
@@ -74,6 +78,19 @@ export async function readReceipt(input: ReadInput): Promise<ReadResult> {
   }
 
   const fields = mergeFields(parsed.fields, modelFields)
+  // The model once read a $9.99 service fee a second time as a 9.99 pickup charge, because
+  // the receipt also said "Cash Pickup" (Angad's WhatsApp test, 2026-10-12). When no line for
+  // a recipient's fee can be read and the model's pickup charge is just the upfront fee again,
+  // it's that double count, so it's dropped. A garbled "Other Fees" line with a different
+  // amount is still the model's to read from the photo.
+  const pickup = fields.pickup_charge
+  if (
+    pickup?.path === 'model' &&
+    pickup.value === fields.fee?.value &&
+    !RECIPIENT_FEE_LINE.test(pageText(input.page))
+  ) {
+    delete fields.pickup_charge
+  }
   const send = fields.send_currency?.value
   const receive = fields.receive_currency?.value
   const midRate = send && receive && input.midRate ? await input.midRate(send, receive, fields.transfer_date?.value) : null

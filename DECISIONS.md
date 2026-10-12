@@ -2016,3 +2016,34 @@ exposure and fix every issue"). Each item checked against the code first:
   Copyright Office's DMCA directory and a fee (Angad's to do), it publishes a postal address,
   and it protects only content users post publicly, which RemitBridge doesn't host. The terms
   gained a Copyright section saying how to send a notice to hello@.
+
+**D163. The app site gets the basics a real site has** (Angad, 2026-10-12, from a checklist:
+"add anything from this list that you can"). A 404 page (Vercel serves `404.html` with a
+real 404 status), `robots.txt` and `sitemap.xml` generated from `PUBLIC_PATHS` in
+`build.mjs`, a canonical link and Open Graph and Twitter tags on every page read from that
+page's own title and description, a 1200 by 630 share image in the website's style, and the
+apple-touch icon and `favicon.ico`. Not done, on purpose: a cookie banner (the site sets no
+cookies; the partner page keeps a random ID in local storage for one first-party count),
+web analytics (needs turning on in Vercel's dashboard first), and a mailing address (Angad's
+choice, 2026-10-03).
+
+**D165. The landing page uses the real screenshots, and the app's real tabs** (Angad,
+2026-10-12: "a lot of the screenshots have been taken so go ahead and check them"). The
+story now runs eight real screens (Scan, Compare, a quote, Rate alerts, Fair rate, Yearly
+cost, Learn, Scam check), and the hero shows Scan and Compare. The feature phone's bar
+matches the app (Scan, Compare, WhatsApp, Tools, Learn; Account behind the avatar), with a
+WhatsApp group from the app's own copy, and picking a feature that has a screenshot shows
+it in the phone. The observatory screenshot ("0 shared receipts") is left out: an empty
+state reads as an unused feature. Same change on the website's /app page.
+
+**D166. Wise breaks a tie between the two mid-market rate sources** (Angad, 2026-10-12:
+"Add a third source"). Mexico published no prices from Oct 9 and India none from Oct 12,
+because Frankfurter (the central bank's once-a-weekday fixing) and open.er-api drifted more
+than 0.5% apart while the peso and the rupee moved. The rule stays strict: when the two
+disagree, the engine asks Wise's comparison API, which marks its own quote as the mid-market
+rate and prices it live, for that one pair. If Wise agrees within 0.5% with exactly one of
+the two, that source is used and all three rates are kept as checks; if it agrees with
+neither, isn't available, or stops calling its rate mid-market (a markup above zero), the
+pair is held as before. Pairs that agree never touch Wise, so it sees a few requests a run
+at most, within the use Wise approved (D91). Loosening the limit to 1.5% was the other
+option and was turned down: it would let a bigger gap into published total costs.

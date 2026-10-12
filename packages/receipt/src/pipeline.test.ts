@@ -83,4 +83,18 @@ describe('readReceipt', () => {
     expect(r.fields.amount_sent).toBeUndefined()
     expect(r.problems.every((p) => p.from === 'model')).toBe(true)
   })
+
+  it('drops a pickup charge that is only the fee read twice, and keeps a real one', async () => {
+    // Angad's WhatsApp test (2026-10-12): "SERVICE FEE $9.99" and "Cash Pickup", read by the
+    // model as a 9.99 MXN pickup charge on top of the fee.
+    const cash = pageFromLines(['GLOBAL MONEY TRANSFER', 'TRANSFER AMOUNT $500.00', 'SERVICE FEE $9.99', 'PAYOUT METHOD: Cash Pickup'])
+    const { client } = fakeModel([{ text: answer({ fee: [9.99, 0.9], pickup_charge: [9.99, 0.9] }) }])
+    const r = await readReceipt({ page: cash, today: TODAY, model: { client }, extractors: rules })
+    expect(r.fields.pickup_charge).toBeUndefined()
+
+    const fee = pageFromLines(['GLOBAL MONEY TRANSFER', 'TRANSFER AMOUNT $500.00', 'Pickup Fee 40.00 MXN'])
+    const second = fakeModel([{ text: answer({ pickup_charge: [40, 0.9] }) }])
+    const kept = await readReceipt({ page: fee, today: TODAY, model: { client: second.client }, extractors: rules })
+    expect(kept.fields.pickup_charge?.value).toBe(40)
+  })
 })

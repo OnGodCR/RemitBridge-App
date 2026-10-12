@@ -11,10 +11,18 @@ export function money(amount: number, currency: string): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
+    currencyDisplay: CODE_NOT_SYMBOL.has(currency) ? 'code' : 'symbol',
     minimumFractionDigits: whole ? 0 : 2,
     maximumFractionDigits: whole ? 0 : 2,
   }).format(amount);
 }
+
+/**
+ * Currencies whose English symbol reads like US dollars ("MX$"), shown by code instead:
+ * "MXN 8,625.00", the way GTQ and KES already show (Angad, 2026-10-12). Brazil's "R$" stays,
+ * since that's what people there write.
+ */
+const CODE_NOT_SYMBOL = new Set(['MXN']);
 
 /** For screen readers: "41,620 Indian rupees" rather than "₹41,620" (PRD 14.10). */
 export function moneySpoken(amount: number, currency: string): string {

@@ -5,6 +5,20 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-11 (see the sections just below; the older status after them is kept for history)
 
+## 2026-10-12: screenshots, Mexico's prices, the code email, WhatsApp replies, store prep
+
+- **Screenshots:** 15 of 18 for the website in `site/screens/`; six App Store shots in
+  `docs/store/screenshots/iphone-6.9/`. Taken on a new `simulator` build profile without ML
+  Kit (it can't run on Apple Silicon simulators). The three scan shots need Angad's iPhone.
+- **Prices (D166):** Wise breaks ties between the two mid-market sources, which had held
+  Mexico since Oct 9 and India since this morning.
+- **Sign-in email:** redesigned and live (Management API, D53).
+- **WhatsApp:** receipt replies in short blocks, tax lines fixed, MXN for pesos, the
+  double-counted fee dropped, the agent told to write like a person. Deployed.
+- **Store prep:** a sample receipt for App Review, review notes updated, 12 Expo packages
+  patched (doctor 21/21, 156 app tests). The production build waits for Angad's Apple
+  sign-in, best after the organization conversion.
+
 ## 2026-10-12: legal audit (D164)
 
 Sign-in asks the year of birth before a phone's first account (nothing stored but a pass or
