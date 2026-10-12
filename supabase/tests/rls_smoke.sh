@@ -49,7 +49,7 @@ post() { # table, json body
 }
 
 echo "--- public reads"
-check "routes are readable (4 seeded)"            "4"   "$(count "${H[@]}" "$REST/routes?select=id")"
+check "routes are readable (26: 4 + 22 in D158)"    "26"  "$(count "${H[@]}" "$REST/routes?select=id")"
 check "providers are readable (9: 8 seeded + Instarem)" "9"   "$(count "${H[@]}" "$REST/providers?select=id")"
 check "latest_quotes view is readable"            "200" "$(pg "${H[@]}" "$REST/latest_quotes?select=id")"
 check "compare_quotes view is readable (D144)"   "200" "$(pg "${H[@]}" "$REST/compare_quotes?select=id")"
@@ -66,6 +66,7 @@ check "saved comparisons are not readable"        "0" "$(count "${H[@]}" "$REST/
 check "internal installs are not readable"        "0" "$(count "${H[@]}" "$REST/internal_installs?select=install_id")"
 check "entered prices are not readable"           "0" "$(count "${H[@]}" "$REST/manual_observations?select=id")"
 check "route requests are not readable"           "0" "$(count "${H[@]}" "$REST/route_requests?select=id")"
+check "suggestions are not readable (D159)"     "0" "$(count "${H[@]}" "$REST/suggestions?select=id")"
 check "WhatsApp users are not readable"           "0" "$(count "${H[@]}" "$REST/whatsapp_users?select=phone_hash")"
 check "receipts are not readable"                 "0" "$(count "${H[@]}" "$REST/receipts?select=id")"
 check "receipt fields are not readable"           "0" "$(count "${H[@]}" "$REST/receipt_fields?select=receipt_id")"
@@ -99,6 +100,7 @@ check "can't queue a WhatsApp photo" "42501" "$(post receipt_intake "$(printf '{
 check "can't take photos off the queue" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/claim_receipt_intake" -d '{"p_limit":1}')"
 check "can't make a rate alert" "42501" "$(post rate_alerts "$(printf '{"user_id":"%s","route_id":"us-in","send_amount":500,"delivery_method":"bank_deposit","target_received":47000,"push_token":"ExponentPushToken[abcdefghijklmnop]"}' "$FAKE_USER")")"
 check "can't read the due rate alerts (push tokens)" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/due_rate_alerts" -d '{}')"
+check "can't file a suggestion (D159)" "42501" "$(post suggestions '{"text":"add Ria"}')"
 check "can't enter a price" "42501" "$(post manual_observations "$(printf '{"provider_id":"wise","route_id":"us-in","send_amount":500,"delivery_method":"bank_deposit","fee":0,"offered_rate":99,"amount_received":49500,"source_url":"x","observed_by":"%s"}' "$FAKE_USER")")"
 check "can't ask for a route as someone else" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","user_id":"%s"}' "$TEST_INSTALL" "$FAKE_USER")")"
 check "can't file a request as WhatsApp" "42501" "$(post route_requests "$(printf '{"send_country":"US","receive_country":"NP","install_id":"%s","source":"whatsapp"}' "$TEST_INSTALL")")"

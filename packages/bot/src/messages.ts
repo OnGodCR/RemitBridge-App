@@ -330,3 +330,22 @@ export function formatSaveNote(lang: Language, saved: boolean): string {
   }
   return saved ? 'Saved to your app, under Saved.' : `To save it, link WhatsApp in the app first: the WhatsApp tab > Link WhatsApp. ${LINK}`
 }
+
+/** A question the model answered from our notes (ai.ts), with the one link that goes with it. */
+export function formatAnswer(lang: Language, a: { text: string; link: string }): string {
+  return `${a.text}\n\n${lang === 'hi' ? 'और जानें' : 'More'}: ${a.link}`
+}
+
+/** A suggestion saved for the team. */
+export function formatSuggestThanks(lang: Language): string {
+  return lang === 'hi'
+    ? 'धन्यवाद! आपका सुझाव टीम तक पहुँच गया है।'
+    : 'Thanks! Your suggestion has gone to the team.'
+}
+
+/** Something the bot doesn't cover (Meta's terms keep it to our own service). */
+export function formatOffTopic(lang: Language): string {
+  return lang === 'hi'
+    ? 'मैं सिर्फ़ विदेश पैसे भेजने और RemitBridge के बारे में मदद कर सकता हूँ। आज़माएँ: 500 to India'
+    : 'I can only help with sending money abroad and with RemitBridge. Try: 500 to India'
+}
