@@ -114,7 +114,10 @@ Checked against Apple's rules on 2026-10-08 (D145):
 
 Answer **None** or **No** to every content question (violence, profanity, gambling,
 contests, mature themes, medical, alcohol). "Unrestricted web access": **No** (links open
-specific pages only). Result: **4+**.
+specific pages only). Result: **4+**, because the rating describes content, and there is
+none to restrict. It is not a children's app: leave **Made for Kids** off, and say so if asked.
+Accounts are for 13 and older behind a neutral age screen (D164), and Play's target
+audience is 18+ (below).
 
 ### Notes for App Review
 
@@ -194,9 +197,48 @@ about other companies' prices. It doesn't hold, send, lend, invest or exchange m
 - Contains ads: **No.**
 - Government app: **No.** News app: **No** (the blog is learning material).
 
+### App access
+
+Choose **"All functionality is available without special access."** Signing in is optional
+(an email code, Sign in with Apple or Google, all self-serve), and everything else works
+signed out. If a reviewer wants to try Scan without a receipt, the same sample as Apple's:
+https://app.remitbridgelabs.org/review/sample-receipt.jpg
+
+### Advertising ID
+
+"Does your app use advertising ID?" **No.** The app has no ads and no analytics SDK, and
+the build blocks the `AD_ID` permission so no library can add it.
+
+### Store settings and graphics
+
+- App category: **Finance**. Tags: personal finance, money transfer, education.
+- Contact: hello@remitbridgelabs.org, website https://app.remitbridgelabs.org.
+- App icon: `docs/store/play-icon-512.png` (512 × 512).
+- Feature graphic: `docs/store/play-feature-graphic.png` (1024 × 500).
+- Phone screenshots: 2 to 8, PNG or JPEG, each side 320 to 3840 px, and the long side no
+  more than twice the short side. Take them on the Android phone (Play wants the Android
+  app as it looks there); most phones' screenshots fit, but a 20:9 phone's full-height shot
+  is over 2:1, so crop a little from the bottom.
+
+### First release
+
+App bundle: the production build's `.aab` from EAS (signed with the upload key EAS holds;
+choose Google-generated app signing key when Play Console asks). Release name: `1.0.0 (2)`.
+Release notes:
+
+```
+First release. Compare what it costs to send money from the US to 26 countries, ranked by how much your family receives. Scan a transfer receipt to see what it really cost.
+```
+
+After the first upload, copy Play App Signing's SHA-256 and SHA-1 (Setup > App signing)
+to Claude: the SHA-256 goes into `site/.well-known/assetlinks.json` (links open the app) and
+the SHA-1 into a second Android sign-in client in Google Cloud (Google sign-in keeps working
+on Play installs).
+
 ### Closed test (required before the first public release)
 
-New personal accounts must run a closed test with **at least 12 testers, opted in for 14
+Only for a personal account; the organization account in RemitBridge Labs' name (D143)
+skips it. New personal accounts must run a closed test with **at least 12 testers, opted in for 14
 days in a row**, before applying for production. Message for testers:
 
 ```
@@ -212,9 +254,9 @@ You don't need an account, and the app never asks for money or bank details.
 
 ## Screenshots (from a development build, D59)
 
-- **iPhone 6.9" (required):** 1320 × 2868. Six, in this order: Scan, a receipt result with
-  "what you could have kept", Compare, a quote's detail, Learn's path, Tools.
-- **Android phone:** at least 2 (same six work), 9:16 or 16:9, at least 1080 px wide.
-- **Play feature graphic:** 1024 × 500, the bridge mark on brand green with "What it really
-  costs to send money home".
+- **iPhone 6.9" (required):** 1320 × 2868, done 2026-10-12 in
+  `docs/store/screenshots/iphone-6.9/`: Scan, Compare, a quote's detail, Yearly cost, Learn,
+  WhatsApp.
+- **Android phone:** see Store settings and graphics above.
+- **Play feature graphic:** done, `docs/store/play-feature-graphic.png`.
 - No device frames needed; no Expo Go dev button in any shot.

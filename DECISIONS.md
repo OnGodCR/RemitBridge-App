@@ -2047,3 +2047,17 @@ neither, isn't available, or stops calling its rate mid-market (a markup above z
 pair is held as before. Pairs that agree never touch Wise, so it sees a few requests a run
 at most, within the use Wise approved (D91). Loosening the limit to 1.5% was the other
 option and was turned down: it would let a bigger gap into published total costs.
+
+**D167. ChatGPT takes over the hand price checks from Claude, under D142's limit** (Angad,
+2026-10-12: "describe all the workflow we have for scraping data manually ... have it add
+onto that and take that task over from you"). The whole workflow is written up as a prompt
+in `docs/outreach/chatgpt-price-checks.md`: the rules, one check step by step, how to read fee-on-top
+prices and first-transfer deals, the arithmetic check, the allowed values, the SQL Angad runs
+in the Supabase SQL editor, what the engine does with each row (6-hour load window, the
+Manual prices workflow, the four outcomes), freshness (24 hours current, 7 days as Older
+prices), a running log, and what to build on (more routes, a rotation, change checks, faster
+rounds). D142's limit carries over unchanged: Angad does every navigation and click on a
+provider's site, and ChatGPT works only from his screenshots, never in agent mode or by
+browsing those sites. Prices still enter only as manual observations through the same gate.
+Claude steps back from routine rounds and helps only when rows are quarantined or rejected
+without a clear reason, or when the format has to change.
