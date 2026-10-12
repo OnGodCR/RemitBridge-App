@@ -101,7 +101,7 @@ export async function deleteAlert(id: number): Promise<boolean> {
   return !error;
 }
 
-/** A sensible step for the target: ₹100 near ₹47,000, MX$10 near MX$8,500. */
+/** A sensible step for the target: ₹100 near ₹47,000, MXN 10 near MXN 8,500. */
 export function targetStep(best: number): number {
   return Math.max(1, 10 ** (Math.floor(Math.log10(Math.max(best, 1))) - 2));
 }

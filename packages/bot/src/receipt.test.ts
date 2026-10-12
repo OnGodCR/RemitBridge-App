@@ -101,21 +101,32 @@ describe('questions', () => {
 })
 
 describe('the result', () => {
-  it('shows what arrived, the total cost split up, the advertised rate, the tax and the source', () => {
+  it('shows what arrived, the total cost as a list, the advertised rate, the tax and the source', () => {
     const r = formatReceiptResult('en', result(), [])
-    expect(r).toContain('Your Western Union receipt, 9/28/2026')
-    expect(r).toContain('*MX$8,560.00* arrived.')
-    expect(r).toMatch(/Total cost \$\d+\.\d\d \(\d+\.\d%\): fee \$4\.99, tax \$5\.00, exchange-rate markup \$\d+\.\d\d, pickup \$2\.26\./)
+    expect(r).toContain('*Western Union* · 9/28/2026')
+    expect(r).toContain('*MXN\u00a08,560.00* arrived.')
+    expect(r).toMatch(/\*Total cost: \$\d+\.\d\d\* \(\d+\.\d%\)\n• Fee: \$4\.99\n• Exchange-rate markup: \$\d+\.\d\d\n• Tax: \$5\.00\n• Pickup charge: \$2\.26/)
     expect(r).toContain('Advertised that day: 17.3. Your rate: 17.2. That cost you $2.83 more.')
-    expect(r).toContain('Paid by cash, so the 1% federal tax ($5.00) applies. From a bank account, the total cost would be')
-    expect(r).toContain('Mid-market rate 17.7, from Frankfurter, 9/28/2026.')
+    // The tax is in the total here, so the bank-account comparison is shown.
+    expect(r).toContain('Paid by cash, so the 1% federal tax ($5.00) applies. From a bank account, the total cost would have been')
+    expect(r).toContain('Mid-market rate: 17.7 (Frankfurter, 9/28/2026)')
     expect(r).not.toContain('Not confirmed')
-    expect(r.split('\n').length).toBeLessThanOrEqual(9)
+    // Blocks, each separated by a blank line, so it reads on a phone.
+    expect(r.split('\n\n').length).toBeGreaterThanOrEqual(5)
+  })
+
+  it('with no tax line on a cash receipt, says what the tax would add, not a bank total equal to this one', () => {
+    // Angad's test receipt, 2026-10-12: "applies", then "from a bank account, the total cost
+    // would be" the same total, which read as a contradiction.
+    const fields = { ...FIELDS, tax: undefined } as unknown as ExtractedFields
+    const r = formatReceiptResult('en', result({ fields }), [])
+    expect(r).toContain('This receipt shows no tax line. If it was charged, the total cost is $5.00 higher.')
+    expect(r).not.toContain('From a bank account')
   })
 
   it('names disclosures not found, without blaming anyone', () => {
     const r = formatReceiptResult('en', result({ disclosures_missing: ['error_rights', 'cfpb_contact'] }), [])
-    expect(r).toContain('Not found on this receipt: your rights if there is an error, the CFPB’s contact details. The photo may have cut it off.')
+    expect(r).toContain('Not on the receipt (the photo may have cut it off): your rights if there is an error, the CFPB’s contact details.')
     expect(formatReceiptResult('hi', result({ disclosures_missing: ['cfpb_contact'] }), [])).toContain('रसीद पर नहीं मिला')
   })
 

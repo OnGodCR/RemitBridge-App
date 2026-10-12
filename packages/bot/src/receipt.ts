@@ -212,85 +212,98 @@ export function readReceiptReply(text: string, field: FieldName, today: string):
 }
 
 /**
- * The result, compact enough for one phone screen (PRD 14.8): what arrived (bold), the
- * total cost split into its parts, the advertised rate that day, the tax check, and where
- * the mid-market rate came from. Values the person didn't confirm are named at the end.
+ * The result, in short blocks a phone shows at a glance (Angad, 2026-10-12: "too
+ * crowded/hard to read"): the header, what arrived (bold), the total cost with its parts as
+ * a list, the tax on its own, the comparison and the rate's source, then anything missing or
+ * unconfirmed. Blocks are separated by a blank line.
  */
 export function formatReceiptResult(lang: Language, r: ConfirmResponse, unconfirmed: FieldName[]): string {
   const hi = lang === 'hi'
   const v = valuesFrom(r.fields)
   const send = v.send_currency ?? 'USD'
   const receive = v.receive_currency
-  const out: string[] = []
-  const who = v.provider ?? (hi ? 'आपकी' : 'Your')
+  const blocks: string[][] = []
   const when = v.transfer_date ? usDate(v.transfer_date) : null
-  out.push(hi ? `${who} रसीद${when ? `, ${when}` : ''}` : `${v.provider ? `Your ${v.provider}` : 'Your'} receipt${when ? `, ${when}` : ''}`)
+  const title = v.provider ?? (hi ? 'आपकी रसीद' : 'Your receipt')
+  blocks.push([`*${title}*${when ? ` · ${when}` : ''}`])
 
   if (v.amount_received !== undefined && receive) {
-    out.push(hi ? `*${money(v.amount_received, receive)}* पहुँचे।` : `*${money(v.amount_received, receive)}* arrived.`)
-  }
-  const cost = r.mid ? receiptCost(v, r.mid.rate) : null
-  if (cost) {
-    const parts = [
-      `${hi ? 'फ़ीस' : 'fee'} ${money(cost.feeCost, send)}`,
-      ...(cost.taxCost > 0 ? [`${hi ? 'टैक्स' : 'tax'} ${money(cost.taxCost, send)}`] : []),
-      `${hi ? 'एक्सचेंज-रेट मार्कअप' : 'exchange-rate markup'} ${money(cost.markupCost, send)}`,
-      ...(cost.pickupCost > 0 ? [`${hi ? 'पिकअप' : 'pickup'} ${money(cost.pickupCost, send)}`] : []),
-    ]
-    out.push(
-      hi
-        ? `कुल लागत ${money(cost.totalCost, send)} (${cost.totalCostPct.toFixed(1)}%): ${parts.join(', ')}।`
-        : `Total cost ${money(cost.totalCost, send)} (${cost.totalCostPct.toFixed(1)}%): ${parts.join(', ')}.`,
-    )
-  } else {
-    out.push(hi ? 'उस दिन का मिड-मार्केट रेट नहीं मिला, इसलिए कुल लागत नहीं दिखा सकते।' : "Couldn't get that day's mid-market rate, so there's no total cost to show.")
+    blocks.push([hi ? `*${money(v.amount_received, receive)}* पहुँचे।` : `*${money(v.amount_received, receive)}* arrived.`])
   }
 
-  const c = r.comparison
-  if (c.gap) {
-    const g = c.gap
-    const more = g.gapAmount > 0
-    const amount = money(Math.abs(g.gapAmount), g.gapCurrency)
-    out.push(
+  const cost = r.mid ? receiptCost(v, r.mid.rate) : null
+  if (cost) {
+    blocks.push([
       hi
-        ? `उस दिन विज्ञापित रेट ${g.advertisedRate} था, आपको ${g.receiptRate} मिला${g.gapAmount === 0 ? '।' : `: इससे आपको ${amount} ${more ? 'ज़्यादा' : 'कम'} लगे।`}`
-        : `Advertised that day: ${g.advertisedRate}. Your rate: ${g.receiptRate}${g.gapAmount === 0 ? '.' : `. That cost you ${amount} ${more ? 'more' : 'less'}.`}`,
-    )
+        ? `*कुल लागत: ${money(cost.totalCost, send)}* (${cost.totalCostPct.toFixed(1)}%)`
+        : `*Total cost: ${money(cost.totalCost, send)}* (${cost.totalCostPct.toFixed(1)}%)`,
+      `• ${hi ? 'फ़ीस' : 'Fee'}: ${money(cost.feeCost, send)}`,
+      `• ${hi ? 'एक्सचेंज-रेट मार्कअप' : 'Exchange-rate markup'}: ${money(cost.markupCost, send)}`,
+      ...(cost.taxCost > 0 ? [`• ${hi ? 'टैक्स' : 'Tax'}: ${money(cost.taxCost, send)}`] : []),
+      ...(cost.pickupCost > 0 ? [`• ${hi ? 'पिकअप चार्ज' : 'Pickup charge'}: ${money(cost.pickupCost, send)}`] : []),
+    ])
   } else {
-    const why =
-      c.reason === 'not_tracked'
-        ? hi ? 'हम इस कंपनी की कीमतें नहीं जाँचते, इसलिए विज्ञापित रेट से तुलना नहीं है।' : "We don't track this company's prices, so there's no advertised rate to compare."
-        : hi ? 'उस दिन की कोई विज्ञापित कीमत हमारे पास नहीं है।' : 'We have no advertised price from that day to compare.'
-    out.push(why)
+    blocks.push([hi ? 'उस दिन का मिड-मार्केट रेट नहीं मिला, इसलिए कुल लागत नहीं दिखा सकते।' : "Couldn't get that day's mid-market rate, so there's no total cost to show."])
   }
 
   const tax = taxCheck(v, r.mid?.rate ?? null)
   if (tax.status === 'matches' || tax.status === 'not_found' || tax.status === 'differs') {
     const method = shown(lang, 'funding_method', r.fields)
-    const bank = tax.bankEquivalent ? money(tax.bankEquivalent.totalCost, send) : null
-    out.push(
-      hi
-        ? `${method} से भुगतान पर 1% संघीय टैक्स (${money(tax.expected ?? 0, send)}) लगता है।${tax.status === 'not_found' ? ' रसीद पर टैक्स की लाइन नहीं मिली।' : tax.status === 'differs' ? ` रसीद पर ${money(tax.found ?? 0, send)} लिखा है।` : ''}${bank ? ` बैंक खाते से कुल लागत ${bank} होती।` : ''}`
-        : `Paid by ${method}, so the 1% federal tax (${money(tax.expected ?? 0, send)}) applies.${tax.status === 'not_found' ? ' No tax line was found on the receipt.' : tax.status === 'differs' ? ` The receipt shows ${money(tax.found ?? 0, send)}.` : ''}${bank ? ` From a bank account, the total cost would be ${bank}.` : ''}`,
-    )
+    const expected = money(tax.expected ?? 0, send)
+    // The bank-account comparison only means something when the total above includes the
+    // tax; with no tax line, the total already leaves it out (the old reply said both).
+    const bank = tax.bankEquivalent && cost && cost.taxCost > 0 ? money(tax.bankEquivalent.totalCost, send) : null
+    const lines = hi
+      ? [
+          `${method} से भुगतान पर 1% संघीय टैक्स (${expected}) लगता है।`,
+          tax.status === 'not_found' ? `इस रसीद पर टैक्स की लाइन नहीं है। अगर लिया गया था, तो कुल लागत ${expected} ज़्यादा है।` : null,
+          tax.status === 'differs' ? `रसीद पर ${money(tax.found ?? 0, send)} लिखा है।` : null,
+          bank ? `बैंक खाते से भेजते तो कुल लागत ${bank} होती।` : null,
+        ]
+      : [
+          `Paid by ${method}, so the 1% federal tax (${expected}) applies.`,
+          tax.status === 'not_found' ? `This receipt shows no tax line. If it was charged, the total cost is ${expected} higher.` : null,
+          tax.status === 'differs' ? `The receipt shows ${money(tax.found ?? 0, send)}.` : null,
+          bank ? `From a bank account, the total cost would have been ${bank}.` : null,
+        ]
+    blocks.push([lines.filter(Boolean).join(' ')])
   }
 
-  if (r.mid) {
-    out.push(hi ? `मिड-मार्केट रेट ${r.mid.rate}, ${r.mid.source} से, ${usDate(r.mid.date)}।` : `Mid-market rate ${r.mid.rate}, from ${r.mid.source}, ${usDate(r.mid.date)}.`)
+  const c = r.comparison
+  const compare: string[] = []
+  if (c.gap) {
+    const g = c.gap
+    const amount = money(Math.abs(g.gapAmount), g.gapCurrency)
+    const more = g.gapAmount > 0
+    compare.push(
+      hi
+        ? `उस दिन विज्ञापित रेट ${g.advertisedRate} था, आपको ${g.receiptRate} मिला${g.gapAmount === 0 ? '।' : `: इससे आपको ${amount} ${more ? 'ज़्यादा' : 'कम'} लगे।`}`
+        : `Advertised that day: ${g.advertisedRate}. Your rate: ${g.receiptRate}${g.gapAmount === 0 ? '.' : `. That cost you ${amount} ${more ? 'more' : 'less'}.`}`,
+    )
+  } else {
+    compare.push(
+      c.reason === 'not_tracked'
+        ? hi ? 'हम इस कंपनी की कीमतें अभी नहीं जाँचते।' : "We don't track this company's prices yet."
+        : hi ? 'उस दिन की कोई विज्ञापित कीमत हमारे पास नहीं है।' : 'We have no advertised price from that day to compare.',
+    )
   }
+  if (r.mid) {
+    compare.push(hi ? `मिड-मार्केट रेट: ${r.mid.rate} (${r.mid.source}, ${usDate(r.mid.date)})` : `Mid-market rate: ${r.mid.rate} (${r.mid.source}, ${usDate(r.mid.date)})`)
+  }
+  blocks.push(compare)
+
+  const notes: string[] = []
   const missing = r.disclosures_missing ?? []
   if (missing.length) {
     const items = missing.map((d) => DISCLOSURE_WORDS[d]?.[lang] ?? d).join(', ')
-    out.push(
-      hi
-        ? `रसीद पर नहीं मिला: ${items}। हो सकता है फ़ोटो में छूट गया हो।`
-        : `Not found on this receipt: ${items}. The photo may have cut it off.`,
-    )
+    notes.push(hi ? `रसीद पर नहीं मिला (शायद फ़ोटो में छूट गया): ${items}।` : `Not on the receipt (the photo may have cut it off): ${items}.`)
   }
   if (unconfirmed.length) {
     const names = unconfirmed.map((f) => LABELS[f][lang]).join(', ')
-    out.push(hi ? `इनकी पुष्टि नहीं हुई: ${names}। नतीजा इन पर निर्भर है।` : `Not confirmed: ${names}. The result depends on them.`)
+    notes.push(hi ? `इनकी पुष्टि नहीं हुई: ${names}। नतीजा इन पर निर्भर है।` : `Not confirmed: ${names}. The result depends on them.`)
   }
-  out.push(hi ? `अगली बार पहले तुलना करें: ${LINK}` : `Compare before your next transfer: ${LINK}`)
-  return out.join('\n')
+  if (notes.length) blocks.push(notes)
+
+  blocks.push([hi ? `अगली बार पहले तुलना करें: ${LINK}` : `Compare before your next transfer: ${LINK}`])
+  return blocks.map((b) => b.join('\n')).join('\n\n')
 }
