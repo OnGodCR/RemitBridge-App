@@ -40,17 +40,15 @@ import { publishableKey, secretKey } from '../_shared/keys.ts';
 import { USER_AGENT } from '../_shared/site-config.ts';
 
 import {
-  answer,
   cloudflareClient,
   DEFAULT_ANSWER_MODEL,
   findPlaces,
-  isQuestion,
+  MAX_AMOUNT,
   normalize,
-  type Entry,
-  formatAnswer,
-  formatOffTopic,
-  formatSuggestThanks,
-  understand,
+  rankFor,
+  retrieve,
+  runAgent,
+  type ToolSpec,
   type AiClient,
   formatCompare,
   formatForgotten,
@@ -81,7 +79,10 @@ import {
   type State,
 } from '../../../packages/bot/src/index.ts';
 import { deserializeValue, FIELD_NAMES, type ConfirmResponse, type FieldName, type ScanResponse } from '../../../packages/receipt/src/index.ts';
-import { routeFor } from '../../../mobile/src/lib/routes.ts';
+import { checkedAmountFor, DELIVERY_LABELS, ROUTES, routeFor, type Route } from '../../../mobile/src/lib/routes.ts';
+import { RECEIVING } from '../../../mobile/src/lib/countries.ts';
+import { money } from '../../../mobile/src/lib/format.ts';
+import { computeTransferCost } from '../../../packages/formula/src/index.ts';
 
 const GRAPH = `https://graph.facebook.com/${Deno.env.get('WHATSAPP_GRAPH_VERSION') ?? 'v23.0'}`;
 /** Messages per number per hour. One reply says so; after that, silence until the hour is up. */
@@ -94,11 +95,11 @@ const HOUR_MS = 3600 * 1000;
  */
 const MESSAGES_PER_DAY = 100;
 const PHOTOS_PER_DAY = 10;
-/** Model calls a day: for one number, and for everyone, which keeps inside Cloudflare's free
- * daily allowance (about 20 neurons a call of its 10,000; D159). Past either, the bot simply
- * answers without the model, as it did before. */
-const MODEL_CALLS_PER_NUMBER = 20;
-const MODEL_CALLS_PER_DAY = Number(Deno.env.get('WHATSAPP_AI_DAILY_CAP') ?? 400);
+/** Agent conversations a day (D160), for one number and for everyone. One conversation is a
+ * few model calls, about 100-120 of Cloudflare's 10,000 free daily neurons, so 80 keeps
+ * inside the allowance. Past either cap the plain bot answers, as it did before. */
+const MODEL_CALLS_PER_NUMBER = 25;
+const MODEL_CALLS_PER_DAY = Number(Deno.env.get('WHATSAPP_AI_DAILY_CAP') ?? 80);
 
 const REPO = 'OnGodCR/RemitBridge-App';
 const INTAKE_WORKFLOW = 'receipt-intake.yml';
@@ -245,37 +246,32 @@ async function handle(m: Incoming) {
   }
 
   const text = m.text;
-  let command = parse(text);
-  // What the parser can't read goes to the model, when it's set up and under its limits, and
-  // so does anything shaped like a question with no amount ("what's the mid-market rate for
-  // india"): the model can still hand a plain price question back to the price templates.
-  if (command.kind === 'unknown' || (isQuestion(text) && command.kind === 'compare' && command.amount === undefined)) {
-    const model = await modelFor(db, hash);
-    const understood = model ? await tryModel(() => understand(model, text)) : null;
-    const lang = (understood && 'language' in understood && understood.language) || state.language;
-    if (understood?.kind === 'command') command = understood.command;
-    else if (understood?.kind === 'ask') {
-      const second = await modelFor(db, hash, Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL);
-      const live = await liveNotes(text);
-      const answered = second ? await tryModel(() => answer(second, understood.question, lang, live)) : null;
-      if (answered) {
-        await save(state);
-        await send(m.from, formatAnswer(lang, answered));
-        await track(db, hash, 'whatsapp_ai', { intent: 'answer' });
+  const command = parse(text);
+  // The agent answers everything (D160), except the few exact commands where a misread
+  // would do harm: linking and unlinking an account, deleting what we keep, saving to an
+  // account, switching the reply language, and YES to a route the plain bot offered.
+  const exact =
+    command.kind === 'link' ||
+    command.kind === 'unlink' ||
+    command.kind === 'forget' ||
+    command.kind === 'language' ||
+    (command.kind === 'compare' && command.save) ||
+    (command.kind === 'yes' && !!state.pendingRequest);
+  if (!exact) {
+    const model = await modelFor(db, hash, Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL);
+    if (model) {
+      const touched: { route?: Route; method?: string } = {};
+      const lastCountry = state.lastRoute ? (ROUTES.find((r) => r.id === state.lastRoute)?.country ?? null) : null;
+      const result = await tryModel(() => runAgent(model, agentTools(db, hash, touched), text, { language: state.language, lastCountry }));
+      if (result) {
+        const next: State = touched.route ? { ...state, lastRoute: touched.route.id, lastMethod: (touched.method ?? null) as State['lastMethod'] } : state;
+        await save(next);
+        await send(m.from, result.text);
+        await track(db, hash, 'whatsapp_ai', { tools: result.tools.join(',') || 'none' });
         return;
       }
-    } else if (understood?.kind === 'suggest') {
-      await db.from('suggestions').insert({ text: understood.text, language: lang, source: 'whatsapp' });
-      await save(state);
-      await send(m.from, formatSuggestThanks(lang));
-      await track(db, hash, 'whatsapp_ai', { intent: 'suggestion' });
-      return;
-    } else if (understood?.kind === 'offtopic') {
-      await save(state);
-      await send(m.from, formatOffTopic(lang));
-      await track(db, hash, 'whatsapp_ai', { intent: 'offtopic' });
-      return;
     }
+    // No model, over the day's limit, or a reply that failed its checks: the plain bot answers.
   }
 
   const { action, state: update } = plan(command, state);
@@ -460,28 +456,112 @@ async function modelFor(db: SupabaseClient, hash: string, model?: string): Promi
 }
 
 /**
- * Today's figures for a route the question names: the mid-market rate and the most that
- * arrives for $500, from the same published prices Compare shows. Numbers in these notes
- * are the only live ones the model may quote (checkAnswer).
+ * What the agent can call (D160). Prices come from the same published quotes and the same
+ * ranking and formula as Compare; every figure is preformatted so the model copies it
+ * rather than doing arithmetic. Writes are the bot's existing ones: a route request and a
+ * suggestion. `touched` records the route asked about, kept as the chat's last route.
  */
-async function liveNotes(text: string): Promise<Entry[]> {
-  const { to } = findPlaces(normalize(text));
-  const route = to ? routeFor('US', to) : undefined;
-  if (!route) return [];
-  const method = route.deliveryMethods[0];
-  const rows = (await quotes(route.id, 500, method)).filter((q) => !q.is_promotional);
-  if (!rows.length) return [];
-  const top = [...rows].sort((a, b) => b.amount_received - a.amount_received)[0];
-  const day = new Date(top.captured_at).toISOString().slice(0, 10);
-  const cur = route.receiveCurrency;
-  const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 4 });
+function agentTools(db: SupabaseClient, hash: string, touched: { route?: Route; method?: string }): ToolSpec[] {
+  const countryOf = (v: unknown): { code: string; name: string } | null => {
+    if (typeof v !== 'string' || !v.trim()) return null;
+    const raw = v.trim();
+    const byCode = RECEIVING.find((c) => c.code === raw.toUpperCase());
+    if (byCode) return { code: byCode.code, name: byCode.name };
+    const { to } = findPlaces(normalize(`to ${raw}`));
+    const found = to ? RECEIVING.find((c) => c.code === to) : undefined;
+    return found ? { code: found.code, name: found.name } : null;
+  };
+  const usd = (n: number) => money(n, 'USD');
+  const rate = (n: number, cur: string) => `1 USD = ${n.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${cur}`;
+  const ago = (iso: string) => {
+    const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+    return mins < 60 ? `${mins} minutes ago` : mins < 48 * 60 ? `${Math.round(mins / 60)} hours ago` : `${Math.round(mins / 1440)} days ago`;
+  };
+
   return [
     {
-      id: `live:${route.id}`,
-      kind: 'faq',
-      title: `Today, US dollars to ${route.country}`,
-      text: `Mid-market rate today: 1 USD = ${fmt(top.mid_market_rate)} ${cur} (checked ${day}). For $500 by ${method.replace('_', ' ')}, the most arrives with ${top.provider_name}: ${fmt(top.amount_received)} ${cur}. Send "500 to ${route.country}" for every provider.`,
-      link: 'https://app.remitbridgelabs.org',
+      name: 'get_prices',
+      about:
+        "Today's checked prices to send money from the US to a country, ranked by how much arrives, with each provider's fee, exchange rate, hidden markup and total cost, and the mid-market rate. Use for any question about cost, rates, fees, providers or how much arrives.",
+      args: { country: 'country name or 2-letter code', amount: 'US dollars to send (default 500)', method: `optional: ${Object.keys(DELIVERY_LABELS).join(', ')}` },
+      run: async (args) => {
+        const country = countryOf(args.country);
+        if (!country) return { error: 'Which country? Ask the person.' };
+        const route = routeFor('US', country.code);
+        if (!route) return { country: country.name, covered: false, note: 'We do not check prices to this country yet. Offer to count a request (request_route).' };
+        const amount = typeof args.amount === 'number' && args.amount > 0 ? Math.min(args.amount, MAX_AMOUNT) : 500;
+        const method = route.deliveryMethods.find((d) => d === args.method) ?? route.deliveryMethods[0];
+        touched.route = route;
+        touched.method = method;
+        const checked = checkedAmountFor(amount);
+        const rows = await quotes(route.id, checked, method);
+        const { standing, promotions } = rankFor(rows, amount);
+        await track(db, hash, 'comparison_run', { route: route.id, checked_amount: checked, method, quotes: standing.length });
+        const cur = route.receiveCurrency;
+        if (!standing.length) return { country: route.country, covered: true, amount: usd(amount), method: DELIVERY_LABELS[method], providers: [], note: 'No checked prices yet for this amount and way of receiving.' };
+        const newest = standing.map((q) => q.captured_at).sort().at(-1)!;
+        return {
+          country: route.country,
+          amount_sent: usd(amount),
+          way_of_receiving: DELIVERY_LABELS[method],
+          other_ways: route.deliveryMethods.filter((d) => d !== method).map((d) => DELIVERY_LABELS[d]),
+          mid_market_rate: rate(standing[0].mid_market_rate, cur),
+          checked: ago(newest),
+          estimated_from: standing[0].basedOn ? usd(standing[0].basedOn) : null,
+          providers: standing.map((q, i) => {
+            const c = computeTransferCost({ sent: amount, fee: q.fee, quotedRate: q.offered_rate, midRate: q.mid_market_rate, pickupCharge: q.pickup_charge });
+            return {
+              rank: i + 1,
+              provider: q.provider_name,
+              family_receives: money(q.amount_received, cur),
+              fee: usd(q.fee),
+              their_rate: rate(q.offered_rate, cur),
+              hidden_in_rate: usd(Math.max(0, c.markupCost)),
+              total_cost: `${usd(c.totalCost)} (${q.total_cost_pct.toFixed(1)}%)`,
+              delivery: q.delivery_time ?? 'not stated',
+            };
+          }),
+          first_transfer_offers_not_shown: promotions,
+          full_list: 'https://app.remitbridgelabs.org',
+        };
+      },
+    },
+    {
+      name: 'get_routes',
+      about: 'The countries we check prices to from the US, and the ways money can arrive in each.',
+      args: {},
+      run: async () => ({ countries: ROUTES.map((r) => `${r.country} (${r.deliveryMethods.map((d) => DELIVERY_LABELS[d]).join(', ')})`), count: ROUTES.length }),
+    },
+    {
+      name: 'search_knowledge',
+      about: "RemitBridge's own explanations: money-transfer words (glossary), how the app and its tools work, privacy, the blog. Use to explain a term or a feature, or to find a link.",
+      args: { query: 'what to look up' },
+      run: async (args) => ({ results: retrieve(String(args.query ?? ''), 4).map((e) => ({ title: e.title, text: e.text, link: e.link })) }),
+    },
+    {
+      name: 'request_route',
+      about: "Counts the person's request for a country we don't cover yet. Requests decide which countries we add next.",
+      args: { country: 'country name or 2-letter code' },
+      run: async (args) => {
+        const country = countryOf(args.country);
+        if (!country) return { error: 'Unknown country.' };
+        if (routeFor('US', country.code)) return { country: country.name, already_covered: true };
+        // A repeat request from the same chat hits the unique index: already counted.
+        await db.from('route_requests').insert({ send_country: 'US', receive_country: country.code, source: 'whatsapp', install_id: installId(hash) });
+        await track(db, hash, 'route_requested', { route: `us-${country.code.toLowerCase()}` });
+        return { country: country.name, request_counted: true };
+      },
+    },
+    {
+      name: 'save_suggestion',
+      about: 'Passes an idea, a provider to add, a feature request or a complaint to the RemitBridge team.',
+      args: { text: 'the suggestion, in their words' },
+      run: async (args) => {
+        const text = String(args.text ?? '').trim().slice(0, 1000);
+        if (!text) return { error: 'Empty suggestion.' };
+        const { error } = await db.from('suggestions').insert({ text, language: 'en', source: 'whatsapp' });
+        return error ? { saved: false } : { saved: true };
+      },
     },
   ];
 }

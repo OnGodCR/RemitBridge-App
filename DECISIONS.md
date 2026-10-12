@@ -1932,3 +1932,31 @@ then "yes lets set start setting everything up"; scope in `docs/whatsapp-ai-scop
 - The privacy policy says so (dated October 12). The bot's new Hindi lines wait for the
   same review as the rest of its Hindi.
 
+**D160. The WhatsApp bot is an agent: the model decides, our backend supplies the data**
+(Angad, 2026-10-12: "we dont need a parser ... it should just reply with our data while
+answering questions in a natural way ... call our backend and get that ... everything else
+should just be the ai making its own decisions and responding with its own natural text").
+- **The model reads every message** and writes every reply in its own words. When it needs
+  data or an action, it calls tools (packages/bot/src/agent.ts, a small JSON protocol of our
+  own):
+  - get_prices: the same published quotes, ranking and formula as Compare, every figure
+    preformatted;
+  - get_routes;
+  - search_knowledge: the glossary, features, short answers and the blog;
+  - request_route;
+  - save_suggestion.
+- **The model is gpt-oss-120b** on Cloudflare's free tier. Qwen3 now only runs the older
+  understand step, which is kept for the test script.
+- **The number rule still holds.** Every number in a reply must appear in a tool result,
+  our basic notes or the person's own message, and links must be ours. One reply that
+  breaks it goes back to the model with the stray numbers named; a second sends the person
+  the plain bot's answer.
+- **Still exact commands:** LINK, UNLINK, FORGET or STOP, HINDI or ENGLISH, SAVE …, and YES
+  to a route the plain bot offered, where a misread would do harm. Receipt photos keep
+  their pipeline.
+- **The parser and templates stay only as the fallback** when the model is missing, fails
+  its checks, or passes a cap: 25 conversations a number and 80 a day, about 100-120 free
+  neurons each.
+This replaces D159's parser-first routing. D159's knowledge, suggestions table, privacy text
+and limits carry over.
+
