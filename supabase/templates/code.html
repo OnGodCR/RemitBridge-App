@@ -1,5 +1,62 @@
-<div style="font-family: -apple-system, 'Segoe UI', sans-serif; max-width: 420px; margin: 0 auto; padding: 24px; color: #1c2024;">
-  <p style="font-size: 15px; margin: 0 0 16px;">Your RemitBridge code:</p>
-  <p style="font-size: 32px; font-weight: 800; letter-spacing: 6px; color: #14705a; margin: 0 0 16px;">{{ .Token }}</p>
-  <p style="font-size: 13px; color: #5b6470; margin: 0;">It expires in 10 minutes. If you didn't ask for it, ignore this email.</p>
-</div>
+<!-- The sign-in code email (D53, redesigned 2026-10-12 at Angad's ask: "make the email look
+     prettier"). Tables and inline styles only, because Gmail and Outlook strip <style> and
+     most layout CSS. The logo is the app site's 180px icon, a PNG, since many mail apps
+     block SVG. Live through the Management API, not `supabase config push` (D53). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Your RemitBridge code</title>
+</head>
+<body style="margin:0; padding:0; background-color:#e8f2ee;">
+<div style="display:none; max-height:0; overflow:hidden; opacity:0;">Your code is {{ .Token }}. It works for 10 minutes.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#e8f2ee;">
+  <tr>
+    <td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:440px; background-color:#ffffff; border-radius:16px; overflow:hidden; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#1c2024;">
+        <tr>
+          <td style="background-color:#14705a; padding:24px 28px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="vertical-align:middle; padding-right:12px;">
+                  <img src="https://app.remitbridgelabs.org/apple-touch-icon.png" width="36" height="36" alt="" style="display:block; border:0; border-radius:9px;">
+                </td>
+                <td style="vertical-align:middle; font-size:18px; font-weight:700; color:#ffffff; letter-spacing:-0.2px;">RemitBridge</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 28px 8px;">
+            <p style="margin:0 0 8px; font-size:22px; line-height:28px; font-weight:700; letter-spacing:-0.3px;">Here's your code</p>
+            <p style="margin:0; font-size:15px; line-height:22px; color:#5b6470;">Type it in the app to sign in.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 28px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" style="background-color:#e8f2ee; border-left:4px solid #14705a; border-radius:12px; padding:22px 12px; font-size:36px; line-height:40px; font-weight:800; letter-spacing:10px; color:#14705a; font-family:'SF Mono', Menlo, Consolas, 'Courier New', monospace;">{{ .Token }}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 28px 28px;">
+            <p style="margin:0; font-size:14px; line-height:21px; color:#5b6470;">It works for 10 minutes. If you didn't ask for it, you can ignore this email. Nobody can sign in without the code.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-top:1px solid #e4e7eb; padding:18px 28px 22px; font-size:12px; line-height:18px; color:#5b6470;">
+            RemitBridge Labs. A free app that compares what it really costs to send money from the US.<br>
+            Questions? <a href="mailto:hello@remitbridgelabs.org" style="color:#14705a; text-decoration:none;">hello@remitbridgelabs.org</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
