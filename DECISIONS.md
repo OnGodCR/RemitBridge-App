@@ -2026,3 +2026,12 @@ apple-touch icon and `favicon.ico`. Not done, on purpose: a cookie banner (the s
 cookies; the partner page keeps a random ID in local storage for one first-party count),
 web analytics (needs turning on in Vercel's dashboard first), and a mailing address (Angad's
 choice, 2026-10-03).
+
+**D165. The landing page uses the real screenshots, and the app's real tabs** (Angad,
+2026-10-12: "a lot of the screenshots have been taken so go ahead and check them"). The
+story now runs eight real screens (Scan, Compare, a quote, Rate alerts, Fair rate, Yearly
+cost, Learn, Scam check), and the hero shows Scan and Compare. The feature phone's bar
+matches the app (Scan, Compare, WhatsApp, Tools, Learn; Account behind the avatar), with a
+WhatsApp group from the app's own copy, and picking a feature that has a screenshot shows
+it in the phone. The observatory screenshot ("0 shared receipts") is left out: an empty
+state reads as an unused feature. Same change on the website's /app page.
