@@ -123,7 +123,11 @@ RemitBridge is a free information tool. It compares the cost of sending money fr
 
 No account is needed: open the app, go to Compare, and prices load for the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and only saves comparisons, receipt checks and rate alerts.
 
-Scan (the first tab) reads a photo of a money-transfer receipt. Any receipt photo from a money-transfer provider works; personal details are covered on the phone before anything is sent. When our own rules can't read a figure, the covered text (and sometimes the covered photo) goes to Groq's AI model with zero data retention; the app asks permission before the first receipt is sent.
+Scan (the first tab) reads a photo of a money-transfer receipt. To test it without a receipt of your own, open this sample on another screen and photograph it, or save it to Photos and use "Choose a photo": https://app.remitbridgelabs.org/review/sample-receipt.jpg (every name and number on it is made up). Personal details are covered on the phone before anything is sent. When our own rules can't read a figure, the covered text (and sometimes the covered photo) goes to Groq's AI model with zero data retention; the app asks permission before the first receipt is sent.
+
+Creating an account first asks for a year of birth (a neutral age screen; accounts are for 13 and older). The year is never stored or sent.
+
+The WhatsApp tab links to our WhatsApp bot (+1 601-980-1089), which answers the same price questions in a chat.
 
 Prices come from providers' public prices (Wise with written permission, Instarem's public quote endpoint) and from prices checked by hand. Each price shows its source and when it was checked.
 
