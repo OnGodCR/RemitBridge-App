@@ -2016,3 +2016,13 @@ exposure and fix every issue"). Each item checked against the code first:
   Copyright Office's DMCA directory and a fee (Angad's to do), it publishes a postal address,
   and it protects only content users post publicly, which RemitBridge doesn't host. The terms
   gained a Copyright section saying how to send a notice to hello@.
+
+**D163. The app site gets the basics a real site has** (Angad, 2026-10-12, from a checklist:
+"add anything from this list that you can"). A 404 page (Vercel serves `404.html` with a
+real 404 status), `robots.txt` and `sitemap.xml` generated from `PUBLIC_PATHS` in
+`build.mjs`, a canonical link and Open Graph and Twitter tags on every page read from that
+page's own title and description, a 1200 by 630 share image in the website's style, and the
+apple-touch icon and `favicon.ico`. Not done, on purpose: a cookie banner (the site sets no
+cookies; the partner page keeps a random ID in local storage for one first-party count),
+web analytics (needs turning on in Vercel's dashboard first), and a mailing address (Angad's
+choice, 2026-10-03).
