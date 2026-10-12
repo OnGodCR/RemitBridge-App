@@ -55,12 +55,13 @@ export function copyrightLine(c) {
   return `© 2026 ${legalEntity(c)}`;
 }
 
-export function render(html, c) {
+export function render(html, c, pagePath = '/') {
   const email = escape(c.CONTACT_EMAIL);
   const address = c.MAILING_ADDRESS.trim();
-  const head = c.META_DOMAIN_VERIFICATION
+  const verify = c.META_DOMAIN_VERIFICATION
     ? `<meta name="facebook-domain-verification" content="${c.META_DOMAIN_VERIFICATION}">`
     : '';
+  const head = [verify, shareTags(html, pagePath)].filter(Boolean).join('\n');
   const footer = [
     '<footer><div class="wrap">',
     '<nav><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Contact</a><a href="https://www.remitbridgelabs.org">remitbridgelabs.org</a></nav>',
@@ -147,6 +148,57 @@ addEventListener('pointermove',function(e){p={x:e.clientX,y:e.clientY};go()},{pa
 addEventListener('scroll',go,{passive:true});
 })()</script>`;
 
+const ORIGIN = 'https://app.remitbridgelabs.org';
+
+/** The address a page is served at: privacy.html is /privacy (cleanUrls), index.html is /. */
+const pathFor = (file) => '/' + file.replace(/\\/g, '/').replace(/(^|\/)index\.html$/, '').replace(/\.html$/, '');
+
+/** Pages that should be in the sitemap and carry a canonical; the rest are utility pages. */
+export const PUBLIC_PATHS = ['/', '/support', '/privacy', '/terms'];
+
+/**
+ * Canonical, Open Graph and Twitter tags for a page, read from its own <title> and
+ * description so each page previews as itself when a link to it is shared. The 404 and
+ * partner pages get the image and title but no canonical.
+ */
+export function shareTags(html, pagePath) {
+  const title = (html.match(/<title>(.*?)<\/title>/) || [])[1] || 'RemitBridge';
+  const description = (html.match(/<meta name="description" content="([^"]*)">/) || [])[1] || '';
+  const url = ORIGIN + (pagePath === '/' ? '/' : pagePath);
+  const canonical = PUBLIC_PATHS.includes(pagePath);
+  return [
+    canonical && `<link rel="canonical" href="${url}">`,
+    '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
+    '<meta property="og:type" content="website">',
+    '<meta property="og:site_name" content="RemitBridge">',
+    `<meta property="og:title" content="${title}">`,
+    description && `<meta property="og:description" content="${description}">`,
+    canonical && `<meta property="og:url" content="${url}">`,
+    `<meta property="og:image" content="${ORIGIN}/og-image.png">`,
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta property="og:image:alt" content="RemitBridge: see what your family really receives.">',
+    '<meta name="twitter:card" content="summary_large_image">',
+    `<meta name="twitter:title" content="${title}">`,
+    description && `<meta name="twitter:description" content="${description}">`,
+    `<meta name="twitter:image" content="${ORIGIN}/og-image.png">`,
+  ].filter(Boolean).join('\n');
+}
+
+/** robots.txt and sitemap.xml, from PUBLIC_PATHS, so a new page is listed by adding it there. */
+function crawlerFiles() {
+  return {
+    'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,
+    'sitemap.xml': [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      ...PUBLIC_PATHS.map((p) => `  <url><loc>${ORIGIN}${p}</loc></url>`),
+      '</urlset>',
+      '',
+    ].join('\n'),
+  };
+}
+
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {
     if (SKIP.has(name) || (name.startsWith('.') && name !== '.well-known')) return [];
@@ -168,7 +220,7 @@ function build({ write }) {
       if (!html.includes('<!--HEAD-->') || !html.includes('<!--FOOTER-->')) {
         throw new Error(`${relative(root, path)}: needs <!--HEAD--> and <!--FOOTER-->`);
       }
-      const page = docLayout(render(html, config));
+      const page = docLayout(render(html, config, pathFor(relative(root, path))));
       if (write) {
         mkdirSync(dirname(target), { recursive: true });
         writeFileSync(target, page);
@@ -181,5 +233,10 @@ function build({ write }) {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  if (process.argv[2] !== 'check') {
+    process.on('exit', () => {
+      for (const [name, text] of Object.entries(crawlerFiles())) writeFileSync(join(out, name), text);
+    });
+  }
   build({ write: process.argv[2] !== 'check' });
 }
