@@ -86,6 +86,10 @@ describe('sounding like a person', () => {
     expect(humanize('Wise is cheaper here. Is there anything else I can help with?')).toBe('Wise is cheaper here.')
   })
 
+  it('never empties a reply that was only a stock phrase', () => {
+    expect(humanize('Sure!')).toBe('Sure!')
+  })
+
   it('leaves an ordinary reply alone', () => {
     const r = 'Instarem gets *₹48,041* to your family, a 0.6% total cost.'
     expect(humanize(r)).toBe(r)
