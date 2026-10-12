@@ -47,29 +47,29 @@ select pg_temp.as_user(null);
 select pg_temp.ok((select count(*) = 0 from public.route_requests), 'anon: route requests are not readable');
 select pg_temp.ok((select count(*) = 0 from public.whatsapp_users), 'anon: WhatsApp users are not readable');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id, user_id)
-  values ('US', 'NP', '00000000-0000-4000-8000-00000000c0de', '00000000-0000-4000-8000-0000000000b2')$$,
+  values ('US', 'SO', '00000000-0000-4000-8000-00000000c0de', '00000000-0000-4000-8000-0000000000b2')$$,
   '42501', 'anon: can''t ask for a route as someone else');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id, source)
-  values ('US', 'NP', '00000000-0000-4000-8000-00000000c0de', 'whatsapp')$$,
+  values ('US', 'SO', '00000000-0000-4000-8000-00000000c0de', 'whatsapp')$$,
   '42501', 'anon: can''t file a request as WhatsApp');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id)
-  values ('USA', 'NP', '00000000-0000-4000-8000-00000000c0de')$$, '23514', 'anon: countries are validated');
+  values ('USA', 'SO', '00000000-0000-4000-8000-00000000c0de')$$, '23514', 'anon: countries are validated');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id)
   values ('US', 'US', '00000000-0000-4000-8000-00000000c0de')$$, '23514', 'anon: a route needs two countries');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id, notify_email)
-  values ('US', 'NP', '00000000-0000-4000-8000-00000000c0de', 'not an address')$$, '23514', 'anon: addresses are validated');
+  values ('US', 'SO', '00000000-0000-4000-8000-00000000c0de', 'not an address')$$, '23514', 'anon: addresses are validated');
 -- The smoke test's own request, from the internal test install, lower-case on purpose.
 insert into public.route_requests (send_country, receive_country, install_id, delivery_method)
-  values ('us', 'np', '00000000-0000-4000-8000-00000000c0de', 'bank_deposit');
+  values ('us', 'so', '00000000-0000-4000-8000-00000000c0de', 'bank_deposit');
 select pg_temp.expect($$insert into public.route_requests (send_country, receive_country, install_id)
-  values ('US', 'NP', '00000000-0000-4000-8000-00000000c0de')$$, '23505', 'anon: the same install can''t ask twice');
+  values ('US', 'SO', '00000000-0000-4000-8000-00000000c0de')$$, '23505', 'anon: the same install can''t ask twice');
 -- A real person asking, with a messy address, trying to backdate it and pre-mark it sent.
 insert into public.route_requests (send_country, receive_country, install_id, notify_email, created_at)
-  values ('US', 'NP', '00000000-0000-4000-8000-0000000000f1', '  Me@Example.ORG ', '2001-01-01');
+  values ('US', 'SO', '00000000-0000-4000-8000-0000000000f1', '  Me@Example.ORG ', '2001-01-01');
 -- Pre-marking a request as notified is quietly undone by the stamp trigger.
 insert into public.route_requests (send_country, receive_country, install_id, notified_at)
   values ('US', 'GH', '00000000-0000-4000-8000-0000000000f2', now());
-select pg_temp.ok((select requests = 1 from public.route_request_counts() where send_country = 'US' and receive_country = 'NP'),
+select pg_temp.ok((select requests = 1 from public.route_request_counts() where send_country = 'US' and receive_country = 'SO'),
   'anon: counts are public, one person counted, the test install left out');
 select pg_temp.expect($$select public.admin_metrics(30)$$, '42501', 'anon: metrics refuse strangers');
 select pg_temp.expect($$insert into public.whatsapp_users (phone_hash) values (repeat('a', 64))$$,
@@ -161,17 +161,17 @@ select pg_temp.ok((select notified_at is not null and notify_email is null from 
   'notify: clearing the address and stamping notified_at together works');
 
 insert into public.routes (id, send_country, send_currency, receive_country, receive_currency, tier, status, status_reason)
-  values ('us-np', 'US', 'USD', 'NP', 'NPR', 3, 'not_feasible', 'No provider publishes prices yet');
-select pg_temp.ok((select count(*) = 0 from public.route_requests where receive_country = 'NP' and notify_email is not null),
+  values ('us-so', 'US', 'USD', 'SO', 'SOS', 3, 'not_feasible', 'No provider publishes prices yet');
+select pg_temp.ok((select count(*) = 0 from public.route_requests where receive_country = 'SO' and notify_email is not null),
   'not feasible: waiting addresses are deleted at once');
 
 set role service_role;
 insert into public.whatsapp_users (phone_hash, language, last_route, last_method, pending_request)
-  values (repeat('b', 64), 'hi', 'us-in', 'upi', 'US-NP');
+  values (repeat('b', 64), 'hi', 'us-in', 'upi', 'US-SO');
 insert into public.route_requests (send_country, receive_country, source, install_id)
-  values ('US', 'NP', 'whatsapp', '40000000-0000-4000-8000-000000000004');
+  values ('US', 'SO', 'whatsapp', '40000000-0000-4000-8000-000000000004');
 select pg_temp.expect($$insert into public.whatsapp_users (phone_hash) values ('not-a-hash')$$, '23514', 'whatsapp: only hashes are stored');
-select pg_temp.expect($$insert into public.whatsapp_users (phone_hash, pending_request) values (repeat('c', 64), 'us-np')$$,
+select pg_temp.expect($$insert into public.whatsapp_users (phone_hash, pending_request) values (repeat('c', 64), 'us-so')$$,
   '23514', 'whatsapp: pending requests are country codes');
 select pg_temp.expect($$insert into public.whatsapp_users (phone_hash, language) values (repeat('d', 64), 'fr')$$,
   '23514', 'whatsapp: only English and Hindi');
