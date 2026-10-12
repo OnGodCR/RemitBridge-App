@@ -78,6 +78,8 @@ export function humanize(reply: string): string {
   let t = reply.trim().replace(OPENER, '')
   for (let i = 0; i < 2; i++) t = t.replace(CLOSER, '')
   t = t.replace(/\s+[—–]\s+/g, ', ').replace(/—/g, ', ')
+  // A reply that was nothing but a stock phrase keeps its words rather than going out empty.
+  if (!t.trim()) return reply.trim()
   return t.charAt(0).toUpperCase() + t.slice(1)
 }
 
