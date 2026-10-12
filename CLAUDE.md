@@ -39,6 +39,9 @@ the work, not afterwards:
   behalf. Record it with the date, the decision, and why.
 - **Open items (below):** add each deferred item when it comes up, and tick it
   with a date when it lands.
+- **docs/todo.md:** the whole to-do list in one place, grouped by who acts (Angad,
+  2026-10-12), with CAC work left out. The RemitBridge pane shows it. Keep it in step with
+  the open items: add, tick or remove there whenever they change.
 - **README.md:** whenever setup, commands, environment variables, or layout change.
 - **docs/MANUAL_RESEARCH.md:** whenever a provider gets no adapter because
   its terms or robots.txt forbid automated access.
