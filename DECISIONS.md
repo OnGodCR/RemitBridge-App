@@ -1907,3 +1907,28 @@ focus on manual scraping w a few"). One request per currency to each, that day:
   set live.
 - The other providers stay hand-checked (D142) on a few routes, not all 26.
 
+**D159. The WhatsApp bot gets a model, on Cloudflare's free tier** (Angad, 2026-10-11: "i want
+to connect an AI model to the whatsapp bot too, but not something from grok but still free",
+then "yes lets set start setting everything up"; scope in `docs/whatsapp-ai-scope.md`).
+- **Where it fits:** only messages the rule parser can't read go to the model. It sorts them
+  into the parser's own commands (prices, a new country, a scam worry, a greeting), a
+  question, a suggestion, or off topic.
+- **Questions** are answered in a few sentences from our own notes: features, short
+  answers, the glossary and the blog. Each answer goes out with one link.
+- **The model never writes a price.** Its answers are refused if they carry a number the
+  notes don't, a link, or too many words. Any failure falls back to the plain reply.
+- **Suggestions** go to a `suggestions` table with no phone number, read in Account → Admin
+  → Suggestions. A suggestion naming a country we don't cover becomes a route request, so
+  it counts toward the next routes.
+- **Defaults Claude picked:** suggestions in the app first, answers kept to RemitBridge and
+  sending money (Meta's terms bar general-purpose assistants), links to the website until
+  new builds can carry app links.
+- **Model:** Cloudflare Workers AI's free allowance, because it states it doesn't train on
+  what it's sent. Gemini's free tier does, and Groq was excluded at Angad's request.
+  Qwen3 30B-A3B beat Gemma 4 26B on 150 labelled messages: about 97% of intents after the
+  route-request rule, 39 of 40 questions answered, 0.6 s. Gemma mostly returned no text.
+- **Limits:** 20 model calls a number and 400 a day, inside the free 10,000 neurons. The
+  message text is all Cloudflare gets.
+- The privacy policy says so (dated October 12). The bot's new Hindi lines wait for the
+  same review as the rest of its Hindi.
+

@@ -111,9 +111,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **An AI model in the WhatsApp bot (scoped 2026-10-11, `docs/whatsapp-ai-scope.md`):** free,
       not Groq; it understands the message and picks what to show, answers from our content
       with links, and logs feature suggestions for Angad. The model never writes a number.
-      Proposed: Cloudflare Workers AI (free daily allowance, doesn't train on our data), Qwen3
-      30B-A3B vs Gemma 4 26B on a 150-message test set. Waiting on Angad's four answers at the
-      end of the scope.
+      **Live 2026-10-12 (D159):** Cloudflare Workers AI, Qwen3 30B-A3B, secrets set by
+      Angad, suggestions migration run (smoke test 70/70), `whatsapp` v27 deployed. Left:
+      Angad's live test (a question, a suggestion, a new country, off topic), then the
+      weekly email of suggestions and app links (`/open/...`, needs builds) later.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
