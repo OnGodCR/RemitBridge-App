@@ -46,7 +46,7 @@ function setup() {
 
 it('outlines each value where it was read, marking the ones to check', () => {
   setup();
-  expect(screen.getByLabelText('Amount received: MX$8,650.00. Please check')).toBeTruthy();
+  expect(screen.getByLabelText('Amount received: MXN\u00a08,650.00. Please check')).toBeTruthy();
   expect(screen.getByLabelText('Amount sent: $500.00')).toBeTruthy();
   expect(screen.getAllByText('Please check')).toHaveLength(2);
 });
@@ -60,9 +60,9 @@ it('won’t go on until every value to check has an answer', () => {
 
 it('takes the suggestion, a choice from the list, and sends the answers', () => {
   const onConfirm = setup();
-  fireEvent.press(screen.getByLabelText('Amount received: MX$8,650.00. Please check'));
-  expect(screen.getByText('The other numbers suggest MX$8,600.00.')).toBeTruthy();
-  fireEvent.press(screen.getByText('Use MX$8,600.00'));
+  fireEvent.press(screen.getByLabelText('Amount received: MXN\u00a08,650.00. Please check'));
+  expect(screen.getByText('The other numbers suggest MXN\u00a08,600.00.')).toBeTruthy();
+  fireEvent.press(screen.getByText('Use MXN\u00a08,600.00'));
   fireEvent.press(screen.getByText('Paid with'));
   fireEvent.press(screen.getByText('Money order'));
   fireEvent.press(screen.getByText('See what it cost'));

@@ -109,7 +109,7 @@ describe('typing and showing receipt values', () => {
   it('shows amounts in the right currency and methods in words', () => {
     const v = { send_currency: 'USD', receive_currency: 'MXN' };
     expect(formatValue('fee', 4.99, v, en, LANGUAGES[0])).toBe('$4.99');
-    expect(formatValue('amount_received', 8560, v, en, LANGUAGES[0])).toBe('MX$8,560.00');
+    expect(formatValue('amount_received', 8560, v, en, LANGUAGES[0])).toBe('MXN\u00a08,560.00');
     expect(formatValue('funding_method', 'cashiers_check', v, en, LANGUAGES[0])).toBe('Cashier’s check');
     expect(formatValue('transfer_date', '2026-09-28', v, en, LANGUAGES[0])).toBe('Sep 28, 2026');
   });

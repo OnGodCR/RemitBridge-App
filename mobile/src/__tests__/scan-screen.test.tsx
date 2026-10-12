@@ -187,7 +187,7 @@ it('goes from the answers to the result, and deletes the receipt on request', as
   fireEvent.press(screen.getByText('Read my receipt'));
   await screen.findByText('Check each value');
   fireEvent.press(screen.getByText('Amount received'));
-  fireEvent.press(screen.getByText('Use MX$8,600.00'));
+  fireEvent.press(screen.getByText('Use MXN\u00a08,600.00'));
   fireEvent.press(screen.getByText('See what it cost'));
   await screen.findByText('This transfer cost you');
   // Deleting lives with the details, under the two answers (D153).

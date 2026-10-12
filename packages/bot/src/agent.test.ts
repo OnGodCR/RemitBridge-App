@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readTurn, runAgent, strayLinks, strayNumbers, type ToolSpec } from './agent.ts'
+import { humanize, readTurn, runAgent, strayLinks, strayNumbers, type ToolSpec } from './agent.ts'
 import type { AiClient } from './ai.ts'
 
 /** A model that says the scripted things in order, and remembers what it was sent. */
@@ -76,5 +76,18 @@ describe('its checks', () => {
   it('accepts only our links', () => {
     expect(strayLinks('More: https://app.remitbridgelabs.org/privacy.')).toEqual([])
     expect(strayLinks('Try https://wise.com')).toEqual(['https://wise.com'])
+  })
+})
+
+describe('sounding like a person', () => {
+  it('drops stock openers and sign-offs, and turns dashes into commas', () => {
+    expect(humanize('Great question! Instarem gets the most to India today. Hope this helps!')).toBe('Instarem gets the most to India today.')
+    expect(humanize('Sure! The fee is $0.00 — the cost is in the rate. Let me know if you have any other questions.')).toBe('The fee is $0.00, the cost is in the rate.')
+    expect(humanize('Wise is cheaper here. Is there anything else I can help with?')).toBe('Wise is cheaper here.')
+  })
+
+  it('leaves an ordinary reply alone', () => {
+    const r = 'Instarem gets *₹48,041* to your family, a 0.6% total cost.'
+    expect(humanize(r)).toBe(r)
   })
 })
