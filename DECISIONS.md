@@ -2036,7 +2036,7 @@ WhatsApp group from the app's own copy, and picking a feature that has a screens
 it in the phone. The observatory screenshot ("0 shared receipts") is left out: an empty
 state reads as an unused feature. Same change on the website's /app page.
 
-**D165. Wise breaks a tie between the two mid-market rate sources** (Angad, 2026-10-12:
+**D166. Wise breaks a tie between the two mid-market rate sources** (Angad, 2026-10-12:
 "Add a third source"). Mexico published no prices from Oct 9 and India none from Oct 12,
 because Frankfurter (the central bank's once-a-weekday fixing) and open.er-api drifted more
 than 0.5% apart while the peso and the rupee moved. The rule stays strict: when the two
