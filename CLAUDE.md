@@ -197,7 +197,9 @@ Angad does this once the app itself is finished (D117).
 
 - [ ] **Permission requests:** all 8 sent 2026-09-28; Wise said yes, the rest only
       auto-replies (Xoom's media desk, Xe ticket 26724746). Follow-ups sent 2026-10-04 to
-      all seven (Angad's request); next nudge 2026-10-12 (calendar reminder set). Xe Care
+      all seven (Angad's request). **Second follow-ups to all 14 silent providers sent 2026-10-11**
+      from hello@ (log in `permission-request.md`); if still silent by 2026-10-25, find a named
+      partnerships contact for each. Xe Care
       redirected us to data@xe.com (2026-10-06); emailed them 2026-10-08. Round 2
       (shorter email, from hello@) to six more on 2026-10-04: Viamericas, Instarem, Pangea,
       Félix Pago, Taptap Send, BOSS Money. Log replies in `docs/outreach/permission-request.md` (D52).
