@@ -114,7 +114,7 @@ check "can't delete receipts" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/forget_
 check "metrics refuse anyone but admins" "42501" "$(pg "${H[@]}" -X POST "$REST/rpc/admin_metrics" -d '{"p_days":30}')"
 check "event names are validated (23514)" "23514" "$(post events "$(printf '{"install_id":"%s","name":"DROP TABLE"}' "$TEST_INSTALL")")"
 curl -s -m 20 -o /dev/null "${H[@]}" -X PATCH "$REST/routes?id=eq.us-in" -d '{"status":"not_feasible"}'
-check "can't change a route (still 'building')" "building" "$(curl -s -m 20 "${H[@]}" "$REST/routes?id=eq.us-in&select=status" | python3 -c 'import sys,json; print(json.load(sys.stdin)[0]["status"])')"
+check "can't change a route (still 'live', D158)" "live" "$(curl -s -m 20 "${H[@]}" "$REST/routes?id=eq.us-in&select=status" | python3 -c 'import sys,json; print(json.load(sys.stdin)[0]["status"])')"
 curl -s -m 20 -o /dev/null "${H[@]}" -X DELETE "$REST/providers?id=eq.wise"
 check "can't delete a provider (still 9)" "9" "$(count "${H[@]}" "$REST/providers?select=id")"
 # A private bucket answers a list with [] rather than an error, so check both sides.
