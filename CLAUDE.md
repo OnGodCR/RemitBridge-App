@@ -99,9 +99,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Webhooks subscribed on that account (the toggle was off, which is why the test number's
       message never reached us), `remitbridge-bot` given full access, `WHATSAPP_PHONE_NUMBER_ID`
       set, `app_settings.whatsapp_number` = 16019801089. Angad's "500 to India" and "500 to
-      Vietnam" got replies. Left: a message from someone who isn't an admin of the Meta app
-      (to rule out development-mode limits), the app icon and Live mode in Meta, the display
-      name review, then `whatsapp_live` on.
+      Vietnam" got replies, and so did his dad's phone (not an app admin). App icon, category
+      and policy URLs set and the Meta app published; `whatsapp_live` = true (Angad's SQL,
+      2026-10-11). Left: the display name review, and LINK + SAVE tried from the app.
 - [ ] **WhatsApp going live (2026-10-09):** the account is **Approved** and the business
       **Verified** (restriction lifted). Meta app: RemitBridge, App ID 1004249319342214 (no
       icon yet; needed before Live). A test "500 to India" was delivered but the whatsapp
@@ -120,10 +120,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       on the fixtures, 97.8% on 60 OCR'd synthetic receipts before the OCR fixes. The model
       now reads only what the rules miss or doubt. Done 2026-10-01. The CAC write-up must
       say the parser is AI-written (`docs/AI_USAGE.md`).
-- [ ] **Wise and Instarem on 26 routes (D158, 2026-10-11):** 22 new Tier 2 routes in the engine,
-      the app and `20261011000000_wise_instarem_routes.sql`. Left: Angad runs that migration in
-      the SQL editor before the next Scrape run (every 6 hours at :17; a run before it would
-      try to save prices for routes the database doesn't know), then a Scrape run to publish.
+- [ ] **Wise and Instarem on 26 routes (D158, 2026-10-11):** 22 new Tier 2 routes; migration run
+      by Angad, and the first run published 179 prices (Wise 99, Instarem 80). 23 routes live.
+      Left: the Dominican Republic, Nicaragua and Uganda published nothing on the first run, so
+      check why if they're still building after the next one.
 - [ ] **More prices** (D115). Wise's are live (D91, every 6 hours). Terms read in a browser
       2026-10-01 (`docs/MANUAL_RESEARCH.md`): Ria, MoneyGram, Xe, WorldRemit, Xoom, Remitly,
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its
