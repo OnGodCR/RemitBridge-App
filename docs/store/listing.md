@@ -114,7 +114,10 @@ Checked against Apple's rules on 2026-10-08 (D145):
 
 Answer **None** or **No** to every content question (violence, profanity, gambling,
 contests, mature themes, medical, alcohol). "Unrestricted web access": **No** (links open
-specific pages only). Result: **4+**.
+specific pages only). Result: **4+**, because the rating describes content, and there is
+none to restrict. It is not a children's app: leave **Made for Kids** off, and say so if asked.
+Accounts are for 13 and older behind a neutral age screen (D164), and Play's target
+audience is 18+ (below).
 
 ### Notes for App Review
 
