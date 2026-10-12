@@ -351,6 +351,8 @@ export const es: Copy = {
     addPriceSub: 'Registra un precio visto en el sitio de una empresa',
     metrics: 'Métricas',
     metricsSub: 'Uso, embudo e impacto, con definiciones',
+    suggestions: 'Sugerencias',
+    suggestionsSub: 'Lo que la gente pidió por WhatsApp',
     replay: 'Ver la bienvenida otra vez (solo en desarrollo)',
   },
 

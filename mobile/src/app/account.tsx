@@ -95,6 +95,7 @@ export default function AccountScreen() {
                 <ListGroup title={a.admin} cards>
                   <ListRow icon="plus.circle" title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
                   <ListRow icon="chart.bar" title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
+                  <ListRow icon="bubble.left" title={a.suggestions} subtitle={a.suggestionsSub} onPress={() => router.push('/suggestions')} />
                 </ListGroup>
               ) : null}
               <View style={styles.actions}>

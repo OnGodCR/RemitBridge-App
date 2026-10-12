@@ -27,6 +27,7 @@ export const ANDROID_SYMBOLS: Partial<Record<SFSymbol, AndroidSymbol>> = {
   'chart.bar': 'bar_chart',
   checkmark: 'check',
   'checkmark.circle.fill': 'check_circle',
+  'bubble.left': 'chat_bubble',
   'chevron.down': 'expand_more',
   'chevron.left': 'arrow_back',
   'chevron.right': 'chevron_right',

@@ -291,6 +291,8 @@ with your name and the date.
 | account.addPriceSub | Enter a price read from a provider’s site | किसी कंपनी की साइट पर देखी कीमत दर्ज करें | |
 | account.metrics | Metrics | आँकड़े | |
 | account.metricsSub | Usage, funnel and impact, with definitions | इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ | |
+| account.suggestions | Suggestions | सुझाव | | NEW 2026-10-12 (admin only)
+| account.suggestionsSub | What people asked for on WhatsApp | WhatsApp पर लोगों ने क्या माँगा | | NEW 2026-10-12 (admin only)
 | account.replay | Replay onboarding (dev only) | शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में) | |
 | saved.rowSub | Comparisons and receipt checks | तुलनाएँ और रसीद जाँचें | |
 | saved.signedOut | Sign in to keep comparisons and receipts. | तुलनाएँ और रसीदें रखने के लिए साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again
