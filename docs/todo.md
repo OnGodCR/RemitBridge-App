@@ -7,7 +7,7 @@ tick items here (`- [x]`) as they land. Details live in CLAUDE.md's open items a
 
 ## Store blockers (Angad)
 
-- [ ] **Reply to D&B**: case #11089990, from hello@, with the certificate and their Business Information Form. The D-U-N-S number gates both stores.
+- [ ] **Waiting on D&B**: case #11089990; Angad sent the certificate and form, no answer yet (2026-10-12). The D-U-N-S number gates both stores.
 - [ ] **Apple account to an organization**: once the D-U-N-S arrives, your dad asks Apple Developer Support to convert it to RemitBridge Labs.
 - [ ] **Google Play organization account**: in RemitBridge Labs' name, with the D-U-N-S ($25 once).
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
