@@ -7,7 +7,7 @@ Verified against the live APIs on 2026-09-28 (INR, MXN, PHP, VND agreed within 0
 Coinbase was tried and dropped: its MXN was 1.4% off both.
 
 If the two disagree by more than FX_MAX_DISAGREEMENT_PCT, Wise is asked as a third source
-(D165, 2026-10-12): its comparison API marks its own quote as the mid-market rate, priced
+(D166, 2026-10-12): its comparison API marks its own quote as the mid-market rate, priced
 live. Frankfurter's central-bank rate is set once a weekday, so a currency that moves more
 than 0.5% after the fixing, or over a weekend, used to hold the whole route for days (Mexico
 from Oct 9, India from Oct 12). If Wise agrees with one of the two within the same limit,
