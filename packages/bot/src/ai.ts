@@ -19,9 +19,9 @@
  */
 import { RECEIVING } from '../../../mobile/src/lib/countries.ts'
 import type { DeliveryMethod } from '../../../mobile/src/lib/routes.ts'
-import { DELIVERY_LABELS } from '../../../mobile/src/lib/routes.ts'
+import { DELIVERY_LABELS, routeFor } from '../../../mobile/src/lib/routes.ts'
 import { retrieve, type Entry } from './knowledge.ts'
-import type { Command, Language } from './parse.ts'
+import { findPlaces, normalize, type Command, type Language } from './parse.ts'
 
 export const DEFAULT_AI_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8'
 
@@ -110,7 +110,18 @@ export async function understand(client: AiClient, text: string): Promise<Unders
     ],
     { maxTokens: 200 },
   )
-  return readUnderstood(raw)
+  return refine(readUnderstood(raw), text)
+}
+
+/**
+ * A suggestion that names a country we don't send to yet is a route request, which is what
+ * decides the next routes. Settled by our own parser and route list rather than the
+ * prompt: the model flips between the two ("please add Cuba"), and this can't.
+ */
+export function refine(u: Understood | null, text: string): Understood | null {
+  if (u?.kind !== 'suggest') return u
+  const { to } = findPlaces(normalize(text))
+  return to && !routeFor('US', to) ? { kind: 'command', command: { kind: 'request', from: 'US', to } } : u
 }
 
 /** The model's JSON as an Understood, validated field by field. Anything off is dropped, not trusted. */
