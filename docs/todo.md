@@ -36,7 +36,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 ## Newsletter (Angad, D169)
 
 - [ ] **Run the newsletter migration**: `supabase/migrations/20261012010000_newsletter.sql` in the SQL editor, then the smoke test.
-- [ ] **Deploy the two functions**: `send-newsletter` deployed 2026-10-12; left: `supabase functions deploy newsletter-unsubscribe --project-ref gmzljjdnwndvqciqicbx`.
+- [x] **Deploy the two functions**: `send-newsletter` and `newsletter-unsubscribe` deployed 2026-10-12; the unsubscribe link redirects to the live `/unsubscribe` page.
 - [ ] **A postal address for the newsletter**: full sends wait for `MAILING_ADDRESS` in `site/site.config.json` (never the home address there; a PO box or mailbox service). Tests to yourself work without it.
 - [ ] **Resend tracking off**: in Resend, Domains, remitbridgelabs.org, check open and click tracking are off (the privacy policy says we don't track).
 - [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
