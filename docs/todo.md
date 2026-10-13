@@ -30,7 +30,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **"What you could have kept" on a real scan** (D119)
 - [ ] **Android run-through**: a receipt scan (ML Kit, the black boxes), Google sign-in, the swipe between tabs, Learn (preview build a5686cd5).
 - [ ] **WhatsApp live test**: a question, a suggestion, a new country, something off topic, a receipt photo.
-- [ ] **WhatsApp in the app**: Chat on WhatsApp works on the Samsung (2026-10-12). Linking failed because Android sign-ins never stuck (fixed, ad1afdc): sign in again on the Samsung, then Link to your account, then try SAVE in WhatsApp.
+- [x] **WhatsApp in the app**: Chat on WhatsApp, Link to your account and SAVE all work on the Samsung after the Android sign-in fix (ad1afdc), 2026-10-12. The three extra Saved rows were test saves from earlier that day; Angad deleted them.
 - [ ] **WhatsApp display name**: check Meta's review of "RemitBridge Labs".
 
 ## Content (Angad)
