@@ -139,6 +139,13 @@ describe('the provider chain', () => {
     expect(chain.used()).toBe(1)
   })
 
+  it('asks the next provider when one answers with junk', async () => {
+    const chain = chainClient([fake('!'.repeat(900)), fake('{"reply":"Opening the scanner."}')])
+    expect(await chain.chat([], { maxTokens: 10 })).toBe('{"reply":"Opening the scanner."}')
+    expect(chain.used()).toBe(1)
+    await expect(chainClient([fake('   '), fake('{"reply":"----------------------------------------"}')]).chat([], { maxTokens: 1 })).rejects.toThrow('unusable')
+  })
+
   it('throws when every provider is out, so the plain bot answers', async () => {
     await expect(chainClient([failing(429), failing(503)]).chat([], { maxTokens: 1 })).rejects.toThrow('503')
     await expect(chainClient([]).chat([], { maxTokens: 1 })).rejects.toThrow('no model providers')
