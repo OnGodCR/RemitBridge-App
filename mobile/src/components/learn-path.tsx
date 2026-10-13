@@ -46,12 +46,15 @@ export function LearnPath({
   learned,
   next,
   onOpen,
+  onStart,
   onNextAt,
 }: {
   modules: Module[];
   learned: Set<string>;
   next: ModuleId | null;
   onOpen: (m: Module) => void;
+  /** The Start bubble over the next module: straight into its lesson, as on Duolingo. */
+  onStart?: (m: Module) => void;
   /** Where the next module sits, from the top of the path, so the screen can scroll to it. */
   onNextAt?: (y: number) => void;
 }) {
@@ -114,7 +117,17 @@ export function LearnPath({
             })}
           </Svg>
           {modules.map((m, i) => (
-            <Node key={m.id} index={i} module={m} learned={learned} isNext={m.id === next} center={centers[i]} width={width} onOpen={onOpen} />
+            <Node
+              key={m.id}
+              index={i}
+              module={m}
+              learned={learned}
+              isNext={m.id === next}
+              center={centers[i]}
+              width={width}
+              onOpen={onOpen}
+              onStart={onStart ?? onOpen}
+            />
           ))}
         </>
       ) : null}
@@ -130,6 +143,7 @@ function Node({
   center,
   width,
   onOpen,
+  onStart,
 }: {
   index: number;
   module: Module;
@@ -138,6 +152,7 @@ function Node({
   center: { x: number; y: number };
   width: number;
   onOpen: (m: Module) => void;
+  onStart: (m: Module) => void;
 }) {
   const t = useTheme();
   const copy = useCopy();
@@ -154,10 +169,20 @@ function Node({
     <>
       {isNext ? <Halo center={center} /> : null}
       {isNext ? (
-        <View style={[styles.tag, { backgroundColor: t.primary, left: center.x - 60, top: center.y - NODE / 2 - 38 }]} pointerEvents="none">
+        // It looks like a button, so it is one (2026-10-12: tapping it did nothing, since it let
+        // touches through to the empty path behind it). It starts the lesson.
+        <Pressable
+          onPress={() => onStart(m)}
+          accessibilityRole="button"
+          accessibilityLabel={`${read > 0 ? l.continue : l.start}: ${title}`}
+          hitSlop={8}
+          style={({ pressed }) => [
+            styles.tag,
+            { backgroundColor: t.primary, left: center.x - 60, top: center.y - NODE / 2 - 38, opacity: pressed ? 0.8 : 1 },
+          ]}>
           <AppText style={[styles.tagText, { color: t.primaryForeground }]}>{read > 0 ? l.continue : l.start}</AppText>
           <View style={[styles.tagTail, { borderTopColor: t.primary }]} />
-        </View>
+        </Pressable>
       ) : null}
       <Pressable
         onPress={() => onOpen(m)}
@@ -189,8 +214,11 @@ function Node({
           so the words read on the scenery and the trail passes under them. */}
       <View
         style={[styles.labelSlot, { left: labelLeft, width: labelWidth, top: center.y - 44, alignItems: onLeft ? 'flex-end' : 'flex-start' }]}
-        pointerEvents="none">
-        <View style={[styles.label, { backgroundColor: t.card, borderBottomColor: t.rim, borderLeftColor: read > 0 ? t.primary : t.card }]}>
+        pointerEvents="box-none">
+        <Pressable
+          onPress={() => onOpen(m)}
+          accessible={false}
+          style={[styles.label, { backgroundColor: t.card, borderBottomColor: t.rim, borderLeftColor: read > 0 ? t.primary : t.card }]}>
           <AppText style={[styles.labelEyebrow, { color: t.primary }]}>{l.moduleN(index + 1)}</AppText>
           <AppText style={[styles.labelTitle, { color: t.text }]} numberOfLines={2}>
             {title}
@@ -203,7 +231,7 @@ function Node({
               {complete ? l.moduleDone : l.moduleCount(read, total)}
             </AppText>
           </View>
-        </View>
+        </Pressable>
       </View>
     </>
   );

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo } from 'react-native';
 import LessonScreen from '@/app/lesson/[id]';
 import { MODULES } from '@/data/modules';
@@ -45,10 +45,14 @@ beforeEach(() => {
   resetLearned();
   mockBack.mockClear();
   mockParams = { id: 'basics', mode: 'quick' };
+  jest.useFakeTimers();
   jest.spyOn(Math, 'random').mockReturnValue(0.8);
   jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => undefined);
 });
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => {
+  jest.useRealTimers();
+  jest.restoreAllMocks();
+});
 
 const l = en.learn.lesson;
 
@@ -75,16 +79,21 @@ it.each([
       continue;
     }
     if (step.kind === 'match') {
-      // Pairs clear as they're found; Continue appears once the board is clear.
-      for (const term of step.terms) {
+      // Pairs clear as they're found, either side first; the board moves on by itself.
+      step.terms.forEach((term, i) => {
         expect(screen.queryByRole('button', { name: l.continue })).toBeNull();
-        press(term.id === 'corridor' ? g.routeWord : term.term);
-        press(firstSentence(term.plain));
+        const name = term.id === 'corridor' ? g.routeWord : term.term;
+        if (i % 2) {
+          press(firstSentence(term.plain));
+          press(name);
+        } else {
+          press(name);
+          press(firstSentence(term.plain));
+        }
         expect(learnedNow()).toContain(term.id);
         questions++;
-      }
-      expect(screen.getByText(g.allMatched)).toBeTruthy();
-      press(l.continue);
+      });
+      act(() => jest.advanceTimersByTime(800));
       continue;
     }
     const choice = rightChoice(step);

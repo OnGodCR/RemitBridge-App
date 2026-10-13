@@ -107,7 +107,7 @@ function Tag({ label, style, color }: { label: string; style: StyleProp<ViewStyl
   );
 }
 
-export type TileState = 'idle' | 'selected' | 'right' | 'wrong' | 'faded';
+export type TileState = 'idle' | 'selected' | 'right' | 'wrong' | 'faded' | 'done';
 
 /**
  * An answer tile: white on a grey lip, green-edged when picked, mint and green when right, grey
@@ -117,6 +117,7 @@ export function Tile({
   label,
   children,
   icon,
+  small,
   state = 'idle',
   onPress,
   disabled,
@@ -126,6 +127,8 @@ export function Tile({
   label?: string;
   children?: ReactNode;
   icon?: SFSymbol;
+  /** Smaller text, for a long label such as a meaning on a match board. */
+  small?: boolean;
   state?: TileState;
   onPress: () => void;
   disabled?: boolean;
@@ -157,9 +160,11 @@ export function Tile({
     right: { bg: t.accent, border: t.primary, lip: t.primaryDeep, fg: t.accentForeground },
     wrong: { bg: t.muted, border: t.border, lip: t.rim, fg: t.textSecondary },
     faded: { bg: t.card, border: t.border, lip: t.rim, fg: t.textSecondary },
+    // A pair already found on a match board: flat and grey, out of the way.
+    done: { bg: t.muted, border: t.muted, lip: t.muted, fg: t.textSecondary },
   }[state];
   return (
-    <Animated.View style={[style, moved, state === 'faded' && styles.faded]}>
+    <Animated.View style={[style, moved, (state === 'faded' || state === 'done') && styles.faded]}>
       <Pressable
         onPress={onPress}
         onPressIn={() => press(true)}
@@ -171,7 +176,9 @@ export function Tile({
         <View pointerEvents="none" style={[styles.tileLip, { backgroundColor: colors.lip }]} />
         <Animated.View style={[styles.tile, { backgroundColor: colors.bg, borderColor: colors.border }, face]}>
           {icon ? <Icon name={icon} size={22} weight="bold" tintColor={colors.fg} fallback={null} /> : null}
-          {label ? <AppText style={[styles.tileLabel, { color: colors.fg }]}>{label}</AppText> : null}
+          {label ? (
+            <AppText style={[styles.tileLabel, small && styles.tileSmall, { color: colors.fg }]}>{label}</AppText>
+          ) : null}
           {children}
         </Animated.View>
       </Pressable>
@@ -398,6 +405,7 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   tileLabel: { fontFamily: Fonts.bold, fontSize: 17, lineHeight: 22, textAlign: 'center', flexShrink: 1 },
+  tileSmall: { fontFamily: Fonts.semibold, fontSize: 14, lineHeight: 19, textAlign: 'left' },
   faded: { opacity: 0.45 },
   bar: {
     paddingHorizontal: Spacing.three,
