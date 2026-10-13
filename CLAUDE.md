@@ -247,8 +247,8 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Newsletter (D169, 2026-10-12):** built: an Account switch (off by default), the admin
       composer (Account, Admin, Write a newsletter), `send-newsletter` and
       `newsletter-unsubscribe`, the site's `/unsubscribe` page, privacy policy and store answers.
-      Left (Angad): run `20261012010000_newsletter.sql` and the smoke test, deploy both functions,
-      a postal address in `MAILING_ADDRESS` before any full send (never the home address), Resend
+      Migration run by Angad and both functions deployed 2026-10-12, smoke test 76/76.
+      Left (Angad): a postal address in `MAILING_ADDRESS` before any full send (never the home address), Resend
       tracking off, Apple's private email relay registration, a new build for the app screens,
       and the six new Hindi rows.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
