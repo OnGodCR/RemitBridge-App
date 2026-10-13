@@ -2153,3 +2153,16 @@ message and three choices (red flag, looks fine, can't tell) instead of four phr
 finish screen bounces in with counting stats. Gone: the timer, "Show the details", the mode
 label over every question, the fictional-amount sentence (a small "Example" tag stays), and
 the mode names under the path's cards. The module screen offers the games as icon tiles.
+**D173. A receipt can include its fee in the amount sent** (Angad, 2026-10-12: the scanner
+"simply needs to be better... It's simply not transcribing well enough right now OR the
+calculation based formula is wrong"). Checked first: the shared formula's 56 test cases and
+the engine's 107 tests pass, and the rule-based reader got every field right on all 60
+synthetic receipts (99.7%) and on the sample receipt photo through OCR. The gap found:
+everything assumed the fee sits on top of "amount sent". Some receipts take it out instead
+("Amount $200.00, fee $5.00, total $200.00", and $195 is converted). Those failed both
+consistency checks, so a correctly read value was flagged as a misread, and the cost counted
+the fee twice. `packages/receipt/src/fee-included.ts` now decides from the receipt itself:
+a total equal to the amount means the fee was inside it; with no total, whichever reading the
+amount received fits. The cost, the checks and the WhatsApp reply all use it. Fee-on-top
+receipts are unchanged. The next step is real receipts: the app's failures need the photos or
+the misread values, added to `benchmark/receipts/` as test cases.
