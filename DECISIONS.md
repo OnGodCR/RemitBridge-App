@@ -2089,3 +2089,11 @@ later. Resend's free plan sends 100 emails a day, which caps an issue at 100 peo
 that changes. Sign in with Apple's "Hide My Email" addresses only receive mail once
 remitbridgelabs.org is registered with Apple's private email relay. The privacy policy and
 both stores' privacy answers now name the newsletter.
+
+**D170. Hindi ships as reviewed** (Angad, 2026-10-12: "my mom approved everything, drop the
+label"). Angad's mother read every row of `docs/translation-review/hi.md`, the bot's Hindi,
+the glossary and the six newsletter rows, and approved them; Angad relayed that in writing
+the same day. `languages.ts` now records her as the reviewer with that date, so D69's rule is
+met and Hindi loses the Draft label and leaves the "We need volunteers" list. The app doesn't
+show reviewers' names, so none is needed on screen. Spanish, Tagalog and Vietnamese stay
+drafts under D151. New Hindi strings from here on go into `hi.md` as NEW rows for her to read.

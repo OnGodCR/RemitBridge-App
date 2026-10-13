@@ -41,7 +41,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Resend tracking off**: in Resend, Domains, remitbridgelabs.org, check open and click tracking are off (the privacy policy says we don't track).
 - [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
-- [ ] **Hindi for the six newsletter rows**: your mom, in `hi.md` (marked NEW 2026-10-12, after the review).
+- [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
 
 ## Content (Angad)
 
