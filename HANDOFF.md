@@ -3,7 +3,20 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-12 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-13 (see the sections just below; the older status after them is kept for history)
+
+## 2026-10-13: Remmy, the assistant in the app (D175)
+
+- **Built on branch `remmy`** (from `chatgpt/learn-game-modes`, so it includes the Learn
+  games): the hovering button on every tab (`components/remmy.tsx`), the chat sheet
+  (`app/remmy.tsx`), the store and actions (`lib/remmy.ts`, `lib/remmy-actions.ts`), and the
+  `remmy` Edge Function. `whatsapp` was refactored onto `_shared/agent.ts`; its 152 tests
+  still pass. App tests 225, bot tests 159; tsc and lint clean.
+- **To go live, Angad deploys** `remmy` (new, `verify_jwt = false` in config.toml) and
+  redeploys `whatsapp` (same behavior, shared code). No migration: it uses the existing
+  `take_hit_for_ip`, `count_hit` and `events`.
+- Expo Go shows it after a reload; no new native module.
+- Privacy policy has a Remmy section; Hindi rows added to `hi.md` by hand (Remmy, 2026-10-13).
 
 ## 2026-10-12: Android sign-ins fixed, WhatsApp linking confirmed, the newsletter (D169)
 

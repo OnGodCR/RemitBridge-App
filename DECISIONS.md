@@ -2183,3 +2183,26 @@ received or total check are now doubted and sent to the model with the photo, wh
 confident wrong value stood and the model was never asked. On the model itself: Groq's only
 vision model is the one already in use (Qwen 3.8 27B, D98), so there's nothing better on the
 free tier there; revisit once real receipts show what's still missed.
+
+**D175. Remmy, an assistant inside the app that can act in it** (Angad, 2026-10-12: "a
+little chatbot that can do everything that whatsapp bot does within the app itself... make
+sure it can also be 'agentic' by taking actions within the app... a hovering icon in
+remitbridge's style"). Remmy runs the WhatsApp agent (D160) on the same free models (D163),
+through a new `remmy` Edge Function. The function and the WhatsApp one now share
+`supabase/functions/_shared/agent.ts` for the model chain and the data tools, so both
+surfaces answer the same way. Remmy also has four app tools: open Compare on a route, open
+a screen, start a lesson, and offer a save. They don't act on the server. Each adds an
+action to the reply, and the app shows it as a card, with an Open, Start or Save button.
+When the person asked to go somewhere, the card opens it after a short pause. Actions are
+checked against one list (`mobile/src/lib/remmy-actions.ts`) on both sides, so a model can
+only name screens, routes and lessons that exist. A save always waits for a tap, and nothing
+Remmy does moves money, changes a setting or contacts a provider. The prompt has Remmy's own
+persona, and the conversation's last 8 turns go along so a follow-up makes sense. Their
+numbers count as sources for the stray-number check. Nothing of the conversation is stored:
+it lives in the app's memory until the app closes or the person starts a new chat. Metrics
+record only which tools ran. Limits (D140): 40 messages a day per install and 200 per
+network address, and the same daily model budget as WhatsApp. Past a limit, Remmy says it's
+resting, and a plain "500 to India" still gets its Compare card. Before the first message
+the app asks once, with Allow / Not now, as the receipt scanner does (Apple 5.1.2(i)), and
+the chat says it uses an AI model. The button is a green speech bubble with the bridge mark
+as a brow, hovering above the tab bar on every tab. It opens Remmy as a sheet.

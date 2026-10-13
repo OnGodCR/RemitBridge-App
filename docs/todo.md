@@ -42,6 +42,13 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
 
+## Remmy (Angad, D175)
+
+- [ ] **Deploy Remmy**: `supabase functions deploy remmy` and redeploy `whatsapp` (it now shares Remmy's agent code).
+- [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
+- [ ] **Merge the Remmy PR**: after the Learn games PR (#5).
+- [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
+
 ## Receipt scanner (Angad, D173)
 
 - [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.

@@ -100,6 +100,8 @@ function Navigator() {
         <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
         {/* A lesson (D136) takes the whole screen, like Duolingo's, and closes with its own button. */}
         <Stack.Screen name="lesson/[id]" options={{ presentation: 'fullScreenModal', headerShown: false, gestureEnabled: false }} />
+        {/* Remmy (D175): a sheet over whatever you were doing, so closing it brings you back. */}
+        <Stack.Screen name="remmy" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
         <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />
         <Stack.Screen name="saved" options={{ ...pushed, title: titles.saved }} />
