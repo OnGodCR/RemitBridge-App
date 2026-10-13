@@ -25,7 +25,7 @@ jest.mock('@/lib/whatsapp', () => ({
   whatsAppSettings: jest.fn(async () => ({ number: '15551845383', live: true })),
   linkStatus: jest.fn(),
   newLinkCode: jest.fn(async () => 'K7P2QX'),
-  openChat: jest.fn(async () => undefined),
+  openChat: jest.fn(async () => true),
   unlinkWhatsApp: jest.fn(async () => true),
 }));
 
@@ -65,6 +65,16 @@ it('links by opening WhatsApp with a one-time code typed in', async () => {
   expect(newLinkCode).toHaveBeenCalled();
   expect(openChat).toHaveBeenCalledWith('15551845383', 'LINK K7P2QX');
   expect(screen.getByText(/Press send in WhatsApp, then come back/)).toBeTruthy();
+});
+
+it('shows the number instead of nothing when WhatsApp can\'t be opened', async () => {
+  jest.mocked(linkStatus).mockResolvedValue({ linked: false, linkedAt: null });
+  jest.mocked(openChat).mockResolvedValueOnce(false);
+  await renderIt();
+  await act(async () => {
+    fireEvent.press(screen.getByText('Link WhatsApp'));
+  });
+  expect(screen.getByText(/Couldn't open WhatsApp\. Message/)).toBeTruthy();
 });
 
 it('shows a linked chat, and unlinks after asking', async () => {

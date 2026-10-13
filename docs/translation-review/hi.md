@@ -413,6 +413,7 @@ with your name and the date.
 | whatsapp.title | WhatsApp | WhatsApp | |
 | whatsapp.chat | Chat on WhatsApp | WhatsApp पर बात करें | |
 | whatsapp.hello | Hi | नमस्ते | |
+| whatsapp.openFailed | Couldn't open WhatsApp. Message {number} on WhatsApp instead. | WhatsApp नहीं खुल सका। WhatsApp पर {number} को मैसेज करें। | | NEW 2026-10-12
 | whatsapp.link | Link WhatsApp | WhatsApp जोड़ें | |
 | whatsapp.linkSub | Save comparisons from WhatsApp to this account | WhatsApp की तुलनाएँ इस खाते में रखें | |
 | whatsapp.linkSent | Press send in WhatsApp, then come back. | WhatsApp में भेजें दबाएँ, फिर यहाँ लौटें। | | CHANGED 2026-10-11: shorter, please read again

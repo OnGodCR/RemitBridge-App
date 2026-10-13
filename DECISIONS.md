@@ -2061,3 +2061,10 @@ provider's site, and ChatGPT works only from his screenshots, never in agent mod
 browsing those sites. Prices still enter only as manual observations through the same gate.
 Claude steps back from routine rounds and helps only when rows are quarantined or rejected
 without a clear reason, or when the format has to change.
+
+**D168. Google Play shows the organization's registered address** (Angad, 2026-10-12: "Keep
+the home address"). Google Play lists an organization developer's address on its store page,
+and it must match D&B's record for the D-U-N-S number, which is the Sammamish address Angad
+gave D&B. Asked whether to switch to a registered-agent or mailbox address first, Angad chose
+to keep it: faster and free. The app site still shows no mailing address (2026-10-03); only
+the Play listing will.

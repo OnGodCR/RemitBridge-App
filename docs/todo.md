@@ -15,7 +15,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
 - [ ] **Play Console**: upload the production `.aab` (EAS build eb1d1d43, versionCode 2, built 2026-10-12; no advertising-ID permission), then fill every form from `docs/store/listing.md`.
-- [ ] **Android phone screenshots**: 2 to 8 from your Samsung (long side at most twice the short side).
+- [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
 ## Test on real phones (Angad)
@@ -30,7 +30,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **"What you could have kept" on a real scan** (D119)
 - [ ] **Android run-through**: a receipt scan (ML Kit, the black boxes), Google sign-in, the swipe between tabs, Learn (preview build a5686cd5).
 - [ ] **WhatsApp live test**: a question, a suggestion, a new country, something off topic, a receipt photo.
-- [ ] **WhatsApp in the app**: LINK and SAVE from the WhatsApp tab.
+- [ ] **WhatsApp in the app**: "Chat on WhatsApp" did nothing on the Samsung (2026-10-12); now it tries the WhatsApp app first and shows the number if it can't. Tap it again with the app server running, then try LINK and SAVE.
 - [ ] **WhatsApp display name**: check Meta's review of "RemitBridge Labs".
 
 ## Content (Angad)
