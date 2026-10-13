@@ -452,81 +452,57 @@ export const es: Copy = {
     workshops: 'Talleres',
     workshopsSub: 'Sesiones para comunidades y escuelas',
     opensWebsite: 'Se abre en el sitio web',
+    /** Learn's game modes (D172): few words, Duolingo's shape. */
     games: {
-      choose: 'Elige un modo',
-      play: 'Jugar',
-      playAgain: 'Volver a jugar',
-      next: 'Siguiente',
-      details: 'Ver los detalles',
-      hideDetails: 'Ocultar los detalles',
-      correct: 'Correcto.',
+      choose: 'Elige un juego',
+      check: 'Comprobar',
+      playAgain: 'Jugar otra vez',
       routeWord: 'Ruta',
+      example: 'Ejemplo',
       modes: {
-        match: 'Une las parejas',
-        quick: 'Ronda rápida',
-        cost: 'Encuentra el costo oculto',
-        receipt: 'Lee el recibo',
-        safety: 'Detecta la señal de alerta',
-        final: 'Ronda final'
+        match: 'Emparejar',
+        quick: 'Verdadero o falso',
+        cost: '¿Quién envía más?',
+        receipt: 'Leer un recibo',
+        safety: 'Detecta la estafa',
+        final: 'Ronda final',
       },
-      matchPrompt: 'Toca una palabra y luego su significado.',
-      matched: 'Pareja encontrada',
-      selected: 'Seleccionado',
-      quickPrompt: '¿Coincide este significado?',
+      matchPrompt: 'Une las parejas',
+      allMatched: '¡Todo emparejado!',
+      quickPrompt: '¿Verdadero o falso?',
       true: 'Verdadero',
       false: 'Falso',
-      timerOff: 'Sin tiempo',
-      timerOn: 'Mostrar cronómetro',
-      elapsed: 'Tiempo transcurrido',
-      example: 'Ejemplo',
-      exampleNote: 'Importes ficticios. Sin proveedor real.',
-      costPrompt: '¿Cuál le da más a la familia?',
-      providerA: 'Proveedor A',
-      providerB: 'Proveedor B',
-      tie: 'El mismo importe',
-      budget: 'Total pagado (USD)',
-      fee: 'Comisión de envío (USD)',
-      rate: 'Tipo de cambio (MXN por USD)',
-      midRate: 'Tipo de cambio medio del mercado (MXN por USD)',
-      received: 'Importe recibido (MXN)',
-      markup: 'Margen cambiario (USD)',
-      totalCost: 'Costo total (USD)',
-      costWhy: 'Compara el importe recibido. Una comisión menor puede ocultar un margen cambiario mayor.',
+      costPrompt: '¿Cuál envía más a casa?',
+      fee: 'Comisión',
+      rate: 'Tipo de cambio',
+      arrives: 'Llega',
+      hidden: (amount: string) => `${amount} escondidos en el tipo de cambio`,
+      receiptTitle: 'Recibo',
       receiptPrompt: {
-        fee: 'Toca la comisión de envío.',
-        rate: 'Toca el tipo de cambio.',
-        received: 'Toca el importe recibido.'
+        fee: 'Toca la comisión',
+        rate: 'Toca el tipo de cambio',
+        received: 'Toca lo que llega',
       },
       receiptLines: {
         fee: 'Cargo por servicio',
         rate: 'Tipo de cambio aplicado',
-        received: 'Monto del pago'
+        received: 'Monto del pago',
       },
-      safetyPrompt: '¿Qué llama la atención?',
+      safetyPrompt: '¿Estafa o no?',
       safetyChoices: {
-        moveMoney: 'Mover dinero para un desconocido',
-        pressure: 'Presión para actuar ya',
-        shareCode: 'Compartir un código de acceso',
-        unknown: 'No hay suficiente información'
+        flag: 'Señal de alerta',
+        fine: 'Parece bien',
+        unsure: 'No se sabe',
       },
       scenarios: {
-        stranger: {
-          text: 'Un desconocido te ofrece dinero por recibir un pago y enviárselo a otra persona.',
-          why: 'Mover dinero para otra persona puede convertirte en una mula de dinero.'
-        },
-        urgent: {
-          text: 'Alguien dice ser tu primo, exige un envío inmediato y te pide que no llames.',
-          why: 'La urgencia y evitar una llamada son señales de alerta. El mensaje no verifica quién lo envió.'
-        },
-        code: {
-          text: 'Alguien en un chat te pide el código de un solo uso para entrar a tu cuenta de envíos.',
-          why: 'Un código de acceso puede darle a otra persona acceso a tu cuenta.'
-        },
-        idCheck: {
-          text: 'Un servicio de envíos pide identificación. No tienes más información sobre el servicio.',
-          why: 'Pedir identificación puede ser parte de KYC. Eso por sí solo no prueba que el servicio sea legítimo.'
-        }
-      }
+        stranger: { text: 'Un desconocido te paga por recibir dinero y pasarlo a otra persona.', why: 'Así empiezan las mulas de dinero.' },
+        urgent: { text: '“Soy tu primo. Manda dinero ya. No me llames.”', why: 'La prisa y evitar una llamada son señales clásicas.' },
+        code: { text: 'Alguien en un chat te pide tu código de acceso.', why: 'Tu código abre tu cuenta. Nunca lo compartas.' },
+        fakeRate: { text: 'Un sitio ofrece un tipo de cambio mucho mejor que todos los demás.', why: 'Si parece demasiado bueno, casi siempre lo es.' },
+        idCheck: { text: 'Una app de envíos te pide tu identificación.', why: 'Las apps reales también lo piden. Por sí solo, no prueba nada.' },
+        usual: { text: 'Tu app de siempre muestra la comisión y el tipo de cambio antes de pagar.', why: 'Mostrar el costo completo antes es una buena señal.' },
+      },
+      answerIs: (answer: string) => `Respuesta: ${answer}`,
     },
     lesson: {
       start: (n: number) => (n === 1 ? 'Empezar lección: 1 palabra nueva' : `Empezar lección: ${n} palabras nuevas`),

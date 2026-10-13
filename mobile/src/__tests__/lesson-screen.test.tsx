@@ -1,10 +1,11 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo } from 'react-native';
 import LessonScreen from '@/app/lesson/[id]';
 import { MODULES } from '@/data/modules';
 import { LanguageProvider } from '@/i18n';
 import { en } from '@/i18n/en';
 import { firstSentence } from '@/lib/lesson';
+import { money } from '@/lib/format';
 import { buildGame, rightChoice, type GameMode } from '@/lib/learn-games';
 import { markLearned, resetLearned } from '@/lib/learn-progress';
 
@@ -26,6 +27,7 @@ jest.mock('expo-router', () => ({
 }));
 jest.mock('expo-haptics', () => ({
   notificationAsync: jest.fn(async () => undefined),
+  selectionAsync: jest.fn(async () => undefined),
   NotificationFeedbackType: { Success: 'success', Error: 'error' },
 }));
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
@@ -48,6 +50,8 @@ beforeEach(() => {
 });
 afterEach(() => jest.restoreAllMocks());
 
+const l = en.learn.lesson;
+
 it.each([
   ['basics', 'match'],
   ['basics', 'quick'],
@@ -67,56 +71,66 @@ it.each([
   let questions = 0;
   for (const step of plan.steps) {
     if (step.kind === 'teach') {
-      press(en.learn.lesson.gotIt);
+      press(l.continue);
       continue;
     }
     if (step.kind === 'match') {
+      // Pairs clear as they're found; Continue appears once the board is clear.
       for (const term of step.terms) {
+        expect(screen.queryByRole('button', { name: l.continue })).toBeNull();
         press(term.id === 'corridor' ? g.routeWord : term.term);
         press(firstSentence(term.plain));
         expect(learnedNow()).toContain(term.id);
-        press(g.next);
         questions++;
       }
+      expect(screen.getByText(g.allMatched)).toBeTruthy();
+      press(l.continue);
       continue;
     }
     const choice = rightChoice(step);
+    // Nothing to check until an answer is picked.
+    expect(screen.getByRole('button', { name: g.check }).props.accessibilityState.disabled).toBe(true);
     if (step.kind === 'quick') press(choice === 'true' ? g.true : g.false);
     if (step.kind === 'cost') {
       expect(screen.getByText(g.example)).toBeTruthy();
-      press(choice === 'a' ? g.providerA : choice === 'b' ? g.providerB : g.tie);
+      fireEvent.press(screen.getByRole('button', { name: new RegExp(`^${choice.toUpperCase()}\\.`) }));
     }
     if (step.kind === 'receipt') {
       // The receipt uses a provider's own wording, never the word the question asks for.
-      const n = (v: number) => v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       const value =
         step.field === 'fee'
-          ? `${n(step.example.cost.feeCost)} USD`
+          ? money(step.example.cost.feeCost, 'USD')
           : step.field === 'rate'
-            ? `1 USD = ${n(step.example.input.quotedRate)} MXN`
-            : `${n(step.example.cost.amountReceived)} MXN`;
-      expect(screen.queryByRole('button', { name: new RegExp(`^${g[step.field]}`) })).toBeNull();
+            ? `1 USD = ${step.example.input.quotedRate.toFixed(2)} MXN`
+            : money(step.example.cost.amountReceived, 'MXN');
+      expect(
+        screen.queryByRole('button', {
+          name: new RegExp(`^${g.receiptPrompt[step.field].replace('Tap the ', '')}`, 'i'),
+        }),
+      ).toBeNull();
       press(`${g.receiptLines[step.field]}: ${value}`);
     }
     if (step.kind === 'safety') press(g.safetyChoices[choice as keyof typeof g.safetyChoices]);
-    press(g.details);
-    expect(screen.getByRole('button', { name: g.hideDetails })).toBeTruthy();
-    press(g.next);
+    press(g.check);
+    expect(l.right.some((cheer) => screen.queryByText(cheer))).toBe(true);
+    if (step.kind === 'safety') expect(screen.getByText(g.scenarios[step.scenario].why)).toBeTruthy();
+    press(l.continue);
     questions++;
   }
-  expect(screen.getByText(en.learn.lesson.done)).toBeTruthy();
+  expect(screen.getByText(l.done)).toBeTruthy();
   expect(screen.getByLabelText(`XP earned: ${questions * 10}`)).toBeTruthy();
   expect(screen.getByLabelText('Accuracy: 100%')).toBeTruthy();
   expect(screen.getByLabelText('Day streak: 1 day')).toBeTruthy();
   expect(JSON.parse(localStorage.getItem('rb.learnStats')!).lessons).toBe(1);
   expect(AccessibilityInfo.announceForAccessibility).toHaveBeenCalled();
   press(g.playAgain);
-  expect(screen.queryByText(en.learn.lesson.done)).toBeNull();
+  expect(screen.queryByText(l.done)).toBeNull();
   expect(JSON.parse(localStorage.getItem('rb.learnStats')!).lessons).toBe(1);
-  press(en.learn.lesson.close);
+  press(l.close);
   expect(mockBack).toHaveBeenCalledTimes(1);
 });
-it('keeps a missed pair on the board, explains it and awards reduced XP on retry', () => {
+
+it('keeps a missed pair on the board and learns it once matched', () => {
   mockParams = { id: 'basics', mode: 'match' };
   const plan = buildGame(MODULES[0], new Set(), 'match', () => 0.8);
   render(
@@ -124,37 +138,33 @@ it('keeps a missed pair on the board, explains it and awards reduced XP on retry
       <LessonScreen />
     </LanguageProvider>,
   );
-  for (const step of plan.steps.filter((s) => s.kind === 'teach')) {
-    void step;
-    press(en.learn.lesson.gotIt);
-  }
+  for (const step of plan.steps) if (step.kind === 'teach') press(l.continue);
   const board = plan.steps.find((s) => s.kind === 'match')!;
   if (board.kind !== 'match') throw new Error('missing board');
   const [a, b] = board.terms;
   press(a.term);
   press(firstSentence(b.plain));
-  expect(screen.getByText(en.learn.lesson.answerWas(firstSentence(a.plain)))).toBeTruthy();
   expect(learnedNow()).not.toContain(a.id);
-  press(g.next);
+  expect(screen.getByRole('button', { name: a.term })).toBeTruthy();
   press(a.term);
   press(firstSentence(a.plain));
-  expect(screen.getByText('+5 XP')).toBeTruthy();
   expect(learnedNow()).toContain(a.id);
 });
-it('offers quick fire untimed by default and cleans up its opt-in timer', () => {
+
+it('shows the answer when a question is missed, then asks it again at the end', () => {
   for (const id of MODULES[0].terms) markLearned(id);
-  jest.useFakeTimers();
-  const rendered = render(
+  const plan = buildGame(MODULES[0], new Set(MODULES[0].terms), 'quick', () => 0.8);
+  render(
     <LanguageProvider>
       <LessonScreen />
     </LanguageProvider>,
   );
-  expect(screen.queryByText(/Time elapsed/)).toBeNull();
-  fireEvent.press(screen.getByRole('radio', { name: g.timerOn }));
-  expect(screen.getByText('Time elapsed: 0:00')).toBeTruthy();
-  act(() => jest.advanceTimersByTime(1000));
-  fireEvent.press(screen.getByRole('radio', { name: g.timerOff }));
-  expect(screen.queryByText(/Time elapsed/)).toBeNull();
-  rendered.unmount();
-  jest.useRealTimers();
+  const first = plan.steps[0];
+  if (first.kind !== 'quick') throw new Error('expected a quick question');
+  press(first.correct === 'true' ? g.false : g.true);
+  press(g.check);
+  expect(screen.getByText(l.wrong)).toBeTruthy();
+  expect(screen.getByText(g.answerIs(g[first.correct]))).toBeTruthy();
+  press(l.continue);
+  expect(screen.getByRole('progressbar').props.accessibilityLabel).toBe(l.progressLabel(2, plan.steps.length + 1));
 });

@@ -1,10 +1,10 @@
 import { computeTransferCost } from '@remitbridge/formula';
 import { MODULES, moduleTerms } from '@/data/modules';
 import {
+  boardDone,
   buildGame,
   comparison,
   costAnswer,
-  exampleTransfer,
   gameAccuracy,
   gameDone,
   gameReducer,
@@ -53,7 +53,7 @@ it.each(MODULES)('final round covers every term in $id and mixes recall modes', 
   expect(plan.steps.some((s) => s.kind === 'quick')).toBe(true);
   expect(plan.steps.some((s) => s.kind === 'match')).toBe(true);
 });
-it('matches only actual pairs and preserves the board until it is cleared', () => {
+it('clears a board pair by pair, keeps a missed pair on it, and moves on only when it is clear', () => {
   const terms = moduleTerms(basics).slice(0, 3);
   const step: GameStep = { kind: 'match', terms, meanings: [...terms].reverse() };
   let state = startGame([step]);
@@ -62,15 +62,16 @@ it('matches only actual pairs and preserves the board until it is cleared', () =
   state = answer(state, terms[1].id, terms[0].id);
   expect(state.xp).toBe(0);
   expect(state.learned).toEqual([]);
-  expect(answer(state, terms[0].id, terms[0].id)).toBe(state);
-  state = next(state);
+  expect(state.missed).toEqual([terms[0].id]);
+  expect(next(state)).toBe(state);
+  // No Continue between pairs: the retry is answered straight away and earns the retry XP.
   state = answer(state, terms[0].id, terms[0].id);
   expect(state.answer?.xp).toBe(5);
-  state = next(state);
-  expect(state.index).toBe(0);
   expect(state.matched).toEqual([terms[0].id]);
   expect(answer(state, terms[0].id, terms[1].id)).toBe(state);
-  for (const term of terms.slice(1)) state = next(answer(state, term.id, term.id));
+  for (const term of terms.slice(1)) state = answer(state, term.id, term.id);
+  expect(boardDone(state)).toBe(true);
+  state = next(state);
   expect(gameDone(state)).toBe(true);
   expect(state.xp).toBe(25);
   expect(gameAccuracy(state)).toBe(67);
@@ -101,22 +102,20 @@ it('does not add another retry after a second miss', () => {
   expect(state.learned).toEqual([]);
 });
 it('keeps all example arithmetic in the canonical formula and ranks by amount received', () => {
-  for (let seed = 0; seed < 30; seed++) {
+  const winners = new Set<number>();
+  for (let seed = 0; seed < 60; seed++) {
     const examples = comparison(seeded(seed));
     expect(examples[0].input.sent).toBe(examples[1].input.sent);
     for (const example of examples) expect(example.cost).toEqual(computeTransferCost(example.input));
     const winner = examples[costAnswer(examples) === 'a' ? 0 : 1];
-    expect(winner.cost.feeCost).toBe(5);
-    expect(winner.cost.amountReceived).toBeGreaterThan(examples.find((x) => x !== winner)!.cost.amountReceived);
+    const loser = examples.find((x) => x !== winner)!;
+    // Never a tie: one always leaves the family more, to the cent.
+    expect(Math.round(winner.cost.amountReceived * 100)).toBeGreaterThan(Math.round(loser.cost.amountReceived * 100));
+    winners.add(winner.cost.feeCost);
   }
-});
-it('accepts a tie when displayed amounts received are equal', () => {
-  const a = exampleTransfer({ sent: 100, fee: 0, midRate: 20, quotedRate: 19 });
-  const b = exampleTransfer({ sent: 100, fee: 5, midRate: 20, quotedRate: 20 });
-  expect(costAnswer([a, b])).toBe('tie');
-  const state = answer(startGame([{ kind: 'cost', examples: [a, b] }]), 'tie');
-  expect(state.xp).toBe(10);
-  expect(state.learned).toEqual([]);
+  // Sometimes the zero-fee one wins and sometimes the one with a fee: no rule of thumb works.
+  expect(winners.has(0)).toBe(true);
+  expect([...winners].some((fee) => fee > 0)).toBe(true);
 });
 it('does not mark unrelated words learned through applied questions', () => {
   const example = comparison(seeded(1))[0];
@@ -139,7 +138,8 @@ it.each(MODULES.flatMap((m) => modesFor(m).map((mode) => ({ m, mode }))))(
       if (step.kind === 'teach') state = next(state);
       else if (step.kind === 'match') {
         const term = step.terms.find((t) => !state.matched.includes(t.id))!;
-        state = next(answer(state, term.id, term.id));
+        state = answer(state, term.id, term.id);
+        if (boardDone(state)) state = next(state);
       } else state = next(answer(state, rightChoice(step)));
     }
     expect(gameDone(state)).toBe(true);

@@ -981,59 +981,48 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | Key | English | Hindi draft | Your change (blank if fine) |
 |---|---|---|---|
 | learn.startHere | Start here | यहाँ से शुरू करें | | NEW 2026-10-12
-| learn.games.choose | Choose a mode | खेल चुनें | | NEW 2026-10-12
-| learn.games.play | Play | खेलें | | NEW 2026-10-12
-| learn.games.playAgain | Play again | फिर खेलें | | NEW 2026-10-12
-| learn.games.next | Next | आगे | | NEW 2026-10-12
-| learn.games.details | Show the details | विवरण देखें | | NEW 2026-10-12
-| learn.games.hideDetails | Hide the details | विवरण छिपाएँ | | NEW 2026-10-12
-| learn.games.correct | Correct. | सही है। | | NEW 2026-10-12
+| learn.games.choose | Pick a game | एक गेम चुनें | | NEW 2026-10-12
+| learn.games.check | Check | जाँचें | | NEW 2026-10-12
+| learn.games.playAgain | Play again | फिर से खेलें | | NEW 2026-10-12
 | learn.games.routeWord | Route | रूट | | NEW 2026-10-12
-| learn.games.modes.match | Match pairs | जोड़ियाँ मिलाएँ | | NEW 2026-10-12
-| learn.games.modes.quick | Quick fire | फटाफट सवाल | | NEW 2026-10-12
-| learn.games.modes.cost | Spot the hidden cost | छिपी लागत पहचानें | | NEW 2026-10-12
-| learn.games.modes.receipt | Read the receipt | रसीद पढ़ें | | NEW 2026-10-12
-| learn.games.modes.safety | Spot the warning sign | खतरे का संकेत पहचानें | | NEW 2026-10-12
-| learn.games.modes.final | Final round | आखिरी दौर | | NEW 2026-10-12
-| learn.games.matchPrompt | Tap a word, then its meaning. | पहले शब्द पर, फिर उसके अर्थ पर टैप करें। | | NEW 2026-10-12
-| learn.games.matched | Matched | जोड़ी मिल गई | | NEW 2026-10-12
-| learn.games.selected | Selected | चुना गया | | NEW 2026-10-12
-| learn.games.quickPrompt | Does this meaning match? | क्या यह अर्थ सही है? | | NEW 2026-10-12
+| learn.games.example | Example | उदाहरण | | NEW 2026-10-12
+| learn.games.modes.match | Match | जोड़ी मिलाएँ | | NEW 2026-10-12
+| learn.games.modes.quick | True or false | सही या गलत | | NEW 2026-10-12
+| learn.games.modes.cost | Who sends more? | कौन ज़्यादा भेजता है? | | NEW 2026-10-12
+| learn.games.modes.receipt | Read a receipt | रसीद पढ़ें | | NEW 2026-10-12
+| learn.games.modes.safety | Spot the scam | धोखा पहचानें | | NEW 2026-10-12
+| learn.games.modes.final | Final round | आखिरी राउंड | | NEW 2026-10-12
+| learn.games.matchPrompt | Match the pairs | जोड़ियाँ मिलाएँ | | NEW 2026-10-12
+| learn.games.allMatched | All matched! | सब मिल गए! | | NEW 2026-10-12
+| learn.games.quickPrompt | True or false? | सही या गलत? | | NEW 2026-10-12
 | learn.games.true | True | सही | | NEW 2026-10-12
 | learn.games.false | False | गलत | | NEW 2026-10-12
-| learn.games.timerOff | Untimed | बिना टाइमर | | NEW 2026-10-12
-| learn.games.timerOn | Show timer | टाइमर दिखाएँ | | NEW 2026-10-12
-| learn.games.elapsed | Time elapsed | बीता समय | | NEW 2026-10-12
-| learn.games.example | Example | उदाहरण | | NEW 2026-10-12
-| learn.games.exampleNote | Fictional amounts. No real provider. | काल्पनिक रकम। कोई असली प्रदाता नहीं। | | NEW 2026-10-12
-| learn.games.costPrompt | Which gives the family more? | किसमें परिवार को ज़्यादा मिलेगा? | | NEW 2026-10-12
-| learn.games.providerA | Provider A | प्रदाता A | | NEW 2026-10-12
-| learn.games.providerB | Provider B | प्रदाता B | | NEW 2026-10-12
-| learn.games.tie | Same amount | बराबर रकम | | NEW 2026-10-12
-| learn.games.budget | Total paid (USD) | कुल भुगतान (USD) | | NEW 2026-10-12
-| learn.games.fee | Transfer fee (USD) | ट्रांसफ़र फ़ीस (USD) | | NEW 2026-10-12
-| learn.games.rate | Exchange rate (MXN per USD) | एक्सचेंज रेट (प्रति USD में MXN) | | NEW 2026-10-12
-| learn.games.midRate | Mid-market rate (MXN per USD) | मिड-मार्केट रेट (प्रति USD में MXN) | | NEW 2026-10-12
-| learn.games.received | Amount received (MXN) | मिलने वाली रकम (MXN) | | NEW 2026-10-12
-| learn.games.markup | Exchange-rate markup (USD) | एक्सचेंज रेट मार्कअप (USD) | | NEW 2026-10-12
-| learn.games.totalCost | Total cost (USD) | कुल लागत (USD) | | NEW 2026-10-12
-| learn.games.costWhy | Compare the amount received. A smaller fee can hide a larger exchange-rate markup. | मिलने वाली रकम की तुलना करें। कम फ़ीस के पीछे ज़्यादा एक्सचेंज रेट मार्कअप छिपा हो सकता है। | | NEW 2026-10-12
-| learn.games.receiptPrompt.fee | Tap the transfer fee. | ट्रांसफ़र फ़ीस पर टैप करें। | | NEW 2026-10-12
-| learn.games.receiptPrompt.rate | Tap the exchange rate. | एक्सचेंज रेट पर टैप करें। | | NEW 2026-10-12
-| learn.games.receiptPrompt.received | Tap the amount received. | मिलने वाली रकम पर टैप करें। | | NEW 2026-10-12
-| learn.games.receiptLines.fee | Service charge | सर्विस चार्ज | | NEW 2026-10-12 (a provider's wording on purpose)
-| learn.games.receiptLines.rate | FX rate applied | लागू FX रेट | | NEW 2026-10-12 (a provider's wording on purpose)
-| learn.games.receiptLines.received | Payout amount | पेआउट राशि | | NEW 2026-10-12 (a provider's wording on purpose)
-| learn.games.safetyPrompt | What stands out? | आपको क्या दिखता है? | | NEW 2026-10-12
-| learn.games.safetyChoices.moveMoney | Moving money for a stranger | अजनबी के लिए पैसे भेजना | | NEW 2026-10-12
-| learn.games.safetyChoices.pressure | Pressure to act now | तुरंत कुछ करने का दबाव | | NEW 2026-10-12
-| learn.games.safetyChoices.shareCode | Sharing a sign-in code | साइन-इन कोड साझा करना | | NEW 2026-10-12
-| learn.games.safetyChoices.unknown | Not enough information | जानकारी पूरी नहीं है | | NEW 2026-10-12
-| learn.games.scenarios.stranger.text | A stranger offers to pay you to receive money and send it to someone else. | एक अजनबी आपको पैसे लेने और किसी और को भेजने के बदले भुगतान का वादा करता है। | | NEW 2026-10-12
-| learn.games.scenarios.stranger.why | Moving money for someone else can make you a money mule. | किसी और के लिए पैसे भेजने से आप मनी म्यूल बन सकते हैं। | | NEW 2026-10-12
-| learn.games.scenarios.urgent.text | Someone claiming to be your cousin demands a transfer now and says not to call. | कोई खुद को आपका चचेरा भाई बताकर तुरंत पैसे माँगता है और फ़ोन करने से मना करता है। | | NEW 2026-10-12
-| learn.games.scenarios.urgent.why | Urgency and avoiding a call are warning signs. The message does not verify who sent it. | जल्दबाज़ी और फ़ोन पर बात करने से बचना खतरे के संकेत हैं। संदेश से भेजने वाले की पहचान पक्की नहीं होती। | | NEW 2026-10-12
-| learn.games.scenarios.code.text | Someone in a chat asks for the one-time code that signs you into your transfer account. | चैट में कोई आपके ट्रांसफ़र खाते में साइन इन करने वाला वन-टाइम कोड माँगता है। | | NEW 2026-10-12
-| learn.games.scenarios.code.why | A sign-in code can give someone access to your account. | साइन-इन कोड से कोई और आपके खाते में जा सकता है। | | NEW 2026-10-12
-| learn.games.scenarios.idCheck.text | A transfer service asks for identification. You have no other information about the service. | पैसे भेजने वाली एक सेवा पहचान पत्र माँगती है। उस सेवा के बारे में आपके पास और जानकारी नहीं है। | | NEW 2026-10-12
-| learn.games.scenarios.idCheck.why | ID checks can be part of KYC. That alone does not prove the service is genuine. | पहचान जाँचना KYC का हिस्सा हो सकता है। केवल इससे सेवा के असली होने का पता नहीं चलता। | | NEW 2026-10-12
+| learn.games.costPrompt | Which sends more home? | कौन घर ज़्यादा भेजता है? | | NEW 2026-10-12
+| learn.games.fee | Fee | फ़ीस | | NEW 2026-10-12
+| learn.games.rate | Rate | रेट | | NEW 2026-10-12
+| learn.games.arrives | Arrives | पहुँचता है | | NEW 2026-10-12
+| learn.games.hidden | {amount} hidden in the rate | {amount} रेट में छिपे | | NEW 2026-10-12
+| learn.games.receiptTitle | Receipt | रसीद | | NEW 2026-10-12
+| learn.games.receiptPrompt.fee | Tap the fee | फ़ीस पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptPrompt.rate | Tap the exchange rate | एक्सचेंज रेट पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptPrompt.received | Tap what arrives | जो पहुँचता है उस पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptLines.fee | Service charge | सर्विस चार्ज (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.receiptLines.rate | FX rate applied | लागू FX रेट (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.receiptLines.received | Payout amount | पेआउट राशि (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.safetyPrompt | Scam or not? | धोखा है या नहीं? | | NEW 2026-10-12
+| learn.games.safetyChoices.flag | Red flag | खतरे का संकेत | | NEW 2026-10-12
+| learn.games.safetyChoices.fine | Looks fine | ठीक लगता है | | NEW 2026-10-12
+| learn.games.safetyChoices.unsure | Can’t tell | कह नहीं सकते | | NEW 2026-10-12
+| learn.games.scenarios.stranger.text | A stranger will pay you to receive money and pass it on. | कोई अनजान व्यक्ति पैसे लेकर आगे भेजने के लिए आपको पैसे देगा। | | NEW 2026-10-12
+| learn.games.scenarios.stranger.why | That’s how money mules start. | मनी म्यूल ऐसे ही शुरू होते हैं। | | NEW 2026-10-12
+| learn.games.scenarios.urgent.text | “It’s your cousin. Send money now. Don’t call me.” | “मैं तुम्हारा कज़िन हूँ। अभी पैसे भेजो। फ़ोन मत करना।” | | NEW 2026-10-12
+| learn.games.scenarios.urgent.why | Rushing you and avoiding a call are classic signs. | जल्दबाज़ी और फ़ोन से बचना आम संकेत हैं। | | NEW 2026-10-12
+| learn.games.scenarios.code.text | Someone in a chat asks for your sign-in code. | चैट में कोई आपका साइन-इन कोड माँगता है। | | NEW 2026-10-12
+| learn.games.scenarios.code.why | Your code opens your account. Never share it. | कोड से आपका खाता खुलता है। इसे कभी न बताएँ। | | NEW 2026-10-12
+| learn.games.scenarios.fakeRate.text | A website offers a rate far better than everyone else’s. | एक वेबसाइट सबसे कहीं बेहतर रेट देती है। | | NEW 2026-10-12
+| learn.games.scenarios.fakeRate.why | A rate that looks too good usually is. | जो रेट बहुत अच्छा लगे, वह अक्सर धोखा होता है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.text | A transfer app asks for your ID. | एक ट्रांसफ़र ऐप आपका पहचान पत्र माँगता है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.why | Real apps ask too. On its own, it proves nothing. | असली ऐप भी माँगते हैं। अकेले इससे कुछ साबित नहीं होता। | | NEW 2026-10-12
+| learn.games.scenarios.usual.text | Your usual app shows the fee and rate before you pay. | आपका रोज़ का ऐप पैसे देने से पहले फ़ीस और रेट दिखाता है। | | NEW 2026-10-12
+| learn.games.scenarios.usual.why | Showing the full cost up front is a good sign. | पहले ही पूरा खर्च दिखाना अच्छा संकेत है। | | NEW 2026-10-12
+| learn.games.answerIs | Answer: {answer} | जवाब: {answer} | | NEW 2026-10-12

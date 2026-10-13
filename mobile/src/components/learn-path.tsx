@@ -195,7 +195,6 @@ function Node({
           <AppText style={[styles.labelTitle, { color: t.text }]} numberOfLines={2}>
             {title}
           </AppText>
-          <AppText variant="small" muted>{l.games.modes[recommendedMode(m, learned)]}</AppText>
           <View style={styles.labelFoot}>
             <View style={[styles.labelTrack, { backgroundColor: t.border }]}>
               <View style={[styles.labelFill, { backgroundColor: t.primary, width: `${total ? (read / total) * 100 : 0}%` }]} />
