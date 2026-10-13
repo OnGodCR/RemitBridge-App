@@ -189,6 +189,18 @@ it('slows down a burst before anything else, and says why', async () => {
   expect(tables.events).toMatchObject([{ name: 'remmy_limited', props: { reason: 'slow' } }])
 })
 
+it('gives a price question its Compare card even when the model only talks', async () => {
+  turns = ['{"reply":"Prices change a lot, have a look."}']
+  const r = await (await ask({ message: '300 to Mexico' })).json()
+  expect(r.actions).toEqual([{ type: 'compare', routeId: 'us-mx', amount: 300, method: 'bank_deposit', now: false }])
+})
+
+it('says the answer failed, not that it is resting, when the model gives nothing usable', async () => {
+  turns = ['not json at all {']
+  const r = await (await ask({ message: '300 to Mexico' })).json()
+  expect(r).toMatchObject({ limited: true, reason: 'failed', actions: [{ type: 'compare', routeId: 'us-mx' }] })
+})
+
 it('still opens a screen when past the day limit', async () => {
   delete env.GROQ_API_KEY
   const r = await (await ask({ message: 'I would like to read about how you handle my data, the privacy policy please' })).json()

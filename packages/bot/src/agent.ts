@@ -132,6 +132,11 @@ export function humanize(reply: string): string {
   return t.charAt(0).toUpperCase() + t.slice(1)
 }
 
+/** Plain text that's the model planning ("We need to call open_compare") rather than answering. */
+export function thinksAloud(text: string, tools: ToolSpec[]): boolean {
+  return tools.some((t) => text.includes(t.name)) || /^(we|i) (need|should|must|will|have) to\b|^let'?s (call|use|check)\b|\bthe (user|person) (is asking|wants|asked)\b/i.test(text.trim())
+}
+
 /** The JSON object in a model turn, or null. */
 export function readTurn(raw: string): { tool: string; args: Record<string, unknown> } | { reply: string } | null {
   const json = raw.match(/\{[\s\S]*\}/)?.[0]
@@ -152,7 +157,15 @@ const norm = (n: string) => n.replace(/,/g, '').replace(/(\.\d*?)0+$/, '$1').rep
 
 /** The numbers in a reply that no source backs, after list markers ("1. ", "2) ") are set aside. */
 export function strayNumbers(reply: string, sources: string[]): string[] {
-  const allowed = new Set(sources.flatMap((s) => s.match(NUMBER) ?? []).map(norm))
+  // A checked figure rounded ("MXN 5,457.84" as "5,458" or "5,457.8") is still that figure;
+  // the model rounds pesos and dollars, and Mexico's replies were all thrown out for it.
+  const allowed = new Set(
+    sources.flatMap((s) => s.match(NUMBER) ?? []).flatMap((n) => {
+      const exact = norm(n)
+      const x = Number(exact)
+      return exact.includes('.') && Number.isFinite(x) ? [exact, norm(x.toFixed(1)), String(Math.round(x))] : [exact]
+    }),
+  )
   const body = reply
     .replace(/https?:\/\/\S+/g, '')
     .replace(/^\s*\d{1,2}[.)]\s/gm, '')
@@ -180,12 +193,22 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
   const sources = [message, ...history.map((h) => h.content), ...CORE.map((n) => `${n.title} ${n.text}`)]
   const called: string[] = []
   let corrected = false
+  let nudged = false
 
   for (let step = 0; step < MAX_STEPS; step++) {
     const raw = await client.chat(messages, { maxTokens: 700 })
     const turn = readTurn(raw)
     if (!turn) return null
     messages.push({ role: 'assistant', content: raw })
+
+    // gpt-oss sometimes answers with its own plan in plain text ("We need to call
+    // open_compare."). That's not a reply: ask once more for the JSON turn.
+    if ('reply' in turn && !raw.includes('{') && thinksAloud(turn.reply, tools)) {
+      if (nudged) return null
+      nudged = true
+      messages.push({ role: 'user', content: 'That was your plan, not a reply. Output one JSON object only: a tool call or {"reply":"..."}.' })
+      continue
+    }
 
     if ('tool' in turn) {
       const tool = byName.get(turn.tool)

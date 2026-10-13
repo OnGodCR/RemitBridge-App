@@ -70,6 +70,7 @@ export const en = {
     opening: 'Opening',
     limited: 'I’m taking a short break. You can still compare prices yourself.',
     slow: 'You’re sending messages quickly. Wait a minute, then try again.',
+    couldNot: 'I couldn’t work that one out. Try asking another way.',
     here: 'Here you go.',
     noAnswer: 'I don’t have an answer for that yet.',
     offline: 'I couldn’t connect. Check your internet and try again.',

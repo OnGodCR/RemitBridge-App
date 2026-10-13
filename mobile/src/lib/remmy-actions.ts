@@ -61,8 +61,9 @@ export interface RemmyReply {
   steps: string[];
   /** Why there's no model answer (over the day's limit, offline), if that's the case. */
   limited?: boolean;
-  /** With limited: 'slow' when messages came too fast (wait a minute), 'day' otherwise. */
-  reason?: 'slow' | 'day';
+  /** With limited: 'slow' when messages came too fast (wait a minute), 'day' past the day's
+   * limits, 'failed' when the models answered but nothing usable came back. */
+  reason?: 'slow' | 'day' | 'failed';
 }
 
 /**

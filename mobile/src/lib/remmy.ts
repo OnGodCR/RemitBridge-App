@@ -19,7 +19,7 @@ import { supabase } from '@/lib/supabase';
  */
 export type RemmyMessage =
   | { id: number; role: 'user'; text: string }
-  | { id: number; role: 'remmy'; text: string; actions: RemmyAction[]; steps: string[]; limited?: boolean; reason?: 'slow' | 'day'; failed?: boolean };
+  | { id: number; role: 'remmy'; text: string; actions: RemmyAction[]; steps: string[]; limited?: boolean; reason?: 'slow' | 'day' | 'failed'; failed?: boolean };
 
 let messages: RemmyMessage[] = [];
 let thinking = false;
@@ -81,7 +81,7 @@ export async function sendToRemmy(text: string, language: string): Promise<void>
       actions: (Array.isArray(r.actions) ? r.actions : []).map((a) => validAction(a, ROUTE_IDS)).filter((a): a is RemmyAction => !!a),
       steps: Array.isArray(r.steps) ? r.steps.filter((s): s is string => typeof s === 'string') : [],
       limited: r.limited === true,
-      ...(r.reason === 'slow' || r.reason === 'day' ? { reason: r.reason } : {}),
+      ...(r.reason === 'slow' || r.reason === 'day' || r.reason === 'failed' ? { reason: r.reason } : {}),
     };
   } catch {
     reply = { id: nextId++, role: 'remmy', text: '', actions: [], steps: [], failed: true };

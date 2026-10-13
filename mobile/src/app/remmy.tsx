@@ -218,7 +218,9 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
     : message.limited && !message.text
       ? message.reason === 'slow'
         ? r.slow
-        : r.limited
+        : message.reason === 'failed'
+          ? r.couldNot
+          : r.limited
       : message.text || (message.actions.length ? r.here : r.noAnswer);
   const steps = [...new Set(message.steps.map((s) => r.steps[s] ?? r.steps.action))];
   return (

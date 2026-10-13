@@ -1073,3 +1073,4 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | remmy.slow | You’re sending messages quickly. Wait a minute, then try again. | आप बहुत जल्दी-जल्दी मैसेज भेज रहे हैं। एक मिनट रुककर फिर कोशिश करें। | | NEW 2026-10-13
 | remmy.here | Here you go. | यह रहा। | | NEW 2026-10-13
 | remmy.noAnswer | I don’t have an answer for that yet. | इसका जवाब अभी मेरे पास नहीं है। | | NEW 2026-10-13
+| remmy.couldNot | I couldn’t work that one out. Try asking another way. | यह मैं समझ नहीं पाया। किसी और तरह से पूछकर देखें। | | NEW 2026-10-13

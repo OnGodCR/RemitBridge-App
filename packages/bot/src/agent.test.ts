@@ -58,6 +58,14 @@ describe('the agent', () => {
     expect((await runAgent(scripted(turn), [], 'is it 48,041 in india', { language: 'en', lastCountry: null, channel: 'app' }))?.text).toBe('**₹48,041** via Instarem')
   })
 
+  it('asks again when the model plans out loud instead of answering', async () => {
+    const model = scripted('We need to call get_prices.', '{"reply":"Here are today’s prices."}')
+    const r = await runAgent(model, [prices], 'prices?', { language: 'en', lastCountry: null })
+    expect(r?.text).toBe('Here are today’s prices.')
+    expect(model.seen[1].at(-1)).toContain('That was your plan')
+    expect(await runAgent(scripted('The user is asking about fees.'), [prices], 'fees?', { language: 'en', lastCountry: null })).toBeNull()
+  })
+
   it('reports a missing tool to the model instead of failing', async () => {
     const model = scripted('{"tool":"teleport","args":{}}', '{"reply":"I can’t do that."}')
     expect((await runAgent(model, [prices], 'x', { language: 'en', lastCountry: null }))?.text).toBe('I can’t do that.')
@@ -76,6 +84,9 @@ describe('its checks', () => {
   it('accepts numbers as the sources wrote them, list markers, and the person’s own numbers', () => {
     expect(strayNumbers('1. Instarem: ₹48,041\n2. Wise: ₹47,481.00', ['₹48,041', '47481'])).toEqual([])
     expect(strayNumbers('You asked about 750.', ['send 750 to vietnam'])).toEqual([])
+    // Rounded checked figures pass; a different figure doesn't.
+    expect(strayNumbers('About MXN 5,458 arrives, or 5,457.8.', ['receives MXN 5,457.84'])).toEqual([])
+    expect(strayNumbers('About MXN 5,470 arrives.', ['receives MXN 5,457.84'])).toEqual(['5,470'])
     expect(strayNumbers('About ₹50,000 arrives.', ['₹48,041'])).toEqual(['50,000'])
   })
 

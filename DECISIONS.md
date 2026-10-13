@@ -2231,3 +2231,14 @@ section: replies can be wrong, so check figures in Compare; what Remmy can and c
 don't type passwords, codes or account numbers. The privacy policy says a plain screen
 request never reaches a model, that the app asks before the first message, and what not to
 type.
+
+D176, live check the same day: screen requests worked on the first deploy, but every Mexico
+price question failed. The reason: $300 to Mexico is estimated from the $200 check, so
+amounts have cents ("MXN 5,457.84"); the model rounds them to 5,458, and the number check
+threw out the reply. Rounding a checked figure (to one decimal or a whole number) now passes;
+a different figure still doesn't. gpt-oss also once answered with its plan in plain text
+("We need to call open_compare."). Plain text that names a tool, or opens with "we need to",
+"let's call" or "the user is asking", is now sent back once for a proper answer. Two more
+fixes: a price question always gets its Compare card, even when the model only talks; and a
+failed answer says "Try asking another way" instead of "I'm taking a short break".
+

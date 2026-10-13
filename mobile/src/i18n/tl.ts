@@ -65,6 +65,7 @@ export const tl: Copy = {
     opening: 'Binubuksan',
     limited: 'Nagpapahinga muna ako. Puwede mo pa ring ihambing ang mga presyo.',
     slow: 'Masyadong mabilis ang pagpapadala mo. Maghintay ng isang minuto, saka subukan ulit.',
+    couldNot: 'Hindi ko iyon nakuha. Subukang itanong sa ibang paraan.',
     here: 'Heto na.',
     noAnswer: 'Wala pa akong sagot diyan.',
     offline: 'Hindi ako makakonekta. Tingnan ang internet at subukan ulit.',

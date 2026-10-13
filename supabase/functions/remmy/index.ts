@@ -101,6 +101,8 @@ Deno.serve(async (req) => {
       const backstop = actions.length ? null : matchIntent(message, 40);
       const extra = backstop?.now ? validAction({ type: 'screen', screen: backstop.screen, now: false }, ROUTE_IDS) : null;
       if (extra) actions.push(extra);
+      // A price question always gets its Compare card, even if the model only talked.
+      if (asked.kind === 'compare' && asked.to && !actions.some((a) => a.type === 'compare' || a.type === 'save')) actions.push(...fallbackActions(message));
       await track('remmy_message', { tools: result.tools.join(',') || 'none', provider: model.names[model.client.used()] ?? 'none' });
       return json({ reply: result.text, actions: dedupe(actions), steps: result.tools } satisfies RemmyReply, 200);
     }
@@ -108,7 +110,7 @@ Deno.serve(async (req) => {
 
   // No model answer: still do the obvious thing for a plain price question.
   await track('remmy_limited', { reason: model ? 'failed' : 'limit' });
-  return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true, reason: 'day' } satisfies RemmyReply, 200);
+  return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true, reason: model ? 'failed' : 'day' } satisfies RemmyReply, 200);
 });
 
 /**

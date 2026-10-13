@@ -64,6 +64,7 @@ export const vi: Copy = {
     opening: 'Đang mở',
     limited: 'Mình đang nghỉ một chút. Bạn vẫn có thể tự so sánh giá.',
     slow: 'Bạn đang gửi tin nhắn quá nhanh. Đợi một phút rồi thử lại.',
+    couldNot: 'Mình chưa hiểu câu đó. Bạn thử hỏi cách khác nhé.',
     here: 'Đây rồi.',
     noAnswer: 'Mình chưa có câu trả lời cho điều đó.',
     offline: 'Mình không kết nối được. Kiểm tra mạng rồi thử lại nhé.',

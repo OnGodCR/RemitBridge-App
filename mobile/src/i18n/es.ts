@@ -64,6 +64,7 @@ export const es: Copy = {
     opening: 'Abriendo',
     limited: 'Estoy tomando un descanso. Igual puedes comparar precios tú mismo.',
     slow: 'Estás enviando mensajes muy rápido. Espera un minuto y vuelve a intentarlo.',
+    couldNot: 'No pude resolver eso. Prueba a preguntarlo de otra forma.',
     here: 'Aquí está.',
     noAnswer: 'Todavía no tengo una respuesta para eso.',
     offline: 'No pude conectarme. Revisa tu internet e inténtalo de nuevo.',
