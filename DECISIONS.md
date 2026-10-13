@@ -2141,3 +2141,15 @@ Wrong answers still shake and grey, never red (D136). Library opens with post 1 
 here" instead of the newest post, which was a technical one. Also restored in review:
 `lesson_started` and `lesson_finished` events, which the rewrite had dropped, now with the
 mode. Checked on Angad's phone before merging.
+
+*Redesigned the same day* (Angad, after playing it: "too much text and jargon. Nobody would
+actually want to do this. Think about duolingo"). Every question now works like Duolingo's:
+one big prompt of a few words, chunky answer tiles, a Check button, and a sheet that slides up
+green ("Nice!") or grey ("Not quite.") with one line and Continue. Match boards clear pair by
+pair with no button between pairs. New words get the module's drawing and one sentence.
+"Who sends more?" shows only each side's fee and rate, and reveals what arrives after Check;
+in some puzzles the zero-fee side wins and in others it loses. "Spot the scam" is a chat
+message and three choices (red flag, looks fine, can't tell) instead of four phrases. The
+finish screen bounces in with counting stats. Gone: the timer, "Show the details", the mode
+label over every question, the fictional-amount sentence (a small "Example" tag stays), and
+the mode names under the path's cards. The module screen offers the games as icon tiles.

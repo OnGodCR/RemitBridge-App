@@ -452,81 +452,57 @@ export const tl: Copy = {
     workshops: 'Workshops',
     workshopsSub: 'Mga sesyon para sa komunidad at paaralan',
     opensWebsite: 'Bubuksan sa website',
+    /** Learn's game modes (D172): few words, Duolingo's shape. */
     games: {
       choose: 'Pumili ng laro',
-      play: 'Maglaro',
-      playAgain: 'Maglaro muli',
-      next: 'Susunod',
-      details: 'Ipakita ang detalye',
-      hideDetails: 'Itago ang detalye',
-      correct: 'Tama.',
+      check: 'Suriin',
+      playAgain: 'Maglaro ulit',
       routeWord: 'Ruta',
+      example: 'Halimbawa',
       modes: {
-        match: 'Pagtambalin',
-        quick: 'Mabilisang tanong',
-        cost: 'Hanapin ang nakatagong gastos',
+        match: 'Pagtapatin',
+        quick: 'Tama o mali',
+        cost: 'Sino ang mas marami?',
         receipt: 'Basahin ang resibo',
-        safety: 'Pansinin ang babala',
-        final: 'Huling round'
+        safety: 'Hanapin ang scam',
+        final: 'Huling round',
       },
-      matchPrompt: 'I-tap ang salita, saka ang kahulugan nito.',
-      matched: 'Nagtugma',
-      selected: 'Napili',
-      quickPrompt: 'Tugma ba ang kahulugang ito?',
+      matchPrompt: 'Pagtapatin ang mga pares',
+      allMatched: 'Tapos lahat!',
+      quickPrompt: 'Tama o mali?',
       true: 'Tama',
       false: 'Mali',
-      timerOff: 'Walang timer',
-      timerOn: 'Ipakita ang timer',
-      elapsed: 'Lumipas na oras',
-      example: 'Halimbawa',
-      exampleNote: 'Kathang-isip na halaga. Walang tunay na provider.',
-      costPrompt: 'Alin ang mas malaki ang matatanggap ng pamilya?',
-      providerA: 'Provider A',
-      providerB: 'Provider B',
-      tie: 'Parehong halaga',
-      budget: 'Kabuuang binayaran (USD)',
-      fee: 'Bayad sa padala (USD)',
-      rate: 'Palitan (MXN bawat USD)',
-      midRate: 'Mid-market rate (MXN bawat USD)',
-      received: 'Halagang matatanggap (MXN)',
-      markup: 'Patong sa palitan (USD)',
-      totalCost: 'Kabuuang gastos (USD)',
-      costWhy: 'Ihambing ang halagang matatanggap. Maaaring may mas malaking patong sa palitan kahit mas mababa ang bayad.',
+      costPrompt: 'Alin ang mas maraming naipapadala?',
+      fee: 'Bayad',
+      rate: 'Rate',
+      arrives: 'Darating',
+      hidden: (amount: string) => `${amount} nakatago sa rate`,
+      receiptTitle: 'Resibo',
       receiptPrompt: {
-        fee: 'I-tap ang bayad sa padala.',
-        rate: 'I-tap ang palitan.',
-        received: 'I-tap ang halagang matatanggap.'
+        fee: 'I-tap ang bayad',
+        rate: 'I-tap ang exchange rate',
+        received: 'I-tap ang darating',
       },
       receiptLines: {
         fee: 'Service charge',
         rate: 'Inilapat na FX rate',
-        received: 'Halaga ng payout'
+        received: 'Halaga ng payout',
       },
-      safetyPrompt: 'Ano ang napapansin mo?',
+      safetyPrompt: 'Scam ba o hindi?',
       safetyChoices: {
-        moveMoney: 'Paglipat ng pera para sa estranghero',
-        pressure: 'Pamimilit na kumilos agad',
-        shareCode: 'Pagbabahagi ng sign-in code',
-        unknown: 'Kulang ang impormasyon'
+        flag: 'Babala',
+        fine: 'Mukhang ayos',
+        unsure: 'Hindi masabi',
       },
       scenarios: {
-        stranger: {
-          text: 'May estrangherong magbabayad daw sa iyo para tumanggap ng pera at ipadala ito sa iba.',
-          why: 'Ang paglipat ng pera para sa iba ay maaaring gawin kang money mule.'
-        },
-        urgent: {
-          text: 'May nagsasabing pinsan mo siya, humihingi ng padala agad, at ayaw magpatawag.',
-          why: 'Babala ang pagmamadali at pag-iwas sa tawag. Hindi patunay ng pagkakakilanlan ang mensahe.'
-        },
-        code: {
-          text: 'May humihingi sa chat ng one-time code para makapasok sa iyong account sa padala.',
-          why: 'Maaaring magamit ng iba ang sign-in code para makapasok sa iyong account.'
-        },
-        idCheck: {
-          text: 'Humihingi ng ID ang isang serbisyo sa padala. Wala ka nang ibang impormasyon tungkol dito.',
-          why: 'Maaaring bahagi ng KYC ang paghingi ng ID. Hindi iyon sapat na patunay na lehitimo ang serbisyo.'
-        }
-      }
+        stranger: { text: 'Babayaran ka ng isang estranghero para tumanggap ng pera at ipasa ito.', why: 'Ganyan nagsisimula ang mga money mule.' },
+        urgent: { text: '“Pinsan mo ’to. Magpadala ka na ngayon. ’Wag kang tumawag.”', why: 'Ang pagmamadali at pag-iwas sa tawag ay karaniwang babala.' },
+        code: { text: 'May humingi sa chat ng iyong sign-in code.', why: 'Binubuksan ng code ang account mo. Huwag itong ibigay.' },
+        fakeRate: { text: 'Isang website ang nag-aalok ng rate na mas mataas kaysa sa lahat.', why: 'Kung parang sobrang ganda, kadalasan hindi totoo.' },
+        idCheck: { text: 'Humingi ng ID ang isang transfer app.', why: 'Humihingi rin ang mga totoong app. Sa sarili nito, walang pinapatunayan.' },
+        usual: { text: 'Ipinapakita ng app na lagi mong gamit ang bayad at rate bago ka magbayad.', why: 'Magandang senyales ang pagpapakita ng buong gastos bago magbayad.' },
+      },
+      answerIs: (answer: string) => `Sagot: ${answer}`,
     },
     lesson: {
       start: (n: number) => (n === 1 ? 'Simulan ang aralin: 1 bagong salita' : `Simulan ang aralin: ${n} bagong salita`),

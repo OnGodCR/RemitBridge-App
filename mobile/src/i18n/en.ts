@@ -436,83 +436,59 @@ export const en = {
     workshops: 'Workshops',
     workshopsSub: 'Sessions for communities and schools',
     opensWebsite: 'Opens on the website',
-    /** Lessons (D136): words met on a card, then quizzed; XP, a combo and a day streak. */
+    /** Learn's game modes (D172): few words, Duolingo's shape. */
     games: {
-      choose: 'Choose a mode',
-      play: 'Play',
+      choose: 'Pick a game',
+      check: 'Check',
       playAgain: 'Play again',
-      next: 'Next',
-      details: 'Show the details',
-      hideDetails: 'Hide the details',
-      correct: 'Correct.',
       routeWord: 'Route',
+      example: 'Example',
       modes: {
-        match: 'Match pairs',
-        quick: 'Quick fire',
-        cost: 'Spot the hidden cost',
-        receipt: 'Read the receipt',
-        safety: 'Spot the warning sign',
-        final: 'Final round'
+        match: 'Match',
+        quick: 'True or false',
+        cost: 'Who sends more?',
+        receipt: 'Read a receipt',
+        safety: 'Spot the scam',
+        final: 'Final round',
       },
-      matchPrompt: 'Tap a word, then its meaning.',
-      matched: 'Matched',
-      selected: 'Selected',
-      quickPrompt: 'Does this meaning match?',
+      matchPrompt: 'Match the pairs',
+      allMatched: 'All matched!',
+      quickPrompt: 'True or false?',
       true: 'True',
       false: 'False',
-      timerOff: 'Untimed',
-      timerOn: 'Show timer',
-      elapsed: 'Time elapsed',
-      example: 'Example',
-      exampleNote: 'Fictional amounts. No real provider.',
-      costPrompt: 'Which gives the family more?',
-      providerA: 'Provider A',
-      providerB: 'Provider B',
-      tie: 'Same amount',
-      budget: 'Total paid (USD)',
-      fee: 'Transfer fee (USD)',
-      rate: 'Exchange rate (MXN per USD)',
-      midRate: 'Mid-market rate (MXN per USD)',
-      received: 'Amount received (MXN)',
-      markup: 'Exchange-rate markup (USD)',
-      totalCost: 'Total cost (USD)',
-      costWhy: 'Compare the amount received. A smaller fee can hide a larger exchange-rate markup.',
+      costPrompt: 'Which sends more home?',
+      fee: 'Fee',
+      rate: 'Rate',
+      arrives: 'Arrives',
+      hidden: (amount: string) => `${amount} hidden in the rate`,
+      receiptTitle: 'Receipt',
       receiptPrompt: {
-        fee: 'Tap the transfer fee.',
-        rate: 'Tap the exchange rate.',
-        received: 'Tap the amount received.'
+        fee: 'Tap the fee',
+        rate: 'Tap the exchange rate',
+        received: 'Tap what arrives',
       },
       receiptLines: {
         fee: 'Service charge',
         rate: 'FX rate applied',
-        received: 'Payout amount'
+        received: 'Payout amount',
       },
-      safetyPrompt: 'What stands out?',
+      safetyPrompt: 'Scam or not?',
       safetyChoices: {
-        moveMoney: 'Moving money for a stranger',
-        pressure: 'Pressure to act now',
-        shareCode: 'Sharing a sign-in code',
-        unknown: 'Not enough information'
+        flag: 'Red flag',
+        fine: 'Looks fine',
+        unsure: 'Can’t tell',
       },
       scenarios: {
-        stranger: {
-          text: 'A stranger offers to pay you to receive money and send it to someone else.',
-          why: 'Moving money for someone else can make you a money mule.'
-        },
-        urgent: {
-          text: 'Someone claiming to be your cousin demands a transfer now and says not to call.',
-          why: 'Urgency and avoiding a call are warning signs. The message does not verify who sent it.'
-        },
-        code: {
-          text: 'Someone in a chat asks for the one-time code that signs you into your transfer account.',
-          why: 'A sign-in code can give someone access to your account.'
-        },
-        idCheck: {
-          text: 'A transfer service asks for identification. You have no other information about the service.',
-          why: 'ID checks can be part of KYC. That alone does not prove the service is genuine.'
-        }
-      }
+        stranger: { text: 'A stranger will pay you to receive money and pass it on.', why: 'That’s how money mules start.' },
+        urgent: { text: '“It’s your cousin. Send money now. Don’t call me.”', why: 'Rushing you and avoiding a call are classic signs.' },
+        code: { text: 'Someone in a chat asks for your sign-in code.', why: 'Your code opens your account. Never share it.' },
+        fakeRate: { text: 'A website offers a rate far better than everyone else’s.', why: 'A rate that looks too good usually is.' },
+        idCheck: { text: 'A transfer app asks for your ID.', why: 'Real apps ask too. On its own, it proves nothing.' },
+        usual: { text: 'Your usual app shows the fee and rate before you pay.', why: 'Showing the full cost up front is a good sign.' },
+      },
+      answerIs: (answer: string) => `Answer: ${answer}`,
     },
+    /** Lessons (D136): words met on a card, then quizzed; XP, a combo and a day streak. */
     lesson: {
       start: (n: number) => (n === 1 ? 'Start lesson: 1 new word' : `Start lesson: ${n} new words`),
       practice: 'Practice these words',

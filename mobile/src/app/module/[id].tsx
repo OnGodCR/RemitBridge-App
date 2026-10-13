@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { Tile } from '@/components/learn-lesson';
 import { MODULE_ART } from '@/components/module-art';
 import { ListGroup } from '@/components/list-row';
 import { ReadingAssignment } from '@/components/reading-assignment';
@@ -11,7 +12,7 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { MODULES, moduleFor, moduleTerms } from '@/data/modules';
-import { modesFor } from '@/lib/learn-games';
+import { modesFor, type GameMode } from '@/lib/learn-games';
 import { WORDS_PER_LESSON } from '@/lib/lesson';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
@@ -83,12 +84,23 @@ export default function ModuleScreen() {
           onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id } })}
         />
 
-        <ListGroup title={l.games.choose} cards>
-          {modesFor(m).map((mode) => (
-            <Button key={mode} variant="secondary" label={l.games.modes[mode]}
-              onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id, mode } })} />
-          ))}
-        </ListGroup>
+        {/* Every game this module has, as big tiles (D172). */}
+        <View style={styles.games}>
+          <AppText variant="heading" accessibilityRole="header">
+            {l.games.choose}
+          </AppText>
+          <View style={styles.grid}>
+            {modesFor(m).map((mode) => (
+              <Tile
+                key={mode}
+                style={styles.gameTile}
+                icon={MODE_ICONS[mode]}
+                label={l.games.modes[mode]}
+                onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id, mode } })}
+              />
+            ))}
+          </View>
+        </View>
 
         {/* The module's last step: a post that puts its words to use (2026-10-11). */}
         {complete ? <ReadingAssignment module={m} learned={learned} /> : null}
@@ -132,6 +144,15 @@ export default function ModuleScreen() {
     </>
   );
 }
+
+const MODE_ICONS = {
+  match: 'square.grid.2x2',
+  quick: 'bolt.fill',
+  cost: 'arrow.left.arrow.right',
+  receipt: 'doc.text',
+  safety: 'exclamationmark.circle.fill',
+  final: 'flag.fill',
+} as const satisfies Record<GameMode, string>;
 
 /** One of the module's words: its number (a tick once learned); opens in the glossary. */
 function Word({ n, term, learned }: { n: number; term: Term; learned: boolean }) {
@@ -181,4 +202,7 @@ const styles = StyleSheet.create({
   doneHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
   tick: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   doneTitle: { fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23 },
+  games: { gap: Spacing.three },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three },
+  gameTile: { flexBasis: '45%', flexGrow: 1 },
 });

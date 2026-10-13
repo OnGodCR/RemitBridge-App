@@ -451,81 +451,57 @@ export const vi: Copy = {
     workshops: 'Hội thảo',
     workshopsSub: 'Các buổi dành cho cộng đồng và trường học',
     opensWebsite: 'Mở trên trang web',
+    /** Learn's game modes (D172): few words, Duolingo's shape. */
     games: {
-      choose: 'Chọn cách chơi',
-      play: 'Chơi',
+      choose: 'Chọn trò chơi',
+      check: 'Kiểm tra',
       playAgain: 'Chơi lại',
-      next: 'Tiếp theo',
-      details: 'Xem chi tiết',
-      hideDetails: 'Ẩn chi tiết',
-      correct: 'Đúng.',
       routeWord: 'Tuyến',
+      example: 'Ví dụ',
       modes: {
         match: 'Ghép cặp',
-        quick: 'Câu hỏi nhanh',
-        cost: 'Tìm chi phí ẩn',
-        receipt: 'Đọc biên lai',
-        safety: 'Nhận ra dấu hiệu cảnh báo',
-        final: 'Vòng cuối'
+        quick: 'Đúng hay sai',
+        cost: 'Bên nào gửi nhiều hơn?',
+        receipt: 'Đọc biên nhận',
+        safety: 'Nhận ra lừa đảo',
+        final: 'Vòng cuối',
       },
-      matchPrompt: 'Chạm vào từ, rồi chạm vào nghĩa của từ đó.',
-      matched: 'Đã ghép',
-      selected: 'Đã chọn',
-      quickPrompt: 'Nghĩa này có đúng không?',
+      matchPrompt: 'Ghép các cặp',
+      allMatched: 'Đã ghép hết!',
+      quickPrompt: 'Đúng hay sai?',
       true: 'Đúng',
       false: 'Sai',
-      timerOff: 'Không bấm giờ',
-      timerOn: 'Hiện đồng hồ',
-      elapsed: 'Thời gian đã qua',
-      example: 'Ví dụ',
-      exampleNote: 'Số tiền giả định. Không phải nhà cung cấp thật.',
-      costPrompt: 'Lựa chọn nào giúp gia đình nhận nhiều hơn?',
-      providerA: 'Nhà cung cấp A',
-      providerB: 'Nhà cung cấp B',
-      tie: 'Số tiền bằng nhau',
-      budget: 'Tổng đã trả (USD)',
-      fee: 'Phí chuyển tiền (USD)',
-      rate: 'Tỷ giá (MXN trên mỗi USD)',
-      midRate: 'Tỷ giá giữa thị trường (MXN trên mỗi USD)',
-      received: 'Số tiền nhận được (MXN)',
-      markup: 'Phần chênh lệch tỷ giá (USD)',
-      totalCost: 'Tổng chi phí (USD)',
-      costWhy: 'So sánh số tiền nhận được. Phí thấp hơn có thể đi kèm phần chênh lệch tỷ giá cao hơn.',
+      costPrompt: 'Bên nào gửi về nhà nhiều hơn?',
+      fee: 'Phí',
+      rate: 'Tỷ giá',
+      arrives: 'Nhận được',
+      hidden: (amount: string) => `${amount} giấu trong tỷ giá`,
+      receiptTitle: 'Biên nhận',
       receiptPrompt: {
-        fee: 'Chạm vào phí chuyển tiền.',
-        rate: 'Chạm vào tỷ giá.',
-        received: 'Chạm vào số tiền nhận được.'
+        fee: 'Chạm vào phí',
+        rate: 'Chạm vào tỷ giá',
+        received: 'Chạm vào số tiền nhận được',
       },
       receiptLines: {
         fee: 'Phí dịch vụ',
         rate: 'Tỷ giá FX áp dụng',
-        received: 'Số tiền chi trả'
+        received: 'Số tiền chi trả',
       },
-      safetyPrompt: 'Bạn nhận thấy điều gì?',
+      safetyPrompt: 'Lừa đảo hay không?',
       safetyChoices: {
-        moveMoney: 'Chuyển tiền cho người lạ',
-        pressure: 'Bị thúc ép hành động ngay',
-        shareCode: 'Chia sẻ mã đăng nhập',
-        unknown: 'Chưa đủ thông tin'
+        flag: 'Dấu hiệu nguy hiểm',
+        fine: 'Có vẻ ổn',
+        unsure: 'Không rõ',
       },
       scenarios: {
-        stranger: {
-          text: 'Một người lạ hứa trả công nếu bạn nhận tiền rồi chuyển cho người khác.',
-          why: 'Chuyển tiền hộ người khác có thể khiến bạn trở thành người trung chuyển tiền bất hợp pháp.'
-        },
-        urgent: {
-          text: 'Ai đó tự nhận là anh họ của bạn, đòi chuyển tiền ngay và bảo bạn đừng gọi.',
-          why: 'Thúc giục và né tránh cuộc gọi là dấu hiệu cảnh báo. Tin nhắn không xác minh được người gửi.'
-        },
-        code: {
-          text: 'Ai đó trong cuộc trò chuyện xin mã dùng một lần để đăng nhập tài khoản chuyển tiền của bạn.',
-          why: 'Mã đăng nhập có thể cho người khác truy cập tài khoản của bạn.'
-        },
-        idCheck: {
-          text: 'Một dịch vụ chuyển tiền yêu cầu giấy tờ tùy thân. Bạn không có thông tin nào khác về dịch vụ đó.',
-          why: 'Kiểm tra giấy tờ có thể là một phần của KYC. Chỉ điều đó chưa chứng minh dịch vụ là thật.'
-        }
-      }
+        stranger: { text: 'Một người lạ trả tiền để bạn nhận tiền rồi chuyển tiếp.', why: 'Đó là cách “con la tiền” bắt đầu.' },
+        urgent: { text: '“Anh họ đây. Gửi tiền ngay. Đừng gọi.”', why: 'Hối thúc và né cuộc gọi là dấu hiệu quen thuộc.' },
+        code: { text: 'Có người trong khung chat xin mã đăng nhập của bạn.', why: 'Mã đó mở tài khoản của bạn. Đừng bao giờ đưa.' },
+        fakeRate: { text: 'Một trang web đưa tỷ giá tốt hơn hẳn mọi nơi khác.', why: 'Tỷ giá tốt đến khó tin thường là không thật.' },
+        idCheck: { text: 'Một ứng dụng chuyển tiền yêu cầu giấy tờ tùy thân.', why: 'Ứng dụng thật cũng yêu cầu. Chỉ vậy thì chưa chứng minh gì.' },
+        usual: { text: 'Ứng dụng quen của bạn hiện phí và tỷ giá trước khi trả tiền.', why: 'Cho thấy toàn bộ chi phí trước là dấu hiệu tốt.' },
+      },
+      answerIs: (answer: string) => `Đáp án: ${answer}`,
     },
     lesson: {
       start: (n: number) => (n === 1 ? 'Bắt đầu bài học: 1 từ mới' : `Bắt đầu bài học: ${n} từ mới`),
