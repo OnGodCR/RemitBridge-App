@@ -22,6 +22,24 @@ export async function setNewsletter(on: boolean, language: string): Promise<bool
   return !error;
 }
 
+/**
+ * The opt-in on onboarding's sign-in step: off unless the person turns it on there, and
+ * applied only once a sign-in succeeds (the database needs the account). Skipping sign-in
+ * drops it.
+ */
+let pendingOptIn = false;
+
+export function setPendingOptIn(on: boolean) {
+  pendingOptIn = on;
+}
+
+/** After a successful sign-in: turns the newsletter on if it was asked for, once. */
+export async function applyPendingOptIn(language: string): Promise<void> {
+  if (!pendingOptIn) return;
+  pendingOptIn = false;
+  await setNewsletter(true, language);
+}
+
 /** How many people the next issue goes to. Admins only; null for anyone else. */
 export async function subscriberCount(): Promise<number | null> {
   if (!supabase) return null;

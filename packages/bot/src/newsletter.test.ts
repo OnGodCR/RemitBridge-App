@@ -6,7 +6,7 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { caller, reset, rpcs, tables } from './test/fake-supabase.ts'
 
-// The postal address lives in site.config.json; each test sets it.
+// The postal address lives in site.config.json; empty unless a test sets it.
 const site = vi.hoisted(() => ({ address: '' }))
 vi.mock('../../../supabase/functions/_shared/site-config.ts', () => ({
   CONTACT_EMAIL: 'hello@remitbridgelabs.org',
@@ -78,11 +78,10 @@ describe('send-newsletter', () => {
     expect(tables.newsletter_issues ?? []).toEqual([])
   })
 
-  it("won't send to everyone without a postal address", async () => {
-    rpcs.newsletter_recipients = () => people(3)
-    const res = await send({ mode: 'send', ...issue })
-    expect(res.status).toBe(409)
-    expect(mail).toEqual([])
+  it('sends to everyone without a postal address, and prints one once set', async () => {
+    rpcs.newsletter_recipients = () => people(1)
+    expect(await (await send({ mode: 'send', ...issue })).json()).toEqual({ recipients: 1, sent: 1, failed: 0 })
+    expect(mail[0].payload[0].text).not.toContain('PO Box')
   })
 
   it('sends everyone their own unsubscribe link, and logs the issue', async () => {

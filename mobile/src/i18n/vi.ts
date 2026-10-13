@@ -146,6 +146,7 @@ export const vi: Copy = {
     google: 'Tiếp tục với Google',
     email: 'Tiếp tục với email',
     skip: 'Để sau',
+    newsletterOptIn: 'Thỉnh thoảng gửi email cập nhật cho tôi',
     birthYear: 'Năm sinh của bạn',
     continue: 'Tiếp tục',
     tooYoung: 'Tài khoản dành cho người từ 13 tuổi trở lên. Bạn vẫn có thể so sánh giá mà không cần tài khoản.',

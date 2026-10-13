@@ -2090,6 +2090,13 @@ that changes. Sign in with Apple's "Hide My Email" addresses only receive mail o
 remitbridgelabs.org is registered with Apple's private email relay. The privacy policy and
 both stores' privacy answers now name the newsletter.
 
+*Changed the same day (Angad: "a newsletter isn't meant to be for advertising, its just
+updates and its ONLY opt in in settings and during onboarding"):* the postal-address block on
+full sends is gone, since the newsletter is opted-in updates rather than advertising; an
+address still prints in every issue once `MAILING_ADDRESS` is set. Onboarding's sign-in step
+gains an "Email me updates now and then" switch, off by default, applied only once the
+sign-in succeeds and dropped on "Not now".
+
 **D170. Hindi ships as reviewed** (Angad, 2026-10-12: "my mom approved everything, drop the
 label"). Angad's mother read every row of `docs/translation-review/hi.md`, the bot's Hindi,
 the glossary and the six newsletter rows, and approved them; Angad relayed that in writing

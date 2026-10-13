@@ -131,6 +131,7 @@ export const en = {
     google: 'Continue with Google',
     email: 'Continue with email',
     skip: 'Not now',
+    newsletterOptIn: 'Email me updates now and then',
     birthYear: 'Year you were born',
     continue: 'Continue',
     tooYoung: 'Accounts are for people 13 and older. Comparing prices works without one.',

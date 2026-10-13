@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Icon } from '@/components/icon';
 import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, TextInput } from 'react-native';
+import { Platform, StyleSheet, Switch, TextInput, View } from 'react-native';
 
 import { SavedArt } from '@/components/illustrations';
 import { Rise } from '@/components/motion-views';
@@ -12,10 +12,11 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
-import { useCopy } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
 import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
+import { applyPendingOptIn, setPendingOptIn } from '@/lib/newsletter';
 import { prefs } from '@/lib/prefs';
 import { signInWithApple, signInWithGoogle, type SignInError } from '@/lib/sign-in';
 import { track } from '@/lib/track';
@@ -48,6 +49,8 @@ export default function SignInOptions() {
   const copy = useCopy();
   const si = copy.signIn;
   const [gate, setGate] = useState(prefs.ageGate);
+  const { language } = useLanguage();
+  const [optIn, setOptIn] = useState(false);
   const [year, setYear] = useState('');
   const thisYear = new Date().getFullYear();
   const yearOk = /^\d{4}$/.test(year) && Number(year) >= 1900 && Number(year) <= thisYear;
@@ -73,6 +76,7 @@ export default function SignInOptions() {
     setBusy(null);
     if (result === null) {
       track('signed_in', { method });
+      applyPendingOptIn(language.code);
       finishOnboarding();
       leaveSignIn();
     } else if (result !== 'closed') {
@@ -82,6 +86,7 @@ export default function SignInOptions() {
   };
 
   const skip = () => {
+    setPendingOptIn(false);
     track('onboarding_skipped');
     finishOnboarding();
     leaveSignIn();
@@ -174,6 +179,22 @@ export default function SignInOptions() {
         />
       ) : null}
 
+      {/* The newsletter (D169): off unless turned on here or in Account, never by default. */}
+      {onboarding && gate === 'ok' ? (
+        <View style={styles.optIn}>
+          <AppText style={[styles.optInText, { color: t.text }]}>{si.newsletterOptIn}</AppText>
+          <Switch
+            value={optIn}
+            onValueChange={(v) => {
+              setOptIn(v);
+              setPendingOptIn(v);
+            }}
+            trackColor={{ true: t.primary, false: t.border }}
+            accessibilityLabel={si.newsletterOptIn}
+          />
+        </View>
+      ) : null}
+
       {error ? (
         <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
           {si.errors[error]}
@@ -198,6 +219,8 @@ const styles = StyleSheet.create({
     letterSpacing: -0.7,
   },
   body: { fontSize: 17, lineHeight: 24 },
+  optIn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
+  optInText: { flex: 1, fontSize: 17, lineHeight: 24 },
   input: {
     minHeight: 56,
     borderRadius: Radius.md,

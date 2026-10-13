@@ -147,6 +147,7 @@ export const es: Copy = {
     google: 'Continuar con Google',
     email: 'Continuar con correo',
     skip: 'Ahora no',
+    newsletterOptIn: 'Envíenme novedades de vez en cuando',
     birthYear: 'Año en que naciste',
     continue: 'Continuar',
     tooYoung: 'Las cuentas son para personas de 13 años o más. Puedes comparar precios sin una cuenta.',
