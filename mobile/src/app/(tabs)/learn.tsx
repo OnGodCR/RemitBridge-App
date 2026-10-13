@@ -110,7 +110,7 @@ export default function LearnScreen() {
       <FocusRise style={styles.fill}>
       {part === 'modules' ? (
         <ScrollView ref={path} onLayout={(e) => setViewport(e.nativeEvent.layout.height)} contentContainerStyle={styles.path}>
-          <LearnPath modules={MODULES} learned={learned} next={next?.module.id ?? null} onOpen={(m) => open(m)} onNextAt={toNext} />
+          <LearnPath modules={MODULES} learned={learned} next={next?.module.id ?? null} onOpen={(m) => open(m)} onStart={lesson} onNextAt={toNext} />
         </ScrollView>
       ) : (
         <ScrollView contentContainerStyle={styles.body}>

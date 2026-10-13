@@ -36,7 +36,7 @@ jest.mock('@/lib/prefs', () => ({
 }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
 jest.mock('@/lib/auth', () => ({ useAuth: () => ({ session: null }) }));
-jest.mock('@/lib/name', () => ({ firstName: () => null }));
+jest.mock('@/lib/name', () => ({ firstName: () => null, partOfDay: () => 'morning' }));
 jest.mock('expo-image', () => ({ Image: () => null }));
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
 jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }) }));

@@ -71,10 +71,8 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
   const [state, dispatch] = useReducer(gameReducer, plan.steps, startGame);
   const [stats, setStats] = useState<LearnStats | null>(null);
   const recorded = useRef(false);
-  // The answer picked but not yet checked; on a match board, the word waiting for its meaning.
+  // The answer picked but not yet checked.
   const [picked, setPicked] = useState<string>();
-  // A wrong pair on a match board, shown grey for a moment.
-  const [miss, setMiss] = useState<{ word: string; meaning: string } | null>(null);
   const scroll = useRef<ScrollView>(null);
   const t = useTheme();
   const copy = useCopy();
@@ -105,15 +103,9 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
     haptic('success');
     announce(plan.practice ? l.practiceDone : l.done);
   }, [done, state, m.id, plan, l]);
-  useEffect(() => {
-    if (!miss) return;
-    const timer = setTimeout(() => setMiss(null), 650);
-    return () => clearTimeout(timer);
-  }, [miss]);
 
   const next = () => {
     setPicked(undefined);
-    setMiss(null);
     dispatch({ type: 'next' });
     scroll.current?.scrollTo({ y: 0, animated: false });
   };
@@ -125,16 +117,24 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
     dispatch({ type: 'answer', choice });
   };
 
-  const tryPair = (word: string, meaning: string) => {
+  const tryPair = (word: string, meaning: string): boolean => {
     const after = gameReducer(state, { type: 'answer', choice: meaning, termId: word });
-    if (after === state) return;
+    if (after === state) return false;
     const right = !!after.answer?.correct;
     haptic(right ? 'success' : 'error');
-    if (!right) setMiss({ word, meaning });
     announce(right ? l.right[after.matched.length % l.right.length] : l.wrong);
-    setPicked(undefined);
     dispatch({ type: 'answer', choice: meaning, termId: word });
+    return right;
   };
+
+  // A cleared board moves on by itself after a beat, the way Duolingo's does.
+  const cleared = boardDone(state);
+  useEffect(() => {
+    if (!cleared) return;
+    announce(g.allMatched);
+    const timer = setTimeout(() => dispatch({ type: 'next' }), 700);
+    return () => clearTimeout(timer);
+  }, [cleared, g.allMatched]);
 
   if (done && stats) {
     return (
@@ -164,56 +164,18 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
     body = (
       <>
         <Prompt>{g.matchPrompt}</Prompt>
-        <View style={styles.words}>
-          {step.terms.map((term) => {
-            const matched = state.matched.includes(term.id);
-            const tileState: TileState = matched
-              ? 'right'
-              : miss?.word === term.id
-                ? 'wrong'
-                : picked === term.id
-                  ? 'selected'
-                  : 'idle';
-            return (
-              <Tile
-                key={term.id}
-                style={styles.wordTile}
-                label={shown(term).term}
-                state={tileState}
-                disabled={matched}
-                onPress={() => {
-                  haptic('tap');
-                  setPicked(picked === term.id ? undefined : term.id);
-                }}
-              />
-            );
-          })}
-        </View>
-        <View style={styles.stack}>
-          {step.meanings.map((term) => {
-            const matched = state.matched.includes(term.id);
-            const tileState: TileState = matched ? 'right' : miss?.meaning === term.id ? 'wrong' : 'idle';
-            return (
-              <Tile
-                key={term.id}
-                label={firstSentence(shown(term).plain)}
-                state={tileState}
-                disabled={matched || !picked}
-                onPress={() => picked && tryPair(picked, term.id)}
-              />
-            );
-          })}
-        </View>
+        <MatchBoard
+          key={state.index}
+          terms={step.terms}
+          meanings={step.meanings}
+          matched={state.matched}
+          word={(term) => shown(term).term}
+          meaning={(term) => firstSentence(shown(term).plain)}
+          onPair={tryPair}
+        />
       </>
     );
-    bottom = boardDone(state) ? (
-      <BottomBar
-        result={{ correct: true, title: g.allMatched, xp: 0 }}
-        canCheck={false}
-        onCheck={next}
-        onContinue={next}
-      />
-    ) : null;
+    bottom = null;
   } else {
     const answered = state.answer;
     const stateFor = (choice: string): TileState =>
@@ -261,6 +223,78 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
         </Rise>
       </ScrollView>
       {bottom}
+    </View>
+  );
+}
+
+/**
+ * A match board, like Duolingo's: words on the left, meanings on the right. Tap one on either
+ * side, then its partner on the other. A right pair flashes green and greys out; a wrong one
+ * shakes. The board moves on once every pair is found.
+ */
+function MatchBoard({
+  terms,
+  meanings,
+  matched,
+  word,
+  meaning,
+  onPair,
+}: {
+  terms: Term[];
+  meanings: Term[];
+  matched: string[];
+  word: (term: Term) => string;
+  meaning: (term: Term) => string;
+  onPair: (word: string, meaning: string) => boolean;
+}) {
+  const [picked, setPicked] = useState<{ side: 'word' | 'meaning'; id: string } | null>(null);
+  const [flash, setFlash] = useState<{ kind: 'right' | 'wrong'; word: string; meaning: string } | null>(null);
+  useEffect(() => {
+    if (!flash) return;
+    const timer = setTimeout(() => setFlash(null), flash.kind === 'right' ? 450 : 600);
+    return () => clearTimeout(timer);
+  }, [flash]);
+
+  const tap = (side: 'word' | 'meaning', id: string) => {
+    if (!picked || picked.side === side) {
+      haptic('tap');
+      setPicked(picked?.side === side && picked.id === id ? null : { side, id });
+      return;
+    }
+    const pair = side === 'word' ? { word: id, meaning: picked.id } : { word: picked.id, meaning: id };
+    setPicked(null);
+    setFlash({ kind: onPair(pair.word, pair.meaning) ? 'right' : 'wrong', ...pair });
+  };
+  const stateOf = (side: 'word' | 'meaning', id: string): TileState => {
+    if (flash && flash[side] === id) return flash.kind;
+    if (matched.includes(id)) return 'done';
+    return picked?.side === side && picked.id === id ? 'selected' : 'idle';
+  };
+  return (
+    <View style={styles.board}>
+      <View style={styles.wordColumn}>
+        {terms.map((term) => (
+          <Tile
+            key={term.id}
+            label={word(term)}
+            state={stateOf('word', term.id)}
+            disabled={matched.includes(term.id)}
+            onPress={() => tap('word', term.id)}
+          />
+        ))}
+      </View>
+      <View style={styles.meaningColumn}>
+        {meanings.map((term) => (
+          <Tile
+            key={term.id}
+            label={meaning(term)}
+            small
+            state={stateOf('meaning', term.id)}
+            disabled={matched.includes(term.id)}
+            onPress={() => tap('meaning', term.id)}
+          />
+        ))}
+      </View>
     </View>
   );
 }
@@ -461,8 +495,9 @@ const styles = StyleSheet.create({
   stack: { gap: Spacing.three },
   row: { flexDirection: 'row', gap: Spacing.three },
   half: { flex: 1 },
-  words: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
-  wordTile: { flexGrow: 1 },
+  board: { flexDirection: 'row', gap: Spacing.two, alignItems: 'flex-start' },
+  wordColumn: { flex: 2, gap: Spacing.two },
+  meaningColumn: { flex: 3, gap: Spacing.two },
   again: { fontFamily: Fonts.bold, fontSize: 13, letterSpacing: 0.3, textTransform: 'uppercase' },
   card: { borderWidth: 2, borderBottomWidth: 5, borderRadius: Radius.lg + 4, padding: Spacing.three, gap: Spacing.two },
   cardWord: { fontFamily: Fonts.extrabold, fontSize: 24, lineHeight: 30 },
