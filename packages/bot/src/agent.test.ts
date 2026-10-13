@@ -52,6 +52,12 @@ describe('the agent', () => {
     expect(await runAgent(scripted(outside, outside), [prices], 'hello', { language: 'en', lastCountry: null })).toBeNull()
   })
 
+  it('bolds the WhatsApp way, and leaves the app’s markdown alone', async () => {
+    const turn = '{"reply":"**₹48,041** via Instarem"}'
+    expect((await runAgent(scripted(turn), [], 'is it 48,041 in india', { language: 'en', lastCountry: null }))?.text).toBe('*₹48,041* via Instarem')
+    expect((await runAgent(scripted(turn), [], 'is it 48,041 in india', { language: 'en', lastCountry: null, channel: 'app' }))?.text).toBe('**₹48,041** via Instarem')
+  })
+
   it('reports a missing tool to the model instead of failing', async () => {
     const model = scripted('{"tool":"teleport","args":{}}', '{"reply":"I can’t do that."}')
     expect((await runAgent(model, [prices], 'x', { language: 'en', lastCountry: null }))?.text).toBe('I can’t do that.')

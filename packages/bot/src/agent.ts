@@ -196,7 +196,9 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
       continue
     }
 
-    const reply = humanize(turn.reply.slice(0, 1500))
+    // WhatsApp bolds *one pair*; a model's **markdown** would show its outer asterisks there.
+    const text = humanize(turn.reply.slice(0, 1500))
+    const reply = ctx.channel === 'app' ? text : text.replace(/\*\*([^*\n]+)\*\*/g, '*$1*')
     const numbers = strayNumbers(reply, sources)
     const links = strayLinks(reply)
     if (!numbers.length && !links.length) return { text: reply, tools: called }
