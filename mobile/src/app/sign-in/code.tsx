@@ -6,10 +6,11 @@ import { Step } from '@/components/onboarding';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useCopy } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
 import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
 import { leaveSignIn } from '@/lib/finish-sign-in';
+import { applyPendingOptIn } from '@/lib/newsletter';
 import { sendEmailCode, verifyEmailCode, type SignInError } from '@/lib/sign-in';
 import { track } from '@/lib/track';
 
@@ -18,6 +19,7 @@ const RESEND_AFTER_S = 60; // matches auth.email.max_frequency in supabase/confi
 export default function CodeStep() {
   const t = useTheme();
   const { finishOnboarding } = useAuth();
+  const { language } = useLanguage();
   const { email = '' } = useLocalSearchParams<{ email: string }>();
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
@@ -44,6 +46,7 @@ export default function CodeStep() {
       return;
     }
     track('signed_in', { method: 'email' });
+    applyPendingOptIn(language.code);
     finishOnboarding();
     leaveSignIn();
   };

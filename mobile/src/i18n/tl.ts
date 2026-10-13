@@ -147,6 +147,7 @@ export const tl: Copy = {
     google: 'Magpatuloy gamit ang Google',
     email: 'Magpatuloy gamit ang email',
     skip: 'Hindi muna',
+    newsletterOptIn: 'I-email ako ng mga update paminsan-minsan',
     birthYear: 'Taon ng iyong kapanganakan',
     continue: 'Magpatuloy',
     tooYoung: 'Para sa edad 13 pataas ang mga account. Puwede ka pa ring maghambing ng presyo nang walang account.',

@@ -3,9 +3,9 @@
 // sends it to everyone.
 //
 // Admins only: the caller's own token is checked with is_admin(), as in notify-route-launch.
-// A full send needs a postal address in site.config.json (MAILING_ADDRESS): US law
-// (CAN-SPAM) asks for one in commercial email, and a newsletter can count as that, so the
-// safe default is not to send without it. A test goes only to the admin and needs none.
+// A test goes only to the admin. The newsletter is updates people opted into, not
+// advertising (Angad, 2026-10-12), so a full send doesn't wait for a postal address; one is
+// printed in every issue once MAILING_ADDRESS in site.config.json is set.
 //
 // Each issue is logged in newsletter_issues before the first email goes out, and a second
 // full send within 10 minutes is refused, so a double tap can't mail everyone twice.
@@ -71,10 +71,6 @@ Deno.serve(async (req) => {
     const built = buildEmail({ ...issue, subject: `[Test] ${issue.subject}` }, sender, `${SITE}/unsubscribe`);
     const res = await resend(key, '/emails', message(to, built));
     return res.ok ? json({ sent: 1, to }, 200) : json({ error: `Resend refused the test (${res.status})` }, 502);
-  }
-
-  if (!MAILING_ADDRESS.trim()) {
-    return json({ error: 'Set MAILING_ADDRESS in site/site.config.json and redeploy before sending to everyone' }, 409);
   }
 
   const admin = createClient(url, secretKey(), { auth: { persistSession: false } });

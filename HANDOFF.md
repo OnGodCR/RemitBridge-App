@@ -18,6 +18,10 @@ resume. Update it at the end of every working session.
   `/unsubscribe` on the site, privacy policy and store answers. Waiting on Angad: the
   migration, the two deploys, a postal address before any full send, Resend tracking off,
   Apple's email relay, and a new build. Local migration checks pass, bot tests 152, app 162.
+  Later the same day: the migration is live (smoke 76/76), both functions deployed, no
+  postal-address block, and an opt-in switch on onboarding's sign-in step.
+- **Hindi reviewed (D170)** and **Compare is the first tab again (D171)**. Android production
+  build 520e9e31 (versionCode 6) has all of it; 604edbb8 and 92f12877 were canceled for it.
 
 ## 2026-10-12: screenshots, Mexico's prices, the code email, WhatsApp replies, store prep
 

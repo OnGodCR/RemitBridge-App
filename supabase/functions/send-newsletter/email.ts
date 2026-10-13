@@ -11,7 +11,7 @@ export interface Issue {
 
 export interface Sender {
   legalName: string;
-  /** Printed in every issue once site.config.json has one; full sends wait for it. */
+  /** Printed in every issue once site.config.json has one. */
   mailingAddress: string;
   contactEmail: string;
 }

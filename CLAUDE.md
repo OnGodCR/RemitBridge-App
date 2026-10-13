@@ -248,8 +248,9 @@ Angad does this once the app itself is finished (D117).
       composer (Account, Admin, Write a newsletter), `send-newsletter` and
       `newsletter-unsubscribe`, the site's `/unsubscribe` page, privacy policy and store answers.
       Migration run by Angad and both functions deployed 2026-10-12, smoke test 76/76.
-      Left (Angad): a postal address in `MAILING_ADDRESS` before any full send (never the home address),
-      Apple's private email relay registration, a new build for the app screens.
+      No postal-address block (opted-in updates, not ads); an opt-in switch on onboarding's
+      sign-in step too. Redeployed. Left (Angad): Apple's private email
+      relay registration; a new build for the app screens.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with

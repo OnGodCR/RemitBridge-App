@@ -12,8 +12,7 @@ import { sendIssue, sentIssues, subscriberCount, type SentIssue } from '@/lib/ne
 /**
  * Writing the newsletter (D169), for admins. Plain text: a blank line starts a paragraph, and
  * web addresses become links. A test goes to your own address first; sending to everyone asks
- * once more, and the function refuses a second send within 10 minutes and any full send until
- * site.config.json has a postal address.
+ * once more, and the function refuses a second send within 10 minutes.
  */
 function NewsletterScreen() {
   const t = useTheme();
@@ -97,7 +96,7 @@ function NewsletterScreen() {
           style={[input, styles.body]}
         />
         <AppText variant="small" muted>
-          Every issue ends with why they got it, a one-tap unsubscribe link, and the name, postal address and email of RemitBridge Labs.
+          Every issue ends with why they got it, a one-tap unsubscribe link, and the name and email of RemitBridge Labs.
         </AppText>
       </View>
       <View style={styles.actions}>

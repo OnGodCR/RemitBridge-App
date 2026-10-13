@@ -14,7 +14,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab` from EAS build 604edbb8 (versionCode 4: the Android sign-in fix, the newsletter and reviewed Hindi; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
+- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
@@ -37,7 +37,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Run the newsletter migration**: run by Angad in the SQL editor 2026-10-12; smoke test 76/76.
 - [x] **Deploy the two functions**: `send-newsletter` and `newsletter-unsubscribe` deployed 2026-10-12; the unsubscribe link redirects to the live `/unsubscribe` page.
-- [ ] **A postal address for the newsletter**: full sends wait for `MAILING_ADDRESS` in `site/site.config.json` (never the home address there; a PO box or mailbox service). Tests to yourself work without it.
+- [x] **Redeploy send-newsletter**: redeployed 2026-10-12 without the postal-address block.
 - [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).

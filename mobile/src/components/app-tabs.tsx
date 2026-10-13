@@ -11,7 +11,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 
 /**
- * The bottom bar: Scan, Compare, WhatsApp, Tools, Learn (D147; Account moved to the top
+ * The bottom bar: Compare, Scan, WhatsApp, Tools, Learn (D147, D171; Account moved to the top
  * right of every tab, since Android's bar holds five at most).
  *
  * iPhone keeps the system tab bar. Android draws its own (Angad, 2026-10-09: the stock
@@ -21,9 +21,9 @@ import { useCopy } from '@/i18n';
  * (pager-tabs.tsx, 2026-10-11), so swiping between them follows the finger.
  */
 const TABS: { name: string; label: 'scan' | 'compare' | 'whatsapp' | 'tools' | 'learn'; sf: SFSymbol; md: AndroidSymbol }[] = [
-  // Scan opens the app (D101): a real receipt is a better first step than a sum.
-  { name: 'index', label: 'scan', sf: 'doc.text.viewfinder', md: 'document_scanner' },
-  { name: 'compare', label: 'compare', sf: 'arrow.left.arrow.right', md: 'compare_arrows' },
+  // Compare opens the app again (Angad, 2026-10-12, D171, reversing D101); Scan is second.
+  { name: 'index', label: 'compare', sf: 'arrow.left.arrow.right', md: 'compare_arrows' },
+  { name: 'scan', label: 'scan', sf: 'doc.text.viewfinder', md: 'document_scanner' },
   { name: 'whatsapp', label: 'whatsapp', sf: 'message', md: 'chat' },
   { name: 'tools', label: 'tools', sf: 'wrench.and.screwdriver', md: 'build' },
   { name: 'learn', label: 'learn', sf: 'book', md: 'menu_book' },
