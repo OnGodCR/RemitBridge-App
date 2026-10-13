@@ -45,6 +45,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 ## Receipt scanner (Angad, D173)
 
 - [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.
+- [x] **Redeploy for the row fix (D174)**: scan-receipt and whatsapp both deployed 2026-10-13.
+- [ ] **Scan a real receipt again** after the row fix (D174) and tell Claude what it read.
 - [ ] **Send Claude the receipts that came out wrong**: a photo (or the values it read and what the receipt really says) for each, so each becomes a test case in `benchmark/receipts/`.
 
 ## Content (Angad)
