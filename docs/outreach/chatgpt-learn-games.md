@@ -98,7 +98,8 @@ The look (DECISIONS.md D18, D44, D47, D103, D109, D112, D136, D152, D154):
 - Today's lesson screen (app/lesson/[id].tsx): full screen, close button and progress bar on
   top, a combo counter that pops at 2 or more in a row, one question at a time, a finish
   screen with XP, accuracy and streak. New modes should feel like the same family: reuse
-  TopBar, the answer feedback and the finish screen rather than inventing new chrome.
+  TopBar, the answer feedback and the finish screen (all local to lesson/[id].tsx today;
+  move them into components/ to share) rather than inventing new chrome.
 - Words (D154): one fact per line, short labels, no explanations under every element; an
   explanation goes behind "Show the details". Buttons say what they do ("Check", "Next",
   "Play again").
