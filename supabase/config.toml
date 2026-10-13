@@ -458,3 +458,8 @@ verify_jwt = false
 
 [functions.newsletter-unsubscribe]
 verify_jwt = false
+
+# Remmy, the in-app assistant (D175). Signed out works too, so the gateway's check is off; the
+# function limits each install and address itself.
+[functions.remmy]
+verify_jwt = false
