@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Extractors } from './extract/index.ts'
 import { pageFromLines } from './ocr.ts'
-import { readReceipt } from './pipeline.ts'
+import { doubtedFields, readReceipt } from './pipeline.ts'
 import { answer, fakeModel } from './test/fake-model.ts'
 import { FIELD_NAMES } from './types.ts'
 
@@ -96,5 +96,33 @@ describe('readReceipt', () => {
     const second = fakeModel([{ text: answer({ pickup_charge: [40, 0.9] }) }])
     const kept = await readReceipt({ page: fee, today: TODAY, model: { client: second.client }, extractors: rules })
     expect(kept.fields.pickup_charge?.value).toBe(40)
+  })
+
+  it('sends values that are read confidently but don\'t add up back to the model (D174)', async () => {
+    // The rules are sure of every number, but 500 x 17.2 isn't 9,000: something is misread.
+    const sure: Extractors = {
+      ...none,
+      provider: () => ({ value: 'Western Union', confidence: 0.95 }),
+      send_currency: () => ({ value: 'USD', confidence: 0.95 }),
+      receive_currency: () => ({ value: 'MXN', confidence: 0.95 }),
+      amount_sent: () => ({ value: 500, confidence: 0.95 }),
+      exchange_rate: () => ({ value: 17.2, confidence: 0.95 }),
+      amount_received: () => ({ value: 9000, confidence: 0.95 }),
+    }
+    const { client } = fakeModel([{ text: answer({ amount_received: [8600, 0.95, 3] }) }])
+    const r = await readReceipt({ page, today: TODAY, model: { client }, extractors: sure })
+    expect(r.askedModel).toEqual(expect.arrayContaining(['amount_sent', 'exchange_rate', 'amount_received']))
+    expect(r.fields.amount_received?.value).toBe(8600)
+    expect(r.validation.checks.find((c) => c.id === 'received')?.ok).toBe(true)
+  })
+
+  it('doubts nothing when the numbers add up', () => {
+    expect(
+      doubtedFields({
+        amount_sent: { value: 500, confidence: 0.95 },
+        exchange_rate: { value: 17.2, confidence: 0.95 },
+        amount_received: { value: 8600, confidence: 0.95 },
+      }),
+    ).toEqual([])
   })
 })

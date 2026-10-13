@@ -2166,3 +2166,20 @@ a total equal to the amount means the fee was inside it; with no total, whicheve
 amount received fits. The cost, the checks and the WhatsApp reply all use it. Fee-on-top
 receipts are unchanged. The next step is real receipts: the app's failures need the photos or
 the misread values, added to `benchmark/receipts/` as test cases.
+
+**D174. Rows the phone's OCR splits are put back together, and doubtful values go to the
+model** (Angad, 2026-10-12: "basically nothing is found... I need to type everything out
+manually... it might make sense to switch to a better model"). The cause wasn't the model.
+ML Kit reads a receipt in blocks by layout, so a row like "Transfer fee ...... $5.00" came
+back as two lines, label and value, and the value's box often starts a pixel above its
+label's. Sorted by top edge, each value landed before its label and paired with the row
+above: a test receipt read as amount sent $4.99, fee $504.99, total 1, rate 8,600. The checks
+then failed everything and the person typed it all. The benchmark never saw it because its
+synthetic receipts go through tesseract, which keeps rows whole. Now `joinRows` (ocr.ts)
+joins lines that share most of their height and sit side by side, in the app's `fromMlKit`
+and again in `readReceipt`, so scans from builds already installed are fixed once
+`scan-receipt` is redeployed. Second: values the rules read confidently but that fail the
+received or total check are now doubted and sent to the model with the photo, where before a
+confident wrong value stood and the model was never asked. On the model itself: Groq's only
+vision model is the one already in use (Qwen 3.8 27B, D98), so there's nothing better on the
+free tier there; revisit once real receipts show what's still missed.
