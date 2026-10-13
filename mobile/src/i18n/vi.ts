@@ -65,6 +65,8 @@ export const vi: Copy = {
     limited: 'Mình đang nghỉ một chút. Bạn vẫn có thể tự so sánh giá.',
     slow: 'Bạn đang gửi tin nhắn quá nhanh. Đợi một phút rồi thử lại.',
     couldNot: 'Mình chưa hiểu câu đó. Bạn thử hỏi cách khác nhé.',
+    pricesHere: 'Đây là giá đã kiểm tra hôm nay.',
+    totalCost: (p: number) => `chi phí ${p.toFixed(1)}%`,
     here: 'Đây rồi.',
     noAnswer: 'Mình chưa có câu trả lời cho điều đó.',
     offline: 'Mình không kết nối được. Kiểm tra mạng rồi thử lại nhé.',

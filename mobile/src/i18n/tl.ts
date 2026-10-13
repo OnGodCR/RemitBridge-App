@@ -66,6 +66,8 @@ export const tl: Copy = {
     limited: 'Nagpapahinga muna ako. Puwede mo pa ring ihambing ang mga presyo.',
     slow: 'Masyadong mabilis ang pagpapadala mo. Maghintay ng isang minuto, saka subukan ulit.',
     couldNot: 'Hindi ko iyon nakuha. Subukang itanong sa ibang paraan.',
+    pricesHere: 'Ito ang mga presyong na-check ngayon.',
+    totalCost: (p: number) => `${p.toFixed(1)}% gastos`,
     here: 'Heto na.',
     noAnswer: 'Wala pa akong sagot diyan.',
     offline: 'Hindi ako makakonekta. Tingnan ang internet at subukan ulit.',

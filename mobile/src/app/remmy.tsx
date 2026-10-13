@@ -21,7 +21,7 @@ import { RemmyMascot } from '@/components/remmy';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { countryIn, useCopy, useLanguage } from '@/i18n';
+import { agoIn, countryIn, useCopy, useLanguage } from '@/i18n';
 import type { Copy } from '@/i18n/en';
 import { announce } from '@/lib/announce';
 import { money } from '@/lib/format';
@@ -218,9 +218,11 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
     : message.limited && !message.text
       ? message.reason === 'slow'
         ? r.slow
-        : message.reason === 'failed'
-          ? r.couldNot
-          : r.limited
+        : message.actions.some((a) => a.type === 'compare' && a.top)
+          ? r.pricesHere
+          : message.reason === 'failed'
+            ? r.couldNot
+            : r.limited
       : message.text || (message.actions.length ? r.here : r.noAnswer);
   const steps = [...new Set(message.steps.map((s) => r.steps[s] ?? r.steps.action))];
   return (
@@ -353,30 +355,53 @@ function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: b
   }, [autoRun, action]);
 
   const finished = state === 'done' || state === 'already';
+  const top = action.type === 'compare' ? action.top : undefined;
   return (
-    <Rise style={[styles.card, { backgroundColor: t.card, borderColor: t.primary, borderBottomColor: t.primaryDeep }]}>
-      <View style={[styles.cardIcon, { backgroundColor: t.accent }]}>
-        <Icon name={SCREEN_ICON[action.type]} size={18} weight="bold" tintColor={t.primary} fallback={null} />
-      </View>
-      <View style={styles.cardText}>
-        <AppText style={[styles.cardTitle, { color: t.text }]} numberOfLines={2}>
-          {title}
-        </AppText>
-        {sub ? (
-          <AppText variant="small" muted numberOfLines={1}>
-            {sub}
+    <Rise style={[styles.cardBox, { backgroundColor: t.card, borderColor: t.primary, borderBottomColor: t.primaryDeep }]}>
+      <View style={styles.card}>
+        <View style={[styles.cardIcon, { backgroundColor: t.accent }]}>
+          <Icon name={SCREEN_ICON[action.type]} size={18} weight="bold" tintColor={t.primary} fallback={null} />
+        </View>
+        <View style={styles.cardText}>
+          <AppText style={[styles.cardTitle, { color: t.text }]} numberOfLines={2}>
+            {title}
           </AppText>
-        ) : null}
+          {sub ? (
+            <AppText variant="small" muted numberOfLines={1}>
+              {sub}
+            </AppText>
+          ) : null}
+        </View>
+        <Pressable
+          onPress={run}
+          disabled={finished || (state === 'busy' && action.type !== 'save')}
+          accessibilityRole="button"
+          accessibilityLabel={`${label}: ${title}`}
+          style={({ pressed }) => [styles.cardButton, { backgroundColor: finished ? t.accent : t.primary, opacity: pressed ? 0.8 : 1 }]}>
+          {finished ? <Icon name="checkmark" size={14} weight="bold" tintColor={t.primary} fallback={null} /> : null}
+          <AppText style={[styles.cardButtonText, { color: finished ? t.primary : t.primaryForeground }]}>{label}</AppText>
+        </Pressable>
       </View>
-      <Pressable
-        onPress={run}
-        disabled={finished || (state === 'busy' && action.type !== 'save')}
-        accessibilityRole="button"
-        accessibilityLabel={`${label}: ${title}`}
-        style={({ pressed }) => [styles.cardButton, { backgroundColor: finished ? t.accent : t.primary, opacity: pressed ? 0.8 : 1 }]}>
-        {finished ? <Icon name="checkmark" size={14} weight="bold" tintColor={t.primary} fallback={null} /> : null}
-        <AppText style={[styles.cardButtonText, { color: finished ? t.primary : t.primaryForeground }]}>{label}</AppText>
-      </Pressable>
+      {top ? (
+        <View style={[styles.prices, { borderTopColor: t.border }]}>
+          {top.map((p, i) => (
+            <View key={p.provider} style={styles.priceRow} accessible accessibilityLabel={`${p.provider}: ${p.receives}, ${r.totalCost(p.pct)}`}>
+              <AppText style={[styles.priceProvider, { color: t.text }]} numberOfLines={1}>
+                {p.provider}
+              </AppText>
+              <AppText style={[styles.priceReceives, { color: i === 0 ? t.primary : t.text }]}>{p.receives}</AppText>
+              <AppText variant="small" muted style={styles.pricePct}>
+                {r.totalCost(p.pct)}
+              </AppText>
+            </View>
+          ))}
+          {action.type === 'compare' && action.checkedAt ? (
+            <AppText variant="small" muted>
+              {copy.time.checked(agoIn(copy, action.checkedAt))}
+            </AppText>
+          ) : null}
+        </View>
+      ) : null}
     </Rise>
   );
 }
@@ -471,15 +496,13 @@ const styles = StyleSheet.create({
   stepText: { fontFamily: Fonts.semibold, fontSize: 12 },
   retry: { minHeight: MinTapTarget, justifyContent: 'center' },
   retryText: { fontFamily: Fonts.bold, fontSize: 15 },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.two + 2,
-    borderWidth: 1.5,
-    borderBottomWidth: 4,
-    borderRadius: Radius.lg + 4,
-    padding: Spacing.two + 2,
-  },
+  cardBox: { borderWidth: 1.5, borderBottomWidth: 4, borderRadius: Radius.lg + 4, padding: Spacing.two + 2, gap: Spacing.two },
+  card: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two + 2 },
+  prices: { borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Spacing.two, gap: 6 },
+  priceRow: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.two },
+  priceProvider: { flex: 1, fontFamily: Fonts.semibold, fontSize: 15 },
+  priceReceives: { fontFamily: Fonts.bold, fontSize: 15, fontVariant: ['tabular-nums'] },
+  pricePct: { minWidth: 64, textAlign: 'right' },
   cardIcon: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
   cardText: { flex: 1, gap: 1 },
   cardTitle: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 20 },

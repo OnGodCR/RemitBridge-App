@@ -19,10 +19,11 @@
 // or when no model answers, the reply is marked `limited` with its reason and, if the message
 // was a plain price question ("500 to India") or a screen, it still offers that.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
-import { DEFAULT_ANSWER_MODEL, parse, runAgent, type ToolSpec } from '../../../packages/bot/src/index.ts';
+import { DEFAULT_ANSWER_MODEL, parse, rankFor, runAgent, type ToolSpec } from '../../../packages/bot/src/index.ts';
 import { REMMY_MODES, REMMY_MODULES, REMMY_SCREENS, matchIntent, validAction, type RemmyAction, type RemmyReply } from '../../../mobile/src/lib/remmy-actions.ts';
-import { ROUTES, routeFor, type Route } from '../../../mobile/src/lib/routes.ts';
-import { countryOf, dataTools, modelChain, tryModel } from '../_shared/agent.ts';
+import { checkedAmountFor, ROUTES, routeFor, type Route } from '../../../mobile/src/lib/routes.ts';
+import { countryOf, dataTools, modelChain, quotes, tryModel } from '../_shared/agent.ts';
+import { money } from '../../../mobile/src/lib/format.ts';
 import { secretKey } from '../_shared/keys.ts';
 
 const PER_MINUTE = 8;
@@ -120,13 +121,13 @@ Deno.serve(async (req) => {
       // A price question always gets its Compare card, even if the model only talked.
       if (asked.kind === 'compare' && asked.to && !actions.some((a) => a.type === 'compare' || a.type === 'save')) actions.push(...fallbackActions(message));
       await track('remmy_message', { tools: result.tools.join(',') || 'none', provider: model.names[model.client.used()] ?? 'none' });
-      return json({ reply: result.text, actions: dedupe(actions), steps: result.tools } satisfies RemmyReply, 200);
+      return json({ reply: result.text, actions: await withPrices(dedupe(actions)), steps: result.tools } satisfies RemmyReply, 200);
     }
   }
 
   // No model answer: still do the obvious thing for a plain price question.
   await track('remmy_limited', { reason: model ? 'failed' : 'limit', ...(refused.length ? { refused: [...new Set(refused)].slice(0, 6).join(' ') } : {}), ...(causes.length ? { causes: causes.join(', ').slice(0, 200) } : {}) });
-  return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true, reason: model ? 'failed' : 'day' } satisfies RemmyReply, 200);
+  return json({ reply: '', actions: await withPrices(fallbackActions(message)), steps: [], limited: true, reason: model ? 'failed' : 'day' } satisfies RemmyReply, 200);
 });
 
 /**
@@ -223,6 +224,27 @@ const SCREEN_ABOUT = [
   'terms: the terms of service',
   'support: help and contact',
 ].join('; ');
+
+/**
+ * Each Compare card carries its top three checked prices, ranked by amount received like
+ * Compare, so a price question shows real figures even when the model's text doesn't come
+ * through. The app words them in the person's language.
+ */
+async function withPrices(actions: RemmyAction[]): Promise<RemmyAction[]> {
+  return Promise.all(
+    actions.map(async (a) => {
+      if (a.type !== 'compare') return a;
+      const rows = await quotes(a.routeId, checkedAmountFor(a.amount), a.method).catch(() => []);
+      const top = rankFor(rows, a.amount).standing.slice(0, 3);
+      if (!top.length) return a;
+      return {
+        ...a,
+        top: top.map((q) => ({ provider: q.provider_name, receives: money(q.amount_received, q.receive_currency), pct: Math.round(q.total_cost_pct * 10) / 10 })),
+        checkedAt: top.map((q) => q.captured_at).sort()[0],
+      };
+    }),
+  );
+}
 
 /** One card per action: the model sometimes calls the same tool twice. */
 function dedupe(actions: RemmyAction[]): RemmyAction[] {

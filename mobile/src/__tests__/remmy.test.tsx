@@ -216,6 +216,25 @@ describe('the chat screen', () => {
     expect(screen.getByText(r.slow)).toBeTruthy();
   });
 
+  it('shows the checked prices on the card, and says so when the model gave no text', async () => {
+    mockInvoke.mockResolvedValueOnce({
+      data: {
+        reply: '',
+        actions: [{ type: 'compare', routeId: 'us-in', amount: 500, method: 'bank_deposit', top: [{ provider: 'Instarem', receives: '₹47,307', pct: 1.2 }], checkedAt: new Date().toISOString() }],
+        steps: [],
+        limited: true,
+        reason: 'failed',
+      },
+      error: null,
+    });
+    renderChat();
+    fireEvent.changeText(screen.getByLabelText(r.placeholder), '500 to India');
+    await act(async () => fireEvent.press(screen.getByRole('button', { name: r.send })));
+    expect(screen.getByText(r.pricesHere)).toBeTruthy();
+    expect(screen.getByText('₹47,307')).toBeTruthy();
+    expect(screen.getByText(r.totalCost(1.2))).toBeTruthy();
+  });
+
   it('says it’s resting when over the limit, and still offers Compare', async () => {
     mockInvoke.mockResolvedValueOnce({ data: { reply: '', actions: [{ type: 'compare', routeId: 'us-mx', amount: 300, method: 'bank_deposit' }], steps: [], limited: true }, error: null });
     renderChat();

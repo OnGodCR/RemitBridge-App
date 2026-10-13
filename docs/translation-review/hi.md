@@ -1074,3 +1074,5 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | remmy.here | Here you go. | यह रहा। | | NEW 2026-10-13
 | remmy.noAnswer | I don’t have an answer for that yet. | इसका जवाब अभी मेरे पास नहीं है। | | NEW 2026-10-13
 | remmy.couldNot | I couldn’t work that one out. Try asking another way. | यह मैं समझ नहीं पाया। किसी और तरह से पूछकर देखें। | | NEW 2026-10-13
+| remmy.pricesHere | Here are today’s checked prices. | ये आज की जाँची हुई कीमतें हैं। | | NEW 2026-10-13
+| remmy.totalCost | {p}% cost | {p}% लागत | | NEW 2026-10-13

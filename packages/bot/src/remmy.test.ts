@@ -216,3 +216,26 @@ it('still opens a screen when past the day limit', async () => {
   expect(r.reason).toBe('day')
   expect(r.actions).toEqual([{ type: 'screen', screen: 'privacy', now: false }])
 })
+
+it('puts the top checked prices on the Compare card, ranked by amount received, even when the model fails', async () => {
+  const at = new Date(Date.now() - 2 * 3600e3).toISOString()
+  const row = (provider_name: string, amount_received: number, total_cost_pct: number) => ({
+    route_id: 'us-in', delivery_method: 'bank_deposit', provider_name, send_amount: 500, send_currency: 'USD', receive_currency: 'INR',
+    fee: 0, offered_rate: 95, mid_market_rate: 96, pickup_charge: 0, amount_received, total_cost_pct, delivery_time: null, is_promotional: false, captured_at: at,
+  })
+  reset({ latest_quotes: [row('Wise', 46694, 2.5), row('Instarem', 47307, 1.2)] })
+  rpcs.take_hit_for_ip = () => true
+  rpcs.count_hit = () => 1
+  turns = ['not json {', 'still not {']
+  const r = await (await ask({ message: 'what does 500 to India cost?' })).json()
+  expect(r.reason).toBe('failed')
+  expect(r.actions[0]).toMatchObject({
+    type: 'compare',
+    routeId: 'us-in',
+    top: [
+      { provider: 'Instarem', receives: '₹47,307', pct: 1.2 },
+      { provider: 'Wise', receives: '₹46,694', pct: 2.5 },
+    ],
+    checkedAt: at,
+  })
+})

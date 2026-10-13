@@ -45,13 +45,31 @@ export const REMMY_MODES = ['match', 'quick', 'cost', 'receipt', 'safety', 'fina
 
 export type RemmyAction =
   /** Compare on a route, an amount and a way of receiving. */
-  | { type: 'compare'; routeId: string; amount: number; method: DeliveryMethod; now?: boolean }
+  | { type: 'compare'; routeId: string; amount: number; method: DeliveryMethod; now?: boolean; top?: TopPrice[]; checkedAt?: string }
   /** Any screen in REMMY_SCREENS; the glossary can open on one term. */
   | { type: 'screen'; screen: RemmyScreen; term?: string; now?: boolean }
   /** A Learn lesson, in a game mode if one was asked for. */
   | { type: 'lesson'; module: (typeof REMMY_MODULES)[number]; mode?: (typeof REMMY_MODES)[number]; now?: boolean }
   /** Save a comparison to the account, once the person taps Save. */
   | { type: 'save'; routeId: string; amount: number; method: DeliveryMethod };
+
+/** One provider on a Compare card: the same checked prices and ranking as Compare itself. */
+export interface TopPrice {
+  provider: string;
+  /** Already formatted in the receiving currency, as Compare shows it. */
+  receives: string;
+  /** Total cost as a percent of the amount sent. */
+  pct: number;
+}
+
+/** Up to three prices from the network, kept only if each is well formed. */
+function topPrices(v: unknown): TopPrice[] | null {
+  if (!Array.isArray(v) || !v.length || v.length > 3) return null;
+  const ok = v.every(
+    (p) => p && typeof p === 'object' && typeof p.provider === 'string' && typeof p.receives === 'string' && Number.isFinite(p.pct),
+  );
+  return ok ? v.map((p) => ({ provider: p.provider.slice(0, 40), receives: p.receives.slice(0, 30), pct: Number(p.pct) })) : null;
+}
 
 /** One reply from Remmy: the text, the actions it proposes, and the steps it took to get there. */
 export interface RemmyReply {
@@ -163,7 +181,12 @@ export function validAction(a: unknown, routeIds: readonly string[]): RemmyActio
   const method = typeof o.method === 'string' && o.method ? o.method : null;
   switch (o.type) {
     case 'compare':
-      return route && method && amount > 0 ? { type: 'compare', routeId: route, amount, method, now } : null;
+      if (!route || !method || !(amount > 0)) return null;
+      {
+        const top = topPrices(o.top);
+        const checkedAt = typeof o.checkedAt === 'string' && !Number.isNaN(Date.parse(o.checkedAt)) ? o.checkedAt : null;
+        return { type: 'compare', routeId: route, amount, method, now, ...(top ? { top } : {}), ...(top && checkedAt ? { checkedAt } : {}) };
+      }
     case 'save':
       return route && method && amount > 0 ? { type: 'save', routeId: route, amount, method } : null;
     case 'screen': {
