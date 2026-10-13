@@ -39,6 +39,8 @@ export interface AgentContext {
   history?: { role: 'user' | 'assistant'; text: string }[]
   /** Told the figures and links a reply was refused for, for metrics (numbers only, no text). */
   onRefused?: (numbers: string[], links: string[]) => void
+  /** Told each reason a turn was unusable ('unreadable', 'planning', 'steps'), for metrics. */
+  onFail?: (cause: string) => void
 }
 
 /** How much of an app conversation goes back to the model: the last few turns, trimmed. */
@@ -141,16 +143,39 @@ export function thinksAloud(text: string, tools: ToolSpec[]): boolean {
 
 /** The JSON object in a model turn, or null. */
 export function readTurn(raw: string): { tool: string; args: Record<string, unknown> } | { reply: string } | null {
-  const json = raw.match(/\{[\s\S]*\}/)?.[0]
-  if (!json) return raw.trim() && !raw.includes('{') ? { reply: raw.trim() } : null
-  try {
-    const o = JSON.parse(json) as Record<string, unknown>
-    if (typeof o.reply === 'string' && o.reply.trim()) return { reply: o.reply.trim() }
-    if (typeof o.tool === 'string') return { tool: o.tool, args: (o.args && typeof o.args === 'object' ? o.args : {}) as Record<string, unknown> }
-  } catch {
-    return null
+  if (!raw.includes('{')) return raw.trim() ? { reply: raw.trim() } : null
+  // The first complete object that is a turn. gpt-oss sometimes writes two in one go (a tool
+  // call, then a guessed reply); one regex from the first { to the last } read that as one
+  // broken object and the whole answer was lost.
+  for (const json of objectsIn(raw)) {
+    try {
+      const o = JSON.parse(json) as Record<string, unknown>
+      if (typeof o.tool === 'string') return { tool: o.tool, args: (o.args && typeof o.args === 'object' ? o.args : {}) as Record<string, unknown> }
+      if (typeof o.reply === 'string' && o.reply.trim()) return { reply: o.reply.trim() }
+    } catch {
+      // Not JSON after all; try the next one.
+    }
   }
   return null
+}
+
+/** Each balanced {...} at the top level of a text, in order, skipping braces inside strings. */
+function objectsIn(text: string): string[] {
+  const found: string[] = []
+  let depth = 0
+  let start = -1
+  let inString = false
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i]
+    if (inString) {
+      if (ch === '\\') i++
+      else if (ch === '"') inString = false
+    } else if (ch === '"' && depth > 0) inString = true
+    else if (ch === '{') {
+      if (depth++ === 0) start = i
+    } else if (ch === '}' && depth > 0 && --depth === 0) found.push(text.slice(start, i + 1))
+  }
+  return found
 }
 
 const NUMBER = /\d[\d,]*(?:\.\d+)?/g
@@ -200,12 +225,20 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
   for (let step = 0; step < MAX_STEPS; step++) {
     const raw = await client.chat(messages, { maxTokens: 700 })
     const turn = readTurn(raw)
-    if (!turn) return null
     messages.push({ role: 'assistant', content: raw })
+    if (!turn) {
+      // Unreadable: ask once for the format before giving up.
+      ctx.onFail?.('unreadable')
+      if (nudged) return null
+      nudged = true
+      messages.push({ role: 'user', content: 'I couldn\'t read that. Output one JSON object only: a tool call or {"reply":"..."}.' })
+      continue
+    }
 
     // gpt-oss sometimes answers with its own plan in plain text ("We need to call
     // open_compare."). That's not a reply: ask once more for the JSON turn.
     if ('reply' in turn && !raw.includes('{') && thinksAloud(turn.reply, tools)) {
+      ctx.onFail?.('planning')
       if (nudged) return null
       nudged = true
       messages.push({ role: 'user', content: 'That was your plan, not a reply. Output one JSON object only: a tool call or {"reply":"..."}.' })
@@ -236,5 +269,6 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
       content: `Your reply can't be sent: ${numbers.length ? `the numbers ${numbers.join(', ')} aren't in any tool result or note` : ''}${numbers.length && links.length ? ', and ' : ''}${links.length ? `the links ${links.join(', ')} aren't ours` : ''}. Call a tool if you need a figure, or rewrite without it. Reply with one JSON object.`,
     })
   }
+  ctx.onFail?.('steps')
   return null
 }

@@ -66,6 +66,13 @@ describe('the agent', () => {
     expect(await runAgent(scripted('The user is asking about fees.'), [prices], 'fees?', { language: 'en', lastCountry: null })).toBeNull()
   })
 
+  it('asks once more when a turn is unreadable, and says why it gave up', async () => {
+    const causes: string[] = []
+    const r = await runAgent(scripted('{"reply": broken', '{"reply":"Fixed."}'), [], 'hi', { language: 'en', lastCountry: null, onFail: (c) => causes.push(c) })
+    expect(r?.text).toBe('Fixed.')
+    expect(causes).toEqual(['unreadable'])
+  })
+
   it('reports a missing tool to the model instead of failing', async () => {
     const model = scripted('{"tool":"teleport","args":{}}', '{"reply":"I can’t do that."}')
     expect((await runAgent(model, [prices], 'x', { language: 'en', lastCountry: null }))?.text).toBe('I can’t do that.')
@@ -77,6 +84,9 @@ describe('its checks', () => {
   it('reads one JSON turn, or plain text as a reply', () => {
     expect(readTurn('{"tool":"get_prices","args":{"country":"IN"}}')).toEqual({ tool: 'get_prices', args: { country: 'IN' } })
     expect(readTurn('Sure.\n{"reply":"Hi"}')).toEqual({ reply: 'Hi' })
+    // Two objects in one turn: the tool call counts, and the guess after it doesn't break it.
+    expect(readTurn('{"tool":"open_compare","args":{"country":"MX"}}\n{"reply":"About {x} arrives."}')).toEqual({ tool: 'open_compare', args: { country: 'MX' } })
+    expect(readTurn('{"reply":"Use {braces} freely"}')).toEqual({ reply: 'Use {braces} freely' })
     expect(readTurn('Just text')).toEqual({ reply: 'Just text' })
     expect(readTurn('{oops')).toBeNull()
   })

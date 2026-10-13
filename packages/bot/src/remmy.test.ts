@@ -196,9 +196,10 @@ it('gives a price question its Compare card even when the model only talks', asy
 })
 
 it('says the answer failed, not that it is resting, when the model gives nothing usable', async () => {
-  turns = ['not json at all {']
+  turns = ['not json at all {', 'still {']
   const r = await (await ask({ message: '300 to Mexico' })).json()
   expect(r).toMatchObject({ limited: true, reason: 'failed', actions: [{ type: 'compare', routeId: 'us-mx' }] })
+  expect(tables.events).toMatchObject([{ name: 'remmy_limited', props: { reason: 'failed', causes: 'unreadable, unreadable' } }])
 })
 
 it('records which figures were refused, never the text', async () => {

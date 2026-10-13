@@ -86,6 +86,7 @@ Deno.serve(async (req) => {
   const actions: RemmyAction[] = [];
   // Figures the number check refused, kept in the failure metric so a miss can be traced.
   const refused: string[] = [];
+  const causes: string[] = [];
   const touched: { route?: Route; method?: string } = {};
   const model =
     allowed === false
@@ -95,7 +96,19 @@ Deno.serve(async (req) => {
     const data = dataTools(db, { track, installId: install, source: 'app', touched });
     const tools = [...data, ...actionTools(actions, data.find((t) => t.name === 'get_prices'))];
     const result = await tryModel(
-      () => runAgent(model.client, tools, message, { language: body.language === 'hi' ? 'hi' : 'en', lastCountry: touched.route?.country ?? null, channel: 'app', history, onRefused: (n) => refused.push(...n) }),
+      () =>
+        runAgent(model.client, tools, message, {
+          language: body.language === 'hi' ? 'hi' : 'en',
+          lastCountry: touched.route?.country ?? null,
+          channel: 'app',
+          history,
+          onRefused: (n) => refused.push(...n),
+          onFail: (c) => causes.push(c),
+        }).catch((e) => {
+          // Provider errors ("429", "timeout") name no user text; the first words are enough.
+          causes.push(`error ${String(e).slice(0, 60)}`);
+          throw e;
+        }),
       'remmy',
     );
     if (result) {
@@ -111,7 +124,7 @@ Deno.serve(async (req) => {
   }
 
   // No model answer: still do the obvious thing for a plain price question.
-  await track('remmy_limited', { reason: model ? 'failed' : 'limit', ...(refused.length ? { refused: [...new Set(refused)].slice(0, 6).join(' ') } : {}) });
+  await track('remmy_limited', { reason: model ? 'failed' : 'limit', ...(refused.length ? { refused: [...new Set(refused)].slice(0, 6).join(' ') } : {}), ...(causes.length ? { causes: causes.join(', ').slice(0, 200) } : {}) });
   return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true, reason: model ? 'failed' : 'day' } satisfies RemmyReply, 200);
 });
 
