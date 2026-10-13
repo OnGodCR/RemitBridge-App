@@ -8,7 +8,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
-- [ ] **Waiting on D&B**: case #11089990; Angad sent the certificate and form, no answer yet (2026-10-12). The D-U-N-S number gates both stores.
+- [ ] **Waiting on D&B**: case #11089990; D&B confirmed on 2026-10-12 that the number comes in 24 to 48 hours. The D-U-N-S number gates both stores.
 - [ ] **Apple account to an organization**: once the D-U-N-S arrives, your dad asks Apple Developer Support to convert it to RemitBridge Labs.
 - [ ] **Google Play organization account**: in RemitBridge Labs' name, with the D-U-N-S ($25 once).
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
@@ -65,8 +65,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Claude, waiting on something
 
-- [ ] **Check on D&B** (due 2026-10-16): search the RemitBridge inbox for case #11089990; if D&B hasn't answered, draft a short status email for Angad to send from hello@.
-- [ ] **Chase D&B** (due 2026-10-22): two weeks since the request, Apple's point to escalate; if still nothing, draft a firmer email to research@iresearch.dnb.com for Angad.
+- [ ] **Check on D&B** (due 2026-10-14): D&B promised the number within 24 to 48 hours of 2026-10-12; search the RemitBridge inbox for it, and if it hasn't come, draft a short status email for Angad to send from hello@.
+- [ ] **Chase D&B** (due 2026-10-16): only if the number still hasn't come; draft a firmer email to research@iresearch.dnb.com for Angad.
 - [ ] **India's prices** (due 2026-10-13): held since 2026-10-12 morning (three rate sources disagree); check whether it's back, then put a 0.6% rule with Wise to Angad if not.
 - [ ] **Uganda's prices**: held, its sources are 2.6% apart; needs a rule for thin currencies if you want one.
 - [ ] **Play App Signing follow-up**: add the SHA-256 to `assetlinks.json` and a second Android Google sign-in client, once you send the keys.
