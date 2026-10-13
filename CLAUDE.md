@@ -92,8 +92,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **WhatsApp in the app (D138):** built 2026-10-02: link a chat to an account with a
       one-time code (no number stored), SAVE from WhatsApp into Saved, UNLINK, Chat on
       WhatsApp with the bot's number (development builds until `app_settings.whatsapp_live`).
-      Migration pushed 2026-10-02 (smoke test 63/63). Left: try LINK from his phone; flip
-      `whatsapp_live` once Meta lifts the restriction.
+      Migration pushed 2026-10-02 (smoke test 63/63). LINK and SAVE work from Angad's Samsung (2026-10-12, after the Android
+      sign-in fix ad1afdc); `whatsapp_live` is on (2026-10-11).
 - [x] **Rate alerts by WhatsApp (D139): dropped for push-only (D148, 2026-10-09).** No
       template or Meta payment method needed; LINK keeps no number. Left: Angad clears any
       number sealed before then (`update public.whatsapp_users set number_sealed = null;`).
@@ -104,7 +104,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       set, `app_settings.whatsapp_number` = 16019801089. Angad's "500 to India" and "500 to
       Vietnam" got replies, and so did his dad's phone (not an app admin). App icon, category
       and policy URLs set and the Meta app published; `whatsapp_live` = true (Angad's SQL,
-      2026-10-11). Left: the display name review, and LINK + SAVE tried from the app.
+      2026-10-11). LINK + SAVE tried from the app and working (2026-10-12). Left: the display name review.
 - [ ] **WhatsApp going live (2026-10-09):** the account is **Approved** and the business
       **Verified** (restriction lifted). Meta app: RemitBridge, App ID 1004249319342214 (no
       icon yet; needed before Live). A test "500 to India" was delivered but the whatsapp
