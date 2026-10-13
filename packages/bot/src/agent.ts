@@ -54,6 +54,7 @@ export interface AgentResult {
 }
 
 const MAX_STEPS = 5
+const AGENT_MAX_TOKENS = 1500
 
 function systemPrompt(tools: ToolSpec[], ctx: AgentContext): string {
   return ctx.channel === 'app' ? appPrompt(tools, ctx) : whatsappPrompt(tools, ctx)
@@ -223,7 +224,10 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
   let nudged = false
 
   for (let step = 0; step < MAX_STEPS; step++) {
-    const raw = await client.chat(messages, { maxTokens: 700 })
+    // gpt-oss reasons before it answers, and the reasoning counts against this cap. At 700 a
+    // harder turn ($1,000 to Vietnam) spent it all thinking and came back empty (2026-10-13).
+    // 1500, not more: Groq's free tier may count the cap against its 8,000 tokens a minute.
+    const raw = await client.chat(messages, { maxTokens: AGENT_MAX_TOKENS })
     const turn = readTurn(raw)
     messages.push({ role: 'assistant', content: raw })
     if (!turn) {

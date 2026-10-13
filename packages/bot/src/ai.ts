@@ -71,9 +71,11 @@ export function openAiClient(
           if (res.status === 400 && typeof err?.failed_generation === 'string' && err.failed_generation.trim()) return stripThinking(err.failed_generation)
           throw new Error(`model service: HTTP ${res.status}${typeof err?.code === 'string' ? ` ${err.code.slice(0, 40)}` : ''}`)
         }
-        const body = (await res.json()) as { choices?: { message?: { content?: string | null } }[] }
+        const body = (await res.json()) as { choices?: { message?: { content?: string | null }; finish_reason?: string }[] }
         const text = body.choices?.[0]?.message?.content
-        if (typeof text !== 'string') throw new Error('model service: no text in the answer')
+        if (typeof text !== 'string' || !text.trim()) {
+          throw new Error(body.choices?.[0]?.finish_reason === 'length' ? 'model service: out of tokens before answering' : 'model service: no text in the answer')
+        }
         return stripThinking(text)
       } finally {
         clearTimeout(timer)

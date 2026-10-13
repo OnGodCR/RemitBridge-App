@@ -160,6 +160,11 @@ describe('the provider chain', () => {
     )
   })
 
+  it('says when a reasoning model ran out of tokens before answering', async () => {
+    const thinking = (async () => new Response(JSON.stringify({ choices: [{ message: { content: null }, finish_reason: 'length' }] }), { status: 200 })) as unknown as typeof fetch
+    await expect(groqChatClient('k', 'm', thinking).chat([], { maxTokens: 9 })).rejects.toThrow('out of tokens before answering')
+  })
+
   it('calls Groq with low reasoning effort', async () => {
     const calls: { url: string; body: Record<string, unknown> }[] = []
     const fetchFake = (async (url: string, init: RequestInit) => {
