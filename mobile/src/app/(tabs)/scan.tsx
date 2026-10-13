@@ -29,8 +29,6 @@ import type { Copy } from '@/i18n/en';
 import { isoDay } from '@/lib/fx';
 import { canScan, discardPhotoFiles, preparePhoto, recognize, renderRedacted, type PreparedPhoto } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
-import { useAuth } from '@/lib/auth';
-import { firstName } from '@/lib/name';
 import { prefs } from '@/lib/prefs';
 import { forgetSaving, recordSaving } from '@/lib/savings';
 import { track } from '@/lib/track';
@@ -72,12 +70,6 @@ type Step =
     }
   | { kind: 'result'; id: string; confirmed: ConfirmResponse; deleted: boolean };
 
-/** Morning until noon, afternoon until 5 pm, evening after, by the phone's own clock. */
-function partOfDay(now = new Date()): 'morning' | 'afternoon' | 'evening' {
-  const h = now.getHours();
-  return h >= 4 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'afternoon' : 'evening';
-}
-
 export default function ScanScreen() {
   useTabFocus('/scan');
   const t = useTheme();
@@ -85,7 +77,6 @@ export default function ScanScreen() {
   const s = copy.scan;
   const [step, setStep] = useState<Step>({ kind: 'start' });
   const [consent, setConsent] = useState(false);
-  const name = firstName(useAuth().session);
 
   useEffect(() => track('tool_opened', { tool: 'receipt_scan' }), []);
 
@@ -242,13 +233,6 @@ export default function ScanScreen() {
       <StepBody key={step.kind} rise={step.kind !== 'start'}>
       {step.kind === 'start' ? (
         <>
-          {/* The greeting sits on the page, dark on light with a green edge, where it can't be
-              missed; in the green band it was faint and easy to skip (D128). */}
-          <View style={[styles.greeting, { borderLeftColor: t.primary }]}>
-            <AppText accessibilityRole="header" style={[styles.greetingText, { color: t.text }]}>
-              {copy.common.greeting(partOfDay(), name ?? undefined)}
-            </AppText>
-          </View>
           <SavingsCard />
           <View style={styles.capture}>
             <ScanHero />
@@ -439,10 +423,8 @@ function StepBody({ rise, children }: { rise: boolean; children: React.ReactNode
 }
 
 const styles = StyleSheet.create({
-  greeting: { borderLeftWidth: 4, paddingLeft: Spacing.three, paddingVertical: Spacing.one },
   blurNote: { borderLeftWidth: 4, borderRadius: Radius.sm, padding: Spacing.three },
   aiNote: { borderLeftWidth: 3, paddingLeft: Spacing.three, paddingVertical: Spacing.one, gap: Spacing.one },
-  greetingText: { fontFamily: Fonts.extrabold, fontSize: 28, lineHeight: 34, letterSpacing: -0.4 },
   heroSub: { fontSize: 17, lineHeight: 24 },
   fill: { flex: 1 },
   scroll: { flexGrow: 1 },

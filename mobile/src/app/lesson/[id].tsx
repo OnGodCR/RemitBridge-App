@@ -1,615 +1,525 @@
-import * as Haptics from 'expo-haptics';
-import { Redirect, router, useLocalSearchParams } from 'expo-router';
-import { Icon } from '@/components/icon';
+import { Redirect, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useMemo, useReducer, useState, type ReactNode } from 'react';
-import { AccessibilityInfo, Pressable, ScrollView, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
-import Animated, {
-  type SharedValue,
-  Easing,
-  useAnimatedStyle,
-  useReducedMotion,
-  useSharedValue,
-  withDelay,
-  withSequence,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import { useEffect, useReducer, useRef, useState, type ReactNode } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { GENTLE, SNAPPY } from '@/components/motion';
-import { ReadingAssignment } from '@/components/reading-assignment';
-import { AppText, Button } from '@/components/ui';
-import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { Icon } from '@/components/icon';
+import {
+  BottomBar,
+  ExampleTag,
+  Finish,
+  haptic,
+  Prompt,
+  TopBar,
+  Tile,
+  WordCard,
+  type Result,
+  type TileState,
+} from '@/components/learn-lesson';
+import { Rise } from '@/components/motion-views';
+import { AppText } from '@/components/ui';
+import { Fonts, Radius, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { termIn } from '@/data/glossary-translations';
-import { moduleFor } from '@/data/modules';
+import { moduleFor, type Module } from '@/data/modules';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
-import { markLearned, moduleProgress, recordLesson, useLearned, type LearnStats } from '@/lib/learn-progress';
+import type { Copy } from '@/i18n/en';
+import { announce } from '@/lib/announce';
+import { money } from '@/lib/format';
 import {
-  accuracy,
-  buildLesson,
-  firstSentence,
-  lessonDone,
-  lessonProgress,
-  lessonReducer,
-  lessonWords,
-  startLesson,
-  XP_FIRST_TRY,
-  XP_RETRY,
-  type Question,
-  type Step,
-} from '@/lib/lesson';
+  boardDone,
+  buildGame,
+  gameAccuracy,
+  gameDone,
+  gameReducer,
+  rightChoice,
+  startGame,
+  type ChoiceQuestion,
+  type ExampleTransfer,
+  type GameState,
+  type ReceiptField,
+  type SafetyChoice,
+} from '@/lib/learn-games';
+import { markLearned, recordLesson, useLearned, type LearnStats } from '@/lib/learn-progress';
+import { firstSentence } from '@/lib/lesson';
 import { track } from '@/lib/track';
 
 /**
- * A Learn lesson (DECISIONS.md D136), in place of the old fold-out definitions: each new word
- * on a card, a question straight after, a review round the other way, missed questions again
- * at the end, then XP, accuracy and the day streak. Full screen, like Duolingo, with its
- * close button top left.
- *
- * A wrong answer is never red: red is kept for real errors (PRD 14.5). It shakes and greys,
- * and the right answer lights up green.
+ * A Learn lesson (DECISIONS.md D136, D172), played as one of six games. Every question works
+ * the same way, like Duolingo: tap an answer, press Check, and a sheet slides up with the
+ * result and Continue. A match board needs no Check: pairs clear as they're found.
  */
 export default function LessonScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, mode } = useLocalSearchParams<{ id: string; mode?: string }>();
   const m = moduleFor(id);
-  const learnedAtStart = useLearned();
-  // Fixed when the lesson opens, so learning a word mid-lesson doesn't reshuffle it.
-  const [plan] = useState(() => {
-    if (!m) return null;
-    const { words, practice } = lessonWords(m, learnedAtStart);
-    return { practice, steps: buildLesson(m, words, practice) };
-  });
-  if (!m || !plan) return <Redirect href="/learn" />;
-  return <Lesson moduleId={m.id} practice={plan.practice} steps={plan.steps} />;
+  const [round, setRound] = useState(0);
+  if (!m) return <Redirect href="/learn" />;
+  return <Lesson key={`${m.id}:${mode}:${round}`} module={m} mode={mode} onReplay={() => setRound((n) => n + 1)} />;
 }
 
-function Lesson({ moduleId, practice, steps }: { moduleId: string; practice: boolean; steps: Step[] }) {
+const SAFETY_ICONS = {
+  flag: 'exclamationmark.circle.fill',
+  fine: 'checkmark.circle.fill',
+  unsure: 'questionmark.circle',
+} as const;
+
+function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; onReplay: () => void }) {
+  const learnedAtStart = useLearned();
+  const [plan] = useState(() => buildGame(m, learnedAtStart, mode));
+  const [state, dispatch] = useReducer(gameReducer, plan.steps, startGame);
+  const [stats, setStats] = useState<LearnStats | null>(null);
+  const recorded = useRef(false);
+  // The answer picked but not yet checked.
+  const [picked, setPicked] = useState<string>();
+  const scroll = useRef<ScrollView>(null);
   const t = useTheme();
   const copy = useCopy();
+  const g = copy.learn.games;
   const l = copy.learn.lesson;
+  const { language } = useLanguage();
   const insets = useSafeAreaInsets();
-  const [state, dispatch] = useReducer(lessonReducer, steps, startLesson);
-  const [stats, setStats] = useState<LearnStats | null>(null);
-  const done = lessonDone(state);
   const step = state.steps[state.index];
+  const done = gameDone(state);
+  const shown = (term: Term) => ({
+    ...termIn(language.code, term),
+    ...(term.id === 'corridor' ? { term: g.routeWord } : {}),
+  });
 
-  useEffect(() => track('lesson_started', { module: moduleId, practice }), [moduleId, practice]);
-
-  // A word answered right counts as learned at once, so leaving early keeps it.
+  useEffect(() => track('lesson_started', { module: m.id, mode: plan.mode, practice: plan.practice }), [m.id, plan]);
   useEffect(() => state.learned.forEach(markLearned), [state.learned]);
+  useEffect(() => {
+    if (!done || recorded.current) return;
+    recorded.current = true;
+    setStats(recordLesson(state.xp));
+    track('lesson_finished', {
+      module: m.id,
+      mode: plan.mode,
+      practice: plan.practice,
+      xp: state.xp,
+      accuracy: gameAccuracy(state),
+    });
+    haptic('success');
+    announce(plan.practice ? l.practiceDone : l.done);
+  }, [done, state, m.id, plan, l]);
 
-  // Moving on: past the last step, the lesson is recorded (XP, streak) and the end shows.
   const next = () => {
-    const after = lessonReducer(state, { type: 'next' });
-    if (lessonDone(after) && !stats) {
-      setStats(recordLesson(after.xp));
-      track('lesson_finished', { module: moduleId, practice, xp: after.xp, accuracy: accuracy(after) });
-      haptic('success');
-    }
+    setPicked(undefined);
     dispatch({ type: 'next' });
+    scroll.current?.scrollTo({ y: 0, animated: false });
   };
 
-  const answer = (choice: string) => {
-    if (!step || step.kind === 'teach' || state.answer) return;
-    const correct = choice === step.term.id;
-    haptic(correct ? 'success' : 'error');
+  const check = (choice: string) => {
+    const after = gameReducer(state, { type: 'answer', choice });
+    if (after === state) return;
+    haptic(after.answer?.correct ? 'success' : 'error');
     dispatch({ type: 'answer', choice });
   };
 
-  // Announce the result for VoiceOver, which can't see the colors.
-  const { language } = useLanguage();
+  const tryPair = (word: string, meaning: string): boolean => {
+    const after = gameReducer(state, { type: 'answer', choice: meaning, termId: word });
+    if (after === state) return false;
+    const right = !!after.answer?.correct;
+    haptic(right ? 'success' : 'error');
+    announce(right ? l.right[after.matched.length % l.right.length] : l.wrong);
+    dispatch({ type: 'answer', choice: meaning, termId: word });
+    return right;
+  };
+
+  // A cleared board moves on by itself after a beat, the way Duolingo's does.
+  const cleared = boardDone(state);
   useEffect(() => {
-    if (!state.answer || !step || step.kind === 'teach') return;
-    const shown = termIn(language.code, step.term);
-    const right = step.kind === 'pickTerm' ? shown.term : firstSentence(shown.plain);
-    AccessibilityInfo.announceForAccessibility(state.answer.correct ? pick(l.right, state.index) : `${l.wrong} ${l.answerWas(right)}`);
-  }, [state.answer, step, language.code, l, state.index]);
+    if (!cleared) return;
+    announce(g.allMatched);
+    const timer = setTimeout(() => dispatch({ type: 'next' }), 700);
+    return () => clearTimeout(timer);
+  }, [cleared, g.allMatched]);
+
+  if (done && stats) {
+    return (
+      <View style={[styles.fill, { backgroundColor: t.background, paddingTop: insets.top }]}>
+        <StatusBar style="auto" />
+        <Finish
+          moduleId={m.id}
+          practice={plan.practice}
+          xp={state.xp}
+          accuracyPct={gameAccuracy(state)}
+          stats={stats}
+          onReplay={onReplay}
+        />
+      </View>
+    );
+  }
+  if (!step) return null;
+
+  let body: ReactNode = null;
+  let bottom: ReactNode = null;
+
+  if (step.kind === 'teach') {
+    const word = shown(step.term);
+    body = <WordCard moduleId={m.id} word={word.term} meaning={firstSentence(word.plain)} />;
+    bottom = <BottomBar result={null} canCheck label={l.continue} onCheck={next} onContinue={next} />;
+  } else if (step.kind === 'match') {
+    body = (
+      <>
+        <Prompt>{g.matchPrompt}</Prompt>
+        <MatchBoard
+          key={state.index}
+          terms={step.terms}
+          meanings={step.meanings}
+          matched={state.matched}
+          word={(term) => shown(term).term}
+          meaning={(term) => firstSentence(shown(term).plain)}
+          onPair={tryPair}
+        />
+      </>
+    );
+    bottom = null;
+  } else {
+    const answered = state.answer;
+    const stateFor = (choice: string): TileState =>
+      !answered
+        ? picked === choice
+          ? 'selected'
+          : 'idle'
+        : choice === rightChoice(step)
+          ? 'right'
+          : choice === answered.choice
+            ? 'wrong'
+            : 'faded';
+    const pick = (choice: string) => {
+      if (answered) return;
+      haptic('tap');
+      setPicked(choice);
+    };
+    body = (
+      <>
+        {step.retry ? <AppText style={[styles.again, { color: t.textSecondary }]}>{l.again}</AppText> : null}
+        <Question step={step} copy={copy} shown={shown} stateFor={stateFor} pick={pick} answered={!!answered} />
+      </>
+    );
+    bottom = (
+      <BottomBar
+        result={answered ? resultFor(step, state, copy) : null}
+        canCheck={!!picked}
+        onCheck={() => picked && check(picked)}
+        onContinue={next}
+      />
+    );
+  }
 
   return (
     <View style={[styles.fill, { backgroundColor: t.background, paddingTop: insets.top + Spacing.two }]}>
       <StatusBar style="auto" />
-      {done && stats ? (
-        <Finish moduleId={moduleId} practice={practice} xp={state.xp} accuracyPct={accuracy(state)} learned={state.learned.length} stats={stats} />
-      ) : (
-        <>
-          <TopBar progress={lessonProgress(state)} combo={state.combo} stepLabel={l.progressLabel(state.index + 1, state.steps.length)} />
-          <ScrollView contentContainerStyle={[styles.body, { paddingBottom: Spacing.six + 140 }]}>
-            {step ? (
-              <Arrive key={state.index} from={14} style={styles.step}>
-                {step.kind === 'teach' ? (
-                  <Teach term={step.term} />
-                ) : (
-                  <Ask question={step} answer={state.answer} onAnswer={answer} />
-                )}
-              </Arrive>
-            ) : null}
-          </ScrollView>
-          {step?.kind === 'teach' ? (
-            <View style={[styles.footer, { paddingBottom: insets.bottom + Spacing.three, borderTopColor: t.border }]}>
-              <Button label={l.gotIt} onPress={next} />
-            </View>
-          ) : state.answer && step ? (
-            <Feedback
-              key={state.index}
-              correct={state.answer.correct}
-              term={step.term}
-              // The word, when the question asked for one; a meaning question already shows
-              // the right definition lit up in green, so it says no more.
-              showAnswer={step.kind === 'pickTerm'}
-              xp={state.answer.correct ? (step.retry ? XP_RETRY : XP_FIRST_TRY) : 0}
-              index={state.index}
-              bottom={insets.bottom}
-              onContinue={next}
-            />
-          ) : null}
-        </>
-      )}
+      <TopBar
+        progress={state.steps.length ? state.index / state.steps.length : 0}
+        combo={state.combo}
+        stepLabel={l.progressLabel(state.index + 1, state.steps.length)}
+      />
+      <ScrollView ref={scroll} contentContainerStyle={styles.body}>
+        <Rise key={state.index} style={styles.stack}>
+          {body}
+        </Rise>
+      </ScrollView>
+      {bottom}
     </View>
-  );
-}
-
-// ---------------------------------------------------------------------------------------
-// The bar at the top: close, progress, and the combo once it's two or more
-// ---------------------------------------------------------------------------------------
-
-function TopBar({ progress, combo, stepLabel }: { progress: number; combo: number; stepLabel: string }) {
-  const t = useTheme();
-  const copy = useCopy();
-  const reduced = useReducedMotion();
-  const width = useSharedValue(progress);
-  useEffect(() => {
-    width.set(reduced ? progress : withSpring(progress, GENTLE));
-  }, [progress, reduced, width]);
-  const fill = useAnimatedStyle(() => ({ width: `${Math.max(0.03, width.get()) * 100}%` }));
-
-  // The combo pops each time it grows.
-  const pop = useSharedValue(1);
-  useEffect(() => {
-    if (combo >= 2 && !reduced) pop.set(withSequence(withTiming(1.25, { duration: 110 }), withSpring(1, SNAPPY)));
-  }, [combo, reduced, pop]);
-  const popStyle = useAnimatedStyle(() => ({ transform: [{ scale: pop.get() }] }));
-
-  return (
-    <View style={styles.top}>
-      <Pressable
-        onPress={() => router.back()}
-        hitSlop={10}
-        accessibilityRole="button"
-        accessibilityLabel={copy.learn.lesson.close}
-        style={({ pressed }) => [styles.close, { opacity: pressed ? 0.5 : 1 }]}>
-        <Icon name="xmark" size={20} weight="bold" tintColor={t.textSecondary} fallback={null} />
-      </Pressable>
-      <View accessible accessibilityRole="progressbar" accessibilityLabel={stepLabel} style={[styles.track, { backgroundColor: t.muted }]}>
-        <Animated.View style={[styles.trackFill, { backgroundColor: t.primary }, fill]} />
-      </View>
-      {combo >= 2 ? (
-        <Animated.View style={[styles.combo, popStyle]} accessible accessibilityLabel={copy.learn.lesson.inARow(combo)}>
-          <Icon name="flame.fill" size={18} tintColor={t.primary} fallback={null} />
-          <AppText style={[styles.comboText, { color: t.primary }]}>{combo}</AppText>
-        </Animated.View>
-      ) : (
-        <View style={styles.comboSpace} />
-      )}
-    </View>
-  );
-}
-
-// ---------------------------------------------------------------------------------------
-// A new word
-// ---------------------------------------------------------------------------------------
-
-function Teach({ term }: { term: Term }) {
-  const t = useTheme();
-  const copy = useCopy();
-  const { language } = useLanguage();
-  const shown = termIn(language.code, term);
-  return (
-    <>
-      <View style={[styles.tag, { backgroundColor: t.accent }]}>
-        <Icon name="sparkles" size={14} tintColor={t.accentForeground} fallback={null} />
-        <AppText style={[styles.tagText, { color: t.accentForeground }]}>{copy.learn.lesson.newWord}</AppText>
-      </View>
-      <View style={styles.wordHead}>
-        <AppText accessibilityRole="header" style={[styles.bigWord, { color: t.text }]}>
-          {shown.term}
-        </AppText>
-        {shown.english ? (
-          <AppText accessibilityLanguage="en-US" style={{ color: t.textSecondary }}>
-            {shown.english}
-          </AppText>
-        ) : null}
-      </View>
-      <View style={[styles.definition, { backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim, borderLeftColor: t.primary }]}>
-        <AppText style={[styles.definitionText, { color: t.text }]}>{shown.plain}</AppText>
-      </View>
-    </>
-  );
-}
-
-// ---------------------------------------------------------------------------------------
-// A question
-// ---------------------------------------------------------------------------------------
-
-function Ask({
-  question,
-  answer,
-  onAnswer,
-}: {
-  question: Question;
-  answer: { choice: string; correct: boolean } | null;
-  onAnswer: (choice: string) => void;
-}) {
-  const t = useTheme();
-  const copy = useCopy();
-  const l = copy.learn.lesson;
-  const { language } = useLanguage();
-  const target = termIn(language.code, question.term);
-  return (
-    <>
-      {question.retry ? (
-        <View style={[styles.tag, { backgroundColor: t.muted }]}>
-          <Icon name="arrow.counterclockwise" size={13} tintColor={t.textSecondary} fallback={null} />
-          <AppText style={[styles.tagText, { color: t.textSecondary }]}>{l.again}</AppText>
-        </View>
-      ) : null}
-      {question.kind === 'pickTerm' ? (
-        <>
-          <AppText accessibilityRole="header" style={[styles.prompt, { color: t.text }]}>
-            {l.whichWord}
-          </AppText>
-          <View style={[styles.definition, { backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim, borderLeftColor: t.primary }]}>
-            <AppText style={[styles.definitionText, { color: t.text }]}>{firstSentence(target.plain)}</AppText>
-          </View>
-        </>
-      ) : (
-        <AppText accessibilityRole="header" style={[styles.prompt, { color: t.text }]}>
-          {l.whatMeans(target.term)}
-        </AppText>
-      )}
-      <View style={styles.options}>
-        {question.options.map((o) => {
-          const shown = termIn(language.code, o);
-          const label = question.kind === 'pickTerm' ? shown.term : firstSentence(shown.plain);
-          const state: OptionState = !answer
-            ? 'idle'
-            : o.id === question.term.id
-              ? 'right'
-              : o.id === answer.choice
-                ? 'wrong'
-                : 'faded';
-          return <Option key={o.id} label={label} long={question.kind === 'pickMeaning'} state={state} onPress={() => onAnswer(o.id)} />;
-        })}
-      </View>
-    </>
-  );
-}
-
-type OptionState = 'idle' | 'right' | 'wrong' | 'faded';
-
-/** One answer: a chunky button that sinks when pressed, lights up if right, shakes if wrong. */
-function Option({ label, long, state, onPress }: { label: string; long: boolean; state: OptionState; onPress: () => void }) {
-  const t = useTheme();
-  const reduced = useReducedMotion();
-  const sink = useSharedValue(0);
-  const shake = useSharedValue(0);
-  const grow = useSharedValue(1);
-
-  useEffect(() => {
-    if (reduced) return;
-    if (state === 'wrong') {
-      shake.set(
-        withSequence(
-          withTiming(-9, { duration: 50 }),
-          withTiming(9, { duration: 70 }),
-          withTiming(-6, { duration: 60 }),
-          withTiming(5, { duration: 55 }),
-          withSpring(0, SNAPPY),
-        ),
-      );
-    }
-    if (state === 'right') grow.set(withSequence(withTiming(1.04, { duration: 120 }), withSpring(1, SNAPPY)));
-  }, [state, reduced, shake, grow]);
-
-  const face = useAnimatedStyle(() => ({
-    transform: [{ translateY: sink.get() * 4 }, { translateX: shake.get() }, { scale: grow.get() }],
-  }));
-
-  const right = state === 'right';
-  const faded = state === 'faded' || state === 'wrong';
-  const bg = right ? t.primary : t.card;
-  const fg = right ? t.primaryForeground : t.text;
-  const border = right ? t.primary : state === 'wrong' ? t.textSecondary : t.border;
-  const rim = right ? t.primaryDeep : t.rim;
-
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={state !== 'idle'}
-      onPressIn={() => state === 'idle' && sink.set(reduced ? 1 : withSpring(1, SNAPPY))}
-      onPressOut={() => sink.set(reduced ? 0 : withSpring(0, SNAPPY))}
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      accessibilityState={{ disabled: state !== 'idle', selected: right }}
-      style={{ opacity: faded ? 0.45 : 1 }}>
-      <View pointerEvents="none" style={[styles.optionLip, { backgroundColor: rim }]} />
-      <Animated.View style={[styles.option, long && styles.optionLong, { backgroundColor: bg, borderColor: border }, face]}>
-        <AppText style={[long ? styles.optionTextLong : styles.optionText, { color: fg }]}>{label}</AppText>
-        {right ? <Icon name="checkmark.circle.fill" size={22} tintColor={fg} fallback={null} /> : null}
-      </Animated.View>
-    </Pressable>
-  );
-}
-
-// ---------------------------------------------------------------------------------------
-// After an answer: the panel that slides up
-// ---------------------------------------------------------------------------------------
-
-function Feedback({
-  correct,
-  term,
-  showAnswer,
-  xp,
-  index,
-  bottom,
-  onContinue,
-}: {
-  correct: boolean;
-  term: Term;
-  showAnswer: boolean;
-  xp: number;
-  index: number;
-  bottom: number;
-  onContinue: () => void;
-}) {
-  const t = useTheme();
-  const copy = useCopy();
-  const l = copy.learn.lesson;
-  const { language } = useLanguage();
-  const shown = termIn(language.code, term);
-  return (
-    <Arrive
-      from={220}
-      fade={false}
-      accessibilityLiveRegion="polite"
-      style={[
-        styles.feedback,
-        { backgroundColor: correct ? t.accent : t.card, borderTopColor: correct ? t.primary : t.border, paddingBottom: bottom + Spacing.three },
-      ]}>
-      <View style={styles.feedbackHead}>
-        <Icon
-          name={correct ? 'checkmark.circle.fill' : 'arrow.uturn.left.circle.fill'}
-          size={28}
-          tintColor={correct ? t.primary : t.textSecondary}
-          fallback={null}
-        />
-        <AppText style={[styles.feedbackTitle, { color: correct ? t.accentForeground : t.text }]}>
-          {correct ? pick(l.right, index) : l.wrong}
-        </AppText>
-        {correct && xp ? (
-          <Arrive from={8} delay={120} style={[styles.xpPill, { backgroundColor: t.primary }]}>
-            <AppText style={[styles.xpText, { color: t.primaryForeground }]}>{l.xp(xp)}</AppText>
-          </Arrive>
-        ) : null}
-      </View>
-      {!correct && showAnswer ? <AppText style={[styles.feedbackAnswer, { color: t.text }]}>{l.answerWas(shown.term)}</AppText> : null}
-      <Button label={l.continue} onPress={onContinue} />
-    </Arrive>
   );
 }
 
 /**
- * Slides (and fades) a view in from below when it mounts, with a spring on its transform.
- * Not a Reanimated `entering` animation: a view with one of those ignored taps for a few
- * seconds in the simulator, so Continue seemed broken; a transform never blocks touches.
+ * A match board, like Duolingo's: words on the left, meanings on the right. Tap one on either
+ * side, then its partner on the other. A right pair flashes green and greys out; a wrong one
+ * shakes. The board moves on once every pair is found.
  */
-function Arrive({
-  from,
-  delay = 0,
-  fade = true,
-  style,
-  children,
-  accessibilityLiveRegion,
+function MatchBoard({
+  terms,
+  meanings,
+  matched,
+  word,
+  meaning,
+  onPair,
 }: {
-  from: number;
-  delay?: number;
-  fade?: boolean;
-  style?: StyleProp<ViewStyle>;
-  children: ReactNode;
-  accessibilityLiveRegion?: 'polite';
+  terms: Term[];
+  meanings: Term[];
+  matched: string[];
+  word: (term: Term) => string;
+  meaning: (term: Term) => string;
+  onPair: (word: string, meaning: string) => boolean;
 }) {
-  const reduced = useReducedMotion();
-  const p = useSharedValue(reduced ? 1 : 0);
+  const [picked, setPicked] = useState<{ side: 'word' | 'meaning'; id: string } | null>(null);
+  const [flash, setFlash] = useState<{ kind: 'right' | 'wrong'; word: string; meaning: string } | null>(null);
   useEffect(() => {
-    if (!reduced) p.set(withDelay(delay, withSpring(1, GENTLE)));
-  }, [reduced, p, delay]);
-  const animated = useAnimatedStyle(() => ({
-    opacity: fade ? Math.min(1, p.get() * 1.6) : 1,
-    transform: [{ translateY: (1 - p.get()) * from }],
-  }));
+    if (!flash) return;
+    const timer = setTimeout(() => setFlash(null), flash.kind === 'right' ? 450 : 600);
+    return () => clearTimeout(timer);
+  }, [flash]);
+
+  const tap = (side: 'word' | 'meaning', id: string) => {
+    if (!picked || picked.side === side) {
+      haptic('tap');
+      setPicked(picked?.side === side && picked.id === id ? null : { side, id });
+      return;
+    }
+    const pair = side === 'word' ? { word: id, meaning: picked.id } : { word: picked.id, meaning: id };
+    setPicked(null);
+    setFlash({ kind: onPair(pair.word, pair.meaning) ? 'right' : 'wrong', ...pair });
+  };
+  const stateOf = (side: 'word' | 'meaning', id: string): TileState => {
+    if (flash && flash[side] === id) return flash.kind;
+    if (matched.includes(id)) return 'done';
+    return picked?.side === side && picked.id === id ? 'selected' : 'idle';
+  };
   return (
-    <Animated.View accessibilityLiveRegion={accessibilityLiveRegion} style={[style, animated]}>
-      {children}
-    </Animated.View>
+    <View style={styles.board}>
+      <View style={styles.wordColumn}>
+        {terms.map((term) => (
+          <Tile
+            key={term.id}
+            label={word(term)}
+            state={stateOf('word', term.id)}
+            disabled={matched.includes(term.id)}
+            onPress={() => tap('word', term.id)}
+          />
+        ))}
+      </View>
+      <View style={styles.meaningColumn}>
+        {meanings.map((term) => (
+          <Tile
+            key={term.id}
+            label={meaning(term)}
+            small
+            state={stateOf('meaning', term.id)}
+            disabled={matched.includes(term.id)}
+            onPress={() => tap('meaning', term.id)}
+          />
+        ))}
+      </View>
+    </View>
   );
 }
 
-// ---------------------------------------------------------------------------------------
-// The end
-// ---------------------------------------------------------------------------------------
-
-function Finish({
-  moduleId,
-  practice,
-  xp,
-  accuracyPct,
-  learned,
-  stats,
-}: {
-  moduleId: string;
-  practice: boolean;
-  xp: number;
-  accuracyPct: number;
-  learned: number;
-  stats: LearnStats;
-}) {
-  const t = useTheme();
-  const copy = useCopy();
+/** The sheet after Check: a cheer or "Not quite", the answer when it was missed, and why for scams. */
+function resultFor(step: ChoiceQuestion, state: GameState, copy: Copy): Result {
+  const g = copy.learn.games;
   const l = copy.learn.lesson;
-  const insets = useSafeAreaInsets();
-  // A lesson that finishes its module ends with that module's reading assignment.
-  const known = useLearned();
-  const m = moduleFor(moduleId);
-  const finished = m && moduleProgress(m, known).complete;
+  const answer = state.answer!;
+  const title = answer.correct ? l.right[state.index % l.right.length] : l.wrong;
+  if (step.kind === 'safety')
+    return { correct: answer.correct, title, xp: answer.xp, line: g.scenarios[step.scenario].why };
+  if (answer.correct) return { correct: true, title, xp: answer.xp };
+  const right = rightChoice(step);
+  const label =
+    step.kind === 'quick'
+      ? g[step.correct]
+      : step.kind === 'cost'
+        ? right.toUpperCase()
+        : g.receiptLines[right as ReceiptField];
+  return { correct: false, title, xp: 0, line: g.answerIs(label) };
+}
+
+function Question({
+  step,
+  copy,
+  shown,
+  stateFor,
+  pick,
+  answered,
+}: {
+  step: ChoiceQuestion;
+  copy: Copy;
+  shown: (term: Term) => { term: string; plain: string };
+  stateFor: (choice: string) => TileState;
+  pick: (choice: string) => void;
+  answered: boolean;
+}) {
+  const t = useTheme();
+  const g = copy.learn.games;
+  if (step.kind === 'quick') {
+    return (
+      <>
+        <Prompt>{g.quickPrompt}</Prompt>
+        <View style={[styles.card, { backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim }]}>
+          <AppText style={[styles.cardWord, { color: t.primary }]}>{shown(step.term).term}</AppText>
+          <AppText style={[styles.cardText, { color: t.text }]}>{firstSentence(shown(step.meaning).plain)}</AppText>
+        </View>
+        <View style={styles.row}>
+          {(['true', 'false'] as const).map((value) => (
+            <Tile
+              key={value}
+              style={styles.half}
+              icon={value === 'true' ? 'checkmark' : 'xmark'}
+              label={g[value]}
+              state={stateFor(value)}
+              disabled={answered}
+              onPress={() => pick(value)}
+            />
+          ))}
+        </View>
+      </>
+    );
+  }
+  if (step.kind === 'cost') {
+    return (
+      <>
+        <Prompt>{g.costPrompt}</Prompt>
+        <ExampleTag />
+        <View style={styles.row}>
+          {step.examples.map((example, i) => {
+            const choice = i === 0 ? 'a' : 'b';
+            return (
+              <Tile
+                key={choice}
+                style={styles.half}
+                state={stateFor(choice)}
+                disabled={answered}
+                accessibilityLabel={`${choice.toUpperCase()}. ${g.fee} ${money(example.cost.feeCost, 'USD')}. ${g.rate} ${rate(example)}`}
+                onPress={() => pick(choice)}>
+                <PriceCard letter={choice.toUpperCase()} example={example} reveal={answered} copy={copy} />
+              </Tile>
+            );
+          })}
+        </View>
+      </>
+    );
+  }
+  if (step.kind === 'receipt') {
+    return (
+      <>
+        <Prompt>{g.receiptPrompt[step.field]}</Prompt>
+        <View style={[styles.receipt, { backgroundColor: t.card, borderColor: t.border }]}>
+          <View style={styles.receiptHead}>
+            <Icon name="doc.text" size={20} tintColor={t.textSecondary} fallback={null} />
+            <AppText style={[styles.receiptTitle, { color: t.text }]}>{g.receiptTitle}</AppText>
+            <ExampleTag />
+          </View>
+          <View style={[styles.dashed, { borderColor: t.border }]} />
+          {(['fee', 'rate', 'received'] as ReceiptField[]).map((field) => (
+            <Tile
+              key={field}
+              state={stateFor(field)}
+              disabled={answered}
+              accessibilityLabel={`${g.receiptLines[field]}: ${receiptValue(field, step.example)}`}
+              onPress={() => pick(field)}>
+              <View style={styles.receiptLine}>
+                <AppText style={styles.receiptLabel}>{g.receiptLines[field]}</AppText>
+                <AppText style={styles.receiptValue}>{receiptValue(field, step.example)}</AppText>
+              </View>
+            </Tile>
+          ))}
+        </View>
+      </>
+    );
+  }
   return (
-    <View style={[styles.fill, styles.finish, { paddingBottom: insets.bottom + Spacing.three }]}>
-      <View style={styles.finishTop}>
-        <Celebration />
-        <Arrive from={14} delay={120} style={styles.finishWords}>
-          <AppText accessibilityRole="header" style={[styles.finishTitle, { color: t.text }]}>
-            {practice ? l.practiceDone : l.done}
+    <>
+      <Prompt>{g.safetyPrompt}</Prompt>
+      <View style={styles.chat}>
+        <View style={[styles.avatar, { backgroundColor: t.muted }]}>
+          <Icon name="person.crop.circle" size={26} tintColor={t.textSecondary} fallback={null} />
+        </View>
+        <View style={[styles.bubble, { backgroundColor: t.card, borderColor: t.border }]}>
+          <AppText style={[styles.cardText, { color: t.text }]}>{g.scenarios[step.scenario].text}</AppText>
+        </View>
+      </View>
+      <View style={styles.stack}>
+        {(Object.keys(g.safetyChoices) as SafetyChoice[]).map((value) => (
+          <Tile
+            key={value}
+            icon={SAFETY_ICONS[value]}
+            label={g.safetyChoices[value]}
+            state={stateFor(value)}
+            disabled={answered}
+            onPress={() => pick(value)}
+          />
+        ))}
+      </View>
+    </>
+  );
+}
+
+/** One side of "who sends more?": the fee and rate, and once checked, what arrives. */
+function PriceCard({
+  letter,
+  example,
+  reveal,
+  copy,
+}: {
+  letter: string;
+  example: ExampleTransfer;
+  reveal: boolean;
+  copy: Copy;
+}) {
+  const t = useTheme();
+  const g = copy.learn.games;
+  return (
+    <View style={styles.price}>
+      <AppText style={[styles.letter, { color: t.primary }]}>{letter}</AppText>
+      <View>
+        <AppText style={[styles.priceLabel, { color: t.textSecondary }]}>{g.fee}</AppText>
+        <AppText style={[styles.priceValue, { color: t.text }]}>{money(example.cost.feeCost, 'USD')}</AppText>
+      </View>
+      <View>
+        <AppText style={[styles.priceLabel, { color: t.textSecondary }]}>{g.rate}</AppText>
+        <AppText style={[styles.priceValue, { color: t.text }]}>{rate(example)}</AppText>
+      </View>
+      {reveal ? (
+        <View>
+          <AppText style={[styles.priceLabel, { color: t.textSecondary }]}>{g.arrives}</AppText>
+          <AppText style={[styles.priceValue, { color: t.moneyReceived }]}>
+            {money(example.cost.amountReceived, 'MXN')}
           </AppText>
-          {!practice && learned ? <AppText style={{ color: t.textSecondary }}>{l.wordsLearned(learned)}</AppText> : null}
-        </Arrive>
-        <Arrive from={14} delay={220} style={styles.tiles}>
-          <Tile icon="bolt.fill" label={l.xpLabel} value={`${xp}`} />
-          <Tile icon="scope" label={l.accuracyLabel} value={`${accuracyPct}%`} />
-          <Tile icon="flame.fill" label={l.streakLabel} value={l.streakDays(stats.streak)} />
-        </Arrive>
-      </View>
-      {finished && m ? (
-        <Arrive from={14} delay={320}>
-          <ReadingAssignment module={m} learned={known} />
-        </Arrive>
+          {example.cost.markupCost > 0 ? (
+            <AppText style={[styles.priceLabel, { color: t.moneyMarkupText }]}>
+              {g.hidden(money(example.cost.markupCost, 'USD'))}
+            </AppText>
+          ) : null}
+        </View>
       ) : null}
-      <Arrive from={14} delay={finished ? 420 : 320}>
-        <Button label={l.continue} onPress={() => router.back()} />
-      </Arrive>
     </View>
   );
 }
 
-function Tile({ icon, label, value }: { icon: 'bolt.fill' | 'scope' | 'flame.fill'; label: string; value: string }) {
-  const t = useTheme();
-  return (
-    <View
-      accessible
-      accessibilityLabel={`${label}: ${value}`}
-      style={[styles.tile, { backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim }]}>
-      <AppText variant="small" style={[styles.tileLabel, { color: t.textSecondary }]}>
-        {label}
-      </AppText>
-      <View style={styles.tileValue}>
-        <Icon name={icon} size={18} tintColor={t.primary} fallback={null} />
-        <AppText style={[styles.tileNumber, { color: t.text }]}>{value}</AppText>
-      </View>
-    </View>
-  );
-}
+const rate = (example: ExampleTransfer) => `${example.input.quotedRate.toFixed(2)} MXN`;
 
-/** A big tick that springs in, with a ring of dots bursting out from it. */
-function Celebration() {
-  const t = useTheme();
-  const reduced = useReducedMotion();
-  const scale = useSharedValue(reduced ? 1 : 0);
-  const burst = useSharedValue(reduced ? 1 : 0);
-  useEffect(() => {
-    if (reduced) return;
-    scale.set(withSpring(1, { damping: 11, stiffness: 180, mass: 0.8 }));
-    burst.set(withDelay(120, withTiming(1, { duration: 700, easing: Easing.out(Easing.cubic) })));
-  }, [reduced, scale, burst]);
-  const badge = useAnimatedStyle(() => ({ transform: [{ scale: scale.get() }] }));
-  const dots = useMemo(() => Array.from({ length: 10 }, (_, i) => (i / 10) * Math.PI * 2), []);
-  return (
-    <View style={styles.celebration} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
-      {dots.map((angle, i) => (
-        <BurstDot key={i} angle={angle} progress={burst} color={i % 2 ? t.moneyMarkup : t.primary} />
-      ))}
-      <Animated.View style={[styles.badge, { backgroundColor: t.primary, borderBottomColor: t.primaryDeep }, badge]}>
-        <Icon name="checkmark" size={54} weight="heavy" tintColor={t.primaryForeground} fallback={null} />
-      </Animated.View>
-    </View>
-  );
-}
-
-function BurstDot({ angle, progress, color }: { angle: number; progress: SharedValue<number>; color: string }) {
-  const style = useAnimatedStyle(() => {
-    const p = progress.get();
-    const r = 46 + p * 46;
-    return {
-      opacity: p < 0.85 ? Math.min(1, p * 4) : (1 - p) / 0.15,
-      transform: [{ translateX: Math.cos(angle) * r }, { translateY: Math.sin(angle) * r }, { scale: 1 - p * 0.4 }],
-    };
-  });
-  return <Animated.View style={[styles.dot, { backgroundColor: color }, style]} />;
-}
-
-// ---------------------------------------------------------------------------------------
-
-/** A different cheer each time, in a fixed order so tests and screen readers agree. */
-function pick(xs: string[], i: number): string {
-  return xs[i % xs.length];
-}
-
-function haptic(kind: 'success' | 'error') {
-  Haptics.notificationAsync(kind === 'success' ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error).catch(
-    () => undefined,
-  );
+/** A receipt line as providers print it: their wording and the unit, so the player has to know which is which. */
+function receiptValue(field: ReceiptField, example: ExampleTransfer): string {
+  if (field === 'fee') return money(example.cost.feeCost, 'USD');
+  if (field === 'rate') return `1 USD = ${example.input.quotedRate.toFixed(2)} MXN`;
+  return money(example.cost.amountReceived, 'MXN');
 }
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  top: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three, paddingHorizontal: Spacing.three, paddingBottom: Spacing.two },
-  close: { width: MinTapTarget - 8, height: MinTapTarget - 8, alignItems: 'center', justifyContent: 'center' },
-  track: { flex: 1, height: 16, borderRadius: 8, overflow: 'hidden' },
-  trackFill: { height: 16, borderRadius: 8 },
-  combo: { flexDirection: 'row', alignItems: 'center', gap: 2, minWidth: 44, justifyContent: 'flex-end' },
-  comboSpace: { width: 44 },
-  comboText: { fontFamily: Fonts.extrabold, fontSize: 18, lineHeight: 22, fontVariant: ['tabular-nums'] },
-  body: { padding: Spacing.three, paddingTop: Spacing.four },
-  step: { gap: Spacing.four },
-  tag: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one, alignSelf: 'flex-start', borderRadius: Radius.pill, paddingHorizontal: Spacing.three, paddingVertical: Spacing.one },
-  tagText: { fontFamily: Fonts.bold, fontSize: 13, lineHeight: 18, letterSpacing: 0.4, textTransform: 'uppercase' },
-  wordHead: { gap: Spacing.one },
-  bigWord: { fontFamily: Fonts.extrabold, fontSize: 34, lineHeight: 40, letterSpacing: -0.6 },
-  definition: { borderWidth: StyleSheet.hairlineWidth, borderBottomWidth: 3, borderLeftWidth: 4, borderRadius: Radius.lg, padding: Spacing.three },
-  definitionText: { fontSize: 18, lineHeight: 27 },
-  prompt: { fontFamily: Fonts.extrabold, fontSize: 24, lineHeight: 30, letterSpacing: -0.3 },
-  options: { gap: Spacing.three },
-  optionLip: { position: 'absolute', left: 0, right: 0, top: 4, bottom: 0, borderRadius: Radius.lg },
-  option: {
-    minHeight: 58,
-    marginBottom: 4,
-    borderWidth: 2,
-    borderRadius: Radius.lg,
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.three,
+  body: { flexGrow: 1, padding: Spacing.three, paddingTop: Spacing.four, paddingBottom: Spacing.five },
+  stack: { gap: Spacing.three },
+  row: { flexDirection: 'row', gap: Spacing.three },
+  half: { flex: 1 },
+  board: { flexDirection: 'row', gap: Spacing.two, alignItems: 'flex-start' },
+  wordColumn: { flex: 2, gap: Spacing.two },
+  meaningColumn: { flex: 3, gap: Spacing.two },
+  again: { fontFamily: Fonts.bold, fontSize: 13, letterSpacing: 0.3, textTransform: 'uppercase' },
+  card: { borderWidth: 2, borderBottomWidth: 5, borderRadius: Radius.lg + 4, padding: Spacing.three, gap: Spacing.two },
+  cardWord: { fontFamily: Fonts.extrabold, fontSize: 24, lineHeight: 30 },
+  cardText: { fontSize: 18, lineHeight: 26 },
+  price: { alignSelf: 'stretch', flex: 1, gap: Spacing.two },
+  letter: { fontFamily: Fonts.extrabold, fontSize: 26, lineHeight: 30 },
+  priceLabel: { fontFamily: Fonts.semibold, fontSize: 13, lineHeight: 17 },
+  priceValue: { fontFamily: Fonts.extrabold, fontSize: 18, lineHeight: 23, fontVariant: ['tabular-nums'] },
+  receipt: { borderWidth: 2, borderRadius: Radius.lg + 4, padding: Spacing.three, gap: Spacing.two },
+  receiptHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  receiptTitle: { flex: 1, fontFamily: Fonts.extrabold, fontSize: 18 },
+  dashed: { borderTopWidth: 2, borderStyle: 'dashed', marginBottom: Spacing.one },
+  receiptLine: {
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     gap: Spacing.two,
   },
-  optionLong: { minHeight: 72 },
-  optionText: { flex: 1, fontFamily: Fonts.bold, fontSize: 18, lineHeight: 23, textAlign: 'center' },
-  optionTextLong: { flex: 1, fontFamily: Fonts.medium, fontSize: 16, lineHeight: 22 },
-  footer: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: Spacing.three, borderTopWidth: StyleSheet.hairlineWidth },
-  feedback: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: Spacing.three, gap: Spacing.two, borderTopWidth: 3, borderTopLeftRadius: Radius.lg, borderTopRightRadius: Radius.lg },
-  feedbackHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
-  feedbackTitle: { flex: 1, fontFamily: Fonts.extrabold, fontSize: 22, lineHeight: 28 },
-  feedbackAnswer: { fontFamily: Fonts.bold, fontSize: 17, lineHeight: 23 },
-  xpPill: { borderRadius: Radius.pill, paddingHorizontal: Spacing.three, paddingVertical: Spacing.one },
-  xpText: { fontFamily: Fonts.extrabold, fontSize: 15, lineHeight: 20 },
-  finish: { paddingHorizontal: Spacing.three, justifyContent: 'space-between' },
-  finishTop: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: Spacing.four },
-  finishWords: { alignItems: 'center', gap: Spacing.one },
-  finishTitle: { fontFamily: Fonts.extrabold, fontSize: 30, lineHeight: 36, letterSpacing: -0.5, textAlign: 'center' },
-  tiles: { flexDirection: 'row', gap: Spacing.two, alignSelf: 'stretch' },
-  tile: { flex: 1, borderWidth: StyleSheet.hairlineWidth, borderBottomWidth: 3, borderRadius: Radius.lg, padding: Spacing.three, gap: Spacing.one, alignItems: 'center' },
-  tileLabel: { fontFamily: Fonts.semibold, textAlign: 'center' },
-  tileValue: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  tileNumber: { fontFamily: Fonts.extrabold, fontSize: 20, lineHeight: 26 },
-  celebration: { width: 200, height: 200, alignItems: 'center', justifyContent: 'center' },
-  badge: { width: 112, height: 112, borderRadius: 56, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 6 },
-  dot: { position: 'absolute', width: 12, height: 12, borderRadius: 6 },
+  receiptLabel: { fontFamily: Fonts.semibold, fontSize: 15, flexShrink: 1 },
+  receiptValue: { fontFamily: Fonts.extrabold, fontSize: 16, fontVariant: ['tabular-nums'] },
+  chat: { flexDirection: 'row', alignItems: 'flex-end', gap: Spacing.two },
+  avatar: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
+  bubble: { flex: 1, borderWidth: 2, borderRadius: 18, borderBottomLeftRadius: 4, padding: Spacing.three },
 });
