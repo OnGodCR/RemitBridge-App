@@ -589,4 +589,42 @@ set role anon;
 select pg_temp.expect($$select * from public.expired_receipt_images(10)$$, '42501', 'anon: can''t list receipt images');
 reset role;
 
+-- ---------------------------------------------------------------------------------------
+-- The newsletter (D169): only the person turns it on or off; only the sender reads addresses
+-- ---------------------------------------------------------------------------------------
+insert into auth.users (id, email) values ('00000000-0000-4000-8000-0000000000c3', 'reader@example.org');
+set role anon;
+select pg_temp.as_user(null);
+select pg_temp.ok((select count(*) = 0 from public.newsletter_subscribers), 'anon: newsletter subscribers are not readable');
+select pg_temp.expect($$select public.newsletter_subscribe('en')$$, '42501', 'anon: can''t turn the newsletter on');
+select pg_temp.expect($$select * from public.newsletter_recipients()$$, '42501', 'anon: can''t read newsletter addresses');
+reset role;
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000c3');
+select pg_temp.ok(not public.newsletter_status(), 'user: the newsletter starts off');
+select public.newsletter_subscribe('hi');
+select pg_temp.ok(public.newsletter_status(), 'user: turns the newsletter on');
+select public.newsletter_subscribe('en');
+select pg_temp.ok(public.newsletter_status(), 'user: turning it on twice is fine');
+select pg_temp.ok((select count(*) = 0 from public.newsletter_subscribers), 'user: even their own row isn''t readable');
+select pg_temp.expect($$select * from public.newsletter_recipients()$$, '42501', 'user: can''t read newsletter addresses');
+select pg_temp.expect($$select public.newsletter_count()$$, '42501', 'user: can''t count subscribers');
+select pg_temp.expect($$insert into public.newsletter_issues (subject, body) values ('x', 'y')$$, '42501', 'user: can''t log an issue');
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000a1');
+select pg_temp.ok(public.newsletter_count() = 1, 'admin: counts subscribers');
+select pg_temp.ok(not public.newsletter_status(), 'admin: someone else''s opt-in isn''t theirs');
+reset role;
+set role service_role;
+select pg_temp.ok((select count(*) = 1 and bool_and(email = 'reader@example.org' and language = 'en')
+                    from public.newsletter_recipients()), 'service role: reads the one address and its language');
+reset role;
+set role authenticated;
+select pg_temp.as_user('00000000-0000-4000-8000-0000000000c3');
+select public.newsletter_unsubscribe();
+select pg_temp.ok(not public.newsletter_status(), 'user: turns the newsletter off');
+select public.newsletter_subscribe('en');
+reset role;
+delete from auth.users where id = '00000000-0000-4000-8000-0000000000c3';
+select pg_temp.ok((select count(*) = 0 from public.newsletter_subscribers), 'deleting the account deletes the opt-in');
+
 \echo 'all local checks passed'

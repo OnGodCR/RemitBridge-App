@@ -104,7 +104,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       set, `app_settings.whatsapp_number` = 16019801089. Angad's "500 to India" and "500 to
       Vietnam" got replies, and so did his dad's phone (not an app admin). App icon, category
       and policy URLs set and the Meta app published; `whatsapp_live` = true (Angad's SQL,
-      2026-10-11). LINK + SAVE tried from the app and working (2026-10-12). Left: the display name review.
+      2026-10-11). LINK + SAVE tried from the app and working, and Meta approved the display name (2026-10-12).
 - [ ] **WhatsApp going live (2026-10-09):** the account is **Approved** and the business
       **Verified** (restriction lifted). Meta app: RemitBridge, App ID 1004249319342214 (no
       icon yet; needed before Live). A test "500 to India" was delivered but the whatsapp
@@ -121,9 +121,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       2026-10-12: the agent writes like a person (prompt rules plus `humanize()`), and
       receipt replies are short blocks; the tax lines no longer contradict; pesos show as
       MXN; a fee read twice as a pickup charge is dropped (whatsapp, scan-receipt deployed).
-      Left: Angad's live test (a question, a suggestion, a new country, off topic, a
-      receipt); the Hindi read of the changed bot lines; Angad sends the Groq nonprofit-tier
-      email; the weekly email of suggestions and app links (`/open/...`, needs builds) later.
+      2026-10-12: LINK and SAVE work from the app; the bot's Hindi read by Angad's mother
+      with nothing to change; no rerun of the model test (Angad); Groq email sent. Left:
+      Angad's live test (a question, a suggestion, a new country, off topic, a receipt); app
+      links (`/open/...`, needs builds) later.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
@@ -243,6 +244,13 @@ Angad does this once the app itself is finished (D117).
 - [x] **Partner emails** (D50): all nine sent. Eight from the RemitBridge Gmail (Horn of
       Africa Services 2026-09-30, the other seven 2026-10-01); El Centro de la Raza through its
       web form by Angad, 2026-10-01. Log replies in `docs/outreach/partners.md`.
+- [ ] **Newsletter (D169, 2026-10-12):** built: an Account switch (off by default), the admin
+      composer (Account, Admin, Write a newsletter), `send-newsletter` and
+      `newsletter-unsubscribe`, the site's `/unsubscribe` page, privacy policy and store answers.
+      Left (Angad): run `20261012010000_newsletter.sql` and the smoke test, deploy both functions,
+      a postal address in `MAILING_ADDRESS` before any full send (never the home address), Resend
+      tracking off, Apple's private email relay registration, a new build for the app screens,
+      and the six new Hindi rows.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with
@@ -250,7 +258,9 @@ Angad does this once the app itself is finished (D117).
       builds before that, marked Draft, with "We need volunteers" in Account (Hindi too, at
       Angad's word the same day). Her first notes are applied
       (सहेज → सेव, 10 flagged lines; rows marked CHANGED 2026-10-10 in `hi.md`).
-      Hindi first; the bot's Hindi (D68) needs the same read. **The review is under way in
+      **Hindi review finished 2026-10-12** (Angad: his mother "reviewed all the hindi stuff
+      and had nothing else to add"), the bot's Hindi included; her name and the date go in
+      `languages.ts` so Hindi drops the Draft label. **The review is under way in
       `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):
       never regenerate it with `scripts/review-sheet.ts`, which rewrites the whole file and
       would wipe the reviewer's column. Add new strings as rows by hand instead. The glossary is drafted in

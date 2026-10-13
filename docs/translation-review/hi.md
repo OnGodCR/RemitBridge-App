@@ -296,6 +296,12 @@ with your name and the date.
 | account.metricsSub | Usage, funnel and impact, with definitions | इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ | |
 | account.suggestions | Suggestions | सुझाव | | NEW 2026-10-12 (admin only)
 | account.suggestionsSub | What people asked for on WhatsApp | WhatsApp पर लोगों ने क्या माँगा | | NEW 2026-10-12 (admin only)
+| account.newsletter | Newsletter | न्यूज़लेटर | | NEW 2026-10-12, after the review
+| account.newsletterSub | New countries and price news by email, now and then. | नए देशों और कीमतों की खबर, कभी-कभी ईमेल पर। | | NEW 2026-10-12, after the review
+| account.newsletterOn | Newsletter on. | न्यूज़लेटर चालू। | | NEW 2026-10-12, after the review
+| account.newsletterOff | Newsletter off. | न्यूज़लेटर बंद। | | NEW 2026-10-12, after the review
+| account.writeNewsletter | Write a newsletter | न्यूज़लेटर लिखें | | NEW 2026-10-12, after the review (admin only)
+| account.writeNewsletterSub | To everyone who turned it on | उन सबको जिन्होंने इसे चालू किया | | NEW 2026-10-12, after the review (admin only)
 | account.replay | Replay onboarding (dev only) | शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में) | |
 | saved.rowSub | Comparisons and receipt checks | तुलनाएँ और रसीद जाँचें | |
 | saved.signedOut | Sign in to keep comparisons and receipts. | तुलनाएँ और रसीदें रखने के लिए साइन इन करें। | | CHANGED 2026-10-10: सहेज → सेव, as you asked CHANGED 2026-10-11: shorter, please read again

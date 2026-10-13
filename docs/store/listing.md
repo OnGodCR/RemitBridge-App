@@ -82,7 +82,7 @@ Tracking: **No**. The app doesn't track people across other companies' apps or w
 
 | Data type (Apple's name) | Collected | Linked to the person | Used for tracking | Purposes |
 |---|---|---|---|---|
-| Contact Info: Email Address | Yes, with an account; or given on a route request (deleted once the launch email is sent) | Yes | No | App Functionality |
+| Contact Info: Email Address | Yes, with an account; or given on a route request (deleted once the launch email is sent) | Yes | No | App Functionality, Developer's Advertising or Marketing (the opt-in newsletter, D169) |
 | Contact Info: Name | Yes, if given or shared by Apple/Google | Yes | No | App Functionality |
 | Financial Info: Other Financial Info (saved transfers, receipt values) | Yes | Yes for saved items; No for scanned receipts | No | App Functionality, Analytics (receipt totals) |
 | User Content: Photos or Videos (the covered receipt photo, kept only with "Keep for research") | Yes | No | No | App Functionality, Other Purposes (research totals) |
@@ -165,7 +165,7 @@ See the fee and the hidden exchange-rate markup, and compare who sends most.
 
 | Data type (Google's name) | Collected | Optional | Purposes |
 |---|---|---|---|
-| Personal info: Email address | Yes | Yes (accounts are optional) | Account management, App functionality |
+| Personal info: Email address | Yes | Yes (accounts are optional) | Account management, App functionality, Developer communications (the opt-in newsletter, D169) |
 | Personal info: Name | Yes | Yes | App functionality |
 | Personal info: User IDs | Yes | No (a random install ID) | Analytics, App functionality |
 | Financial info: Other financial info | Yes | Yes | App functionality, Analytics |

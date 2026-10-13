@@ -449,3 +449,12 @@ verify_jwt = false
 # monthly cap bounds what a flood of requests could spend on the model.
 [functions.scan-receipt]
 verify_jwt = false
+
+# The newsletter (D169). send-newsletter checks is_admin() as the caller, like
+# notify-route-launch. newsletter-unsubscribe is opened from an email with no sign-in: the
+# random token in the link is its only key.
+[functions.send-newsletter]
+verify_jwt = false
+
+[functions.newsletter-unsubscribe]
+verify_jwt = false
