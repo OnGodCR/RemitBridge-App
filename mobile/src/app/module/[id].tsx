@@ -117,7 +117,7 @@ export default function ModuleScreen() {
             label={l.tryIt(toolTitle)}
             trailingIcon="arrow.right"
             // Compare is a tab: go back to the tabs and switch, rather than stacking a copy.
-            onPress={() => (tool.href === '/compare' ? router.dismissTo('/compare') : router.push(tool.href))}
+            onPress={() => (tool.href === '/' ? router.dismissTo('/') : router.push(tool.href))}
           />
         ) : null}
       </ScrollView>

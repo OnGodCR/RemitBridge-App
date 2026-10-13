@@ -6,7 +6,7 @@ import AppTabs from '@/components/app-tabs';
 import { currentTab, setSwipeDirection } from '@/lib/current-tab';
 
 /** The tabs left to right, as the tab bar shows them. */
-const ORDER = ['/', '/compare', '/whatsapp', '/tools', '/learn'] as const;
+const ORDER = ['/', '/scan', '/whatsapp', '/tools', '/learn'] as const;
 
 /** The furthest the current swipe has gone sideways. The pan's own translation can arrive
  * as 0 at the end on iOS, so it's kept from the updates. One swipe at a time. */

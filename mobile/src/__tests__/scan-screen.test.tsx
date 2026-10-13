@@ -1,5 +1,5 @@
 /**
- * The scan screen's flow (app/(tabs)/index.tsx, the first tab since D101), with the photo, OCR, drawing and network faked:
+ * The scan screen's flow (app/(tabs)/scan.tsx, the second tab since D171), with the photo, OCR, drawing and network faked:
  * nothing is sent before the person presses "Read my receipt", what's sent is the redacted
  * text and image, their extra cover and consent choice go with it, and a result can be
  * deleted. Also: Expo Go, errors, and Hindi.
@@ -9,7 +9,7 @@ import { Alert } from 'react-native';
 
 import { detectPii, pageFromLines, redactionBoxes, type ConfirmResponse, type ScanResponse } from '@remitbridge/receipt';
 
-import ScanScreen from '@/app/(tabs)/index';
+import ScanScreen from '@/app/(tabs)/scan';
 import { LanguageProvider } from '@/i18n';
 import { canScan, discardPhotoFiles, recognize, renderRedacted } from '@/lib/receipt-scan';
 import { confirmScan, forgetReceipt, sendScan } from '@/lib/receipts';
