@@ -46,10 +46,12 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.
 - [x] **Redeploy for the row fix (D174)**: scan-receipt and whatsapp both deployed 2026-10-13.
-- [ ] **Scan a real receipt again** after the row fix (D174) and tell Claude what it read.
+- [x] **Scan a real receipt again**: "reciept works much better" (Angad, 2026-10-13, after D174).
 - [ ] **Send Claude the receipts that came out wrong**: a photo (or the values it read and what the receipt really says) for each, so each becomes a test case in `benchmark/receipts/`.
 
 ## Content (Angad)
+
+- [ ] **CAC essays**: paste `docs/cac/chatgpt-essay-prompt.md` into ChatGPT with the form's questions, then rewrite the drafts in your own words; note in the AI-use answer how they were drafted.
 
 - [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
 - [ ] **Learn game modes with ChatGPT**: paste `docs/outreach/chatgpt-learn-games.md`, pick from its proposal, then it opens a pull request (branch `chatgpt/learn-game-modes`) for Claude to review and merge. It also swaps Library's "Latest post" for the first post.
