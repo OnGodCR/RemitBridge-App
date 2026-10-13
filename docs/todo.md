@@ -44,7 +44,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Remmy (Angad, D175)
 
-- [ ] **Deploy Remmy**: first deployed 2026-10-13; redeploy `remmy` and `whatsapp` once more for the junk-output fix (44a53f7). `whatsapp` now shares Remmy's agent code.
+- [ ] **Deploy Remmy**: `whatsapp` redeployed with the shared agent code and the junk-output fix (2026-10-13); `remmy` needs one more deploy for the price fix (0f26e6e).
+- [ ] **WhatsApp after the refactor**: text the bot "500 to India" once to confirm it still answers.
 - [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
 - [ ] **Merge the Remmy PR**: after the Learn games PR (#5).
 - [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
