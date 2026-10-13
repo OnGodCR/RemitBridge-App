@@ -5,11 +5,11 @@
  * (in the worker, Phase 5), and the benchmark calls it in each of its modes.
  */
 import { mergeFields, fieldsForModel } from './merge.ts'
-import { pageText } from './ocr.ts'
+import { joinRows, pageText } from './ocr.ts'
 import { askModel, ModelError, type ModelClient, type Reasoning } from './model.ts'
 import { parseReceipt, type ParseOptions } from './parser.ts'
 import { templateFor } from './templates.ts'
-import type { ExtractedFields, FieldName, OcrPage, ParsedFields } from './types.ts'
+import { LOW_CONFIDENCE, type ExtractedFields, type FieldName, type OcrPage, type ParsedField, type ParsedFields } from './types.ts'
 import { validateReceipt, type Validation } from './validate.ts'
 
 /** A line for a fee charged to the recipient: Reg E's "Other Fees", or a pickup or payout fee. */
@@ -48,13 +48,30 @@ export interface ReadResult {
   problems: { field: FieldName; message: string; from: 'parser' | 'model' }[]
 }
 
+/** The fields in any arithmetic check the rules' own reading fails (before the model or the day's rate). */
+export function doubtedFields(parsed: ParsedFields): FieldName[] {
+  const checks = validateReceipt(mergeFields(parsed, null)).checks
+  return [...new Set(checks.filter((c) => !c.ok && (c.id === 'received' || c.id === 'total')).flatMap((c) => c.fields))]
+}
+
 export async function readReceipt(input: ReadInput): Promise<ReadResult> {
   const mode = input.mode ?? 'combined'
+  // Rows the phone's OCR split into label and value, put back together (D174). The app does
+  // this too from its next build; doing it here fixes scans from builds already installed.
+  const page: OcrPage = { ...input.page, lines: joinRows(input.page.lines) }
   const parsed =
     mode === 'model'
       ? { templateId: 'generic', fields: {} as ParsedFields, problems: [] }
-      : parseReceipt(input.page, { today: input.today, extractors: input.extractors, templates: input.templates })
+      : parseReceipt(page, { today: input.today, extractors: input.extractors, templates: input.templates })
   const problems: ReadResult['problems'] = parsed.problems.map((p) => ({ ...p, from: 'parser' as const }))
+
+  // Values the rules read confidently but that don't add up with each other: doubted, so
+  // the model reads them again from the photo instead of a wrong value standing (D174).
+  const doubted = doubtedFields(parsed.fields)
+  for (const f of doubted) {
+    const field = parsed.fields[f]
+    if (field && field.confidence >= LOW_CONFIDENCE) (parsed.fields as Record<string, ParsedField>)[f] = { ...field, confidence: LOW_CONFIDENCE - 0.01 }
+  }
 
   const ask = input.model ? fieldsForModel(parsed.fields) : []
   let modelFields: ParsedFields | null = null
@@ -63,7 +80,7 @@ export async function readReceipt(input: ReadInput): Promise<ReadResult> {
     try {
       const answer = await askModel(input.model.client, {
         fields: ask,
-        page: input.page,
+        page: page,
         image: input.image,
         today: input.today,
         model: input.model.model,
@@ -87,7 +104,7 @@ export async function readReceipt(input: ReadInput): Promise<ReadResult> {
   if (
     pickup?.path === 'model' &&
     pickup.value === fields.fee?.value &&
-    !RECIPIENT_FEE_LINE.test(pageText(input.page))
+    !RECIPIENT_FEE_LINE.test(pageText(page))
   ) {
     delete fields.pickup_charge
   }

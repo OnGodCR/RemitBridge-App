@@ -2113,3 +2113,34 @@ callback, leaving sign-in) now lands on Compare, and every link that opened Comp
 (`openCompare`, saved comparisons, the Learn module's tool link) uses `/`. The tab bar reads
 Compare · Scan · WhatsApp · Tools · Learn on both platforms, and swiping follows that order.
 The "Hi, [name]" greeting (D114) stays on Scan's band, where it was built.
+
+**D173. A receipt can include its fee in the amount sent** (Angad, 2026-10-12: the scanner
+"simply needs to be better... It's simply not transcribing well enough right now OR the
+calculation based formula is wrong"). Checked first: the shared formula's 56 test cases and
+the engine's 107 tests pass, and the rule-based reader got every field right on all 60
+synthetic receipts (99.7%) and on the sample receipt photo through OCR. The gap found:
+everything assumed the fee sits on top of "amount sent". Some receipts take it out instead
+("Amount $200.00, fee $5.00, total $200.00", and $195 is converted). Those failed both
+consistency checks, so a correctly read value was flagged as a misread, and the cost counted
+the fee twice. `packages/receipt/src/fee-included.ts` now decides from the receipt itself:
+a total equal to the amount means the fee was inside it; with no total, whichever reading the
+amount received fits. The cost, the checks and the WhatsApp reply all use it. Fee-on-top
+receipts are unchanged. The next step is real receipts: the app's failures need the photos or
+the misread values, added to `benchmark/receipts/` as test cases.
+
+**D174. Rows the phone's OCR splits are put back together, and doubtful values go to the
+model** (Angad, 2026-10-12: "basically nothing is found... I need to type everything out
+manually... it might make sense to switch to a better model"). The cause wasn't the model.
+ML Kit reads a receipt in blocks by layout, so a row like "Transfer fee ...... $5.00" came
+back as two lines, label and value, and the value's box often starts a pixel above its
+label's. Sorted by top edge, each value landed before its label and paired with the row
+above: a test receipt read as amount sent $4.99, fee $504.99, total 1, rate 8,600. The checks
+then failed everything and the person typed it all. The benchmark never saw it because its
+synthetic receipts go through tesseract, which keeps rows whole. Now `joinRows` (ocr.ts)
+joins lines that share most of their height and sit side by side, in the app's `fromMlKit`
+and again in `readReceipt`, so scans from builds already installed are fixed once
+`scan-receipt` is redeployed. Second: values the rules read confidently but that fail the
+received or total check are now doubted and sent to the model with the photo, where before a
+confident wrong value stood and the model was never asked. On the model itself: Groq's only
+vision model is the one already in use (Qwen 3.8 27B, D98), so there's nothing better on the
+free tier there; revisit once real receipts show what's still missed.

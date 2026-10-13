@@ -13,6 +13,7 @@ import {
   type FundingMethod,
   type TransferCost,
 } from '../../formula/src/index.ts'
+import { totalPaidBy } from './fee-included.ts'
 import type { ExtractedFields, FieldValues } from './types.ts'
 
 type Values = Partial<FieldValues>
@@ -25,14 +26,24 @@ export function valuesFrom(fields: ExtractedFields): Values {
 }
 
 /**
- * The formula's inputs from a receipt (D77): S is everything paid, amount_sent + fee + tax;
- * the fee and the tax come off before conversion. Null without the amount sent and rate.
+ * The formula's inputs from a receipt (D77): S is everything paid, which is amount_sent + fee
+ * + tax when the fee is on top, or amount_sent alone when the receipt took the fee out of it
+ * (D173); the fee and the tax come off before conversion. Null without the amount sent and rate.
  */
 export function formulaInputs(v: Values): { sent: number; fee: number; transferTax: number; quotedRate: number; pickupCharge: number } | null {
   if (v.amount_sent === undefined || v.exchange_rate === undefined) return null
   const fee = v.fee ?? 0
   const transferTax = v.tax ?? 0
-  return { sent: v.amount_sent + fee + transferTax, fee, transferTax, quotedRate: v.exchange_rate, pickupCharge: v.pickup_charge ?? 0 }
+  const sent = totalPaidBy({
+    A: v.amount_sent,
+    F: fee,
+    X: transferTax,
+    P: v.total_paid,
+    Q: v.exchange_rate,
+    V: v.amount_received,
+    R: v.pickup_charge,
+  })!
+  return { sent, fee, transferTax, quotedRate: v.exchange_rate, pickupCharge: v.pickup_charge ?? 0 }
 }
 
 /** The receipt's true cost at the day's mid-market rate, through the one formula. */

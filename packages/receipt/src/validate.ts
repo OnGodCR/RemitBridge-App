@@ -5,9 +5,10 @@
  *
  * The checks:
  *   received  amount_received ≈ (S − F − T) × Q − R, from computeTransferCost, where
- *             S = amount_sent + fee + tax. Tolerance: the engine's (the larger of 0.2%
- *             or one unit of the receiving currency).
- *   total     total_paid ≈ amount_sent + fee + tax, within 2 cents.
+ *             S = amount_sent + fee + tax, or amount_sent alone when the receipt took the
+ *             fee out of it (fee-included.ts, D173). Tolerance: the engine's (the larger of
+ *             0.2% or one unit of the receiving currency).
+ *   total     total_paid ≈ S, within 2 cents.
  *   fee       the fee is less than the amount sent.
  *   currencies  the two currencies differ.
  *   rate      the rate is within 20% below to 5% above the mid-market rate for the day,
@@ -15,6 +16,7 @@
  *             not a price anyone charges.
  */
 import { computeTransferCost, roundingTolerance } from '../../formula/src/index.ts'
+import { totalPaidBy } from './fee-included.ts'
 import { FIELD_SPECS } from './fields.ts'
 import { LOW_CONFIDENCE, type ExtractedField, type ExtractedFields, type FieldName } from './types.ts'
 
@@ -89,11 +91,14 @@ export function validateReceipt(input: ExtractedFields, options: ValidateOptions
   const M = options.midRate ?? undefined
   const checks: Check[] = []
 
+  // S, everything paid: the amount plus fee and tax, or the amount alone when the receipt
+  // took the fee out of it (D173).
+  const S = totalPaidBy({ A, F, X, P, Q, V, R })
   if (A !== undefined && Q !== undefined && V !== undefined) {
     // The one formula, with S = everything paid. Mid-market doesn't affect the amount
     // received, so the rate stands in for it here (as in the admin screen's check).
     const expected = computeTransferCost({
-      sent: A + (F ?? 0) + (X ?? 0),
+      sent: S!,
       fee: F ?? 0,
       transferTax: X ?? 0,
       quotedRate: Q,
@@ -111,7 +116,7 @@ export function validateReceipt(input: ExtractedFields, options: ValidateOptions
     })
   }
   if (P !== undefined && A !== undefined) {
-    const expected = A + (F ?? 0) + (X ?? 0)
+    const expected = S!
     checks.push({
       id: 'total',
       ok: Math.abs(expected - P) <= TOTAL_TOLERANCE,

@@ -95,8 +95,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Migration pushed 2026-10-02 (smoke test 63/63). LINK and SAVE work from Angad's Samsung (2026-10-12, after the Android
       sign-in fix ad1afdc); `whatsapp_live` is on (2026-10-11).
 - [x] **Rate alerts by WhatsApp (D139): dropped for push-only (D148, 2026-10-09).** No
-      template or Meta payment method needed; LINK keeps no number. Left: Angad clears any
-      number sealed before then (`update public.whatsapp_users set number_sealed = null;`).
+      template or Meta payment method needed; LINK keeps no number. Angad cleared the numbers
+      sealed before then, 2026-10-12.
 - [ ] **WhatsApp on its real number (2026-10-11):** Google Voice +1 601-980-1089, Phone Number ID
       1401205103074407, in the new messaging account "RemitBridge Labs" (2494223487766004).
       Webhooks subscribed on that account (the toggle was off, which is why the test number's
@@ -166,8 +166,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       **D166 (2026-10-12):** Mexico (from Oct 9) and India (from Oct 12) published nothing
       because Frankfurter and open.er-api drifted past 0.5%; Wise now breaks the tie. Mexico
       came back at 17:51 UTC. India is still held: all three disagree (Frankfurter 96.24,
-      open.er-api 96.96 and stale, Wise 95.73; Wise is 0.53% from Frankfurter). Left: see if
-      India returns on its own by 2026-10-13; if not, consider 0.6% when Wise is one of the two.
+      open.er-api 96.96 and stale, Wise 95.73; Wise is 0.53% from Frankfurter). India returned on
+      its own (published 2026-10-13 00:46 UTC); no rule change needed.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
@@ -249,8 +249,8 @@ Angad does this once the app itself is finished (D117).
       `newsletter-unsubscribe`, the site's `/unsubscribe` page, privacy policy and store answers.
       Migration run by Angad and both functions deployed 2026-10-12, smoke test 76/76.
       No postal-address block (opted-in updates, not ads); an opt-in switch on onboarding's
-      sign-in step too. Redeployed. Left (Angad): Apple's private email
-      relay registration; a new build for the app screens.
+      sign-in step too. Redeployed. Apple's private email relay registered
+      (four sources, all SPF) and Resend tracking confirmed off. Left: the new build (520e9e31).
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with

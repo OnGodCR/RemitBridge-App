@@ -14,7 +14,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
+- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; finished 2026-10-12, checked: no AD_ID or photo permissions; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
@@ -38,13 +38,20 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Run the newsletter migration**: run by Angad in the SQL editor 2026-10-12; smoke test 76/76.
 - [x] **Deploy the two functions**: `send-newsletter` and `newsletter-unsubscribe` deployed 2026-10-12; the unsubscribe link redirects to the live `/unsubscribe` page.
 - [x] **Redeploy send-newsletter**: redeployed 2026-10-12 without the postal-address block.
-- [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
+- [x] **Apple's email relay**: registered 2026-10-12 in your dad's account: remitbridgelabs.org, send.remitbridgelabs.org (Resend's bounce domain), RemitBridge@ and hello@, all four passing SPF. Resend's open and click tracking were never set up, so they're off.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
+
+## Receipt scanner (Angad, D173)
+
+- [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.
+- [ ] **Redeploy for the row fix (D174)**: `supabase functions deploy scan-receipt --project-ref gmzljjdnwndvqciqicbx` and `supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx`, then scan a real receipt again.
+- [ ] **Send Claude the receipts that came out wrong**: a photo (or the values it read and what the receipt really says) for each, so each becomes a test case in `benchmark/receipts/`.
 
 ## Content (Angad)
 
 - [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
+- [ ] **Learn game modes with ChatGPT**: paste `docs/outreach/chatgpt-learn-games.md`, pick from its proposal, then it opens a pull request (branch `chatgpt/learn-game-modes`) for Claude to review and merge. It also swaps Library's "Latest post" for the first post.
 - [ ] **Hand-checked prices with ChatGPT**: paste `docs/outreach/chatgpt-price-checks.md` into a ChatGPT project, then do a round ($200 and $500 to India, Mexico, the Philippines, Vietnam first); you click, it reads your screenshots and writes the SQL (D167).
 
 ## Legal, accounts and money (Angad)
@@ -56,7 +63,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
 - [x] **Send the Groq email**: sent 2026-10-12; Groq's automatic reply says no new tiers for now (enterprise only).
-- [ ] **Clear old sealed WhatsApp numbers**: run `update public.whatsapp_users set number_sealed = null;` in the SQL editor (D148).
+- [x] **Clear old sealed WhatsApp numbers**: run by Angad 2026-10-12 (D148).
 - [ ] **Renumber duplicate decisions**: D160 and D163 are each used twice; say yes and Claude renumbers.
 - [ ] **hello@ profile photo**: Google case #76360017; Angad confirmed freeing the domain on 2026-10-12, so Google is deleting the unfinished Workspace. Then make a free Google account for hello@ and upload the logo.
 
@@ -76,7 +83,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [ ] **Check on D&B** (due 2026-10-14): D&B promised the number within 24 to 48 hours of 2026-10-12; search the RemitBridge inbox for it, and if it hasn't come, draft a short status email for Angad to send from hello@.
 - [ ] **Chase D&B** (due 2026-10-16): only if the number still hasn't come; draft a firmer email to research@iresearch.dnb.com for Angad.
-- [ ] **India's prices** (due 2026-10-13): held since 2026-10-12 morning (three rate sources disagree); check whether it's back, then put a 0.6% rule with Wise to Angad if not.
+- [x] **India's prices**: back on their own; the 00:46 UTC run on 2026-10-13 published India (and Mexico). No 0.6% rule needed.
 - [ ] **Uganda's prices**: held, its sources are 2.6% apart; needs a rule for thin currencies if you want one.
 - [ ] **Play App Signing follow-up**: add the SHA-256 to `assetlinks.json` and a second Android Google sign-in client, once you send the keys.
 - [ ] **Receipt scanning accuracy**: revisit with more real receipts.

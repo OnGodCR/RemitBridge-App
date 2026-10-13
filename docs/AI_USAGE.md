@@ -623,3 +623,33 @@ privacy policy match what the code does. **What Claude created or changed:**
   rules), `HANDOFF.md`, `README.md`, `docs/SECURITY.md`, `docs/store/listing.md`,
   `docs/outreach/partners.md`: updated to match.
 
+
+---
+
+## 2026-10-12: the CAC cover photo, Android sign-in, the newsletter, Compare first
+
+**What Claude did:**
+- Made the CAC cover photo at Angad's request, modelled on a reference image he chose: a
+  600x800 JPEG (and a 1200x1600 copy) of two phone frames showing the app's real Compare and
+  Scan screenshots (taken earlier from the simulator build) on the brand's green, with drawn
+  a dashed route from a "You send $200" card (US flag) to a "Family receives ₹18,987" card (India flag), the logo and one headline; the first version's 3D coins were dropped at Angad's ask. Built as an HTML page and rendered with
+  headless Chrome; the page itself isn't kept.
+- Found and fixed the bug that kept Android sign-ins from persisting, made WhatsApp linking
+  a real button, built the opt-in newsletter (D169), marked Hindi reviewed (D170) and made
+  Compare the first tab (D171). Every commit carries `Co-Authored-By: Claude`.
+
+**Files created**
+- `docs/cac/cover-showcase.jpg`, `docs/cac/cover-showcase-1200x1600.jpg`: the cover photo.
+- Newsletter: `supabase/migrations/20261012010000_newsletter.sql`,
+  `supabase/functions/send-newsletter/`, `supabase/functions/newsletter-unsubscribe/`,
+  `site/unsubscribe.html`, `mobile/src/lib/newsletter.ts`, `mobile/src/app/newsletter.tsx`,
+  and their tests.
+- `docs/outreach/chatgpt-learn-games.md`: a prompt for ChatGPT's Learn game modes.
+
+**Written or done by Angad, not Claude:** the decision on each feature, the reference image
+for the cover, running the migration and deploying the functions, his mother's Hindi
+review, every test on his phone.
+
+**Gap in this log:** entries stop at 2026-10-02 although work with Claude continued every
+day since. `git log` from 2026-10-03 to 2026-10-12 lists that work; commits Claude wrote
+carry the Co-Authored-By line. Backfill before the CAC submission.
