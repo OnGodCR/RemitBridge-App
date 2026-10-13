@@ -10,6 +10,8 @@ import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
+import { useAuth } from '@/lib/auth';
+import { firstName, partOfDay } from '@/lib/name';
 
 /**
  * The brand-green band at the top of each tab: the website's full-bleed feature band.
@@ -34,6 +36,10 @@ export function HeroHeader({
   const t = useTheme();
   const copy = useCopy();
   const insets = useSafeAreaInsets();
+  // Every tab greets you at the top (Angad, 2026-10-12: "add the Hey Angad to the top again
+  // everywhere"); pushed screens with a back button don't.
+  const name = firstName(useAuth().session);
+  const hello = greeting ?? (onBack ? undefined : copy.common.greeting(partOfDay(), name ?? undefined));
   return (
     <View style={[styles.band, { backgroundColor: t.hero, paddingTop: insets.top + Spacing.three }]}>
       <StatusBar style="light" />
@@ -52,8 +58,8 @@ export function HeroHeader({
           <AccountButton />
         )}
       </View>
-      {/* "Good morning, Angad" above the title on the home tab (D114, D128). */}
-      {greeting ? <AppText style={[styles.greeting, { color: t.heroMuted }]}>{greeting}</AppText> : null}
+      {/* "Good evening, Angad!" above every tab's title (D114, D128). */}
+      {hello ? <AppText style={[styles.greeting, { color: t.heroText }]}>{hello}</AppText> : null}
       <AppText variant="title" accessibilityRole="header" style={{ color: t.heroText }}>
         {title}
       </AppText>
@@ -93,7 +99,7 @@ const styles = StyleSheet.create({
   // Account's button sits right, the back button left; the title starts below either.
   topRow: { flexDirection: 'row', justifyContent: 'flex-end', minHeight: 38, marginBottom: -Spacing.one },
   back: { marginRight: 'auto', height: 38, justifyContent: 'center' },
-  greeting: { fontFamily: Fonts.semibold, fontSize: 18, lineHeight: 23, marginBottom: -Spacing.two },
+  greeting: { fontFamily: Fonts.extrabold, fontSize: 19, lineHeight: 24, marginBottom: -Spacing.two },
   backdrop: { position: 'absolute', top: 0, left: 0, right: 0, height: 420 },
   shield: { position: 'absolute', top: 0, left: 0, right: 0 },
 });

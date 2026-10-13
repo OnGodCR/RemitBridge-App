@@ -2114,6 +2114,45 @@ callback, leaving sign-in) now lands on Compare, and every link that opened Comp
 Compare · Scan · WhatsApp · Tools · Learn on both platforms, and swiping follows that order.
 The "Hi, [name]" greeting (D114) stays on Scan's band, where it was built.
 
+**D172. Learn's lessons become six game modes** (Angad, 2026-10-12: "add game-modes or
+something else cool that makes learning actually engaging"; he approved all six from
+ChatGPT's proposal). Built by ChatGPT (Codex) from `docs/outreach/chatgpt-learn-games.md`,
+reviewed and finished by Claude. Logic is pure in `lib/learn-games.ts`, the shared pieces in
+`components/learn-lesson.tsx`, the screen in `app/lesson/[id].tsx`.
+- **Match pairs:** up to three words and their meanings, matched by taps. A wrong pair stays
+  on the board; getting it later earns the retry XP.
+- **Quick fire:** true or false, does this meaning fit the word. The timer is opt-in, counts
+  up only, pauses on feedback and in the background, and changes nothing about the score.
+- **Spot the hidden cost** (Cost module): two labelled-fictional USD to MXN transfers;
+  which leaves the family more. Worked out with `computeTransferCost`, so the arithmetic
+  matches the rest of the app; ranked by amount received.
+- **Read the receipt** (Basics and Cost): a fictional receipt in a provider's own wording
+  ("Service charge", "FX rate applied", "Payout amount"), and the question uses ours (fee,
+  exchange rate, amount received). Claude changed this in review: the first version labelled
+  each line with the very word the question asked for, which gave the answer away.
+- **Spot the warning sign** (Safety): four scenarios, including "Not enough information"
+  for an ID check that proves nothing either way.
+- **Final round:** every word in the module, in both recall formats, plus the module's
+  applied questions.
+The module screen lists its modes; the path names the recommended one, which rotates as
+words are learned and becomes the final round once the module is done. Words count as learned
+only when answered in a word game; applied questions earn XP without marking unrelated words.
+Wrong answers still shake and grey, never red (D136). Library opens with post 1 under "Start
+here" instead of the newest post, which was a technical one. Also restored in review:
+`lesson_started` and `lesson_finished` events, which the rewrite had dropped, now with the
+mode. Checked on Angad's phone before merging.
+
+*Redesigned the same day* (Angad, after playing it: "too much text and jargon. Nobody would
+actually want to do this. Think about duolingo"). Every question now works like Duolingo's:
+one big prompt of a few words, chunky answer tiles, a Check button, and a sheet that slides up
+green ("Nice!") or grey ("Not quite.") with one line and Continue. Match boards clear pair by
+pair with no button between pairs. New words get the module's drawing and one sentence.
+"Who sends more?" shows only each side's fee and rate, and reveals what arrives after Check;
+in some puzzles the zero-fee side wins and in others it loses. "Spot the scam" is a chat
+message and three choices (red flag, looks fine, can't tell) instead of four phrases. The
+finish screen bounces in with counting stats. Gone: the timer, "Show the details", the mode
+label over every question, the fictional-amount sentence (a small "Example" tag stays), and
+the mode names under the path's cards. The module screen offers the games as icon tiles.
 **D173. A receipt can include its fee in the amount sent** (Angad, 2026-10-12: the scanner
 "simply needs to be better... It's simply not transcribing well enough right now OR the
 calculation based formula is wrong"). Checked first: the shared formula's 56 test cases and
