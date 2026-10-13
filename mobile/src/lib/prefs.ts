@@ -13,6 +13,7 @@ const KEYS = {
   installId: 'rb.installId',
   language: 'rb.language',
   aiConsent: 'rb.aiConsent',
+  remmyConsent: 'rb.remmyConsent',
   ageGate: 'rb.ageGate',
 } as const;
 
@@ -44,6 +45,9 @@ export const prefs = {
   /** Said yes, once, to receipt text going to the AI model (Apple 5.1.2(i); D145). */
   aiConsent: () => get(KEYS.aiConsent) === '1',
   setAiConsent: () => set(KEYS.aiConsent, '1'),
+  /** Said yes, once, to Remmy's messages going to the AI model (Apple 5.1.2(i); D175). */
+  remmyConsent: () => get(KEYS.remmyConsent) === '1',
+  setRemmyConsent: () => set(KEYS.remmyConsent, '1'),
   /**
    * The account age check (COPPA): 'ok' or 'blocked', once per phone, so going back can't
    * change the answer. Only this flag is kept; the year itself is never stored or sent.

@@ -33,7 +33,15 @@ export interface AgentContext {
   language: Language
   /** The route asked about last, so "what about 1000?" works. */
   lastCountry: string | null
+  /** Where the conversation happens: WhatsApp (the default) or Remmy in the app (D175). */
+  channel?: 'whatsapp' | 'app'
+  /** The conversation so far in the app, oldest first, so follow-ups make sense. */
+  history?: { role: 'user' | 'assistant'; text: string }[]
 }
+
+/** How much of an app conversation goes back to the model: the last few turns, trimmed. */
+const HISTORY_TURNS = 8
+const HISTORY_CHARS = 600
 
 export interface AgentResult {
   text: string
@@ -44,12 +52,52 @@ export interface AgentResult {
 const MAX_STEPS = 5
 
 function systemPrompt(tools: ToolSpec[], ctx: AgentContext): string {
+  return ctx.channel === 'app' ? appPrompt(tools, ctx) : whatsappPrompt(tools, ctx)
+}
+
+/**
+ * Remmy, the assistant inside the app (D175): the WhatsApp bot's rules, plus tools that act in
+ * the app (open a screen, compare a route, start a lesson, save a comparison). The app shows
+ * each action as a card the person can see and undo by going back.
+ */
+function appPrompt(tools: ToolSpec[], ctx: AgentContext): string {
+  return `You are Remmy, the assistant inside the RemitBridge app. RemitBridge compares the real cost of sending money from the US, ranked only by how much the family receives. It never sends or holds money; no provider pays to be listed.
+
+Write like a friendly person, not a chatbot: short sentences, contractions, plain words. One to five short lines. Answer in the first line. No openers like "Great question", no sign-offs, never mention being an AI. No emoji, no dashes between clauses. Reply in the person's language. **bold** the amount that arrives.
+
+Tools:
+${toolList(tools)}
+
+Each turn, output one JSON object only: {"tool":"name","args":{...}} or {"reply":"text"}.
+
+Rules:
+- Every number must be copied exactly from a tool result or the notes. No figure? Call a tool or say you don't know.
+- Keep providers in the order given. Never say "best"; the top one gives the family the most.
+- Explain, never advise. You can't send money, see accounts or contact providers.
+- Only money transfers abroad and RemitBridge; politely decline the rest.
+- You can act in the app. When the person asks to go somewhere, see something, start something, or save something, call the matching action tool (open_compare, open_screen, start_lesson, save_comparison), then reply in one short line saying what's ready.
+- now is true when they ask to be taken somewhere ("take me to", "open", "go to", "start"); otherwise false.
+- Any price, cost, fee or rate question for a country: call open_compare (it returns the prices), then answer from them.
+- "Teach me", "how do I spot", "learn about": call start_lesson on the matching module, then reply in one line. For a quick explanation, search_knowledge first and answer from our notes.
+- Links only from tool results or the notes, in full.
+- A country we don't cover: offer to count a request; request_route when they want it.
+- An idea or request for the app: save_suggestion, then thank them.${ctx.lastCountry ? `\n- They last asked about ${ctx.lastCountry}.` : ''}
+
+Notes:
+${CORE.map((n) => `- ${n.text}`).join('\n')}`
+}
+
+function toolList(tools: ToolSpec[]): string {
+  return tools.map((t) => `- ${t.name}(${Object.entries(t.args).map(([k, v]) => `${k}: ${v}`).join('; ')}): ${t.about}`).join('\n')
+}
+
+function whatsappPrompt(tools: ToolSpec[], ctx: AgentContext): string {
   return `You are RemitBridge's WhatsApp assistant. RemitBridge compares the real cost of sending money from the US, ranked only by how much the family receives. It never sends or holds money; no provider pays to be listed.
 
 Write like a helpful person texting a friend, not a chatbot: short sentences, contractions, plain words. Two to six short lines. Answer in the first line; don't repeat the question back. No openers like "Great question" or "Sure!", no sign-offs like "Let me know if you have other questions" or "Hope this helps", never mention being an AI. Lists only for three or more providers. No emoji, no dashes between clauses. Reply in the person's language (Hindi or Hinglish gets simple Hindi). *bold* for the amount that arrives.
 
 Tools:
-${tools.map((t) => `- ${t.name}(${Object.entries(t.args).map(([k, v]) => `${k}: ${v}`).join('; ')}): ${t.about}`).join('\n')}
+${toolList(tools)}
 
 Each turn, output one JSON object only: {"tool":"name","args":{...}} or {"reply":"text"}.
 
@@ -121,11 +169,14 @@ export function strayLinks(reply: string): string[] {
  */
 export async function runAgent(client: AiClient, tools: ToolSpec[], message: string, ctx: AgentContext): Promise<AgentResult | null> {
   const byName = new Map(tools.map((t) => [t.name, t]))
+  const history = (ctx.history ?? []).slice(-HISTORY_TURNS).map((h) => ({ role: h.role, content: h.text.slice(0, HISTORY_CHARS) }))
   const messages: ChatMessage[] = [
     { role: 'system', content: systemPrompt(tools, ctx) },
+    ...history,
     { role: 'user', content: message.slice(0, 1000) },
   ]
-  const sources = [message, ...CORE.map((n) => `${n.title} ${n.text}`)]
+  // Numbers from earlier in the conversation came from tools or the person, so they may recur.
+  const sources = [message, ...history.map((h) => h.content), ...CORE.map((n) => `${n.title} ${n.text}`)]
   const called: string[] = []
   let corrected = false
 
@@ -145,7 +196,9 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
       continue
     }
 
-    const reply = humanize(turn.reply.slice(0, 1500))
+    // WhatsApp bolds *one pair*; a model's **markdown** would show its outer asterisks there.
+    const text = humanize(turn.reply.slice(0, 1500))
+    const reply = ctx.channel === 'app' ? text : text.replace(/\*\*([^*\n]+)\*\*/g, '*$1*')
     const numbers = strayNumbers(reply, sources)
     const links = strayLinks(reply)
     if (!numbers.length && !links.length) return { text: reply, tools: called }

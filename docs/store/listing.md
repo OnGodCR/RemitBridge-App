@@ -99,6 +99,9 @@ Checked against Apple's rules on 2026-10-08 (D145):
 - **Third-party AI (5.1.2(i)):** the covered receipt text, and sometimes the covered photo,
   can go to Groq's model. The scan screen says so every time, and the app asks once, with
   Allow / Not now, before the first receipt is sent. The policy says the same.
+  Remmy, the in-app assistant (D175), sends what the person types to Cloudflare's or Groq's
+  model; it asks the same way, once, before the first message, and says under the chat
+  box that it uses an AI model.
 - **Account deletion (5.1.1(v)):** in the app, Account > Delete account. For Sign in with
   Apple accounts, the app gets a fresh code from Apple's sheet and the server revokes the
   grant through Apple's REST API (needs the `APPLE_*` secrets).
