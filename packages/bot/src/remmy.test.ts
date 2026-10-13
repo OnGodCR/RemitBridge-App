@@ -56,7 +56,12 @@ it('acts in the app: opens Compare on the route asked about', async () => {
   expect(r.actions).toEqual([{ type: 'compare', routeId: 'us-in', amount: 500, method: 'bank_deposit', now: true }])
   // Remmy's own prompt, not the WhatsApp one, and the metric names tools, never the text.
   expect(prompts[0]).toContain('You are Remmy')
-  expect(tables.events).toMatchObject([{ name: 'remmy_message', props: { tools: 'open_compare' }, platform: 'ios' }])
+  // The card's tool hands back today's prices too, so the model has real figures to quote.
+  expect(prompts[1]).toMatch(/Result of open_compare: \{"shown":"Compare is ready for 500 USD to India","opened":true,"prices":/)
+  expect(tables.events).toMatchObject([
+    { name: 'comparison_run', props: { route: 'us-in' } },
+    { name: 'remmy_message', props: { tools: 'open_compare' }, platform: 'ios' },
+  ])
   expect(JSON.stringify(tables.events)).not.toContain('India')
 })
 

@@ -65,7 +65,8 @@ Deno.serve(async (req) => {
       ? null
       : await modelChain(db, { bucket: 'remmy', key: install, perKey: PER_INSTALL, label: 'remmy', model: Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL });
   if (model) {
-    const tools = [...dataTools(db, { track, installId: install, source: 'app', touched }), ...actionTools(actions)];
+    const data = dataTools(db, { track, installId: install, source: 'app', touched });
+    const tools = [...data, ...actionTools(actions, data.find((t) => t.name === 'get_prices'))];
     const result = await tryModel(
       () => runAgent(model.client, tools, message, { language: body.language === 'hi' ? 'hi' : 'en', lastCountry: touched.route?.country ?? null, channel: 'app', history }),
       'remmy',
@@ -85,7 +86,7 @@ Deno.serve(async (req) => {
  * Tools that act in the app. Each adds an action for the app to carry out and tells the model
  * what the person will see, so the reply can say it in a line.
  */
-function actionTools(actions: RemmyAction[]): ToolSpec[] {
+function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
   const add = (a: unknown) => {
     const valid = validAction(a, ROUTE_IDS);
     if (valid) actions.push(valid);
@@ -99,7 +100,7 @@ function actionTools(actions: RemmyAction[]): ToolSpec[] {
   return [
     {
       name: 'open_compare',
-      about: 'Opens Compare in the app on a route, an amount and a way of receiving, with every provider ranked. Use it whenever prices come up, and when they ask to see or compare.',
+      about: "Opens Compare in the app on a route, an amount and a way of receiving, and returns today's prices for it (the same as get_prices). Use it for every price or cost question, instead of get_prices.",
       args: { country: 'name or 2-letter code', amount: 'USD, default 500', method: 'optional: bank_deposit, cash_pickup, mobile_wallet, upi, debit_card, home_delivery', now: 'true only if they asked to go there' },
       run: async (args) => {
         const { c, route } = routeOf(args.country);
@@ -108,7 +109,10 @@ function actionTools(actions: RemmyAction[]): ToolSpec[] {
         const amount = typeof args.amount === 'number' && args.amount > 0 ? Math.min(args.amount, MAX_AMOUNT) : 500;
         const method = route.deliveryMethods.find((d) => d === args.method) ?? route.deliveryMethods[0];
         const done = add({ type: 'compare', routeId: route.id, amount, method, now: args.now === true });
-        return done ? { shown: `Compare is ready for ${amount} USD to ${route.country}`, opened: done.now === true } : { error: 'could not open' };
+        if (!done) return { error: 'could not open' };
+        // The prices come back with the card, so one call gives the model real figures to quote.
+        const today = prices ? await prices.run({ country: args.country, amount, method }).catch(() => null) : null;
+        return { shown: `Compare is ready for ${amount} USD to ${route.country}`, opened: done.now === true, ...(today ? { prices: today } : {}) };
       },
     },
     {
