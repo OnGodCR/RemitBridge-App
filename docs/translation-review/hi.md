@@ -1026,3 +1026,47 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | learn.games.scenarios.usual.text | Your usual app shows the fee and rate before you pay. | आपका रोज़ का ऐप पैसे देने से पहले फ़ीस और रेट दिखाता है। | | NEW 2026-10-12
 | learn.games.scenarios.usual.why | Showing the full cost up front is a good sign. | पहले ही पूरा खर्च दिखाना अच्छा संकेत है। | | NEW 2026-10-12
 | learn.games.answerIs | Answer: {answer} | जवाब: {answer} | | NEW 2026-10-12
+
+## Remmy (2026-10-13)
+
+| Key | English | Hindi draft | Your change (blank if fine) |
+|---|---|---|---|
+| remmy.open | Ask Remmy | Remmy से पूछें | | NEW 2026-10-13
+| remmy.subtitle | Prices, fees and help with the app | कीमतें, फ़ीस और ऐप में मदद | | NEW 2026-10-13
+| remmy.hello | Hi, I’m Remmy | नमस्ते, मैं Remmy हूँ | | NEW 2026-10-13
+| remmy.intro | Ask what a transfer really costs, or tell me where to take you. | पूछें कि ट्रांसफ़र असल में कितने का पड़ता है, या बताएँ कि कहाँ ले चलूँ। | | NEW 2026-10-13
+| remmy.suggestions.0 | What does $500 to India cost? | भारत $500 भेजने में कितना लगेगा? | | NEW 2026-10-13
+| remmy.suggestions.1 | What’s a hidden exchange-rate fee? | एक्सचेंज रेट में छिपी फ़ीस क्या है? | | NEW 2026-10-13
+| remmy.suggestions.2 | Take me to the receipt scanner | मुझे रसीद स्कैनर पर ले चलो | | NEW 2026-10-13
+| remmy.suggestions.3 | Teach me to spot scams | धोखा पहचानना सिखाओ | | NEW 2026-10-13
+| remmy.placeholder | Ask Remmy | Remmy से पूछें | | NEW 2026-10-13
+| remmy.send | Send | भेजें | | NEW 2026-10-13
+| remmy.newChat | New chat | नई चैट | | NEW 2026-10-13
+| remmy.close | Close | बंद करें | | NEW 2026-10-13
+| remmy.thinking.0 | Thinking | सोच रहा हूँ | | NEW 2026-10-13
+| remmy.thinking.1 | Checking prices | कीमतें देख रहा हूँ | | NEW 2026-10-13
+| remmy.thinking.2 | Looking it up | ढूँढ रहा हूँ | | NEW 2026-10-13
+| remmy.steps.get_prices | Checked today’s prices | आज की कीमतें देखीं | | NEW 2026-10-13
+| remmy.steps.get_routes | Looked at our routes | हमारे रूट देखे | | NEW 2026-10-13
+| remmy.steps.search_knowledge | Looked up our notes | हमारे नोट्स देखे | | NEW 2026-10-13
+| remmy.steps.request_route | Counted your request | आपकी माँग गिनी | | NEW 2026-10-13
+| remmy.steps.save_suggestion | Passed your idea on | आपका सुझाव टीम तक पहुँचाया | | NEW 2026-10-13
+| remmy.steps.action | Got it ready | तैयार कर दिया | | NEW 2026-10-13
+| remmy.compareCard | Compare | तुलना | | NEW 2026-10-13
+| remmy.lessonCard | Lesson | पाठ | | NEW 2026-10-13
+| remmy.go | Open | खोलें | | NEW 2026-10-13
+| remmy.start | Start | शुरू करें | | NEW 2026-10-13
+| remmy.save | Save | सेव करें | | NEW 2026-10-13
+| remmy.saved | Saved | सेव हो गया | | NEW 2026-10-13
+| remmy.already | Already saved | पहले से सेव है | | NEW 2026-10-13
+| remmy.signIn | Sign in to save | सेव करने के लिए साइन इन करें | | NEW 2026-10-13
+| remmy.saveFailed | Couldn’t save. Try again. | सेव नहीं हुआ। फिर से कोशिश करें। | | NEW 2026-10-13
+| remmy.opening | Opening | खोल रहा हूँ | | NEW 2026-10-13
+| remmy.limited | I’m taking a short break. You can still compare prices yourself. | मैं थोड़ी देर आराम कर रहा हूँ। आप खुद कीमतों की तुलना कर सकते हैं। | | NEW 2026-10-13
+| remmy.offline | I couldn’t connect. Check your internet and try again. | कनेक्ट नहीं हो पाया। इंटरनेट देखकर फिर से कोशिश करें। | | NEW 2026-10-13
+| remmy.retry | Try again | फिर से कोशिश करें | | NEW 2026-10-13
+| remmy.privacy | Remmy uses an AI model. It doesn’t keep your messages. | Remmy एक AI मॉडल इस्तेमाल करता है। यह आपके मैसेज नहीं रखता। | | NEW 2026-10-13
+| remmy.aiTitle | Send to an AI service? | AI सेवा को भेजें? | | NEW 2026-10-13
+| remmy.aiBody | Remmy sends what you type to an AI model run by Cloudflare or Groq. Neither keeps it or trains on it. | Remmy आपका लिखा हुआ Cloudflare या Groq के AI मॉडल को भेजता है। कोई भी इसे नहीं रखता, न इससे सीखता है। | | NEW 2026-10-13
+| remmy.aiAllow | Allow | अनुमति दें | | NEW 2026-10-13
+| remmy.aiDecline | Not now | अभी नहीं | | NEW 2026-10-13
