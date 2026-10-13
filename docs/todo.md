@@ -76,7 +76,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [ ] **Check on D&B** (due 2026-10-14): D&B promised the number within 24 to 48 hours of 2026-10-12; search the RemitBridge inbox for it, and if it hasn't come, draft a short status email for Angad to send from hello@.
 - [ ] **Chase D&B** (due 2026-10-16): only if the number still hasn't come; draft a firmer email to research@iresearch.dnb.com for Angad.
-- [ ] **India's prices** (due 2026-10-13): held since 2026-10-12 morning (three rate sources disagree); check whether it's back, then put a 0.6% rule with Wise to Angad if not.
+- [x] **India's prices**: back on their own; the 00:46 UTC run on 2026-10-13 published India (and Mexico). No 0.6% rule needed.
 - [ ] **Uganda's prices**: held, its sources are 2.6% apart; needs a rule for thin currencies if you want one.
 - [ ] **Play App Signing follow-up**: add the SHA-256 to `assetlinks.json` and a second Android Google sign-in client, once you send the keys.
 - [ ] **Receipt scanning accuracy**: revisit with more real receipts.
