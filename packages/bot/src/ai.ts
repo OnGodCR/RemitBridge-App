@@ -62,7 +62,15 @@ export function openAiClient(
           body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: 0, ...extra }),
           signal: ctrl.signal,
         })
-        if (!res.ok) throw new Error(`model service: HTTP ${res.status}`)
+        if (!res.ok) {
+          // Groq refuses gpt-oss turns that look like its own native tool calls (400,
+          // "tool_use_failed") but returns what the model wrote as failed_generation. That is
+          // usually our JSON turn, so it's used as the answer. Otherwise the error code (never
+          // the text) goes into the message, for the failure metric.
+          const err = ((await res.json().catch(() => null)) as { error?: { code?: unknown; failed_generation?: unknown } } | null)?.error
+          if (res.status === 400 && typeof err?.failed_generation === 'string' && err.failed_generation.trim()) return stripThinking(err.failed_generation)
+          throw new Error(`model service: HTTP ${res.status}${typeof err?.code === 'string' ? ` ${err.code.slice(0, 40)}` : ''}`)
+        }
         const body = (await res.json()) as { choices?: { message?: { content?: string | null } }[] }
         const text = body.choices?.[0]?.message?.content
         if (typeof text !== 'string') throw new Error('model service: no text in the answer')

@@ -78,14 +78,17 @@ export async function quotes(routeId: string, amount: number, method: string): P
  */
 export async function modelChain(
   db: SupabaseClient,
-  opts: { bucket: string; key: string; perKey: number; label: string; model?: string },
+  opts: { bucket: string; key: string; perKey: number; label: string; model?: string; onProviderFail?: (cause: string) => void },
 ) {
   const providers = await providersFor(db, opts.model ?? (Deno.env.get('WHATSAPP_AI_MODEL') || undefined));
   if (!providers.length) return null;
   if ((await countToday(db, opts.bucket, opts.key)) > opts.perKey) return null;
   const client = chainClient(
     providers.map((p) => p.client),
-    (i, e) => console.warn(`${opts.label} model ${providers[i].name} failed:`, String(e)),
+    (i, e) => {
+      console.warn(`${opts.label} model ${providers[i].name} failed:`, String(e));
+      opts.onProviderFail?.(`${providers[i].name}: ${String(e).replace(/^Error: /, '').slice(0, 60)}`);
+    },
   );
   return { client, names: providers.map((p) => p.name) };
 }

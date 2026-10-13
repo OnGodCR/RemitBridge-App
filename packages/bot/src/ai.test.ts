@@ -151,6 +151,15 @@ describe('the provider chain', () => {
     await expect(chainClient([]).chat([], { maxTokens: 1 })).rejects.toThrow('no model providers')
   })
 
+  it('uses what gpt-oss wrote when Groq refuses it as a native tool call, and names other errors', async () => {
+    const answer = (status: number, body: unknown) => (async () => new Response(JSON.stringify(body), { status })) as unknown as typeof fetch
+    const failed = { error: { code: 'tool_use_failed', failed_generation: '{"tool":"open_compare","args":{"country":"MX"}}' } }
+    expect(await groqChatClient('k', 'openai/gpt-oss-20b', answer(400, failed)).chat([], { maxTokens: 9 })).toBe('{"tool":"open_compare","args":{"country":"MX"}}')
+    await expect(groqChatClient('k', 'm', answer(400, { error: { code: 'context_length_exceeded', message: 'secret text' } })).chat([], { maxTokens: 9 })).rejects.toThrow(
+      'model service: HTTP 400 context_length_exceeded',
+    )
+  })
+
   it('calls Groq with low reasoning effort', async () => {
     const calls: { url: string; body: Record<string, unknown> }[] = []
     const fetchFake = (async (url: string, init: RequestInit) => {

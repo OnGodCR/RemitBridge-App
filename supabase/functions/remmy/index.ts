@@ -83,15 +83,16 @@ Deno.serve(async (req) => {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   const { data: allowed } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy', p_ip: ip, p_max: PER_ADDRESS, p_window_seconds: DAY });
 
-  const actions: RemmyAction[] = [];
-  // Figures the number check refused, kept in the failure metric so a miss can be traced.
+  // Figures the number check refused, and why turns or providers failed: kept in the failure
+  // metric (numbers and error codes only, never text) so a miss can be traced.
   const refused: string[] = [];
   const causes: string[] = [];
+  const actions: RemmyAction[] = [];
   const touched: { route?: Route; method?: string } = {};
   const model =
     allowed === false
       ? null
-      : await modelChain(db, { bucket: 'remmy', key: install, perKey: PER_INSTALL, label: 'remmy', model: Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL });
+      : await modelChain(db, { bucket: 'remmy', key: install, perKey: PER_INSTALL, label: 'remmy', model: Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL, onProviderFail: (c) => causes.push(c) });
   if (model) {
     const data = dataTools(db, { track, installId: install, source: 'app', touched });
     const tools = [...data, ...actionTools(actions, data.find((t) => t.name === 'get_prices'))];
