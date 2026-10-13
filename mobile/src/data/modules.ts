@@ -43,7 +43,7 @@ export const MODULES: Module[] = [
   {
     id: 'arrival',
     terms: ['bank-deposit', 'cash-pickup', 'mobile-money', 'last-mile', 'cutoff-time', 'provisional-credit', 'batch-processing'],
-    tool: { href: '/compare', title: 'compare' },
+    tool: { href: '/', title: 'compare' },
   },
   {
     id: 'safety',

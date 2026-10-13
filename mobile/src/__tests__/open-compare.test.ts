@@ -15,7 +15,7 @@ test('from inside a tab, it switches to Compare', () => {
   openCompare({ routeId: 'us-mx', amount: 500, method: 'cash_pickup' });
   expect(r.dismissTo).not.toHaveBeenCalled();
   expect(r.navigate).toHaveBeenCalledWith({
-    pathname: '/compare',
+    pathname: '/',
     params: { route: 'us-mx', amount: '500', method: 'cash_pickup', at: expect.any(String) },
   });
 });
@@ -24,5 +24,5 @@ test('from a pushed screen, it pops back to the tabs', () => {
   r.canDismiss.mockReturnValue(true);
   openCompare({ routeId: 'us-in' });
   expect(r.navigate).not.toHaveBeenCalled();
-  expect(r.dismissTo).toHaveBeenCalledWith({ pathname: '/compare', params: { route: 'us-in', at: expect.any(String) } });
+  expect(r.dismissTo).toHaveBeenCalledWith({ pathname: '/', params: { route: 'us-in', at: expect.any(String) } });
 });

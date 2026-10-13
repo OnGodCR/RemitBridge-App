@@ -10,7 +10,7 @@ import type { DeliveryMethod } from '@/lib/routes';
  */
 export function openCompare(c: { routeId: string; amount?: number; method?: DeliveryMethod }) {
   const href = {
-    pathname: '/compare',
+    pathname: '/',
     params: {
       route: c.routeId,
       ...(c.amount ? { amount: String(c.amount) } : {}),

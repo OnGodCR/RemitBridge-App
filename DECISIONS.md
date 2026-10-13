@@ -2104,3 +2104,12 @@ the same day. `languages.ts` now records her as the reviewer with that date, so 
 met and Hindi loses the Draft label and leaves the "We need volunteers" list. The app doesn't
 show reviewers' names, so none is needed on screen. Spanish, Tagalog and Vietnamese stay
 drafts under D151. New Hindi strings from here on go into `hi.md` as NEW rows for her to read.
+
+**D171. Compare is the first tab again, and the app opens on it; Scan is second** (Angad,
+2026-10-12: "Make compare the main tab and scan the 2nd tab"). Reverses D101's order. The
+route files swap: Compare is `(tabs)/index.tsx` (`/`) and Scan is `(tabs)/scan.tsx`
+(`/scan`), so everything that lands on `/` (the app's launch, a partner link, the sign-in
+callback, leaving sign-in) now lands on Compare, and every link that opened Compare
+(`openCompare`, saved comparisons, the Learn module's tool link) uses `/`. The tab bar reads
+Compare · Scan · WhatsApp · Tools · Learn on both platforms, and swiping follows that order.
+The "Hi, [name]" greeting (D114) stays on Scan's band, where it was built.

@@ -61,7 +61,7 @@ export function SavedComparisons() {
       <ListGroup title={sv.comparisons}>
         <ListItem style={styles.empty}>
           <AppText muted>{sv.comparisonsEmpty}</AppText>
-          <Button label={sv.comparePrices} variant="secondary" onPress={() => router.navigate('/compare')} />
+          <Button label={sv.comparePrices} variant="secondary" onPress={() => router.navigate('/')} />
         </ListItem>
       </ListGroup>
     );
