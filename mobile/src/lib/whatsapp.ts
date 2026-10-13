@@ -75,6 +75,9 @@ export async function linkStatus(): Promise<LinkStatus | null> {
 export async function newLinkCode(): Promise<string | null> {
   if (!supabase) return null;
   const { data, error } = await supabase.rpc('whatsapp_link_code');
+  // Logged, so a failed link says why in the development build's log (it failed silently on
+  // Angad's Samsung, 2026-10-12).
+  if (error) console.warn('newLinkCode failed:', error.code, error.message);
   return error || typeof data !== 'string' ? null : data;
 }
 
