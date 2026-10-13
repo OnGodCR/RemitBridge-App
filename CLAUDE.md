@@ -166,8 +166,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       **D166 (2026-10-12):** Mexico (from Oct 9) and India (from Oct 12) published nothing
       because Frankfurter and open.er-api drifted past 0.5%; Wise now breaks the tie. Mexico
       came back at 17:51 UTC. India is still held: all three disagree (Frankfurter 96.24,
-      open.er-api 96.96 and stale, Wise 95.73; Wise is 0.53% from Frankfurter). Left: see if
-      India returns on its own by 2026-10-13; if not, consider 0.6% when Wise is one of the two.
+      open.er-api 96.96 and stale, Wise 95.73; Wise is 0.53% from Frankfurter). India returned on
+      its own (published 2026-10-13 00:46 UTC); no rule change needed.
 
 - [ ] **RemitBridge Labs (D141):** built 2026-10-02: one config file (`site/site.config.json`)
       for the operator's public details, the site build, footer, Contact, new privacy policy
