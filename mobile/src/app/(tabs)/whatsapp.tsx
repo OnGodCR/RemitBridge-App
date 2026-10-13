@@ -88,11 +88,6 @@ export default function WhatsAppScreen() {
             {session ? (
               <>
                 <WhatsAppSection chat={false} title={wt.linkTitle} />
-                {open ? (
-                  <AppText variant="small" muted>
-                    {wt.linkWhy}
-                  </AppText>
-                ) : null}
               </>
             ) : open ? (
               <>
