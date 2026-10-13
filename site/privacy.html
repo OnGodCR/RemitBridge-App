@@ -67,7 +67,9 @@
 
 <h2>Remmy, the assistant in the app</h2>
 <p>When you ask Remmy something, the app sends your message and the last few messages of the conversation, and nothing else, to our server, which passes that text to an AI model to work out the answer from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's free daily allowance is used up; neither uses what it's sent to train AI models. We don't store the conversation: it stays on your phone until you close the app or start a new chat. We record only that a message was answered and which of Remmy's tools it used (for example, that it checked prices), with the random ID described above, never what you wrote. If you send a suggestion for the app, we keep its text, its language and the date, with no ID attached.</p>
+<p>The first time you send Remmy a message, the app asks your permission before anything goes to an AI model. A plain request to open a screen, such as "open settings", is handled by our own server and never reaches an AI model.</p>
 <p>Remmy can open a screen or a comparison for you, and offer to save one to your account; saving happens only when you tap Save. It can't send money, change your settings or contact a provider.</p>
+<p>Please don't type passwords, sign-in codes, card or account numbers, or other people's personal details into the chat. Remmy doesn't need them, and anything you type goes to the AI model as written.</p>
 
 <h2>WhatsApp</h2>
 <p>When you message our WhatsApp bot, we don't store your phone number. We keep a scrambled ID made from it (a keyed hash, which can't be turned back into the number), your reply language, and the last route you asked about.</p>
@@ -87,7 +89,7 @@
 <li>On your phone, your sign-in is stored encrypted, with a key kept in the phone's secure storage (the iPhone Keychain or Android Keystore) that never goes into a backup or onto another phone.</li>
 <li>A receipt photo is deleted from the app's storage as soon as its text is read; after that the app works only from the covered copy.</li>
 <li>There's no password to steal: you sign in with a code we email you, or with Apple or Google.</li>
-<li>To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and we delete the counts within a day.</li>
+<li>To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above, per minute and per day), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and we delete the counts within a day.</li>
 <li>The deletions promised here run automatically: receipts after 30 days (24 months for research receipts), and a WhatsApp number held for a receipt within the hour.</li>
 </ul>
 

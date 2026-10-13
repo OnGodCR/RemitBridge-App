@@ -30,6 +30,8 @@ jest.mock('@/lib/prefs', () => ({
   },
 }));
 jest.mock('@/lib/track', () => ({ track: jest.fn() }));
+const mockOpenPage = jest.fn();
+jest.mock('@/lib/links', () => ({ ...jest.requireActual('@/lib/links'), openPage: (...args: unknown[]) => mockOpenPage(...args) }));
 jest.mock('expo-router', () => ({
   get router() {
     return mockRouter;
@@ -45,6 +47,9 @@ const ROUTES = ['us-in', 'us-mx'];
 beforeEach(() => {
   newChat();
   mockConsent = true;
+  // Each send happens two seconds after the last, past the double-tap guard.
+  let clock = 1_000_000;
+  jest.spyOn(Date, 'now').mockImplementation(() => (clock += 2000));
   jest.clearAllMocks();
   jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => undefined);
 });
@@ -63,6 +68,9 @@ describe('validAction', () => {
     expect(validAction({ type: 'screen', screen: 'glossary', term: 'kyc', now: true }, ROUTES)).toEqual({ type: 'screen', screen: 'glossary', term: 'kyc', now: true });
     expect(validAction({ type: 'lesson', module: 'safety', mode: 'nope' }, ROUTES)).toEqual({ type: 'lesson', module: 'safety', now: false });
     expect(validAction({ type: 'transfer', amount: 500 }, ROUTES)).toBeNull();
+    // Any name the model uses for a screen is mapped to the real one.
+    expect(validAction({ type: 'screen', screen: 'User Settings' }, ROUTES)).toEqual({ type: 'screen', screen: 'account', now: false });
+    expect(validAction({ type: 'screen', screen: 'constructor' }, ROUTES)).toBeNull();
   });
 });
 
@@ -93,6 +101,20 @@ it('sends the conversation so far, and drops actions the app wouldn’t take', a
       install_id: '00000000-0000-4000-8000-00000000c0de',
     }),
   });
+});
+
+it('drops a second send within a moment of the first', async () => {
+  (Date.now as jest.Mock).mockReturnValue(5_000_000);
+  mockInvoke.mockResolvedValue({ data: { reply: 'Hi!', actions: [], steps: [] }, error: null });
+  await sendToRemmy('hello', 'en');
+  await sendToRemmy('hello again', 'en');
+  expect(mockInvoke).toHaveBeenCalledTimes(1);
+});
+
+it('opens the policy pages in the browser', async () => {
+  await runAction({ type: 'screen', screen: 'privacy' });
+  expect(mockOpenPage).toHaveBeenCalledWith(expect.stringMatching(/\/privacy$/));
+  expect(mockRouter.push).not.toHaveBeenCalled();
 });
 
 it('opens tabs by going back to them, and other screens on top', async () => {
@@ -184,6 +206,14 @@ describe('the chat screen', () => {
     await act(async () => fireEvent.press(screen.getByRole('button', { name: r.retry })));
     expect(screen.getByText('Back now.')).toBeTruthy();
     expect(screen.queryByText(r.offline)).toBeNull();
+  });
+
+  it('asks to slow down when messages come too fast', async () => {
+    mockInvoke.mockResolvedValueOnce({ data: { reply: '', actions: [], steps: [], limited: true, reason: 'slow' }, error: null });
+    renderChat();
+    fireEvent.changeText(screen.getByLabelText(r.placeholder), 'hello');
+    await act(async () => fireEvent.press(screen.getByRole('button', { name: r.send })));
+    expect(screen.getByText(r.slow)).toBeTruthy();
   });
 
   it('says it’s resting when over the limit, and still offers Compare', async () => {

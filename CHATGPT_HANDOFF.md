@@ -290,7 +290,8 @@ connections), then runs `supabase/tests/rls_smoke.sh` (76/76 at last run).
    stores.**
 2. **D&B chase (due 2026-10-16):** only if still nothing; draft a firmer email to
    research@iresearch.dnb.com for Angad to send.
-3. **Angad tries Remmy in Expo Go:** the floating button, a price question, "take me to the
+3. **Remmy round 1 (D176) is built and pushed:** any "open X" works without the model (alias table in `mobile/src/lib/remmy-actions.ts`; add aliases there when a phrasing misses, with a row in the test table in `packages/bot/src/remmy.test.ts`), a per-minute limit, the composer follows the keyboard, AI answers in the terms. Angad deploys `remmy` again.
+   3. **Angad tries Remmy in Expo Go:** the floating button, a price question, "take me to the
    scanner", a lesson, a save (needs sign-in). Fix whatever he reports.
 4. **Hindi rows for Remmy:** 39 new rows at the end of `docs/translation-review/hi.md` for
    Angad's mother. Apply her changes to `mobile/src/i18n/hi.ts`.

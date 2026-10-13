@@ -2206,3 +2206,28 @@ resting, and a plain "500 to India" still gets its Compare card. Before the firs
 the app asks once, with Allow / Not now, as the receipt scanner does (Apple 5.1.2(i)), and
 the chat says it uses an AI model. The button is a green speech bubble with the bridge mark
 as a brow, hovering above the tab bar on every tab. It opens Remmy as a sheet.
+
+**D176. Remmy's actions no longer depend on the model, it has a burst limit, and its
+composer follows the keyboard** (Angad, 2026-10-13: "agentic stuff only works with the
+prompt designed. I need the harness to work regardless of what the prompt is, may it be
+'Open user settings'... enable rate limiting... the chatbox doesnt move at all"). One table
+in `mobile/src/lib/remmy-actions.ts` names every screen the way people say it, in the five
+app languages ("user settings", "profile", "log out", "privacy policy", "ajustes",
+"settings kholo"). A short plain request ("open user settings", "where's the glossary", or
+just "settings") is matched there and opened by the function without a model call. Price
+questions still go to the model, so Compare opens on the route. Any screen name the model
+uses goes through the same table. A name that fits nothing gets the real list back to choose
+from. If the model answers a clear "take me to..." without acting, the table adds the card.
+When no model can answer, a screen named in the message still comes back as a card to tap.
+Remmy can now open sign-in and, in the browser, the privacy policy, terms and support. A
+test table of 24 everyday phrasings, and four that must still reach the model, keeps this
+honest. Limits: 8 messages a minute per install on top of the daily ones, with its own "slow
+down" reply; the app also drops a second send within 1.5 seconds and caps a message at 500
+characters. The composer now rides on Reanimated's live keyboard height. A
+KeyboardAvoidingView measured from the window misplaced it in the iPhone sheet and did
+nothing on Android, which draws edge to edge. Dragging the thread dismisses the keyboard,
+and the thread scrolls to the end when the keyboard opens. The terms gain an "AI answers"
+section: replies can be wrong, so check figures in Compare; what Remmy can and can't do; and
+don't type passwords, codes or account numbers. The privacy policy says a plain screen
+request never reaches a model, that the app asks before the first message, and what not to
+type.

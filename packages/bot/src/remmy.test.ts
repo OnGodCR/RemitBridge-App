@@ -79,7 +79,7 @@ it('passes the conversation so far, so a follow-up makes sense', async () => {
 
 it('only takes actions that exist', async () => {
   turns = [
-    '{"tool":"open_screen","args":{"screen":"settings_admin"}}',
+    '{"tool":"open_screen","args":{"screen":"teleporter"}}',
     '{"tool":"start_lesson","args":{"module":"safety","mode":"safety"}}',
     '{"reply":"Here is the safety lesson."}',
   ]
@@ -117,4 +117,82 @@ it('stops at the address limit and the install limit', async () => {
 it('refuses a request without a message or a real install ID', async () => {
   expect((await ask({ message: '' })).status).toBe(400)
   expect((await handler(new Request('https://x', { method: 'POST', body: JSON.stringify({ message: 'hi', install_id: 'nope' }) }))).status).toBe(400)
+})
+
+// The harness, without the model: everyday ways of asking for a screen (D175). Each must open
+// the right screen with no model call at all, so it works whatever the model does that day.
+const PLAIN_REQUESTS: [string, string][] = [
+  ['Open user settings', 'account'],
+  ['open settings', 'account'],
+  ['settings', 'account'],
+  ['take me to my profile', 'account'],
+  ['where do I change my language?', 'account'],
+  ['log out', 'account'],
+  ['delete my account', 'account'],
+  ['create an account', 'sign_in'],
+  ['go to the scanner', 'scan'],
+  ['Scan a receipt', 'scan'],
+  ['open the glossary', 'glossary'],
+  ['where is the privacy policy', 'privacy'],
+  ['show me the terms of service', 'terms'],
+  ['open help', 'support'],
+  ['take me to saved', 'saved'],
+  ['open rate history', 'rate_history'],
+  ['show me the blog', 'blog'],
+  ['open the scam checker', 'scam_check'],
+  ['open WhatsApp', 'whatsapp'],
+  ['go to tools', 'tools'],
+  ['llévame a mi cuenta', 'account'],
+  ['abrir ajustes', 'account'],
+  ['settings kholo', 'account'],
+  ['mở cài đặt', 'account'],
+]
+
+it.each(PLAIN_REQUESTS)('"%s" opens %s without asking the model', async (message, screen) => {
+  const r = await (await ask({ message })).json()
+  expect(r.actions).toEqual([{ type: 'screen', screen, now: true }])
+  expect(r.steps).toEqual(['open_screen'])
+  expect(prompts).toHaveLength(0)
+})
+
+it.each(['500 to India', 'what is an exchange-rate markup?', 'is this a scam: someone wants my sign-in code', 'how do fees work'])(
+  '"%s" goes to the model',
+  async (message) => {
+    turns = ['{"reply":"Sure."}']
+    await ask({ message })
+    expect(prompts).toHaveLength(1)
+  },
+)
+
+it('maps whatever screen name the model uses, and tells it the real names when none fits', async () => {
+  turns = [
+    '{"tool":"open_screen","args":{"screen":"teleport"}}',
+    '{"tool":"open_screen","args":{"screen":"User Settings","now":true}}',
+    '{"reply":"Settings are open."}',
+  ]
+  const r = await (await ask({ message: 'I need to change some stuff about how the app works for me' })).json()
+  expect(r.actions).toEqual([{ type: 'screen', screen: 'account', now: true }])
+  expect(prompts[1]).toContain('Pick one of: compare, scan')
+})
+
+it('adds the screen when the model answers a clear "take me to" without acting', async () => {
+  turns = ['{"reply":"Markup is the gap between the rate you get and the mid-market rate."}']
+  const r = await (await ask({ message: 'take me to the glossary and tell me what markup means in simple words' })).json()
+  expect(r.reply).toContain('Markup is the gap')
+  expect(r.actions).toEqual([{ type: 'screen', screen: 'glossary', now: false }])
+})
+
+it('slows down a burst before anything else, and says why', async () => {
+  rpcs.take_hit_for_ip = (args: { p_bucket: string }) => args.p_bucket !== 'remmy_minute'
+  const r = await (await ask({ message: 'open settings' })).json()
+  expect(r).toEqual({ reply: '', actions: [], steps: [], limited: true, reason: 'slow' })
+  expect(tables.events).toMatchObject([{ name: 'remmy_limited', props: { reason: 'slow' } }])
+})
+
+it('still opens a screen when past the day limit', async () => {
+  delete env.GROQ_API_KEY
+  const r = await (await ask({ message: 'I would like to read about how you handle my data, the privacy policy please' })).json()
+  expect(r.limited).toBe(true)
+  expect(r.reason).toBe('day')
+  expect(r.actions).toEqual([{ type: 'screen', screen: 'privacy', now: false }])
 })
