@@ -5,6 +5,9 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-13 (see the sections just below; the older status after them is kept for history)
 
+**2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
+briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
 ## 2026-10-13: Remmy, the assistant in the app (D175)
 
 - **Built on branch `remmy`** (from `chatgpt/learn-game-modes`, so it includes the Learn
