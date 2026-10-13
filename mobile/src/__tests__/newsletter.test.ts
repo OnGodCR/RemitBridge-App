@@ -45,10 +45,22 @@ it('says so when the database refuses', async () => {
 it("shows the function's own reason when a send is refused", async () => {
   mockInvoke.mockResolvedValue({
     data: null,
-    error: { message: 'Edge Function returned a non-2xx status code', context: { json: async () => ({ error: 'Set MAILING_ADDRESS first' }) } },
+    error: { message: 'Edge Function returned a non-2xx status code', context: { json: async () => ({ error: 'An issue went out in the last 10 minutes' }) } },
   });
-  expect(await sendIssue('send', 'S', 'B')).toEqual({ ok: false, message: 'Set MAILING_ADDRESS first' });
+  expect(await sendIssue('send', 'S', 'B')).toEqual({ ok: false, message: 'An issue went out in the last 10 minutes' });
   mockInvoke.mockResolvedValue({ data: { sent: 1, to: 'a@example.org' }, error: null });
   expect(await sendIssue('test', 'S', 'B')).toEqual({ ok: true, sent: 1, failed: 0, to: 'a@example.org' });
   expect(mockInvoke).toHaveBeenLastCalledWith('send-newsletter', { method: 'POST', body: { mode: 'test', subject: 'S', body: 'B' } });
+});
+
+it('applies the onboarding opt-in once, after sign-in, and only if it was turned on', async () => {
+  const { applyPendingOptIn, setPendingOptIn } = jest.requireActual('@/lib/newsletter');
+  await applyPendingOptIn('en');
+  expect(mockRpc).not.toHaveBeenCalled();
+  setPendingOptIn(true);
+  await applyPendingOptIn('es');
+  expect(mockRpc).toHaveBeenCalledWith('newsletter_subscribe', { p_language: 'es' });
+  mockRpc.mockClear();
+  await applyPendingOptIn('es');
+  expect(mockRpc).not.toHaveBeenCalled();
 });
