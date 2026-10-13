@@ -340,6 +340,12 @@ export const en = {
     metricsSub: 'Usage, funnel and impact, with definitions',
     suggestions: 'Suggestions',
     suggestionsSub: 'What people asked for on WhatsApp',
+    newsletter: 'Newsletter',
+    newsletterSub: 'New countries and price news by email, now and then.',
+    newsletterOn: 'Newsletter on.',
+    newsletterOff: 'Newsletter off.',
+    writeNewsletter: 'Write a newsletter',
+    writeNewsletterSub: 'To everyone who turned it on',
     replay: 'Replay onboarding (dev only)',
   },
 

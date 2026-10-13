@@ -31,7 +31,17 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Android run-through**: a receipt scan (ML Kit, the black boxes), Google sign-in, the swipe between tabs, Learn (preview build a5686cd5).
 - [ ] **WhatsApp live test**: a question, a suggestion, a new country, something off topic, a receipt photo.
 - [x] **WhatsApp in the app**: Chat on WhatsApp, Link to your account and SAVE all work on the Samsung after the Android sign-in fix (ad1afdc), 2026-10-12. The three extra Saved rows were test saves from earlier that day; Angad deleted them.
-- [ ] **WhatsApp display name**: check Meta's review of "RemitBridge Labs".
+- [x] **WhatsApp display name**: Meta approved "RemitBridge Labs" (2026-10-12).
+
+## Newsletter (Angad, D169)
+
+- [ ] **Run the newsletter migration**: `supabase/migrations/20261012010000_newsletter.sql` in the SQL editor, then the smoke test.
+- [ ] **Deploy the two functions**: `supabase functions deploy send-newsletter` and `supabase functions deploy newsletter-unsubscribe`.
+- [ ] **A postal address for the newsletter**: full sends wait for `MAILING_ADDRESS` in `site/site.config.json` (never the home address there; a PO box or mailbox service). Tests to yourself work without it.
+- [ ] **Resend tracking off**: in Resend, Domains, remitbridgelabs.org, check open and click tracking are off (the privacy policy says we don't track).
+- [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
+- [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
+- [ ] **Hindi for the six newsletter rows**: your mom, in `hi.md` (marked NEW 2026-10-12, after the review).
 
 ## Content (Angad)
 
@@ -53,7 +63,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Translations
 
-- [ ] **Hindi review**: your mom continues in `docs/translation-review/hi.md` from `fairRate.yourTransfer`, including the NEW and CHANGED rows and the bot's Hindi.
+- [x] **Hindi review**: your mom finished every row, including the NEW and CHANGED ones and the bot's Hindi, with nothing more to change (2026-10-12). Six newsletter rows were added after, marked NEW.
 - [ ] **Spanish, Tagalog and Vietnamese reviewers**: a fluent volunteer for each, named with the date in `languages.ts`.
 - [ ] **The site in Hindi**: after the legal review.
 

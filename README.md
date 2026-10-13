@@ -42,9 +42,11 @@ packages/receipt/    The receipt pipeline: redaction, the rule-based parser (ext
                      the synthetic receipt generator, the benchmark scripts, and the WhatsApp photo worker
 benchmark/           Receipt reading accuracy: real and synthetic receipts with ground truth, results.md
 supabase/            Migrations, row-level security, Edge Functions (delete-account, process-prices,
-                     notify-route-launch, whatsapp, scan-receipt)
+                     notify-route-launch, whatsapp, scan-receipt, send-newsletter,
+                     newsletter-unsubscribe)
 .github/workflows/   CI, scheduled scrapes, manual price checks, health checks, the WhatsApp photo worker
-site/                app.remitbridgelabs.org: privacy policy, terms, contact and support, partner links
+site/                app.remitbridgelabs.org: privacy policy, terms, contact and support, partner links,
+                     the newsletter's unsubscribe page
                      (Vercel, root "site"; build.mjs fills in site.config.json, the operator's details)
 docs/                PRD, manual-research list, store/listing.md (what to paste into both stores)
 research/            world-bank-rpw/: the World Bank's US remittance price survey (Q2 2016 to Q1 2025)

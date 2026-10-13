@@ -9,6 +9,8 @@ export const clients: string[] = []
 /** Database functions the test scripts: name → what it returns. */
 export const rpcs: Record<string, (args: Row) => unknown> = {}
 export const rpcCalls: { name: string; args: Row }[] = []
+/** Who auth.getUser() says the caller is (the newsletter test). */
+export const caller: { user: Row | null } = { user: null }
 
 export function reset(seed: Record<string, Row[]> = {}) {
   for (const k of Object.keys(tables)) delete tables[k]
@@ -16,6 +18,7 @@ export function reset(seed: Record<string, Row[]> = {}) {
   clients.length = 0
   rpcCalls.length = 0
   for (const k of Object.keys(rpcs)) delete rpcs[k]
+  caller.user = null
 }
 
 export function createClient(_url: string, key: string) {
@@ -26,17 +29,22 @@ export function createClient(_url: string, key: string) {
       rpcCalls.push({ name, args })
       return { data: rpcs[name] ? rpcs[name](args) : null, error: null }
     },
+    auth: { getUser: async () => ({ data: { user: caller.user }, error: null }) },
   }
 }
 
 function query(table: string) {
-  const filters: [string, unknown][] = []
+  const filters: ((r: Row) => boolean)[] = []
   const rows = () => (tables[table] ??= [])
-  const matching = () => rows().filter((r) => filters.every(([c, v]) => r[c] === v))
+  const matching = () => rows().filter((r) => filters.every((f) => f(r)))
   const api = {
     select: () => api,
     eq: (col: string, val: unknown) => {
-      filters.push([col, val])
+      filters.push((r) => r[col] === val)
+      return api
+    },
+    gte: (col: string, val: string) => {
+      filters.push((r) => String(r[col] ?? '') >= val)
       return api
     },
     maybeSingle: async () => ({ data: matching()[0] ?? null, error: null }),
@@ -47,9 +55,14 @@ function query(table: string) {
       else rows().push({ ...row })
       return { error: null }
     },
-    insert: async (row: Row) => {
-      rows().push({ id: `id-${rows().length + 1}`, ...row })
-      return { error: null }
+    insert: (row: Row) => {
+      const stored = { id: `id-${rows().length + 1}`, ...row }
+      rows().push(stored)
+      // Awaited as it is, or followed by .select().single() for the new row.
+      return {
+        then: (resolve: (v: { error: null }) => void) => resolve({ error: null }),
+        select: () => ({ single: async () => ({ data: stored, error: null }) }),
+      }
     },
     update: (patch: Row) => ({
       eq: async (col: string, val: unknown) => {

@@ -356,6 +356,12 @@ export const hi: Copy = {
     metricsSub: 'इस्तेमाल, फ़नल और असर, परिभाषाओं के साथ',
     suggestions: 'सुझाव',
     suggestionsSub: 'WhatsApp पर लोगों ने क्या माँगा',
+    newsletter: 'न्यूज़लेटर',
+    newsletterSub: 'नए देशों और कीमतों की खबर, कभी-कभी ईमेल पर।',
+    newsletterOn: 'न्यूज़लेटर चालू।',
+    newsletterOff: 'न्यूज़लेटर बंद।',
+    writeNewsletter: 'न्यूज़लेटर लिखें',
+    writeNewsletterSub: 'उन सबको जिन्होंने इसे चालू किया',
     replay: 'शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में)',
   },
 

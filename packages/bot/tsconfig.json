@@ -11,5 +11,5 @@
     "allowImportingTsExtensions": true
   },
   "include": ["src"],
-  "exclude": ["src/webhook.test.ts"]
+  "exclude": ["src/webhook.test.ts", "src/newsletter.test.ts"]
 }

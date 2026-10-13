@@ -2068,3 +2068,24 @@ and it must match D&B's record for the D-U-N-S number, which is the Sammamish ad
 gave D&B. Asked whether to switch to a registered-agent or mailbox address first, Angad chose
 to keep it: faster and free. The app site still shows no mailing address (2026-10-03); only
 the Play listing will.
+
+**D169. A newsletter people opt into, from the app** (Angad, 2026-10-12: "add a newsletter
+feature", choosing a newsletter for users over an internal digest). Off by default; a switch
+under Account turns it on for a signed-in account, and it goes to the address that account
+already signs in with, so nothing new is collected (`newsletter_subscribers` keeps the user,
+the date, the app language and a random unsubscribe token; nobody can read the table from the
+app). Admins write an issue in plain text on Account, Admin, Write a newsletter, send a test
+to themselves, then send to everyone through the `send-newsletter` function (Resend, batches
+of 100, each issue logged in `newsletter_issues`, a second full send within 10 minutes
+refused). Every issue ends with why it came, a one-tap unsubscribe link (the site's
+`/unsubscribe` page, which POSTs to `newsletter-unsubscribe`; a GET only redirects, so link
+scanners remove nobody), List-Unsubscribe headers for Gmail and Apple Mail's own button, and
+the legal name, postal address and email. Defaults picked on Angad's behalf: **a full send is
+refused until `MAILING_ADDRESS` in `site/site.config.json` is set**, because CAN-SPAM asks for
+a postal address in commercial email and a newsletter can count as that, while the config
+says never a home address (so a PO box or mailbox service, or Angad's explicit choice
+otherwise); no open or click tracking; English issues for now, with the language kept for
+later. Resend's free plan sends 100 emails a day, which caps an issue at 100 people until
+that changes. Sign in with Apple's "Hide My Email" addresses only receive mail once
+remitbridgelabs.org is registered with Apple's private email relay. The privacy policy and
+both stores' privacy answers now name the newsletter.
