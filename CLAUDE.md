@@ -95,8 +95,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Migration pushed 2026-10-02 (smoke test 63/63). LINK and SAVE work from Angad's Samsung (2026-10-12, after the Android
       sign-in fix ad1afdc); `whatsapp_live` is on (2026-10-11).
 - [x] **Rate alerts by WhatsApp (D139): dropped for push-only (D148, 2026-10-09).** No
-      template or Meta payment method needed; LINK keeps no number. Left: Angad clears any
-      number sealed before then (`update public.whatsapp_users set number_sealed = null;`).
+      template or Meta payment method needed; LINK keeps no number. Angad cleared the numbers
+      sealed before then, 2026-10-12.
 - [ ] **WhatsApp on its real number (2026-10-11):** Google Voice +1 601-980-1089, Phone Number ID
       1401205103074407, in the new messaging account "RemitBridge Labs" (2494223487766004).
       Webhooks subscribed on that account (the toggle was off, which is why the test number's
