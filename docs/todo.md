@@ -46,7 +46,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Deploy Remmy**: `remmy` and `whatsapp` deployed 2026-10-13. Live check: "500 to India" answers from today's prices with a Compare card, "take me to the scanner" opens it, "teach me to spot scams" starts the Safety lesson.
 - [x] **WhatsApp after the refactor**: "500 to India" answered (2026-10-13), with the asterisks showing around the amounts.
-- [ ] **Redeploy whatsapp for the bold fix** (18dd46e): the model's `**bold**` is now WhatsApp's `*bold*`.
+- [x] **Redeploy whatsapp for the bold fix** (18dd46e): deployed 2026-10-13.
 - [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
 - [x] **Merge the PRs**: Learn games (#5) and Remmy (#6) merged into main, 2026-10-13.
 - [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
