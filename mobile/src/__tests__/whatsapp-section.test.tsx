@@ -77,6 +77,13 @@ it('shows the number instead of nothing when WhatsApp can\'t be opened', async (
   expect(screen.getByText(/Couldn't open WhatsApp\. Message/)).toBeTruthy();
 });
 
+it('still offers the link button when the link status can\'t be read', async () => {
+  // Angad's Samsung, 2026-10-12: the status check failed and only a heading was left.
+  jest.mocked(linkStatus).mockResolvedValue(null);
+  await renderIt();
+  expect(screen.getByText('Link to your account')).toBeTruthy();
+});
+
 it('shows a linked chat, and unlinks after asking', async () => {
   jest.mocked(linkStatus).mockResolvedValue({ linked: true, linkedAt: '2026-10-02T03:00:00Z' });
   const alert = jest.spyOn(Alert, 'alert');

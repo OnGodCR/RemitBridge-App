@@ -66,6 +66,7 @@ export type LinkStatus = { linked: boolean; linkedAt: string | null };
 export async function linkStatus(): Promise<LinkStatus | null> {
   if (!supabase) return null;
   const { data, error } = await supabase.rpc('whatsapp_link_status');
+  if (error) console.warn('linkStatus failed:', error.code, error.message);
   if (error || !data) return null;
   const d = data as { linked: boolean; linked_at: string | null };
   return { linked: !!d.linked, linkedAt: d.linked_at };

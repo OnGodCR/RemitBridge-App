@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Alert, AppState } from 'react-native';
 
 import { ListGroup, ListRow } from '@/components/list-row';
-import { AppText } from '@/components/ui';
+import { AppText, Button } from '@/components/ui';
 import { useCopy, useLanguage } from '@/i18n';
 import { announce } from '@/lib/announce';
 import { useAuth } from '@/lib/auth';
@@ -109,18 +109,21 @@ export function WhatsAppSection({ chat = true, title }: { chat?: boolean; title?
             }}
           />
         ) : null}
-        {session && status ? (
-          status.linked ? (
-            <ListRow icon="link" title={w.linked} subtitle={w.linkedSub(since)} onPress={confirmUnlink} />
-          ) : (
-            <ListRow icon="link" title={w.link} subtitle={w.linkSub} onPress={link} />
-          )
+        {session && status?.linked ? (
+          <ListRow icon="link" title={w.linked} subtitle={w.linkedSub(since)} onPress={confirmUnlink} />
         ) : null}
       </ListGroup>
-      {session && status && !status.linked ? (
-        <AppText variant="small" muted>
-          {w.linkNote}
-        </AppText>
+      {/* Signed in and not known to be linked: a real button, shown even when the status
+          check fails, since a bare heading with nothing to tap is what Angad found on his
+          Samsung (2026-10-12). Linking again is harmless: the server replaces the old code. */}
+      {session && !status?.linked ? (
+        <>
+          <AppText muted>{w.linkSub}</AppText>
+          <Button label={w.link} variant="secondary" onPress={link} />
+          <AppText variant="small" muted>
+            {w.linkNote}
+          </AppText>
+        </>
       ) : null}
       {note ? <AppText muted>{note}</AppText> : null}
       {!settings.live ? (
