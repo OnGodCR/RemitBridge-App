@@ -8,7 +8,8 @@ describe('which languages a build offers (D69, D151)', () => {
   });
 
   it('asks for volunteers for each released draft', () => {
-    expect(codes(languagesNeedingReview(false))).toEqual(['hi', 'es', 'tl', 'vi']);
+    // Hindi was reviewed on 2026-10-12, so only the other three still ask for volunteers.
+    expect(codes(languagesNeedingReview(false))).toEqual(['es', 'tl', 'vi']);
   });
 
   it('shows every draft in development builds', () => {

@@ -10,7 +10,7 @@ export type TermTranslation = { term: string; plain: string };
 
 export const TERM_TRANSLATIONS: Partial<Record<LanguageCode, Record<string, TermTranslation>>> = {
   // Claude's draft, 2026-10-01 (D125), in the Hindi app strings' words (कंपनी for provider,
-  // फ़ीस for fee). Awaiting the Hindi reviewer, with the rest of Hindi (D69).
+  // फ़ीस for fee). Reviewed with the rest of Hindi, 2026-10-12 (D69).
   hi: {
     "remittance": { term: "रेमिटेंस (घर भेजा गया पैसा)", plain: "एक देश में काम करने वाला व्यक्ति दूसरे देश में अपने परिवार या दोस्तों को जो पैसा भेजता है। आम तौर पर नियमित, आम तौर पर छोटी रकम, और आम तौर पर खाने, किराए, पढ़ाई और दवा जैसी ज़रूरतों पर खर्च होता है।" },
     "corridor": { term: "कॉरिडोर", plain: "भेजने वाला देश और पाने वाला देश, एक जोड़ी के रूप में। अमेरिका से मेक्सिको एक कॉरिडोर है, अमेरिका से भारत दूसरा। खर्च हर कॉरिडोर के हिसाब से मापा जाता है, क्योंकि उनके बीच बहुत बड़ा फ़र्क होता है।" },

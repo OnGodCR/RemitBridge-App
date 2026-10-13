@@ -247,10 +247,9 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Newsletter (D169, 2026-10-12):** built: an Account switch (off by default), the admin
       composer (Account, Admin, Write a newsletter), `send-newsletter` and
       `newsletter-unsubscribe`, the site's `/unsubscribe` page, privacy policy and store answers.
-      Left (Angad): run `20261012010000_newsletter.sql` and the smoke test, deploy both functions,
-      a postal address in `MAILING_ADDRESS` before any full send (never the home address), Resend
-      tracking off, Apple's private email relay registration, a new build for the app screens,
-      and the six new Hindi rows.
+      Migration run by Angad and both functions deployed 2026-10-12, smoke test 76/76.
+      Left (Angad): a postal address in `MAILING_ADDRESS` before any full send (never the home address),
+      Apple's private email relay registration, a new build for the app screens.
 - [ ] **Translation reviewers** (D69): Angad's mother reviews Hindi (D117), from
       `docs/translation-review/hi.md` (840 lines, now with the glossary, D125). Hindi, Spanish, Tagalog and Vietnamese
       are Claude's drafts. A fluent speaker reads each, agrees in writing, and is named with
@@ -259,8 +258,8 @@ Angad does this once the app itself is finished (D117).
       Angad's word the same day). Her first notes are applied
       (सहेज → सेव, 10 flagged lines; rows marked CHANGED 2026-10-10 in `hi.md`).
       **Hindi review finished 2026-10-12** (Angad: his mother "reviewed all the hindi stuff
-      and had nothing else to add"), the bot's Hindi included; her name and the date go in
-      `languages.ts` so Hindi drops the Draft label. **The review is under way in
+      and had nothing else to add"), the bot's Hindi included; Hindi no longer shows Draft
+      (`languages.ts`, consent 2026-10-12, relayed by Angad; her name isn't shown in the app). **The review is under way in
       `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):
       never regenerate it with `scripts/review-sheet.ts`, which rewrites the whole file and
       would wipe the reviewer's column. Add new strings as rows by hand instead. The glossary is drafted in
