@@ -37,7 +37,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Run the newsletter migration**: run by Angad in the SQL editor 2026-10-12; smoke test 76/76.
 - [x] **Deploy the two functions**: `send-newsletter` and `newsletter-unsubscribe` deployed 2026-10-12; the unsubscribe link redirects to the live `/unsubscribe` page.
-- [ ] **Redeploy send-newsletter**: `supabase functions deploy send-newsletter --project-ref gmzljjdnwndvqciqicbx` (no more postal-address block).
+- [x] **Redeploy send-newsletter**: redeployed 2026-10-12 without the postal-address block.
 - [ ] **Apple's email relay**: your dad's Apple account, Certificates, Identifiers & Profiles, Services, Sign in with Apple for Email Communication: add remitbridgelabs.org and RemitBridge@remitbridgelabs.org, so "Hide My Email" users get it.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
