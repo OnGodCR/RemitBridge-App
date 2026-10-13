@@ -379,7 +379,7 @@ with your name and the date.
 | learn.website | On the website | वेबसाइट पर | |
 | learn.blog | Blog | ब्लॉग | |
 | learn.blogSub | Stories and explainers | कहानियाँ और समझाने वाले लेख | |
-| learn.latestPost | Latest post | नई पोस्ट | | NEW 2026-10-10
+| learn.latestPost | Latest post | नई पोस्ट | | REMOVED 2026-10-12: replaced by learn.startHere, no need to read
 | learn.allPosts | All posts | सभी पोस्ट | | NEW 2026-10-10
 | learn.assignmentTitle | Now put it to use | अब इसे काम में लाएँ | | NEW 2026-10-11
 | learn.assignmentBody | Read a post that uses the words you just learned. | एक पोस्ट पढ़ें जिसमें आपके अभी सीखे शब्द हैं। | | NEW 2026-10-11
@@ -975,3 +975,65 @@ with your name and the date.
 
 The WhatsApp bot's Hindi replies (packages/bot) need the same read. They're built from
 pieces in code, so ask Claude for a separate sheet of example replies.
+
+## Learn game modes (2026-10-12)
+
+| Key | English | Hindi draft | Your change (blank if fine) |
+|---|---|---|---|
+| learn.startHere | Start here | यहाँ से शुरू करें | | NEW 2026-10-12
+| learn.games.choose | Choose a mode | खेल चुनें | | NEW 2026-10-12
+| learn.games.play | Play | खेलें | | NEW 2026-10-12
+| learn.games.playAgain | Play again | फिर खेलें | | NEW 2026-10-12
+| learn.games.next | Next | आगे | | NEW 2026-10-12
+| learn.games.details | Show the details | विवरण देखें | | NEW 2026-10-12
+| learn.games.hideDetails | Hide the details | विवरण छिपाएँ | | NEW 2026-10-12
+| learn.games.correct | Correct. | सही है। | | NEW 2026-10-12
+| learn.games.routeWord | Route | रूट | | NEW 2026-10-12
+| learn.games.modes.match | Match pairs | जोड़ियाँ मिलाएँ | | NEW 2026-10-12
+| learn.games.modes.quick | Quick fire | फटाफट सवाल | | NEW 2026-10-12
+| learn.games.modes.cost | Spot the hidden cost | छिपी लागत पहचानें | | NEW 2026-10-12
+| learn.games.modes.receipt | Read the receipt | रसीद पढ़ें | | NEW 2026-10-12
+| learn.games.modes.safety | Spot the warning sign | खतरे का संकेत पहचानें | | NEW 2026-10-12
+| learn.games.modes.final | Final round | आखिरी दौर | | NEW 2026-10-12
+| learn.games.matchPrompt | Tap a word, then its meaning. | पहले शब्द पर, फिर उसके अर्थ पर टैप करें। | | NEW 2026-10-12
+| learn.games.matched | Matched | जोड़ी मिल गई | | NEW 2026-10-12
+| learn.games.selected | Selected | चुना गया | | NEW 2026-10-12
+| learn.games.quickPrompt | Does this meaning match? | क्या यह अर्थ सही है? | | NEW 2026-10-12
+| learn.games.true | True | सही | | NEW 2026-10-12
+| learn.games.false | False | गलत | | NEW 2026-10-12
+| learn.games.timerOff | Untimed | बिना टाइमर | | NEW 2026-10-12
+| learn.games.timerOn | Show timer | टाइमर दिखाएँ | | NEW 2026-10-12
+| learn.games.elapsed | Time elapsed | बीता समय | | NEW 2026-10-12
+| learn.games.example | Example | उदाहरण | | NEW 2026-10-12
+| learn.games.exampleNote | Fictional amounts. No real provider. | काल्पनिक रकम। कोई असली प्रदाता नहीं। | | NEW 2026-10-12
+| learn.games.costPrompt | Which gives the family more? | किसमें परिवार को ज़्यादा मिलेगा? | | NEW 2026-10-12
+| learn.games.providerA | Provider A | प्रदाता A | | NEW 2026-10-12
+| learn.games.providerB | Provider B | प्रदाता B | | NEW 2026-10-12
+| learn.games.tie | Same amount | बराबर रकम | | NEW 2026-10-12
+| learn.games.budget | Total paid (USD) | कुल भुगतान (USD) | | NEW 2026-10-12
+| learn.games.fee | Transfer fee (USD) | ट्रांसफ़र फ़ीस (USD) | | NEW 2026-10-12
+| learn.games.rate | Exchange rate (MXN per USD) | एक्सचेंज रेट (प्रति USD में MXN) | | NEW 2026-10-12
+| learn.games.midRate | Mid-market rate (MXN per USD) | मिड-मार्केट रेट (प्रति USD में MXN) | | NEW 2026-10-12
+| learn.games.received | Amount received (MXN) | मिलने वाली रकम (MXN) | | NEW 2026-10-12
+| learn.games.markup | Exchange-rate markup (USD) | एक्सचेंज रेट मार्कअप (USD) | | NEW 2026-10-12
+| learn.games.totalCost | Total cost (USD) | कुल लागत (USD) | | NEW 2026-10-12
+| learn.games.costWhy | Compare the amount received. A smaller fee can hide a larger exchange-rate markup. | मिलने वाली रकम की तुलना करें। कम फ़ीस के पीछे ज़्यादा एक्सचेंज रेट मार्कअप छिपा हो सकता है। | | NEW 2026-10-12
+| learn.games.receiptPrompt.fee | Tap the transfer fee. | ट्रांसफ़र फ़ीस पर टैप करें। | | NEW 2026-10-12
+| learn.games.receiptPrompt.rate | Tap the exchange rate. | एक्सचेंज रेट पर टैप करें। | | NEW 2026-10-12
+| learn.games.receiptPrompt.received | Tap the amount received. | मिलने वाली रकम पर टैप करें। | | NEW 2026-10-12
+| learn.games.receiptLines.fee | Service charge | सर्विस चार्ज | | NEW 2026-10-12 (a provider's wording on purpose)
+| learn.games.receiptLines.rate | FX rate applied | लागू FX रेट | | NEW 2026-10-12 (a provider's wording on purpose)
+| learn.games.receiptLines.received | Payout amount | पेआउट राशि | | NEW 2026-10-12 (a provider's wording on purpose)
+| learn.games.safetyPrompt | What stands out? | आपको क्या दिखता है? | | NEW 2026-10-12
+| learn.games.safetyChoices.moveMoney | Moving money for a stranger | अजनबी के लिए पैसे भेजना | | NEW 2026-10-12
+| learn.games.safetyChoices.pressure | Pressure to act now | तुरंत कुछ करने का दबाव | | NEW 2026-10-12
+| learn.games.safetyChoices.shareCode | Sharing a sign-in code | साइन-इन कोड साझा करना | | NEW 2026-10-12
+| learn.games.safetyChoices.unknown | Not enough information | जानकारी पूरी नहीं है | | NEW 2026-10-12
+| learn.games.scenarios.stranger.text | A stranger offers to pay you to receive money and send it to someone else. | एक अजनबी आपको पैसे लेने और किसी और को भेजने के बदले भुगतान का वादा करता है। | | NEW 2026-10-12
+| learn.games.scenarios.stranger.why | Moving money for someone else can make you a money mule. | किसी और के लिए पैसे भेजने से आप मनी म्यूल बन सकते हैं। | | NEW 2026-10-12
+| learn.games.scenarios.urgent.text | Someone claiming to be your cousin demands a transfer now and says not to call. | कोई खुद को आपका चचेरा भाई बताकर तुरंत पैसे माँगता है और फ़ोन करने से मना करता है। | | NEW 2026-10-12
+| learn.games.scenarios.urgent.why | Urgency and avoiding a call are warning signs. The message does not verify who sent it. | जल्दबाज़ी और फ़ोन पर बात करने से बचना खतरे के संकेत हैं। संदेश से भेजने वाले की पहचान पक्की नहीं होती। | | NEW 2026-10-12
+| learn.games.scenarios.code.text | Someone in a chat asks for the one-time code that signs you into your transfer account. | चैट में कोई आपके ट्रांसफ़र खाते में साइन इन करने वाला वन-टाइम कोड माँगता है। | | NEW 2026-10-12
+| learn.games.scenarios.code.why | A sign-in code can give someone access to your account. | साइन-इन कोड से कोई और आपके खाते में जा सकता है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.text | A transfer service asks for identification. You have no other information about the service. | पैसे भेजने वाली एक सेवा पहचान पत्र माँगती है। उस सेवा के बारे में आपके पास और जानकारी नहीं है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.why | ID checks can be part of KYC. That alone does not prove the service is genuine. | पहचान जाँचना KYC का हिस्सा हो सकता है। केवल इससे सेवा के असली होने का पता नहीं चलता। | | NEW 2026-10-12

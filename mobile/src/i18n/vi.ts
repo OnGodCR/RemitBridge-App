@@ -441,7 +441,7 @@ export const vi: Copy = {
     website: 'Trên trang web',
     blog: 'Blog',
     blogSub: 'Câu chuyện và bài giải thích',
-    latestPost: 'Bài mới nhất',
+    startHere: 'Bắt đầu từ đây',
     allPosts: 'Tất cả bài viết',
     assignmentTitle: 'Giờ hãy áp dụng',
     assignmentBody: 'Đọc một bài có dùng những từ bạn vừa học.',
@@ -451,6 +451,82 @@ export const vi: Copy = {
     workshops: 'Hội thảo',
     workshopsSub: 'Các buổi dành cho cộng đồng và trường học',
     opensWebsite: 'Mở trên trang web',
+    games: {
+      choose: 'Chọn cách chơi',
+      play: 'Chơi',
+      playAgain: 'Chơi lại',
+      next: 'Tiếp theo',
+      details: 'Xem chi tiết',
+      hideDetails: 'Ẩn chi tiết',
+      correct: 'Đúng.',
+      routeWord: 'Tuyến',
+      modes: {
+        match: 'Ghép cặp',
+        quick: 'Câu hỏi nhanh',
+        cost: 'Tìm chi phí ẩn',
+        receipt: 'Đọc biên lai',
+        safety: 'Nhận ra dấu hiệu cảnh báo',
+        final: 'Vòng cuối'
+      },
+      matchPrompt: 'Chạm vào từ, rồi chạm vào nghĩa của từ đó.',
+      matched: 'Đã ghép',
+      selected: 'Đã chọn',
+      quickPrompt: 'Nghĩa này có đúng không?',
+      true: 'Đúng',
+      false: 'Sai',
+      timerOff: 'Không bấm giờ',
+      timerOn: 'Hiện đồng hồ',
+      elapsed: 'Thời gian đã qua',
+      example: 'Ví dụ',
+      exampleNote: 'Số tiền giả định. Không phải nhà cung cấp thật.',
+      costPrompt: 'Lựa chọn nào giúp gia đình nhận nhiều hơn?',
+      providerA: 'Nhà cung cấp A',
+      providerB: 'Nhà cung cấp B',
+      tie: 'Số tiền bằng nhau',
+      budget: 'Tổng đã trả (USD)',
+      fee: 'Phí chuyển tiền (USD)',
+      rate: 'Tỷ giá (MXN trên mỗi USD)',
+      midRate: 'Tỷ giá giữa thị trường (MXN trên mỗi USD)',
+      received: 'Số tiền nhận được (MXN)',
+      markup: 'Phần chênh lệch tỷ giá (USD)',
+      totalCost: 'Tổng chi phí (USD)',
+      costWhy: 'So sánh số tiền nhận được. Phí thấp hơn có thể đi kèm phần chênh lệch tỷ giá cao hơn.',
+      receiptPrompt: {
+        fee: 'Chạm vào phí chuyển tiền.',
+        rate: 'Chạm vào tỷ giá.',
+        received: 'Chạm vào số tiền nhận được.'
+      },
+      receiptLines: {
+        fee: 'Phí dịch vụ',
+        rate: 'Tỷ giá FX áp dụng',
+        received: 'Số tiền chi trả'
+      },
+      safetyPrompt: 'Bạn nhận thấy điều gì?',
+      safetyChoices: {
+        moveMoney: 'Chuyển tiền cho người lạ',
+        pressure: 'Bị thúc ép hành động ngay',
+        shareCode: 'Chia sẻ mã đăng nhập',
+        unknown: 'Chưa đủ thông tin'
+      },
+      scenarios: {
+        stranger: {
+          text: 'Một người lạ hứa trả công nếu bạn nhận tiền rồi chuyển cho người khác.',
+          why: 'Chuyển tiền hộ người khác có thể khiến bạn trở thành người trung chuyển tiền bất hợp pháp.'
+        },
+        urgent: {
+          text: 'Ai đó tự nhận là anh họ của bạn, đòi chuyển tiền ngay và bảo bạn đừng gọi.',
+          why: 'Thúc giục và né tránh cuộc gọi là dấu hiệu cảnh báo. Tin nhắn không xác minh được người gửi.'
+        },
+        code: {
+          text: 'Ai đó trong cuộc trò chuyện xin mã dùng một lần để đăng nhập tài khoản chuyển tiền của bạn.',
+          why: 'Mã đăng nhập có thể cho người khác truy cập tài khoản của bạn.'
+        },
+        idCheck: {
+          text: 'Một dịch vụ chuyển tiền yêu cầu giấy tờ tùy thân. Bạn không có thông tin nào khác về dịch vụ đó.',
+          why: 'Kiểm tra giấy tờ có thể là một phần của KYC. Chỉ điều đó chưa chứng minh dịch vụ là thật.'
+        }
+      }
+    },
     lesson: {
       start: (n: number) => (n === 1 ? 'Bắt đầu bài học: 1 từ mới' : `Bắt đầu bài học: ${n} từ mới`),
       practice: 'Ôn lại các từ này',

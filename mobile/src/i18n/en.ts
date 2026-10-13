@@ -426,7 +426,7 @@ export const en = {
     website: 'On the website',
     blog: 'Blog',
     blogSub: 'Stories and explainers',
-    latestPost: 'Latest post',
+    startHere: 'Start here',
     allPosts: 'All posts',
     assignmentTitle: 'Now put it to use',
     assignmentBody: 'Read a post that uses the words you just learned.',
@@ -437,6 +437,82 @@ export const en = {
     workshopsSub: 'Sessions for communities and schools',
     opensWebsite: 'Opens on the website',
     /** Lessons (D136): words met on a card, then quizzed; XP, a combo and a day streak. */
+    games: {
+      choose: 'Choose a mode',
+      play: 'Play',
+      playAgain: 'Play again',
+      next: 'Next',
+      details: 'Show the details',
+      hideDetails: 'Hide the details',
+      correct: 'Correct.',
+      routeWord: 'Route',
+      modes: {
+        match: 'Match pairs',
+        quick: 'Quick fire',
+        cost: 'Spot the hidden cost',
+        receipt: 'Read the receipt',
+        safety: 'Spot the warning sign',
+        final: 'Final round'
+      },
+      matchPrompt: 'Tap a word, then its meaning.',
+      matched: 'Matched',
+      selected: 'Selected',
+      quickPrompt: 'Does this meaning match?',
+      true: 'True',
+      false: 'False',
+      timerOff: 'Untimed',
+      timerOn: 'Show timer',
+      elapsed: 'Time elapsed',
+      example: 'Example',
+      exampleNote: 'Fictional amounts. No real provider.',
+      costPrompt: 'Which gives the family more?',
+      providerA: 'Provider A',
+      providerB: 'Provider B',
+      tie: 'Same amount',
+      budget: 'Total paid (USD)',
+      fee: 'Transfer fee (USD)',
+      rate: 'Exchange rate (MXN per USD)',
+      midRate: 'Mid-market rate (MXN per USD)',
+      received: 'Amount received (MXN)',
+      markup: 'Exchange-rate markup (USD)',
+      totalCost: 'Total cost (USD)',
+      costWhy: 'Compare the amount received. A smaller fee can hide a larger exchange-rate markup.',
+      receiptPrompt: {
+        fee: 'Tap the transfer fee.',
+        rate: 'Tap the exchange rate.',
+        received: 'Tap the amount received.'
+      },
+      receiptLines: {
+        fee: 'Service charge',
+        rate: 'FX rate applied',
+        received: 'Payout amount'
+      },
+      safetyPrompt: 'What stands out?',
+      safetyChoices: {
+        moveMoney: 'Moving money for a stranger',
+        pressure: 'Pressure to act now',
+        shareCode: 'Sharing a sign-in code',
+        unknown: 'Not enough information'
+      },
+      scenarios: {
+        stranger: {
+          text: 'A stranger offers to pay you to receive money and send it to someone else.',
+          why: 'Moving money for someone else can make you a money mule.'
+        },
+        urgent: {
+          text: 'Someone claiming to be your cousin demands a transfer now and says not to call.',
+          why: 'Urgency and avoiding a call are warning signs. The message does not verify who sent it.'
+        },
+        code: {
+          text: 'Someone in a chat asks for the one-time code that signs you into your transfer account.',
+          why: 'A sign-in code can give someone access to your account.'
+        },
+        idCheck: {
+          text: 'A transfer service asks for identification. You have no other information about the service.',
+          why: 'ID checks can be part of KYC. That alone does not prove the service is genuine.'
+        }
+      }
+    },
     lesson: {
       start: (n: number) => (n === 1 ? 'Start lesson: 1 new word' : `Start lesson: ${n} new words`),
       practice: 'Practice these words',
