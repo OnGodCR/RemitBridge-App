@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { Icon } from '@/components/icon';
@@ -59,9 +59,9 @@ export default function WhatsAppScreen() {
                 <Button
                   label={w.chat}
                   icon={<Icon name="message.fill" size={18} tintColor={t.primaryForeground} fallback={null} />}
-                  onPress={() => {
+                  onPress={async () => {
                     track('whatsapp_chat_opened', { from: 'tab' });
-                    openChat(open.number, w.hello);
+                    if (!(await openChat(open.number, w.hello))) Alert.alert(w.title, w.openFailed(formatNumber(open.number)));
                   }}
                 />
                 <AppText variant="small" muted style={styles.center}>

@@ -8,14 +8,14 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
-- [ ] **Waiting on D&B**: case #11089990; Angad sent the certificate and form, no answer yet (2026-10-12). The D-U-N-S number gates both stores.
+- [ ] **Waiting on D&B**: case #11089990; D&B confirmed on 2026-10-12 that the number comes in 24 to 48 hours. The D-U-N-S number gates both stores.
 - [ ] **Apple account to an organization**: once the D-U-N-S arrives, your dad asks Apple Developer Support to convert it to RemitBridge Labs.
 - [ ] **Google Play organization account**: in RemitBridge Labs' name, with the D-U-N-S ($25 once).
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
 - [ ] **Play Console**: upload the production `.aab` (EAS build eb1d1d43, versionCode 2, built 2026-10-12; no advertising-ID permission), then fill every form from `docs/store/listing.md`.
-- [ ] **Android phone screenshots**: 2 to 8 from your Samsung (long side at most twice the short side).
+- [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
 ## Test on real phones (Angad)
@@ -30,7 +30,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **"What you could have kept" on a real scan** (D119)
 - [ ] **Android run-through**: a receipt scan (ML Kit, the black boxes), Google sign-in, the swipe between tabs, Learn (preview build a5686cd5).
 - [ ] **WhatsApp live test**: a question, a suggestion, a new country, something off topic, a receipt photo.
-- [ ] **WhatsApp in the app**: LINK and SAVE from the WhatsApp tab.
+- [ ] **WhatsApp in the app**: "Chat on WhatsApp" did nothing on the Samsung (2026-10-12); now it tries the WhatsApp app first and shows the number if it can't. Tap it again with the app server running, then try LINK and SAVE.
 - [ ] **WhatsApp display name**: check Meta's review of "RemitBridge Labs".
 
 ## Content (Angad)
@@ -65,8 +65,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Claude, waiting on something
 
-- [ ] **Check on D&B** (due 2026-10-16): search the RemitBridge inbox for case #11089990; if D&B hasn't answered, draft a short status email for Angad to send from hello@.
-- [ ] **Chase D&B** (due 2026-10-22): two weeks since the request, Apple's point to escalate; if still nothing, draft a firmer email to research@iresearch.dnb.com for Angad.
+- [ ] **Check on D&B** (due 2026-10-14): D&B promised the number within 24 to 48 hours of 2026-10-12; search the RemitBridge inbox for it, and if it hasn't come, draft a short status email for Angad to send from hello@.
+- [ ] **Chase D&B** (due 2026-10-16): only if the number still hasn't come; draft a firmer email to research@iresearch.dnb.com for Angad.
 - [ ] **India's prices** (due 2026-10-13): held since 2026-10-12 morning (three rate sources disagree); check whether it's back, then put a 0.6% rule with Wise to Angad if not.
 - [ ] **Uganda's prices**: held, its sources are 2.6% apart; needs a rule for thin currencies if you want one.
 - [ ] **Play App Signing follow-up**: add the SHA-256 to `assetlinks.json` and a second Android Google sign-in client, once you send the keys.

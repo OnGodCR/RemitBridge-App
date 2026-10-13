@@ -477,6 +477,7 @@ export const vi: Copy = {
     title: 'WhatsApp',
     chat: 'Trò chuyện qua WhatsApp',
     hello: 'Xin chào',
+    openFailed: (number: string) => `Không mở được WhatsApp. Hãy nhắn cho ${number} trên WhatsApp.`,
     link: 'Liên kết WhatsApp',
     linkSub: 'Lưu các so sánh từ WhatsApp vào tài khoản này',
     linkSent: 'Nhấn gửi trong WhatsApp, rồi quay lại.',

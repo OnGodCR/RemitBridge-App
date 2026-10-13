@@ -71,7 +71,7 @@ export function WhatsAppSection({ chat = true, title }: { chat?: boolean; title?
     }
     track('whatsapp_link_started', {});
     setNote(w.linkSent);
-    await openChat(settings.number, `LINK ${code}`);
+    if (!(await openChat(settings.number, `LINK ${code}`))) setNote(w.openFailed(formatNumber(settings.number)));
   };
 
   const confirmUnlink = () =>
@@ -104,7 +104,9 @@ export function WhatsAppSection({ chat = true, title }: { chat?: boolean; title?
             icon="message"
             title={w.chat}
             subtitle={formatNumber(settings.number)}
-            onPress={() => openChat(settings.number, w.hello)}
+            onPress={async () => {
+              if (!(await openChat(settings.number, w.hello))) Alert.alert(w.title, w.openFailed(formatNumber(settings.number)));
+            }}
           />
         ) : null}
         {session && status ? (

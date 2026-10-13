@@ -478,6 +478,7 @@ export const es: Copy = {
     title: 'WhatsApp',
     chat: 'Chatear por WhatsApp',
     hello: 'Hola',
+    openFailed: (number: string) => `No se pudo abrir WhatsApp. Escribe a ${number} por WhatsApp.`,
     link: 'Vincular WhatsApp',
     linkSub: 'Guarda en esta cuenta las comparaciones de WhatsApp',
     linkSent: 'Pulsa enviar en WhatsApp y vuelve.',
