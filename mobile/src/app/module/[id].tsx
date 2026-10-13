@@ -11,6 +11,7 @@ import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { MODULES, moduleFor, moduleTerms } from '@/data/modules';
+import { modesFor } from '@/lib/learn-games';
 import { WORDS_PER_LESSON } from '@/lib/lesson';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
@@ -82,6 +83,13 @@ export default function ModuleScreen() {
           onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id } })}
         />
 
+        <ListGroup title={l.games.choose} cards>
+          {modesFor(m).map((mode) => (
+            <Button key={mode} variant="secondary" label={l.games.modes[mode]}
+              onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: m.id, mode } })} />
+          ))}
+        </ListGroup>
+
         {/* The module's last step: a post that puts its words to use (2026-10-11). */}
         {complete ? <ReadingAssignment module={m} learned={learned} /> : null}
 
@@ -135,7 +143,7 @@ function Word({ n, term, learned }: { n: number; term: Term; learned: boolean })
     <Pressable
       onPress={() => router.push({ pathname: '/glossary', params: { term: term.id } })}
       accessibilityRole="button"
-      accessibilityLabel={`${n}. ${learned ? `${copy.learn.learned}. ` : ''}${copy.learn.lesson.lookUp(shown.term)}`}
+      accessibilityLabel={`${n}. ${learned ? `${copy.learn.learned}. ` : ''}${copy.learn.lesson.lookUp(term.id === 'corridor' ? copy.learn.games.routeWord : shown.term)}`}
       style={({ pressed }) => [styles.word, { borderBottomColor: t.border, opacity: pressed ? 0.6 : 1 }]}>
       <View style={[styles.number, { borderColor: t.primary, backgroundColor: learned ? t.primary : 'transparent' }]}>
         {learned ? (
@@ -145,7 +153,7 @@ function Word({ n, term, learned }: { n: number; term: Term; learned: boolean })
         )}
       </View>
       <View style={styles.termText}>
-        <AppText style={[styles.term, { color: t.text }]}>{shown.term}</AppText>
+        <AppText style={[styles.term, { color: t.text }]}>{term.id === 'corridor' ? copy.learn.games.routeWord : shown.term}</AppText>
         {shown.english ? (
           <AppText variant="small" muted>
             {shown.english}

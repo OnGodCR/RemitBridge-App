@@ -442,7 +442,7 @@ export const tl: Copy = {
     website: 'Sa website',
     blog: 'Blog',
     blogSub: 'Mga kuwento at paliwanag',
-    latestPost: 'Pinakabagong post',
+    startHere: 'Magsimula rito',
     allPosts: 'Lahat ng post',
     assignmentTitle: 'Gamitin mo na ito',
     assignmentBody: 'Magbasa ng post na gumagamit ng mga salitang natutunan mo.',
@@ -452,6 +452,82 @@ export const tl: Copy = {
     workshops: 'Workshops',
     workshopsSub: 'Mga sesyon para sa komunidad at paaralan',
     opensWebsite: 'Bubuksan sa website',
+    games: {
+      choose: 'Pumili ng laro',
+      play: 'Maglaro',
+      playAgain: 'Maglaro muli',
+      next: 'Susunod',
+      details: 'Ipakita ang detalye',
+      hideDetails: 'Itago ang detalye',
+      correct: 'Tama.',
+      routeWord: 'Ruta',
+      modes: {
+        match: 'Pagtambalin',
+        quick: 'Mabilisang tanong',
+        cost: 'Hanapin ang nakatagong gastos',
+        receipt: 'Basahin ang resibo',
+        safety: 'Pansinin ang babala',
+        final: 'Huling round'
+      },
+      matchPrompt: 'I-tap ang salita, saka ang kahulugan nito.',
+      matched: 'Nagtugma',
+      selected: 'Napili',
+      quickPrompt: 'Tugma ba ang kahulugang ito?',
+      true: 'Tama',
+      false: 'Mali',
+      timerOff: 'Walang timer',
+      timerOn: 'Ipakita ang timer',
+      elapsed: 'Lumipas na oras',
+      example: 'Halimbawa',
+      exampleNote: 'Kathang-isip na halaga. Walang tunay na provider.',
+      costPrompt: 'Alin ang mas malaki ang matatanggap ng pamilya?',
+      providerA: 'Provider A',
+      providerB: 'Provider B',
+      tie: 'Parehong halaga',
+      budget: 'Kabuuang binayaran (USD)',
+      fee: 'Bayad sa padala (USD)',
+      rate: 'Palitan (MXN bawat USD)',
+      midRate: 'Mid-market rate (MXN bawat USD)',
+      received: 'Halagang matatanggap (MXN)',
+      markup: 'Patong sa palitan (USD)',
+      totalCost: 'Kabuuang gastos (USD)',
+      costWhy: 'Ihambing ang halagang matatanggap. Maaaring may mas malaking patong sa palitan kahit mas mababa ang bayad.',
+      receiptPrompt: {
+        fee: 'I-tap ang bayad sa padala.',
+        rate: 'I-tap ang palitan.',
+        received: 'I-tap ang halagang matatanggap.'
+      },
+      receiptLines: {
+        fee: 'Service charge',
+        rate: 'Inilapat na FX rate',
+        received: 'Halaga ng payout'
+      },
+      safetyPrompt: 'Ano ang napapansin mo?',
+      safetyChoices: {
+        moveMoney: 'Paglipat ng pera para sa estranghero',
+        pressure: 'Pamimilit na kumilos agad',
+        shareCode: 'Pagbabahagi ng sign-in code',
+        unknown: 'Kulang ang impormasyon'
+      },
+      scenarios: {
+        stranger: {
+          text: 'May estrangherong magbabayad daw sa iyo para tumanggap ng pera at ipadala ito sa iba.',
+          why: 'Ang paglipat ng pera para sa iba ay maaaring gawin kang money mule.'
+        },
+        urgent: {
+          text: 'May nagsasabing pinsan mo siya, humihingi ng padala agad, at ayaw magpatawag.',
+          why: 'Babala ang pagmamadali at pag-iwas sa tawag. Hindi patunay ng pagkakakilanlan ang mensahe.'
+        },
+        code: {
+          text: 'May humihingi sa chat ng one-time code para makapasok sa iyong account sa padala.',
+          why: 'Maaaring magamit ng iba ang sign-in code para makapasok sa iyong account.'
+        },
+        idCheck: {
+          text: 'Humihingi ng ID ang isang serbisyo sa padala. Wala ka nang ibang impormasyon tungkol dito.',
+          why: 'Maaaring bahagi ng KYC ang paghingi ng ID. Hindi iyon sapat na patunay na lehitimo ang serbisyo.'
+        }
+      }
+    },
     lesson: {
       start: (n: number) => (n === 1 ? 'Simulan ang aralin: 1 bagong salita' : `Simulan ang aralin: ${n} bagong salita`),
       practice: 'Sanayin ang mga salitang ito',

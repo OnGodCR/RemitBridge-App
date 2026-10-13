@@ -1,3 +1,4 @@
+import { recommendedMode } from '@/lib/learn-games';
 import { Icon } from '@/components/icon';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
@@ -161,7 +162,7 @@ function Node({
       <Pressable
         onPress={() => onOpen(m)}
         accessibilityRole="button"
-        accessibilityLabel={l.nodeLabel(index + 1, title, read, total)}
+        accessibilityLabel={`${l.nodeLabel(index + 1, title, read, total)}. ${l.games.modes[recommendedMode(m, learned)]}`}
         style={[styles.node, { left: center.x - NODE / 2, top: center.y - NODE / 2, transform: [{ scale: isNext ? 1.06 : 1 }] }]}>
         {({ pressed }) => (
           <>
@@ -194,6 +195,7 @@ function Node({
           <AppText style={[styles.labelTitle, { color: t.text }]} numberOfLines={2}>
             {title}
           </AppText>
+          <AppText variant="small" muted>{l.games.modes[recommendedMode(m, learned)]}</AppText>
           <View style={styles.labelFoot}>
             <View style={[styles.labelTrack, { backgroundColor: t.border }]}>
               <View style={[styles.labelFill, { backgroundColor: t.primary, width: `${total ? (read / total) * 100 : 0}%` }]} />

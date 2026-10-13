@@ -22,10 +22,8 @@ import { FocusRise } from '@/components/motion-views';
 
 const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
-/** The newest post written in full, for the top of Library. */
-const LATEST =
-  [...POSTS].filter((p) => p.body).sort((a, b) => (b.publishedOn ?? '').localeCompare(a.publishedOn ?? '') || b.id - a.id)[0] ??
-  POSTS[0];
+/** The first explainer introduces remittances before the technical posts. */
+const FIRST_POST = POSTS.find((post) => post.id === 1)!;
 
 /**
  * Learn (DECISIONS.md D33, D58, D104, D107, D111), in two parts under a fixed green band:
@@ -116,9 +114,9 @@ export default function LearnScreen() {
         </ScrollView>
       ) : (
         <ScrollView contentContainerStyle={styles.body}>
-          {/* The website's blog, in the app (D106), led by its newest post with its cover. */}
-          <ListGroup title={l.latestPost} cards>
-            <PostCard post={LATEST} />
+          {/* The website's blog, in the app (D106), starting with its first explainer. */}
+          <ListGroup title={l.startHere} cards>
+            <PostCard post={FIRST_POST} />
             <ListRow icon="newspaper" title={l.allPosts} subtitle={l.blogSub} onPress={() => router.push('/blog')} />
           </ListGroup>
 
