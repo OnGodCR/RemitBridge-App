@@ -42,7 +42,11 @@ async function seal(value: string): Promise<string> {
 }
 
 async function open(stored: string): Promise<string> {
-  const sealed = AESSealedData.fromCombined(stored.slice(SEALED.length));
+  // Bytes, not the base64 text: Android's fromCombined takes only a byte array, and given the
+  // text it threw, so every Android session was sealed, then unreadable, then deleted, and
+  // the database saw a signed-out caller while the screens showed a sign-in (2026-10-12).
+  // iOS takes either.
+  const sealed = AESSealedData.fromCombined(base64Bytes(stored.slice(SEALED.length)));
   return fromBase64(await aesDecryptAsync(sealed, await encryptionKey(), { output: 'base64' }));
 }
 
@@ -62,8 +66,9 @@ export const secureSessionStorage = {
     }
     try {
       return await open(stored);
-    } catch {
+    } catch (e) {
       // Sealed with a key this phone no longer has (restored from a backup): sign in again.
+      if (__DEV__) console.warn('secure session: open failed', String(e));
       safeRemove(name);
       return null;
     }
@@ -71,8 +76,9 @@ export const secureSessionStorage = {
   async setItem(name: string, value: string): Promise<void> {
     try {
       localStorage.setItem(name, await seal(value));
-    } catch {
+    } catch (e) {
       // Never fall back to plain text: without a key the session lasts until the app closes.
+      if (__DEV__) console.warn('secure session: seal failed', String(e));
       safeRemove(name);
     }
   },
@@ -97,6 +103,13 @@ function toBase64(text: string): string {
   return btoa(binary);
 }
 
+function base64Bytes(b64: string): Uint8Array {
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
 function fromBase64(b64: string): string {
   const binary = atob(b64);
   const bytes = new Uint8Array(binary.length);
@@ -119,4 +132,18 @@ function fromUtf8(bytes: Uint8Array): string {
     i += n;
   }
   return out;
+}
+
+// Development builds check the round trip once at start, so a broken one shows in the log
+// at once (on Angad's Samsung it broke every Android sign-in, 2026-10-12). Logs only.
+if (__DEV__ && process.env.NODE_ENV !== 'test') {
+  (async () => {
+    const probe = '{"probe":"ü✓ " , "n": 1}';
+    try {
+      const back = await open(await seal(probe));
+      if (back !== probe) console.warn('secure session self-test: mismatch', back.slice(0, 40));
+    } catch (e) {
+      console.warn('secure session self-test failed:', String(e));
+    }
+  })();
 }

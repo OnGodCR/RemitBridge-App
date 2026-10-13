@@ -24,7 +24,7 @@ jest.mock('expo-secure-store', () => ({
   },
 }));
 jest.mock('expo-crypto', () => {
-  // "Encryption" that reverses the base64 text: enough to prove the plain text isn't stored.
+  // "Encryption" that reverses the base64 text into bytes: enough to prove the plain text isn't stored.
   class Key {
     hex: string;
     constructor(hex: string) {
@@ -40,24 +40,28 @@ jest.mock('expo-crypto', () => {
       return this.hex;
     }
   }
+  // Sealed data is bytes, and fromCombined takes only bytes, as on Android: given base64 text
+  // it throws, which is the bug that broke every Android sign-in (2026-10-12).
   class Sealed {
-    data: string;
-    constructor(data: string) {
-      this.data = data;
+    bytes: Uint8Array;
+    constructor(bytes: Uint8Array) {
+      this.bytes = bytes;
     }
-    static fromCombined(data: string) {
+    static fromCombined(data: Uint8Array) {
+      if (!(data instanceof Uint8Array)) throw new TypeError('fromCombined takes a byte array');
       return new Sealed(data);
     }
     async combined() {
-      return this.data;
+      return btoa(String.fromCharCode(...this.bytes));
     }
   }
+  const reversedBytes = (text: string) => Uint8Array.from([...text].reverse(), (c) => c.charCodeAt(0));
   return {
     AESKeySize: { AES256: 256 },
     AESEncryptionKey: Key,
     AESSealedData: Sealed,
-    aesEncryptAsync: async (b64: string) => new Sealed([...b64].reverse().join('')),
-    aesDecryptAsync: async (s: Sealed) => [...s.data].reverse().join(''),
+    aesEncryptAsync: async (b64: string) => new Sealed(reversedBytes(b64)),
+    aesDecryptAsync: async (s: Sealed) => String.fromCharCode(...s.bytes).split('').reverse().join(''),
   };
 });
 
