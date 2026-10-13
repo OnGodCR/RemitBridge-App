@@ -54,6 +54,59 @@ mobile/src/data/blog.json ("What is an international remittance, and why is it m
 money transfer?"). Rename the section to "Start here" (a new string, see the rules), keep
 the "All posts" row under it, and remove the LATEST sort, which nothing else uses.
 
+## Design context (match it; Angad has rejected "vibecoded" looks twice)
+Who it's for: people in the US sending money home, often reading in a second language, on
+ordinary phones. They want the answer, not the method. Big targets, few words, calm color.
+
+The look (DECISIONS.md D18, D44, D47, D103, D109, D112, D136, D152, D154):
+- Same as the website, remitbridgelabs.org: brand green #14705A (token `primary`), mint
+  tints (`accent`, `accentDeep`), white cards on a near-white background, and a full-width
+  green header band on every tab (`hero`, `heroText`, `heroMuted`). The Learn tab's band
+  holds the Modules/Library switch, a percent ring with the count and streak beside it,
+  and a white Continue button.
+- Type: Plus Jakarta Sans (Fonts.regular/medium/semibold/bold/extrabold in theme.ts); Hindi
+  switches to Hind automatically inside AppText. Use AppText variants (title 26, heading 17,
+  body 15, label 13, small 12, figure 24 with tabular numbers), never raw Text.
+- Chunky and raised, like Duolingo but restrained (D112): Button has a darker lip under it
+  (`primaryDeep` under green, `rim` under outlined, `inverseRim` on the band) that it sinks
+  into when pressed. Variants: primary, secondary, plain, inverse, inverse-plain. Cards sit
+  on a soft rim along their bottom edge. Rows that go somewhere are chunky cards with an
+  illustration on a mint disc (ListRow in components/list-row.tsx).
+- Illustrations (D103, D109): components/illustrations.tsx, one hand-drawn SVG set: a 64-unit
+  square, 2-unit ink outlines, a shaded mint disc behind, a faded deep-green shadow copy,
+  colors only from the money palette. Module art already exists (BasicsArt, FeeMarkupArt,
+  ArrivalArt, ScamCheckArt, BankArt, ProviderArt, ChainArt, GlossaryArt and more). New art
+  for a game mode follows the same recipe, via the file's depth() wrapper.
+- Money colors carry meaning everywhere: `moneyReceived` (brand green, what reaches family),
+  `moneyFee` (grey, the visible fee), `moneyMarkup` / `moneyMarkupText` (mid and deep green,
+  the hidden exchange-rate markup), `moneyPickup` (pale green). Use them the same way in games.
+- Red (`destructive`) is only for real errors and Scam check, never for a wrong answer (D136):
+  a wrong answer shakes and greys out; the right one fills green. Keep that.
+- Segmented controls, never pill chips. No emoji, no icon tiles in place of words, no
+  confetti explosions or casino effects. Symbols come from the Icon component (SF Symbols
+  names, mapped for Android in components/icon.tsx; add a mapping for any new one).
+- Motion: springs from components/motion.ts (SNAPPY for taps, GENTLE for settling), Rise /
+  RiseIn / GrowIn / GrowBar from components/motion-views.tsx for entrances, useCountUp for
+  numbers, expo-haptics on answers (as the lesson does now). Everything goes still when the
+  phone asks for reduced motion.
+- Light and dark mode both: every color comes from useTheme(), whose tokens change per mode.
+- The path (D152): nodes alternate left and right with a label card beside each ("Module N",
+  name, a small progress bar), a solid green trail where you've walked and dotted beyond, a
+  soft pulse on the current node, a sky that deepens to mint with clouds, hills and a flag at
+  the top. Modes can show on the path (a small symbol on a node, a different node for a
+  module's final round) but keep this look.
+- Today's lesson screen (app/lesson/[id].tsx): full screen, close button and progress bar on
+  top, a combo counter that pops at 2 or more in a row, one question at a time, a finish
+  screen with XP, accuracy and streak. New modes should feel like the same family: reuse
+  TopBar, the answer feedback and the finish screen rather than inventing new chrome.
+- Words (D154): one fact per line, short labels, no explanations under every element; an
+  explanation goes behind "Show the details". Buttons say what they do ("Check", "Next",
+  "Play again").
+- Android draws its own tab bar and swipes between tabs in a native pager; don't add
+  horizontal swipe gestures inside a game that would fight it, or give them a tap
+  alternative and test on Android.
+- If you can, share screenshots or a short screen recording in the PR (light and dark).
+
 ## Rules (from CLAUDE.md; breaking one is a bug)
 Content and numbers
 - Never show a number that looks like a real price. Any money in a game is a clearly
