@@ -1076,3 +1076,5 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | remmy.couldNot | I couldn’t work that one out. Try asking another way. | यह मैं समझ नहीं पाया। किसी और तरह से पूछकर देखें। | | NEW 2026-10-13
 | remmy.pricesHere | Here are today’s checked prices. | ये आज की जाँची हुई कीमतें हैं। | | NEW 2026-10-13
 | remmy.totalCost | {p}% cost | {p}% लागत | | NEW 2026-10-13
+
+Review confirmation, 2026-10-13: Angad confirmed in writing that his mother reviewed everything and it looks good, including the Learn games and Remmy rows above. No translation changes requested.

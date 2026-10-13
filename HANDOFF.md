@@ -8,6 +8,12 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-13: ChatGPT resumes, Hindi approved, Android Remmy testing
+
+- Angad confirmed no new developments and no D-U-N-S number yet.
+- His mother approved every Hindi row, including Learn games and Remmy. No wording changes requested.
+- No other session is working on the repository. Next: test Remmy on Samsung using Expo Go.
+
 ## 2026-10-13 evening: Remmy hardened, ChatGPT handoff refreshed
 
 - The live failures were model-side: two JSON objects in one turn, Groq's tool_use_failed,

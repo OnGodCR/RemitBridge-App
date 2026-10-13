@@ -268,7 +268,7 @@ Angad does this once the app itself is finished (D117).
       builds before that, marked Draft, with "We need volunteers" in Account (Hindi too, at
       Angad's word the same day). Her first notes are applied
       (सहेज → सेव, 10 flagged lines; rows marked CHANGED 2026-10-10 in `hi.md`).
-      **Hindi review finished 2026-10-12** (Angad: his mother "reviewed all the hindi stuff
+      **Latest Hindi rows, including Learn games and Remmy, approved by Angad’s mother, relayed by Angad 2026-10-13. Hindi review finished 2026-10-12** (Angad: his mother "reviewed all the hindi stuff
       and had nothing else to add"), the bot's Hindi included; Hindi no longer shows Draft
       (`languages.ts`, consent 2026-10-12, relayed by Angad; her name isn't shown in the app). **The review is under way in
       `hi.md` itself** (Angad marked "ENDED HERE" at `fairRate.yourTransfer`, 2026-10-03):

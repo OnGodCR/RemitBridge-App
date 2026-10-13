@@ -52,7 +52,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Deploy remmy and whatsapp for the agent fixes** (rounded figures, turn reader, failure causes): both deployed 2026-10-13. "What does 300 to Mexico cost?" answered 4 of 5 times; the miss showed Compare with "try asking another way".
 - [x] **Remmy failure causes read and fixed** (2026-10-13): empty output from gpt-oss reasoning past the token cap (now 1500), and Groq 400 tool_use_failed (its failed_generation is used now). Compare cards carry the top three checked prices (e5f8c6f, deployed), so price questions show figures even when the model fails.
 - [x] **Merge the PRs**: Learn games (#5) and Remmy (#6) merged into main, 2026-10-13.
-- [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
+- [x] **Hindi rows for Learn games and Remmy**: Angad confirmed his mother reviewed everything and approved it, 2026-10-13.
 
 ## Receipt scanner (Angad, D173)
 
