@@ -44,7 +44,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Receipt scanner (Angad, D173)
 
-- [ ] **Redeploy for the fee fix**: `supabase functions deploy scan-receipt --project-ref gmzljjdnwndvqciqicbx` and `supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx`.
+- [ ] **Redeploy for the fee fix**: scan-receipt deployed 2026-10-12; left: `supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx`.
 - [ ] **Send Claude the receipts that came out wrong**: a photo (or the values it read and what the receipt really says) for each, so each becomes a test case in `benchmark/receipts/`.
 
 ## Content (Angad)
