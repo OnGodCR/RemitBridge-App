@@ -14,7 +14,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab` (EAS build eb1d1d43, versionCode 2, built 2026-10-12; no advertising-ID permission), then fill every form from `docs/store/listing.md`.
+- [ ] **Play Console**: upload the production `.aab` from EAS build 3d995a29 (versionCode 3, with the Android sign-in fix; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
@@ -30,7 +30,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **"What you could have kept" on a real scan** (D119)
 - [ ] **Android run-through**: a receipt scan (ML Kit, the black boxes), Google sign-in, the swipe between tabs, Learn (preview build a5686cd5).
 - [ ] **WhatsApp live test**: a question, a suggestion, a new country, something off topic, a receipt photo.
-- [ ] **WhatsApp in the app**: "Chat on WhatsApp" did nothing on the Samsung (2026-10-12); now it tries the WhatsApp app first and shows the number if it can't. Tap it again with the app server running, then try LINK and SAVE.
+- [x] **WhatsApp in the app**: Chat on WhatsApp, Link to your account and SAVE all work on the Samsung after the Android sign-in fix (ad1afdc), 2026-10-12. The three extra Saved rows were test saves from earlier that day; Angad deleted them.
 - [ ] **WhatsApp display name**: check Meta's review of "RemitBridge Labs".
 
 ## Content (Angad)

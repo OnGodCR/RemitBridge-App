@@ -63,9 +63,26 @@ export async function openChat(number: string, text: string): Promise<boolean> {
 
 export type LinkStatus = { linked: boolean; linkedAt: string | null };
 
+/**
+ * Runs a signed-in call once more after refreshing the sign-in, if the server answered as if
+ * nobody were signed in (42501). On Angad's Samsung (2026-10-12) the app still showed him
+ * signed in while its token had gone stale, so every link call was refused and nothing
+ * happened. If the refresh fails, Supabase signs the app out, and the screens fall back to
+ * their "sign in to link" state instead of a dead one.
+ */
+async function signedInCall<T>(call: () => PromiseLike<{ data: T; error: { code?: string; message: string } | null }>) {
+  let result = await call();
+  if (result.error?.code === '42501' && supabase) {
+    const { error } = await supabase.auth.refreshSession();
+    if (!error) result = await call();
+  }
+  return result;
+}
+
 export async function linkStatus(): Promise<LinkStatus | null> {
   if (!supabase) return null;
-  const { data, error } = await supabase.rpc('whatsapp_link_status');
+  const { data, error } = await signedInCall(() => supabase!.rpc('whatsapp_link_status'));
+  if (error) console.warn('linkStatus failed:', error.code, error.message);
   if (error || !data) return null;
   const d = data as { linked: boolean; linked_at: string | null };
   return { linked: !!d.linked, linkedAt: d.linked_at };
@@ -74,12 +91,17 @@ export async function linkStatus(): Promise<LinkStatus | null> {
 /** A one-time code, valid 10 minutes, for "LINK <code>". Null if it couldn't be made. */
 export async function newLinkCode(): Promise<string | null> {
   if (!supabase) return null;
-  const { data, error } = await supabase.rpc('whatsapp_link_code');
+  const { data, error } = await signedInCall(() => supabase!.rpc('whatsapp_link_code'));
+  // Logged, so a failed link says why in the development build's log (it failed silently on
+  // Angad's Samsung, 2026-10-12).
+  if (error) {
+    console.warn('newLinkCode failed:', error.code, error.message);
+  }
   return error || typeof data !== 'string' ? null : data;
 }
 
 export async function unlinkWhatsApp(): Promise<boolean> {
   if (!supabase) return false;
-  const { error } = await supabase.rpc('unlink_whatsapp');
+  const { error } = await signedInCall(() => supabase!.rpc('unlink_whatsapp'));
   return !error;
 }

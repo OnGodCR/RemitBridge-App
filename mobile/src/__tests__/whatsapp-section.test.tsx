@@ -60,11 +60,11 @@ it('links by opening WhatsApp with a one-time code typed in', async () => {
   jest.mocked(linkStatus).mockResolvedValue({ linked: false, linkedAt: null });
   await renderIt();
   await act(async () => {
-    fireEvent.press(screen.getByText('Link WhatsApp'));
+    fireEvent.press(screen.getByText('Link to your account'));
   });
   expect(newLinkCode).toHaveBeenCalled();
   expect(openChat).toHaveBeenCalledWith('15551845383', 'LINK K7P2QX');
-  expect(screen.getByText(/Press send in WhatsApp, then come back/)).toBeTruthy();
+  expect(screen.getByText(/Press send there, then come back here/)).toBeTruthy();
 });
 
 it('shows the number instead of nothing when WhatsApp can\'t be opened', async () => {
@@ -72,9 +72,16 @@ it('shows the number instead of nothing when WhatsApp can\'t be opened', async (
   jest.mocked(openChat).mockResolvedValueOnce(false);
   await renderIt();
   await act(async () => {
-    fireEvent.press(screen.getByText('Link WhatsApp'));
+    fireEvent.press(screen.getByText('Link to your account'));
   });
   expect(screen.getByText(/Couldn't open WhatsApp\. Message/)).toBeTruthy();
+});
+
+it('still offers the link button when the link status can\'t be read', async () => {
+  // Angad's Samsung, 2026-10-12: the status check failed and only a heading was left.
+  jest.mocked(linkStatus).mockResolvedValue(null);
+  await renderIt();
+  expect(screen.getByText('Link to your account')).toBeTruthy();
 });
 
 it('shows a linked chat, and unlinks after asking', async () => {
@@ -87,12 +94,12 @@ it('shows a linked chat, and unlinks after asking', async () => {
     await buttons.find((b) => b.text === 'Unlink')!.onPress!();
   });
   expect(unlinkWhatsApp).toHaveBeenCalled();
-  expect(screen.getByText('Link WhatsApp')).toBeTruthy();
+  expect(screen.getByText('Link to your account')).toBeTruthy();
 });
 
 it('offers linking only when signed in', async () => {
   mockSession = null;
   await renderIt();
   expect(screen.getByText('Chat on WhatsApp')).toBeTruthy();
-  expect(screen.queryByText('Link WhatsApp')).toBeNull();
+  expect(screen.queryByText('Link to your account')).toBeNull();
 });

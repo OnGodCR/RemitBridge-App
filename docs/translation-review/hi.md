@@ -414,9 +414,9 @@ with your name and the date.
 | whatsapp.chat | Chat on WhatsApp | WhatsApp पर बात करें | |
 | whatsapp.hello | Hi | नमस्ते | |
 | whatsapp.openFailed | Couldn't open WhatsApp. Message {number} on WhatsApp instead. | WhatsApp नहीं खुल सका। WhatsApp पर {number} को मैसेज करें। | | NEW 2026-10-12
-| whatsapp.link | Link WhatsApp | WhatsApp जोड़ें | |
-| whatsapp.linkSub | Save comparisons from WhatsApp to this account | WhatsApp की तुलनाएँ इस खाते में रखें | |
-| whatsapp.linkSent | Press send in WhatsApp, then come back. | WhatsApp में भेजें दबाएँ, फिर यहाँ लौटें। | | CHANGED 2026-10-11: shorter, please read again
+| whatsapp.link | Link to your account | अपने खाते से जोड़ें | | CHANGED 2026-10-12: clearer wording, please read again
+| whatsapp.linkSub | Then comparisons you SAVE in WhatsApp show up here | फिर WhatsApp में SAVE की गई तुलनाएं यहां दिखेंगी | | CHANGED 2026-10-12: clearer wording, please read again
+| whatsapp.linkSent | WhatsApp is open with a code typed in. Press send there, then come back here. | WhatsApp में एक कोड लिखा हुआ है। वहां भेजें दबाएं, फिर यहां लौट आएं। | | CHANGED 2026-10-12: clearer wording, please read again
 | whatsapp.linked | WhatsApp linked | WhatsApp जुड़ा है | |
 | whatsapp.linkedSub | Since {since}. Tap to unlink. | {since} से। हटाने के लिए टैप करें। | |
 | whatsapp.unlinkTitle | Unlink WhatsApp? | WhatsApp हटाएँ? | |
