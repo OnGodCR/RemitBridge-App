@@ -356,6 +356,12 @@ export const es: Copy = {
     metricsSub: 'Uso, embudo e impacto, con definiciones',
     suggestions: 'Sugerencias',
     suggestionsSub: 'Lo que la gente pidió por WhatsApp',
+    newsletter: 'Boletín',
+    newsletterSub: 'Países nuevos y noticias de precios por correo, de vez en cuando.',
+    newsletterOn: 'Boletín activado.',
+    newsletterOff: 'Boletín desactivado.',
+    writeNewsletter: 'Escribir un boletín',
+    writeNewsletterSub: 'Para quienes lo activaron',
     replay: 'Ver la bienvenida otra vez (solo en desarrollo)',
   },
 

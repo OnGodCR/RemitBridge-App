@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
-import { Alert, Platform, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, Platform, ScrollView, StyleSheet, Switch, TextInput, View } from 'react-native';
 
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { LanguageSheet } from '@/components/language-picker';
 import { CheckedArt, FeeMarkupArt, NoAffiliateArt, SavedArt, WrongPriceArt } from '@/components/illustrations';
-import { ListGroup, ListPoint, ListRow } from '@/components/list-row';
+import { ListGroup, ListItem, ListPoint, ListRow } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
 import { INCORPORATED, LEGAL_NAME } from '@/constants/site-config';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
@@ -17,6 +17,7 @@ import { useAuth } from '@/lib/auth';
 import { announce } from '@/lib/announce';
 import { CONTACT, LINKS, openPage, writeToUs } from '@/lib/links';
 import { fullName, saveName } from '@/lib/name';
+import { newsletterStatus, setNewsletter } from '@/lib/newsletter';
 import { appleAuthorizationCode } from '@/lib/sign-in';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/track';
@@ -91,11 +92,13 @@ export default function AccountScreen() {
               <ListGroup cards>
                 <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />
               </ListGroup>
+              <NewsletterSwitch />
               {isAdmin ? (
                 <ListGroup title={a.admin} cards>
                   <ListRow icon="plus.circle" title={a.addPrice} subtitle={a.addPriceSub} onPress={() => router.push('/admin')} />
                   <ListRow icon="chart.bar" title={a.metrics} subtitle={a.metricsSub} onPress={() => router.push('/metrics')} />
                   <ListRow icon="bubble.left" title={a.suggestions} subtitle={a.suggestionsSub} onPress={() => router.push('/suggestions')} />
+                  <ListRow icon="envelope.fill" title={a.writeNewsletter} subtitle={a.writeNewsletterSub} onPress={() => router.push('/newsletter')} />
                 </ListGroup>
               ) : null}
               <View style={styles.actions}>
@@ -177,6 +180,57 @@ export default function AccountScreen() {
   );
 }
 
+/**
+ * The newsletter (D169): off until the person turns it on, and it goes to the address they
+ * signed in with. Hidden until the current setting is known, so it never shows the wrong one.
+ */
+function NewsletterSwitch() {
+  const t = useTheme();
+  const copy = useCopy();
+  const a = copy.account;
+  const { language } = useLanguage();
+  const [on, setOn] = useState<boolean | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    let live = true;
+    newsletterStatus().then((s) => live && setOn(s));
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  if (on === null) return null;
+  const change = async (next: boolean) => {
+    setBusy(true);
+    setOn(next);
+    const ok = await setNewsletter(next, language.code);
+    setBusy(false);
+    if (!ok) {
+      setOn(!next);
+      Alert.alert(copy.whatsapp.failed);
+      return;
+    }
+    announce(next ? a.newsletterOn : a.newsletterOff);
+    track(next ? 'newsletter_on' : 'newsletter_off');
+  };
+  return (
+    <ListGroup title={a.newsletter}>
+      <ListItem style={styles.switchRow}>
+        <AppText style={[styles.switchText, { color: t.textSecondary }]}>{a.newsletterSub}</AppText>
+        <Switch
+          value={on}
+          disabled={busy}
+          onValueChange={change}
+          trackColor={{ true: t.primary, false: t.border }}
+          accessibilityLabel={a.newsletter}
+          accessibilityHint={a.newsletterSub}
+        />
+      </ListItem>
+    </ListGroup>
+  );
+}
+
 /** The name the app greets you by (D114), kept with the account and deleted with it. */
 function NameField() {
   const t = useTheme();
@@ -221,6 +275,8 @@ function NameField() {
 
 const styles = StyleSheet.create({
   nameField: { gap: Spacing.two },
+  switchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
+  switchText: { flex: 1 },
   nameInput: {
     minHeight: MinTapTarget + 8,
     borderWidth: StyleSheet.hairlineWidth,

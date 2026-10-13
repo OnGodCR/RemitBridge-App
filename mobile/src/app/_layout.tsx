@@ -118,6 +118,7 @@ function Navigator() {
         <Stack.Screen name="admin" options={{ ...pushed, title: 'Add a price' }} />
         <Stack.Screen name="metrics" options={{ ...pushed, title: 'Metrics' }} />
         <Stack.Screen name="suggestions" options={{ ...pushed, title: 'Suggestions' }} />
+        <Stack.Screen name="newsletter" options={{ ...pushed, title: 'Newsletter' }} />
       </Stack.Protected>
     </Stack>
   );

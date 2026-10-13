@@ -50,6 +50,9 @@
 <h2>Rate alerts</h2>
 <p>If you turn on a rate alert, we keep the route, the amount, how you send and pay, your target, your language, and your phone's notification token (a code that lets a notification reach this app on your phone), with your account. After each price update we check your alert, and when a price reaches your target we send one notification, at most once a day. Asking for notifications happens only when you turn an alert on. Delete an alert in the app, or delete your account, and it's gone.</p>
 
+<h2>Newsletter</h2>
+<p>The newsletter is off unless you turn it on in the app, under Account. If you do, we send an email now and then about new countries, price changes and new guides, to the address your account already uses (for Sign in with Apple's "Hide My Email", Apple's relay address). We keep only that you turned it on, when, your app language, and a random code for the unsubscribe link. Every issue has a one-tap unsubscribe link; using it, turning the newsletter off in the app, or deleting your account removes all of that. We don't track whether you open an issue or click its links.</p>
+
 <h2>Scanning a receipt</h2>
 <p>The app asks for camera or photo access only when you scan a transfer receipt, and uses only the photo you take or choose. It reads the receipt on your phone first. Before anything leaves your phone, it covers names, addresses, phone numbers, email addresses, and card, account and reference numbers with solid boxes, removes the photo's hidden details (such as where it was taken), and shows you exactly what would be sent. You can cover more before sending.</p>
 <p>What's sent is the covered photo and the text read from it. Our server checks the text again and covers anything the phone missed. If it finds anything, it doesn't use or keep the photo.</p>
@@ -87,6 +90,7 @@
 <h2>Why we use it</h2>
 <ul>
 <li>To run the app: signing you in and keeping what you save.</li>
+<li>To send the newsletter, only if you turned it on.</li>
 <li>To measure and improve it: counting users, comparisons and features used. We only report these as totals, never about an individual.</li>
 </ul>
 <p>We don't sell or rent your data, and we don't use it for advertising.</p>
@@ -94,7 +98,7 @@
 <h2>Who processes it</h2>
 <ul>
 <li><strong>Supabase</strong> hosts the database and sign-in, in the United States.</li>
-<li><strong>Resend</strong> sends the sign-in code email, if you sign in with email.</li>
+<li><strong>Resend</strong> sends the sign-in code email, if you sign in with email, and the newsletter, if you turned it on.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
 <li><strong>Expo</strong>'s push service, with <strong>Apple</strong> or <strong>Google</strong>, delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else.</li>
 <li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp (OpenAI's open gpt-oss models), when Cloudflare's daily allowance is used up, it gets only the text of your message, never your number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>

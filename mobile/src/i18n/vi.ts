@@ -355,6 +355,12 @@ export const vi: Copy = {
     metricsSub: 'Mức sử dụng, hành trình và tác động, kèm định nghĩa',
     suggestions: 'Góp ý',
     suggestionsSub: 'Những gì mọi người đề xuất qua WhatsApp',
+    newsletter: 'Bản tin',
+    newsletterSub: 'Quốc gia mới và tin về giá qua email, thỉnh thoảng.',
+    newsletterOn: 'Đã bật bản tin.',
+    newsletterOff: 'Đã tắt bản tin.',
+    writeNewsletter: 'Viết bản tin',
+    writeNewsletterSub: 'Gửi cho mọi người đã bật nó',
     replay: 'Xem lại phần giới thiệu (chỉ khi phát triển)',
   },
 

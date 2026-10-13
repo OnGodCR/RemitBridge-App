@@ -356,6 +356,12 @@ export const tl: Copy = {
     metricsSub: 'Paggamit, mga hakbang, at epekto, may mga depinisyon',
     suggestions: 'Mga mungkahi',
     suggestionsSub: 'Ang hiniling ng mga tao sa WhatsApp',
+    newsletter: 'Newsletter',
+    newsletterSub: 'Mga bagong bansa at balita sa presyo sa email, paminsan-minsan.',
+    newsletterOn: 'Naka-on ang newsletter.',
+    newsletterOff: 'Naka-off ang newsletter.',
+    writeNewsletter: 'Sumulat ng newsletter',
+    writeNewsletterSub: 'Para sa lahat ng nag-on nito',
     replay: 'Ulitin ang intro (dev lang)',
   },
 

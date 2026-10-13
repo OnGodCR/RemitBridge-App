@@ -3,7 +3,21 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-11 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-12 (see the sections just below; the older status after them is kept for history)
+
+## 2026-10-12: Android sign-ins fixed, WhatsApp linking confirmed, the newsletter (D169)
+
+- **Android sign-ins (ad1afdc):** expo-crypto's Android `fromCombined` takes only bytes, so
+  every Android session was sealed, then unreadable, then deleted; the server saw a signed-out
+  caller. Fixed, with a test that fails on the old code. Production build 3d995a29
+  (versionCode 3) has the fix; eb1d1d43 and preview a5686cd5 don't.
+- **WhatsApp:** Link to your account and SAVE work on Angad's Samsung; Meta approved the
+  display name; the bot's Hindi passed his mother's review.
+- **Hindi:** her review is finished; `languages.ts` needs her name and the date to drop Draft.
+- **Newsletter (D169), built, not live:** an Account switch, an admin composer, two functions,
+  `/unsubscribe` on the site, privacy policy and store answers. Waiting on Angad: the
+  migration, the two deploys, a postal address before any full send, Resend tracking off,
+  Apple's email relay, and a new build. Local migration checks pass, bot tests 152, app 162.
 
 ## 2026-10-12: screenshots, Mexico's prices, the code email, WhatsApp replies, store prep
 

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Unsubscribe | RemitBridge</title>
+<meta name="description" content="Stop the RemitBridge newsletter.">
+<!--HEAD-->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="preload" href="/fonts/PlusJakartaSans_400Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 17Q24 3 46 17"/><path d="M14 30v-6q10-9 20 0v6"/></svg>RemitBridge</a><nav><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a class="cta" href="https://www.remitbridgelabs.org/app">About the app</a></nav></div></header>
+<main class="wrap">
+<h1>Unsubscribe</h1>
+<!-- The newsletter's unsubscribe page (D169). The link in each email carries a random token
+     (?t=...); the button sends it to the newsletter-unsubscribe function, which deletes that
+     person's opt-in. Nothing happens until the button is pressed, so a mail app or link
+     scanner opening the page removes nobody. -->
+<div id="ask" hidden>
+<p>Stop getting the RemitBridge newsletter? You can turn it back on any time in the app, under Account, Newsletter.</p>
+<p class="actions"><button id="go" class="button" type="button" style="border:0; font:inherit; font-weight:700; cursor:pointer;">Unsubscribe</button></p>
+</div>
+<p id="done" hidden role="status">You're unsubscribed. You won't get the newsletter again unless you turn it back on in the app.</p>
+<p id="failed" hidden role="alert">That didn't work. Try again, or turn the newsletter off in the app under Account, Newsletter. You can also email <a href="mailto:{{CONTACT_EMAIL}}?subject=Unsubscribe">{{CONTACT_EMAIL}}</a> and we'll take you off.</p>
+<p id="nolink" hidden>To stop the newsletter, use the unsubscribe link at the bottom of any issue, or turn it off in the app under Account, Newsletter. You can also email <a href="mailto:{{CONTACT_EMAIL}}?subject=Unsubscribe">{{CONTACT_EMAIL}}</a> and we'll take you off.</p>
+<noscript><p>To stop the newsletter, turn it off in the app under Account, Newsletter, or email <a href="mailto:{{CONTACT_EMAIL}}?subject=Unsubscribe">{{CONTACT_EMAIL}}</a>.</p></noscript>
+<script>
+(function () {
+  var t = new URLSearchParams(location.search).get('t') || '';
+  var show = function (id) { ['ask', 'done', 'failed', 'nolink'].forEach(function (x) { document.getElementById(x).hidden = x !== id; }); };
+  if (!/^[0-9a-f-]{36}$/i.test(t)) return show('nolink');
+  show('ask');
+  var button = document.getElementById('go');
+  button.addEventListener('click', function () {
+    button.disabled = true;
+    fetch('https://gmzljjdnwndvqciqicbx.supabase.co/functions/v1/newsletter-unsubscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: t }),
+    })
+      .then(function (r) { show(r.ok ? 'done' : 'failed'); })
+      .catch(function () { show('failed'); })
+      .finally(function () { button.disabled = false; });
+  });
+})();
+</script>
+</main>
+<!--FOOTER-->
+</body>
+</html>
