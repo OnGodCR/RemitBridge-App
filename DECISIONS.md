@@ -2114,6 +2114,45 @@ callback, leaving sign-in) now lands on Compare, and every link that opened Comp
 Compare · Scan · WhatsApp · Tools · Learn on both platforms, and swiping follows that order.
 The "Hi, [name]" greeting (D114) stays on Scan's band, where it was built.
 
+**D172. Learn's lessons become six game modes** (Angad, 2026-10-12: "add game-modes or
+something else cool that makes learning actually engaging"; he approved all six from
+ChatGPT's proposal). Built by ChatGPT (Codex) from `docs/outreach/chatgpt-learn-games.md`,
+reviewed and finished by Claude. Logic is pure in `lib/learn-games.ts`, the shared pieces in
+`components/learn-lesson.tsx`, the screen in `app/lesson/[id].tsx`.
+- **Match pairs:** up to three words and their meanings, matched by taps. A wrong pair stays
+  on the board; getting it later earns the retry XP.
+- **Quick fire:** true or false, does this meaning fit the word. The timer is opt-in, counts
+  up only, pauses on feedback and in the background, and changes nothing about the score.
+- **Spot the hidden cost** (Cost module): two labelled-fictional USD to MXN transfers;
+  which leaves the family more. Worked out with `computeTransferCost`, so the arithmetic
+  matches the rest of the app; ranked by amount received.
+- **Read the receipt** (Basics and Cost): a fictional receipt in a provider's own wording
+  ("Service charge", "FX rate applied", "Payout amount"), and the question uses ours (fee,
+  exchange rate, amount received). Claude changed this in review: the first version labelled
+  each line with the very word the question asked for, which gave the answer away.
+- **Spot the warning sign** (Safety): four scenarios, including "Not enough information"
+  for an ID check that proves nothing either way.
+- **Final round:** every word in the module, in both recall formats, plus the module's
+  applied questions.
+The module screen lists its modes; the path names the recommended one, which rotates as
+words are learned and becomes the final round once the module is done. Words count as learned
+only when answered in a word game; applied questions earn XP without marking unrelated words.
+Wrong answers still shake and grey, never red (D136). Library opens with post 1 under "Start
+here" instead of the newest post, which was a technical one. Also restored in review:
+`lesson_started` and `lesson_finished` events, which the rewrite had dropped, now with the
+mode. Checked on Angad's phone before merging.
+
+*Redesigned the same day* (Angad, after playing it: "too much text and jargon. Nobody would
+actually want to do this. Think about duolingo"). Every question now works like Duolingo's:
+one big prompt of a few words, chunky answer tiles, a Check button, and a sheet that slides up
+green ("Nice!") or grey ("Not quite.") with one line and Continue. Match boards clear pair by
+pair with no button between pairs. New words get the module's drawing and one sentence.
+"Who sends more?" shows only each side's fee and rate, and reveals what arrives after Check;
+in some puzzles the zero-fee side wins and in others it loses. "Spot the scam" is a chat
+message and three choices (red flag, looks fine, can't tell) instead of four phrases. The
+finish screen bounces in with counting stats. Gone: the timer, "Show the details", the mode
+label over every question, the fictional-amount sentence (a small "Example" tag stays), and
+the mode names under the path's cards. The module screen offers the games as icon tiles.
 **D173. A receipt can include its fee in the amount sent** (Angad, 2026-10-12: the scanner
 "simply needs to be better... It's simply not transcribing well enough right now OR the
 calculation based formula is wrong"). Checked first: the shared formula's 56 test cases and
@@ -2144,3 +2183,51 @@ received or total check are now doubted and sent to the model with the photo, wh
 confident wrong value stood and the model was never asked. On the model itself: Groq's only
 vision model is the one already in use (Qwen 3.8 27B, D98), so there's nothing better on the
 free tier there; revisit once real receipts show what's still missed.
+
+**D175. Remmy, an assistant inside the app that can act in it** (Angad, 2026-10-12: "a
+little chatbot that can do everything that whatsapp bot does within the app itself... make
+sure it can also be 'agentic' by taking actions within the app... a hovering icon in
+remitbridge's style"). Remmy runs the WhatsApp agent (D160) on the same free models (D163),
+through a new `remmy` Edge Function. The function and the WhatsApp one now share
+`supabase/functions/_shared/agent.ts` for the model chain and the data tools, so both
+surfaces answer the same way. Remmy also has four app tools: open Compare on a route, open
+a screen, start a lesson, and offer a save. They don't act on the server. Each adds an
+action to the reply, and the app shows it as a card, with an Open, Start or Save button.
+When the person asked to go somewhere, the card opens it after a short pause. Actions are
+checked against one list (`mobile/src/lib/remmy-actions.ts`) on both sides, so a model can
+only name screens, routes and lessons that exist. A save always waits for a tap, and nothing
+Remmy does moves money, changes a setting or contacts a provider. The prompt has Remmy's own
+persona, and the conversation's last 8 turns go along so a follow-up makes sense. Their
+numbers count as sources for the stray-number check. Nothing of the conversation is stored:
+it lives in the app's memory until the app closes or the person starts a new chat. Metrics
+record only which tools ran. Limits (D140): 40 messages a day per install and 200 per
+network address, and the same daily model budget as WhatsApp. Past a limit, Remmy says it's
+resting, and a plain "500 to India" still gets its Compare card. Before the first message
+the app asks once, with Allow / Not now, as the receipt scanner does (Apple 5.1.2(i)), and
+the chat says it uses an AI model. The button is a green speech bubble with the bridge mark
+as a brow, hovering above the tab bar on every tab. It opens Remmy as a sheet.
+
+**D176. Remmy's actions no longer depend on the model, it has a burst limit, and its
+composer follows the keyboard** (Angad, 2026-10-13: "agentic stuff only works with the
+prompt designed. I need the harness to work regardless of what the prompt is, may it be
+'Open user settings'... enable rate limiting... the chatbox doesnt move at all"). One table
+in `mobile/src/lib/remmy-actions.ts` names every screen the way people say it, in the five
+app languages ("user settings", "profile", "log out", "privacy policy", "ajustes",
+"settings kholo"). A short plain request ("open user settings", "where's the glossary", or
+just "settings") is matched there and opened by the function without a model call. Price
+questions still go to the model, so Compare opens on the route. Any screen name the model
+uses goes through the same table. A name that fits nothing gets the real list back to choose
+from. If the model answers a clear "take me to..." without acting, the table adds the card.
+When no model can answer, a screen named in the message still comes back as a card to tap.
+Remmy can now open sign-in and, in the browser, the privacy policy, terms and support. A
+test table of 24 everyday phrasings, and four that must still reach the model, keeps this
+honest. Limits: 8 messages a minute per install on top of the daily ones, with its own "slow
+down" reply; the app also drops a second send within 1.5 seconds and caps a message at 500
+characters. The composer now rides on Reanimated's live keyboard height. A
+KeyboardAvoidingView measured from the window misplaced it in the iPhone sheet and did
+nothing on Android, which draws edge to edge. Dragging the thread dismisses the keyboard,
+and the thread scrolls to the end when the keyboard opens. The terms gain an "AI answers"
+section: replies can be wrong, so check figures in Compare; what Remmy can and can't do; and
+don't type passwords, codes or account numbers. The privacy policy says a plain screen
+request never reaches a model, that the app asks before the first message, and what not to
+type.

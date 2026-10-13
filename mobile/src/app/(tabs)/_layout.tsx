@@ -3,6 +3,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import AppTabs from '@/components/app-tabs';
+import { RemmyButton } from '@/components/remmy';
 import { currentTab, setSwipeDirection } from '@/lib/current-tab';
 
 /** The tabs left to right, as the tab bar shows them. */
@@ -44,11 +45,20 @@ const swipe = Gesture.Pan()
   });
 
 export default function TabsLayout() {
-  if (Platform.OS === 'android') return <AppTabs />;
+  // Remmy floats over every tab (D175).
+  if (Platform.OS === 'android') {
+    return (
+      <View style={styles.fill}>
+        <AppTabs />
+        <RemmyButton />
+      </View>
+    );
+  }
   return (
     <GestureDetector gesture={swipe}>
       <View style={styles.fill} collapsable={false}>
         <AppTabs />
+        <RemmyButton />
       </View>
     </GestureDetector>
   );

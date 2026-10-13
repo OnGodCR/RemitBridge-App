@@ -379,7 +379,7 @@ with your name and the date.
 | learn.website | On the website | वेबसाइट पर | |
 | learn.blog | Blog | ब्लॉग | |
 | learn.blogSub | Stories and explainers | कहानियाँ और समझाने वाले लेख | |
-| learn.latestPost | Latest post | नई पोस्ट | | NEW 2026-10-10
+| learn.latestPost | Latest post | नई पोस्ट | | REMOVED 2026-10-12: replaced by learn.startHere, no need to read
 | learn.allPosts | All posts | सभी पोस्ट | | NEW 2026-10-10
 | learn.assignmentTitle | Now put it to use | अब इसे काम में लाएँ | | NEW 2026-10-11
 | learn.assignmentBody | Read a post that uses the words you just learned. | एक पोस्ट पढ़ें जिसमें आपके अभी सीखे शब्द हैं। | | NEW 2026-10-11
@@ -975,3 +975,101 @@ with your name and the date.
 
 The WhatsApp bot's Hindi replies (packages/bot) need the same read. They're built from
 pieces in code, so ask Claude for a separate sheet of example replies.
+
+## Learn game modes (2026-10-12)
+
+| Key | English | Hindi draft | Your change (blank if fine) |
+|---|---|---|---|
+| learn.startHere | Start here | यहाँ से शुरू करें | | NEW 2026-10-12
+| learn.games.choose | Pick a game | एक गेम चुनें | | NEW 2026-10-12
+| learn.games.check | Check | जाँचें | | NEW 2026-10-12
+| learn.games.playAgain | Play again | फिर से खेलें | | NEW 2026-10-12
+| learn.games.routeWord | Route | रूट | | NEW 2026-10-12
+| learn.games.example | Example | उदाहरण | | NEW 2026-10-12
+| learn.games.modes.match | Match | जोड़ी मिलाएँ | | NEW 2026-10-12
+| learn.games.modes.quick | True or false | सही या गलत | | NEW 2026-10-12
+| learn.games.modes.cost | Who sends more? | कौन ज़्यादा भेजता है? | | NEW 2026-10-12
+| learn.games.modes.receipt | Read a receipt | रसीद पढ़ें | | NEW 2026-10-12
+| learn.games.modes.safety | Spot the scam | धोखा पहचानें | | NEW 2026-10-12
+| learn.games.modes.final | Final round | आखिरी राउंड | | NEW 2026-10-12
+| learn.games.matchPrompt | Match the pairs | जोड़ियाँ मिलाएँ | | NEW 2026-10-12
+| learn.games.allMatched | All matched! | सब मिल गए! | | NEW 2026-10-12
+| learn.games.quickPrompt | True or false? | सही या गलत? | | NEW 2026-10-12
+| learn.games.true | True | सही | | NEW 2026-10-12
+| learn.games.false | False | गलत | | NEW 2026-10-12
+| learn.games.costPrompt | Which sends more home? | कौन घर ज़्यादा भेजता है? | | NEW 2026-10-12
+| learn.games.fee | Fee | फ़ीस | | NEW 2026-10-12
+| learn.games.rate | Rate | रेट | | NEW 2026-10-12
+| learn.games.arrives | Arrives | पहुँचता है | | NEW 2026-10-12
+| learn.games.hidden | {amount} hidden in the rate | {amount} रेट में छिपे | | NEW 2026-10-12
+| learn.games.receiptTitle | Receipt | रसीद | | NEW 2026-10-12
+| learn.games.receiptPrompt.fee | Tap the fee | फ़ीस पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptPrompt.rate | Tap the exchange rate | एक्सचेंज रेट पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptPrompt.received | Tap what arrives | जो पहुँचता है उस पर टैप करें | | NEW 2026-10-12
+| learn.games.receiptLines.fee | Service charge | सर्विस चार्ज (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.receiptLines.rate | FX rate applied | लागू FX रेट (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.receiptLines.received | Payout amount | पेआउट राशि (a provider's wording on purpose) | | NEW 2026-10-12
+| learn.games.safetyPrompt | Scam or not? | धोखा है या नहीं? | | NEW 2026-10-12
+| learn.games.safetyChoices.flag | Red flag | खतरे का संकेत | | NEW 2026-10-12
+| learn.games.safetyChoices.fine | Looks fine | ठीक लगता है | | NEW 2026-10-12
+| learn.games.safetyChoices.unsure | Can’t tell | कह नहीं सकते | | NEW 2026-10-12
+| learn.games.scenarios.stranger.text | A stranger will pay you to receive money and pass it on. | कोई अनजान व्यक्ति पैसे लेकर आगे भेजने के लिए आपको पैसे देगा। | | NEW 2026-10-12
+| learn.games.scenarios.stranger.why | That’s how money mules start. | मनी म्यूल ऐसे ही शुरू होते हैं। | | NEW 2026-10-12
+| learn.games.scenarios.urgent.text | “It’s your cousin. Send money now. Don’t call me.” | “मैं तुम्हारा कज़िन हूँ। अभी पैसे भेजो। फ़ोन मत करना।” | | NEW 2026-10-12
+| learn.games.scenarios.urgent.why | Rushing you and avoiding a call are classic signs. | जल्दबाज़ी और फ़ोन से बचना आम संकेत हैं। | | NEW 2026-10-12
+| learn.games.scenarios.code.text | Someone in a chat asks for your sign-in code. | चैट में कोई आपका साइन-इन कोड माँगता है। | | NEW 2026-10-12
+| learn.games.scenarios.code.why | Your code opens your account. Never share it. | कोड से आपका खाता खुलता है। इसे कभी न बताएँ। | | NEW 2026-10-12
+| learn.games.scenarios.fakeRate.text | A website offers a rate far better than everyone else’s. | एक वेबसाइट सबसे कहीं बेहतर रेट देती है। | | NEW 2026-10-12
+| learn.games.scenarios.fakeRate.why | A rate that looks too good usually is. | जो रेट बहुत अच्छा लगे, वह अक्सर धोखा होता है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.text | A transfer app asks for your ID. | एक ट्रांसफ़र ऐप आपका पहचान पत्र माँगता है। | | NEW 2026-10-12
+| learn.games.scenarios.idCheck.why | Real apps ask too. On its own, it proves nothing. | असली ऐप भी माँगते हैं। अकेले इससे कुछ साबित नहीं होता। | | NEW 2026-10-12
+| learn.games.scenarios.usual.text | Your usual app shows the fee and rate before you pay. | आपका रोज़ का ऐप पैसे देने से पहले फ़ीस और रेट दिखाता है। | | NEW 2026-10-12
+| learn.games.scenarios.usual.why | Showing the full cost up front is a good sign. | पहले ही पूरा खर्च दिखाना अच्छा संकेत है। | | NEW 2026-10-12
+| learn.games.answerIs | Answer: {answer} | जवाब: {answer} | | NEW 2026-10-12
+
+## Remmy (2026-10-13)
+
+| Key | English | Hindi draft | Your change (blank if fine) |
+|---|---|---|---|
+| remmy.open | Ask Remmy | Remmy से पूछें | | NEW 2026-10-13
+| remmy.subtitle | Prices, fees and help with the app | कीमतें, फ़ीस और ऐप में मदद | | NEW 2026-10-13
+| remmy.hello | Hi, I’m Remmy | नमस्ते, मैं Remmy हूँ | | NEW 2026-10-13
+| remmy.intro | Ask what a transfer really costs, or tell me where to take you. | पूछें कि ट्रांसफ़र असल में कितने का पड़ता है, या बताएँ कि कहाँ ले चलूँ। | | NEW 2026-10-13
+| remmy.suggestions.0 | What does $500 to India cost? | भारत $500 भेजने में कितना लगेगा? | | NEW 2026-10-13
+| remmy.suggestions.1 | What’s a hidden exchange-rate fee? | एक्सचेंज रेट में छिपी फ़ीस क्या है? | | NEW 2026-10-13
+| remmy.suggestions.2 | Take me to the receipt scanner | मुझे रसीद स्कैनर पर ले चलो | | NEW 2026-10-13
+| remmy.suggestions.3 | Teach me to spot scams | धोखा पहचानना सिखाओ | | NEW 2026-10-13
+| remmy.placeholder | Ask Remmy | Remmy से पूछें | | NEW 2026-10-13
+| remmy.send | Send | भेजें | | NEW 2026-10-13
+| remmy.newChat | New chat | नई चैट | | NEW 2026-10-13
+| remmy.close | Close | बंद करें | | NEW 2026-10-13
+| remmy.thinking.0 | Thinking | सोच रहा हूँ | | NEW 2026-10-13
+| remmy.thinking.1 | Checking prices | कीमतें देख रहा हूँ | | NEW 2026-10-13
+| remmy.thinking.2 | Looking it up | ढूँढ रहा हूँ | | NEW 2026-10-13
+| remmy.steps.get_prices | Checked today’s prices | आज की कीमतें देखीं | | NEW 2026-10-13
+| remmy.steps.get_routes | Looked at our routes | हमारे रूट देखे | | NEW 2026-10-13
+| remmy.steps.search_knowledge | Looked up our notes | हमारे नोट्स देखे | | NEW 2026-10-13
+| remmy.steps.request_route | Counted your request | आपकी माँग गिनी | | NEW 2026-10-13
+| remmy.steps.save_suggestion | Passed your idea on | आपका सुझाव टीम तक पहुँचाया | | NEW 2026-10-13
+| remmy.steps.action | Got it ready | तैयार कर दिया | | NEW 2026-10-13
+| remmy.compareCard | Compare | तुलना | | NEW 2026-10-13
+| remmy.lessonCard | Lesson | पाठ | | NEW 2026-10-13
+| remmy.go | Open | खोलें | | NEW 2026-10-13
+| remmy.start | Start | शुरू करें | | NEW 2026-10-13
+| remmy.save | Save | सेव करें | | NEW 2026-10-13
+| remmy.saved | Saved | सेव हो गया | | NEW 2026-10-13
+| remmy.already | Already saved | पहले से सेव है | | NEW 2026-10-13
+| remmy.signIn | Sign in to save | सेव करने के लिए साइन इन करें | | NEW 2026-10-13
+| remmy.saveFailed | Couldn’t save. Try again. | सेव नहीं हुआ। फिर से कोशिश करें। | | NEW 2026-10-13
+| remmy.opening | Opening | खोल रहा हूँ | | NEW 2026-10-13
+| remmy.limited | I’m taking a short break. You can still compare prices yourself. | मैं थोड़ी देर आराम कर रहा हूँ। आप खुद कीमतों की तुलना कर सकते हैं। | | NEW 2026-10-13
+| remmy.offline | I couldn’t connect. Check your internet and try again. | कनेक्ट नहीं हो पाया। इंटरनेट देखकर फिर से कोशिश करें। | | NEW 2026-10-13
+| remmy.retry | Try again | फिर से कोशिश करें | | NEW 2026-10-13
+| remmy.privacy | Remmy uses an AI model. It doesn’t keep your messages. | Remmy एक AI मॉडल इस्तेमाल करता है। यह आपके मैसेज नहीं रखता। | | NEW 2026-10-13
+| remmy.aiTitle | Send to an AI service? | AI सेवा को भेजें? | | NEW 2026-10-13
+| remmy.aiBody | Remmy sends what you type to an AI model run by Cloudflare or Groq. Neither keeps it or trains on it. | Remmy आपका लिखा हुआ Cloudflare या Groq के AI मॉडल को भेजता है। कोई भी इसे नहीं रखता, न इससे सीखता है। | | NEW 2026-10-13
+| remmy.aiAllow | Allow | अनुमति दें | | NEW 2026-10-13
+| remmy.aiDecline | Not now | अभी नहीं | | NEW 2026-10-13
+| remmy.slow | You’re sending messages quickly. Wait a minute, then try again. | आप बहुत जल्दी-जल्दी मैसेज भेज रहे हैं। एक मिनट रुककर फिर कोशिश करें। | | NEW 2026-10-13
+| remmy.here | Here you go. | यह रहा। | | NEW 2026-10-13
+| remmy.noAnswer | I don’t have an answer for that yet. | इसका जवाब अभी मेरे पास नहीं है। | | NEW 2026-10-13

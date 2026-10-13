@@ -64,6 +64,9 @@ export const ANDROID_SYMBOLS: Partial<Record<SFSymbol, AndroidSymbol>> = {
   trash: 'delete',
   'wrench.and.screwdriver': 'build',
   xmark: 'close',
+  'arrow.up': 'arrow_upward',
+  'square.grid.2x2': 'grid_view',
+  'flag.fill': 'flag',
 };
 
 type IconProps = Omit<SymbolViewProps, 'name' | 'weight'> & {

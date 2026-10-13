@@ -106,6 +106,7 @@ export function chainClient(clients: AiClient[], onFail: (index: number, error: 
       for (let i = start; i < clients.length; i++) {
         try {
           const text = await clients[i].chat(messages, options)
+          if (looksBroken(text)) throw new Error('unusable output')
           start = i
           return text
         } catch (e) {
@@ -117,6 +118,16 @@ export function chainClient(clients: AiClient[], onFail: (index: number, error: 
       throw last
     },
   }
+}
+
+/**
+ * Output no one should see: nothing, no letters at all, or one character run on and on
+ * (gpt-oss on Cloudflare once answered "take me to the scanner" with 900 exclamation marks,
+ * 2026-10-13). The chain treats it as a failure and asks the next provider.
+ */
+export function looksBroken(text: string): boolean {
+  const t = text.trim()
+  return !/\p{L}/u.test(t) || /(\S)\1{29,}/u.test(t)
 }
 
 /** Qwen3 can open with its reasoning in <think> tags; only what follows is the answer. */

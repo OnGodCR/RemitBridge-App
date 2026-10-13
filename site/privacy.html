@@ -16,8 +16,8 @@
 <header><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 17Q24 3 46 17"/><path d="M14 30v-6q10-9 20 0v6"/></svg>RemitBridge</a><nav><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a class="cta" href="https://www.remitbridgelabs.org/app">About the app</a></nav></div></header>
 <main class="wrap">
 <h1>Privacy policy</h1>
-<p class="muted">Last updated October 12, 2026</p>
-<p>RemitBridge is a free app that compares the cost of sending money abroad. {{LEGAL_ENTITY}} ("RemitBridge Labs", "we") publishes and operates it, and is responsible for the data described here. No person who founded, runs or volunteers for RemitBridge Labs holds your data in their own name. This policy covers the RemitBridge mobile app, this site and the RemitBridge WhatsApp bot.</p>
+<p class="muted">Last updated October 13, 2026</p>
+<p>RemitBridge is a free app that compares the cost of sending money abroad. {{LEGAL_ENTITY}} ("RemitBridge Labs", "we") publishes and operates it, and is responsible for the data described here. No person who founded, runs or volunteers for RemitBridge Labs holds your data in their own name. This policy covers the RemitBridge mobile app (including Remmy, its assistant), this site and the RemitBridge WhatsApp bot.</p>
 
 <h2>In short</h2>
 <ul>
@@ -65,6 +65,12 @@
 <p>A scanned receipt carries no account, phone number or device ID. The app adds up what your scans say you could have kept, on your phone only; that total never leaves it, and deleting a receipt in the app takes it out.</p>
 <p>On WhatsApp, if you send a photo of a receipt, our server reads it and covers the same personal details before any figures are read. Only the covered text goes on to be read, including by Groq, never the photo. The photo is deleted once it's read and is never stored. How we handle your number while it's read is below.</p>
 
+<h2>Remmy, the assistant in the app</h2>
+<p>When you ask Remmy something, the app sends your message and the last few messages of the conversation, and nothing else, to our server, which passes that text to an AI model to work out the answer from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's free daily allowance is used up; neither uses what it's sent to train AI models. We don't store the conversation: it stays on your phone until you close the app or start a new chat. We record only that a message was answered and which of Remmy's tools it used (for example, that it checked prices), with the random ID described above, never what you wrote. If you send a suggestion for the app, we keep its text, its language and the date, with no ID attached.</p>
+<p>The first time you send Remmy a message, the app asks your permission before anything goes to an AI model. A plain request to open a screen, such as "open settings", is handled by our own server and never reaches an AI model.</p>
+<p>Remmy can open a screen or a comparison for you, and offer to save one to your account; saving happens only when you tap Save. It can't send money, change your settings or contact a provider.</p>
+<p>Please don't type passwords, sign-in codes, card or account numbers, or other people's personal details into the chat. Remmy doesn't need them, and anything you type goes to the AI model as written.</p>
+
 <h2>WhatsApp</h2>
 <p>When you message our WhatsApp bot, we don't store your phone number. We keep a scrambled ID made from it (a keyed hash, which can't be turned back into the number), your reply language, and the last route you asked about.</p>
 <p>We keep the number itself only while a receipt photo is read: to send you the answer a few minutes later, we keep it encrypted until the answer is sent, and never longer than an hour. Only the server that sends WhatsApp messages can unlock it. It never appears in our logs and goes to no one but WhatsApp.</p>
@@ -83,7 +89,7 @@
 <li>On your phone, your sign-in is stored encrypted, with a key kept in the phone's secure storage (the iPhone Keychain or Android Keystore) that never goes into a backup or onto another phone.</li>
 <li>A receipt photo is deleted from the app's storage as soon as its text is read; after that the app works only from the covered copy.</li>
 <li>There's no password to steal: you sign in with a code we email you, or with Apple or Google.</li>
-<li>To stop abuse, we count requests from each network address, and receipt checks from each phone (by the random ID above), each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and we delete the counts within a day.</li>
+<li>To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above, per minute and per day), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and we delete the counts within a day.</li>
 <li>The deletions promised here run automatically: receipts after 30 days (24 months for research receipts), and a WhatsApp number held for a receipt within the hour.</li>
 </ul>
 
@@ -101,8 +107,8 @@
 <li><strong>Resend</strong> sends the sign-in code email, if you sign in with email, and the newsletter, if you turned it on.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
 <li><strong>Expo</strong>'s push service, with <strong>Apple</strong> or <strong>Google</strong>, delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else.</li>
-<li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp (OpenAI's open gpt-oss models), when Cloudflare's daily allowance is used up, it gets only the text of your message, never your number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>
-<li><strong>Cloudflare</strong> runs an AI model (Workers AI) on the text of most WhatsApp messages to our bot. It gets only that text, never your number, and doesn't use it to train AI models.</li>
+<li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp and Remmy (OpenAI's open gpt-oss models), when Cloudflare's daily allowance is used up, it gets only the text of your messages, never your number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>
+<li><strong>Cloudflare</strong> runs an AI model (Workers AI) on the text of most messages to our WhatsApp bot and to Remmy in the app. It gets only that text, never your number, and doesn't use it to train AI models.</li>
 <li><strong>Meta</strong> carries the messages you exchange with the WhatsApp bot, under WhatsApp's own terms.</li>
 <li><strong>GitHub</strong> runs the program that reads a receipt photo sent on WhatsApp. The photo is held only in that program's memory, on a temporary machine, and is never written to disk.</li>
 <li><strong>Vercel</strong> hosts this site.</li>

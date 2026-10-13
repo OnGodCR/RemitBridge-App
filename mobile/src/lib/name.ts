@@ -28,3 +28,9 @@ export async function saveName(name: string): Promise<boolean> {
   const { error } = await supabase.auth.updateUser({ data: { name: name.trim().slice(0, 40) } });
   return !error;
 }
+
+/** Morning until noon, afternoon until 5 pm, evening after, by the phone's own clock. */
+export function partOfDay(now = new Date()): 'morning' | 'afternoon' | 'evening' {
+  const h = now.getHours();
+  return h >= 4 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'afternoon' : 'evening';
+}

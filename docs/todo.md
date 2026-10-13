@@ -42,6 +42,17 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
 
+## Remmy (Angad, D175)
+
+- [x] **Deploy Remmy**: `remmy` and `whatsapp` deployed 2026-10-13. Live check: "500 to India" answers from today's prices with a Compare card, "take me to the scanner" opens it, "teach me to spot scams" starts the Safety lesson.
+- [x] **WhatsApp after the refactor**: "500 to India" answered (2026-10-13), with the asterisks showing around the amounts.
+- [x] **Redeploy whatsapp for the bold fix** (18dd46e): deployed 2026-10-13.
+- [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
+- [x] **Remmy feedback, round 1 (D176)**: any "open X" works without the model, a per-minute limit, the composer follows the keyboard, AI answers in the terms. Built 2026-10-13.
+- [ ] **Deploy Remmy again for D176**: `supabase functions deploy remmy`; then reload the app and try "open user settings", "log out", "privacy policy", typing with the keyboard open.
+- [x] **Merge the PRs**: Learn games (#5) and Remmy (#6) merged into main, 2026-10-13.
+- [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
+
 ## Receipt scanner (Angad, D173)
 
 - [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.

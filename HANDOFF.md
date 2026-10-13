@@ -3,7 +3,31 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-12 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-13 (see the sections just below; the older status after them is kept for history)
+
+**2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
+briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-13: Remmy, round 1 of Angad's feedback (D176)
+
+- Screen requests in any wording go through one alias table (`remmy-actions.ts`), with no
+  model call; 8 messages a minute per install; the composer rides the keyboard (Reanimated);
+  the terms gain "AI answers". App 228 tests, bot 193. Needs `remmy` deployed again; the site
+  updates on push.
+
+## 2026-10-13: Remmy, the assistant in the app (D175)
+
+- **Built on branch `remmy`** (from `chatgpt/learn-game-modes`, so it includes the Learn
+  games): the hovering button on every tab (`components/remmy.tsx`), the chat sheet
+  (`app/remmy.tsx`), the store and actions (`lib/remmy.ts`, `lib/remmy-actions.ts`), and the
+  `remmy` Edge Function. `whatsapp` was refactored onto `_shared/agent.ts`; its 152 tests
+  still pass. App tests 225, bot tests 159; tsc and lint clean.
+- **Live 2026-10-13:** `remmy` and `whatsapp` deployed by Angad. The first live test found
+  gpt-oss answering with junk (now a chain failure, 44a53f7) and price questions failing
+  the number check (open_compare now returns the prices, 0f26e6e). After that, all three
+  test messages answered correctly.
+- Expo Go shows it after a reload; no new native module.
+- Privacy policy has a Remmy section; Hindi rows added to `hi.md` by hand (Remmy, 2026-10-13).
 
 ## 2026-10-12: Android sign-ins fixed, WhatsApp linking confirmed, the newsletter (D169)
 
@@ -20,6 +44,10 @@ resume. Update it at the end of every working session.
   Apple's email relay, and a new build. Local migration checks pass, bot tests 152, app 162.
   Later the same day: the migration is live (smoke 76/76), both functions deployed, no
   postal-address block, and an opt-in switch on onboarding's sign-in step.
+- **Learn game modes (D172):** six modes built by ChatGPT (Codex) in this checkout on
+  `chatgpt/learn-game-modes`, reviewed and finished by Claude (receipt labels no longer give
+  the answer away, lesson events restored, tests fixed: 216 pass). PR open; merge after Angad
+  checks it on his phone (Expo Go, Metro in the "Metro (Expo Go)" terminal tab).
 - **Hindi reviewed (D170)** and **Compare is the first tab again (D171)**. Android production
   build 520e9e31 (versionCode 6) has all of it; 604edbb8 and 92f12877 were canceled for it.
 
