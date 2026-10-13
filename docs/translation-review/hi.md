@@ -1070,3 +1070,6 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | remmy.aiBody | Remmy sends what you type to an AI model run by Cloudflare or Groq. Neither keeps it or trains on it. | Remmy आपका लिखा हुआ Cloudflare या Groq के AI मॉडल को भेजता है। कोई भी इसे नहीं रखता, न इससे सीखता है। | | NEW 2026-10-13
 | remmy.aiAllow | Allow | अनुमति दें | | NEW 2026-10-13
 | remmy.aiDecline | Not now | अभी नहीं | | NEW 2026-10-13
+| remmy.slow | You’re sending messages quickly. Wait a minute, then try again. | आप बहुत जल्दी-जल्दी मैसेज भेज रहे हैं। एक मिनट रुककर फिर कोशिश करें। | | NEW 2026-10-13
+| remmy.here | Here you go. | यह रहा। | | NEW 2026-10-13
+| remmy.noAnswer | I don’t have an answer for that yet. | इसका जवाब अभी मेरे पास नहीं है। | | NEW 2026-10-13

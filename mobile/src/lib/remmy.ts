@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { useSyncExternalStore } from 'react';
 
 import { saveComparison, type SaveResult } from '@/lib/comparisons';
+import { LINKS, openPage } from '@/lib/links';
 import { openCompare } from '@/lib/open-compare';
 import { prefs } from '@/lib/prefs';
 import { REMMY_SCREENS, validAction, type RemmyAction, type RemmyReply } from '@/lib/remmy-actions';
@@ -18,11 +19,14 @@ import { supabase } from '@/lib/supabase';
  */
 export type RemmyMessage =
   | { id: number; role: 'user'; text: string }
-  | { id: number; role: 'remmy'; text: string; actions: RemmyAction[]; steps: string[]; limited?: boolean; failed?: boolean };
+  | { id: number; role: 'remmy'; text: string; actions: RemmyAction[]; steps: string[]; limited?: boolean; reason?: 'slow' | 'day'; failed?: boolean };
 
 let messages: RemmyMessage[] = [];
 let thinking = false;
 let nextId = 1;
+/** When the last message went out: a second send within MIN_GAP_MS is dropped (a double tap). */
+let lastSent = 0;
+const MIN_GAP_MS = 1500;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const subscribe = (l: () => void) => {
@@ -38,6 +42,7 @@ export function useRemmy(): { messages: RemmyMessage[]; thinking: boolean } {
 
 export function newChat() {
   messages = [];
+  lastSent = 0;
   thinking = false;
   emit();
 }
@@ -47,7 +52,8 @@ const ROUTE_IDS = ROUTES.map((r) => r.id);
 /** Sends a message and adds Remmy's reply, or a failed one the person can retry. */
 export async function sendToRemmy(text: string, language: string): Promise<void> {
   const trimmed = text.trim();
-  if (!trimmed || thinking) return;
+  if (!trimmed || thinking || Date.now() - lastSent < MIN_GAP_MS) return;
+  lastSent = Date.now();
   const history = messages.slice(-8).map((m) => ({ role: m.role === 'user' ? 'user' : 'assistant', text: m.text }));
   messages = [...messages, { id: nextId++, role: 'user', text: trimmed }];
   thinking = true;
@@ -75,6 +81,7 @@ export async function sendToRemmy(text: string, language: string): Promise<void>
       actions: (Array.isArray(r.actions) ? r.actions : []).map((a) => validAction(a, ROUTE_IDS)).filter((a): a is RemmyAction => !!a),
       steps: Array.isArray(r.steps) ? r.steps.filter((s): s is string => typeof s === 'string') : [],
       limited: r.limited === true,
+      ...(r.reason === 'slow' || r.reason === 'day' ? { reason: r.reason } : {}),
     };
   } catch {
     reply = { id: nextId++, role: 'remmy', text: '', actions: [], steps: [], failed: true };
@@ -103,6 +110,11 @@ export async function runAction(action: RemmyAction): Promise<SaveResult | 'done
       return 'done';
     case 'screen': {
       const path = REMMY_SCREENS[action.screen];
+      // The privacy policy, terms and support open in the browser, over Remmy.
+      if (path.startsWith('page:')) {
+        openPage(LINKS[path.slice(5) as keyof typeof LINKS]);
+        return 'done';
+      }
       if (TABS.has(path)) {
         router.dismissTo(path);
       } else {

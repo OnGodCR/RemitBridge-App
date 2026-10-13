@@ -8,17 +8,24 @@
 // Privacy: messages are passed to the model and answered; nothing of them is stored. Metrics
 // record which tools ran, never the text.
 //
-// Limits (D140): 40 messages a day per install and 200 per address, and the shared daily
-// share of Cloudflare's free allowance. Past a limit, or when no model answers, the reply is
-// marked `limited` and, if the message was a plain price question ("500 to India"), it
-// still opens Compare on it.
+// The harness doesn't depend on the model picking the right tool. A plain request to go
+// somewhere ("open user settings", "where's the glossary") is matched against one table of
+// screen names (remmy-actions.ts) and opened without a model call at all. Whatever screen
+// name the model uses goes through the same table, and if the model answers without acting
+// on a clear "take me to ...", the table adds the action anyway.
+//
+// Limits (D140, D175): 8 messages a minute per install (a burst), 40 a day per install and
+// 200 per address, and the shared daily share of Cloudflare's free allowance. Past a limit,
+// or when no model answers, the reply is marked `limited` with its reason and, if the message
+// was a plain price question ("500 to India") or a screen, it still offers that.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { DEFAULT_ANSWER_MODEL, parse, runAgent, type ToolSpec } from '../../../packages/bot/src/index.ts';
-import { REMMY_MODES, REMMY_MODULES, REMMY_SCREENS, validAction, type RemmyAction, type RemmyReply } from '../../../mobile/src/lib/remmy-actions.ts';
+import { REMMY_MODES, REMMY_MODULES, REMMY_SCREENS, matchIntent, validAction, type RemmyAction, type RemmyReply } from '../../../mobile/src/lib/remmy-actions.ts';
 import { ROUTES, routeFor, type Route } from '../../../mobile/src/lib/routes.ts';
 import { countryOf, dataTools, modelChain, tryModel } from '../_shared/agent.ts';
 import { secretKey } from '../_shared/keys.ts';
 
+const PER_MINUTE = 8;
 const PER_INSTALL = 40;
 const PER_ADDRESS = 200;
 const DAY = 86_400;
@@ -52,11 +59,29 @@ Deno.serve(async (req) => {
   if (!message || !install) return json({ error: 'message and install_id required' }, 400);
 
   const db = service();
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  const { data: allowed } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy', p_ip: ip, p_max: PER_ADDRESS, p_window_seconds: DAY });
   const track = async (name: string, props: Record<string, string | number>) => {
     await db.from('events').insert({ install_id: install, name, props, platform });
   };
+
+  // A burst first: a script or a stuck button can't run through the day's budget in seconds.
+  const { data: steady } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy_minute', p_ip: install, p_max: PER_MINUTE, p_window_seconds: 60 });
+  if (steady === false) {
+    await track('remmy_limited', { reason: 'slow' });
+    return json({ reply: '', actions: [], steps: [], limited: true, reason: 'slow' } satisfies RemmyReply, 200);
+  }
+
+  // "Open user settings": no model needed. A price question goes to the model instead, which
+  // opens Compare on the route rather than the bare tab.
+  const asked = parse(message);
+  const intent = asked.kind === 'compare' && asked.to ? null : matchIntent(message);
+  const intentAction = intent ? validAction({ type: 'screen', screen: intent.screen, now: intent.now }, ROUTE_IDS) : null;
+  if (intentAction) {
+    await track('remmy_message', { tools: 'intent', provider: 'none' });
+    return json({ reply: '', actions: [intentAction], steps: ['open_screen'] } satisfies RemmyReply, 200);
+  }
+
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  const { data: allowed } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy', p_ip: ip, p_max: PER_ADDRESS, p_window_seconds: DAY });
 
   const actions: RemmyAction[] = [];
   const touched: { route?: Route; method?: string } = {};
@@ -72,6 +97,10 @@ Deno.serve(async (req) => {
       'remmy',
     );
     if (result) {
+      // A longer "take me to the glossary and explain markup" the model answered without acting.
+      const backstop = actions.length ? null : matchIntent(message, 40);
+      const extra = backstop?.now ? validAction({ type: 'screen', screen: backstop.screen, now: false }, ROUTE_IDS) : null;
+      if (extra) actions.push(extra);
       await track('remmy_message', { tools: result.tools.join(',') || 'none', provider: model.names[model.client.used()] ?? 'none' });
       return json({ reply: result.text, actions: dedupe(actions), steps: result.tools } satisfies RemmyReply, 200);
     }
@@ -79,7 +108,7 @@ Deno.serve(async (req) => {
 
   // No model answer: still do the obvious thing for a plain price question.
   await track('remmy_limited', { reason: model ? 'failed' : 'limit' });
-  return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true } satisfies RemmyReply, 200);
+  return json({ reply: '', actions: fallbackActions(message), steps: [], limited: true, reason: 'day' } satisfies RemmyReply, 200);
 });
 
 /**
@@ -117,11 +146,13 @@ function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
     },
     {
       name: 'open_screen',
-      about: 'Opens a screen in the app: the receipt scanner, a tool, Learn, Saved, Account, the glossary (optionally on one term), the route board, WhatsApp, the blog.',
-      args: { screen: Object.keys(REMMY_SCREENS).join('/'), term: 'optional glossary term id, e.g. exchange-rate-markup', now: 'true only if they asked to go there' },
+      about: `Opens a screen in the app. ${SCREEN_ABOUT}`,
+      args: { screen: Object.keys(REMMY_SCREENS).join('/'), term: 'optional glossary term id, e.g. exchange-rate-markup', now: 'true if they asked to go there' },
       run: async (args) => {
         const done = add({ type: 'screen', screen: args.screen, term: typeof args.term === 'string' ? args.term : undefined, now: args.now === true });
-        return done ? { shown: `${String(args.screen)} is ready`, opened: done.now === true } : { error: `no screen called ${String(args.screen)}` };
+        return done
+          ? { shown: `${done.type === 'screen' ? done.screen : ''} is ready`, opened: done.now === true }
+          : { error: `No screen called ${String(args.screen)}. Pick one of: ${Object.keys(REMMY_SCREENS).join(', ')}. If none fits, say what the app can't do.` };
       },
     },
     {
@@ -149,6 +180,32 @@ function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
   ];
 }
 
+/** What each screen is, so the model can map "change my password" or "turn on emails" itself. */
+const SCREEN_ABOUT = [
+  'compare: prices for a route (prefer open_compare)',
+  'scan: the receipt scanner',
+  'whatsapp: link WhatsApp, chat with the bot',
+  'tools: the list of calculators',
+  'learn: lessons and games',
+  'saved: saved comparisons',
+  'account: settings, name, language, newsletter, sign out, delete account',
+  'sign_in: sign in or create an account',
+  'glossary: definitions, optionally on one term',
+  'routes: the countries covered and requested',
+  'request_route: ask for a new country',
+  'fair_rate: check if a rate is fair',
+  'scam_check: check a message or offer for scam signs',
+  'true_cost: work out the real cost of a transfer you made',
+  'yearly_cost: what fees add up to in a year',
+  'rate_history: how the exchange rate moved',
+  'observatory: the market overview',
+  'remitbench: the cost benchmark',
+  'blog: articles',
+  'privacy: the privacy policy',
+  'terms: the terms of service',
+  'support: help and contact',
+].join('; ');
+
 /** One card per action: the model sometimes calls the same tool twice. */
 function dedupe(actions: RemmyAction[]): RemmyAction[] {
   const seen = new Set<string>();
@@ -163,7 +220,11 @@ function dedupe(actions: RemmyAction[]): RemmyAction[] {
 /** Without a model: "500 to India" still opens Compare on it. */
 export function fallbackActions(message: string): RemmyAction[] {
   const c = parse(message);
-  if (c.kind !== 'compare' || !c.to) return [];
+  if (c.kind !== 'compare' || !c.to) {
+    const intent = matchIntent(message, 40, true);
+    const action = intent ? validAction({ type: 'screen', screen: intent.screen, now: false }, ROUTE_IDS) : null;
+    return action ? [action] : [];
+  }
   const route = routeFor(c.from ?? 'US', c.to);
   if (!route) return [];
   const action = validAction(

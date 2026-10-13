@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Keyboard, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import Animated, {
   Easing,
+  useAnimatedKeyboard,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
@@ -44,8 +45,22 @@ export default function RemmyChat() {
   const { messages, thinking } = useRemmy();
   const [draft, setDraft] = useState('');
   const scroll = useRef<ScrollView>(null);
+  // The composer rides on the keyboard. A KeyboardAvoidingView measured from the window got
+  // it wrong inside the iPhone sheet and did nothing on Android (edge to edge), so this reads
+  // the keyboard's live height instead, frame by frame, on both.
+  const keyboard = useAnimatedKeyboard();
+  const lift = useAnimatedStyle(() => ({ paddingBottom: keyboard.height.value }));
+  const composerPad = useAnimatedStyle(() => ({
+    paddingBottom: Math.max(insets.bottom - keyboard.height.value, 0) + Spacing.two,
+  }));
 
   useEffect(() => track('remmy_opened'), []);
+  useEffect(() => {
+    const sub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', () =>
+      setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 120),
+    );
+    return () => sub.remove();
+  }, []);
   useEffect(() => {
     const last = messages[messages.length - 1];
     if (last?.role === 'remmy' && last.text) announce(last.text.replace(/\*/g, ''));
@@ -74,10 +89,7 @@ export default function RemmyChat() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.fill, { backgroundColor: t.background }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 0}>
+    <Animated.View style={[styles.fill, { backgroundColor: t.background }, lift]}>
       <StatusBar style="auto" />
       <View style={[styles.header, { paddingTop: (Platform.OS === 'android' ? insets.top : 0) + Spacing.three, borderBottomColor: t.border }]}>
         <RemmyMascot size={40} />
@@ -96,6 +108,7 @@ export default function RemmyChat() {
         style={styles.fill}
         contentContainerStyle={[styles.thread, !messages.length && styles.threadEmpty]}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
         onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: true })}>
         {messages.length ? (
           messages.map((m, i) =>
@@ -111,14 +124,14 @@ export default function RemmyChat() {
         {thinking ? <Thinking /> : null}
       </ScrollView>
 
-      <View style={[styles.composer, { borderTopColor: t.border, paddingBottom: Math.max(insets.bottom, Spacing.two) + Spacing.one }]}>
+      <Animated.View style={[styles.composer, { borderTopColor: t.border, backgroundColor: t.background }, composerPad]}>
         <TextInput
           value={draft}
           onChangeText={setDraft}
           placeholder={r.placeholder}
           placeholderTextColor={t.textSecondary}
           multiline
-          maxLength={1000}
+          maxLength={500}
           returnKeyType="send"
           submitBehavior="submit"
           onSubmitEditing={() => send(draft)}
@@ -133,11 +146,8 @@ export default function RemmyChat() {
           style={[styles.sendButton, { backgroundColor: draft.trim() && !thinking ? t.primary : t.muted }]}>
           <Icon name="arrow.up" size={20} weight="bold" tintColor={draft.trim() && !thinking ? t.primaryForeground : t.textSecondary} fallback={null} />
         </Pressable>
-      </View>
-      <AppText variant="small" muted style={[styles.privacy, { paddingBottom: Platform.OS === 'android' ? Spacing.one : 0 }]}>
-        {r.privacy}
-      </AppText>
-    </KeyboardAvoidingView>
+      </Animated.View>
+    </Animated.View>
   );
 }
 
@@ -181,6 +191,9 @@ function Welcome({ onPick }: { onPick: (text: string) => void }) {
           </Pressable>
         ))}
       </View>
+      <AppText variant="small" muted style={styles.privacy}>
+        {r.privacy}
+      </AppText>
     </Rise>
   );
 }
@@ -200,7 +213,13 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
   const t = useTheme();
   const copy = useCopy();
   const r = copy.remmy;
-  const text = message.failed ? r.offline : message.limited && !message.text ? r.limited : message.text;
+  const text = message.failed
+    ? r.offline
+    : message.limited && !message.text
+      ? message.reason === 'slow'
+        ? r.slow
+        : r.limited
+      : message.text || (message.actions.length ? r.here : r.noAnswer);
   const steps = [...new Set(message.steps.map((s) => r.steps[s] ?? r.steps.action))];
   return (
     <Rise style={styles.remmyRow}>
@@ -265,6 +284,10 @@ function screenTitle(copy: Copy, screen: RemmyScreen): string {
     observatory: copy.titles.observatory,
     remitbench: copy.titles.remitbench,
     blog: copy.titles.blog,
+    sign_in: copy.account.createOrSignIn,
+    privacy: copy.account.privacy,
+    terms: copy.account.terms,
+    support: copy.account.support,
   };
   return titles[screen];
 }
@@ -500,5 +523,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sendButton: { width: MinTapTarget, height: MinTapTarget, borderRadius: MinTapTarget / 2, alignItems: 'center', justifyContent: 'center' },
-  privacy: { textAlign: 'center', marginTop: -Spacing.one },
+  privacy: { textAlign: 'center', marginTop: Spacing.one },
 });

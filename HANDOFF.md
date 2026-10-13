@@ -8,6 +8,13 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-13: Remmy, round 1 of Angad's feedback (D176)
+
+- Screen requests in any wording go through one alias table (`remmy-actions.ts`), with no
+  model call; 8 messages a minute per install; the composer rides the keyboard (Reanimated);
+  the terms gain "AI answers". App 228 tests, bot 193. Needs `remmy` deployed again; the site
+  updates on push.
+
 ## 2026-10-13: Remmy, the assistant in the app (D175)
 
 - **Built on branch `remmy`** (from `chatgpt/learn-game-modes`, so it includes the Learn
