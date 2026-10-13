@@ -87,6 +87,7 @@ describe('its checks', () => {
     // Rounded checked figures pass; a different figure doesn't.
     expect(strayNumbers('About MXN 5,458 arrives, or 5,457.8.', ['receives MXN 5,457.84'])).toEqual([])
     expect(strayNumbers('About MXN 5,470 arrives.', ['receives MXN 5,457.84'])).toEqual(['5,470'])
+    expect(strayNumbers('The rate is 18.19 or about 18.2.', ['rate 18.1928 MXN per USD'])).toEqual([])
     expect(strayNumbers('About ₹50,000 arrives.', ['₹48,041'])).toEqual(['50,000'])
   })
 

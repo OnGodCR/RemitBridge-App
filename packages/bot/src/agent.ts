@@ -37,6 +37,8 @@ export interface AgentContext {
   channel?: 'whatsapp' | 'app'
   /** The conversation so far in the app, oldest first, so follow-ups make sense. */
   history?: { role: 'user' | 'assistant'; text: string }[]
+  /** Told the figures and links a reply was refused for, for metrics (numbers only, no text). */
+  onRefused?: (numbers: string[], links: string[]) => void
 }
 
 /** How much of an app conversation goes back to the model: the last few turns, trimmed. */
@@ -163,7 +165,7 @@ export function strayNumbers(reply: string, sources: string[]): string[] {
     sources.flatMap((s) => s.match(NUMBER) ?? []).flatMap((n) => {
       const exact = norm(n)
       const x = Number(exact)
-      return exact.includes('.') && Number.isFinite(x) ? [exact, norm(x.toFixed(1)), String(Math.round(x))] : [exact]
+      return exact.includes('.') && Number.isFinite(x) ? [exact, norm(x.toFixed(2)), norm(x.toFixed(1)), String(Math.round(x))] : [exact]
     }),
   )
   const body = reply
@@ -226,6 +228,7 @@ export async function runAgent(client: AiClient, tools: ToolSpec[], message: str
     const numbers = strayNumbers(reply, sources)
     const links = strayLinks(reply)
     if (!numbers.length && !links.length) return { text: reply, tools: called }
+    ctx.onRefused?.(numbers, links)
     if (corrected) return null
     corrected = true
     messages.push({

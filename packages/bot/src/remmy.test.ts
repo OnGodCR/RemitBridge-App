@@ -201,6 +201,13 @@ it('says the answer failed, not that it is resting, when the model gives nothing
   expect(r).toMatchObject({ limited: true, reason: 'failed', actions: [{ type: 'compare', routeId: 'us-mx' }] })
 })
 
+it('records which figures were refused, never the text', async () => {
+  turns = ['{"reply":"About 9,999 arrives."}', '{"reply":"Still 9,999."}']
+  await ask({ message: 'what does 300 to Mexico cost?' })
+  expect(tables.events).toMatchObject([{ name: 'remmy_limited', props: { reason: 'failed', refused: '9,999' } }])
+  expect(JSON.stringify(tables.events)).not.toContain('Mexico')
+})
+
 it('still opens a screen when past the day limit', async () => {
   delete env.GROQ_API_KEY
   const r = await (await ask({ message: 'I would like to read about how you handle my data, the privacy policy please' })).json()
