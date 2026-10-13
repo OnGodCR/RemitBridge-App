@@ -45,6 +45,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 ## Content (Angad)
 
 - [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
+- [ ] **Learn game modes with ChatGPT**: paste `docs/outreach/chatgpt-learn-games.md`, pick from its proposal, then it opens a pull request (branch `chatgpt/learn-game-modes`) for Claude to review and merge. It also swaps Library's "Latest post" for the first post.
 - [ ] **Hand-checked prices with ChatGPT**: paste `docs/outreach/chatgpt-price-checks.md` into a ChatGPT project, then do a round ($200 and $500 to India, Mexico, the Philippines, Vietnam first); you click, it reads your screenshots and writes the SQL (D167).
 
 ## Legal, accounts and money (Angad)
@@ -56,7 +57,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
 - [x] **Send the Groq email**: sent 2026-10-12; Groq's automatic reply says no new tiers for now (enterprise only).
-- [ ] **Clear old sealed WhatsApp numbers**: run `update public.whatsapp_users set number_sealed = null;` in the SQL editor (D148).
+- [x] **Clear old sealed WhatsApp numbers**: run by Angad 2026-10-12 (D148).
 - [ ] **Renumber duplicate decisions**: D160 and D163 are each used twice; say yes and Claude renumbers.
 - [ ] **hello@ profile photo**: Google case #76360017; Angad confirmed freeing the domain on 2026-10-12, so Google is deleting the unfinished Workspace. Then make a free Google account for hello@ and upload the logo.
 
