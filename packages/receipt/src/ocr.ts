@@ -96,8 +96,41 @@ export function fromMlKit(result: MlKitResult, width: number, height: number): O
       lines.push({ words, box: line.frame ? box(line.frame) : unionBox(words.map((w) => w.box)) })
     }
   }
-  lines.sort((a, b) => a.box.y - b.box.y || a.box.x - b.box.x)
-  return { width, height, lines }
+  return { width, height, lines: joinRows(lines) }
+}
+
+/**
+ * Pieces of one printed row, put back together (D174). ML Kit reads a receipt in blocks by
+ * layout, so "Transfer fee ........ $5.00" comes back as two lines, the label in one block
+ * and the value in another, and the value's box often starts a pixel or two above its label's.
+ * Sorted by top edge alone, the value could land before its label and pair with the wrong
+ * one, which is why real photos read far worse than the benchmark's tesseract text (Angad,
+ * 2026-10-12: "basically nothing is found"). Lines that share most of their height and sit
+ * side by side become one line, its words left to right.
+ */
+export function joinRows(lines: OcrLine[]): OcrLine[] {
+  const sorted = [...lines].sort((a, b) => a.box.y + a.box.height / 2 - (b.box.y + b.box.height / 2) || a.box.x - b.box.x)
+  const rows: OcrLine[][] = []
+  for (const line of sorted) {
+    const row = rows.find((r) => r.every((other) => sameRow(other, line)))
+    if (row) row.push(line)
+    else rows.push([line])
+  }
+  return rows
+    .map((row) => {
+      if (row.length === 1) return row[0]
+      const parts = [...row].sort((a, b) => a.box.x - b.box.x)
+      return { words: parts.flatMap((p) => p.words), box: unionBox(parts.map((p) => p.box)) }
+    })
+    .sort((a, b) => a.box.y - b.box.y || a.box.x - b.box.x)
+}
+
+/** Most of the shorter line's height shared, and no horizontal overlap: two parts of one row. */
+function sameRow(a: OcrLine, b: OcrLine): boolean {
+  const overlap = Math.min(a.box.y + a.box.height, b.box.y + b.box.height) - Math.max(a.box.y, b.box.y)
+  if (overlap < 0.6 * Math.min(a.box.height, b.box.height)) return false
+  const apart = a.box.x + a.box.width <= b.box.x + 2 || b.box.x + b.box.width <= a.box.x + 2
+  return apart
 }
 
 /**
