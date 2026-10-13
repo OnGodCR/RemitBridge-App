@@ -58,6 +58,29 @@ from memory, an estimate, an earlier round or another website.
   If it doesn't, don't adjust anything: tell Angad which row and ask him to re-check the page.
 - If the page doesn't show how the money is paid or delivered, ask Angad; don't assume.
 
+## When the page won't show everything (first round's lessons, 2026-10-12)
+Every row needs a confirmed payment method and delivery method: they change the cost, and
+cash or card triggers the 1% federal remittance tax. Three rules, in order:
+1. If the page has a setting for it, Angad sets it before the screenshot, so it's visible.
+2. If the page has no setting, Angad confirms what the page priced ("bank account to bank
+   deposit"); write "method confirmed by Angad" in your log for that row. This is how
+   Remitly, MoneyGram and WorldRemit were done on 2026-10-04.
+3. If getting the price needs a sign-in, an account, registration or the app, skip that
+   provider this round. Nobody signs in for a hand check. A gap is better than a guess.
+Provider notes:
+- Remitly: Angad picks delivery on the page; Economy is the bank-account-funded option where
+  Economy and Express are offered. Promotions: regular price when the struck-through regular
+  price is shown (deal in promo_text), otherwise the deal labelled "First transfer only".
+- Western Union: only the first estimate screen, before any registration step. If fee, rate
+  and amount received aren't all there, skip WU.
+- MoneyGram: rule 2; skip if Angad can't tell what the page priced.
+- Xoom: never sign in. If Xoom's public send-money page shows the bank-account fee and the
+  rate, that's enough: fee on top, so send_amount = amount + fee. If not, skip.
+- WorldRemit: rule 2 for how it's paid; if unknown, skip. Never guess card or bank.
+- Xe: bank deposit where there's a choice, otherwise rule 2.
+And again: you never click or browse on these sites yourself. If you find yourself describing
+what happened after a click, stop and ask Angad for a screenshot instead.
+
 ## Values allowed
 - provider_id: remitly, western-union, moneygram, xoom, worldremit, ria, xe
 - route_id: us- plus the country's two-letter code in lower case: us-in (India), us-mx
