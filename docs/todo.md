@@ -14,7 +14,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
+- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; finished 2026-10-12, checked: no AD_ID or photo permissions; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 
