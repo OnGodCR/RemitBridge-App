@@ -632,7 +632,7 @@ privacy policy match what the code does. **What Claude created or changed:**
 - Made the CAC cover photo at Angad's request, modelled on a reference image he chose: a
   600x800 JPEG (and a 1200x1600 copy) of two phone frames showing the app's real Compare and
   Scan screenshots (taken earlier from the simulator build) on the brand's green, with drawn
-  3D coins ($, ₹, ₱), the logo and one headline. Built as an HTML page and rendered with
+  a dashed route from a "You send $200" card (US flag) to a "Family receives ₹18,987" card (India flag), the logo and one headline; the first version's 3D coins were dropped at Angad's ask. Built as an HTML page and rendered with
   headless Chrome; the page itself isn't kept.
 - Found and fixed the bug that kept Android sign-ins from persisting, made WhatsApp linking
   a real button, built the opt-in newsletter (D169), marked Hindi reviewed (D170) and made
