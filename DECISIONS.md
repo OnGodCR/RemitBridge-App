@@ -2242,3 +2242,18 @@ a different figure still doesn't. gpt-oss also once answered with its plan in pl
 fixes: a price question always gets its Compare card, even when the model only talks; and a
 failed answer says "Try asking another way" instead of "I'm taking a short break".
 
+
+D176, later the same day, from the failure causes Angad read in `remmy_limited`: no figures
+were refused, so the number check wasn't to blame. Four fixes, all in the shared agent code
+(WhatsApp has them too):
+- `readTurn` walks balanced JSON objects, because gpt-oss sometimes wrote a tool call and a
+  guessed reply in one turn. An unreadable turn is sent back once.
+- Groq's 400 `tool_use_failed` carries the model's text as `failed_generation`, and that is
+  now used as the answer.
+- gpt-oss spent the 700-token cap reasoning and returned nothing, so the cap is now 1500. It
+  isn't higher because Groq's free tier may count the cap against 8,000 tokens a minute.
+- Each provider's error goes into `props.causes`.
+
+Since the free models still miss some turns, every Compare card Remmy shows now carries the
+top three checked prices (the same quotes, ranking and formula as Compare). A price question
+shows real figures even when the model's text doesn't come through.

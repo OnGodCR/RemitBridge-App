@@ -1,4 +1,4 @@
-# Handoff to ChatGPT (from Claude, 2026-10-13)
+# Handoff to ChatGPT (from Claude, 2026-10-13, updated the same evening)
 
 Angad is moving day-to-day work on RemitBridge from Claude to you because Claude's usage is
 nearly used up. This file is everything Claude knew at the moment of handoff: the rules, where
@@ -6,7 +6,7 @@ the work stands, what comes next, and how to run the app in Expo Go. Read it top
 once. The two appendices are copies of the full open-items list ("the MOD", from
 `CLAUDE.md`) and the to-do list (`docs/todo.md`) as they stood at handoff.
 
-`main` was at `b816305` when this was written. Everything described here is committed and
+`main` was at `e5f8c6f` (plus the commit adding this update) when this was last updated. Everything described here is committed and
 pushed; nothing is waiting uncommitted.
 
 ---
@@ -157,6 +157,12 @@ docs/                   everything above, plus store/, outreach/, cac/, handoffs
 cd mobile && npx expo start --lan
 ```
 
+Because `expo-dev-client` is installed, Expo starts in **development build** mode and shows
+a QR code for the RemitBridge development app (already on Angad's iPhone and Samsung). That's
+the better way to test, since the dev app also has the scanner and native sign-in. To use
+Expo Go instead, press `s` in the terminal to switch, then scan the new QR code. At handoff,
+Metro was running in the desktop app's Terminal panel tab "Expo Go".
+
 - **iPhone:** open the Camera app, point it at the QR code in the terminal, tap the banner.
 - **Android:** open Expo Go and use "Scan QR code".
 - If the phone can't reach the Mac (school or guest Wi-Fi), use `npx expo start --tunnel`.
@@ -225,7 +231,7 @@ npm run typecheck
 cd mobile && npx expo lint
 ```
 
-At handoff: app 225 tests, bot 161, all passing; typecheck and lint clean. CI runs on every
+At handoff: app 229 tests, bot 201, all passing; typecheck and lint clean. CI runs on every
 push to `main` (engine, TypeScript packages and app, migrations on a throwaway Postgres).
 
 ### Deploying (Angad runs these)
@@ -243,30 +249,13 @@ connections), then runs `supabase/tests/rls_smoke.sh` (76/76 at last run).
 
 ## 6. What happened in the last sessions (newest first)
 
+- **2026-10-13 evening, Remmy hardened (D176 and after, all deployed and checked live):**
+  - Angad's feedback: actions only worked for the tested prompts ("Open user settings" did
+    nothing), turn on rate limiting, check the policies, and the composer didn't move with
+    the keyboard. All four are fixed.
+  - Live check at handoff: "what does 300 to Mexico cost?", "how much for 1000 to Vietnam"
+    and "open user settings" all answer correctly, and each Compare card carries its prices.
 - **2026-10-13, merged:** PR #5 (Learn game modes) and PR #6 (Remmy) are both on `main`.
-- **Remmy (D175), live:** `remmy` and `whatsapp` deployed by Angad and checked live:
-  - "what does 500 to India cost?" answers "**₹47,550** arrives..." with a Compare card;
-  - "take me to the scanner" opens it by itself;
-  - "teach me to spot scams" offers the Safety lesson.
-
-  How it works:
-  - **The button:** a floating mascot (`components/remmy.tsx`) over every tab opens the chat
-    sheet (`app/remmy.tsx`).
-  - **The app side:** the conversation is kept in memory only (`lib/remmy.ts`).
-  - **The server side:** the `remmy` function runs the same agent as WhatsApp (shared code
-    in `supabase/functions/_shared/agent.ts` and `packages/bot/src/agent.ts`), plus four app
-    tools: `open_compare` (also returns today's prices), `open_screen`, `start_lesson` and
-    `save_comparison`. Each tool adds an action, and the app renders it as a card.
-  - **Safety:** actions are checked on both sides against `mobile/src/lib/remmy-actions.ts`.
-  - **Permission:** the app asks once, Allow / Not now, before the first message goes to the
-    AI model (Apple 5.1.2(i)).
-  - **Limits:** 40 messages a day per install and 200 per network address.
-  - **Privacy policy:** it has a Remmy section.
-- **Fixes found during Remmy's live test (all deployed):**
-  - The model chain now treats junk output (no letters, or one character repeated 30+ times)
-    as a failure and moves to the next provider.
-  - `open_compare` returns prices, so price answers pass the stray-number check.
-  - WhatsApp replies turn `**bold**` into `*bold*`.
 - **Learn game modes (D172):**
   - A Duolingo-style redesign: match pairs, a cost game, receipt tapping, scam-or-not.
   - Start bubble fixed.
@@ -281,6 +270,86 @@ connections), then runs `supabase/tests/rls_smoke.sh` (76/76 at last run).
   - Essay prompt for you: `docs/cac/chatgpt-essay-prompt.md`.
   - Draft: `docs/cac/submission.md`.
 
+### How Remmy works now (read this before touching it)
+
+Remmy is the assistant inside the app (D175, D176). Angad cares most about its "agentic"
+feel: it should act in the app for any reasonable wording, not just tested prompts.
+
+**Files**
+
+| File | What it does |
+|---|---|
+| `mobile/src/components/remmy.tsx` | The mascot and the floating button over every tab. |
+| `mobile/src/app/remmy.tsx` | The chat sheet: welcome screen, bubbles, step chips, action cards with prices, the thinking dots, and the composer, which rides on Reanimated's `useAnimatedKeyboard`. |
+| `mobile/src/lib/remmy.ts` | The conversation (in memory only), sending, and `runAction` (tabs via `router.dismissTo`, other screens pushed, policy pages via `openPage`). Drops a second send within 1.5 s. |
+| `mobile/src/lib/remmy-actions.ts` | **The harness's single source of truth**, shared by app and server, with no imports so Deno can read it. |
+| `supabase/functions/remmy/index.ts` | The server. |
+| `supabase/functions/_shared/agent.ts` | Model chain, data tools and quotes, shared with WhatsApp. |
+| `packages/bot/src/agent.ts` | `runAgent` (the loop), `appPrompt`, the stray-number check. |
+| `packages/bot/src/ai.ts` | The model clients and the provider chain. |
+
+**What `remmy-actions.ts` holds**
+- `REMMY_SCREENS`: every screen Remmy can open. `privacy`, `terms` and `support` are
+  `page:` links that open in the browser.
+- `ALIASES`: what people call each screen, in all five languages.
+- `screenFor()`: maps any name the model uses to a real screen.
+- `matchIntent()`: matches plain requests such as "open settings", "where's the glossary" or
+  just "settings".
+- `validAction()`: checks every action on both sides, including the top-price rows on a
+  Compare card.
+
+**What the server does, in order**
+1. A burst limit of 8 messages a minute per install (`remmy_minute`).
+2. A plain screen request is opened straight from the alias table, with no model call.
+   Price questions skip this step.
+3. The address limit (200 a day) and the per-install model limit (40 a day).
+4. `runAgent` with the data tools plus four app tools: `open_compare` (also returns
+   prices), `open_screen` (lists every screen with a one-line description), `start_lesson`
+   and `save_comparison`.
+5. Backstops:
+   - if the model answered a clear "take me to..." without acting, the screen card is added;
+   - a price question always gets its Compare card.
+6. Every Compare card gets the top three checked prices (`withPrices`), so figures show even
+   when the model's text fails.
+7. With no usable answer: `limited: true` with `reason` set to `slow`, `day` or `failed`, plus
+   the fallback cards.
+
+**Model reliability fixes, all in the shared code, so WhatsApp has them too**
+- Junk output (no letters, or one character repeated) counts as a provider failure.
+- A checked figure rounded to 0, 1 or 2 decimals passes the stray-number check.
+- `readTurn` takes the first valid JSON object; gpt-oss sometimes writes two in one turn.
+- An unreadable turn, or a plan written out loud ("We need to call..."), is sent back once.
+- Groq's 400 `tool_use_failed` returns the model's text as `failed_generation`, which is used
+  as the answer.
+- The agent's token cap is 1500 because gpt-oss reasons before answering. It isn't higher
+  because Groq's free tier allows 8,000 tokens a minute.
+
+**When a phrasing misses**
+1. Add the alias to `ALIASES`.
+2. Add a row to `PLAIN_REQUESTS` in `packages/bot/src/remmy.test.ts`.
+3. Run `npm test -w @remitbridge/bot`.
+4. Angad deploys `remmy`.
+
+**Debugging live failures**
+
+There are no function logs. Every failure writes a `remmy_limited` event whose `props` hold:
+- `causes`: each provider's error and why each turn failed;
+- `refused`: the figures the number check rejected (numbers only, never text).
+
+Angad runs:
+
+```sql
+select created_at, props from events where name = 'remmy_limited' order by created_at desc limit 5;
+```
+
+To test the live function from the Mac without printing the key (never show it in chat):
+
+```bash
+cd mobile && set -a && . ./.env.local && set +a && curl -s -X POST "$EXPO_PUBLIC_SUPABASE_URL/functions/v1/remmy" -H "apikey: $EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY" -H "content-type: application/json" -d '{"message":"what does 300 to Mexico cost?","install_id":"00000000-0000-4000-8000-0000000c1a99","language":"en","history":[]}'
+```
+
+Use a fresh `install_id` for each batch of tests, or the burst limit replies `slow`.
+
 ## 7. What to do next, in order
 
 1. **D&B check (due 2026-10-14):** D&B (case #11089990) promised the D-U-N-S number within 24
@@ -290,26 +359,33 @@ connections), then runs `supabase/tests/rls_smoke.sh` (76/76 at last run).
    stores.**
 2. **D&B chase (due 2026-10-16):** only if still nothing; draft a firmer email to
    research@iresearch.dnb.com for Angad to send.
-3. **Remmy round 1 (D176) is built and pushed:** any "open X" works without the model (alias table in `mobile/src/lib/remmy-actions.ts`; add aliases there when a phrasing misses, with a row in the test table in `packages/bot/src/remmy.test.ts`), a per-minute limit, the composer follows the keyboard, AI answers in the terms. Angad deploys `remmy` again.
-   3. **Angad tries Remmy in Expo Go:** the floating button, a price question, "take me to the
-   scanner", a lesson, a save (needs sign-in). Fix whatever he reports.
-4. **Hindi rows for Remmy:** 39 new rows at the end of `docs/translation-review/hi.md` for
-   Angad's mother. Apply her changes to `mobile/src/i18n/hi.ts`.
-5. **CAC submission (internal deadline Oct 23, official Oct 26):** Angad rewrites the essays in
-   his own words (from `docs/cac/chatgpt-essay-prompt.md`), records a demo video of 3 minutes at
-   most, and submits. The write-up must say the receipt parser is AI-written. **Backfill
-   `docs/AI_USAGE.md`** for Oct 3 to 11 (it has a gap), and add how ChatGPT is used from now on.
+3. **Angad tries Remmy on his phones:** press `r` in the Expo terminal to reload.
+   - Things to try: the floating button, "open user settings", "log out", "privacy policy",
+     a price question (check that the card shows its prices), "take me to the scanner", a
+     lesson, and a save (needs sign-in).
+   - Type with the keyboard open: the composer must ride above it on both iPhone and Android.
+   - Fix whatever he reports, using the guide above.
+4. **Hindi rows:** the Remmy rows are at the end of `docs/translation-review/hi.md`, for
+   Angad's mother. Apply her changes to `mobile/src/i18n/hi.ts`. Add rows by hand, never
+   regenerate the sheet.
+5. **CAC submission (internal deadline Oct 23, official Oct 26):**
+   - Angad rewrites the essays in his own words, from `docs/cac/chatgpt-essay-prompt.md`.
+   - He records a demo video of 3 minutes at most, which could now show Remmy, and submits.
+   - The write-up must say the receipt parser is AI-written.
+   - **Backfill `docs/AI_USAGE.md`** for Oct 3 to 11 (it has a gap), and add how ChatGPT is
+     used from now on.
 6. **Store blockers, all waiting on the D-U-N-S:**
    1. Convert the Apple account to an organization (Angad's dad asks Apple Developer Support).
    2. Create a Google Play organization account.
    3. Create the App Store Connect record.
    4. Make the iPhone production build.
-   5. Upload the Play `.aab` (EAS build 520e9e31, versionCode 6). Note: it predates Learn
-      games and Remmy, so a fresh production build is needed for those.
+   5. Upload a **fresh** Play `.aab`. EAS build 520e9e31 (versionCode 6) predates Learn games
+      and Remmy, so it needs a new production build first.
 7. **Receipt accuracy:** when Angad sends receipts that read wrong, turn each into a test case
-   in `benchmark/receipts/` (made when needed; real receipts stay out of git unless every
-   personal detail is swapped for a made-up one, D85). Synthetic fixtures are in
-   `packages/receipt/fixtures/`.
+   in `benchmark/receipts/`.
+   - Real receipts stay out of git unless every personal detail is swapped for a made-up one
+     (D85).
+   - Synthetic fixtures are in `packages/receipt/fixtures/`.
 8. Everything else is in the appendices, grouped by who acts.
 
 ### Watch-outs
@@ -321,6 +397,7 @@ connections), then runs `supabase/tests/rls_smoke.sh` (76/76 at last run).
 - **No Supabase logs:** Claude couldn't read function logs (CLI v2.75 has no logs command).
   For live debugging, call the function with the publishable key from `mobile/.env.local`
   without printing it, for example a POST to `/functions/v1/remmy` with a test `install_id`.
+- **Decision numbers:** the last is D176; a cloud Claude session was told to use D177 and up.
 - **Groq and Cloudflare free limits:** both models run within free limits. The WhatsApp and
   Remmy chain is Cloudflare gpt-oss-120b, then Groq gpt-oss-120b, then Groq gpt-oss-20b, then
   plain replies (D163). The receipt model is Groq `qwen/qwen3.8-27b`.
@@ -410,7 +487,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       hovering button, the chat sheet, the `remmy` function (the WhatsApp agent plus four app
       actions, checked on both sides), a one-time AI permission, the privacy section. Deployed and
       checked live, and merged with the Learn games (2026-10-13). `whatsapp` redeployed with
-      the bold fix the same day. Left: Angad tries it in Expo Go.
+      the bold fix the same day. Round 1 of Angad's feedback (D176, all deployed 2026-10-13):
+      any wording of "open X" works without the model, 8 messages a minute, the composer
+      follows the keyboard, "AI answers" in the terms; then agent fixes found live (rounded
+      figures, a turn reader that handles two objects, Groq's failed_generation, a 1500-token
+      cap for gpt-oss's reasoning, failure causes in `remmy_limited`), and Compare cards that
+      carry the top three checked prices. Left: Angad tries it in Expo Go.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
@@ -812,6 +894,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **WhatsApp after the refactor**: "500 to India" answered (2026-10-13), with the asterisks showing around the amounts.
 - [x] **Redeploy whatsapp for the bold fix** (18dd46e): deployed 2026-10-13.
 - [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
+- [x] **Remmy feedback, round 1 (D176)**: any "open X" works without the model, a per-minute limit, the composer follows the keyboard, AI answers in the terms. Built 2026-10-13.
+- [x] **Deploy remmy and whatsapp for the agent fixes** (rounded figures, turn reader, failure causes): both deployed 2026-10-13. "What does 300 to Mexico cost?" answered 4 of 5 times; the miss showed Compare with "try asking another way".
+- [x] **Remmy failure causes read and fixed** (2026-10-13): empty output from gpt-oss reasoning past the token cap (now 1500), and Groq 400 tool_use_failed (its failed_generation is used now). Compare cards carry the top three checked prices (e5f8c6f, deployed), so price questions show figures even when the model fails.
 - [x] **Merge the PRs**: Learn games (#5) and Remmy (#6) merged into main, 2026-10-13.
 - [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
 

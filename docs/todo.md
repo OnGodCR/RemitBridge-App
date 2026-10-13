@@ -50,7 +50,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Try Remmy in Expo Go**: the hovering button, a price question, "take me to the scanner", a lesson, a save.
 - [x] **Remmy feedback, round 1 (D176)**: any "open X" works without the model, a per-minute limit, the composer follows the keyboard, AI answers in the terms. Built 2026-10-13.
 - [x] **Deploy remmy and whatsapp for the agent fixes** (rounded figures, turn reader, failure causes): both deployed 2026-10-13. "What does 300 to Mexico cost?" answered 4 of 5 times; the miss showed Compare with "try asking another way".
-- [ ] **Read the last two Remmy failures' causes** (after d6c3a10, deployed to remmy and whatsapp 2026-10-13; 6 of 8 live questions answered, the misses showed their Compare card): `select created_at, props from events where name = 'remmy_limited' order by created_at desc limit 2;`. `props.causes` now lists every provider's error.
+- [x] **Remmy failure causes read and fixed** (2026-10-13): empty output from gpt-oss reasoning past the token cap (now 1500), and Groq 400 tool_use_failed (its failed_generation is used now). Compare cards carry the top three checked prices (e5f8c6f, deployed), so price questions show figures even when the model fails.
 - [x] **Merge the PRs**: Learn games (#5) and Remmy (#6) merged into main, 2026-10-13.
 - [ ] **Hindi rows for Remmy**: your mother reads the new rows at the end of `hi.md`.
 

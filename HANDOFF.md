@@ -8,6 +8,15 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-13 evening: Remmy hardened, ChatGPT handoff refreshed
+
+- The live failures were model-side: two JSON objects in one turn, Groq's tool_use_failed,
+  and gpt-oss reasoning past the token cap. All three are handled now, and failure causes are
+  recorded. Compare cards carry the top three checked prices. `remmy` and `whatsapp` are
+  deployed; Mexico, Vietnam and "open user settings" answer live.
+- `CHATGPT_HANDOFF.md` is updated with a Remmy guide (files, server order, debugging) and the
+  current next steps.
+
 ## 2026-10-13: Remmy, round 1 of Angad's feedback (D176)
 
 - Screen requests in any wording go through one alias table (`remmy-actions.ts`), with no

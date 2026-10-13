@@ -129,7 +129,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       hovering button, the chat sheet, the `remmy` function (the WhatsApp agent plus four app
       actions, checked on both sides), a one-time AI permission, the privacy section. Deployed and
       checked live, and merged with the Learn games (2026-10-13). `whatsapp` redeployed with
-      the bold fix the same day. Left: Angad tries it in Expo Go.
+      the bold fix the same day. Round 1 of Angad's feedback (D176, all deployed 2026-10-13):
+      any wording of "open X" works without the model, 8 messages a minute, the composer
+      follows the keyboard, "AI answers" in the terms; then agent fixes found live (rounded
+      figures, a turn reader that handles two objects, Groq's failed_generation, a 1500-token
+      cap for gpt-oss's reasoning, failure causes in `remmy_limited`), and Compare cards that
+      carry the top three checked prices. Left: Angad tries it in Expo Go.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
