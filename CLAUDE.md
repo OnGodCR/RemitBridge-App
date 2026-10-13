@@ -127,9 +127,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       links (`/open/...`, needs builds) later.
 - [ ] **Remmy, the assistant in the app (D175, 2026-10-13):** built on branch `remmy`: the
       hovering button, the chat sheet, the `remmy` function (the WhatsApp agent plus four app
-      actions, checked on both sides), a one-time AI permission, the privacy section. Left:
-      Angad deploys `remmy` and redeploys `whatsapp`, tries it in Expo Go, and the PR merges
-      after the Learn PR.
+      actions, checked on both sides), a one-time AI permission, the privacy section. Deployed and
+      checked live, and merged with the Learn games (2026-10-13). Left: Angad tries it in Expo
+      Go; `whatsapp` redeployed for the bold fix.
 - [ ] **Receipt scanning accuracy (Angad, 2026-10-11):** "could still use more work". To revisit
       once the other features are set up, with more real data. The $9.99-read-as-$999.99 fee
       no longer happens, per Angad.
