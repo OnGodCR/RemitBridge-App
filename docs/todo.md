@@ -42,6 +42,11 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Store privacy answers**: email is now also used for the newsletter (`docs/store/listing.md`); pick those when you fill in App Store Connect and Play.
 - [x] **Hindi for the six newsletter rows**: approved by your mom; Hindi no longer shows Draft (2026-10-12).
 
+## Receipt scanner (Angad, D173)
+
+- [x] **Redeploy for the fee fix**: scan-receipt and whatsapp both deployed 2026-10-12.
+- [ ] **Send Claude the receipts that came out wrong**: a photo (or the values it read and what the receipt really says) for each, so each becomes a test case in `benchmark/receipts/`.
+
 ## Content (Angad)
 
 - [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
