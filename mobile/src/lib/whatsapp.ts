@@ -42,9 +42,23 @@ export function formatNumber(digits: string): string {
   return us ? `+1 ${us[1]}-${us[2]}-${us[3]}` : `+${digits}`;
 }
 
-/** Opens WhatsApp (or its web page, without the app) on a chat with `text` typed in. */
-export function openChat(number: string, text: string) {
-  return Linking.openURL(`https://wa.me/${number}?text=${encodeURIComponent(text)}`);
+/**
+ * Opens WhatsApp on a chat with `text` typed in. WhatsApp's own link goes straight to the app;
+ * the wa.me web link is the fallback when the app isn't installed. On Angad's Samsung the
+ * wa.me link alone did nothing at all (2026-10-12), so each failure is logged and the caller
+ * is told, to show the number instead of leaving the tap with no answer.
+ */
+export async function openChat(number: string, text: string): Promise<boolean> {
+  const q = encodeURIComponent(text);
+  for (const url of [`whatsapp://send?phone=${number}&text=${q}`, `https://wa.me/${number}?text=${q}`]) {
+    try {
+      await Linking.openURL(url);
+      return true;
+    } catch (e) {
+      console.warn(`openChat: ${url.split('?')[0]} failed:`, String(e));
+    }
+  }
+  return false;
 }
 
 export type LinkStatus = { linked: boolean; linkedAt: string | null };

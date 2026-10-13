@@ -464,6 +464,7 @@ export const en = {
     title: 'WhatsApp',
     chat: 'Chat on WhatsApp',
     hello: 'Hi',
+    openFailed: (number: string) => `Couldn't open WhatsApp. Message ${number} on WhatsApp instead.`,
     link: 'Link WhatsApp',
     linkSub: 'Save comparisons from WhatsApp to this account',
     linkSent: 'Press send in WhatsApp, then come back.',

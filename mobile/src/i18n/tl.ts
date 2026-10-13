@@ -478,6 +478,7 @@ export const tl: Copy = {
     title: 'WhatsApp',
     chat: 'Mag-chat sa WhatsApp',
     hello: 'Hi',
+    openFailed: (number: string) => `Hindi mabuksan ang WhatsApp. Mag-message sa ${number} sa WhatsApp.`,
     link: 'I-link ang WhatsApp',
     linkSub: 'I-save sa account na ito ang mga paghahambing mula sa WhatsApp',
     linkSent: 'Pindutin ang send sa WhatsApp, saka bumalik.',

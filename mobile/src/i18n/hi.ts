@@ -478,6 +478,7 @@ export const hi: Copy = {
     title: 'WhatsApp',
     chat: 'WhatsApp पर बात करें',
     hello: 'नमस्ते',
+    openFailed: (number: string) => `WhatsApp नहीं खुल सका। WhatsApp पर ${number} को मैसेज करें।`,
     link: 'WhatsApp जोड़ें',
     linkSub: 'WhatsApp की तुलनाएँ इस खाते में रखें',
     linkSent: 'WhatsApp में भेजें दबाएँ, फिर यहाँ लौटें।',
