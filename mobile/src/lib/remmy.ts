@@ -101,6 +101,20 @@ export async function sendToRemmy(text: string, language: string): Promise<void>
   emit();
 }
 
+/** Sends only the selected reply after explicit confirmation. No chat history or prompt. */
+export async function reportRemmy(text: string, language: string): Promise<boolean> {
+  try {
+    if (!supabase) return false;
+    const { data, error } = await supabase.functions.invoke('remmy', {
+      method: 'POST',
+      body: { report: text.slice(0, 980), language, install_id: prefs.installId() },
+    });
+    return !error && data?.reported === true;
+  } catch {
+    return false;
+  }
+}
+
 /** Sends the last thing the person said again, after a failed reply. */
 export function retryLast(language: string) {
   const lastUser = [...messages].reverse().find((m) => m.role === 'user');

@@ -3,10 +3,22 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-13 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-14 (see the sections just below; the older status after them is kept for history)
 
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-14: privacy and publication audit (D180)
+
+Updated app-domain legal/support/overview pages and store listing for Remmy, reports,
+privacy identifiers/retention, games, bank funding and choice. Added in-app reply reporting
+using suggestions, corrected/versioned consent, safe diagnostic categories and agent-price
+parity. Both remmy and whatsapp need operator deployment; commands in launch-checklist.
+Six Expo patch updates and Vitest 4.1.11; 785 tests pass, workspace typecheck/lint/site pass,
+Expo Doctor 21/21. Full npm audit still has 70 advisories (54 high, 16 moderate, no critical).
+Submission is not ready: see docs/store/publication-audit.md and docs/launch-checklist.md.
+Separate marketing site remains out of scope; concrete handoff prepared. New Hindi rows
+appended without changing previous approvals. No production deployment/build/submission.
 
 ## 2026-10-14: unified Compare ranking and RemitBridge choice (D179)
 

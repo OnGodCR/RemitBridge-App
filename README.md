@@ -9,6 +9,13 @@ method is public, and RemitBridge never touches anyone's money.
 Surfaces: a mobile app for the App Store and Play Store, a WhatsApp bot, and
 research built from the collected price data.
 
+Remmy can explain costs, open comparisons or screens, start lessons and offer saves
+that require a tap. Chat uses Cloudflare or Groq after permission; replies can be reported
+inside the app. Compare shows bank-account-funded prices and labels the highest listed
+standard payout RemitBridge choice. Open a quote for its source and collection time.
+
+Publication status and remaining gates: [launch checklist](docs/launch-checklist.md).
+
 ## Status
 
 **Every MVP screen is built, and the WhatsApp bot is ready for Meta.** Prices come from

@@ -21,6 +21,7 @@
   "files": [
     "src/test/deno.d.ts",
     "../../supabase/functions/scan-receipt/index.ts",
-    "../../supabase/functions/whatsapp/index.ts"
+    "../../supabase/functions/whatsapp/index.ts",
+    "../../supabase/functions/remmy/index.ts"
   ]
 }

@@ -6,7 +6,7 @@
 // card. Every action is checked against mobile/src/lib/remmy-actions.ts on both sides.
 //
 // Privacy: messages are passed to the model and answered; nothing of them is stored. Metrics
-// record which tools ran, never the text.
+// record which tools ran, never chat transcripts. Explicit reports are kept separately.
 //
 // The harness doesn't depend on the model picking the right tool. A plain request to go
 // somewhere ("open user settings", "where's the glossary") is matched against one table of
@@ -48,21 +48,35 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   if (req.method !== 'POST') return json({ error: 'method not allowed' }, 405);
 
-  const body = await req.json().catch(() => ({}));
+  const payload = await req.json().catch(() => null);
+  const body = payload && typeof payload === 'object' && !Array.isArray(payload) ? payload : {};
   const message = typeof body.message === 'string' ? body.message.trim().slice(0, 1000) : '';
   const install = typeof body.install_id === 'string' && UUID.test(body.install_id) ? body.install_id : null;
   const platform = body.platform === 'ios' || body.platform === 'android' ? body.platform : null;
   const history: Turn[] = Array.isArray(body.history)
     ? body.history
         .filter((h: unknown): h is Turn => !!h && typeof h === 'object' && ((h as Turn).role === 'user' || (h as Turn).role === 'assistant') && typeof (h as Turn).text === 'string')
-        .slice(-16)
+        .slice(-8)
+        .map((h: Turn) => ({ role: h.role, text: h.text.slice(0, 4000) }))
     : [];
-  if (!message || !install) return json({ error: 'message and install_id required' }, 400);
+  const report = typeof body.report === 'string' ? body.report.trim() : '';
+  if ((!message && !report) || !install) return json({ error: 'message and install_id required' }, 400);
 
   const db = service();
   const track = async (name: string, props: Record<string, string | number>) => {
     await db.from('events').insert({ install_id: install, name, props, platform });
   };
+
+  // Explicitly submitted reports, never prompts/history, enter the existing moderation inbox.
+  // Fail closed if the limiter cannot be checked, and do not call a model on this path.
+  if (report) {
+    const { data: allowed, error: limitError } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy_report', p_ip: install, p_max: 5, p_window_seconds: DAY });
+    if (limitError || allowed !== true) return json({ error: 'report limit reached' }, 429);
+    const language = ['en', 'hi', 'es', 'tl', 'vi'].includes(body.language) ? body.language : 'en';
+    const { error } = await db.from('suggestions').insert({ text: `[Remmy report] ${report}`.slice(0, 1000), language, source: 'app' });
+    if (error) return json({ error: 'report unavailable' }, 503);
+    return json({ reported: true }, 200);
+  }
 
   // A burst first: a script or a stuck button can't run through the day's budget in seconds.
   const { data: steady } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy_minute', p_ip: install, p_max: PER_MINUTE, p_window_seconds: 60 });
@@ -107,8 +121,8 @@ Deno.serve(async (req) => {
           onRefused: (n) => refused.push(...n),
           onFail: (c) => causes.push(c),
         }).catch((e) => {
-          // Provider errors ("429", "timeout") name no user text; the first words are enough.
-          causes.push(`error ${String(e).slice(0, 60)}`);
+          // Keep a fixed category; arbitrary exception text could contain user content.
+          causes.push('agent_error');
           throw e;
         }),
       'remmy',
@@ -160,7 +174,7 @@ function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
         if (!done) return { error: 'could not open' };
         // The prices come back with the card, so one call gives the model real figures to quote.
         const today = prices ? await prices.run({ country: args.country, amount, method }).catch(() => null) : null;
-        return { shown: `Compare is ready for ${amount} USD to ${route.country}`, opened: done.now === true, ...(today ? { prices: today } : {}) };
+        return { shown: `Compare is ready for ${amount} USD to ${route.country}`, opened: 'now' in done && done.now === true, ...(today ? { prices: today } : {}) };
       },
     },
     {
@@ -170,7 +184,7 @@ function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
       run: async (args) => {
         const done = add({ type: 'screen', screen: args.screen, term: typeof args.term === 'string' ? args.term : undefined, now: args.now === true });
         return done
-          ? { shown: `${done.type === 'screen' ? done.screen : ''} is ready`, opened: done.now === true }
+          ? { shown: `${done.type === 'screen' ? done.screen : ''} is ready`, opened: 'now' in done && done.now === true }
           : { error: `No screen called ${String(args.screen)}. Pick one of: ${Object.keys(REMMY_SCREENS).join(', ')}. If none fits, say what the app can't do.` };
       },
     },
@@ -180,7 +194,7 @@ function actionTools(actions: RemmyAction[], prices?: ToolSpec): ToolSpec[] {
       args: { module: REMMY_MODULES.join('/'), mode: `optional: ${REMMY_MODES.join('/')}`, now: 'true only if they asked to start it' },
       run: async (args) => {
         const done = add({ type: 'lesson', module: args.module, mode: args.mode, now: args.now === true });
-        return done ? { shown: 'The lesson is ready', opened: done.now === true } : { error: 'no such module' };
+        return done ? { shown: 'The lesson is ready', opened: 'now' in done && done.now === true } : { error: 'no such module' };
       },
     },
     {

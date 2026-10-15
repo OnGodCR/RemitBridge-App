@@ -51,15 +51,27 @@ export async function quotes(routeId: string, amount: number, method: string): P
   const pub = createClient(Deno.env.get('SUPABASE_URL')!, publishableKey(), {
     auth: { persistSession: false },
   });
-  const { data } = await pub
-    .from('latest_quotes')
-    .select(
-      'provider_name, send_amount, send_currency, receive_currency, fee, offered_rate, mid_market_rate, pickup_charge, amount_received, total_cost_pct, delivery_time, is_promotional, captured_at',
-    )
+  const query = (view: string) => pub
+    .from(view)
+    .select('*')
     .eq('route_id', routeId)
-    .eq('send_amount', amount)
-    .eq('delivery_method', method);
-  return (data ?? []).map((q) => ({
+    .eq('payment_method', 'bank_account')
+    .eq('delivery_method', method)
+    .gte('send_amount', amount)
+    .lt('send_amount', amount * 1.05);
+  let { data, error } = await query('compare_quotes');
+  if (error?.code === 'PGRST205') ({ data, error } = await query('latest_quotes'));
+  if (error) return [];
+  // Match Compare: current rows first, then nearest checked amount, then newest.
+  const best = new Map<string, NonNullable<typeof data>[number]>();
+  for (const q of data ?? []) {
+    const key = q.provider_id ?? q.provider_name;
+    const held = best.get(key);
+    if (!held || (!!q.is_older !== !!held.is_older ? !q.is_older :
+      Number(q.send_amount) !== Number(held.send_amount) ? Number(q.send_amount) < Number(held.send_amount) :
+      q.captured_at > held.captured_at)) best.set(key, q);
+  }
+  return [...best.values()].map((q) => ({
     ...q,
     send_amount: Number(q.send_amount),
     fee: Number(q.fee),
@@ -85,9 +97,9 @@ export async function modelChain(
   if ((await countToday(db, opts.bucket, opts.key)) > opts.perKey) return null;
   const client = chainClient(
     providers.map((p) => p.client),
-    (i, e) => {
-      console.warn(`${opts.label} model ${providers[i].name} failed:`, String(e));
-      opts.onProviderFail?.(`${providers[i].name}: ${String(e).replace(/^Error: /, '').slice(0, 60)}`);
+    (i) => {
+      console.warn(`${opts.label} model ${providers[i].name} failed`);
+      opts.onProviderFail?.(`${providers[i].name}: provider_error`);
     },
   );
   return { client, names: providers.map((p) => p.name) };
@@ -205,8 +217,8 @@ export function dataTools(db: SupabaseClient, hooks: ToolHooks): ToolSpec[] {
 export async function tryModel<T>(call: () => Promise<T | null>, label = 'assistant'): Promise<T | null> {
   try {
     return await call();
-  } catch (e) {
-    console.warn(`${label} model call failed:`, String(e));
+  } catch {
+    console.warn(`${label} model call failed`);
     return null;
   }
 }

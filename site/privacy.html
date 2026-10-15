@@ -16,7 +16,7 @@
 <header><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 17Q24 3 46 17"/><path d="M14 30v-6q10-9 20 0v6"/></svg>RemitBridge</a><nav><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a class="cta" href="https://www.remitbridgelabs.org/app">About the app</a></nav></div></header>
 <main class="wrap">
 <h1>Privacy policy</h1>
-<p class="muted">Last updated October 13, 2026</p>
+<p class="muted">Last updated October 14, 2026</p>
 <p>RemitBridge is a free app that compares the cost of sending money abroad. {{LEGAL_ENTITY}} ("RemitBridge Labs", "we") publishes and operates it, and is responsible for the data described here. No person who founded, runs or volunteers for RemitBridge Labs holds your data in their own name. This policy covers the RemitBridge mobile app (including Remmy, its assistant), this site and the RemitBridge WhatsApp bot.</p>
 
 <h2>In short</h2>
@@ -24,18 +24,18 @@
 <li>{{LEGAL_NAME}} does not send, hold or exchange money. RemitBridge only shows prices.</li>
 <li>Nothing in the app, on this site or from the bot is financial or legal advice.</li>
 <li>We have no affiliate or paid relationships with providers. Providers are ranked by the amount received, and nothing else.</li>
-<li>Prices come from providers' public websites, provider APIs used with the provider's permission (such as Wise's), prices entered by RemitBridge staff, and mid-market rates from Frankfurter. Prices change during the day, so one may be out of date.</li>
+<li>Prices come from providers' public websites, provider APIs used with the provider's permission (such as Wise's), prices entered by RemitBridge staff, and mid-market references such as Frankfurter, ExchangeRate-API and Wise. Prices change during the day, so one may be out of date.</li>
 <li>Comparing prices needs no account. We don't sell data, and there is no advertising or third-party tracking.</li>
 </ul>
 
 <h2>Without an account</h2>
 <p>You can compare prices without signing up. The app still records how it's used, to count users and see which features help. Each record holds:</p>
 <ul>
-<li>a random ID created when the app is first opened, which is not linked to your name, device or advertising ID;</li>
+<li>a random ID created when the app is first opened, which identifies this installation, rather than your hardware or advertising ID;</li>
 <li>what happened, such as "comparison run", with the choices involved, such as the route and the amount you checked;</li>
 <li>whether you're on iOS or Android, the app version, and the time.</li>
 </ul>
-<p>We don't collect your location, contacts, device identifiers or advertising ID, and we don't track you across other apps or websites.</p>
+<p>We don't collect your precise location, contacts, hardware identifiers or advertising ID, and we don't track you across other apps or websites.</p>
 
 <h2>With an account</h2>
 <p>An account is optional. If you create one, we also store:</p>
@@ -54,9 +54,9 @@
 <p>The newsletter is off unless you turn it on, either on the sign-in step when you first set up the app or later under Account. If you do, we send an email now and then about new countries, price changes and new guides, to the address your account already uses (for Sign in with Apple's "Hide My Email", Apple's relay address). We keep only that you turned it on, when, your app language, and a random code for the unsubscribe link. Every issue has a one-tap unsubscribe link; using it, turning the newsletter off in the app, or deleting your account removes all of that. We don't track whether you open an issue or click its links.</p>
 
 <h2>Scanning a receipt</h2>
-<p>The app asks for camera or photo access only when you scan a transfer receipt, and uses only the photo you take or choose. It reads the receipt on your phone first. Before anything leaves your phone, it covers names, addresses, phone numbers, email addresses, and card, account and reference numbers with solid boxes, removes the photo's hidden details (such as where it was taken), and shows you exactly what would be sent. You can cover more before sending.</p>
+<p>The app asks for camera or photo access only when you scan a transfer receipt, and uses only the photo you take or choose. It reads the receipt on your phone first. Before anything leaves your phone, it covers names, addresses, phone numbers, email addresses, and card, account and reference numbers with solid boxes, removes the photo's hidden details (such as where it was taken), and shows you exactly what would be sent. Automatic covering can miss details: review the preview and cover anything else before sending.</p>
 <p>What's sent is the covered photo and the text read from it. Our server checks the text again and covers anything the phone missed. If it finds anything, it doesn't use or keep the photo.</p>
-<p>Our server reads the transaction figures from the covered text: the amounts, fee, tax, exchange rate, currencies, date, provider and how you paid. When its own rules can't read a figure, it sends the covered text, and in some cases the covered photo, to an AI model run by Groq, a third-party provider. Zero data retention is turned on for our Groq account, so Groq doesn't store what it's sent. The app asks your permission before your first receipt is sent, and says on every scan that this can happen. If you don't allow it, nothing is sent.</p>
+<p>Our server reads the transaction figures from the covered text: the amounts, fee, tax, exchange rate, currencies, date, provider and how you paid. When its own rules can't read a figure, it sends the covered text, and in some cases the covered photo, to an AI model run by Groq, a third-party provider. Our Groq account is configured for zero data retention for input and output content; Groq still retains service usage metadata. The app asks your permission before your first receipt is sent, and says on every scan that this can happen. If you don't allow it, nothing is sent.</p>
 <ul>
 <li><strong>The text</strong> read from the receipt is never stored.</li>
 <li><strong>The figures</strong>, where each came from, and when, are kept for 30 days and then deleted. You can delete them sooner in the app.</li>
@@ -66,22 +66,28 @@
 <p>On WhatsApp, if you send a photo of a receipt, our server reads it and covers the same personal details before any figures are read. Only the covered text goes on to be read, including by Groq, never the photo. The photo is deleted once it's read and is never stored. How we handle your number while it's read is below.</p>
 
 <h2>Remmy, the assistant in the app</h2>
-<p>When you ask Remmy something, the app sends your message and the last few messages of the conversation, and nothing else, to our server, which passes that text to an AI model to work out the answer from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's free daily allowance is used up; neither uses what it's sent to train AI models. We don't store the conversation: it stays on your phone until you close the app or start a new chat. We record only that a message was answered and which of Remmy's tools it used (for example, that it checked prices), with the random ID described above, never what you wrote. If you send a suggestion for the app, we keep its text, its language and the date, with no ID attached.</p>
-<p>The first time you send Remmy a message, the app asks your permission before anything goes to an AI model. A plain request to open a screen, such as "open settings", is handled by our own server and never reaches an AI model.</p>
-<p>Remmy can open a screen or a comparison for you, and offer to save one to your account; saving happens only when you tap Save. It can't send money, change your settings or contact a provider.</p>
-<p>Please don't type passwords, sign-in codes, card or account numbers, or other people's personal details into the chat. Remmy doesn't need them, and anything you type goes to the AI model as written.</p>
+<p>Remmy can explain costs, check published prices, open screens and comparisons, start lessons and offer to save a comparison. A requested navigation runs once; reopening the chat does not repeat it. Saving requires your tap and an account. Remmy cannot move money, change account settings or contact a provider.</p>
+<p>Before the first message, we ask permission to process your chat. A message goes to our server with up to eight recent messages, your language, platform and a random installation ID for operation and abuse limits. The server also receives your network address. Plain screen-opening requests are handled on our server without a model. Other questions send the message, recent history and relevant RemitBridge information or tool results to Cloudflare Workers AI, with Groq as a fallback when capacity is exhausted or a provider fails. We do not intentionally send your account profile or installation ID to the model.</p>
+<p>We do not save chat transcripts in our database. The current conversation stays in app memory when you close and reopen Remmy, until you start a new chat or the app process ends. Starting a new chat clears this local conversation; it does not delete saved comparisons, submitted suggestions or reports.</p>
+<p>We record operational events with the installation ID, platform, time, tools used, model provider, limit reasons and failure diagnostics. Diagnostics may include rejected numeric fragments and provider error categories, rather than full questions or answers. These records are pseudonymous, not necessarily anonymous. If you submit a suggestion, we keep its text, language and date without attaching your account or installation ID.</p>
+<p>You can report a reply inside Remmy. Before sending, a confirmation explains that the selected reply is sent to RemitBridge for review, without your question or chat history. The report text, language and date are kept in our moderation inbox without an account or installation ID attached. Suggestions and reports are kept separately for review and improvement until no longer needed. They are not removed by starting a new chat or deleting an account.</p>
+<p>We do not use your chats to train models. Cloudflare says it does not use customer content to train models without consent. Our Groq account is configured for zero data retention for input and output content; service usage metadata can still be retained by the provider. See <a href="https://developers.cloudflare.com/workers-ai/platform/data-usage/">Cloudflare's data policy</a> and <a href="https://console.groq.com/docs/your-data">Groq's data policy</a>.</p>
+<p>Please do not type passwords, sign-in codes, account or card numbers, or other people's personal details. Chat text is not automatically covered like a scanned receipt and can reach the AI service as written. AI answers can be wrong. Check Compare and the provider before acting.</p>
+
+<h2>Learning and settings on your phone</h2>
+<p>Your language, display preferences, consent choices and lesson or game progress are saved on your phone. Compare may cache checked prices for offline use and shows when cached data was loaded. These local records are separate from account data; removing the app or clearing its storage removes local records, subject to your operating system's backup behavior.</p>
 
 <h2>WhatsApp</h2>
 <p>When you message our WhatsApp bot, we don't store your phone number. We keep a scrambled ID made from it (a keyed hash, which can't be turned back into the number), your reply language, and the last route you asked about.</p>
 <p>We keep the number itself only while a receipt photo is read: to send you the answer a few minutes later, we keep it encrypted until the answer is sent, and never longer than an hour. Only the server that sends WhatsApp messages can unlock it. It never appears in our logs and goes to no one but WhatsApp.</p>
-<p>Apart from a few exact commands (such as STOP, LINK or HINDI), the bot sends the text of your message, and nothing else, to an AI model, which works out what you're asking and answers from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's free daily allowance is used up. Neither gets your number, and neither uses what it's sent to train AI models. If you send a suggestion for the app, we keep its text, its language and the date, with no number or ID attached.</p>
+<p>Apart from a few exact commands (such as STOP, LINK or HINDI), the bot sends the text of your message to an AI model, which works out what you're asking and answers from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's capacity is used up or its service fails. Neither gets your number, and neither uses what it's sent to train AI models. If you send a suggestion for the app, we keep its text, its language and the date, with no number or ID attached.</p>
 <p>If you link WhatsApp from the WhatsApp tab in the app, we connect the scrambled ID (not your number) to your account, so comparisons you send with SAVE are kept there. Send UNLINK, or tap Unlink in the app, and the link is removed at once; deleting your account does the same. Send STOP and we delete everything we keep about your number.</p>
 
 <h2>Asking for a route</h2>
 <p>If you ask us to check prices for a country we don't cover yet, we keep the two countries, how you'd like the money to arrive if you said, and when you asked. If you give an email address so we can tell you when it's ready, we send that one email and then delete the address; if we decide we can't add the route, we delete it then. Delete your account and your requests go with it.</p>
 
-<h2>What we never collect</h2>
-<p>We never ask for or collect immigration status or documents, bank or card sign-in details, passwords or PINs, or digital wallet details.</p>
+<h2>Information you should not send</h2>
+<p>We never ask for immigration documents, bank or card sign-in details, passwords, PINs or digital wallet credentials. Do not send these through chat, suggestions, reports or support; user-submitted text can contain whatever you include.</p>
 
 <h2>Keeping it safe</h2>
 <ul>
@@ -89,7 +95,7 @@
 <li>On your phone, your sign-in is stored encrypted, with a key kept in the phone's secure storage (the iPhone Keychain or Android Keystore) that never goes into a backup or onto another phone.</li>
 <li>A receipt photo is deleted from the app's storage as soon as its text is read; after that the app works only from the covered copy.</li>
 <li>There's no password to steal: you sign in with a code we email you, or with Apple or Google.</li>
-<li>To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above, per minute and per day), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and we delete the counts within a day.</li>
+<li>To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above, per minute and per day), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and automatically expire the short-lived counts.</li>
 <li>The deletions promised here run automatically: receipts after 30 days (24 months for research receipts), and a WhatsApp number held for a receipt within the hour.</li>
 </ul>
 
@@ -107,8 +113,8 @@
 <li><strong>Resend</strong> sends the sign-in code email, if you sign in with email, and the newsletter, if you turned it on.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
 <li><strong>Expo</strong>'s push service, with <strong>Apple</strong> or <strong>Google</strong>, delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else.</li>
-<li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp and Remmy (OpenAI's open gpt-oss models), when Cloudflare's daily allowance is used up, it gets only the text of your messages, never your number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>
-<li><strong>Cloudflare</strong> runs an AI model (Workers AI) on the text of most messages to our WhatsApp bot and to Remmy in the app. It gets only that text, never your number, and doesn't use it to train AI models.</li>
+<li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp and Remmy (OpenAI's open gpt-oss models), when Cloudflare's capacity is used up or its service fails, it receives message text, relevant history and RemitBridge context, never your WhatsApp number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>
+<li><strong>Cloudflare</strong> runs an AI model (Workers AI) on the text of most messages to our WhatsApp bot and to Remmy in the app. It receives the message, relevant conversation history and RemitBridge context, never your WhatsApp number, and doesn't use it to train AI models.</li>
 <li><strong>Meta</strong> carries the messages you exchange with the WhatsApp bot, under WhatsApp's own terms.</li>
 <li><strong>GitHub</strong> runs the program that reads a receipt photo sent on WhatsApp. The photo is held only in that program's memory, on a temporary machine, and is never written to disk.</li>
 <li><strong>Vercel</strong> hosts this site.</li>
@@ -117,13 +123,13 @@
 <p>Each processes data only to provide its service to {{LEGAL_NAME}}.</p>
 
 <h2>Deleting your data</h2>
-<p>In the app, go to Account, then Delete account. This deletes your account and everything saved to it at once. If you signed in with Apple, it also ends RemitBridge's access to your Apple Account. Usage records made while you were signed in are kept only as anonymous totals: the link to your account is removed. You can also email us to ask for deletion.</p>
+<p>In the app, go to Account, then Delete account. This deletes your account and everything saved to it at once. If you signed in with Apple, it also ends RemitBridge's access to your Apple Account. The account link on usage records is removed, but pseudonymous installation IDs and operational records may remain for analytics and abuse prevention. These are not converted into anonymous totals by account deletion. Scans are stored separately without an account link; use the receipt deletion control in the app to delete them sooner. Submitted suggestions and reports are stored separately as described above. You can also email us to ask for deletion.</p>
 
 <h2>Children</h2>
 <p>RemitBridge is not directed at children under 13, and we don't knowingly collect their data. Before a phone's first account is created, the app asks for a year of birth. The year never leaves the phone and isn't kept; the phone remembers only whether an account can be created. Anyone under 13 can still compare prices, which needs no account. If you believe a child under 13 has given us personal information, email us and we'll delete it.</p>
 
 <h2>Changes</h2>
-<p>If this policy changes, we'll update the date at the top. Significant changes will be noted in the app.</p>
+<p>If this policy changes, we'll update the date at the top. Please review this page for the current policy.</p>
 
 <h2>Contact</h2>
 <p>{{LEGAL_ENTITY}}</p>

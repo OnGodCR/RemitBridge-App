@@ -116,6 +116,7 @@ it('stops at the address limit and the install limit', async () => {
 
 it('refuses a request without a message or a real install ID', async () => {
   expect((await ask({ message: '' })).status).toBe(400)
+  expect((await handler(new Request('https://x', { method: 'POST', body: 'null' }))).status).toBe(400)
   expect((await handler(new Request('https://x', { method: 'POST', body: JSON.stringify({ message: 'hi', install_id: 'nope' }) }))).status).toBe(400)
 })
 
@@ -220,10 +221,10 @@ it('still opens a screen when past the day limit', async () => {
 it('puts the top checked prices on the Compare card, ranked by amount received, even when the model fails', async () => {
   const at = new Date(Date.now() - 2 * 3600e3).toISOString()
   const row = (provider_name: string, amount_received: number, total_cost_pct: number) => ({
-    route_id: 'us-in', delivery_method: 'bank_deposit', provider_name, send_amount: 500, send_currency: 'USD', receive_currency: 'INR',
+    route_id: 'us-in', delivery_method: 'bank_deposit', payment_method: 'bank_account', provider_name, send_amount: 500, send_currency: 'USD', receive_currency: 'INR',
     fee: 0, offered_rate: 95, mid_market_rate: 96, pickup_charge: 0, amount_received, total_cost_pct, delivery_time: null, is_promotional: false, captured_at: at,
   })
-  reset({ latest_quotes: [row('Wise', 46694, 2.5), row('Instarem', 47307, 1.2)] })
+  reset({ compare_quotes: [row('Wise', 46694, 2.5), row('Instarem', 47307, 1.2)] })
   rpcs.take_hit_for_ip = () => true
   rpcs.count_hit = () => 1
   turns = ['not json {', 'still not {']
@@ -238,4 +239,35 @@ it('puts the top checked prices on the Compare card, ranked by amount received, 
     ],
     checkedAt: at,
   })
+})
+
+it('accepts an explicit report without sending prompts or history to a model', async () => {
+  const response = await ask({ report: 'An unsafe reply', message: 'Private question', history: [{ role: 'user', text: 'Private history' }], language: 'es' })
+  expect(response.status).toBe(200)
+  expect(await response.json()).toEqual({ reported: true })
+  expect(tables.suggestions).toMatchObject([{ text: '[Remmy report] An unsafe reply', language: 'es', source: 'app' }])
+  expect(JSON.stringify(tables.suggestions)).not.toContain(INSTALL)
+  expect(JSON.stringify(tables.suggestions)).not.toContain('Private')
+  expect(prompts).toHaveLength(0)
+})
+
+it('fails closed when the report limit is reached or unavailable', async () => {
+  rpcs.take_hit_for_ip = () => false
+  expect((await ask({ report: 'A reply' })).status).toBe(429)
+  rpcs.take_hit_for_ip = () => null
+  expect((await ask({ report: 'A reply' })).status).toBe(429)
+  expect(tables.suggestions ?? []).toHaveLength(0)
+  expect(prompts).toHaveLength(0)
+})
+
+it('uses bank-funded eligible manual prices, keeps their original times and ignores card funding', async () => {
+  const at = new Date(Date.now() - 3 * 86400e3).toISOString()
+  const row = { provider_id: 'a', provider_name: 'Manual A', route_id: 'us-in', delivery_method: 'bank_deposit', payment_method: 'bank_account', send_amount: 500, send_currency: 'USD', receive_currency: 'INR', fee: 0, offered_rate: 95, mid_market_rate: 96, pickup_charge: 0, amount_received: 47500, total_cost_pct: 1, is_promotional: false, is_older: true, captured_at: at }
+  reset({ compare_quotes: [row, { ...row, provider_id: 'b', provider_name: 'Card B', payment_method: 'debit_card', amount_received: 49000 }] })
+  rpcs.take_hit_for_ip = () => true
+  delete env.GROQ_API_KEY
+  const r = await (await ask({ message: '500 to India' })).json()
+  expect(r.actions[0].top).toHaveLength(1)
+  expect(r.actions[0].top[0].provider).toBe('Manual A')
+  expect(r.actions[0].checkedAt).toBe(at)
 })

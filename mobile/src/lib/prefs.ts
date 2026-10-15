@@ -13,7 +13,7 @@ const KEYS = {
   installId: 'rb.installId',
   language: 'rb.language',
   aiConsent: 'rb.aiConsent',
-  remmyConsent: 'rb.remmyConsent',
+  remmyConsent: 'rb.remmyConsent.v2',
   ageGate: 'rb.ageGate',
 } as const;
 

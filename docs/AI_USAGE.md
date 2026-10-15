@@ -678,3 +678,16 @@ No prices were relabelled or translation wording changed.
 At Angad’s request, ChatGPT removed the Older prices section, ranked eligible prices
 together, added the RemitBridge choice label in five languages and moved collection time
 to quote details. Ranking regression coverage changed; original timestamps and expiry stay.
+
+
+## 2026-10-14: privacy and publication readiness
+
+At Angad's request, ChatGPT audited implementation against app-domain privacy/terms/support,
+store disclosures and current primary Apple/Google/AI-provider guidance. Added Remmy reply
+reporting and regression tests, revised/versioned consent and localized reporting strings,
+limited history payloads, removed arbitrary error strings, aligned shared price tools with
+bank-funded Compare and expanded Edge Function typechecks. Updated six Expo patches and
+Vitest security patches; 785 tests, typecheck/lint/site checks pass, Expo Doctor 21/21.
+Remaining full-workspace dependency advisories and all unperformed release steps are in the
+publication audit/checklist. No legal approval, production deployment, account creation,
+paid build or submission is claimed. Existing Hindi approvals preserved, new rows appended.

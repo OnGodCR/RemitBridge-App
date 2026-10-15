@@ -43,8 +43,12 @@ function query(table: string) {
       filters.push((r) => r[col] === val)
       return api
     },
-    gte: (col: string, val: string) => {
-      filters.push((r) => String(r[col] ?? '') >= val)
+    gte: (col: string, val: string | number) => {
+      filters.push((r) => typeof val === 'number' ? Number(r[col]) >= val : String(r[col] ?? '') >= val)
+      return api
+    },
+    lt: (col: string, val: number) => {
+      filters.push((r) => Number(r[col]) < val)
       return api
     },
     maybeSingle: async () => ({ data: matching()[0] ?? null, error: null }),

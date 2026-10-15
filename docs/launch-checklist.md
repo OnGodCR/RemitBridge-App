@@ -1,102 +1,122 @@
-# Launch checklist: App Store and Google Play
+# Publication readiness: App Store and Google Play
 
-Everything left before RemitBridge can be submitted to each store, as of 2026-10-12.
-Who does each: **Angad** (needs his sign-in, his phone or a decision), **Claude**, or
-**both**. Tick items here as they land; CLAUDE.md's open items point here.
+Updated 2026-10-14. **Not ready to submit yet.** This checklist distinguishes source
+changes from deployment, signed builds, account verification and real-device evidence.
+Older checked items are not proof that the latest version passed release testing.
 
-Already done, so not listed: the store listing, privacy and age-rating answers
-(`docs/store/listing.md`), privacy policy and terms (live), in-app account deletion and
-the deletion web page, Sign in with Apple and its token revocation (D145), the AI
-disclosure (D145), push notifications, app icons and splash, the Apple and Android
-signing keys, universal links and Android App Links, build settings for production.
+## Prepared in source
 
-## The one thing both stores wait on
+- [x] Privacy, terms, support and app-domain overview updated for Remmy, lessons/games,
+  newsletter, bank-account funding, RemitBridge choice and collection times in details.
+- [x] AI consent names Cloudflare/Groq and discloses chat history; updated disclosure
+  requires consent again. No message is sent when the person declines.
+- [x] In-app Report reply with confirmation, success/error handling, backend moderation
+  storage and rate limits. Reports contain the selected reply, not prompts/history.
+- [x] Remmy actions run once per requested action; saving still needs a tap.
+- [x] Shared Remmy/WhatsApp price tools use bank-account-funded compare_quotes, including
+  eligible manual prices; original collection times are preserved.
+- [x] Revised store descriptions, privacy/Data safety drafts, reviewer steps and rating
+  guidance: [listing.md](store/listing.md).
+- [x] Existing account deletion, Apple token revocation, optional authentication and
+  just-in-time permission flows remain in source. Runtime verification remains below.
 
-- [ ] **D-U-N-S number** for RemitBridge Labs (D&B case #11089990; documents sent
-      2026-10-09). D&B usually answers in about 5 business days and may call
-      (425) 500-9144. *Angad.* Both store accounts publish as RemitBridge Labs only with it
-      (D141, D143, D146).
+## Deploy and verify before building
 
-## iPhone (App Store)
+- [ ] Deploy changed `remmy` and `whatsapp` Edge Functions. Both bundle shared agent code.
+  No database migration is needed: reports use the existing `suggestions` table.
+- [ ] Confirm report arrives in suggestions with prefix `[Remmy report]`, source `app`,
+  text/language/date only. Cancel sends nothing. Network/server failure stays retryable.
+- [ ] Assign a RemitBridge admin to review that inbox, address harmful outputs and remove
+  reports/suggestions when no longer needed. New chat/account deletion do not delete them.
+- [ ] Verify public app-domain privacy/terms/support pages after deployment and without
+  login. Check the support mailbox can receive and reply to deletion/support requests.
+- [ ] Recheck Groq zero-data-retention setting and Cloudflare production configuration.
+  Confirm logs contain no raw prompts, replies, receipt text or unexpected personal data.
+- [ ] Resolve or formally assess remaining dependency advisories: 70 full-workspace npm
+  findings (54 high, 16 moderate, zero critical). See the audit; Expo Doctor is not a
+  vulnerability or signed-bundle scan.
+- [ ] Confirm receipt retention/deletion jobs, RLS, abuse limits, alert delivery and
+  production function secrets. Use [security-review.md](security-review.md).
+- [ ] Recheck public bank-funded quotes immediately before submission. Manual prices
+  expire seven days after their original observation, not seven days after import.
+  The Oct 14 import published 282 observations; held/incomplete rows must remain excluded.
 
-### Blocking
+Deployment commands, run from the repository root by the production operator:
 
-- [ ] **Convert the Apple account to an organization**, once the D-U-N-S arrives: Angad's
-      dad (a director, so he can sign for RemitBridge Labs) asks Apple Developer Support to
-      convert the individual account. *Angad and his dad.* (Publishing earlier under the
-      individual account is possible, but `listing.md` says to wait, D146.)
-- [ ] **App Store Connect app record**: My Apps → + → RemitBridge, bundle ID
-      `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). *Angad*, with Claude
-      reading the screen.
-- [ ] **Paste the listing** from `docs/store/listing.md`: description, keywords, URLs,
-      category, App Privacy answers, age rating, review notes, a review phone number;
-      availability **US only**. *Angad*, Claude checks.
-- [x] **6.9-inch iPhone screenshots** (1320 × 2868, six): done 2026-10-12 in
-      `docs/store/screenshots/iphone-6.9/`, real simulator shots scaled 9.45% (same shape).
-      Scan, Compare, the quote, Yearly cost, Learn, WhatsApp.
-- [ ] **Production build and submit**: Claude runs `eas build --profile production
-      --platform ios`; Angad runs `eas submit -p ios` and signs in to Apple once. *Both.*
-- [x] **Checked 2026-10-12 (Claude):** expo-doctor 21/21 after bringing 12 packages to SDK
-      57's patch versions; app type check, lint and 156 tests pass; Info.plist purpose
-      strings specific; export compliance answered; Sign in with Apple, account deletion and
-      the AI-consent prompt in place; review notes link a sample receipt
-      (`/review/sample-receipt.jpg`) and explain the age screen.
-- [ ] **App Store provisioning profile**: the production build needs one, and making it
-      needs Angad's Apple sign-in once (`eas build --profile production --platform ios`
-      asks). Best done after the organization conversion, so it's made for the final team.
-- [ ] **Real-phone checks on the iPhone build**: Sign in with Apple and Google; delete an
-      Apple-signed-in test account; a blurry receipt is turned back (D131); a rate alert
-      arrives as a notification; the new tabs, Account button and savings counter. *Angad.*
+```bash
+supabase functions deploy remmy --project-ref gmzljjdnwndvqciqicbx
+```
 
-### Should do first
+```bash
+supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
+```
 
-- [ ] **Legal review** of the privacy policy and terms (still marked draft). *Angad.*
-- [ ] **Security review** (`docs/security-review.md`) and two-factor on every account.
-      *Angad.*
-- [ ] **Fresh hand prices** so reviewers see a full Compare (the Oct 4 round drops out on
-      Oct 11; Wise and Instarem stay current on their own). *Both*, about 30 minutes.
+## Organization and console gates: Angad/account holder
 
-## Android (Google Play)
+- [ ] Receive D-U-N-S for RemitBridge Labs (case 11089990; last user update: not received).
+- [ ] Complete Apple organization conversion and Google Play organization verification.
+  Confirm seller/legal name is RemitBridge Labs before publication.
+- [ ] Create/verify store app records for `org.remitbridgelabs.app`, intended US availability,
+  agreements, reviewer contact and access instructions. No account was created in this audit.
+- [ ] Complete current Apple privacy/age questionnaire and Play Data safety, financial
+  features, content rating, target audience, access and deletion forms from listing.md.
+  Do not use the old blanket 4+ or no-financial-features instructions.
+- [ ] Owner/legal review of the revised privacy and terms, still marked draft in source.
+  A code audit does not verify enforceability, jurisdictional disclosures or liability clauses.
+- [ ] Review new Hindi consent/report strings and the changed choice label with a fluent
+  reader. Prior Hindi approval predates these additions. Spanish/Tagalog/Vietnamese remain drafts.
+- [ ] Separate marketing website owner applies [website-handoff.md](store/website-handoff.md).
+  This checkout's rules prohibit editing/deploying that separate repository from here.
 
-### Blocking
+## Build and release evidence
 
-- [ ] **Google Play organization account** in RemitBridge Labs' name, with the D-U-N-S
-      number ($25 one time). Organization accounts skip the 12-tester, 14-day closed test.
-      *Angad.*
-- [ ] **Real-phone checks on Android** (only the development build has run so far):
-      a receipt scan (ML Kit and the redaction have never run on Android), Google sign-in
-      (now the native sheet), a rate alert notification, the new tab bar and Learn.
-      *Angad*, on his Android.
-- [ ] **Play App Signing's key**: once the app is in Play Console, copy its SHA-256 and
-      SHA-1 (Setup → App signing). Claude adds the SHA-256 to `assetlinks.json` and creates
-      a second Android sign-in client with the SHA-1. *Both.*
-- [ ] **Play Console forms** from `docs/store/listing.md`: store listing, Data safety,
-      content rating, target audience (18+), financial features ("none"), account
-      deletion URL, app access, advertising ID ("no"), release notes. All drafted
-      2026-10-12, with the 512 × 512 icon (`docs/store/play-icon-512.png`). *Angad*, Claude
-      checks.
-- [ ] **Phone screenshots** from Angad's Android. *Angad.* The 1024 × 500 feature graphic
-      is done (`docs/store/play-feature-graphic.png`, 2026-10-12).
-- [ ] **Production build and submit**: Claude runs `eas build --profile production
-      --platform android` (an .aab); the first upload goes through Play Console by hand,
-      later ones with `eas submit` and a Play service-account key that Angad creates.
-      *Both.*
+- [ ] New EAS production builds for both platforms from the final main commit. Existing
+  October 12 production build predates Remmy and subsequent changes. Keep auto-incremented
+  build numbers; no native or store submission was performed in this audit.
+- [ ] Confirm production environment points at the correct Supabase project and auth clients;
+  no server-only keys in EXPO_PUBLIC variables. Verify signed binaries' SDK/target versions,
+  permissions, privacy manifests, required-reason API declarations and absence of debug UI.
+- [ ] Apple provisioning under the final team, and export-compliance answers for the actual
+  binary. Do not infer the merged native manifest from app.json alone.
+- [ ] Google Play App Signing SHA-256 in assetlinks and SHA-1 in Google OAuth, verified on
+  a Play-installed build. Development-key authentication does not prove release authentication.
+- [ ] Refresh iPhone and Android screenshots: actual final UI, Remmy, games and Compare choice.
+  Existing October 12 images are historical assets, not current release evidence.
+- [ ] Run the device acceptance checks below on a TestFlight iPhone and Play internal-test
+  Android build, then run platform pre-launch/review checks and resolve findings.
+- [ ] Account holder uploads/submits after these gates pass. Store approval is external.
 
-### Should do first
+Build commands, once organization/provisioning and deployment are ready, from `mobile/`:
 
-- The same legal review, security review and fresh prices as for iPhone.
+```bash
+npx eas-cli@latest build --profile production --platform ios
+```
 
-## Not needed for launch
+```bash
+npx eas-cli@latest build --profile production --platform android
+```
 
-- **WhatsApp going live.** The WhatsApp tab says "coming soon" until it is, which is fine
-  for review. Still open: the webhook isn't delivering messages, then a real number.
-- **The EIN.** Needed for 501(c)(3) status, a bank account and Google for Nonprofits, not
-  for either store.
-- **Other languages.** English only until a reviewer signs off on each (D69).
-- **The hello@ profile photo.**
+No paid build, account purchase or store submission is authorized by checking off a source change.
 
-## This Mac
+## Device acceptance checks
 
-- [ ] **Disk space: 3.7 GB free** (2026-10-10). Cloud builds don't need local space, but
-      the simulator, Xcode and downloads do. Clearing app caches (`~/Library/Caches`) frees
-      several GB.
+- [ ] Cold start and reload on real iPhone/Android, Wi-Fi and mobile data, with no Metro server.
+- [ ] Compare: bank funding only; standard ranking and choice reflect largest payout;
+  promotions separate; details show source/original time; estimates labelled; expired prices absent.
+- [ ] Remmy: decline sends nothing; accept works; follow-up understands history; screen
+  opens once; reopening never repeats it; fresh prompt can repeat intentionally; save needs tap.
+- [ ] Remmy reporting: cancel/confirm, retry on error, report delivered and admin can review;
+  harmful/scam-enabling/out-of-scope requests declined; no fabricated price on model failure.
+- [ ] AI limits and network loss provide useful fallback; New chat clears local conversation.
+- [ ] Scan: camera/library, denied permissions, blur rejection, all personal details covered
+  before submission, review/additional cover, AI consent, correct fee/tax, research opt-in off
+  by default, deletion and savings counter. Simulator build omits ML Kit and cannot prove this.
+- [ ] Email/Google/Apple sign-in, sign-out, save, delete account, Apple grant revocation,
+  newsletter opt-in/unsubscribe, alerts and push delivery with production signing.
+- [ ] Lessons/games, glossary, accessible labels, large text, screen reader, light/dark themes,
+  small-screen keyboard, all languages and legal/support links.
+
+## Verification from this audit
+
+Automated test/check results are recorded in [publication-audit.md](store/publication-audit.md).
+Unperformed checks remain unchecked, including production deployment and store-console forms.

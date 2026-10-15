@@ -604,3 +604,14 @@ Rules:
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+
+## Publication audit, 2026-10-14 (D180)
+
+App-domain privacy/terms/support/overview and store drafts reflect the new features.
+Remmy reporting, consent v2 and bank-funded agent price parity are in source, pending
+Angad's remmy/whatsapp deploys. Updated Expo patches and Vitest; 785 tests, typecheck,
+lint/site validation pass and Expo Doctor is 21/21. Full npm audit remains 70 advisories
+(54 high, 16 moderate, no critical); not release-approved. Current gates and operator
+commands: docs/launch-checklist.md; evidence: docs/store/publication-audit.md. Separate
+marketing repository remains untouched, with docs/store/website-handoff.md prepared.

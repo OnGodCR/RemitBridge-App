@@ -155,6 +155,27 @@ describe('the chat screen', () => {
     expect(mockOpenCompare).toHaveBeenCalledWith({ routeId: 'us-in', amount: 500, method: 'bank_deposit' });
   });
 
+  it('reports only the selected reply after confirmation, and keeps failure retryable', async () => {
+    mockInvoke.mockResolvedValueOnce({ data: { reply: 'A questionable reply.', actions: [], steps: [] }, error: null });
+    renderChat();
+    await act(async () => sendToRemmy('A private question', 'en'));
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    fireEvent.press(screen.getByRole('button', { name: r.report }));
+    expect(mockInvoke).toHaveBeenCalledTimes(1);
+    expect(alert).toHaveBeenCalledWith(r.report, r.reportBody, expect.any(Array));
+    mockInvoke.mockResolvedValueOnce({ data: null, error: new Error('offline') });
+    await act(async () => alert.mock.calls[0][2]![1].onPress?.());
+    expect(screen.getByRole('button', { name: r.report })).toBeTruthy();
+    expect(alert).toHaveBeenLastCalledWith(r.reportFailed);
+    fireEvent.press(screen.getByRole('button', { name: r.report }));
+    mockInvoke.mockResolvedValueOnce({ data: { reported: true }, error: null });
+    await act(async () => alert.mock.calls[2][2]![1].onPress?.());
+    expect(mockInvoke).toHaveBeenLastCalledWith('remmy', { method: 'POST', body: {
+      report: 'A questionable reply.', language: 'en', install_id: '00000000-0000-4000-8000-00000000c0de',
+    } });
+    expect(screen.getByText(r.reported)).toBeTruthy();
+  });
+
   it('asks once before the first message goes to the AI model, and sends nothing on Not now', async () => {
     mockConsent = false;
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);

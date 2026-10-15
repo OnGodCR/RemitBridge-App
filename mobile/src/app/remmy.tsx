@@ -26,7 +26,7 @@ import type { Copy } from '@/i18n/en';
 import { announce } from '@/lib/announce';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
-import { actionWasExecuted, boldParts, markActionExecuted, newChat, retryLast, runAction, sendToRemmy, useRemmy, type RemmyMessage } from '@/lib/remmy';
+import { actionWasExecuted, boldParts, markActionExecuted, newChat, reportRemmy, retryLast, runAction, sendToRemmy, useRemmy, type RemmyMessage } from '@/lib/remmy';
 import type { RemmyAction, RemmyScreen } from '@/lib/remmy-actions';
 import { track } from '@/lib/track';
 
@@ -124,6 +124,11 @@ export default function RemmyChat() {
         {thinking ? <Thinking /> : null}
       </ScrollView>
 
+      {messages.length ? (
+        <Pressable accessibilityRole="link" accessibilityLabel={copy.account.privacy} onPress={() => runAction({ type: 'screen', screen: 'privacy' })}>
+          <AppText variant="small" muted style={styles.privacy}>{r.privacy}</AppText>
+        </Pressable>
+      ) : null}
       <Animated.View style={[styles.composer, { borderTopColor: t.border, backgroundColor: t.background }, composerPad]}>
         <TextInput
           value={draft}
@@ -213,6 +218,9 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
   const t = useTheme();
   const copy = useCopy();
   const r = copy.remmy;
+  const { language } = useLanguage();
+  const [reported, setReported] = useState(false);
+  const [reporting, setReporting] = useState(false);
   const text = message.failed
     ? r.offline
     : message.limited && !message.text
@@ -253,6 +261,21 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
             </Pressable>
           ) : null}
         </View>
+        {message.text && !message.failed ? (
+          <Pressable accessibilityRole="button" disabled={reported || reporting} style={styles.retry} onPress={() =>
+            Alert.alert(r.report, r.reportBody, [
+              { text: r.reportCancel, style: 'cancel' },
+              { text: r.reportSend, onPress: async () => {
+                setReporting(true);
+                const ok = await reportRemmy(message.text, language.code);
+                setReporting(false);
+                if (ok) setReported(true);
+                else Alert.alert(r.reportFailed);
+              } },
+            ])}>
+            <AppText variant="small" style={{ color: t.primary }}>{reported ? r.reported : r.report}</AppText>
+          </Pressable>
+        ) : null}
         {message.actions.map((a, i) => (
           <ActionCard key={i} messageId={message.id} index={i} action={a} autoRun={latest && i === 0 && 'now' in a && a.now === true} copy={copy} />
         ))}

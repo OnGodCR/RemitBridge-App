@@ -2286,3 +2286,14 @@ quotes by amount received. The highest standard payout is labelled RemitBridge c
 including when there is only one result. First-transfer offers remain labelled separately.
 Compare cards omit collection time and stale labels; opening a quote shows its original
 collection date/time and source. Existing seven-day manual expiry and publish checks remain.
+
+
+**D180. Update disclosures and publication readiness for the actual Remmy feature set**
+(Angad, 2026-10-14). Privacy, terms, support and store drafts must reflect chat history,
+third-party AI, operational identifiers, diagnostics, separate suggestions/reports, games,
+newsletter and current Compare behavior. Add an in-app AI-reply report with confirmation,
+using the existing private suggestions inbox, without storing prompt/history or attached
+account/install identifiers in reports. Limits still use the installation ID in transit.
+Version the corrected Remmy consent so prior users see it again. Make agent price tools
+match bank-funded eligible Compare prices. Keep deployment/build/account/legal/security
+and real-device gates explicit rather than claiming publication readiness from source alone.

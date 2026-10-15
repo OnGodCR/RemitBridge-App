@@ -59,6 +59,7 @@ afterAll(() => vi.unstubAllGlobals())
 const quote = (over: Record<string, unknown> = {}) => ({
   route_id: 'us-in',
   delivery_method: 'bank_deposit',
+  payment_method: 'bank_account',
   provider_name: 'Provider A',
   send_amount: 500,
   send_currency: 'USD',
@@ -82,7 +83,7 @@ beforeEach(() => {
   templates.length = 0
   confirmReply = null
   Object.assign(env, { WHATSAPP_RECEIPTS: undefined, RECEIPT_INTAKE_SECRET: undefined, GITHUB_DISPATCH_TOKEN: undefined })
-  reset({ latest_quotes: [quote(), quote({ provider_name: 'Provider B', amount_received: 47000, total_cost_pct: 2 })] })
+  reset({ compare_quotes: [quote(), quote({ provider_name: 'Provider B', amount_received: 47000, total_cost_pct: 2 })] })
 })
 
 let n = 0

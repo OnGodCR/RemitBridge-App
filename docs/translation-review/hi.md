@@ -1080,3 +1080,19 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 Review confirmation, 2026-10-13: Angad confirmed in writing that his mother reviewed everything and it looks good, including the Learn games and Remmy rows above. No translation changes requested.
 
 | compare.mostToFamily | RemitBridge choice | RemitBridge की पसंद | | CHANGED 2026-10-14 |
+
+
+## Publication disclosure and reporting additions, 2026-10-14
+
+Prior approval is preserved. These rows need fresh fluent review.
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| remmy.privacy | AI answers can be wrong. Don’t share personal or bank details. | AI के जवाब गलत हो सकते हैं। निजी या बैंक की जानकारी न लिखें। | | NEW/CHANGED 2026-10-14 |
+| remmy.aiBody | Your message, recent chat history and relevant RemitBridge data go through our server to Cloudflare or Groq to answer you. We do not store chats or use them to train models. Our server also receives an install ID, language and platform for operation and limits. Suggestions and reports you submit are kept separately. Do not include private details. | जवाब देने के लिए आपका संदेश, हाल की बातचीत और RemitBridge की संबंधित जानकारी हमारे सर्वर से Cloudflare या Groq को जाती है। हम चैट सहेजते नहीं हैं और मॉडल को प्रशिक्षित करने के लिए इस्तेमाल नहीं करते। सेवा और सीमा के लिए हमारे सर्वर को इंस्टॉल ID, भाषा और प्लेटफ़ॉर्म भी मिलता है। आपके भेजे सुझाव और रिपोर्ट अलग रखे जाते हैं। निजी जानकारी न लिखें। | | NEW/CHANGED 2026-10-14 |
+| remmy.report | Report reply | जवाब की रिपोर्ट करें | | NEW/CHANGED 2026-10-14 |
+| remmy.reportBody | Send this reply to RemitBridge for review? Only the selected reply is sent, without your question or chat history. Reports are kept separately from chats. | यह जवाब समीक्षा के लिए RemitBridge को भेजें? केवल चुना हुआ जवाब भेजा जाएगा, आपका सवाल या बातचीत नहीं। रिपोर्ट चैट से अलग रखी जाती हैं। | | NEW/CHANGED 2026-10-14 |
+| remmy.reportSend | Send report | रिपोर्ट भेजें | | NEW/CHANGED 2026-10-14 |
+| remmy.reportCancel | Cancel | रद्द करें | | NEW/CHANGED 2026-10-14 |
+| remmy.reported | Report sent | रिपोर्ट भेज दी गई | | NEW/CHANGED 2026-10-14 |
+| remmy.reportFailed | Could not send report. Try again later. | रिपोर्ट नहीं भेज सके। बाद में फिर कोशिश करें। | | NEW/CHANGED 2026-10-14 |

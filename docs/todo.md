@@ -124,3 +124,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] Unify eligible Compare prices and label the top standard payout RemitBridge choice; collection date/time is in quote details (D179).
 - [ ] Hindi review: changed RemitBridge choice badge row appended 2026-10-14.
+
+- [x] Update privacy/terms/support/store drafts and add Remmy reply reporting (D180).
+- [ ] Publication gates and remaining dependency assessment: docs/launch-checklist.md.
+- [ ] Operator deploys remmy and whatsapp with D180 before new production builds.

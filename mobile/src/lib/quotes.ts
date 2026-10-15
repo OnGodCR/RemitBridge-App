@@ -34,7 +34,7 @@ export interface LatestQuote {
   source: 'scraper' | 'api' | 'manual' | 'partner';
   captured_at: string;
   is_stale: boolean;
-  /** Past 48 hours: only hand-checked prices get here, and they're listed apart (D144). */
+  /** Past 48 hours: only hand-checked prices get here, and they remain in the shared ranking (D179). */
   is_older?: boolean;
 }
 
