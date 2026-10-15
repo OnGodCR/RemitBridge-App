@@ -6,7 +6,7 @@ name: Manual prices
 #
 # The app's process-prices Edge Function starts this right after an entry, when
 # GITHUB_DISPATCH_TOKEN is set in Supabase. The schedule is the fallback. It's every three
-# hours because an entry must be checked within six (MANUAL_QUOTE_MAX_AGE_S), and each run
+# hours to process entries promptly within their seven-day eligibility window; each run
 # costs private-repo Actions minutes. A run with nothing pending stops after one request.
 
 on:

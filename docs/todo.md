@@ -110,3 +110,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Nonprofit yearly**: Washington's annual report, and an accountant's look at the federal return.
 - [ ] **Disk space on this Mac**: about 2.4 GB free; real native work needs 15 to 20 GB.
 - [ ] **DCO check**: when the first outside contributor starts.
+
+## Reviewed price publication (2026-10-14)
+
+- [x] Publish reviewed collection with seven-day intake and original dates (D177): 282 quotes published; 279 visible in Compare, CI passed.
+- [ ] Resolve remaining collection holds: 69 verified rows lack app-compatible methods/currencies, 16 engine quarantines, 12 Uganda reference-rate holds. The 46 nonverified collection rows remain excluded.

@@ -1,16 +1,16 @@
-# Graph Report - RemitBridge-App  (2026-10-13)
+# Graph Report - RemitBridge-App  (2026-10-14)
 
 ## Corpus Check
-- 445 files · ~1,100,940 words
+- 450 files · ~1,166,203 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2771 nodes · 7456 edges · 173 communities (132 shown, 41 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 123 edges (avg confidence: 0.58)
+- 2842 nodes · 7564 edges · 172 communities (130 shown, 42 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 122 edges (avg confidence: 0.58)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `82ad5117`
+- Built from commit: `65997cfc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,7 +20,7 @@
 - types.ts
 - LocalStore
 - metrics.tsx
-- scan-receipt/index.ts
+- FieldName
 - expo
 - ocr.ts
 - test_wise.py
@@ -36,29 +36,29 @@
 - adapters/__init__.py
 - dependencies
 - 14. Design system and brand consistency
-- lesson/[id].tsx
+- learn-games.ts
 - bot/package.json
-- useCopy
+- track
 - admin.tsx
-- review-sheet.ts
+- quotes.ts
 - compilerOptions
 - Google Play
 - illustrations.tsx
 - model.ts
-- track
+- true-cost.tsx
 - devDependencies
-- Quote
+- runner.py
 - lesson.ts
-- models.py
+- RawResponse
 - synth.ts
-- formula/src/index.ts
+- Appendix B: the to-do list (copied from `docs/todo.md` at handoff)
 - ui.tsx
 - receipt/package.json
-- expo-router
+- i18n/index.tsx
 - @supabase/supabase-js
 - compilerOptions
 - remitbridge-engine
-- bot/src/index.ts
+- whatsapp/index.ts
 - RemitBridge: context for the Congressional App Challenge 2026
 - RemitBridge — Product Requirements Document
 - rls_smoke.sh
@@ -66,33 +66,33 @@
 - 5. MVP features
 - 6. Corridors
 - build.mjs
-- webhook.test.ts
+- src/newsletter.test.ts
 - Partner outreach: Seattle-area organizations
 - test_instarem.py
 - useTheme
 - send-rate-alerts.mjs
 - extract.py
 - 1. Why this exists
-- whatsapp/index.ts
-- scan.tsx
+- receipt.ts
+- scan-screen.test.tsx
 - To do
 - expo-device
 - vercel.json
-- app/_layout.tsx
+- bot/src/index.ts
 - make-icons.py
-- RawResponse
-- FieldValues
+- cli.py
+- learn-path.tsx
 - The four Tier 1 routes, Q1 2025
 - make-onboarding-art.py
-- i18n/index.tsx
+- src/agent.ts
 - scripts/benchmark.ts
 - Providers for manual research
 - @expo-google-fonts/plus-jakarta-sans
-- newsletter.ts
-- languages.ts
+- routes.ts
+- learn-games.test.ts
 - expo-font
 - remmy.ts
-- runner.py
+- mock
 - local_migrations.sh
 - expo-sqlite
 - AI usage log
@@ -100,22 +100,22 @@
 - README.md
 - RemitBridge App
 - Decisions
-- account.tsx
+- blog.tsx
 - RemitBridge
 - Engine
 - test_gate.py
 - expo-localization
 - extract/fields.ts
-- eval-ai.ts
+- receipt-result.tsx
 - Congressional App Challenge 2026: draft entry
 - @infinitered/react-native-mlkit-core
-- src/agent.ts
+- webhook.test.ts
 - CAC gap report: the receipt scanner and what goes with it
 - port-blog.mjs
 - website-legal-entity.md
 - react-native-safe-area-context
 - Receipt reading benchmark
-- app/remmy.tsx
+- FieldValues
 - Launch checklist: App Store and Google Play
 - @shopify/react-native-skia
 - expo-file-system
@@ -128,20 +128,20 @@
 - @expo-google-fonts/hind
 - react-native-reanimated
 - parse.ts
-- synthesize.ts
+- notify-route-launch/index.ts
 - ai.ts
 - expo-splash-screen
-- observatory.ts
+- collection.py
 - rate-alerts.ts
-- whatsapp-section.tsx
+- scan.tsx
 - expo-router
 - Security review (for Angad)
 - @expo/ui
 - expo-crypto
 - react-native-screens
-- scam-check.tsx
+- keys.ts
 - Security and data protection
-- experiments
+- suggestions.tsx
 - RemitBridge Labs: setting up the nonprofit
 - @infinitered/react-native-mlkit-text-recognition
 - react-native-web
@@ -152,22 +152,22 @@
 - CREDITS.md
 - ios
 - android
-- module/[id].tsx
+- lesson/[id].tsx
 - secure-session.ts
 - react-dom
 - learn-progress.ts
-- alert.tsx
-- api.ts
+- pager-tabs.tsx
+- OcrPage
 - extra
 - expo-constants
 - plugins
-- pager-tabs.tsx
+- (tabs)/_layout.tsx
 - Scope: an AI model in the WhatsApp bot
 - send-newsletter/index.ts
-- email.ts
+- reading.ts
 - expo-image-picker
+- icon.test.ts
 - expo-system-ui
-- cli.py
 - chatgpt-essay-prompt.md
 - apple.ts
 - react-native-pager-view
@@ -175,10 +175,9 @@
 - sign-in.ts
 - chatgpt-learn-games.md
 - @remitbridge/receipt
-- quotes.ts
 - chatgpt-research-task.md
 - chatgpt-price-checks.md
-- computeTransferCost
+- scan-receipt/index.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `useTheme()` - 201 edges
@@ -186,7 +185,7 @@
 3. `track()` - 66 edges
 4. `AppText()` - 62 edges
 5. `Spacing` - 55 edges
-6. `money()` - 53 edges
+6. `money()` - 55 edges
 7. `expo-router` - 52 edges
 8. `useLanguage()` - 49 edges
 9. `Fonts` - 46 edges
@@ -197,21 +196,21 @@
   engine/src/remitbridge_engine/normalize.py → packages/formula/python/remitbridge_formula/__init__.py
 - `Inline()` --indirect_call--> `TOKEN()`  [INFERRED]
   mobile/src/components/blog.tsx → packages/bot/src/newsletter.test.ts
-- `buildGame()` --indirect_call--> `field()`  [INFERRED]
-  mobile/src/lib/learn-games.ts → packages/bot/src/webhook.test.ts
-- `Pending` --references--> `FieldName`  [EXTRACTED]
-  supabase/functions/whatsapp/index.ts → packages/receipt/src/types.ts
+- `termsIn()` --indirect_call--> `TOKEN()`  [INFERRED]
+  mobile/src/lib/reading.ts → packages/bot/src/newsletter.test.ts
 - `ScanScreen()` --calls--> `detectPii()`  [EXTRACTED]
+  mobile/src/app/(tabs)/scan.tsx → packages/receipt/src/redact.ts
+- `ScanScreen()` --calls--> `redactionBoxes()`  [EXTRACTED]
   mobile/src/app/(tabs)/scan.tsx → packages/receipt/src/redact.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (173 total, 41 thin omitted)
+## Communities (172 total, 42 thin omitted)
 
 ### Community 0 - "Handoff"
-Cohesion: 0.10
-Nodes (20): 2026-09-30 evening (local session, the go-live list), 2026-10-01 (cloud session), 2026-10-10: where things stand, 2026-10-11: Android feedback, 2026-10-12: Android sign-ins fixed, WhatsApp linking confirmed, the newsletter (D169), 2026-10-12: legal audit (D164), 2026-10-12: screenshots, Mexico's prices, the code email, WhatsApp replies, store prep, 2026-10-12: the WhatsApp agent's fallbacks (D163) (+12 more)
+Cohesion: 0.08
+Nodes (24): 2026-09-30 evening (local session, the go-live list), 2026-10-01 (cloud session), 2026-10-10: where things stand, 2026-10-11: Android feedback, 2026-10-12: Android sign-ins fixed, WhatsApp linking confirmed, the newsletter (D169), 2026-10-12: legal audit (D164), 2026-10-12: screenshots, Mexico's prices, the code email, WhatsApp replies, store prep, 2026-10-12: the WhatsApp agent's fallbacks (D163) (+16 more)
 
 ### Community 1 - "Permission request: pricing data"
 Cohesion: 0.29
@@ -219,30 +218,30 @@ Nodes (6): 2026-10-12: inbox check, From 2026-10-08: signing as an incorporated 
 
 ### Community 2 - "types.ts"
 Cohesion: 0.11
-Nodes (37): read(), Extractor, Extractors, LabelHit, fieldsForModel(), mergeFields(), ModelResult, Reasoning (+29 more)
+Nodes (36): read(), ExtractionContext, Extractors, Checked, checkValue(), DELIVERY_METHODS, deserializeValue(), FIELD_SPECS (+28 more)
 
 ### Community 3 - "LocalStore"
 Cohesion: 0.08
-Nodes (11): Any, LocalStore, mid_market_rows(), AsyncClient, datetime, Path, Protocol, quote_row() (+3 more)
+Nodes (10): Any, MidMarketRate, LocalStore, mid_market_rows(), AsyncClient, datetime, Path, Protocol (+2 more)
 
 ### Community 4 - "metrics.tsx"
 Cohesion: 0.16
 Nodes (12): Breakdown(), Group(), MetricsScreen(), PERIODS, styles, TOOL_LABELS, csvCell(), DEFINITIONS (+4 more)
 
-### Community 5 - "scan-receipt/index.ts"
-Cohesion: 0.11
-Nodes (30): trustedToday(), Checked, checkValue(), deserializeValue(), FIELD_SPECS, FieldKind, FieldSpec, isRealDate() (+22 more)
+### Community 5 - "FieldName"
+Cohesion: 0.10
+Nodes (28): page, RESULT, Comparison, ConfirmResponse, isBox(), isNum(), Parsed, parseRequest() (+20 more)
 
 ### Community 6 - "expo"
-Cohesion: 0.20
-Nodes (9): expo, icon, name, orientation, owner, scheme, slug, userInterfaceStyle (+1 more)
+Cohesion: 0.15
+Nodes (12): reactCompiler, typedRoutes, expo, experiments, icon, name, orientation, owner (+4 more)
 
 ### Community 7 - "ocr.ts"
-Cohesion: 0.09
-Nodes (43): pages, clean(), count, misses, offenders, score(), showsWord(), checkDisclosures() (+35 more)
+Cohesion: 0.10
+Nodes (39): pages, clean(), count, misses, offenders, score(), checkDisclosures(), missingDisclosures() (+31 more)
 
 ### Community 8 - "test_wise.py"
-Cohesion: 0.19
+Cohesion: 0.20
 Nodes (19): _delivery(), An ISO 8601 duration such as PT44M27S or P2DT3H, in seconds., Wise's own estimate in plain words. Nothing when Wise gives none., _seconds(), WiseAdapter, fixture(), _FourRoutes, parametrize (+11 more)
 
 ### Community 9 - "formula/package.json"
@@ -266,8 +265,8 @@ Cohesion: 0.15
 Nodes (12): devDependencies, patch-package, name, private, scripts, postinstall, test, typecheck (+4 more)
 
 ### Community 14 - "run_adapter"
-Cohesion: 0.26
-Nodes (16): LocalArchive, Path, Writes to engine/.archive. For development and tests; gitignored., run_adapter(), FakeAdapter, The smallest honest adapter: one JSON endpoint, one route, one method., respond(), setup() (+8 more)
+Cohesion: 0.17
+Nodes (20): LocalArchive, Path, Writes to engine/.archive. For development and tests; gitignored., run_adapter(), mid(), no_sleep(), test_a_full_run_publishes_all_four_routes_through_the_gate(), FakeAdapter (+12 more)
 
 ### Community 15 - "9. The scraping engine (core system)"
 Cohesion: 0.14
@@ -285,25 +284,25 @@ Nodes (27): expo, expo-apple-authentication, expo-haptics, expo-image, expo-noti
 Cohesion: 0.17
 Nodes (12): 14.10 Accessibility and low-bandwidth use, 14.11 Enforcement, 14.1 Where the app lives, 14.2 Naming, 14.3 Voice and writing rules, 14.4 Shared terminology, 14.5 Visual foundations, 14.6 Core components (+4 more)
 
-### Community 21 - "lesson/[id].tsx"
-Cohesion: 0.08
-Nodes (44): Lesson(), MatchBoard(), PriceCard(), Question(), rate(), receiptValue(), resultFor(), SAFETY_ICONS (+36 more)
+### Community 21 - "learn-games.ts"
+Cohesion: 0.11
+Nodes (25): buildGame(), ChoiceQuestion, CHOICES, comparison(), exampleTransfer, GameAction, GameAnswer, GameQuestion (+17 more)
 
 ### Community 22 - "bot/package.json"
 Cohesion: 0.13
 Nodes (14): devDependencies, typescript, vitest, typescript, vitest, main, name, private (+6 more)
 
-### Community 23 - "useCopy"
-Cohesion: 0.08
-Nodes (41): styles, Welcome(), styles, Stat(), STATS, styles, Why(), brandStyles (+33 more)
+### Community 23 - "track"
+Cohesion: 0.09
+Nodes (32): NewsletterSwitch(), NewsletterScreen(), styles, Welcome(), PartnerLink(), Answer, ANSWERS, QUESTIONS (+24 more)
 
 ### Community 24 - "admin.tsx"
 Cohesion: 0.19
 Nodes (15): AddPriceScreen(), cleanNumber(), Field(), RecentRow(), STATUS_LABEL, styles, arithmeticCheck(), EntryStatus (+7 more)
 
-### Community 25 - "review-sheet.ts"
-Cohesion: 0.12
-Nodes (23): cell(), Code, doc, draft, DRAFTS, leaves(), lines, next (+15 more)
+### Community 25 - "quotes.ts"
+Cohesion: 0.06
+Nodes (52): cell(), Code, doc, draft, DRAFTS, leaves(), lines, next (+44 more)
 
 ### Community 26 - "compilerOptions"
 Cohesion: 0.17
@@ -314,60 +313,60 @@ Cohesion: 0.11
 Nodes (17): Advertising ID, Age rating, App access, App Privacy ("nutrition label"), App Store, Closed test (required before the first public release), Content rating (IARC questionnaire), Data safety (+9 more)
 
 ### Community 28 - "illustrations.tsx"
-Cohesion: 0.11
-Nodes (38): ORDER, styles, swipe, styles, ArrivalArt, Art, BankArt, BasicsArt (+30 more)
+Cohesion: 0.17
+Nodes (30): ArrivalArt, Art, BankArt, BasicsArt, ChainArt, CheckedArt, depth(), FairRateArt (+22 more)
 
 ### Community 29 - "model.ts"
-Cohesion: 0.06
-Nodes (46): answerSchema(), askModel(), buildRequest(), ChatRequest, ChatResponse, DEFAULT_MODEL, DEFAULT_REASONING, GROQ_URL (+38 more)
-
-### Community 30 - "track"
 Cohesion: 0.07
-Nodes (71): FairRateScreen(), knownCurrency(), styles, ObservatoryScreen(), styles, PartnerLink(), fmt(), PERIODS (+63 more)
+Nodes (45): answerSchema(), askModel(), buildRequest(), ChatRequest, ChatResponse, DEFAULT_MODEL, DEFAULT_REASONING, GROQ_URL (+37 more)
+
+### Community 30 - "true-cost.tsx"
+Cohesion: 0.08
+Nodes (53): FairRateScreen(), knownCurrency(), styles, ObservatoryScreen(), styles, fmt(), PERIODS, RateHistoryScreen() (+45 more)
 
 ### Community 31 - "devDependencies"
 Cohesion: 0.04
 Nodes (44): eslint, eslint-config-expo, jest, jest-expo, devDependencies, eslint, eslint-config-expo, jest (+36 more)
 
-### Community 32 - "Quote"
-Cohesion: 0.21
-Nodes (13): _anomaly(), _is_promotional(), _math_ok(), _range_problems(), The publish gate (PRD 9.7). A quote reaches users only if it passes every…, Sets validation_status, validation_notes and is_promotional on each quote, in…, Index -> problem, for quotes whose markup jumps against their grid neighbour., run_gate() (+5 more)
+### Community 32 - "runner.py"
+Cohesion: 0.10
+Nodes (28): Archive, Protocol, _anomaly(), _is_promotional(), _math_ok(), _range_problems(), The publish gate (PRD 9.7). A quote reaches users only if it passes every…, Sets validation_status, validation_notes and is_promotional on each quote, in… (+20 more)
 
 ### Community 33 - "lesson.ts"
-Cohesion: 0.21
-Nodes (16): moduleTerms(), accuracy(), buildLesson(), distractors(), firstSentence(), LessonAction, lessonDone(), lessonReducer() (+8 more)
+Cohesion: 0.16
+Nodes (20): Term, TERMS, BY_ID, ModuleId, moduleTerms(), accuracy(), buildLesson(), distractors() (+12 more)
 
-### Community 34 - "models.py"
+### Community 34 - "RawResponse"
 Cohesion: 0.07
-Nodes (34): ABC, Adapter, AdapterMeta, The adapter framework (PRD 9.3). An adapter holds only what is specific to one…, A hash of the response's structure (keys and types, not values), for drift…, Which routes, delivery methods and payment methods this provider serves., Every quote to ask for this run: supported routes x methods x the amount grid., Ask for one quote with one strategy. Return the raw response untouched. (+26 more)
+Nodes (40): ABC, Adapter, AdapterMeta, The adapter framework (PRD 9.3). An adapter holds only what is specific to one…, A hash of the response's structure (keys and types, not values), for drift…, Which routes, delivery methods and payment methods this provider serves., Every quote to ask for this run: supported routes x methods x the amount grid., Ask for one quote with one strategy. Return the raw response untouched. (+32 more)
 
 ### Community 35 - "synth.ts"
-Cohesion: 0.08
-Nodes (31): addDays(), CITIES, Corridor, CORRIDORS, DELIVERY_WORDS, escapeHtml(), FINE_PRINT, FONTS (+23 more)
+Cohesion: 0.05
+Nodes (47): LANG, require, count, first, IMAGES, LANG, OUT, require (+39 more)
 
-### Community 36 - "formula/src/index.ts"
-Cohesion: 0.19
-Nodes (12): costOf(), NewCheck, SaveCheckError, SavedCheck, FUNDING_METHODS, FundingMethod, MATH_TOLERANCE_ABS, MATH_TOLERANCE_REL (+4 more)
+### Community 36 - "Appendix B: the to-do list (copied from `docs/todo.md` at handoff)"
+Cohesion: 0.05
+Nodes (38): 1. How to work with Angad, 2. The project in a paragraph, 3. Rules that are code rules (breaking one is a bug), 4. Git workflow, 5. Running the app in Expo Go (and when you need a development build), 6. What happened in the last sessions (newest first), 7. What to do next, in order, Appendix A: open items (the MOD, copied from `CLAUDE.md` at handoff) (+30 more)
 
 ### Community 37 - "ui.tsx"
-Cohesion: 0.06
-Nodes (68): BlogPostScreen(), styles, BlogIndex(), styles, GlossaryScreen(), styles, styles, fetchSuggestions() (+60 more)
+Cohesion: 0.07
+Nodes (65): styles, styles, MODE_ICONS, styles, styles, styles, Stat(), STATS (+57 more)
 
 ### Community 38 - "receipt/package.json"
 Cohesion: 0.08
 Nodes (23): devDependencies, playwright-core, tesseract.js, @tesseract.js-data/eng, typescript, vitest, typescript, vitest (+15 more)
 
-### Community 39 - "expo-router"
-Cohesion: 0.08
-Nodes (37): RequestRoute(), styles, BoardRow(), LaunchEmails(), RouteBoard(), STAGES, styles, SavedScreen() (+29 more)
+### Community 39 - "i18n/index.tsx"
+Cohesion: 0.07
+Nodes (50): PickRoute(), RequestRoute(), styles, BoardRow(), LaunchEmails(), RouteBoard(), STAGES, styles (+42 more)
 
 ### Community 41 - "compilerOptions"
 Cohesion: 0.10
 Nodes (19): compilerOptions, allowImportingTsExtensions, lib, module, moduleResolution, noEmit, paths, skipLibCheck (+11 more)
 
-### Community 45 - "bot/src/index.ts"
-Cohesion: 0.12
-Nodes (35): AMOUNTS, checkedAmountFor(), DELIVERY_LABELS, Route, ROUTES, AgentContext, ago(), countryIn() (+27 more)
+### Community 45 - "whatsapp/index.ts"
+Cohesion: 0.09
+Nodes (48): ROUTES, ago(), countryIn(), EN_THE, formatAnswer(), formatCompare(), formatDailyLimit(), formatForgotten() (+40 more)
 
 ### Community 46 - "RemitBridge: context for the Congressional App Challenge 2026"
 Cohesion: 0.17
@@ -397,21 +396,21 @@ Nodes (8): 6.1 Tier 1 — Launch (4 corridors), 6.2 Tier 2 — First expansion (
 Cohesion: 0.20
 Nodes (15): build(), copyrightLine(), docLayout(), escape(), files(), legalEntity(), loadConfig(), out (+7 more)
 
-### Community 53 - "webhook.test.ts"
-Cohesion: 0.05
-Nodes (42): BlogBlock, BlogPost, BLOG_IMAGES, linkTarget(), POSTS, relatedTo(), SERIES, SeriesId (+34 more)
+### Community 53 - "src/newsletter.test.ts"
+Cohesion: 0.10
+Nodes (20): env, handlers, issue, mail, people(), site, TOKEN(), env (+12 more)
 
 ### Community 54 - "Partner outreach: Seattle-area organizations"
 Cohesion: 0.33
 Nodes (5): Draft email, Log, Partner outreach: Seattle-area organizations, What to ask for, Who, and why
 
 ### Community 55 - "test_instarem.py"
-Cohesion: 0.27
-Nodes (17): InstaremAdapter, fixture(), _FourRoutes, parametrize, The Instarem adapter against real responses from its quote endpoint…, The adapter on the four routes the saved answers cover., raw(), req() (+9 more)
+Cohesion: 0.29
+Nodes (16): InstaremAdapter, fixture(), _FourRoutes, parametrize, The Instarem adapter against real responses from its quote endpoint…, The adapter on the four routes the saved answers cover., raw(), req() (+8 more)
 
 ### Community 56 - "useTheme"
-Cohesion: 0.10
-Nodes (34): QuoteDetail(), rate(), styles, AppTabs(), BarProps, CleanTabBar(), IosTabs(), styles (+26 more)
+Cohesion: 0.06
+Nodes (67): AlertScreen(), Step(), GlossaryScreen(), Word(), QuoteDetail(), rate(), styles, ActionCard() (+59 more)
 
 ### Community 57 - "send-rate-alerts.mjs"
 Cohesion: 0.17
@@ -425,13 +424,13 @@ Nodes (9): _clean(), extract(), main(), _median(), _num(), _pct(), _period_label
 Cohesion: 0.67
 Nodes (3): 1. Why this exists, The end goal, in one sentence, What "success" looks like in 12 months
 
-### Community 60 - "whatsapp/index.ts"
-Cohesion: 0.08
-Nodes (53): formatDailyLimit(), formatForgotten(), formatNotText(), formatPhotoLimit(), formatRateLimited(), formatRequested(), LINK, DELIVERY_WORDS (+45 more)
+### Community 60 - "receipt.ts"
+Cohesion: 0.13
+Nodes (24): DELIVERY_WORDS, DISCLOSURE_WORDS, formatReceiptAck(), formatReceiptFailed(), formatReceiptQuestion(), formatReceiptResult(), formatReceiptUnreadable(), FUNDING_WORDS (+16 more)
 
-### Community 61 - "scan.tsx"
-Cohesion: 0.07
-Nodes (50): RedactedPhoto(), ScanScreen(), Step, styles, Answers, canScan(), discardPhotoFiles(), measureSharpness() (+42 more)
+### Community 61 - "scan-screen.test.tsx"
+Cohesion: 0.06
+Nodes (46): ScanScreen(), canScan(), discardPhotoFiles(), measureSharpness(), MlKit, MlKitText, OcrOutcome, PreparedPhoto (+38 more)
 
 ### Community 62 - "To do"
 Cohesion: 0.15
@@ -441,21 +440,21 @@ Nodes (12): Claude, waiting on something, Content (Angad), Later, Legal, account
 Cohesion: 0.29
 Nodes (6): buildCommand, cleanUrls, headers, ignoreCommand, outputDirectory, rewrites
 
-### Community 65 - "app/_layout.tsx"
-Cohesion: 0.20
-Nodes (10): Navigator(), useAlertTaps(), useSessionEvents(), AccessibilityProvider(), BoldText, stackOptions(), useIsAdmin(), AuthContext (+2 more)
+### Community 65 - "bot/src/index.ts"
+Cohesion: 0.27
+Nodes (12): checkedAmountFor(), DeliveryMethod, AgentContext, Command, Language, Action, MAX_AMOUNT, NEW_STATE (+4 more)
 
 ### Community 66 - "make-icons.py"
 Cohesion: 0.40
 Nodes (3): mark(), Rebuild the app icons from the website mark: `python3 scripts/make-icons.py`…, Draw the mark so its 64-unit design fits `box` px (the favicon's own 64 grid),…
 
-### Community 67 - "RawResponse"
-Cohesion: 0.10
-Nodes (17): The shape of what this adapter reads: the envelope and Wise's own quotes. The…, Archive, archive_key(), AsyncClient, Protocol, The raw archive (PRD 9.1 principle 4): every response, compressed and…, Uploads to the private `raw-archive` bucket in Supabase Storage., SupabaseArchive (+9 more)
+### Community 67 - "cli.py"
+Cohesion: 0.12
+Nodes (19): archive_key(), AsyncClient, The raw archive (PRD 9.1 principle 4): every response, compressed and…, Uploads to the private `raw-archive` bucket in Supabase Storage., SupabaseArchive, _accept_drift(), _backends(), _fx() (+11 more)
 
-### Community 68 - "FieldValues"
-Cohesion: 0.29
-Nodes (6): confirmed(), expected, fields(), WU, Fixture, FieldValues
+### Community 68 - "learn-path.tsx"
+Cohesion: 0.22
+Nodes (9): CLOUDS, Halo(), LearnBackdrop(), LearnPath(), Node(), Ring(), styles, MODULE_ART (+1 more)
 
 ### Community 69 - "The four Tier 1 routes, Q1 2025"
 Cohesion: 0.25
@@ -465,33 +464,33 @@ Nodes (7): India (47 services surveyed), Median total cost of a $200 transfer, b
 Cohesion: 0.23
 Nodes (9): band(), ground(), light(), mark(), Render the website's backdrop art for the app: `python3 scripts/make-…, A round pen along the path: no seams where segments meet., The outlined mark, white on transparent, at `scale` px per viewBox unit., The resting light: color at `alpha` in the middle, nothing at 60% of 38rem. (+1 more)
 
-### Community 71 - "i18n/index.tsx"
-Cohesion: 0.08
-Nodes (32): PickRoute(), AlertLink(), cleanAmount(), Compare(), CompareScreen(), FundingPicker(), Notice(), styles (+24 more)
+### Community 71 - "src/agent.ts"
+Cohesion: 0.21
+Nodes (16): AgentResult, appPrompt(), humanize(), norm(), objectsIn(), readTurn(), runAgent(), strayLinks() (+8 more)
 
 ### Community 72 - "scripts/benchmark.ts"
 Cohesion: 0.06
-Nodes (50): f(), field(), byItem, imageFor(), leaks, lost, md, modes (+42 more)
+Nodes (50): f(), byItem, imageFor(), leaks, lost, md, modes, readAll() (+42 more)
 
 ### Community 73 - "Providers for manual research"
 Cohesion: 0.40
 Nodes (5): Checked 2026-10-01, nothing to automate, Neither forbidden nor automated, Not yet checked, Providers for manual research, Public datasets
 
-### Community 75 - "newsletter.ts"
-Cohesion: 0.24
-Nodes (10): NewsletterScreen(), newsletterStatus(), sendIssue(), SendResult, SentIssue, sentIssues(), setNewsletter(), subscriberCount() (+2 more)
+### Community 75 - "routes.ts"
+Cohesion: 0.12
+Nodes (23): AMOUNTS, DELIVERY_LABELS, Route, routeFor(), chainClient(), cloudflareClient(), DEFAULT_ANSWER_MODEL, groqChatClient() (+15 more)
 
-### Community 76 - "languages.ts"
-Cohesion: 0.24
-Nodes (10): AccountScreen(), LanguageProvider(), LanguageState, startingLanguage(), isReviewed(), Language, LanguageCode, LANGUAGES (+2 more)
+### Community 76 - "learn-games.test.ts"
+Cohesion: 0.26
+Nodes (12): Lesson(), resultFor(), boardDone(), costAnswer(), gameAccuracy(), gameDone(), gameReducer(), GameStep (+4 more)
 
 ### Community 79 - "remmy.ts"
-Cohesion: 0.07
-Nodes (37): saveComparison(), SavedComparison, SaveResult, DeliveryMethod, isScreen(), REMMY_MODES, REMMY_MODULES, REMMY_SCREENS (+29 more)
+Cohesion: 0.08
+Nodes (37): RemmyChat(), SaveResult, ALIAS_LIST, ALIASES, bare(), DeliveryMethod, fold(), isScreen() (+29 more)
 
-### Community 80 - "runner.py"
-Cohesion: 0.13
-Nodes (24): _cross_check(), _er_api(), _frankfurter(), FxUnavailable, _pct(), AsyncClient, Exception, Mid-market reference rates from two free sources, cross-checked (PRD 9.7 check… (+16 more)
+### Community 80 - "mock"
+Cohesion: 0.18
+Nodes (23): _cross_check(), _er_api(), fetch_mid_market(), _frankfurter(), FxUnavailable, _pct(), AsyncClient, Exception (+15 more)
 
 ### Community 81 - "local_migrations.sh"
 Cohesion: 0.67
@@ -499,11 +498,11 @@ Nodes (3): LC_ALL, run(), local_migrations.sh script
 
 ### Community 83 - "AI usage log"
 Cohesion: 0.08
-Nodes (24): 2026-09-30: merging `main` (the other session's languages and accessibility work), 2026-09-30: Phase 1, the gap report, 2026-09-30: Phase 2, data model, redaction, parser harness, model fallback, validation, 2026-09-30: Phase 3, confirmation screen, result screen, funding method, 2026-09-30: Phase 4, the accuracy benchmark and synthetic receipts, 2026-09-30: Phase 5, receipt photos on WhatsApp, 2026-09-30: Phase 6, the disclosure check and the receipt observatory, 2026-09-30: switching the model fallback to Groq's free tier (+16 more)
+Nodes (26): 2026-09-30: merging `main` (the other session's languages and accessibility work), 2026-09-30: Phase 1, the gap report, 2026-09-30: Phase 2, data model, redaction, parser harness, model fallback, validation, 2026-09-30: Phase 3, confirmation screen, result screen, funding method, 2026-09-30: Phase 4, the accuracy benchmark and synthetic receipts, 2026-09-30: Phase 5, receipt photos on WhatsApp, 2026-09-30: Phase 6, the disclosure check and the receipt observatory, 2026-09-30: switching the model fallback to Groq's free tier (+18 more)
 
 ### Community 84 - "PoliteClient"
-Cohesion: 0.15
-Nodes (20): fetch_mid_market(), One entry per quote currency: a cross-checked rate, or the reason there isn't…, PoliteClient, AsyncClient, mock(), test_a_wise_rate_with_a_markup_is_not_a_reference(), test_agreeing_sources_give_a_named_reference_rate(), test_disagreeing_sources_hold_the_pair() (+12 more)
+Cohesion: 0.20
+Nodes (8): PoliteClient, AsyncClient, parametrize, test_gives_up_after_max_attempts(), test_never_retries_when_told_to_stop(), test_retries_transient_errors_then_succeeds(), test_waits_between_requests_to_the_same_domain(), Response
 
 ### Community 85 - "README.md"
 Cohesion: 0.18
@@ -517,9 +516,9 @@ Nodes (17): Before launch, CAC submission (internal deadline Oct 23, official Oc
 Cohesion: 0.11
 Nodes (19): 2026-09-28: Angad's answers on partners, structure, and prices, 2026-09-28: during the first build slice, 2026-09-28: first round, after reading PRD v0.4, 2026-09-28: onboarding and the Compare controls, 2026-09-28: second round, 2026-09-28: third round, 2026-09-30: accessibility and languages, 2026-09-30: Phase 3 defaults (+11 more)
 
-### Community 88 - "account.tsx"
-Cohesion: 0.15
-Nodes (20): NameField(), styles, AccountButton(), HeroBackdrop(), HeroHeader(), StatusBarShield(), styles, CONTACT_EMAIL (+12 more)
+### Community 88 - "blog.tsx"
+Cohesion: 0.13
+Nodes (24): BlogPostScreen(), styles, BlogIndex(), styles, LearnScreen(), go(), Inline(), Linkified() (+16 more)
 
 ### Community 89 - "RemitBridge"
 Cohesion: 0.29
@@ -530,24 +529,24 @@ Cohesion: 0.33
 Nodes (5): Adapters, Adding an adapter, Engine, How a run works, Manual quotes
 
 ### Community 91 - "test_gate.py"
-Cohesion: 0.28
-Nodes (14): mid(), no_sleep(), gate(), make(), test_a_clean_quote_publishes(), test_captured_at_defaults_to_now(), test_huge_fee_is_held(), test_markup_over_15_percent_is_held() (+6 more)
+Cohesion: 0.42
+Nodes (11): gate(), make(), test_a_clean_quote_publishes(), test_captured_at_defaults_to_now(), test_huge_fee_is_held(), test_markup_over_15_percent_is_held(), test_provider_rounding_is_tolerated(), test_rate_well_above_mid_market_needs_a_promo_label() (+3 more)
 
 ### Community 93 - "extract/fields.ts"
-Cohesion: 0.11
-Nodes (45): deliveryIn(), extractAmountReceived(), extractAmountSent(), extractDeliveryMethod(), extractExchangeRate(), extractFee(), extractFundingMethod(), ExtractionContext (+37 more)
+Cohesion: 0.12
+Nodes (43): deliveryIn(), extractAmountReceived(), extractAmountSent(), extractDeliveryMethod(), extractExchangeRate(), extractFee(), extractFundingMethod(), extractPickupCharge() (+35 more)
 
-### Community 94 - "eval-ai.ts"
-Cohesion: 0.15
-Nodes (8): all, Labelled, messages, misses, out, report, samples, Understood
+### Community 94 - "receipt-result.tsx"
+Cohesion: 0.12
+Nodes (24): EASE_OUT, GENTLE, RISE_DELAYS, RISE_DISTANCE, RISE_DURATION, RISE_EASING, FocusRiseAnimated(), GrowBar() (+16 more)
 
 ### Community 95 - "Congressional App Challenge 2026: draft entry"
 Cohesion: 0.17
 Nodes (11): App name, Congressional App Challenge 2026: draft entry, Demo video script (about 2 minutes 45 seconds), How does it work?, One-line description, Technologies, Use of AI tools (disclose this), What did you learn? / What would you do next? (+3 more)
 
-### Community 97 - "src/agent.ts"
-Cohesion: 0.20
-Nodes (16): AgentResult, appPrompt(), humanize(), norm(), readTurn(), runAgent(), strayLinks(), strayNumbers() (+8 more)
+### Community 97 - "webhook.test.ts"
+Cohesion: 0.16
+Nodes (9): confirms, delivery(), dispatched, env, FIELDS, photo(), sent, signed() (+1 more)
 
 ### Community 98 - "CAC gap report: the receipt scanner and what goes with it"
 Cohesion: 0.33
@@ -561,9 +560,9 @@ Nodes (9): app, appCovers, assets, blogJs, { bodies }, coverFiles, images, out (
 Cohesion: 0.14
 Nodes (12): Real receipts (`receipts/`), Receipt reading benchmark, Running it, Synthetic receipts (`synthetic/`), What this does not tell you, By field (accuracy), Disclosure check, Receipt reading benchmark (+4 more)
 
-### Community 103 - "app/remmy.tsx"
-Cohesion: 0.09
-Nodes (28): NewsletterSwitch(), ActionCard(), Dot(), HeaderButton(), RemmyBubble(), RemmyChat(), SCREEN_ICON, screenTitle() (+20 more)
+### Community 103 - "FieldValues"
+Cohesion: 0.18
+Nodes (10): confirmed(), expected, fields(), WU, FundingMethod, DISCLOSURE_ITEMS, DisclosureResult, TEXT_SIGNS (+2 more)
 
 ### Community 104 - "Launch checklist: App Store and Google Play"
 Cohesion: 0.18
@@ -578,44 +577,44 @@ Cohesion: 0.14
 Nodes (13): 1. Your money, over a year: a personal remittance record, 2. A rights checker: "was this transfer done right?", 3. Scam shield on WhatsApp, 4. Community prices: receipts that help everyone, 5. Reaching people without smartphones or data, 6. Smarter alerts that state facts, not forecasts, 7. Tools for the organizations that serve senders, 8. Open data and a public price index (+5 more)
 
 ### Community 116 - "parse.ts"
-Cohesion: 0.10
-Nodes (25): ALIASES, CHECK, CURRENCY_TO_COUNTRY, ENGLISH, findAmount(), findMethod(), FORGET, HELP (+17 more)
+Cohesion: 0.09
+Nodes (27): Country, RECEIVING, SENDING, ALIASES, CHECK, CURRENCY_TO_COUNTRY, ENGLISH, findAmount() (+19 more)
 
-### Community 117 - "synthesize.ts"
-Cohesion: 0.20
-Nodes (8): count, first, IMAGES, LANG, OUT, require, ROOT, { values: args }
+### Community 117 - "notify-route-launch/index.ts"
+Cohesion: 0.21
+Nodes (7): cors, NAMES, cors, CONTACT_EMAIL, LEGAL_NAME, MAILING_ADDRESS, USER_AGENT
 
 ### Community 119 - "ai.ts"
-Cohesion: 0.09
-Nodes (36): RECEIVING, routeFor(), answer, ANSWER_PROMPT(), chainClient(), checkAnswer(), cloudflareClient(), COUNTRIES (+28 more)
+Cohesion: 0.07
+Nodes (35): all, Labelled, messages, misses, out, report, samples, AiClient (+27 more)
 
-### Community 121 - "observatory.ts"
-Cohesion: 0.38
-Nodes (5): fetchObservatory(), Observatory, ObservatoryGroup, DATA, fetchMock
+### Community 121 - "collection.py"
+Cohesion: 0.31
+Nodes (8): Prepare a reviewed CSV for the manual adapter; never writes to Supabase., prepare_collection(), datetime, Validate reviewed collection CSV rows before feeding the ordinary manual…, row(), test_missing_methods_currency_mismatch_and_old_quotes_stay_held(), test_promotional_quote_stays_labelled(), test_regular_terms_keep_original_date_and_promotional_evidence()
 
 ### Community 123 - "rate-alerts.ts"
-Cohesion: 0.22
-Nodes (9): AlertChannel, createAlert(), CreateResult, pushToken(), RateAlert, TokenResult, ALERT, mockInsert (+1 more)
+Cohesion: 0.19
+Nodes (11): AlertChannel, createAlert(), CreateResult, pushToken(), RateAlert, startingTarget(), targetStep(), TokenResult (+3 more)
 
-### Community 124 - "whatsapp-section.tsx"
-Cohesion: 0.44
-Nodes (9): WhatsAppSection(), formatNumber(), linkStatus, newLinkCode(), openChat(), signedInCall(), unlinkWhatsApp(), whatsAppSettings (+1 more)
+### Community 124 - "scan.tsx"
+Cohesion: 0.06
+Nodes (59): AccountScreen(), NameField(), styles, Navigator(), useAlertTaps(), useSessionEvents(), SavedScreen(), RedactedPhoto() (+51 more)
 
 ### Community 126 - "Security review (for Angad)"
 Cohesion: 0.22
 Nodes (8): 1. Changes already live (please review), 2. Changes waiting on your `supabase db push` (please review, then push), 3. Changes in the app (ship with the next build; please review), 4. Things only you can do, 4b. WhatsApp numbers (your yes, 2026-10-02), 4c. Limits on AI spending (your ask, 2026-10-02; D140), 5. Checked and fine (nothing to do, for your information), Security review (for Angad)
 
-### Community 130 - "scam-check.tsx"
-Cohesion: 0.33
-Nodes (6): Answer, ANSWERS, QUESTIONS, riskLabel(), ScamCheckScreen(), styles
+### Community 130 - "keys.ts"
+Cohesion: 0.28
+Nodes (6): RFC-8058, cors, service(), service(), fromDictionary(), secretKey()
 
 ### Community 131 - "Security and data protection"
 Cohesion: 0.40
 Nodes (4): Security and data protection, Still to do (people, not code), Threats and what stops them, What's sensitive
 
-### Community 132 - "experiments"
-Cohesion: 0.67
-Nodes (3): reactCompiler, typedRoutes, experiments
+### Community 132 - "suggestions.tsx"
+Cohesion: 0.25
+Nodes (7): fetchSuggestions(), FILTERS, Status, styles, Suggestion, SuggestionsScreen(), TextLink()
 
 ### Community 133 - "RemitBridge Labs: setting up the nonprofit"
 Cohesion: 0.25
@@ -633,9 +632,9 @@ Nodes (9): usesNonExemptEncryption, ios, associatedDomains, bundleIdentifier, co
 Cohesion: 0.29
 Nodes (7): allowBackup, intentFilters, package, permissions, predictiveBackGestureEnabled, android, android.permission.CAMERA
 
-### Community 143 - "module/[id].tsx"
-Cohesion: 0.11
-Nodes (25): LessonScreen(), MODE_ICONS, ModuleScreen(), styles, Word(), Finish(), Tile(), CLOUDS (+17 more)
+### Community 143 - "lesson/[id].tsx"
+Cohesion: 0.13
+Nodes (25): LessonScreen(), MatchBoard(), PriceCard(), Question(), rate(), receiptValue(), SAFETY_ICONS, styles (+17 more)
 
 ### Community 144 - "secure-session.ts"
 Cohesion: 0.11
@@ -643,15 +642,15 @@ Nodes (14): base64Bytes(), encryptionKey(), fromBase64(), fromUtf8(), open(), se
 
 ### Community 146 - "learn-progress.ts"
 Cohesion: 0.13
-Nodes (20): LearnScreen(), MODULES, GameMode, dayBefore(), learned, LearnStats, listeners, localDay() (+12 more)
+Nodes (18): Module, MODULES, GameMode, dayBefore(), learned, listeners, localDay(), markLearned() (+10 more)
 
-### Community 148 - "alert.tsx"
-Cohesion: 0.53
-Nodes (5): AlertScreen(), Step(), styles, startingTarget(), targetStep()
+### Community 148 - "pager-tabs.tsx"
+Cohesion: 0.40
+Nodes (3): BarProps, PagerTabs, styles
 
-### Community 149 - "api.ts"
-Cohesion: 0.07
-Nodes (39): page, RESULT, LANG, require, Comparison, ConfirmRequest, ConfirmResponse, isBox() (+31 more)
+### Community 149 - "OcrPage"
+Cohesion: 0.17
+Nodes (16): LIMITS, Call, ModelInput, Fixture, claim(), download(), fitLimits(), IntakeDeps (+8 more)
 
 ### Community 150 - "extra"
 Cohesion: 0.50
@@ -661,25 +660,21 @@ Nodes (4): projectId, extra, eas, router
 Cohesion: 0.50
 Nodes (4): plugins, expo-apple-authentication, expo-localization, expo-sqlite
 
-### Community 153 - "pager-tabs.tsx"
-Cohesion: 0.40
-Nodes (3): BarProps, PagerTabs, styles
+### Community 153 - "(tabs)/_layout.tsx"
+Cohesion: 0.32
+Nodes (6): ORDER, styles, swipe, AppTabs(), currentTab(), setSwipeDirection()
 
 ### Community 154 - "Scope: an AI model in the WhatsApp bot"
 Cohesion: 0.18
 Nodes (10): Feature suggestions, How we'd know it works, Questions for Angad, Rules it has to keep, Scope: an AI model in the WhatsApp bot, What changes, What it can link to, What the bot does today (+2 more)
 
 ### Community 155 - "send-newsletter/index.ts"
-Cohesion: 0.12
-Nodes (15): RFC-8058, cors, cors, NAMES, cors, service(), cors, Recipient (+7 more)
+Cohesion: 0.21
+Nodes (9): buildEmail(), Built, escape(), Issue, paragraphHtml(), paragraphs(), Sender, cors (+1 more)
 
-### Community 156 - "email.ts"
-Cohesion: 0.39
-Nodes (7): buildEmail(), Built, escape(), Issue, paragraphHtml(), paragraphs(), Sender
-
-### Community 160 - "cli.py"
-Cohesion: 0.38
-Nodes (9): _accept_drift(), _backends(), _fx(), _health(), main(), AsyncClient, rb-engine: the command the scheduled workflows run. rb-engine run [--adapter ID…, _run() (+1 more)
+### Community 156 - "reading.ts"
+Cohesion: 0.43
+Nodes (6): BlogPost, Assignment, readingFor(), TERMS_BY_POST, termsIn(), textOf()
 
 ### Community 162 - "apple.ts"
 Cohesion: 0.31
@@ -690,36 +685,32 @@ Cohesion: 0.40
 Nodes (5): backgroundColor, backgroundImage, foregroundImage, monochromeImage, adaptiveIcon
 
 ### Community 167 - "sign-in.ts"
-Cohesion: 0.36
-Nodes (8): appleAuthorizationCode(), friendly(), providerEnabled(), Result, signInWithApple(), signInWithGoogle(), signInWithGoogleNative(), verifyEmailCode()
+Cohesion: 0.42
+Nodes (7): friendly(), providerEnabled(), Result, signInWithApple(), signInWithGoogle(), signInWithGoogleNative(), verifyEmailCode()
 
-### Community 173 - "quotes.ts"
-Cohesion: 0.20
-Nodes (15): atAmount(), fetchQuote(), fetchQuotes(), fromCache(), HistoryPoint, LatestQuote, nearest(), numeric() (+7 more)
-
-### Community 178 - "computeTransferCost"
-Cohesion: 0.16
-Nodes (20): computeTransferCost(), REMITTANCE_TAX_FROM, REMITTANCE_TAX_SMALL, roundingTolerance(), Amounts, feeIncluded(), INSIDE, totalPaidBy() (+12 more)
+### Community 178 - "scan-receipt/index.ts"
+Cohesion: 0.07
+Nodes (53): costOf(), NewCheck, SaveCheckError, SavedCheck, computeTransferCost(), FUNDING_METHODS, MATH_TOLERANCE_ABS, MATH_TOLERANCE_REL (+45 more)
 
 ## Knowledge Gaps
-- **913 isolated node(s):** `H`, `COUNTRY`, `TEXT`, `whatsapp`, `push` (+908 more)
+- **955 isolated node(s):** `H`, `COUNTRY`, `TEXT`, `whatsapp`, `push` (+950 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **41 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **42 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useTheme()` connect `useTheme` to `scam-check.tsx`, `metrics.tsx`, `module/[id].tsx`, `learn-progress.ts`, `alert.tsx`, `lesson/[id].tsx`, `useCopy`, `admin.tsx`, `illustrations.tsx`, `track`, `ui.tsx`, `expo-router`, `scan.tsx`, `app/_layout.tsx`, `i18n/index.tsx`, `newsletter.ts`, `languages.ts`, `account.tsx`, `app/remmy.tsx`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **Why does `expo-router` connect `expo-router` to `app/_layout.tsx`, `pager-tabs.tsx`, `ui.tsx`, `app/remmy.tsx`, `i18n/index.tsx`, `module/[id].tsx`, `whatsapp-section.tsx`, `remmy.ts`, `alert.tsx`, `lesson/[id].tsx`, `webhook.test.ts`, `useCopy`, `plugins`, `admin.tsx`, `useTheme`, `account.tsx`, `illustrations.tsx`, `track`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Why does `plugins` connect `plugins` to `expo`, `expo-router`?**
+- **Why does `useTheme()` connect `useTheme` to `metrics.tsx`, `ui.tsx`, `suggestions.tsx`, `i18n/index.tsx`, `learn-path.tsx`, `learn-games.test.ts`, `illustrations.tsx`, `lesson/[id].tsx`, `remmy.ts`, `quotes.ts`, `track`, `admin.tsx`, `receipt-result.tsx`, `blog.tsx`, `scan.tsx`, `scan-screen.test.tsx`, `true-cost.tsx`?**
+  _High betweenness centrality (0.037) - this node is a cross-community bridge._
+- **Why does `expo-router` connect `ui.tsx` to `lesson.ts`, `(tabs)/_layout.tsx`, `i18n/index.tsx`, `lesson/[id].tsx`, `remmy.ts`, `receipt-result.tsx`, `pager-tabs.tsx`, `track`, `plugins`, `admin.tsx`, `useTheme`, `blog.tsx`, `scan.tsx`, `true-cost.tsx`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+- **Why does `plugins` connect `plugins` to `ui.tsx`, `expo`?**
   _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **What connects `H`, `COUNTRY`, `TEXT` to the rest of the system?**
-  _913 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _955 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Handoff` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `types.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.1054421768707483 - nodes in this community are weakly interconnected._
 - **Should `LocalStore` be split into smaller, more focused modules?**
-  _Cohesion score 0.07716701902748414 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08292682926829269 - nodes in this community are weakly interconnected._

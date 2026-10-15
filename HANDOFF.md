@@ -12,7 +12,7 @@ briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
 - Angad authorized publication of the reviewed collection and seven-day intake from original observation. The Supabase import contains 425 rows: 379 verified, 5 incomplete, 39 skipped, 2 superseded.
 - Local CSV matched the database fingerprint (379 verified rows). Preparation accepted 310 and held 69 verified rows with missing methods or route/payout-currency mismatches; all 46 nonverified rows remain excluded.
-- Local engine preview: 282 published, 16 quarantined, 12 Uganda rows held for disagreeing reference sources, zero arithmetic rejects. Production publication is being run through the existing Manual prices workflow.
+- Local engine preview: 282 published, 16 quarantined, 12 Uganda rows held for disagreeing reference sources, zero arithmetic rejects. Production publication completed through the push-triggered Scrape workflow (run 38675351253): 282 published, 16 quarantined, 12 Uganda FX holds. Public Compare confirms 279 visible manual quotes across six providers; three published observations are superseded by newer matching quotes. CI 38675351390 passed.
 
 ## 2026-10-13: ChatGPT resumes, Hindi approved, Android Remmy testing
 
