@@ -71,7 +71,7 @@ export const vi: Copy = {
     noAnswer: 'Mình chưa có câu trả lời cho điều đó.',
     offline: 'Mình không kết nối được. Kiểm tra mạng rồi thử lại nhé.',
     retry: 'Thử lại',
-    privacy: 'AI có thể trả lời sai. Đừng chia sẻ thông tin cá nhân hay ngân hàng.',
+    privacy: 'Đây không phải là lời khuyên tài chính. AI có thể trả lời sai. Đừng chia sẻ thông tin cá nhân hay ngân hàng.',
     aiTitle: 'Gửi đến dịch vụ AI?',
     aiBody: 'Tin nhắn, lịch sử trò chuyện gần đây và dữ liệu RemitBridge liên quan được gửi qua máy chủ của chúng tôi đến Cloudflare hoặc Groq để trả lời bạn. Chúng tôi không lưu cuộc trò chuyện hay dùng để huấn luyện mô hình. Máy chủ cũng nhận mã cài đặt, ngôn ngữ và nền tảng để vận hành và giới hạn sử dụng. Góp ý và báo cáo bạn gửi được lưu riêng. Đừng nhập thông tin riêng tư.',
     aiAllow: 'Cho phép',

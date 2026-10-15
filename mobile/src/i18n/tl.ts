@@ -72,7 +72,7 @@ export const tl: Copy = {
     noAnswer: 'Wala pa akong sagot diyan.',
     offline: 'Hindi ako makakonekta. Tingnan ang internet at subukan ulit.',
     retry: 'Subukan ulit',
-    privacy: 'Maaaring mali ang sagot ng AI. Huwag magbahagi ng pribadong detalye o detalye ng bangko.',
+    privacy: 'Hindi ito payong pinansyal. Maaaring mali ang sagot ng AI. Huwag magbahagi ng pribadong detalye o detalye ng bangko.',
     aiTitle: 'Ipadala sa isang AI service?',
     aiBody: 'Ang mensahe mo, kamakailang chat at kaugnay na datos ng RemitBridge ay dumadaan sa aming server papunta sa Cloudflare o Groq para sumagot. Hindi namin iniimbak ang mga chat o ginagamit para sanayin ang mga modelo. Tumatanggap din ang server ng install ID, wika at platform para sa serbisyo at mga limitasyon. Hiwalay na iniimbak ang mga mungkahi at ulat na ipinapadala mo. Huwag magsama ng pribadong detalye.',
     aiAllow: 'Payagan',

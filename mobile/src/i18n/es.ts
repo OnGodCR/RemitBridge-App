@@ -71,7 +71,7 @@ export const es: Copy = {
     noAnswer: 'Todavía no tengo una respuesta para eso.',
     offline: 'No pude conectarme. Revisa tu internet e inténtalo de nuevo.',
     retry: 'Intentar de nuevo',
-    privacy: 'La IA puede equivocarse. No compartas datos personales ni bancarios.',
+    privacy: 'No es asesoramiento financiero. La IA puede equivocarse. No compartas datos personales ni bancarios.',
     aiTitle: '¿Enviar a un servicio de IA?',
     aiBody: 'Tu mensaje, el historial reciente y datos relevantes de RemitBridge pasan por nuestro servidor a Cloudflare o Groq para responderte. No guardamos chats ni los usamos para entrenar modelos. Nuestro servidor también recibe un ID de instalación, idioma y plataforma para operar y limitar el uso. Las sugerencias y los informes enviados se guardan aparte. No incluyas datos privados.',
     aiAllow: 'Permitir',

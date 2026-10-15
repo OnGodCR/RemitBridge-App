@@ -77,7 +77,7 @@ export const en = {
     noAnswer: 'I don’t have an answer for that yet.',
     offline: 'I couldn’t connect. Check your internet and try again.',
     retry: 'Try again',
-    privacy: 'AI answers can be wrong. Don’t share personal or bank details.',
+    privacy: 'Not financial advice. AI answers can be wrong. Don’t share personal or bank details.',
     aiTitle: 'Send to an AI service?',
     aiBody: 'Your message, recent chat history and relevant RemitBridge data go through our server to Cloudflare or Groq to answer you. We do not store chats or use them to train models. Our server also receives an install ID, language and platform for operation and limits. Suggestions and reports you submit are kept separately. Do not include private details.',
     aiAllow: 'Allow',

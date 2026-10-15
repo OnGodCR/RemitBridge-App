@@ -1098,3 +1098,12 @@ Prior approval is preserved. Angad confirmed review and approval of the added ro
 | remmy.reportFailed | Could not send report. Try again later. | रिपोर्ट नहीं भेज सके। बाद में फिर कोशिश करें। | | NEW/CHANGED 2026-10-14 |
 
 Review confirmation, 2026-10-14: Angad confirmed item #4 complete, covering the new consent/reporting strings and RemitBridge choice label. Earlier dated row markers are retained as change history.
+
+
+## Remmy advice disclaimer, 2026-10-15
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| remmy.privacy | Not financial advice. AI answers can be wrong. Don’t share personal or bank details. | यह वित्तीय सलाह नहीं है। AI के जवाब गलत हो सकते हैं। निजी या बैंक की जानकारी न लिखें। | | CHANGED 2026-10-15; review pending |
+
+Prior approvals are preserved; only the added disclaimer needs fresh review.

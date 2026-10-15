@@ -691,3 +691,10 @@ Vitest security patches; 785 tests, typecheck/lint/site checks pass, Expo Doctor
 Remaining full-workspace dependency advisories and all unperformed release steps are in the
 publication audit/checklist. No legal approval, production deployment, account creation,
 paid build or submission is claimed. Existing Hindi approvals preserved, new rows appended.
+
+
+## 2026-10-15: Remmy advice disclaimer
+
+At Angad's request, ChatGPT added "Not financial advice" to the existing Remmy welcome
+and persistent chat notice in all five language files. Existing notice placement is reused.
+The changed Hindi row was appended for review without altering earlier approvals.

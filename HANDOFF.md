@@ -3,10 +3,16 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-14 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-15 (see the sections just below; the older status after them is kept for history)
 
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-15: visible Remmy advice disclaimer
+
+At Angad's request, added "Not financial advice" to Remmy's existing localized notice.
+It appears on the welcome screen and stays visible during chats. Updated all five
+languages; appended only the changed Hindi row for fresh review. No backend changes.
 
 ## 2026-10-14: Android feature testing passed
 
