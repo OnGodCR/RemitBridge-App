@@ -104,6 +104,11 @@ No paid build, account purchase or store submission is authorized by checking of
 
 ## Device acceptance checks
 
+- [x] Android feature testing: Angad confirmed on 2026-10-14 that all new features were
+  tested and work perfectly. This is user-reported feature validation in the existing
+  Android setup; final Play-installed and iPhone acceptance checks remain below.
+
+
 - [ ] Cold start and reload on real iPhone/Android, Wi-Fi and mobile data, with no Metro server.
 - [ ] Compare: bank funding only; standard ranking and choice reflect largest payout;
   promotions separate; details show source/original time; estimates labelled; expired prices absent.

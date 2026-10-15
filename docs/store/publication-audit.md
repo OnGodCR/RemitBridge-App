@@ -95,3 +95,10 @@ Its concrete update brief is [website-handoff.md](website-handoff.md).
 - [Groq Your Data](https://console.groq.com/docs/your-data): ZDR content versus retained usage metadata.
 - [Expo SDK 57](https://docs.expo.dev/versions/v57.0.0/) and local Expo Doctor.
 - [Vitest 4 migration](https://v4.vitest.dev/guide/migration.html).
+
+## Subsequent Android feedback, 2026-10-14
+
+Angad confirmed that he tested all new features on Android and everything works perfectly.
+This is user-reported Android feature acceptance, not independent verification of the full
+release matrix or evidence from a Play-installed production build. iPhone and final signed
+production-build tests remain required.
