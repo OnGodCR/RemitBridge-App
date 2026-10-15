@@ -543,8 +543,8 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - Use the terminology table in PRD 14.4: *mid-market rate*, *exchange-rate
   markup*, *total cost*, *amount received*, *provider*. Say *route* in the UI and
   *corridor* in docs and research.
-- Plain words and short sentences. No hype: never "Best deal!". The top result
-  is "Most to your family", not "Best".
+- Plain words and short sentences. No hype: never "Best deal!". The top standard result
+  is "RemitBridge choice" (D179), ranked only by amount received.
 - Every figure names its source and when it was checked. Every tool gets a
   "What this does not tell you" section.
 

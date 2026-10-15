@@ -8,6 +8,12 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-14: unified Compare ranking and RemitBridge choice (D179)
+
+- Eligible manual prices share the standard ranking instead of an Older prices section. Top standard payout is labelled RemitBridge choice. Promotions remain separate.
+- Collection time is removed from Compare cards; quote details show the original date/time and source. Seven-day manual expiry remains.
+- Badge translations updated in all five languages; new Hindi review row appended manually.
+
 ## 2026-10-14: Remmy replay fixed and Compare funding simplified (D178)
 
 - Remmy action execution is tracked with the session conversation by message ID and action index. Reopening the sheet no longer repeats the last navigation; a fresh prompt can run the same command. A regression test unmounts/reopens the chat and verifies both behaviors.

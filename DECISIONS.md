@@ -2278,3 +2278,11 @@ clarified "I meant bank-account funding only"). Remove the payment-method select
 show the existing bank-account label as plain text. Keep filtering actual quote
 payment_method values; never relabel debit-card or credit-card quotes as bank-funded.
 Receipt analysis and manual cost calculators still describe the transfer actually entered.
+
+
+**D179. Eligible manual prices share the regular ranking; collection time is in details**
+(Angad, 2026-10-14). Remove the Older prices section and rank all eligible standard
+quotes by amount received. The highest standard payout is labelled RemitBridge choice,
+including when there is only one result. First-transfer offers remain labelled separately.
+Compare cards omit collection time and stale labels; opening a quote shows its original
+collection date/time and source. Existing seven-day manual expiry and publish checks remain.

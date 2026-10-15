@@ -121,3 +121,6 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] Fix Remmy repeating its last navigation when chat reopens; regression test covers reopening and a fresh prompt.
 - [x] Compare uses only bank-account-funded quotes, with no payment-method selector (D178).
 - [ ] Confirm on Android: ask Remmy to open account settings, reopen Remmy, then send another command; check Compare shows bank-account funding only.
+
+- [x] Unify eligible Compare prices and label the top standard payout RemitBridge choice; collection date/time is in quote details (D179).
+- [ ] Hindi review: changed RemitBridge choice badge row appended 2026-10-14.

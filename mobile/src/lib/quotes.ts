@@ -86,7 +86,7 @@ export type QuotesResult =
       kind: 'ok';
       standing: LatestQuote[];
       promotional: LatestQuote[];
-      /** Hand-checked prices more than 48 hours old, ranked apart (D144). */
+      /** Legacy bucket, empty now that eligible prices share one ranking (D179). */
       older: LatestQuote[];
       /** Set when the network failed and these are the prices kept from the last visit. */
       savedAt?: string;
@@ -181,16 +181,15 @@ function fromCache(key: string): QuotesResult | null {
 /**
  * Ranked by amount received, never by fee (PRD 5.1). Promotional first-transfer rates are
  * ranked apart from standing rates (PRD 9.7 check 6), so a one-time offer can't sit on
- * top of the list as if it were the ongoing price. Hand-checked prices more than 48 hours
- * old are ranked apart too (D144), so a price from days ago can't outrank a current one.
+ * top of the list as if it were the ongoing price. Eligible hand-checked prices share
+ * the standard ranking regardless of age; their collection times appear in quote details.
  */
 export function rank(quotes: LatestQuote[]): { standing: LatestQuote[]; promotional: LatestQuote[]; older: LatestQuote[] } {
   const byReceived = (a: LatestQuote, b: LatestQuote) => b.amount_received - a.amount_received;
-  const current = quotes.filter((q) => !q.is_older);
   return {
-    standing: current.filter((q) => !q.is_promotional).sort(byReceived),
-    promotional: current.filter((q) => q.is_promotional).sort(byReceived),
-    older: quotes.filter((q) => q.is_older).sort(byReceived),
+    standing: quotes.filter((q) => !q.is_promotional).sort(byReceived),
+    promotional: quotes.filter((q) => q.is_promotional).sort(byReceived),
+    older: [],
   };
 }
 

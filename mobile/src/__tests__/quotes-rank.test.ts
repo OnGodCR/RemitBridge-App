@@ -36,13 +36,13 @@ test('one price per provider: current over older, then nearest, then newest', ()
   expect(rows.map((r) => r.id).sort()).toEqual([2, 4, 6]);
 });
 
-test('older prices are ranked apart and never above a current one', () => {
+test('all eligible standard prices rank by amount received regardless of age', () => {
   const r = rank([
     q({ id: 1, amount_received: 41000, is_older: true }),
     q({ id: 2, provider_id: 'wise', amount_received: 40000 }),
     q({ id: 3, provider_id: 'xoom', amount_received: 42000, is_promotional: true }),
   ]);
-  expect(r.standing.map((x) => x.id)).toEqual([2]);
+  expect(r.standing.map((x) => x.id)).toEqual([1, 2]);
   expect(r.promotional.map((x) => x.id)).toEqual([3]);
-  expect(r.older.map((x) => x.id)).toEqual([1]);
+  expect(r.older).toEqual([]);
 });

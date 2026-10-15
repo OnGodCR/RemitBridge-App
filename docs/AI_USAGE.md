@@ -672,3 +672,9 @@ Angad reported repeated Remmy navigation and clarified bank-account-only price c
 ChatGPT added session-level action execution tracking, a chat reopen regression test,
 and replaced Compare’s funding selector with the existing localized bank-account label.
 No prices were relabelled or translation wording changed.
+
+## 2026-10-14: unified price ranking
+
+At Angad’s request, ChatGPT removed the Older prices section, ranked eligible prices
+together, added the RemitBridge choice label in five languages and moved collection time
+to quote details. Ranking regression coverage changed; original timestamps and expiry stay.

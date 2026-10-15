@@ -235,7 +235,7 @@ export const en = {
     offlineBody: (ago: string) => `Prices from your last visit, ${ago}.`,
     offlineNothing: 'You’re offline, and nothing is saved for this yet.',
     summary: (low: string, high: string) => `${low} to ${high} arrives, depending on the provider.`,
-    mostToFamily: 'Most to your family',
+    mostToFamily: 'RemitBridge choice',
     promotion: 'Promotion',
     firstTransferOffers: 'First-transfer offers',
     olderPrices: 'Older prices',

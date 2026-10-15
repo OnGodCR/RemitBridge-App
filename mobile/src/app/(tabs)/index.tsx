@@ -333,8 +333,8 @@ function Results({
         <RiseIn key={q.id} index={i}>
           <QuoteCard
             quote={q}
-            featured={i === 0 && standing.length > 1}
-            highlight={i === 0 && standing.length > 1 ? copy.compare.mostToFamily : undefined}
+            featured={i === 0}
+            highlight={i === 0 ? copy.compare.mostToFamily : undefined}
             onPress={() => open(q)}
           />
         </RiseIn>
@@ -346,21 +346,6 @@ function Results({
           </AppText>
           {promotional.map((q) => (
             <QuoteCard key={q.id} quote={q} highlight={copy.compare.promotion} onPress={() => open(q)} />
-          ))}
-        </>
-      ) : null}
-      {/* Hand-checked prices past 48 hours (D144): below everything current, ranked among
-          themselves, each card still saying "Stale" and when it was checked. */}
-      {older.length > 0 ? (
-        <>
-          <AppText variant="heading" style={styles.promoHeading}>
-            {copy.compare.olderPrices}
-          </AppText>
-          <AppText variant="small" muted>
-            {copy.compare.olderNote}
-          </AppText>
-          {older.map((q) => (
-            <QuoteCard key={q.id} quote={q} highlight={q.is_promotional ? copy.compare.promotion : undefined} onPress={() => open(q)} />
           ))}
         </>
       ) : null}

@@ -251,7 +251,7 @@ export const tl: Copy = {
     offlineBody: (ago) => `Mga presyo mula sa huling bisita mo, ${ago}.`,
     offlineNothing: 'Offline ka, at wala pang naka-save para dito.',
     summary: (low, high) => `${low} hanggang ${high} ang matatanggap, depende sa provider.`,
-    mostToFamily: 'Pinakamalaki sa pamilya mo',
+    mostToFamily: 'Pinili ng RemitBridge',
     promotion: 'Promo',
     firstTransferOffers: 'Mga alok sa unang padala',
     olderPrices: 'Mas lumang presyo',

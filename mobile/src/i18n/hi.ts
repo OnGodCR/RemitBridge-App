@@ -251,7 +251,7 @@ export const hi: Copy = {
     offlineBody: (ago) => `आपकी पिछली विज़िट की कीमतें, ${ago}।`,
     offlineNothing: 'आप ऑफ़लाइन हैं, और इसके लिए अभी कुछ सेव नहीं है।',
     summary: (low, high) => `कंपनी के हिसाब से ${low} से ${high} तक पहुँचते हैं।`,
-    mostToFamily: 'परिवार को सबसे ज़्यादा पैसे',
+    mostToFamily: 'RemitBridge की पसंद',
     promotion: 'ऑफ़र',
     firstTransferOffers: 'पहली बार भेजने के ऑफ़र',
     olderPrices: 'पुरानी कीमतें',

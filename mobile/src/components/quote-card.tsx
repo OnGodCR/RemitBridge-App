@@ -4,7 +4,7 @@ import { Arrow } from '@/components/list-row';
 import { AppText, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { agoIn, useCopy } from '@/i18n';
+import { useCopy, useLanguage } from '@/i18n';
 import { money, moneySpoken, pct } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
 import { GrowIn } from '@/components/motion-views';
@@ -59,7 +59,6 @@ export function QuoteCard({
 
       <View style={styles.footer}>
         <View style={styles.flex}>
-          <FreshnessBadge quote={q} showSource={false} />
           {q.basedOn !== null ? (
             <AppText variant="small" muted>
               {copy.quote.estimatedFrom(money(q.basedOn, q.send_currency).replace('.00', ''))}
@@ -132,23 +131,18 @@ export function CostBreakdownBar({ quote: q }: { quote: LatestQuote }) {
   );
 }
 
-/**
- * "Checked 3h ago · Public calculator" (PRD 14.6): freshness and source in one line.
- * Stale gets a word, never colour alone. The mid-market source is in the accessibility
- * label and on How it works. On Compare's cards the source is left off (Angad,
- * 2026-10-01: less text); the quote's own screen, a tap away, still names it.
- */
+/** Collection date, time and source, shown after opening a quote. */
 export function FreshnessBadge({ quote, showSource = true }: { quote: LatestQuote; showSource?: boolean }) {
   const t = useTheme();
   const copy = useCopy();
-  const checked = copy.time.checked(agoIn(copy, quote.captured_at));
+  const { language } = useLanguage();
+  const checked = copy.time.checked(new Date(quote.captured_at).toLocaleString(language.locale));
   const source = copy.quote.sources[quote.source] ?? quote.source;
   return (
     <AppText
       variant="small"
-      style={{ color: quote.is_stale ? t.stale : t.textSecondary }}
-      accessibilityLabel={copy.quote.spokenFreshness(quote.is_stale, checked, source, quote.mid_market_source)}>
-      {quote.is_stale ? `${copy.quote.stale} · ` : ''}
+      style={{ color: t.textSecondary }}
+      accessibilityLabel={copy.quote.spokenFreshness(false, checked, source, quote.mid_market_source)}>
       {showSource ? `${checked} · ${source}` : checked}
     </AppText>
   );

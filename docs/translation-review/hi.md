@@ -1078,3 +1078,5 @@ pieces in code, so ask Claude for a separate sheet of example replies.
 | remmy.totalCost | {p}% cost | {p}% लागत | | NEW 2026-10-13
 
 Review confirmation, 2026-10-13: Angad confirmed in writing that his mother reviewed everything and it looks good, including the Learn games and Remmy rows above. No translation changes requested.
+
+| compare.mostToFamily | RemitBridge choice | RemitBridge की पसंद | | CHANGED 2026-10-14 |

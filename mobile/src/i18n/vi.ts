@@ -250,7 +250,7 @@ export const vi: Copy = {
     offlineBody: (ago) => `Giá từ lần xem trước, ${ago}.`,
     offlineNothing: 'Bạn đang ngoại tuyến và chưa có gì được lưu cho mục này.',
     summary: (low, high) => `Nhận được từ ${low} đến ${high}, tùy công ty.`,
-    mostToFamily: 'Gia đình nhận nhiều nhất',
+    mostToFamily: 'Lựa chọn của RemitBridge',
     promotion: 'Khuyến mãi',
     firstTransferOffers: 'Ưu đãi cho lần gửi đầu tiên',
     olderPrices: 'Giá cũ hơn',

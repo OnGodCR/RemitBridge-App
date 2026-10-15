@@ -251,7 +251,7 @@ export const es: Copy = {
     offlineBody: (ago) => `Precios de tu última visita, ${ago}.`,
     offlineNothing: 'Estás sin conexión y aún no hay nada guardado para esto.',
     summary: (low, high) => `Llegan entre ${low} y ${high}, según la empresa.`,
-    mostToFamily: 'Más para tu familia',
+    mostToFamily: 'Elección de RemitBridge',
     promotion: 'Promoción',
     firstTransferOffers: 'Ofertas para el primer envío',
     olderPrices: 'Precios anteriores',
