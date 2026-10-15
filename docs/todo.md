@@ -8,9 +8,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
-- [ ] **Waiting on D&B**: case #11089990; D&B confirmed on 2026-10-12 that the number comes in 24 to 48 hours. The D-U-N-S number gates both stores.
-- [ ] **Apple account to an organization**: once the D-U-N-S arrives, your dad asks Apple Developer Support to convert it to RemitBridge Labs.
-- [ ] **Google Play organization account**: in RemitBridge Labs' name, with the D-U-N-S ($25 once).
+- [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
+- [ ] **Apple organization conversion approval**: request submitted by Angad 2026-10-14; waiting for Apple.
+- [ ] **Google Play organization verification**: Angad is completing it as of 2026-10-14; approval pending.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
 - [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
@@ -123,8 +123,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] Confirm on Android: ask Remmy to open account settings, reopen Remmy, then send another command; check Compare shows bank-account funding only.
 
 - [x] Unify eligible Compare prices and label the top standard payout RemitBridge choice; collection date/time is in quote details (D179).
-- [ ] Hindi review: changed RemitBridge choice badge row appended 2026-10-14.
+- [x] Hindi review: changed choice badge and new consent/report strings approved, confirmed by Angad 2026-10-14.
 
 - [x] Update privacy/terms/support/store drafts and add Remmy reply reporting (D180).
 - [ ] Publication gates and remaining dependency assessment: docs/launch-checklist.md.
-- [ ] Operator deploys remmy and whatsapp with D180 before new production builds.
+- [x] remmy v11 and whatsapp v41 deployed and smoke-tested after Angad authorized Codex to deploy them.

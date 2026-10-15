@@ -26,12 +26,14 @@ Older checked items are not proof that the latest version passed release testing
   No database migration is needed: reports use the existing `suggestions` table.
 - [ ] Confirm report arrives in suggestions with prefix `[Remmy report]`, source `app`,
   text/language/date only. Cancel sends nothing. Network/server failure stays retryable.
-- [ ] Assign a RemitBridge admin to review that inbox, address harmful outputs and remove
-  reports/suggestions when no longer needed. New chat/account deletion do not delete them.
-- [ ] Verify public app-domain privacy/terms/support pages after deployment and without
-  login. Check the support mailbox can receive and reply to deletion/support requests.
-- [ ] Recheck Groq zero-data-retention setting and Cloudflare production configuration.
-  Confirm logs contain no raw prompts, replies, receipt text or unexpected personal data.
+- [x] Angad is responsible for reviewing Remmy reports/suggestions and acting on harmful
+  outputs or obsolete records (confirmed 2026-10-14). New chat/account deletion do not delete them.
+- [x] Public privacy/terms/support pages verified live without login; Angad confirmed the
+  support mailbox receives mail and can reply (2026-10-14).
+- [x] Angad confirmed account two-factor authentication and Groq zero-data-retention
+  setting (2026-10-14).
+- [ ] Verify Cloudflare production configuration and inspect production logs for raw prompts,
+  replies, receipt text or unexpected personal data.
 - [ ] Resolve or formally assess remaining dependency advisories: 70 full-workspace npm
   findings (54 high, 16 moderate, zero critical). See the audit; Expo Doctor is not a
   vulnerability or signed-bundle scan.
@@ -53,9 +55,11 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
 
 ## Organization and console gates: Angad/account holder
 
-- [ ] Receive D-U-N-S for RemitBridge Labs (case 11089990; last user update: not received).
-- [ ] Complete Apple organization conversion and Google Play organization verification.
-  Confirm seller/legal name is RemitBridge Labs before publication.
+- [x] D-U-N-S received for RemitBridge Labs, confirmed by Angad 2026-10-14 (case 11089990).
+- [x] Apple organization-conversion request submitted by Angad (2026-10-14).
+- [ ] Apple approves/completes organization conversion.
+- [ ] Google Play organization verification: Angad is completing verification (2026-10-14).
+  Confirm approval and seller/legal name RemitBridge Labs before publication.
 - [ ] Create/verify store app records for `org.remitbridgelabs.app`, intended US availability,
   agreements, reviewer contact and access instructions. No account was created in this audit.
 - [ ] Complete current Apple privacy/age questionnaire and Play Data safety, financial
@@ -63,8 +67,8 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
   Do not use the old blanket 4+ or no-financial-features instructions.
 - [ ] Owner/legal review of the revised privacy and terms, still marked draft in source.
   A code audit does not verify enforceability, jurisdictional disclosures or liability clauses.
-- [ ] Review new Hindi consent/report strings and the changed choice label with a fluent
-  reader. Prior Hindi approval predates these additions. Spanish/Tagalog/Vietnamese remain drafts.
+- [x] New Hindi consent/report strings and changed choice label reviewed and approved,
+  confirmed by Angad 2026-10-14. Spanish/Tagalog/Vietnamese remain drafts.
 - [ ] Separate marketing website owner applies [website-handoff.md](store/website-handoff.md).
   This checkout's rules prohibit editing/deploying that separate repository from here.
 

@@ -8,6 +8,15 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-14: Angad confirms publication prerequisites
+
+D-U-N-S received; Apple organization-conversion request submitted, approval pending.
+Google Play verification is in progress, not yet confirmed approved. Angad confirmed the
+new Hindi additions/choice label review, support mailbox test and his role as reports
+reviewer, plus account two-factor authentication and Groq zero-data-retention setting.
+These confirmations do not mark legal review, device/build tests, report-delivery smoke
+checks, Cloudflare configuration/log inspection or store submission complete.
+
 ## 2026-10-14: production deployment explicitly authorized
 
 Angad asked Codex to deploy the two functions. remmy v11 and whatsapp v41 deployed

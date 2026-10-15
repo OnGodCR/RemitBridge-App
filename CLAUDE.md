@@ -213,10 +213,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       - [x] Meta business verification submitted 2026-10-08 as an Institution; **Meta emailed
         "Verification successful for REMITBRIDGE LABS" the same evening.** Next for WhatsApp:
         request a review of the restriction in Business Support Home, then a real number.
-      - [ ] **D-U-N-S (D&B case #11089990):** requested through Apple's tool 2026-10-08. D&B's
-        iResearch team (research@iresearch.dnb.com) asked the same night, within 72 hours, for
-        the certificate plus their Business Information Form (BIR_FORM_USA.docx). Angad
-        replied with both; no answer yet (2026-10-12). Then the Apple account conversion.
+      - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
+        Apple organization-conversion request submitted, approval pending; Google Play
+        verification in progress. New Hindi additions approved. Angad confirmed support
+        mailbox testing, will review reports, and confirmed 2FA and Groq ZDR.
       - [x] No mailing address on the site (Angad, 2026-10-03): the Contact sections ask
         people to email for it. Charity registration also filed by Angad, under review;
         the wording rule holds until he says it's approved.

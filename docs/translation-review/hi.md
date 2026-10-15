@@ -1084,7 +1084,7 @@ Review confirmation, 2026-10-13: Angad confirmed in writing that his mother revi
 
 ## Publication disclosure and reporting additions, 2026-10-14
 
-Prior approval is preserved. These rows need fresh fluent review.
+Prior approval is preserved. Angad confirmed review and approval of the added rows and choice label on 2026-10-14; no wording changes requested.
 
 | Key | English | Hindi | Reviewer notes | Status |
 |---|---|---|---|---|
@@ -1096,3 +1096,5 @@ Prior approval is preserved. These rows need fresh fluent review.
 | remmy.reportCancel | Cancel | रद्द करें | | NEW/CHANGED 2026-10-14 |
 | remmy.reported | Report sent | रिपोर्ट भेज दी गई | | NEW/CHANGED 2026-10-14 |
 | remmy.reportFailed | Could not send report. Try again later. | रिपोर्ट नहीं भेज सके। बाद में फिर कोशिश करें। | | NEW/CHANGED 2026-10-14 |
+
+Review confirmation, 2026-10-14: Angad confirmed item #4 complete, covering the new consent/reporting strings and RemitBridge choice label. Earlier dated row markers are retained as change history.
