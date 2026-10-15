@@ -80,7 +80,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Send the Groq email**: sent 2026-10-12; Groq's automatic reply says no new tiers for now (enterprise only).
 - [x] **Clear old sealed WhatsApp numbers**: run by Angad 2026-10-12 (D148).
 - [ ] **Renumber duplicate decisions**: D160 and D163 are each used twice; say yes and Claude renumbers.
-- [ ] **hello@ profile photo**: Google case #76360017; Angad confirmed freeing the domain on 2026-10-12, so Google is deleting the unfinished Workspace. Then make a free Google account for hello@ and upload the logo.
+- [ ] **hello@ profile photo**: Google case #76360017: Angad confirmed Workspace was deleted, 2026-10-13. Free Google account setup for hello@ is in progress; then upload the logo.
 
 ## Translations
 
