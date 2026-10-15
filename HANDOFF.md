@@ -8,11 +8,18 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-14: reviewed price collection publication (D177)
+
+- Angad authorized publication of the reviewed collection and seven-day intake from original observation. The Supabase import contains 425 rows: 379 verified, 5 incomplete, 39 skipped, 2 superseded.
+- Local CSV matched the database fingerprint (379 verified rows). Preparation accepted 310 and held 69 verified rows with missing methods or route/payout-currency mismatches; all 46 nonverified rows remain excluded.
+- Local engine preview: 282 published, 16 quarantined, 12 Uganda rows held for disagreeing reference sources, zero arithmetic rejects. Production publication is being run through the existing Manual prices workflow.
+
 ## 2026-10-13: ChatGPT resumes, Hindi approved, Android Remmy testing
 
 - Angad confirmed no new developments and no D-U-N-S number yet.
 - His mother approved every Hindi row, including Learn games and Remmy. No wording changes requested.
-- No other session is working on the repository. Next: test Remmy on Samsung using Expo Go.
+- No other session is working on the repository. Expo Go is running on LAN port 8082 for Samsung Remmy testing. The 43 Remmy harness tests, workspace typecheck and Expo lint pass.
+- Angad confirmed the unfinished Google Workspace was deleted. Free Google account setup for hello@ is in progress, followed by its profile picture.
 
 ## 2026-10-13 evening: Remmy hardened, ChatGPT handoff refreshed
 

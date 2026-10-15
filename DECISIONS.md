@@ -2257,3 +2257,17 @@ were refused, so the number check wasn't to blame. Four fixes, all in the shared
 Since the free models still miss some turns, every Compare card Remmy shows now carries the
 top three checked prices (the same quotes, ranking and formula as Compare). A price question
 shows real figures even when the model's text doesn't come through.
+
+
+**D177. Reviewed manual prices can enter the engine for seven days from observation**
+(Angad, 2026-10-14: "this data can last a total of 7 days so this is fine").
+The former six-hour intake rule is seven days, matching the existing manual-price display
+window. Original observation timestamps remain unchanged, and Compare retains its stale
+and older-price labels. The import-time cross-checked reference is used for cost calculation,
+so its source remains recorded separately from the original provider observation. All other
+publish checks remain active. Collection CSV outcomes alone do not publish a price: missing
+methods, missing rates and payout currencies that differ from the app route stay held.
+Regular terms reconstructed from observed regular rates retain promotional page evidence
+in the archive without being incorrectly labelled first-transfer prices. Recipient pickup
+charges were excluded from this collection by Angad; the archived blank and exclusion are
+retained, and arithmetic compares the payout before recipient pickup charges.

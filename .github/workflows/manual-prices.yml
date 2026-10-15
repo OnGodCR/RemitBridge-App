@@ -11,6 +11,11 @@ name: Manual prices
 
 on:
   workflow_dispatch:
+    inputs:
+      reviewed_collection:
+        description: Process reviewed collection files even when the app queue is empty
+        type: boolean
+        default: false
   schedule:
     - cron: "23 */3 * * *"
 
@@ -31,6 +36,8 @@ jobs:
     steps:
       - name: Anything waiting?
         id: pending
+        env:
+          REVIEWED_COLLECTION: ${{ inputs.reviewed_collection }}
         run: |
           # A newer sb_secret_ key goes only in the apikey header; a legacy key is also a bearer token (D137).
           AUTH=(); [[ "$SUPABASE_SERVICE_ROLE_KEY" == sb_* ]] || AUTH=(-H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY")
@@ -38,6 +45,7 @@ jobs:
             -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
             "${AUTH[@]}" | jq length)
           echo "Pending entries: $n"
+          if [ "$REVIEWED_COLLECTION" = true ]; then n=$((n + 1)); fi
           echo "n=$n" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         if: steps.pending.outputs.n != '0'

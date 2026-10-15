@@ -8,9 +8,10 @@ through exactly the same normaliser, publish gate and archive as a scraped quote
 manual number is held to the same standard and traced the same way. It is labelled
 `source: manual` everywhere it appears.
 
-A manual quote must be run within MANUAL_QUOTE_MAX_AGE_S of when it was observed:
-its markup is measured against the mid-market rate fetched at run time, and an old
-observation against today's reference rate would be the wrong comparison.
+A manual quote must be run within MANUAL_QUOTE_MAX_AGE_S of when it was observed,
+seven days from observation (Angad, 2026-10-14). Its original timestamp is preserved.
+The cost uses the cross-checked reference fetched at processing time; older observations
+remain explicitly dated and Compare keeps its stale and older-price labels.
 
 A row from the database carries its `row_id`; the runner writes the gate's outcome
 back to that row so the person who entered it can see what happened.

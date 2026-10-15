@@ -657,3 +657,11 @@ carry the Co-Authored-By line. Backfill before the CAC submission.
 ## 2026-10-13: ChatGPT handoff and Remmy testing setup
 
 ChatGPT read the handoff and repository context, started the Android Expo Go testing setup, and recorded Angad’s confirmation of his mother’s Hindi approval in HANDOFF.md, CLAUDE.md, docs/todo.md and the review sheet. No translation wording changed. Angad supplied the status updates and will perform the phone tests.
+
+## 2026-10-14: reviewed collection import
+
+Angad reviewed the source collection and authorized publication with seven-day validity.
+ChatGPT added the collection validator, preparation script, tests, reviewed manual batch,
+seven-day intake rule and explicit Manual prices workflow input. Original timestamps and
+evidence are retained; missing methods and unsupported payout currencies stay held. The
+normal engine formula, raw archive and publish gate determine publication.

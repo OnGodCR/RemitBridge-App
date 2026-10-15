@@ -122,11 +122,11 @@ async def test_manual_quotes_go_through_the_same_gate(tmp_path, no_sleep):
     obs = {
         "provider_id": "remitly", "route_id": "us-in", "send_amount": 500,
         "delivery_method": "bank_deposit", "fee": 3.99, "offered_rate": 95.1,
-        "amount_received": round((500 - 3.99) * 95.1, 2), "observed_at": now.isoformat(),
+        "amount_received": round((500 - 3.99) * 95.1, 2), "observed_at": (now - timedelta(days=2)).isoformat(),
         "observed_by": "tests", "source_url": "https://www.remitly.com/us/en/india",
     }
     stale = {**obs, "send_amount": 1000, "amount_received": round((1000 - 3.99) * 95.1, 2),
-             "observed_at": (now - timedelta(hours=8)).isoformat()}
+             "observed_at": (now - timedelta(days=8)).isoformat()}
     wrong = {**obs, "send_amount": 200, "amount_received": 99999}
     d = tmp_path / "manual"
     d.mkdir()
@@ -153,7 +153,7 @@ async def test_prices_entered_in_the_app_get_their_outcome_written_back(tmp_path
     wrong = {**base, "row_id": 2, "send_amount": 500, "amount_received": 1.0}
     old = {**base, "row_id": 3, "send_amount": 1000,
            "amount_received": round((1000 - 2.5) * 95.1, 2),
-           "observed_at": (now - timedelta(hours=9)).isoformat()}
+           "observed_at": (now - timedelta(days=8)).isoformat()}
     env = setup(tmp_path, no_sleep)
     store = env["store"]
     store.data["manual_observations"] = [dict(good), dict(wrong), dict(old)]
