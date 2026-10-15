@@ -8,6 +8,14 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-14: production deployment explicitly authorized
+
+Angad asked Codex to deploy the two functions. remmy v11 and whatsapp v41 deployed
+successfully and are ACTIVE. Live smoke checks: Remmy account navigation 200 with correct
+action; malformed body 400; unsigned WhatsApp webhook 401. No WhatsApp messages sent.
+This completes the earlier pending function deployment, not store publication. CI for
+77475f3 passed, and revised privacy/terms/support are confirmed live.
+
 ## 2026-10-14: privacy and publication audit (D180)
 
 Updated app-domain legal/support/overview pages and store listing for Remmy, reports,

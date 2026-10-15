@@ -73,8 +73,10 @@ audit still reports the counts above. Only the full-workspace result is used her
 ## Still required
 
 Use [the launch checklist](../launch-checklist.md) for owners and commands. Production
-functions are intentionally not deployed by this audit: the project handoff assigns those
-deploys to Angad. New signed builds and real-device evidence are required, along with
+functions were subsequently deployed after Angad explicitly asked Codex to deploy them:
+remmy v11 and whatsapp v41 are ACTIVE. Live checks passed: account navigation returned
+200 with the expected action, malformed Remmy JSON returned 400, and unsigned WhatsApp
+webhook returned 401. No WhatsApp message was sent. New signed builds and real-device evidence are required, along with
 organization/store setup, updated console declarations, screenshots, legal review and the
 new translation review. No console forms, support emails, paid builds or submissions were sent.
 

@@ -1,5 +1,11 @@
 # Security review (for Angad)
 
+> Historical October 1 checklist. Unchecked items below are not proof they remain undone.
+> Several migrations and deployments were completed later. Do not rerun old migrations
+> solely from this list. Use docs/launch-checklist.md and docs/store/publication-audit.md
+> for the current release gates, including the remaining dependency advisories.
+
+
 Everything from the security pass on 2026-10-01 (DECISIONS.md D135), as a list to go
 through. Tick an item once you've read it and you're happy with it, or write a note under it.
 The technical version, with every threat and what stops it, is `docs/SECURITY.md`.

@@ -22,7 +22,7 @@ Older checked items are not proof that the latest version passed release testing
 
 ## Deploy and verify before building
 
-- [ ] Deploy changed `remmy` and `whatsapp` Edge Functions. Both bundle shared agent code.
+- [x] Deployed `remmy` v11 and `whatsapp` v41 on 2026-10-14 after Angad explicitly authorized deployment. Both are ACTIVE; live navigation/validation checks pass. Both bundle shared agent code.
   No database migration is needed: reports use the existing `suggestions` table.
 - [ ] Confirm report arrives in suggestions with prefix `[Remmy report]`, source `app`,
   text/language/date only. Cancel sends nothing. Network/server failure stays retryable.
@@ -119,4 +119,4 @@ No paid build, account purchase or store submission is authorized by checking of
 ## Verification from this audit
 
 Automated test/check results are recorded in [publication-audit.md](store/publication-audit.md).
-Unperformed checks remain unchecked, including production deployment and store-console forms.
+Unperformed checks remain unchecked, including full device testing and store-console forms. Production deployment of these two functions is complete.
