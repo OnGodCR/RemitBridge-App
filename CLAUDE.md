@@ -46,6 +46,9 @@ the work, not afterwards:
 - **docs/MANUAL_RESEARCH.md:** whenever a provider gets no adapter because
   its terms or robots.txt forbid automated access.
 
+Latest phone feedback, 2026-10-14: Compare offers bank-account-funded prices only (D178).
+Remmy navigation actions must not replay when the chat sheet reopens.
+
 ## Open items
 
 These are deferred on purpose, not forgotten. Update this list as things land. Grouped

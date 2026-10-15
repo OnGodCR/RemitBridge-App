@@ -8,6 +8,12 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-14: Remmy replay fixed and Compare funding simplified (D178)
+
+- Remmy action execution is tracked with the session conversation by message ID and action index. Reopening the sheet no longer repeats the last navigation; a fresh prompt can run the same command. A regression test unmounts/reopens the chat and verifies both behaviors.
+- Compare now has a fixed bank-account funding label and no payment-method selector. Actual quote funding remains filtered to bank_account.
+- All 230 app tests and workspace typechecks pass; lint verified before commit. Metro is running in Android development-build mode on port 8082. Reload the installed app to test.
+
 ## 2026-10-14: reviewed price collection publication (D177)
 
 - Angad authorized publication of the reviewed collection and seven-day intake from original observation. The Supabase import contains 425 rows: 379 verified, 5 incomplete, 39 skipped, 2 superseded.

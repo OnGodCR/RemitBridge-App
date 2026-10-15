@@ -196,6 +196,24 @@ describe('the chat screen', () => {
     expect(screen.getByText(r.signIn)).toBeTruthy();
   });
 
+  it('does not replay navigation when the chat reopens, but acts on a fresh prompt', async () => {
+    jest.useFakeTimers();
+    const reply = { data: { reply: 'Opening account settings.', actions: [{ type: 'screen', screen: 'account', now: true }], steps: [] }, error: null };
+    mockInvoke.mockResolvedValue(reply);
+    const first = renderChat();
+    await act(async () => sendToRemmy('open the account settings', 'en'));
+    act(() => jest.advanceTimersByTime(1000));
+    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    first.unmount();
+    renderChat();
+    act(() => jest.advanceTimersByTime(1000));
+    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    await act(async () => sendToRemmy('open the account settings again', 'en'));
+    act(() => jest.advanceTimersByTime(1000));
+    expect(mockRouter.push).toHaveBeenCalledTimes(2);
+    jest.useRealTimers();
+  });
+
   it('says when it can’t connect, and tries again', async () => {
     mockInvoke.mockRejectedValueOnce(new Error('offline'));
     renderChat();

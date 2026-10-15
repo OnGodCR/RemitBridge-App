@@ -12,9 +12,8 @@ import {
   View,
 } from 'react-native';
 
-import { FUNDING_METHODS, type FundingMethod } from '@remitbridge/formula';
+import type { FundingMethod } from '@remitbridge/formula';
 
-import { ChoiceList } from '@/components/choice-list';
 import { DoesNotTellYou } from '@/components/does-not-tell-you';
 import { HeroBackdrop, HeroHeader, StatusBarShield } from '@/components/hero-header';
 import { QuoteCard } from '@/components/quote-card';
@@ -75,9 +74,8 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
     start.deliveryMethods.find((m) => m === initial.method) ?? start.deliveryMethods[0],
   );
   const activeMethod = route && !route.deliveryMethods.includes(method) ? route.deliveryMethods[0] : method;
-  // How the sender pays (D90): prices are checked per payment method, so
-  // only that method's show, and a cash-type method adds the 1% federal tax to the total cost.
-  const [funding, setFunding] = useState<FundingMethod>('bank_account');
+  // Compare offers verified bank-account-funded quotes only.
+  const funding: FundingMethod = 'bank_account';
   const checked = checkedAmountFor(amount);
   const quotes = useQuotes(route, checked, activeMethod);
   const large = useLargeText();
@@ -152,7 +150,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
                 value={activeMethod}
                 onChange={setMethod}
               />
-              <FundingPicker value={funding} onChange={setFunding} />
+              <AppText variant="small" muted>{`${copy.funding.compareLabel}: ${copy.payment.bank_account}`}</AppText>
               {amount > 0 ? (
                 <>
                   <Results
@@ -238,38 +236,6 @@ function useQuotes(route: Route | undefined, checked: number, method: DeliveryMe
   }, [refetchIfOld]);
 
   return { result: key && loaded?.key === key ? loaded.result : null, refresh, refreshing };
-}
-
-/**
- * "You pay with": one line showing the choice, which opens the list. It stays out of the
- * way for the usual answer (a bank account) and is one tap away for the rest.
- */
-function FundingPicker({ value, onChange }: { value: FundingMethod; onChange: (f: FundingMethod) => void }) {
-  const t = useTheme();
-  const copy = useCopy();
-  const [open, setOpen] = useState(false);
-  return (
-    <View style={styles.funding}>
-      <TextLink
-        arrow={false}
-        icon={open ? 'chevron.up' : 'chevron.down'}
-        label={`${copy.funding.compareLabel}: ${copy.payment[value]}`}
-        onPress={() => setOpen((o) => !o)}
-      />
-      {open ? (
-        <ChoiceList
-          label={copy.funding.compareLabel}
-          options={FUNDING_METHODS.map((f) => ({ value: f, label: copy.payment[f] }))}
-          value={value}
-          onChange={(f) => {
-            onChange(f);
-            setOpen(false);
-          }}
-        />
-      ) : null}
-      <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: t.border }} />
-    </View>
-  );
 }
 
 function Results({
@@ -550,7 +516,6 @@ const styles = StyleSheet.create({
   summary: { fontFamily: Fonts.semibold, fontSize: 15, lineHeight: 21 },
   loading: { marginVertical: Spacing.four },
   promoHeading: { marginTop: Spacing.two },
-  funding: { gap: Spacing.two },
   notice: { borderLeftWidth: 3, paddingLeft: Spacing.three, paddingVertical: Spacing.one, gap: Spacing.one },
   noticeTitle: { fontFamily: Fonts.bold, fontSize: 17 },
 });

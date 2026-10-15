@@ -2271,3 +2271,10 @@ Regular terms reconstructed from observed regular rates retain promotional page 
 in the archive without being incorrectly labelled first-transfer prices. Recipient pickup
 charges were excluded from this collection by Angad; the archived blank and exclusion are
 retained, and arithmetic compares the payout before recipient pickup charges.
+
+
+**D178. Compare offers bank-account-funded prices only** (Angad, 2026-10-14,
+clarified "I meant bank-account funding only"). Remove the payment-method selector and
+show the existing bank-account label as plain text. Keep filtering actual quote
+payment_method values; never relabel debit-card or credit-card quotes as bank-funded.
+Receipt analysis and manual cost calculators still describe the transfer actually entered.

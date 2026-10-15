@@ -665,3 +665,10 @@ ChatGPT added the collection validator, preparation script, tests, reviewed manu
 seven-day intake rule and explicit Manual prices workflow input. Original timestamps and
 evidence are retained; missing methods and unsupported payout currencies stay held. The
 normal engine formula, raw archive and publish gate determine publication.
+
+## 2026-10-14: Remmy navigation replay and Compare funding
+
+Angad reported repeated Remmy navigation and clarified bank-account-only price comparisons.
+ChatGPT added session-level action execution tracking, a chat reopen regression test,
+and replaced Compare’s funding selector with the existing localized bank-account label.
+No prices were relabelled or translation wording changed.

@@ -5,18 +5,18 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1791913114.42684,
-    "ast_hash": "b13eb4ffe7599278a3a762c2f9642ee5",
+    "mtime": 1792035090.4653583,
+    "ast_hash": "2aebe853b93aec49bd1e725f200aa749",
     "semantic_hash": ""
   },
   "DECISIONS.md": {
-    "mtime": 1792034149.337614,
-    "ast_hash": "bfd9ca0372a91619c6ddb8584ea7b728",
+    "mtime": 1792035090.4627533,
+    "ast_hash": "17479ce0e91c8f7ec2681152e290bf5b",
     "semantic_hash": ""
   },
   "HANDOFF.md": {
-    "mtime": 1792034149.3389232,
-    "ast_hash": "637137b900801cb7bfc389b4dcf6155e",
+    "mtime": 1792035090.4642446,
+    "ast_hash": "1d567741feb6fb194ad5d18c8c95f0ca",
     "semantic_hash": ""
   },
   "README.md": {
@@ -370,8 +370,8 @@
     "semantic_hash": ""
   },
   "mobile/src/app/(tabs)/index.tsx": {
-    "mtime": 1791860822.3217206,
-    "ast_hash": "0cd3d0ec86169fdaca7c09f58fa16fc0",
+    "mtime": 1792035038.2975047,
+    "ast_hash": "83ce864a6c0f131450e901df6e1189bc",
     "semantic_hash": ""
   },
   "mobile/src/app/onboarding/_layout.tsx": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/manual-prices.yml": {
-    "mtime": 1792034149.3346877,
-    "ast_hash": "6a6a5a054e08c473e50c4b997a3666dc",
+    "mtime": 1792034397.7142768,
+    "ast_hash": "b06a93213d700117e276289b28051605",
     "semantic_hash": ""
   },
   "mobile/src/components/flag.tsx": {
@@ -1840,8 +1840,8 @@
     "semantic_hash": ""
   },
   "docs/AI_USAGE.md": {
-    "mtime": 1792034149.3400059,
-    "ast_hash": "9939bc015ea87b940b997aa395d6041c",
+    "mtime": 1792035090.466451,
+    "ast_hash": "59e16e4351bbfe6bfed466d28a01d13b",
     "semantic_hash": ""
   },
   "docs/cac-gap-report.md": {
@@ -3555,8 +3555,8 @@
     "semantic_hash": ""
   },
   "docs/todo.md": {
-    "mtime": 1791913247.032636,
-    "ast_hash": "6aa66530c17f8123ee35b306438e0389",
+    "mtime": 1792035090.4647126,
+    "ast_hash": "1ef352460e6e50a5f2f729f367fb6f78",
     "semantic_hash": ""
   },
   "docs/outreach/chatgpt-research-task.md": {
@@ -3715,13 +3715,13 @@
     "semantic_hash": ""
   },
   "mobile/src/__tests__/remmy.test.tsx": {
-    "mtime": 1791912606.1537979,
-    "ast_hash": "c4951946ebea54cad662faf47a9bc600",
+    "mtime": 1792034990.3942826,
+    "ast_hash": "bf21c33e95dca0c7289d81a5bc0b5b6b",
     "semantic_hash": ""
   },
   "mobile/src/app/remmy.tsx": {
-    "mtime": 1791912566.5007439,
-    "ast_hash": "8c760495621e0dbee49df5ed1e00ad88",
+    "mtime": 1792035060.8888907,
+    "ast_hash": "5bf186f2422a13a07097771f7c43eab4",
     "semantic_hash": ""
   },
   "mobile/src/components/remmy.tsx": {
@@ -3735,8 +3735,8 @@
     "semantic_hash": ""
   },
   "mobile/src/lib/remmy.ts": {
-    "mtime": 1791906463.3336215,
-    "ast_hash": "b8c14d832bbcd2e43d5517797f6c0932",
+    "mtime": 1792034990.2689998,
+    "ast_hash": "697eb13b204a1941ce4fb65dd5d66cd2",
     "semantic_hash": ""
   },
   "packages/bot/src/remmy.test.ts": {
@@ -3772,6 +3772,11 @@
   "engine/tests/test_collection.py": {
     "mtime": 1792034149.3446178,
     "ast_hash": "62d9dc0ee2fcd6253aa61861be1e1b9e",
+    "semantic_hash": ""
+  },
+  "engine/manual/quotes/2026-10-14-reviewed.json": {
+    "mtime": 1792034149.343325,
+    "ast_hash": "",
     "semantic_hash": ""
   }
 }

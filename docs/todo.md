@@ -115,3 +115,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] Publish reviewed collection with seven-day intake and original dates (D177): 282 quotes published; 279 visible in Compare, CI passed.
 - [ ] Resolve remaining collection holds: 69 verified rows lack app-compatible methods/currencies, 16 engine quarantines, 12 Uganda reference-rate holds. The 46 nonverified collection rows remain excluded.
+
+## Phone feedback fixes (2026-10-14)
+
+- [x] Fix Remmy repeating its last navigation when chat reopens; regression test covers reopening and a fresh prompt.
+- [x] Compare uses only bank-account-funded quotes, with no payment-method selector (D178).
+- [ ] Confirm on Android: ask Remmy to open account settings, reopen Remmy, then send another command; check Compare shows bank-account funding only.

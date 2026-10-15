@@ -26,7 +26,7 @@ import type { Copy } from '@/i18n/en';
 import { announce } from '@/lib/announce';
 import { money } from '@/lib/format';
 import { prefs } from '@/lib/prefs';
-import { boldParts, newChat, retryLast, runAction, sendToRemmy, useRemmy, type RemmyMessage } from '@/lib/remmy';
+import { actionWasExecuted, boldParts, markActionExecuted, newChat, retryLast, runAction, sendToRemmy, useRemmy, type RemmyMessage } from '@/lib/remmy';
 import type { RemmyAction, RemmyScreen } from '@/lib/remmy-actions';
 import { track } from '@/lib/track';
 
@@ -254,7 +254,7 @@ function RemmyBubble({ message, latest, onRetry }: { message: Extract<RemmyMessa
           ) : null}
         </View>
         {message.actions.map((a, i) => (
-          <ActionCard key={i} action={a} autoRun={latest && i === 0 && 'now' in a && a.now === true} copy={copy} />
+          <ActionCard key={i} messageId={message.id} index={i} action={a} autoRun={latest && i === 0 && 'now' in a && a.now === true} copy={copy} />
         ))}
       </View>
     </Rise>
@@ -300,11 +300,11 @@ function screenTitle(copy: Copy, screen: RemmyScreen): string {
  * What Remmy offers to do, as a card with one button. When the person asked to be taken
  * somewhere, it opens by itself after a beat, so they see what's happening first.
  */
-function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: boolean; copy: Copy }) {
+function ActionCard({ messageId, index, action, autoRun, copy }: { messageId: number; index: number; action: RemmyAction; autoRun: boolean; copy: Copy }) {
   const t = useTheme();
   const r = copy.remmy;
   const [state, setState] = useState<'idle' | 'busy' | 'done' | 'already' | 'signedOut' | 'error'>('idle');
-  const ran = useRef(false);
+  const pendingAutoRun = autoRun && !actionWasExecuted(messageId, index);
   const country = 'routeId' in action ? countryIn(copy, action.routeId.split('-')[1]?.toUpperCase() ?? '') : '';
   const title =
     action.type === 'compare' || action.type === 'save'
@@ -323,7 +323,7 @@ function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: b
   const label =
     action.type === 'save'
       ? { idle: r.save, busy: r.save, done: r.saved, already: r.already, signedOut: r.signIn, error: r.saveFailed }[state]
-      : state === 'busy'
+      : state === 'busy' || pendingAutoRun
         ? r.opening
         : action.type === 'lesson'
           ? r.start
@@ -337,6 +337,7 @@ function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: b
     }
     if (state !== 'idle' && state !== 'error') return;
     setState('busy');
+    markActionExecuted(messageId, index);
     track('remmy_action', { type: action.type });
     const result = await runAction(action);
     if (action.type !== 'save') return;
@@ -344,15 +345,15 @@ function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: b
   };
 
   useEffect(() => {
-    if (!autoRun || ran.current) return;
-    ran.current = true;
-    setState('busy');
+    if (!autoRun || actionWasExecuted(messageId, index)) return;
     const timer = setTimeout(() => {
+      if (!markActionExecuted(messageId, index)) return;
+      setState('busy');
       track('remmy_action', { type: action.type, auto: true });
       runAction(action);
     }, 900);
     return () => clearTimeout(timer);
-  }, [autoRun, action]);
+  }, [autoRun, action, messageId, index]);
 
   const finished = state === 'done' || state === 'already';
   const top = action.type === 'compare' ? action.top : undefined;
@@ -374,7 +375,7 @@ function ActionCard({ action, autoRun, copy }: { action: RemmyAction; autoRun: b
         </View>
         <Pressable
           onPress={run}
-          disabled={finished || (state === 'busy' && action.type !== 'save')}
+          disabled={finished || ((state === 'busy' || pendingAutoRun) && action.type !== 'save')}
           accessibilityRole="button"
           accessibilityLabel={`${label}: ${title}`}
           style={({ pressed }) => [styles.cardButton, { backgroundColor: finished ? t.accent : t.primary, opacity: pressed ? 0.8 : 1 }]}>

@@ -24,6 +24,15 @@ export type RemmyMessage =
 let messages: RemmyMessage[] = [];
 let thinking = false;
 let nextId = 1;
+// Keep execution state with the in-memory conversation, beyond the chat sheet's lifetime.
+const executedActions = new Set<string>();
+export const actionWasExecuted = (messageId: number, index: number) => executedActions.has(`${messageId}:${index}`);
+export function markActionExecuted(messageId: number, index: number): boolean {
+  const key = `${messageId}:${index}`;
+  if (executedActions.has(key)) return false;
+  executedActions.add(key);
+  return true;
+}
 /** When the last message went out: a second send within MIN_GAP_MS is dropped (a double tap). */
 let lastSent = 0;
 const MIN_GAP_MS = 1500;
@@ -42,6 +51,7 @@ export function useRemmy(): { messages: RemmyMessage[]; thinking: boolean } {
 
 export function newChat() {
   messages = [];
+  executedActions.clear();
   lastSent = 0;
   thinking = false;
   emit();
