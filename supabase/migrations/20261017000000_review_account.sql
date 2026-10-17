@@ -14,6 +14,12 @@ create table private.review_accounts (
   created_at timestamptz not null default now()
 );
 
+-- The live project switched row-level security on for this table by itself, so the
+-- sign-in hook saw an empty list and refused the review account too (2026-10-17). RLS
+-- stays on with one read policy for the role Supabase Auth runs hooks as; nobody else
+-- gets a policy.
+alter table private.review_accounts enable row level security;
+
 create or replace function public.custom_access_token_hook(event jsonb) returns jsonb
 language plpgsql stable set search_path = '' as $$
 begin
@@ -39,5 +45,7 @@ begin
     grant execute on function public.custom_access_token_hook(jsonb) to supabase_auth_admin;
     grant usage on schema private to supabase_auth_admin;
     grant select on private.review_accounts to supabase_auth_admin;
+    create policy "sign-in reads the review list" on private.review_accounts
+      for select to supabase_auth_admin using (true);
   end if;
 end $$;

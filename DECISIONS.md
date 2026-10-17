@@ -2340,6 +2340,10 @@ Angad creates the account in the Supabase dashboard with a password of his own a
 into the store consoles himself; Claude never sees it. Saying nothing is restricted would
 not have been true, since saving and alerts need an account. Needs the migration pushed and
 a new build, which waits for Angad's go-ahead.
+Live 2026-10-17: Angad ran the migration in the SQL editor and created the account. The
+first sign-in was still refused because the project had switched row-level security on
+for the new table, hiding it from Supabase Auth; a read policy for `supabase_auth_admin`
+only fixed it, and the review account's password sign-in then returned a token.
 
 
 **D185. The app fills the iPad screen** (Angad, 2026-10-17: "why doesnt it cover the full
