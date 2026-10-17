@@ -46,7 +46,7 @@ export const tl: Copy = {
     close: 'Isara',
     thinking: ['Nag-iisip', 'Tinitingnan ang presyo', 'Hinahanap'],
     steps: {
-      get_prices: 'Tiningnan ang presyo ngayon',
+      get_prices: 'Tiningnan ang mga presyo',
       get_routes: 'Tiningnan ang aming mga ruta',
       search_knowledge: 'Tiningnan ang aming notes',
       request_route: 'Binilang ang hiling mo',
@@ -66,7 +66,7 @@ export const tl: Copy = {
     limited: 'Nagpapahinga muna ako. Puwede mo pa ring ihambing ang mga presyo.',
     slow: 'Masyadong mabilis ang pagpapadala mo. Maghintay ng isang minuto, saka subukan ulit.',
     couldNot: 'Hindi ko iyon nakuha. Subukang itanong sa ibang paraan.',
-    pricesHere: 'Ito ang mga presyong na-check ngayon.',
+    pricesHere: 'Ito ang mga presyong na-check.',
     totalCost: (p: number) => `${p.toFixed(1)}% gastos`,
     here: 'Heto na.',
     noAnswer: 'Wala pa akong sagot diyan.',

@@ -21,7 +21,7 @@ import { RemmyMascot } from '@/components/remmy';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { agoIn, countryIn, useCopy, useLanguage } from '@/i18n';
+import { countryIn, useCopy, useLanguage } from '@/i18n';
 import type { Copy } from '@/i18n/en';
 import { announce } from '@/lib/announce';
 import { money } from '@/lib/format';
@@ -419,11 +419,6 @@ function ActionCard({ messageId, index, action, autoRun, copy }: { messageId: nu
               </AppText>
             </View>
           ))}
-          {action.type === 'compare' && action.checkedAt ? (
-            <AppText variant="small" muted>
-              {copy.time.checked(agoIn(copy, action.checkedAt))}
-            </AppText>
-          ) : null}
         </View>
       ) : null}
     </Rise>

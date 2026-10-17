@@ -2306,3 +2306,15 @@ for $500 to India, above a price checked that morning. Angad keeps D179 as it is
 eligible hand price ranks with the live ones until it is seven days old, and then leaves.
 No code change: the `compare_quotes` view already drops manual prices past seven days, and
 Compare, Remmy and WhatsApp all read it. Each quote's details still show when it was checked.
+
+
+**D182. Remmy and WhatsApp don't say when prices were checked** (Angad, 2026-10-17: "We
+dont need to tell them when prices have been collected honestly. We will update them
+manually every 7 days on our backend, but even for the remmy stuff no need to say that").
+Hand prices are refreshed on the backend every seven days and leave at seven days (D181).
+Remmy's Compare card no longer shows "Checked 5d ago", and its replies no longer say
+"today's" prices, which wasn't true of hand prices. The shared agent's price tool stops
+passing the check time to the model, so the AI can't mention it either, and WhatsApp's plain
+price reply drops "Prices checked X ago". The quote detail screen still shows each price's
+source and check time one tap away, as the store listing and reviewer notes describe;
+this overrides the "every figure names when it was checked" rule only for Remmy and WhatsApp.

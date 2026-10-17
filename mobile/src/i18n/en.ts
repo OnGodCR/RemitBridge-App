@@ -51,7 +51,7 @@ export const en = {
     close: 'Close',
     thinking: ['Thinking', 'Checking prices', 'Looking it up'],
     steps: {
-      get_prices: 'Checked today’s prices',
+      get_prices: 'Checked the prices',
       get_routes: 'Looked at our routes',
       search_knowledge: 'Looked up our notes',
       request_route: 'Counted your request',
@@ -71,7 +71,7 @@ export const en = {
     limited: 'I’m taking a short break. You can still compare prices yourself.',
     slow: 'You’re sending messages quickly. Wait a minute, then try again.',
     couldNot: 'I couldn’t work that one out. Try asking another way.',
-    pricesHere: 'Here are today’s checked prices.',
+    pricesHere: 'Here are the checked prices.',
     totalCost: (p: number) => `${p.toFixed(1)}% cost`,
     here: 'Here you go.',
     noAnswer: 'I don’t have an answer for that yet.',

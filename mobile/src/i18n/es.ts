@@ -45,7 +45,7 @@ export const es: Copy = {
     close: 'Cerrar',
     thinking: ['Pensando', 'Revisando precios', 'Buscando'],
     steps: {
-      get_prices: 'Revisé los precios de hoy',
+      get_prices: 'Revisé los precios',
       get_routes: 'Revisé nuestras rutas',
       search_knowledge: 'Busqué en nuestras notas',
       request_route: 'Conté tu solicitud',
@@ -65,7 +65,7 @@ export const es: Copy = {
     limited: 'Estoy tomando un descanso. Igual puedes comparar precios tú mismo.',
     slow: 'Estás enviando mensajes muy rápido. Espera un minuto y vuelve a intentarlo.',
     couldNot: 'No pude resolver eso. Prueba a preguntarlo de otra forma.',
-    pricesHere: 'Estos son los precios revisados de hoy.',
+    pricesHere: 'Estos son los precios revisados.',
     totalCost: (p: number) => `${p.toFixed(1)}% de costo`,
     here: 'Aquí está.',
     noAnswer: 'Todavía no tengo una respuesta para eso.',

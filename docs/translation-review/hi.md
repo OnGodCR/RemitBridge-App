@@ -1107,3 +1107,13 @@ Review confirmation, 2026-10-14: Angad confirmed item #4 complete, covering the 
 | remmy.privacy | Not financial advice. AI answers can be wrong. Don’t share personal or bank details. | यह वित्तीय सलाह नहीं है। AI के जवाब गलत हो सकते हैं। निजी या बैंक की जानकारी न लिखें। | | CHANGED 2026-10-15; review pending |
 
 Prior approvals are preserved; only the added disclaimer needs fresh review.
+
+
+## Remmy no longer says "today's", 2026-10-17 (D182)
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| remmy.steps.get_prices | Checked the prices | कीमतें देखीं | | CHANGED 2026-10-17; review pending ("आज की" removed) |
+| remmy.pricesHere | Here are the checked prices. | ये जाँची हुई कीमतें हैं। | | CHANGED 2026-10-17; review pending ("आज की" removed) |
+
+Only the word for "today's" was removed; the rest is the approved wording.

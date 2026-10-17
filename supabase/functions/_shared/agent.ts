@@ -129,15 +129,11 @@ export function dataTools(db: SupabaseClient, hooks: ToolHooks): ToolSpec[] {
   const { touched } = hooks;
   const usd = (n: number) => money(n, 'USD');
   const rate = (n: number, cur: string) => `1 USD = ${n.toLocaleString('en-US', { maximumFractionDigits: 4 })} ${cur}`;
-  const ago = (iso: string) => {
-    const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
-    return mins < 60 ? `${mins} minutes ago` : mins < 48 * 60 ? `${Math.round(mins / 60)} hours ago` : `${Math.round(mins / 1440)} days ago`;
-  };
 
   return [
     {
       name: 'get_prices',
-      about: "Today's checked prices from the US, most received first: each provider's fee, rate, cost hidden in the rate, total cost; plus the mid-market rate. For any cost, rate, fee or provider question.",
+      about: "Checked prices from the US, most received first: each provider's fee, rate, cost hidden in the rate, total cost; plus the mid-market rate. For any cost, rate, fee or provider question.",
       args: { country: 'name or 2-letter code', amount: 'USD, default 500', method: `optional, ${Object.keys(DELIVERY_LABELS).join('/')}` },
       run: async (args) => {
         const country = countryOf(args.country);
@@ -154,14 +150,12 @@ export function dataTools(db: SupabaseClient, hooks: ToolHooks): ToolSpec[] {
         await hooks.track('comparison_run', { route: route.id, checked_amount: checked, method, quotes: standing.length });
         const cur = route.receiveCurrency;
         if (!standing.length) return { country: route.country, amount: usd(amount), method: DELIVERY_LABELS[method], providers: [], note: 'No checked prices yet.' };
-        const newest = standing.map((q) => q.captured_at).sort().at(-1)!;
         // One line per provider: far fewer tokens than repeating JSON keys (D163).
         const others = route.deliveryMethods.filter((d) => d !== method).map((d) => DELIVERY_LABELS[d]);
         return {
           sent: `${usd(amount)} to ${route.country}, ${DELIVERY_LABELS[method]}`,
           ...(others.length ? { other_ways: others.join(', ') } : {}),
           mid_market: rate(standing[0].mid_market_rate, cur),
-          checked: ago(newest),
           ...(standing[0].basedOn ? { estimated_from: usd(standing[0].basedOn) } : {}),
           providers: standing.map((q) => {
             const c = computeTransferCost({ sent: amount, fee: q.fee, quotedRate: q.offered_rate, midRate: q.mid_market_rate, pickupCharge: q.pickup_charge });

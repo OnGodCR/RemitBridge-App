@@ -45,7 +45,7 @@ export const vi: Copy = {
     close: 'Đóng',
     thinking: ['Đang nghĩ', 'Đang xem giá', 'Đang tìm'],
     steps: {
-      get_prices: 'Đã xem giá hôm nay',
+      get_prices: 'Đã xem giá',
       get_routes: 'Đã xem các tuyến',
       search_knowledge: 'Đã tra ghi chú',
       request_route: 'Đã ghi nhận yêu cầu',
@@ -65,7 +65,7 @@ export const vi: Copy = {
     limited: 'Mình đang nghỉ một chút. Bạn vẫn có thể tự so sánh giá.',
     slow: 'Bạn đang gửi tin nhắn quá nhanh. Đợi một phút rồi thử lại.',
     couldNot: 'Mình chưa hiểu câu đó. Bạn thử hỏi cách khác nhé.',
-    pricesHere: 'Đây là giá đã kiểm tra hôm nay.',
+    pricesHere: 'Đây là giá đã kiểm tra.',
     totalCost: (p: number) => `chi phí ${p.toFixed(1)}%`,
     here: 'Đây rồi.',
     noAnswer: 'Mình chưa có câu trả lời cho điều đó.',

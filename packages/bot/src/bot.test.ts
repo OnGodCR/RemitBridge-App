@@ -159,7 +159,6 @@ describe('replies', () => {
       3. Provider C: *₹47,000* arrives · 2.0%
 
       Plus 1 first-transfer offer in the app.
-      Prices checked 2 hours ago.
       Full list: https://app.remitbridgelabs.org
       Reply WHY to see where the rest goes."
     `)
@@ -180,7 +179,7 @@ describe('replies', () => {
     expect(rankFor([row({ fee: 20 })], 10).standing).toHaveLength(0)
   })
 
-  it('says plainly when there are no prices, and warns when they are old', () => {
+  it('says plainly when there are no prices, and never says when prices were checked (D182)', () => {
     expect(formatCompare('en', { route: india, amount: 500, checked: 500, method: 'upi', rows: [], now })).toContain(
       'No checked prices for India yet.',
     )
@@ -192,7 +191,7 @@ describe('replies', () => {
       rows: [row({ captured_at: '2026-09-27T12:00:00Z' })],
       now,
     })
-    expect(old).toContain('Prices checked 2 days ago, so they may have moved.')
+    expect(old).not.toMatch(/checked .*ago|may have moved/)
   })
 
   it('fits on one phone screen', () => {

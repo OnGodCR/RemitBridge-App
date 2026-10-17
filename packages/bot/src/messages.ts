@@ -143,8 +143,6 @@ export function formatCompare(
     return `${i + 1}. ${q.provider_name}: ${got} ${arrives} · ${costText}${q.delivery_time ? ` · ${q.delivery_time}` : ''}`
   })
 
-  const oldest = top.reduce((a, q) => (q.captured_at < a ? q.captured_at : a), top[0].captured_at)
-  const stale = p.now.getTime() - new Date(oldest).getTime() > 24 * 3600 * 1000
   const out = [head]
   if (top.some((q) => q.basedOn !== null)) {
     out.push(
@@ -162,9 +160,6 @@ export function formatCompare(
     )
   }
   out.push(
-    lang === 'hi'
-      ? `कीमतें ${ago(lang, oldest, p.now)} जाँची गईं${stale ? ', इसलिए अब बदल चुकी हो सकती हैं' : ''}।`
-      : `Prices checked ${ago(lang, oldest, p.now)}${stale ? ', so they may have moved' : ''}.`,
     lang === 'hi' ? `पूरी सूची: ${LINK}` : `Full list: ${LINK}`,
     lang === 'hi' ? 'बाकी पैसा कहाँ जाता है, जानने के लिए WHY लिखें।' : 'Reply WHY to see where the rest goes.',
   )
