@@ -8,6 +8,20 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-17: history rewritten under Angad's name
+
+At Angad's request every commit on main, remmy, chatgpt/learn-game-modes,
+claude/gallant-hopper-51zhhm (and local codex/publish-reviewed-rates-20261014) was rewritten
+with git-filter-repo: Angad Kochar (GitHub noreply address) is the only author and committer,
+and all 321 Claude co-author lines are gone. File contents are identical; IDs changed. All
+four remote branches were force-pushed. Old to new IDs: `docs/commit-id-map-2026-10-17.md`
+(the Oct 16 builds' ff6af09 is now 6ba381d). Backups on Angad's Desktop:
+`RemitBridge-App-backup-2026-10-17.bundle` and `RemitBridge-App-git-backup-2026-10-17/`.
+**Any other clone must re-clone or `git fetch && git reset --hard origin/main`** before
+committing, or it will push the old history back. The build worktree at
+`/private/tmp/remitbridge-release-ff6af09` still sits on the old commit; remove it with
+`git worktree remove --force /private/tmp/remitbridge-release-ff6af09` when done.
+
 ## 2026-10-17: Claude reviewed ChatGPT's work; new store screenshots
 
 Claude read ChatGPT's Oct 14 to 16 commits and ran the app. Not ready to submit. Findings and

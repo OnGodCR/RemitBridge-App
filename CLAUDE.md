@@ -594,6 +594,9 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - Commit messages explain **why**, in prose, including what was tried and failed.
   Never claim a change the diff doesn't contain.
 - Force-pushes and history rewrites need an explicit yes.
+- Every commit is authored and committed as Angad Kochar only: no AI co-author trailers
+  (Angad, 2026-10-17; history rewritten that day, old IDs in `docs/commit-id-map-2026-10-17.md`).
+  AI use is still disclosed in `docs/AI_USAGE.md`.
 
 ## graphify
 

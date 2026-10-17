@@ -3,7 +3,7 @@
 Angad authorized fresh iOS and Android production builds. These are build requests only;
 no automatic submission, public release or paid upgrade was requested.
 
-Source: `ff6af09c59a020a2af765fb6644460684d63f796`, including the Remmy advice disclaimer.
+Source: `ff6af09c59a020a2af765fb6644460684d63f796` (since the 2026-10-17 history rewrite: `6ba381d`; same files), including the Remmy advice disclaimer.
 A clean detached checkout at `/private/tmp/remitbridge-release-ff6af09` preserves the
 uncommitted quote-card edit in the primary workspace; that edit is not in these builds.
 The clean source passes 231 mobile tests, mobile typecheck and lint.
