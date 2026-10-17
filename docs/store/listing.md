@@ -203,11 +203,18 @@ invest. Resolve the console's classification before submission.
 - Contains ads: **No.**
 - Government app: **No.** News app: **No** (the blog is learning material).
 
-### App access
+### App access (Sign in details)
 
-Select the access answer that reflects account-gated Saved, alerts and deletion. Provide working review access/instructions if requested; do not claim every feature works signed out. Signing in is optional
-(an email code, Sign in with Apple or Google, all self-serve), and Compare, Learn, Remmy and scanning work signed out. If a reviewer wants to try Scan without a receipt, the same sample as Apple's:
-https://app.remitbridgelabs.org/review/sample-receipt.jpg
+Entered by Angad 2026-10-17: Yes, parts are restricted; name "App Review account", username
+review@remitbridgelabs.org, the password he set (never written here), and these instructions:
+
+> On the first screen tap "I already have an account", then "Continue with email", and enter
+> review@remitbridgelabs.org. A password field appears for this address only; enter the
+> password above and tap Sign in. Compare, Learn, Remmy and receipt scanning also work
+> without signing in. A sample receipt for Scan:
+> https://app.remitbridgelabs.org/review/sample-receipt.jpg
+
+Apple's App Review Information takes the same account and text.
 
 ### Advertising ID
 

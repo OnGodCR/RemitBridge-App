@@ -18,7 +18,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Review sign-in migration (D184)**: run by Angad in the SQL editor 2026-10-17 (`db push` hung at "Initialising login role"), recorded in the migration history, plus the read policy for Supabase Auth.
 - [x] **App Review account**: review@remitbridgelabs.org created by Angad and on the review list; a password sign-in returned a token (2026-10-17).
-- [ ] **Play Console, Sign in details**: Yes, add the review address and your password (you type the password), with the instructions from `docs/store/listing.md`.
+- [x] **Play Console, Sign in details**: review account and instructions added by Angad (2026-10-17). It only works on the next build, which has the password field.
+- [x] **Play Console, Target audience (18 and over) and Data safety**: saved by Claude 2026-10-17; App content shows nothing left.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
 - [ ] **New production builds for D184, D185 and D186**: only when Angad says go. The iPad (D185) and the new onboarding order (D186) also take effect with them.
 - [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.

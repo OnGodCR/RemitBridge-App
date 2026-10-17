@@ -31,7 +31,8 @@ TestFlight or Play internal-test build.
 
 Done: Advertising ID (no), Government apps (no), Health (none), Financial features (Other,
 informational only), Content rating (Everyone, PEGI 3, all ages; IARC terms accepted by Angad),
-internal tester list, new store description and short line.
-Saved as drafts: Data safety (waits for Target audience) and the store listing (needs the icon,
-feature graphic and screenshots uploaded).
-Left: Sign in details (after D184 goes live), Target audience, the graphics, and the new AAB.
+Sign in details (the review account, typed by Angad), Target audience (18 and over), Data
+safety (as in listing.md), internal tester list, new store description and short line.
+App content shows "You're all caught up".
+Left: the icon, feature graphic and screenshots uploaded to the store listing, and the new
+AAB, which is also the first build with the review password field.
