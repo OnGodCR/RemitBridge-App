@@ -23,7 +23,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
 - [ ] **New production builds for D184, D185 and D186**: only when Angad says go. The iPad (D185) and the new onboarding order (D186) also take effect with them.
 - [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
-- [ ] **Hindi for the onboarding questions step (D186)**: four new rows in `docs/translation-review/hi.md`.
+- [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
 
 ## Store blockers (Angad)
 
