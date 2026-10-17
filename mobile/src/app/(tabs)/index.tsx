@@ -21,6 +21,7 @@ import { RouteNotCovered } from '@/components/route-request';
 import { CountrySelect } from '@/components/select-field';
 import { AppText, Button, Segmented, TextLink, useLargeText } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { announce } from '@/lib/announce';
 import { saveComparison } from '@/lib/comparisons';
@@ -62,6 +63,7 @@ const sendsFrom = (code: string) => ROUTES.some((r) => r.id.startsWith(`${code.t
 
 function Compare(initial: { routeId?: string; amount?: string; method?: string }) {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const start =
     ROUTES.find((r) => r.id === initial.routeId) ?? ROUTES.find((r) => r.id === prefs.homeRoute()) ?? ROUTES[0];
@@ -142,7 +144,7 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
           </View>
         </HeroHeader>
 
-        <FocusRise style={[styles.body, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.body, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
           {route ? (
             <>
               <Segmented

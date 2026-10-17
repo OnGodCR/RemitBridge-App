@@ -1128,3 +1128,15 @@ Shown only when someone types the review account's address. Reviewers will see E
 | signIn.passwordLabel | Password | पासवर्ड | | NEW 2026-10-17; review pending |
 | signIn.signInWithPassword | Sign in | साइन इन करें | | NEW 2026-10-17; review pending |
 | signIn.errors.badPassword | Wrong password. Try again. | पासवर्ड गलत है। फिर कोशिश करें। | | NEW 2026-10-17; review pending |
+
+
+## Onboarding questions step, 2026-10-17 (D186)
+
+The year of birth and the newsletter switch moved to their own step before sign-up.
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| onboarding.about.eyebrow | About you | आपके बारे में | | NEW 2026-10-17; review pending |
+| onboarding.about.lead | Two quick | दो छोटे | | NEW 2026-10-17; review pending |
+| onboarding.about.accent | questions | सवाल | | NEW 2026-10-17; review pending |
+| onboarding.about.intro | Your birth year never leaves this phone. | आपका जन्म वर्ष इस फ़ोन से बाहर नहीं जाता। | | NEW 2026-10-17; review pending |

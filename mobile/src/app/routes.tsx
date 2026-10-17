@@ -8,6 +8,7 @@ import { FlagSlot } from '@/components/flag';
 import { Arrow, ListGroup, ListItem } from '@/components/list-row';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useIsAdmin } from '@/lib/admin';
 import { countryIn, useCopy } from '@/i18n';
@@ -36,6 +37,7 @@ const STAGES: { status: RouteStatus; filled: boolean }[] = [
 
 export default function RouteBoard() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const isAdmin = useIsAdmin();
   const [board, setBoard] = useState<{ entries: BoardEntry[]; counted: boolean } | 'error' | null>(null);
@@ -67,7 +69,7 @@ export default function RouteBoard() {
   return (
     <ScrollView
       style={[styles.fill, { backgroundColor: t.background }]}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
       contentInsetAdjustmentBehavior="automatic"
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} />}>
       <StatusBar style="auto" />

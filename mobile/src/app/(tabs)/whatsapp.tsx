@@ -9,6 +9,7 @@ import { FocusRise } from '@/components/motion-views';
 import { AppText, Button, TextLink } from '@/components/ui';
 import { WhatsAppSection } from '@/components/whatsapp-section';
 import { Fonts, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useAuth } from '@/lib/auth';
@@ -28,6 +29,7 @@ import { formatNumber, openChat, whatsAppSettings, type WhatsAppSettings } from 
 export default function WhatsAppScreen() {
   useTabFocus('/whatsapp');
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const w = copy.whatsapp;
   const wt = copy.whatsappTab;
@@ -51,7 +53,7 @@ export default function WhatsAppScreen() {
         <HeroHeader title={copy.tabs.whatsapp}>
           <AppText style={[styles.lead, { color: t.heroText }]}>{wt.lead}</AppText>
         </HeroHeader>
-        <FocusRise style={[styles.body, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.body, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
           <View style={styles.intro}>
             <AppText style={[styles.sub, { color: t.text }]}>{wt.sub}</AppText>
             {open ? (

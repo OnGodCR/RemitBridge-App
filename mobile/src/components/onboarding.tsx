@@ -9,6 +9,7 @@ import { Ground } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { useIconSize } from '@/hooks/use-icon-size';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 
@@ -37,9 +38,10 @@ export function Step({
   back?: boolean;
 }) {
   const t = useTheme();
+  const gutter = useGutter(Spacing.four);
   const hero = tone === 'band';
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: hero ? t.hero : t.background }]}>
+    <SafeAreaView style={[styles.fill, { backgroundColor: hero ? t.hero : t.background, paddingHorizontal: gutter }]}>
       <Ground tone={tone} />
       <StatusBar style={hero ? 'light' : 'auto'} />
       <View style={styles.top}>

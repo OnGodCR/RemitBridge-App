@@ -31,11 +31,11 @@ export default function PickRoute() {
   const pick = (routeId: string) => {
     prefs.setHomeRoute(routeId);
     track('onboarding_route_picked', { route: routeId });
-    router.push({ pathname: '/sign-in', params: { from: 'onboarding' } });
+    router.push('/onboarding/about');
   };
 
   return (
-    <Step step={3} of={4} actions={null}>
+    <Step step={2} of={5} actions={null}>
       <Rise step={0} style={styles.head}>
         <Eyebrow>{o.eyebrow}</Eyebrow>
         <DisplayTitle lead={o.lead} accent={o.accent} />

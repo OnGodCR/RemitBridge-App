@@ -190,6 +190,12 @@ export const hi: Copy = {
       paidIn: (country, currency) => `${country}। भुगतान ${currency} में`,
       elsewhere: 'कहीं और भेजते हैं? तुलना में उसे माँगें।',
     },
+    about: {
+      eyebrow: 'आपके बारे में',
+      lead: 'दो छोटे',
+      accent: 'सवाल',
+      intro: 'आपका जन्म वर्ष इस फ़ोन से बाहर नहीं जाता।',
+    },
   },
 
   signIn: {

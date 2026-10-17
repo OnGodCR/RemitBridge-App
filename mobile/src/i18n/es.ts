@@ -190,6 +190,12 @@ export const es: Copy = {
       paidIn: (country, currency) => `${country}. Se paga en ${currency}`,
       elsewhere: '¿A otro lugar? Pídelo en Comparar.',
     },
+    about: {
+      eyebrow: 'Sobre ti',
+      lead: 'Dos preguntas',
+      accent: 'rápidas',
+      intro: 'Tu año de nacimiento nunca sale de este teléfono.',
+    },
   },
 
   signIn: {

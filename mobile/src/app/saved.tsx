@@ -8,6 +8,7 @@ import { SavedChecks } from '@/components/saved-checks';
 import { SavedComparisons } from '@/components/saved-comparisons';
 import { AppText, Button } from '@/components/ui';
 import { Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useAuth } from '@/lib/auth';
@@ -20,10 +21,11 @@ import { useAuth } from '@/lib/auth';
  */
 export default function SavedScreen() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const { session } = useAuth();
   return (
-    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
+    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic">
       <StatusBar style="auto" />
       {session ? (
         <>

@@ -190,6 +190,12 @@ export const tl: Copy = {
       paidIn: (country, currency) => `${country}. Matatanggap sa ${currency}`,
       elsewhere: 'Sa ibang lugar? Hilingin ito sa Compare.',
     },
+    about: {
+      eyebrow: 'Tungkol sa iyo',
+      lead: 'Dalawang mabilis',
+      accent: 'na tanong',
+      intro: 'Hindi umaalis sa phone na ito ang taon ng kapanganakan mo.',
+    },
   },
 
   signIn: {

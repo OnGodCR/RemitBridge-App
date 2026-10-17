@@ -2340,3 +2340,24 @@ Angad creates the account in the Supabase dashboard with a password of his own a
 into the store consoles himself; Claude never sees it. Saying nothing is restricted would
 not have been true, since saving and alerts need an account. Needs the migration pushed and
 a new build, which waits for Angad's go-ahead.
+
+
+**D185. The app fills the iPad screen** (Angad, 2026-10-17: "why doesnt it cover the full
+iPad screen? it should cover the whole thing"). `supportsTablet` is now true, with
+`requireFullScreen` so the portrait-only app passes App Store validation without
+supporting every orientation and Split View. On wide screens a `useGutter` hook keeps content in a
+640-point column centered on the screen while the green bands and backgrounds reach both
+edges; phones are unchanged (the gutter is the old padding there). Remmy stays a sheet,
+which iPadOS already draws as a centered card. Seen in the web render at 834 points wide.
+It needs the next build to take effect, and App Store Connect will then ask for 13-inch
+iPad screenshots.
+
+
+**D186. Onboarding asks its questions first and ends on sign-up** (Angad, 2026-10-17:
+"have the sign-up at the end and move all the questions to the beginning"). The order is
+now Welcome (with the language), route, "About you" (year of birth and the newsletter
+switch), why it matters, then sign-up with only the account buttons and "Not now". The age
+check works as before: neutral, only pass or block is kept, never the year. "Not now" on
+About you skips the questions, and the sign-up step then asks the year before any account
+button, as it always did. The newsletter switch moved off the sign-up step, so "I already
+have an account" no longer shows it (Account still has it).

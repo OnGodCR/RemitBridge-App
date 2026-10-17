@@ -8,6 +8,7 @@ import type { FundingMethod } from '@remitbridge/formula';
 
 import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, useCopy, useLanguage } from '@/i18n';
 import { money } from '@/lib/format';
@@ -31,6 +32,7 @@ export default function AlertScreen() {
     provider: string;
   }>();
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const a = copy.alerts;
   const { language } = useLanguage();
@@ -76,7 +78,7 @@ export default function AlertScreen() {
             : null;
 
   return (
-    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
+    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic">
       <StatusBar style="auto" />
       <AppText style={[styles.intro, { color: t.text }]}>{a.intro(money(amount, 'USD').replace('.00', ''), country)}</AppText>
 

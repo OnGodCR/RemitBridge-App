@@ -13,6 +13,7 @@ import {
 } from '@/components/illustrations';
 import { ListGroup, ListRow } from '@/components/list-row';
 import { Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useTabFocus } from '@/lib/current-tab';
@@ -27,6 +28,7 @@ import { FocusRise } from '@/components/motion-views';
 export default function ToolsScreen() {
   useTabFocus('/tools');
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const groups: { title: string; tools: { href: Href; title: string; subtitle: string; art: ReactNode }[] }[] = [
     {
@@ -53,7 +55,7 @@ export default function ToolsScreen() {
       <HeroBackdrop />
       <ScrollView contentContainerStyle={styles.scroll}>
         <HeroHeader title={copy.tools.title} />
-        <FocusRise style={[styles.body, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.body, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
           {/* Saved comparisons and receipt checks (D108), first, since they're yours. */}
           <ListGroup cards>
             <ListRow art={<SavedArt />} title={copy.titles.saved} subtitle={copy.saved.rowSub} onPress={() => router.push('/saved')} />

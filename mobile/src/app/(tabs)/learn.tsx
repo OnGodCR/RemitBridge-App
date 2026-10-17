@@ -13,6 +13,7 @@ import { Fonts, Spacing } from '@/constants/theme';
 import { POSTS } from '@/data/blog';
 import { TERMS } from '@/data/glossary';
 import { MODULES, type Module } from '@/data/modules';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { nextStep, useLearnStats, useLearned } from '@/lib/learn-progress';
@@ -33,6 +34,7 @@ const FIRST_POST = POSTS.find((post) => post.id === 1)!;
 export default function LearnScreen() {
   useTabFocus('/learn');
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const l = copy.learn;
   const [part, setPart] = useState<'modules' | 'library'>('modules');
@@ -109,11 +111,11 @@ export default function LearnScreen() {
 
       <FocusRise style={styles.fill}>
       {part === 'modules' ? (
-        <ScrollView ref={path} onLayout={(e) => setViewport(e.nativeEvent.layout.height)} contentContainerStyle={styles.path}>
+        <ScrollView ref={path} onLayout={(e) => setViewport(e.nativeEvent.layout.height)} contentContainerStyle={[styles.path, { paddingHorizontal: gutter }]}>
           <LearnPath modules={MODULES} learned={learned} next={next?.module.id ?? null} onOpen={(m) => open(m)} onStart={lesson} onNextAt={toNext} />
         </ScrollView>
       ) : (
-        <ScrollView contentContainerStyle={styles.body}>
+        <ScrollView contentContainerStyle={[styles.body, { paddingHorizontal: gutter }]}>
           {/* The website's blog, in the app (D106), starting with its first explainer. */}
           <ListGroup title={l.startHere} cards>
             <PostCard post={FIRST_POST} />

@@ -29,12 +29,12 @@ export default function Why() {
   const w = copy.onboarding.why;
   return (
     <Step
-      step={2}
-      of={4}
+      step={4}
+      of={5}
       tone="band"
       actions={
         <Rise step={4}>
-          <Button label={w.continue} variant="inverse" trailingIcon="arrow.right" onPress={() => router.push('/onboarding/route')} />
+          <Button label={w.continue} variant="inverse" trailingIcon="arrow.right" onPress={() => router.push({ pathname: '/sign-in', params: { from: 'onboarding' } })} />
         </Rise>
       }>
       <Rise step={0} style={styles.head}>

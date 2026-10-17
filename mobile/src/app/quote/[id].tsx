@@ -12,6 +12,7 @@ import { CostBreakdownBar, FreshnessBadge } from '@/components/quote-card';
 import { AppText, TextLink } from '@/components/ui';
 import { FIGURES } from '@/constants/figures';
 import { Fonts, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, useCopy } from '@/i18n';
 import { money, moneySpoken, pct } from '@/lib/format';
@@ -30,6 +31,7 @@ import { track } from '@/lib/track';
  */
 export default function QuoteDetail() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const { id, amount, funding } = useLocalSearchParams<{ id: string; amount?: string; funding?: string }>();
   const [raw, setRaw] = useState<{ id: string; value: LatestQuote | 'missing' | 'error' } | null>(null);
@@ -103,7 +105,7 @@ export default function QuoteDetail() {
   return (
     <ScrollView
       style={[styles.fill, { backgroundColor: t.background }]}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
       contentInsetAdjustmentBehavior="automatic">
       <Stack.Screen options={{ title: q.provider_name }} />
       <StatusBar style="auto" />

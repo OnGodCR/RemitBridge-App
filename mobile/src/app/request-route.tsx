@@ -6,6 +6,7 @@ import { RouteNotCovered } from '@/components/route-request';
 import { CountrySelect } from '@/components/select-field';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { RECEIVING, SENDING } from '@/lib/countries';
@@ -19,6 +20,7 @@ import { ROUTES, routeFor } from '@/lib/routes';
  */
 export default function RequestRoute() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const [from, setFrom] = useState('US');
   const [to, setTo] = useState('NP');
@@ -30,7 +32,7 @@ export default function RequestRoute() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={100}>
       <ScrollView
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         contentInsetAdjustmentBehavior="automatic">

@@ -10,7 +10,8 @@
     "ios": {
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "org.remitbridgelabs.app",
-      "supportsTablet": false,
+      "supportsTablet": true,
+      "requireFullScreen": true,
       "usesAppleSignIn": true,
       "associatedDomains": [
         "applinks:app.remitbridgelabs.org"

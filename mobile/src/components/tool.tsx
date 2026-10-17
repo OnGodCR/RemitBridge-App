@@ -13,6 +13,7 @@ import {
 
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 
@@ -23,6 +24,7 @@ import { useCopy } from '@/i18n';
  */
 export function ToolScreen({ intro, art, children }: { intro: string; art?: ReactNode; children: ReactNode }) {
   const t = useTheme();
+  const gutter = useGutter();
   return (
     <KeyboardAvoidingView
       style={[styles.fill, { backgroundColor: t.background }]}
@@ -30,7 +32,7 @@ export function ToolScreen({ intro, art, children }: { intro: string; art?: Reac
       keyboardVerticalOffset={100}>
       <StatusBar style="auto" />
       <ScrollView
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         contentInsetAdjustmentBehavior="automatic">

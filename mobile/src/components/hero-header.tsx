@@ -8,6 +8,7 @@ import { AccountButton } from '@/components/account-button';
 import { Icon } from '@/components/icon';
 import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useAuth } from '@/lib/auth';
@@ -34,6 +35,7 @@ export function HeroHeader({
   onBack?: () => void;
 }) {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const insets = useSafeAreaInsets();
   // Every tab greets you at the top (Angad, 2026-10-12: "add the Hey Angad to the top again
@@ -41,7 +43,7 @@ export function HeroHeader({
   const name = firstName(useAuth().session);
   const hello = greeting ?? (onBack ? undefined : copy.common.greeting(partOfDay(), name ?? undefined));
   return (
-    <View style={[styles.band, { backgroundColor: t.hero, paddingTop: insets.top + Spacing.three }]}>
+    <View style={[styles.band, { backgroundColor: t.hero, paddingTop: insets.top + Spacing.three, paddingHorizontal: gutter }]}>
       <StatusBar style="light" />
       <Svg width={260} height={174} viewBox="0 0 48 32" style={[styles.mark, { top: insets.top - 30 }]} pointerEvents="none" accessible={false}>
         <G stroke={t.heroText} strokeWidth={2.4} strokeLinecap="round" fill="none" opacity={0.09}>

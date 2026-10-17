@@ -189,6 +189,12 @@ export const vi: Copy = {
       paidIn: (country, currency) => `${country}. Nhận bằng ${currency}`,
       elsewhere: 'Gửi nơi khác? Hãy yêu cầu trong So sánh.',
     },
+    about: {
+      eyebrow: 'Về bạn',
+      lead: 'Hai câu hỏi',
+      accent: 'nhanh',
+      intro: 'Năm sinh của bạn không bao giờ rời khỏi điện thoại này.',
+    },
   },
 
   signIn: {

@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Icon } from '@/components/icon';
 import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, Switch, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, TextInput } from 'react-native';
 
 import { SavedArt } from '@/components/illustrations';
 import { Rise } from '@/components/motion-views';
@@ -31,8 +31,9 @@ import { track } from '@/lib/track';
  * button, Google's "G" as its sign-in guidelines require on a custom button, an envelope for
  * email), because a sign-in button people recognize is one they trust.
  *
- * Before the first account on a phone, a neutral age screen (COPPA; the FTC's guidance): the
- * year of birth, with no hint of the cutoff. Anyone 13 or younger by year is told accounts
+ * The questions (year of birth, the newsletter) come before this, on onboarding/about
+ * (Angad, 2026-10-17). Reached without an answer, it asks first: a neutral age screen
+ * (COPPA; the FTC's guidance), the year of birth with no hint of the cutoff. Anyone 13 or younger by year is told accounts
  * are for 13 and up, and the phone remembers it so going back can't change the answer.
  * Only that pass or block flag is kept, on the phone; the year is never stored or sent.
  * Comparing never needs an account, so nobody loses the app itself.
@@ -50,7 +51,6 @@ export default function SignInOptions() {
   const si = copy.signIn;
   const [gate, setGate] = useState(prefs.ageGate);
   const { language } = useLanguage();
-  const [optIn, setOptIn] = useState(false);
   const [year, setYear] = useState('');
   const thisYear = new Date().getFullYear();
   const yearOk = /^\d{4}$/.test(year) && Number(year) >= 1900 && Number(year) <= thisYear;
@@ -94,8 +94,8 @@ export default function SignInOptions() {
 
   return (
     <Step
-      step={onboarding ? 4 : undefined}
-      of={onboarding ? 4 : undefined}
+      step={onboarding ? 5 : undefined}
+      of={onboarding ? 5 : undefined}
       actions={
         gate !== 'ok' ? (
           <Rise step={4} style={styles.actions}>
@@ -179,22 +179,6 @@ export default function SignInOptions() {
         />
       ) : null}
 
-      {/* The newsletter (D169): off unless turned on here or in Account, never by default. */}
-      {onboarding && gate === 'ok' ? (
-        <View style={styles.optIn}>
-          <AppText style={[styles.optInText, { color: t.text }]}>{si.newsletterOptIn}</AppText>
-          <Switch
-            value={optIn}
-            onValueChange={(v) => {
-              setOptIn(v);
-              setPendingOptIn(v);
-            }}
-            trackColor={{ true: t.primary, false: t.border }}
-            accessibilityLabel={si.newsletterOptIn}
-          />
-        </View>
-      ) : null}
-
       {error ? (
         <AppText variant="label" style={{ color: t.destructive }} accessibilityLiveRegion="polite">
           {si.errors[error]}
@@ -219,8 +203,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.7,
   },
   body: { fontSize: 17, lineHeight: 24 },
-  optIn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
-  optInText: { flex: 1, fontSize: 17, lineHeight: 24 },
   input: {
     minHeight: 56,
     borderRadius: Radius.md,

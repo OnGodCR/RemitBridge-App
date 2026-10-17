@@ -23,6 +23,7 @@ import { ReceiptResult } from '@/components/receipt-result';
 import { SavingsCard } from '@/components/savings-card';
 import { AppText, Button, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import type { Copy } from '@/i18n/en';
@@ -73,6 +74,7 @@ type Step =
 export default function ScanScreen() {
   useTabFocus('/scan');
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const s = copy.scan;
   const [step, setStep] = useState<Step>({ kind: 'start' });
@@ -225,7 +227,7 @@ export default function ScanScreen() {
           {/* Full white, not the muted tint: it's the instruction, so it gets full contrast. */}
           {step.kind === 'start' ? <AppText style={[styles.heroSub, { color: t.heroText }]}>{s.heroSub}</AppText> : null}
         </HeroHeader>
-        <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.content, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
       {/* Each step rises in as it replaces the last (D132), instead of swapping in a frame. The
           opening one doesn't: the tab's own entrance already brings it in. */}
       {/* key: each step mounts fresh, so it rises in (Rise draws on its transform; an

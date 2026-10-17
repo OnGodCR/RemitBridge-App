@@ -9,6 +9,7 @@ import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
 import { TERMS } from '@/data/glossary';
 import { TERM_TRANSLATIONS, termIn } from '@/data/glossary-translations';
 import { useIconSize } from '@/hooks/use-icon-size';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
@@ -20,6 +21,7 @@ import { track } from '@/lib/track';
  */
 export default function GlossaryScreen() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const { language } = useLanguage();
   const { term } = useLocalSearchParams<{ term?: string }>();
@@ -46,7 +48,7 @@ export default function GlossaryScreen() {
       <StatusBar style="auto" />
       <FlatList
         style={{ backgroundColor: t.background }}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
         contentInsetAdjustmentBehavior="automatic"
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps="handled"

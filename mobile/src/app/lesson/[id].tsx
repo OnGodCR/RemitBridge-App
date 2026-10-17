@@ -23,6 +23,7 @@ import { Fonts, Radius, Spacing } from '@/constants/theme';
 import type { Term } from '@/data/glossary';
 import { termIn } from '@/data/glossary-translations';
 import { moduleFor, type Module } from '@/data/modules';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import type { Copy } from '@/i18n/en';
@@ -75,6 +76,7 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
   const [picked, setPicked] = useState<string>();
   const scroll = useRef<ScrollView>(null);
   const t = useTheme();
+  const gutter = useGutter(0);
   const copy = useCopy();
   const g = copy.learn.games;
   const l = copy.learn.lesson;
@@ -210,7 +212,7 @@ function Lesson({ module: m, mode, onReplay }: { module: Module; mode?: string; 
   }
 
   return (
-    <View style={[styles.fill, { backgroundColor: t.background, paddingTop: insets.top + Spacing.two }]}>
+    <View style={[styles.fill, { backgroundColor: t.background, paddingTop: insets.top + Spacing.two, paddingHorizontal: gutter }]}>
       <StatusBar style="auto" />
       <TopBar
         progress={state.steps.length ? state.index / state.steps.length : 0}

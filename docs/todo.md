@@ -19,8 +19,10 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Push the review sign-in migration (D184)**: `supabase db push` (adds `private.review_accounts` and lets only that account use a password).
 - [ ] **Create the App Review account**: Supabase dashboard, Authentication, Add user: review@remitbridgelabs.org, a password of your own, Auto Confirm on. Then in the SQL editor: `insert into private.review_accounts (user_id) select id from auth.users where email = 'review@remitbridgelabs.org';`
 - [ ] **Play Console, Sign in details**: Yes, add the review address and your password (you type the password), with the instructions from `docs/store/listing.md`.
-- [ ] **Play Console, Content rating**: needs your yes to IARC's terms, then Claude fills the questionnaire with hello@remitbridgelabs.org.
-- [ ] **New production builds for D184**: only when Angad says go.
+- [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
+- [ ] **New production builds for D184, D185 and D186**: only when Angad says go. The iPad (D185) and the new onboarding order (D186) also take effect with them.
+- [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
+- [ ] **Hindi for the onboarding questions step (D186)**: four new rows in `docs/translation-review/hi.md`.
 
 ## Store blockers (Angad)
 

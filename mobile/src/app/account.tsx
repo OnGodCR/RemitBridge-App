@@ -9,6 +9,7 @@ import { ListGroup, ListItem, ListPoint, ListRow } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
 import { INCORPORATED, LEGAL_NAME } from '@/constants/site-config';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { languagesNeedingReview, offeredLanguages } from '@/i18n/languages';
@@ -30,6 +31,7 @@ import { FocusRise } from '@/components/motion-views';
  */
 export default function AccountScreen() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const a = copy.account;
   const { language } = useLanguage();
@@ -84,7 +86,7 @@ export default function AccountScreen() {
             <AppText style={{ color: t.heroMuted }}>{session.user.email ?? a.signedInApple}</AppText>
           ) : null}
         </HeroHeader>
-        <FocusRise style={[styles.content, { backgroundColor: t.background }]}>
+        <FocusRise style={[styles.content, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
           {session ? (
             <>
               <NameField />

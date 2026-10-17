@@ -14,6 +14,7 @@ import type { Term } from '@/data/glossary';
 import { MODULES, moduleFor, moduleTerms } from '@/data/modules';
 import { modesFor, type GameMode } from '@/lib/learn-games';
 import { WORDS_PER_LESSON } from '@/lib/lesson';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { termIn } from '@/data/glossary-translations';
@@ -33,6 +34,7 @@ export default function ModuleScreen() {
   const m = moduleFor(id);
   const learned = useLearned();
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const l = copy.learn;
 
@@ -56,7 +58,7 @@ export default function ModuleScreen() {
       <StatusBar style="auto" />
       <ScrollView
         style={{ backgroundColor: t.background }}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
         contentInsetAdjustmentBehavior="automatic">
         <View style={styles.lead}>
           <Art size={64} />

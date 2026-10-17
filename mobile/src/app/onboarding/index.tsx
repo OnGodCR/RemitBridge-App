@@ -31,11 +31,11 @@ export default function Welcome() {
   return (
     <Step
       step={1}
-      of={4}
+      of={5}
       back={false}
       actions={
         <Rise step={4} style={styles.actions}>
-          <Button label={w.getStarted} trailingIcon="arrow.right" onPress={() => router.push('/onboarding/why')} />
+          <Button label={w.getStarted} trailingIcon="arrow.right" onPress={() => router.push('/onboarding/route')} />
           <Button
             label={w.haveAccount}
             variant="secondary"

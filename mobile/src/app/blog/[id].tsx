@@ -8,6 +8,7 @@ import { Eyebrow } from '@/components/brand';
 import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { postById, relatedTo } from '@/data/blog';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { track } from '@/lib/track';
@@ -20,6 +21,7 @@ export default function BlogPostScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const post = postById(id);
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const date = usePostDate();
 
@@ -34,7 +36,7 @@ export default function BlogPostScreen() {
     <>
       <Stack.Screen options={{ title: '' }} />
       <StatusBar style="auto" />
-      <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
+      <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic">
         <PostCover post={post} rounded />
         <View style={styles.head}>
           <SeriesMark series={post.series} />

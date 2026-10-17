@@ -6,6 +6,7 @@ import { PostCard } from '@/components/blog';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Spacing } from '@/constants/theme';
 import { POSTS, SERIES, type SeriesId } from '@/data/blog';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
@@ -16,6 +17,7 @@ import { track } from '@/lib/track';
  */
 export default function BlogIndex() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const b = copy.blog;
   const { language } = useLanguage();
@@ -26,7 +28,7 @@ export default function BlogIndex() {
   useEffect(() => track('learn_opened', { page: 'blog' }), []);
 
   return (
-    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
+    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic">
       <StatusBar style="auto" />
       <AppText muted>{b.written(written, POSTS.length)}</AppText>
       {language.code !== 'en' ? <AppText muted>{b.englishOnly}</AppText> : null}

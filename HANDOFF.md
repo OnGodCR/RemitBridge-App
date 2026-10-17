@@ -8,6 +8,18 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-17: iPad full screen and onboarding reordered (D185, D186)
+
+- The app now declares iPad support (`supportsTablet`, `requireFullScreen`); on wide screens
+  `mobile/src/hooks/use-gutter.ts` centers content in a 640-point column, bands stay full
+  width. Phones are unchanged. Before this, the dev build ran on the iPad simulator in
+  iPhone compatibility mode and worked.
+- Onboarding: Welcome, route, About you (`onboarding/about.tsx`: year of birth, newsletter),
+  why it matters, sign-up (buttons only).
+- Checked in the web render at 834 points; 234 app tests, typecheck and lint pass. Not yet
+  seen on a native build: both take effect with the next build, which waits for Angad.
+  App Store Connect will need 13-inch iPad screenshots.
+
 ## 2026-10-17: history rewritten under Angad's name
 
 At Angad's request every commit on main, remmy, chatgpt/learn-game-modes,

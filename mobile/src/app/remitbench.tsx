@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { Breakdown, Section } from '@/components/tool';
 import { AppText } from '@/components/ui';
 import { Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { EnglishOnly, useCopy, useLanguage } from '@/i18n';
 import { track } from '@/lib/track';
@@ -108,6 +109,7 @@ const TESTS = [
 
 export default function RemitBenchScreen() {
   const t = useTheme();
+  const gutter = useGutter();
   const copy = useCopy();
   const { language } = useLanguage();
   const [test, setTest] = useState(TESTS[0].id);
@@ -119,7 +121,7 @@ export default function RemitBenchScreen() {
       <StatusBar style="auto" />
       <ScrollView
         style={{ backgroundColor: t.background }}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]}
         contentInsetAdjustmentBehavior="automatic">
         {language.code !== 'en' ? (
           <AppText accessibilityLanguage={language.locale} style={{ color: t.text }}>

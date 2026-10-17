@@ -5,6 +5,7 @@ import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { ListGroup } from '@/components/list-row';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { EnglishOnly } from '@/i18n';
 import { sendIssue, sentIssues, subscriberCount, type SentIssue } from '@/lib/newsletter';
@@ -16,6 +17,7 @@ import { sendIssue, sentIssues, subscriberCount, type SentIssue } from '@/lib/ne
  */
 function NewsletterScreen() {
   const t = useTheme();
+  const gutter = useGutter();
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [count, setCount] = useState<number | null>(null);
@@ -69,7 +71,7 @@ function NewsletterScreen() {
 
   const input = [styles.input, { color: t.text, backgroundColor: t.card, borderColor: t.border, borderBottomColor: t.rim }];
   return (
-    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled">
+    <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled">
       <StatusBar style="auto" />
       <AppText muted>
         {count === null ? 'Counting subscribers…' : `${count} ${count === 1 ? 'person gets' : 'people get'} the next issue.`}

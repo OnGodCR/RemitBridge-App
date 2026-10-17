@@ -174,6 +174,12 @@ export const en = {
       paidIn: (country: string, currency: string) => `${country}. Paid out in ${currency}`,
       elsewhere: 'Somewhere else? Ask for it on Compare.',
     },
+    about: {
+      eyebrow: 'About you',
+      lead: 'Two quick',
+      accent: 'questions',
+      intro: 'Your birth year never leaves this phone.',
+    },
   },
 
   signIn: {
