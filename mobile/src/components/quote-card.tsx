@@ -5,15 +5,15 @@ import { AppText, Card } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
-import { money, moneySpoken, pct } from '@/lib/format';
+import { money, moneySpoken } from '@/lib/format';
 import type { LatestQuote, ShownQuote } from '@/lib/quotes';
 import { GrowIn } from '@/components/motion-views';
 
 
 
 /**
- * One provider's quote (PRD 14.6): the amount received is the largest text, then total
- * cost, the breakdown, and where the number came from and when.
+ * A compact provider quote: the amount received, then the total cost in dollars, and
+ * "Estimated from the $X check" when the amount sits between checked amounts. Tap for details.
  */
 export function QuoteCard({
   quote,
@@ -31,7 +31,8 @@ export function QuoteCard({
   const t = useTheme();
   const copy = useCopy();
   const q = quote;
-  const spoken = copy.quote.spokenArrive(moneySpoken(q.amount_received, q.receive_currency), q.total_cost_pct.toFixed(1));
+  const estimate = q.basedOn !== null ? copy.quote.estimatedFrom(money(q.basedOn, q.send_currency).replace('.00', '')) : null;
+  const spoken = `${moneySpoken(q.amount_received, q.receive_currency)} ${copy.quote.arrives}, ${moneySpoken(q.total_cost, q.send_currency)} ${copy.quote.cost}${estimate ? `. ${estimate}` : ''}`;
   const card = (
     <Card style={featured ? [styles.featured, { borderLeftColor: t.primary }] : undefined}>
       <View style={styles.header}>
@@ -49,23 +50,19 @@ export function QuoteCard({
         <AppText variant="figure" style={{ color: t.moneyReceived }}>
           {money(q.amount_received, q.receive_currency)}
         </AppText>
-        <AppText muted>
-          {copy.quote.arrives} · {pct(q.total_cost_pct)} {copy.quote.cost}
-          {q.delivery_time ? ` · ${q.delivery_time}` : ''}
-        </AppText>
-      </View>
-
-      <CostBreakdownBar quote={q} />
-
-      <View style={styles.footer}>
-        <View style={styles.flex}>
-          {q.basedOn !== null ? (
-            <AppText variant="small" muted>
-              {copy.quote.estimatedFrom(money(q.basedOn, q.send_currency).replace('.00', ''))}
+        <View style={styles.costRow}>
+          <View style={styles.flex}>
+            <AppText muted>
+              {copy.quote.arrives} · {money(q.total_cost, q.send_currency)} {copy.quote.cost}
             </AppText>
-          ) : null}
+            {estimate ? (
+              <AppText variant="small" muted>
+                {estimate}
+              </AppText>
+            ) : null}
+          </View>
+          {onPress ? <Arrow /> : null}
         </View>
-        {onPress ? <Arrow /> : null}
       </View>
     </Card>
   );
@@ -150,7 +147,7 @@ export function FreshnessBadge({ quote, showSource = true }: { quote: LatestQuot
 
 const styles = StyleSheet.create({
   featured: { borderLeftWidth: 4 },
-  footer: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  costRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   flex: { flex: 1, gap: 2 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.two },
   tag: { fontFamily: Fonts.semibold },

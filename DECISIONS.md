@@ -2318,3 +2318,12 @@ passing the check time to the model, so the AI can't mention it either, and What
 price reply drops "Prices checked X ago". The quote detail screen still shows each price's
 source and check time one tap away, as the store listing and reviewer notes describe;
 this overrides the "every figure names when it was checked" rule only for Remmy and WhatsApp.
+
+
+**D183. Compare cards: amount, dollar cost, and the estimate label** (Angad, 2026-10-17:
+"keep it with the fixes you just proposed"). Each Compare card shows the amount received,
+then "arrives · $X cost", and "Estimated from the $Y check" when the typed amount sits
+between checked amounts. The % cost, the delivery time and the breakdown bar move to the
+quote's details. An earlier uncommitted edit had dropped the estimate label and said
+"Arrived", which read like a finished transfer; both are fixed. It reuses existing strings,
+so no translation changes.

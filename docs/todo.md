@@ -10,9 +10,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Old hand prices as RemitBridge choice**: kept as is (D181, Angad 2026-10-17); hand prices compete until 7 days old, then leave Compare. The view already does this.
 - [x] **Remmy says "today's checked prices"**: fixed 2026-10-17 (D182): Remmy and WhatsApp no longer say when prices were checked. Deployed 2026-10-17; Hindi review of two rows pending.
-- [ ] **Uncommitted quote-card edit**: keep it (bring back the "Estimated from" label and "arrives") or discard it. Not in the Oct 16 builds; the new screenshots show it.
+- [x] **Uncommitted quote-card edit**: kept with the estimate label and "arrives" restored (D183, 2026-10-17); Compare screenshot retaken.
 - [x] **Redeploy `remmy` and `whatsapp`** for D182: both deployed by Angad 2026-10-17.
-- [ ] **New production builds** after the quote-card decision, then TestFlight and Play internal testing.
+- [ ] **New production builds** (code is ready as of 2026-10-17), then TestFlight and Play internal testing.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
