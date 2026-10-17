@@ -1,6 +1,6 @@
 # Publication readiness: App Store and Google Play
 
-Updated 2026-10-14. **Not ready to submit yet.** This checklist distinguishes source
+Updated 2026-10-16. **Not ready to submit yet.** This checklist distinguishes source
 changes from deployment, signed builds, account verification and real-device evidence.
 Older checked items are not proof that the latest version passed release testing.
 
@@ -58,8 +58,8 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
 - [x] D-U-N-S received for RemitBridge Labs, confirmed by Angad 2026-10-14 (case 11089990).
 - [x] Apple organization-conversion request submitted by Angad (2026-10-14).
 - [ ] Apple approves/completes organization conversion.
-- [ ] Google Play organization verification: Angad is completing verification (2026-10-14).
-  Confirm approval and seller/legal name RemitBridge Labs before publication.
+- [x] Google Play organization verification complete, confirmed by Angad 2026-10-16;
+  he can now create the first app. App record/submission steps remain separate.
 - [ ] Create/verify store app records for `org.remitbridgelabs.app`, intended US availability,
   agreements, reviewer contact and access instructions. No account was created in this audit.
 - [ ] Complete current Apple privacy/age questionnaire and Play Data safety, financial
@@ -74,9 +74,12 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
 
 ## Build and release evidence
 
-- [ ] New EAS production builds for both platforms from the final main commit. Existing
-  October 12 production build predates Remmy and subsequent changes. Keep auto-incremented
-  build numbers; no native or store submission was performed in this audit.
+- [x] New production builds FINISHED from latest committed app source ff6af09: Android
+  1.0.0 (8) and iOS 1.0.0 (5), 2026-10-16. See [build record](store/release-builds-2026-10-16.md).
+  The uncommitted quote-card edit was preserved/excluded. Neither build submitted.
+- [x] Basic artifact metadata inspected: expected identifiers/versions, Android target 36,
+  blocked permissions absent, iOS purpose strings and aggregate privacy manifest present.
+  Full security and real-device checks below remain separate.
 - [ ] Confirm production environment points at the correct Supabase project and auth clients;
   no server-only keys in EXPO_PUBLIC variables. Verify signed binaries' SDK/target versions,
   permissions, privacy manifests, required-reason API declarations and absence of debug UI.

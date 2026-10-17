@@ -698,3 +698,15 @@ paid build or submission is claimed. Existing Hindi approvals preserved, new row
 At Angad's request, ChatGPT added "Not financial advice" to the existing Remmy welcome
 and persistent chat notice in all five language files. Existing notice placement is reused.
 The changed Hindi row was appended for review without altering earlier approvals.
+
+
+## 2026-10-16: production builds and artifact checks
+
+Angad authorized fresh builds, then handled Apple authentication/certificate/profile setup
+himself. ChatGPT built clean committed ff6af09 in a temporary worktree, preserving the
+uncommitted quote-card change. Fixed upload packaging/disk issues and the visible terminal's
+missing Homebrew PATH; removed only the obsolete EAS CLI 24.13 cache before successful iOS
+retry. Android code 8 and iOS build 5 both finished. Checked manifest/plist/signature-entry
+metadata with small range downloads. Source tests (231), typecheck and lint pass. No store
+submission/publication performed; no cryptographic or full security certification claimed.
+Google Play verification marked complete based on Angad's explicit confirmation.

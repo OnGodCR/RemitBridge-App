@@ -10,11 +10,11 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [ ] **Apple organization conversion approval**: request submitted by Angad 2026-10-14; waiting for Apple.
-- [ ] **Google Play organization verification**: Angad is completing it as of 2026-10-14; approval pending.
+- [x] **Google Play organization verification**: complete, confirmed by Angad 2026-10-16; first app can now be created.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
 - [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
-- [ ] **iPhone production build**: sign in to Apple once so EAS makes the App Store profile; Claude builds, you run `eas submit`.
-- [ ] **Play Console**: upload the production `.aab` from EAS build 520e9e31 (versionCode 6: the Android sign-in fix, the newsletter with its onboarding opt-in, reviewed Hindi, and Compare as the first tab; finished 2026-10-12, checked: no AD_ID or photo permissions; NOT eb1d1d43, which can't keep anyone signed in), then fill every form from `docs/store/listing.md`.
+- [x] **iPhone production build**: 1.0.0 (5), b44747b9-818f-4850-a1ad-591e4ceaebc9 FINISHED 2026-10-16. Apple signing completed by Angad; not submitted.
+- [ ] **Play Console**: create first app and upload the fresh production AAB, build 27908f86-1347-4fd0-9d45-0bfb457f330e, version code 8 (finished 2026-10-16). Do not use the older version code 6. Complete the forms from docs/store/listing.md.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
 - [ ] **Play App Signing keys**: after the first Play upload, send Claude the SHA-256 and SHA-1 (Setup > App signing).
 

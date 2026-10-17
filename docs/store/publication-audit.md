@@ -102,3 +102,12 @@ Angad confirmed that he tested all new features on Android and everything works 
 This is user-reported Android feature acceptance, not independent verification of the full
 release matrix or evidence from a Play-installed production build. iPhone and final signed
 production-build tests remain required.
+
+## Subsequent production builds, 2026-10-16
+
+Both new production builds finished successfully: Android 1.0.0 (8) and iOS 1.0.0 (5),
+from ff6af09. Basic artifact metadata checked; details/downloads in
+[release-builds-2026-10-16.md](release-builds-2026-10-16.md). Google Play verification is
+complete per Angad. These updates close the earlier build/verification waits, not the
+remaining device, security, legal, store-form or publication gates. iOS signing currently
+uses the individual Apple team while organization conversion remains separate.

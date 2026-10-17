@@ -3,10 +3,25 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-15 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-16 (see the sections just below; the older status after them is kept for history)
 
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-16: both production builds complete; Google Play verified
+
+Angad confirmed Google Play organization verification fully complete; first-app creation
+is available. Fresh store builds from clean committed ff6af09 both FINISHED:
+Android 1.0.0 (8), 27908f86-1347-4fd0-9d45-0bfb457f330e;
+iOS 1.0.0 (5), b44747b9-818f-4850-a1ad-591e4ceaebc9.
+Clean source passed 231 mobile tests, typecheck and lint. Both artifacts' metadata checked;
+see docs/store/release-builds-2026-10-16.md for download links, checks and limitations.
+User completed Apple signing in the visible terminal. Fixed its npx PATH problem with
+/opt/homebrew/bin; after signing, a local ENOSPC upload failure was resolved by removing
+only an obsolete EAS CLI download cache and retrying with saved credentials. No personal
+files deleted. Signing is still the current individual Apple team, pending org conversion.
+No store upload/submission or public release performed. Main checkout's existing quote-card
+edit remains unmodified and excluded; temporary build checkout retained for now.
 
 ## 2026-10-15: visible Remmy advice disclaimer
 
