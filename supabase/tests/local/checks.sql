@@ -377,12 +377,25 @@ select pg_temp.ok((select public.custom_access_token_hook('{"authentication_meth
 select pg_temp.ok((select not (public.custom_access_token_hook(
     '{"authentication_method": "token_refresh", "claims": {"sub": "x", "amr": [{"method": "oauth", "timestamp": 1}]}}') ? 'error')),
   'hook: refreshing a Google or Apple session works');
+-- The one exception (D184): an account listed for app review may use its password.
+insert into private.review_accounts (user_id) values ('40000000-0000-4000-8000-000000000004');
+select pg_temp.ok((select not (public.custom_access_token_hook(
+    '{"user_id": "40000000-0000-4000-8000-000000000004", "authentication_method": "password", "claims": {"sub": "40000000-0000-4000-8000-000000000004"}}') ? 'error')),
+  'hook: the listed review account may sign in with its password');
+select pg_temp.ok((select public.custom_access_token_hook(
+    '{"user_id": "40000000-0000-4000-8000-000000000005", "authentication_method": "password", "claims": {"sub": "40000000-0000-4000-8000-000000000005"}}') ? 'error'),
+  'hook: any other account still gets no token for a password');
+select pg_temp.ok((select public.custom_access_token_hook(
+    '{"authentication_method": "password", "claims": {"sub": "40000000-0000-4000-8000-000000000004"}}') ? 'error'),
+  'hook: a password event without the listed user_id is refused');
+delete from private.review_accounts;
 
 set role anon;
 select pg_temp.expect($$select public.custom_access_token_hook('{}')$$, '42501', 'anon: can''t call the sign-in hook');
 select pg_temp.expect($$select public.take_hit_for_ip('scan', '1.2.3.4', 1, 60)$$, '42501', 'anon: can''t touch rate limits');
 select pg_temp.expect($$select public.is_admin()$$, '42501', 'anon: is_admin() isn''t callable');
 select pg_temp.expect($$select * from private.rate_limit_hits$$, '42501', 'anon: the private schema is closed');
+select pg_temp.expect($$insert into private.review_accounts (user_id) values (gen_random_uuid())$$, '42501', 'anon: can''t add a review account');
 -- Seven events from one address against a limit of 600 per 10 minutes: all fine.
 select set_config('request.headers', '{"x-forwarded-for": "203.0.113.9, 10.0.0.1"}', false);
 insert into public.events (install_id, name) select '30000000-0000-4000-8000-000000000003', 'app_opened' from generate_series(1, 7);

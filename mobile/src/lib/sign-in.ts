@@ -17,7 +17,7 @@ import { supabase } from '@/lib/supabase';
  * need a custom SMTP sender (D42). Until those exist, these say "not set up yet" rather
  * than show a raw error.
  */
-export type SignInError = 'notReady' | 'notOpen' | 'rateLimit' | 'badCode' | 'offline' | 'notConnected' | 'generic';
+export type SignInError = 'notReady' | 'notOpen' | 'rateLimit' | 'badCode' | 'badPassword' | 'offline' | 'notConnected' | 'generic';
 type Result = SignInError | 'closed' | null;
 
 function friendly(message: string): SignInError {
@@ -39,6 +39,21 @@ export async function sendEmailCode(email: string): Promise<Result> {
     options: { shouldCreateUser: true },
   });
   return error ? friendly(error.message) : null;
+}
+
+/**
+ * The one account App Review signs in with (D184). Reviewers can't receive an email code,
+ * so this address gets a password field instead; the server accepts a password only for
+ * the account listed in private.review_accounts and refuses it for everyone else (D135).
+ */
+export const REVIEW_EMAIL = 'review@remitbridgelabs.org';
+export const isReviewEmail = (email: string) => email.trim().toLowerCase() === REVIEW_EMAIL;
+
+export async function signInForReview(email: string, password: string): Promise<Result> {
+  if (!supabase) return 'notConnected';
+  const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+  if (!error) return null;
+  return error.message.toLowerCase().includes('invalid login') ? 'badPassword' : friendly(error.message);
 }
 
 export async function verifyEmailCode(email: string, code: string): Promise<Result> {

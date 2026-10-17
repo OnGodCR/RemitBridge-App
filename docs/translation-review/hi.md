@@ -1117,3 +1117,14 @@ Prior approvals are preserved; only the added disclaimer needs fresh review.
 | remmy.pricesHere | Here are the checked prices. | ये जाँची हुई कीमतें हैं। | | CHANGED 2026-10-17; review pending ("आज की" removed) |
 
 Only the word for "today's" was removed; the rest is the approved wording.
+
+
+## App Review sign-in, 2026-10-17 (D184)
+
+Shown only when someone types the review account's address. Reviewers will see English.
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| signIn.passwordLabel | Password | पासवर्ड | | NEW 2026-10-17; review pending |
+| signIn.signInWithPassword | Sign in | साइन इन करें | | NEW 2026-10-17; review pending |
+| signIn.errors.badPassword | Wrong password. Try again. | पासवर्ड गलत है। फिर कोशिश करें। | | NEW 2026-10-17; review pending |

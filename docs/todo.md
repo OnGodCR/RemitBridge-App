@@ -16,6 +16,12 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
+- [ ] **Push the review sign-in migration (D184)**: `supabase db push` (adds `private.review_accounts` and lets only that account use a password).
+- [ ] **Create the App Review account**: Supabase dashboard, Authentication, Add user: review@remitbridgelabs.org, a password of your own, Auto Confirm on. Then in the SQL editor: `insert into private.review_accounts (user_id) select id from auth.users where email = 'review@remitbridgelabs.org';`
+- [ ] **Play Console, Sign in details**: Yes, add the review address and your password (you type the password), with the instructions from `docs/store/listing.md`.
+- [ ] **Play Console, Content rating**: needs your yes to IARC's terms, then Claude fills the questionnaire with hello@remitbridgelabs.org.
+- [ ] **New production builds for D184**: only when Angad says go.
+
 ## Store blockers (Angad)
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).

@@ -2327,3 +2327,16 @@ between checked amounts. The % cost, the delivery time and the breakdown bar mov
 quote's details. An earlier uncommitted edit had dropped the estimate label and said
 "Arrived", which read like a finished transfer; both are fixed. It reuses existing strings,
 so no translation changes.
+
+
+**D184. A password sign-in for App Review only** (Angad, 2026-10-17: "option B honestly",
+and "dont start the build until I tell you"). Google Play and Apple ask for sign-in details
+their reviewers can use, and reviewers can't create accounts or receive email codes.
+RemitBridge refuses every password sign-in (D135). Now the token hook allows a password only
+for an account listed in `private.review_accounts`, a table only the database owner can fill;
+everyone else is still refused (local checks cover both). In the app, typing
+review@remitbridgelabs.org on the email screen swaps the code step for a password field.
+Angad creates the account in the Supabase dashboard with a password of his own and types it
+into the store consoles himself; Claude never sees it. Saying nothing is restricted would
+not have been true, since saving and alerts need an account. Needs the migration pushed and
+a new build, which waits for Angad's go-ahead.

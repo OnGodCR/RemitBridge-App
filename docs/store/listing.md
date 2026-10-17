@@ -143,6 +143,8 @@ Prices come from providers' public prices (Wise with written permission, Instare
 
 Remmy: tap the assistant, allow the AI disclosure, and ask "open account settings". Return to Remmy: the action must not repeat. Ask "compare 500 to India" or "start a lesson about scams". Saving requires a separate tap and optional sign-in. Use Report reply below an AI answer; cancel sends nothing, confirm submits only that answer for moderation. AI limits can make replies unavailable; ordinary navigation and Compare remain accessible. New chat clears local chat memory, not submitted reports.
 
+Signing in: on the Account tab choose Continue with email and enter the review address given in the sign-in details; a password field appears in place of the code. Use the password given there.
+
 Account deletion: Account > Delete account.
 Contact: hello@remitbridgelabs.org
 ```

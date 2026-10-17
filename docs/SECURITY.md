@@ -28,7 +28,9 @@ first (`admin_metrics`) or are granted to the service role only.
 **Taking over an account.**
 - No passwords: `custom_access_token_hook` refuses any token for a password sign-in or a
   session that began with one, so an account someone pre-registers with another person's
-  address and a password is useless to them. Email confirmation is on.
+  address and a password is useless to them. Email confirmation is on. One exception (D184):
+  the App Review account listed in `private.review_accounts`, which only the database owner
+  can fill, may use its password; it holds no real data.
 - Sign-in redirects go only to `remitbridge://` and Expo Go on a private network (never an
   arbitrary `exp://` server, which could receive someone's sign-in).
 - Google uses PKCE in the browser and Google's own sheet on iPhone; Apple sign-in sends a
