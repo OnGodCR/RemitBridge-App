@@ -2297,3 +2297,12 @@ account/install identifiers in reports. Limits still use the installation ID in 
 Version the corrected Remmy consent so prior users see it again. Make agent price tools
 match bank-funded eligible Compare prices. Keep deployment/build/account/legal/security
 and real-device gates explicit rather than claiming publication readiness from source alone.
+
+
+**D181. Hand prices up to seven days old keep competing for RemitBridge choice**
+(Angad, 2026-10-17: "For prices > 48 hours don't change anything. Only change if it is more
+than 7 days"). Claude's review found a five-day-old hand price ranked as RemitBridge choice
+for $500 to India, above a price checked that morning. Angad keeps D179 as it is: an
+eligible hand price ranks with the live ones until it is seven days old, and then leaves.
+No code change: the `compare_quotes` view already drops manual prices past seven days, and
+Compare, Remmy and WhatsApp all read it. Each quote's details still show when it was checked.

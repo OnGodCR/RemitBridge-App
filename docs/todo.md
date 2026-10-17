@@ -8,10 +8,10 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Before submitting: found in the 2026-10-17 review (Angad decides, Claude builds)
 
-- [ ] **Old hand prices as RemitBridge choice**: $500 to India puts WorldRemit on top from a price checked Oct 12 (total cost -$0.73), above Wise checked Oct 17. Decide: no "RemitBridge choice" past 48 hours, or rank older prices apart again (D179 vs D144).
+- [x] **Old hand prices as RemitBridge choice**: kept as is (D181, Angad 2026-10-17); hand prices compete until 7 days old, then leave Compare. The view already does this.
 - [ ] **Remmy says "today's checked prices"** above a card that says "Checked 5d ago": match the wording to the prices' age.
 - [ ] **Uncommitted quote-card edit**: keep it (bring back the "Estimated from" label and "arrives") or discard it. Not in the Oct 16 builds; the new screenshots show it.
-- [ ] **New production builds** after these three, then TestFlight and Play internal testing.
+- [ ] **New production builds** after the two fixes above, then TestFlight and Play internal testing.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
