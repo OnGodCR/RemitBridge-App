@@ -42,35 +42,24 @@ Compare bank-funded transfers, scan receipts and ask Remmy about costs. See who 
 remittance,send money,exchange rate,transfer fee,compare,India,Mexico,Philippines,Vietnam,receipt
 ```
 
-**Description** (4000 max):
+**Description** (4000 max; Angad approved this wording on 2026-10-17, written to read like a story):
 
 ```
-RemitBridge shows what it really costs to send money from the US to family abroad.
+Say you send $300 home every month. The app shows a $3.99 fee, so that feels like the cost. But the exchange rate it gives you is lower than the real one, and that gap can take more than the fee does. Over a year, it adds up to money your family never sees.
 
-Every transfer has two costs: the fee you can see, and a markup hidden in the exchange rate. RemitBridge splits them apart, so you can see the whole cost and what your family actually receives.
+RemitBridge shows you that gap.
 
-SCAN A RECEIPT
-Take a photo of a transfer receipt. RemitBridge reads it on your phone, covers your name, address and account numbers before anything is sent, and shows:
-- the true cost: fee, exchange-rate markup, tax and pickup charges
-- whether the 1% federal remittance tax was charged correctly
-- what you could have kept with the cheapest provider we had prices for
+Pick a country and an amount. You'll see what your family would get from each provider, ranked by how much actually arrives. The one at the top is marked RemitBridge choice. No company can pay to be there, because none of them pay us anything. Tap any price to see the fee and the exchange-rate markup split apart, and where the price came from. Prices are for paying from a bank account. Comparing doesn't need an account.
 
-COMPARE PROVIDERS
-Choose a country, an amount and how the money should arrive. Providers are ranked by how much your family receives, never by who pays us, because nobody does. Bank-account funding only. RemitBridge choice marks the highest listed standard amount received; promotions are separate. Tap a price for its source and collection time. Hand-checked quotes may remain eligible for up to seven days. Confirm the provider's final price.
+Already sent money? Take a photo of the receipt. Your name, address and account numbers are covered on your phone before anything leaves it. Then you'll see what that transfer really cost, whether the 1% federal remittance tax was charged right, and what you could have kept with another provider.
 
-ASK REMMY
-Ask about costs, open a comparison or settings, and start a lesson. Saving a comparison needs your tap. AI answers can be wrong; do not share private details. Chat uses Cloudflare or Groq after your permission, and you can report replies in the app.
+Got a question? Ask Remmy, the assistant in the app. It answers from the prices we've checked and can take you to the right screen. It's an AI, so it can get things wrong, and it isn't financial advice.
 
-RATE ALERTS
-Pick a target and get one notification when a provider's price reaches it.
+Want to know what the words on a receipt mean? Short lessons and games cover rates, fees, markups and scams. There are tools to check a rate, look over a message asking for money, and add up a year of sending. You can also set an alert for when a provider's price reaches your target.
 
-LEARN
-Lessons and games explain rates, fees, markups and scams, with tools to check a rate and add up a year of sending. An optional newsletter brings updates; unsubscribe anytime.
+A few things RemitBridge will never do. It never sends or holds your money, and there's no send button. There are no ads and no affiliate links. We don't make anything when you pick a provider.
 
-WHAT REMITBRIDGE DOES NOT DO
-RemitBridge never moves money. There is no "send" button, no affiliate links and no advertising. Comparing prices needs no account.
-
-Supports routes from the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Available quotes vary by route, amount and receiving method; request more countries in the app.
+RemitBridge is made by RemitBridge Labs, a nonprofit corporation. It covers sending from the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Prices change, so check the final amount with the provider before you send.
 ```
 
 **What's New** (first version):
@@ -156,10 +145,10 @@ D135): encryption that only protects the app's own data is exempt, so the answer
 
 ## Google Play
 
-**Short description** (80 max, this is 77):
+**Short description** (80 max, this is 79):
 
 ```
-See the fee and the hidden exchange-rate markup, and compare who sends most.
+See the fee, the hidden exchange-rate cost, and who sends your family the most.
 ```
 
 **Full description**: the App Store description above (it fits Play's 4000 too).
