@@ -3,10 +3,22 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-16 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-17 (see the sections just below; the older status after them is kept for history)
 
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-17: Claude reviewed ChatGPT's work; new store screenshots
+
+Claude read ChatGPT's Oct 14 to 16 commits and ran the app. Not ready to submit. Findings and
+the ordered next steps: `~/Desktop/RemitBridge-App-Store/NEXT-STEPS.md`, tracked in
+`docs/todo.md` ("Before submitting"). The main three: a 5-day-old hand price is "RemitBridge
+choice" for India (D179), Remmy calls 5-day-old prices "today's", and the uncommitted
+quote-card edit drops the estimate label. Eight new store screenshots per platform
+(iPhone 6.9-inch 1320x2868, Android 1080x1920) and an interactive walk-through are in
+`~/Desktop/RemitBridge-App-Store/`, captured from the web render (`.claude/launch.json`, now
+`--no-dev`, since the dev bundle fails on a React Native devtools import). The capture patches
+three native-only calls at load and blocks analytics writes; it doesn't change the repo.
 
 ## 2026-10-16: both production builds complete; Google Play verified
 

@@ -6,13 +6,22 @@ tick items here (`- [x]`) as they land. A `(due YYYY-MM-DD)` after a title puts 
 pane's Due group, and Claude's own dated items go into Claude's instructions every session.
 Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
+## Before submitting: found in the 2026-10-17 review (Angad decides, Claude builds)
+
+- [ ] **Old hand prices as RemitBridge choice**: $500 to India puts WorldRemit on top from a price checked Oct 12 (total cost -$0.73), above Wise checked Oct 17. Decide: no "RemitBridge choice" past 48 hours, or rank older prices apart again (D179 vs D144).
+- [ ] **Remmy says "today's checked prices"** above a card that says "Checked 5d ago": match the wording to the prices' age.
+- [ ] **Uncommitted quote-card edit**: keep it (bring back the "Estimated from" label and "arrives") or discard it. Not in the Oct 16 builds; the new screenshots show it.
+- [ ] **New production builds** after these three, then TestFlight and Play internal testing.
+- [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
+- [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
+
 ## Store blockers (Angad)
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [ ] **Apple organization conversion approval**: request submitted by Angad 2026-10-14; waiting for Apple.
 - [x] **Google Play organization verification**: complete, confirmed by Angad 2026-10-16; first app can now be created.
 - [ ] **App Store Connect app record**: bundle `org.remitbridgelabs.app`, SKU `remitbridge`, English (U.S.). Claude reads the screen with you.
-- [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the six 6.9-inch screenshots.
+- [ ] **Paste the App Store listing**: from `docs/store/listing.md`, availability US only, the eight new 6.9-inch screenshots in `~/Desktop/RemitBridge-App-Store/store/iphone-6.9/` (2026-10-17; the Oct 12 ones are out of date).
 - [x] **iPhone production build**: 1.0.0 (5), b44747b9-818f-4850-a1ad-591e4ceaebc9 FINISHED 2026-10-16. Apple signing completed by Angad; not submitted.
 - [ ] **Play Console**: create first app and upload the fresh production AAB, build 27908f86-1347-4fd0-9d45-0bfb457f330e, version code 8 (finished 2026-10-16). Do not use the older version code 6. Complete the forms from docs/store/listing.md.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
