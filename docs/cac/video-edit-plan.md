@@ -43,6 +43,16 @@ The working project is in Descript: "RemitBridge CAC Video"
   it leaves; and in the codebase scene the language chips come in before their bars
   grow. Full copy in Downloads as `RemitBridge CAC v8.mp4`.
 
+- **v9** (2:57): the app demo rebuilt around Angad's ten phone recordings (Drive, Raw
+  Screen Recordings). The recording plays in a phone frame in the middle, a label on the
+  left names the feature, and Angad stays in the frame on the right. One clip per line:
+  onboarding, sign-in, Compare (India, then Mexico), a quote's details, "No affiliate
+  deals", TrueCost (scan, redaction preview, result), Remmy answering and moving the app,
+  a Learn game, the scam check, the blog, and WhatsApp. Each piece is sped up to fit its
+  line (`video-graphics/phone_pieces.txt`). Cut for privacy: the WhatsApp share sheet
+  (contact names) and the Account screen with Angad's email; also cut, 27 seconds of
+  loading after sign-in. Full copy in Downloads as `RemitBridge CAC v9.mp4`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are

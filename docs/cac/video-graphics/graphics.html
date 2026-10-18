@@ -64,6 +64,7 @@ const SEGS = {
   [34.982,38.681,"intent classification model routes requests between Groq and Cloudflare."],
   [38.939,42.537,"Altogether, RemitBridge spans roughly thirty-eight thousand lines of code"],
   [42.659,44.599,"across TypeScript, Python, and SQL."]],
+ demo: [],
  close: [
   [0.340,4.131,"Ultimately, I can't make supporting three households easy, but I can help"],
   [4.132,7.911,"families keep more of what they earn and understand where every dollar goes, and"],
@@ -71,7 +72,7 @@ const SEGS = {
   [10.081,14.855,"You can find Remit Bridge on iOS, Android, and at remitbridgelabs.org/app."],
   [14.966,15.467,"Thank you."]]
 };
-const SPEED = SECTION === 'tech' ? 1.1 : 1.0;
+const SPEED = (SECTION === 'tech' || SECTION === 'demo') ? 1.1 : 1.0;
 function W(phrase, nth=0){ let seen=0;
   for(const [a,b,txt] of SEGS[SECTION]){ let i=-1, from=0;
     while((i=txt.indexOf(phrase,from))!==-1){ if(seen++===nth) return (a+(b-a)*(i/txt.length))/SPEED; from=i+1; } }
@@ -270,6 +271,33 @@ if (SECTION === 'tech') {
     pulse(b, t); });
 }
 
+// ================================================================ demo
+if (SECTION === 'demo') {
+  // Phone recordings play in the phone frame (composited by ffmpeg); Angad in the frame on the right.
+  const s0 = mk(root, `<div class="abs" style="inset:0"></div>`); items.push({el:s0, kind:'scene', tin:-1, tout:99, in:'fade', out:'fade', dur:.034});
+  mk(s0, `<div class="abs" style="left:0;top:0;width:1920px;height:1080px;background:var(--bg);-webkit-mask:linear-gradient(#000 0 0);"></div>`);
+  root.innerHTML = '';  items.length = 0;
+  const bg = mk(root, `<svg class="abs" style="left:0;top:0" width="1920" height="1080"><defs><mask id="m"><rect width="1920" height="1080" fill="#fff"/><rect x="640" y="70" width="434" height="940" rx="44" fill="#000"/><rect x="1220" y="150" width="620" height="780" rx="28" fill="#000"/></mask></defs><rect width="1920" height="1080" fill="#0c3a30" mask="url(#m)"/></svg>`);
+  mk(root, `<div class="abs" style="left:628px;top:58px;width:458px;height:964px;border-radius:56px;border:12px solid #071f19;box-shadow:0 0 0 3px rgba(143,202,182,.45)"></div>`);
+  mk(root, `<div class="ring" style="left:1216px;top:146px;width:628px;height:788px"></div>`);
+  mk(root, `<div class="tag" style="left:1250px;top:858px">Angad Kochar</div>`);
+  const stage = mk(root, `<div class="abs" style="left:0;top:0;width:620px;height:1080px;overflow:hidden"></div>`);
+  const lab = (from, to, tin, tout, head, subs) => { const s = scene(stage, from, to, tin, tout);
+    title(s, 90, 300, head.split('\n'), from+0.05, 54);
+    subs.forEach(([txt, t, kind='slide'], i) => add(s, `<div class="abs" style="left:90px;top:${300 + head.split('\n').length*66 + 40 + i*74}px;width:350px;background:#fff;color:#1c2024;border-radius:16px;padding:14px 20px;font-size:26px;font-weight:700;box-shadow:0 5px 0 #0b4f3f">${txt}</div>`, t, kind)); };
+  lab(0.2, 5.47, 'zoom', 'pushUp', 'Onboarding', [['Pick a route', 2.9]]);
+  lab(5.47, 7.24, 'pushUp', 'pushLeft', 'Sign in', [['Apple or Google', 5.8, 'drop']]);
+  lab(7.24, 15.0, 'pushLeft', 'wipe', 'Compare', [['Real prices, checked', 8.2], ['Ranked by amount received', 12.33, 'stamp']]);
+  lab(15.0, 19.0, 'wipe', 'pushUp', 'Quote\ndetails', [['Upfront fee', 15.6, 'slide'], ['Exchange-rate markup', 16.4, 'slide'], ['Delivery time', 17.2, 'slide']]);
+  lab(19.0, 22.4, 'pushUp', 'iris', 'No paid\nplacement', [['No affiliate deals', 20.0, 'stamp']]);
+  lab(22.4, 40.28, 'iris', 'pushLeft', 'TrueCost', [['1  Scan a receipt', 25.5], ['2  Hide private details', 29.25], ['3  See the real cost', 33.87], ['What you could have kept', 37.5, 'stamp']]);
+  lab(40.28, 49.52, 'pushLeft', 'wipe', 'Remmy', [['Your AI assistant', 40.9, 'spin'], ['Runs comparisons', 45.6], ['Moves the app for you', 47.2]]);
+  lab(49.52, 57.18, 'wipe', 'pushUp', 'Learn', [['Lessons and games', 50.2, 'pop'], ['Scam check', 52.6, 'pop'], ['Blog posts', 55.1, 'pop']]);
+  lab(57.18, 99, 'pushUp', 'fade', 'WhatsApp\nbot', [['No app needed', 58.6, 'slide'], ['English and Hindi', 61.0, 'slide']]);
+  add(stage, `<div class="abs" style="left:90px;top:220px;width:64px;height:64px">${icon('whatsapp')}</div>`, 57.5, 'spin');
+  items[items.length-1].tout = 99;
+}
+
 // ================================================================ close
 if (SECTION === 'close') {
   const tEnd = W('You can find');
@@ -360,7 +388,7 @@ window.render = (t) => {
 window.audit = () => { const out=[]; let sc=null; const scenes = items.filter(i=>i.kind==='scene');
   for (const it of items) { if (it.kind==='scene'||it.kind==='progress'||it.kind==='pulse') continue;
     const s = scenes.filter(x=>x.el.contains(it.el)).sort((a,b)=>b.tin-a.tin)[0]; if(!s) continue;
-    const vis = Math.min(s.tout, {intro:54.15, tech:41.03, close:16.9}[SECTION]) - it.tin; if (vis < 1.4) out.push(`${it.tin.toFixed(2)}s ${it.kind} visible ${vis.toFixed(2)}s: ${(it.el.textContent||it.el.innerHTML).replace(/\s+/g,' ').slice(0,50)}`); }
+    const vis = Math.min(s.tout, {intro:54.15, tech:41.03, close:16.9, demo:66.6}[SECTION]) - it.tin; if (vis < 1.4) out.push(`${it.tin.toFixed(2)}s ${it.kind} visible ${vis.toFixed(2)}s: ${(it.el.textContent||it.el.innerHTML).replace(/\s+/g,' ').slice(0,50)}`); }
   return out.join('\n') || 'all elements visible 1.4s or more'; };
 window.render(0);
 </script></body></html>
