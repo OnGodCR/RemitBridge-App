@@ -36,9 +36,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] Internal testing release saved as a draft: 1.0.0 (11), version code 11; the only warning is the optional deobfuscation file (we don't shrink or obfuscate code).
 - [x] Production release saved as a draft: 1.0.0 (11), United States only (Google counts 7 locations: the US and its territories).
 - [x] Play App Signing key read from Play Console: SHA-1 `0C:CA:6B:F1:38:B9:56:3B:EE:F2:56:0C:E4:7E:65:34:FE:81:49:0F`, SHA-256 `AD:4C:25:DD:6B:54:D5:70:FD:E1:0D:5E:B0:42:2C:51:7D:61:36:84:7D:BD:42:07:17:BB:E1:84:68:DB:33:83`. SHA-256 added to `site/.well-known/assetlinks.json` (08660ae).
-- [ ] **Google sign-in for the Play-installed app**: a second Android OAuth client in Google Cloud (project remittances-benchmarking, package org.remitbridgelabs.app) with the Play SHA-1 above. Needs Angad's yes.
+- [x] **Google sign-in for the Play-installed app**: "RemitBridge Android (Play signing key)" created by Claude with Angad's yes, 2026-10-18 (project remittances-benchmarking, package org.remitbridgelabs.app, Play SHA-1 above).
 - [ ] **Angad decides: catalog access preferences** (Play Console notice on the production release).
-- [ ] **Angad reviews everything, then:** publish internal testing to the testers, install from Play on the Samsung, test Google sign-in, then send production for review. Claude doesn't send or publish until Angad says.
+- [ ] **Angad's final look-through: `docs/store/play-final-review.md`**, then: publish internal testing to the testers, install from Play on the Samsung, test Google sign-in, then send production for review. Claude doesn't send or publish until Angad says.
 
 ## Store blockers (Angad)
 
