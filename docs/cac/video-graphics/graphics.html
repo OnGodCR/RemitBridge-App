@@ -139,15 +139,24 @@ if (SECTION === 'intro') {
   const M = window.MAP, ox = 560, oy = 280;
   const land = M.out.map(c=>`<path d="${c.d}" fill="${c.k?'#14705a':'rgba(255,255,255,.10)'}" stroke="${c.k?'#8fcab6':'rgba(143,202,182,.35)'}" stroke-width="${c.k?2:1}"/>`).join('');
   add(s, `<svg class="abs" style="left:${ox}px;top:${oy}px" width="${M.W}" height="${M.H}" viewBox="0 0 ${M.W} ${M.H}">${land}</svg>`, T1+0.2, 'fade');
-  const P = k => [ox+M.pts[k][0], oy+M.pts[k][1]];
-  const dot = (k, t) => { const [x,y]=P(k); add(s, `<div class="abs" style="left:${x-15}px;top:${y-15}px;width:30px;height:30px;border-radius:50%;background:#fff;border:7px solid #46a085"></div>`, t, 'pop'); };
-  const label = (y, head, sub, t, k) => { add(s, `<div class="abs" style="left:90px;top:${y}px;width:330px;background:#fff;color:#1c2024;border-radius:18px;padding:14px 22px;box-shadow:0 6px 0 #0b4f3f"><div style="font-size:30px;font-weight:800">${head}</div><div style="font-size:22px;font-weight:500;color:#5b6470">${sub}</div></div>`, t, 'slide');
-    const [x,yy]=P(k); line(s, `M420 ${y+46}H${x-60}L${x-22} ${yy}`, t+0.25, {w:3, color:'rgba(255,255,255,.55)', dur:.5}); };
-  dot('us', W('America')); label(330, 'United States', 'raising the children', W('America'), 'us');
-  const arc = (a, b, bend, t) => { const [x1,y1]=P(a),[x2,y2]=P(b); line(s, `M${x1} ${y1}Q${(x1+x2)/2+bend} ${(y1+y2)/2} ${x2} ${y2}`, t, {w:5, color:'#fff', dur:1.1}); };
-  arc('us','mx',-90, W('paying for')); dot('mx', W('medication')); label(500, 'Mexico', "parents' medication", W('medication'), 'mx');
-  arc('us','ar',190, W('all while')); dot('ar', W('Argentina')); label(670, 'Argentina', "spouse's family", W('Argentina'), 'ar');
-  add(s, `<div class="abs" style="left:90px;top:880px;font-size:36px;font-weight:700;color:#8fcab6">This is life for millions of immigrants.</div>`, W('For millions'), 'fade');
+  // Points: the US dot sits mid-country, a little north so its label clears Mexico's.
+  const P = k => [ox+M.pts[k][0], oy+M.pts[k][1] - (k==='us'?30:0)];
+  // Each country in order: the arc travels there first, then its dot lands and its
+  // label slides in beside it, joined by a short straight leader (no crossings).
+  const arcPath = (a, b, bend) => { const [x1,y1]=P(a),[x2,y2]=P(b); return `M${x1} ${y1}Q${(x1+x2)/2+bend} ${(y1+y2)/2} ${x2} ${y2}`; };
+  const stops = [
+    ['us', 'United States', 'raising the children', W('America'), 540, null],
+    ['mx', 'Mexico', "parents' medication", W('medication'), 672, arcPath('us','mx',-45)],
+    ['ar', 'Argentina', "spouse's family", W('Argentina'), 836, arcPath('us','ar',170)],
+  ];
+  // DOM order sets layering: arcs under leaders under labels under dots.
+  stops.forEach(([k,,,t,,arc]) => { if (arc) line(s, arc, t-0.15, {w:5, color:'#fff', dur:k==='ar'?1.0:0.7}); });
+  stops.forEach(([k,,,t,y,arc]) => { const [x,yy]=P(k); const land = arc ? t+(k==='ar'?0.85:0.55) : t; line(s, `M424 ${y+40}L${x-24} ${yy}`, land+0.3, {w:3, color:'rgba(255,255,255,.6)', dur:.4}); });
+  stops.forEach(([k,head,sub,t,y,arc]) => { const land = arc ? t+(k==='ar'?0.85:0.55) : t;
+    add(s, `<div class="abs" style="left:90px;top:${y}px;width:330px;background:#fff;color:#1c2024;border-radius:18px;padding:10px 22px 12px;box-shadow:0 6px 0 #0b4f3f"><div style="font-size:30px;font-weight:800">${head}</div><div style="font-size:22px;font-weight:500;color:#5b6470">${sub}</div></div>`, land, 'slide'); });
+  stops.forEach(([k,,,t,,arc]) => { const [x,y]=P(k); const land = arc ? t+(k==='ar'?0.85:0.55) : t;
+    add(s, `<div class="abs" style="left:${x-15}px;top:${y-15}px;width:30px;height:30px;border-radius:50%;background:#fff;border:7px solid #46a085"></div>`, land, 'pop'); });
+  add(s, `<div class="abs" style="left:90px;top:975px;font-size:36px;font-weight:700;color:#8fcab6">This is life for millions of immigrants.</div>`, W('For millions'), 'fade');
 
   // 3. 1 / 3 / 9
   s = scene(stage, T2, A1+1, 'wipe', 'fade');

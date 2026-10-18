@@ -60,6 +60,13 @@ The working project is in Descript: "RemitBridge CAC Video"
   page loads them from `pics/` beside it. Full copy in Downloads as
   `RemitBridge CAC v10.mp4`.
 
+- **v11** (2:57): the map redone so it follows the words: the arc travels to Mexico or
+  Argentina first, then that dot and its label land, each label joined to its dot by a
+  short straight line (the old elbow lines crossed the map and each other, and arcs
+  arrived before their dots). The VS Code insert ends before the empty end of the
+  file, and both screen recordings fade in and out instead of cutting. Full copy in
+  Downloads as `RemitBridge CAC v11.mp4`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are
