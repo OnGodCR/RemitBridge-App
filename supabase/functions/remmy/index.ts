@@ -25,6 +25,7 @@ import { checkedAmountFor, ROUTES, routeFor, type Route } from '../../../mobile/
 import { countryOf, dataTools, modelChain, quotes, tryModel } from '../_shared/agent.ts';
 import { money } from '../../../mobile/src/lib/format.ts';
 import { secretKey } from '../_shared/keys.ts';
+import { clientIp } from '../_shared/client-ip.ts';
 
 const PER_MINUTE = 8;
 const PER_INSTALL = 40;
@@ -95,7 +96,7 @@ Deno.serve(async (req) => {
     return json({ reply: '', actions: [intentAction], steps: ['open_screen'] } satisfies RemmyReply, 200);
   }
 
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  const ip = clientIp(req) ?? 'unknown';
   const { data: allowed } = await db.rpc('take_hit_for_ip', { p_bucket: 'remmy', p_ip: ip, p_max: PER_ADDRESS, p_window_seconds: DAY });
 
   // Figures the number check refused, and why turns or providers failed: kept in the failure
@@ -105,7 +106,8 @@ Deno.serve(async (req) => {
   const actions: RemmyAction[] = [];
   const touched: { route?: Route; method?: string } = {};
   const model =
-    allowed === false
+    // A limit that can't be checked counts as reached (security audit, 2026-10-17).
+    allowed !== true
       ? null
       : await modelChain(db, { bucket: 'remmy', key: install, perKey: PER_INSTALL, label: 'remmy', model: Deno.env.get('WHATSAPP_AI_ANSWER_MODEL') || DEFAULT_ANSWER_MODEL, onProviderFail: (c) => causes.push(c) });
   if (model) {

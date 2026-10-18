@@ -97,7 +97,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Legal review**: `site/privacy.html` and `site/terms.html`, still marked draft.
 - [ ] **License the name and domain to RemitBridge Labs**: in writing.
 - [ ] **Read the security review**: `docs/security-review.md`, tick or comment on each change.
-- [ ] **Two-factor everywhere**: Supabase, GitHub, Expo, the RemitBridge Gmail, Google Cloud, Vercel, GoDaddy, Resend, Groq, Meta.
+- [x] **Two-factor everywhere**: done by Angad on his own accounts, 2026-10-17.
+- [ ] **Deploy the security fixes (2026-10-17 audit)**: `supabase functions deploy remmy --project-ref gmzljjdnwndvqciqicbx` and `supabase functions deploy scan-receipt --project-ref gmzljjdnwndvqciqicbx` (`docs/security-audit-2026-10-17.md`).
+- [ ] **Remove the Expo Go sign-in addresses** once Expo Go testing is over: Supabase, Authentication, URL Configuration, delete the `exp://` entries, keep `remitbridge://**`.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
 - [x] **Send the Groq email**: sent 2026-10-12; Groq's automatic reply says no new tiers for now (enterprise only).

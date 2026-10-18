@@ -8,6 +8,15 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-17: security audit
+
+`docs/security-audit-2026-10-17.md`: no exposed secrets (repo, history, app bundle, EAS
+env), RLS smoke test 79/79 live, Edge Function auth reviewed, sign-in settings and phone
+storage checked, npm audit sorted (one app-side low issue, waiting on Expo). Fixed: Remmy's
+spoofable address limit and fail-open limiters (needs Angad's deploy of `remmy` and
+`scan-receipt`), three new smoke checks. Left: drop the `exp://` sign-in addresses after
+Expo Go testing.
+
 ## 2026-10-17: tablets in landscape, and the terms step (D187, D188)
 
 - Every orientation declared; phones locked upright at startup (`mobile/src/lib/orientation.ts`,

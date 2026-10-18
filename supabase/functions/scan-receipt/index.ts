@@ -31,6 +31,7 @@
 // any value.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { secretKey } from '../_shared/keys.ts';
+import { clientIp } from '../_shared/client-ip.ts';
 
 import {
   advertisedGap,
@@ -117,8 +118,9 @@ Deno.serve(async (req) => {
       p_max: max,
       p_window_seconds: 3600,
     });
-    // Before the migration is live the function doesn't exist: fail open, as before.
-    if (!limitError && allowed === false) return json({ error: 'too many requests', retry: 'hour' }, 429);
+    // The limiter has been live since 2026-10-02, so a limit that can't be checked now
+    // refuses rather than lets the scan through (security audit, 2026-10-17).
+    if (limitError || allowed !== true) return json({ error: 'too many requests', retry: 'hour' }, 429);
     if (parsed.request.action === 'scan' && !(await underDailyLimits(db, req, parsed.request.install_id))) {
       return json({ error: 'too many requests', retry: 'tomorrow' }, 429);
     }
@@ -456,8 +458,8 @@ function capped(client: ModelClient, db: SupabaseClient, cap: number, dailyCap: 
 
 /**
  * Today's scans for this phone, this account (when signed in) and this network address
- * (D140). Each counts one hit; a counter that can't be reached doesn't block (fail open, as
- * the hourly limit does), since the model caps still hold.
+ * (D140). Each counts one hit; a counter that can't be reached blocks, like the hourly limit
+ * (security audit, 2026-10-17).
  */
 async function underDailyLimits(db: SupabaseClient, req: Request, installId: string | undefined): Promise<boolean> {
   const userId = await signedInUser(db, req);
@@ -469,7 +471,7 @@ async function underDailyLimits(db: SupabaseClient, req: Request, installId: str
   for (const [bucket, key, max] of checks) {
     if (!key) continue;
     const { data, error } = await db.rpc('count_hit', { p_bucket: bucket, p_key: key, p_window_seconds: DAY_SECONDS });
-    if (!error && typeof data === 'number' && data > max) return false;
+    if (error || typeof data !== 'number' || data > max) return false;
   }
   return true;
 }
@@ -484,11 +486,6 @@ async function signedInUser(db: SupabaseClient, req: Request): Promise<string | 
 }
 
 /** The caller's address, as Supabase's gateway passes it on; null if there's none. */
-function clientIp(req: Request): string | null {
-  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-  return req.headers.get('cf-connecting-ip') ?? req.headers.get('x-real-ip') ?? (forwarded || null);
-}
-
 function fromWorker(req: Request): boolean {
   const secret = Deno.env.get('RECEIPT_INTAKE_SECRET');
   const given = req.headers.get('x-intake-secret') ?? '';
