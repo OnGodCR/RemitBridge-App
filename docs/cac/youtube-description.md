@@ -1,6 +1,6 @@
 # CAC video: YouTube title, description and thumbnail
 
-Thumbnail: `youtube-thumbnail.png` (1280x720): the video's end card with the Compare screen in a phone and a neutral frame of Angad (a smiling photo can replace it later), also in Downloads as
+Thumbnail: `youtube-thumbnail.png` (1280x720): the video's end card with the Compare screen in a phone and Angad mid-explanation, pointing, also in Downloads as
 "RemitBridge CAC thumbnail.png".
 
 ## Title
