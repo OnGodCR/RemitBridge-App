@@ -31,6 +31,15 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
 
+## Google Play, 2026-10-18 (drafts ready; nothing sent)
+
+- [x] Internal testing release saved as a draft: 1.0.0 (11), version code 11; the only warning is the optional deobfuscation file (we don't shrink or obfuscate code).
+- [x] Production release saved as a draft: 1.0.0 (11), United States only (Google counts 7 locations: the US and its territories).
+- [x] Play App Signing key read from Play Console: SHA-1 `0C:CA:6B:F1:38:B9:56:3B:EE:F2:56:0C:E4:7E:65:34:FE:81:49:0F`, SHA-256 `AD:4C:25:DD:6B:54:D5:70:FD:E1:0D:5E:B0:42:2C:51:7D:61:36:84:7D:BD:42:07:17:BB:E1:84:68:DB:33:83`. SHA-256 added to `site/.well-known/assetlinks.json` (08660ae).
+- [ ] **Google sign-in for the Play-installed app**: a second Android OAuth client in Google Cloud (project remittances-benchmarking, package org.remitbridgelabs.app) with the Play SHA-1 above. Needs Angad's yes.
+- [ ] **Angad decides: catalog access preferences** (Play Console notice on the production release).
+- [ ] **Angad reviews everything, then:** publish internal testing to the testers, install from Play on the Samsung, test Google sign-in, then send production for review. Claude doesn't send or publish until Angad says.
+
 ## Store blockers (Angad)
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
