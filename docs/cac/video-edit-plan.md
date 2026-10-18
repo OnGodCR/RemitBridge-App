@@ -67,6 +67,14 @@ The working project is in Descript: "RemitBridge CAC Video"
   file, and both screen recordings fade in and out instead of cutting. Full copy in
   Downloads as `RemitBridge CAC v11.mp4`.
 
+- **v11 1440p upload master** (2:57): the same video, but for YouTube. v11 had been
+  re-encoded several times at about 4 Mbps, so it looked soft there. The master is one
+  encode straight from the original clips: graphics redrawn at 2560x1440, the phone
+  recordings rebuilt from the originals at a larger size, H.264 at CRF 15 (about
+  17 Mbps), and 320 kbps audio. 1440p also gets a better YouTube encode. In Downloads
+  as `RemitBridge CAC v11 1440p (upload this).mp4`; the filter graph is
+  `video-graphics/master_1440p_filter.txt`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are
