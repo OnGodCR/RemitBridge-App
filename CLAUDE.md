@@ -228,8 +228,9 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       onboarding and Ask for a route offer only routes and ways of receiving with published
       prices; everything held back is in `docs/future-updates.md`. Learn progress is kept with
       the account (`learn_progress`, merged on sign-in). Migration run by Angad, smoke test 81/81
-      (2026-10-18); `remmy` and `whatsapp` redeployed by Angad; builds started (iOS ad19a66c,
-      Android 12). Left: internal test, then the production release.
+      (2026-10-18); `remmy` and `whatsapp` redeployed by Angad; Android 1.0.0 (12) tested by Angad and
+      **sent to Google Play for review 2026-10-18**. Left: Google's decision; iOS 1.0.0 (8) waits
+      on Apple's organization conversion.
 
 ### Testing (once the features are set up)
 

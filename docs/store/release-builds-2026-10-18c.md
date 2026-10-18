@@ -23,6 +23,10 @@ Source: `39a1919` on `main` (app code `d015de8`).
 ## Next
 
 1. Play internal testing: version code 12 published to the tester list, 2026-10-18 3:14 PM (Claude, on Angad's "do the tester stuff"). Notes copied from 11; the one warning is the optional deobfuscation file.
-2. Angad installs it from the internal test link and checks Compare (no UPI, no Uganda),
-   Learn progress after sign-in, and sign-in.
-3. Production: replace the 1.0.0 (11) draft with 12, then send for review on Angad's word.
+2. Angad tested 12 on his phone: "Version 12 works on my phone" (2026-10-18).
+3. Production: the draft now holds only 12, named 1.0.0 (12), United States, same notes.
+   **Sent to Google for review 2026-10-18** on Angad's word ("Replace the production draft
+   with 12 and send it for review"): 10 changes (release, country, store listing, content
+   rating, target audience, privacy policy, ads, data safety, health apps, category).
+   Managed publishing is off, so Play publishes as soon as Google approves; reviews usually
+   take up to 7 days.

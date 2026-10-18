@@ -37,7 +37,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Learn progress kept with the account (D191)**: built, merged on sign-in.
 - [x] **Learn progress migration**: run by Angad in the SQL editor 2026-10-18; smoke test 81/81 live (run by Claude).
 - [x] **Redeploy `remmy` and `whatsapp`**: both deployed by Angad 2026-10-18.
-- [ ] **New production builds for D190 and D191**: started 2026-10-18, iOS `ad19a66c`, Android version code 12 (`docs/store/release-builds-2026-10-18c.md`); then replace the internal testing and production drafts on Play.
+- [x] **New production builds for D190 and D191**: iOS 1.0.0 (8) and Android 1.0.0 (12), 2026-10-18 (`docs/store/release-builds-2026-10-18c.md`). Android 12 on internal testing, tested by Angad.
+- [ ] **Google Play review**: 1.0.0 (12) sent for review 2026-10-18 (US only; publishes when approved, managed publishing off). Watch for Google's email; answer any policy questions.
 - [ ] **Hindi for "Somewhere else?" (D190)**: 1 changed row in `docs/translation-review/hi.md`.
 - [ ] **Accept the terms again** on the new privacy date (October 18): expected, D188.
 

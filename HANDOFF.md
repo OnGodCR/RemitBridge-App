@@ -17,8 +17,10 @@ summary-only blog posts and "Coming soon". They come back by themselves when pri
 publish; the list is `docs/future-updates.md`. Learn progress is kept with the account in
 `learn_progress` and merged on sign-in (`mobile/src/lib/learn-sync.ts`). The privacy policy
 is dated October 18. Left for Angad: run `20261018000000_learn_progress.sql` in the SQL
-editor and the smoke test (81 checks), redeploy `remmy` and `whatsapp`, then new builds
-to replace the Play drafts (1.0.0 (11) has none of this).
+editor and the smoke test (81 checks), redeploy `remmy` and `whatsapp`, then new builds.
+**Update, same day:** all of that is done. Android 1.0.0 (12) was tested by Angad and sent
+to Google Play for review (US, publishes on approval); iOS 1.0.0 (8) is built and waits on
+Apple's organization conversion.
 
 ## 2026-10-17: security audit
 
