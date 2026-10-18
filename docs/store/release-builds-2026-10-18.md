@@ -1,4 +1,9 @@
-# Final production builds, 2026-10-18
+# Production builds, 2026-10-18 (do not submit)
+
+**Superseded.** Angad's phone test found that Continue with Google stalled the app: the
+terms step (D188) raced the sign-in screens. Fixed in `6a51d84`; these two builds still have
+the bug, so neither should be uploaded or submitted. New builds follow once the fix is
+confirmed on the phone.
 
 Angad's go-ahead on 2026-10-17 (local time): "Build now; any Hindi fixes can go in the next
 update." Builds only: nothing was submitted to either store.
