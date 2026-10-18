@@ -35,7 +35,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **Hide what has no prices (D190)**: Compare, onboarding and Ask for a route offer only routes and ways of receiving with published prices; UPI, wallet, card, home delivery, Uganda, uncovered countries and the 13 summary-only posts held back in `docs/future-updates.md`.
 - [x] **Learn progress kept with the account (D191)**: built, merged on sign-in.
-- [ ] **Run `supabase/migrations/20261018000000_learn_progress.sql` in the SQL editor** (Angad), record it in the migration history, then `supabase/tests/rls_smoke.sh` (now 81 checks).
+- [x] **Learn progress migration**: run by Angad in the SQL editor 2026-10-18; smoke test 81/81 live (run by Claude).
 - [ ] **Redeploy `remmy` and `whatsapp`** (Angad): Remmy's route list now reads live prices, and UPI and the other methods are gone from both.
 - [ ] **New production builds for D190 and D191**, then replace the internal testing and production drafts on Play (Angad's go).
 - [ ] **Hindi for "Somewhere else?" (D190)**: 1 changed row in `docs/translation-review/hi.md`.

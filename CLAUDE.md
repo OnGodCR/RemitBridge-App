@@ -227,8 +227,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 - [ ] **Only what has data, and Learn on the account (D190, D191, 2026-10-18):** built: Compare,
       onboarding and Ask for a route offer only routes and ways of receiving with published
       prices; everything held back is in `docs/future-updates.md`. Learn progress is kept with
-      the account (`learn_progress`, merged on sign-in). Left: Angad runs the migration and the
-      smoke test, redeploys `remmy` and `whatsapp`, then new builds for Play.
+      the account (`learn_progress`, merged on sign-in). Migration run by Angad, smoke test 81/81
+      (2026-10-18). Left: Angad redeploys `remmy` and `whatsapp`, then new builds for Play.
 
 ### Testing (once the features are set up)
 
