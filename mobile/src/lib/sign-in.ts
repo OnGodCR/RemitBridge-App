@@ -162,6 +162,11 @@ async function signInWithGoogleNative(): Promise<Result> {
   try {
     // Android needs Google Play services for the sheet; without them, say so plainly.
     if (Platform.OS === 'android') await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Forget the account picked last time, so Google shows its account chooser instead of
+    // quietly reusing it (Angad, 2026-10-18: "i want it to open the dialogue and be able to
+    // select which one of my accounts"). This only clears the kit's memory on the phone; it
+    // doesn't sign anyone out of Google.
+    await GoogleSignin.signOut().catch(() => undefined);
     const response = await GoogleSignin.signIn();
     if (!isSuccessResponse(response)) {
       console.warn('[google sign-in] no account came back:', response.type);
