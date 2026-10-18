@@ -20,6 +20,15 @@ The working project is in Descript: "RemitBridge CAC Video"
   least 1.4 seconds, and the end card held 1.5 seconds longer. A full copy is in
   Downloads as `RemitBridge CAC v6.mp4`. Its graphics source is `video-graphics/graphics.html`;
   `audit.js` lists anything on screen for under 1.4 seconds.
+  In Descript it is the composition "v6 green (final file)"
+  (https://share.descript.com/view/jQuNTwelL6A). The composition named "v6" is a
+  half-finished edit (Descript's AI credits ran out): its intro and technical part are
+  still v5, so don't use it.
+
+**Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
+1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
+little guy", the blog posts, "let's dive into the app") give it personality, so none are
+cut. Next: Angad records the stage 2 clips below; a few smaller fixes come after that.
 
 Times below are in v2, except the stage 2 list, which uses v6.
 
