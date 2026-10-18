@@ -2365,3 +2365,28 @@ check works as before: neutral, only pass or block is kept, never the year. "Not
 About you skips the questions, and the sign-up step then asks the year before any account
 button, as it always did. The newsletter switch moved off the sign-up step, so "I already
 have an account" no longer shows it (Account still has it).
+
+
+**D187. Tablets turn freely; phones stay upright** (Angad, 2026-10-17: "lets support
+landscape properly"). The app now declares every orientation, because Android 16 (API 36,
+which the app targets) ignores a portrait lock on tablets anyway, and Play's large-screen
+guidance expects rotation. At startup `lib/orientation.ts` locks anything narrower than
+600 points on its short side back to portrait, so phones don't change. With every
+orientation declared, D185's `requireFullScreen` came out again, so iPads also get Split
+View; the centered column handles narrow windows. Remmy, which fills the screen on an
+Android tablet, measures its own width for the same column. Checked in the web render at
+1280 by 800. Play's tablet screenshots (8 at 7 inches, portrait 1080 by 1920, and 8 at
+10 inches, landscape 2560 by 1440) are in the Desktop upload folder.
+
+
+**D188. An account agrees to the terms and privacy policy, read inside the app** (Angad,
+2026-10-17: "after they create an account, add a page that asks them to accept ToS and
+Privacy Policy and implements them into the app itself"). Both documents now open inside
+the app, from Account, Remmy, WhatsApp and the new step, generated from site/terms.html
+and site/privacy.html by `site/legal-for-app.mjs`; the site build fails if the app's copy
+falls behind, so the two never say different things. The text stays English, with a
+note in other languages, until a translation is reviewed. Any signed-in account that
+hasn't agreed to the current versions sees only the consent step: both documents, an
+unticked switch, "Accept and continue", or "Sign out instead" (the app keeps working
+without an account). The agreement is stored on the account (`user_metadata.legal_accepted`,
+the version and time); a new date on either document asks everyone again. No migration.

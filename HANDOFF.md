@@ -8,6 +8,17 @@ resume. Update it at the end of every working session.
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
 
+## 2026-10-17: tablets in landscape, and the terms step (D187, D188)
+
+- Every orientation declared; phones locked upright at startup (`mobile/src/lib/orientation.ts`,
+  new module `expo-screen-orientation`, so it needs the next build). `requireFullScreen` removed.
+- Play tablet screenshots: 8 at 7 inches and 8 at 10 inches in
+  `Desktop/RemitBridge-App-Store/play-upload/`, for Angad to upload.
+- Terms and privacy inside the app (`app/legal/[doc].tsx`, text in `src/content/legal.json`
+  from `node site/legal-for-app.mjs`; `node site/build.mjs check` fails if it is stale).
+  A signed-in account that hasn't agreed sees `app/consent.tsx` until it accepts or signs out.
+- 237 app tests, typecheck, lint and the site check pass. Seen in the web render only.
+
 ## 2026-10-17: iPad full screen and onboarding reordered (D185, D186)
 
 - The app now declares iPad support (`supportsTablet`, `requireFullScreen`); on wide screens

@@ -23,6 +23,10 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
 - [ ] **New production builds for D184, D185 and D186**: only when Angad says go. The iPad (D185) and the new onboarding order (D186) also take effect with them.
 - [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
+- [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
+- [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
+- [ ] **Try the terms step on the new build (D188)**: sign up, read both documents, accept; then sign out and in again (it shouldn't ask twice).
+- [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
 
 ## Store blockers (Angad)

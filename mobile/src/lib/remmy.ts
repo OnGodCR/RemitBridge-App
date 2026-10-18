@@ -134,7 +134,13 @@ export async function runAction(action: RemmyAction): Promise<SaveResult | 'done
       return 'done';
     case 'screen': {
       const path = REMMY_SCREENS[action.screen];
-      // The privacy policy, terms and support open in the browser, over Remmy.
+      // The terms and privacy policy open inside the app (D188); support opens in the
+      // browser, over Remmy.
+      if (path === 'page:terms' || path === 'page:privacy') {
+        router.back();
+        router.push(path === 'page:terms' ? '/legal/terms' : '/legal/privacy');
+        return 'done';
+      }
       if (path.startsWith('page:')) {
         openPage(LINKS[path.slice(5) as keyof typeof LINKS]);
         return 'done';

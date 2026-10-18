@@ -21,11 +21,14 @@ import { useTheme } from '@/hooks/use-theme';
 import { LanguageProvider, useCopy } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { needsLegalConsent } from '@/lib/legal';
 import { openCompare } from '@/lib/open-compare';
+import { keepPhonesUpright } from '@/lib/orientation';
 import type { DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 SplashScreen.preventAutoHideAsync();
+keepPhonesUpright();
 
 export default function RootLayout() {
   const scheme = useColorScheme();
@@ -61,7 +64,10 @@ export default function RootLayout() {
 }
 
 function Navigator() {
-  const { ready, onboarded } = useAuth();
+  const { ready, onboarded, session } = useAuth();
+  // An account that hasn't agreed to the current terms and privacy policy sees only that
+  // step until it agrees or signs out (D188).
+  const consent = needsLegalConsent(session);
   const isAdmin = useIsAdmin();
   const t = useTheme();
   const { titles } = useCopy();
@@ -86,7 +92,10 @@ function Navigator() {
       <Stack.Protected guard={!onboarded}>
         <Stack.Screen name="onboarding" />
       </Stack.Protected>
-      <Stack.Protected guard={onboarded}>
+      <Stack.Protected guard={consent}>
+        <Stack.Screen name="consent" />
+      </Stack.Protected>
+      <Stack.Protected guard={onboarded && !consent}>
         <Stack.Screen name="(tabs)" />
         {/* Account left the bottom bar for WhatsApp (D147): pushed from the button at the
             top right of every tab, with its own back button in the green band. */}
@@ -114,6 +123,8 @@ function Navigator() {
       </Stack.Protected>
       {/* Reachable from onboarding and from Account. */}
       <Stack.Screen name="sign-in" />
+      {/* The terms and privacy policy (D188), open from Account, Remmy and the consent step. */}
+      <Stack.Screen name="legal/[doc]" options={{ ...pushed, title: '' }} />
       {/* Price entry (D54). The screen is hidden from everyone else, and RLS refuses the
           insert anyway: the guard is convenience, the policy is the protection. */}
       <Stack.Protected guard={isAdmin}>

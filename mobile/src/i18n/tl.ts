@@ -1083,4 +1083,19 @@ export const tl: Copy = {
     trueCostLabel: 'Ibinayad mo gamit ang',
     trueCostTaxLine: (funding, tax) => `Binayaran gamit ang ${funding}, kaya kasama ang 1% buwis (${tax}).`,
   },
+
+  legal: {
+    eyebrow: 'Isang huling hakbang',
+    lead: 'Ang aming mga tuntunin',
+    accent: 'at ang privacy mo',
+    intro: 'Handa na ang account mo. Basahin ang dalawa, saka tanggapin para magamit ito.',
+    changed: 'Nagbago ang aming mga tuntunin o privacy policy. Basahin ang mga ito, saka tanggapin para patuloy mong magamit ang account mo.',
+    agree: 'Nabasa ko at sumasang-ayon ako sa Mga Tuntunin ng Paggamit at sa Privacy Policy.',
+    accept: 'Tanggapin at magpatuloy',
+    decline: 'Mag-sign out na lang',
+    declineNote: 'Gumagana ang paghahambing ng presyo kahit walang account.',
+    failed: 'Hindi ito na-save. Tingnan ang koneksyon mo at subukang muli.',
+    englishOnly: 'Nasa Ingles ang mga dokumentong ito.',
+    openOnWeb: 'Buksan sa web',
+  },
 };

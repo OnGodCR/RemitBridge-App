@@ -20,6 +20,7 @@ import { Rise } from '@/components/motion-views';
 import { RemmyMascot } from '@/components/remmy';
 import { AppText } from '@/components/ui';
 import { Fonts, MinTapTarget, Radius, Spacing } from '@/constants/theme';
+import { gutterFor } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, useCopy, useLanguage } from '@/i18n';
 import type { Copy } from '@/i18n/en';
@@ -45,6 +46,10 @@ export default function RemmyChat() {
   const { messages, thinking } = useRemmy();
   const [draft, setDraft] = useState('');
   const scroll = useRef<ScrollView>(null);
+  // Measured, not the window: on an iPad this is a sheet narrower than the screen, while on
+  // an Android tablet it fills the screen, and both should keep a readable column (D187).
+  const [width, setWidth] = useState(0);
+  const side = gutterFor(width);
   // The composer rides on the keyboard. A KeyboardAvoidingView measured from the window got
   // it wrong inside the iPhone sheet and did nothing on Android (edge to edge), so this reads
   // the keyboard's live height instead, frame by frame, on both.
@@ -89,9 +94,9 @@ export default function RemmyChat() {
   };
 
   return (
-    <Animated.View style={[styles.fill, { backgroundColor: t.background }, lift]}>
+    <Animated.View style={[styles.fill, { backgroundColor: t.background }, lift]} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
       <StatusBar style="auto" />
-      <View style={[styles.header, { paddingTop: (Platform.OS === 'android' ? insets.top : 0) + Spacing.three, borderBottomColor: t.border }]}>
+      <View style={[styles.header, { paddingHorizontal: side, paddingTop: (Platform.OS === 'android' ? insets.top : 0) + Spacing.three, borderBottomColor: t.border }]}>
         <RemmyMascot size={40} />
         <View style={styles.headerText}>
           <AppText style={[styles.name, { color: t.text }]}>{r.name}</AppText>
@@ -106,7 +111,7 @@ export default function RemmyChat() {
       <ScrollView
         ref={scroll}
         style={styles.fill}
-        contentContainerStyle={[styles.thread, !messages.length && styles.threadEmpty]}
+        contentContainerStyle={[styles.thread, { paddingHorizontal: side }, !messages.length && styles.threadEmpty]}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
         onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: true })}>
@@ -126,10 +131,10 @@ export default function RemmyChat() {
 
       {messages.length ? (
         <Pressable accessibilityRole="link" accessibilityLabel={copy.account.privacy} onPress={() => runAction({ type: 'screen', screen: 'privacy' })}>
-          <AppText variant="small" muted style={styles.privacy}>{r.privacy}</AppText>
+          <AppText variant="small" muted style={[styles.privacy, { paddingHorizontal: side }]}>{r.privacy}</AppText>
         </Pressable>
       ) : null}
-      <Animated.View style={[styles.composer, { borderTopColor: t.border, backgroundColor: t.background }, composerPad]}>
+      <Animated.View style={[styles.composer, { paddingHorizontal: side, borderTopColor: t.border, backgroundColor: t.background }, composerPad]}>
         <TextInput
           value={draft}
           onChangeText={setDraft}

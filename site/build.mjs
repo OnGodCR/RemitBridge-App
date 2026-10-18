@@ -17,9 +17,11 @@
 //   {{MAILING_ADDRESS_LINE}}     the mailing address, or, with none set (Angad's choice,
 //                                2026-10-03), a line asking people to email for it
 // An unknown {{TOKEN}} stops the build, so a typo can't ship as text.
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { APP_LEGAL, appLegalText, checkAppLegal } from './legal-for-app.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const out = join(root, 'dist');
@@ -239,4 +241,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     });
   }
   build({ write: process.argv[2] !== 'check' });
+  // The app carries the terms and privacy policy as text (D188): keep it the same words.
+  // Skipped where only site/ is checked out (Vercel's project root), which has no app.
+  if (existsSync(dirname(APP_LEGAL))) {
+    if (process.argv[2] === 'check') checkAppLegal();
+    else writeFileSync(APP_LEGAL, appLegalText());
+  }
 }

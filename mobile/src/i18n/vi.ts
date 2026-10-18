@@ -1081,4 +1081,19 @@ export const vi: Copy = {
     trueCostLabel: 'Bạn đã trả bằng',
     trueCostTaxLine: (funding, tax) => `Trả bằng ${funding}, nên đã gồm thuế 1% (${tax}).`,
   },
+
+  legal: {
+    eyebrow: 'Bước cuối cùng',
+    lead: 'Điều khoản',
+    accent: 'và quyền riêng tư của bạn',
+    intro: 'Tài khoản của bạn đã sẵn sàng. Hãy đọc cả hai rồi chấp nhận để sử dụng.',
+    changed: 'Điều khoản hoặc chính sách quyền riêng tư đã thay đổi. Hãy đọc rồi chấp nhận để tiếp tục dùng tài khoản.',
+    agree: 'Tôi đã đọc và đồng ý với Điều khoản sử dụng và Chính sách quyền riêng tư.',
+    accept: 'Chấp nhận và tiếp tục',
+    decline: 'Đăng xuất',
+    declineNote: 'So sánh giá vẫn dùng được khi không có tài khoản.',
+    failed: 'Không lưu được. Hãy kiểm tra kết nối rồi thử lại.',
+    englishOnly: 'Các tài liệu này bằng tiếng Anh.',
+    openOnWeb: 'Mở trên web',
+  },
 };

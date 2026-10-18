@@ -111,10 +111,15 @@ it('drops a second send within a moment of the first', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1);
 });
 
-it('opens the policy pages in the browser', async () => {
+it('opens the terms and privacy policy in the app, and support in the browser (D188)', async () => {
   await runAction({ type: 'screen', screen: 'privacy' });
-  expect(mockOpenPage).toHaveBeenCalledWith(expect.stringMatching(/\/privacy$/));
-  expect(mockRouter.push).not.toHaveBeenCalled();
+  expect(mockRouter.back).toHaveBeenCalled();
+  expect(mockRouter.push).toHaveBeenCalledWith('/legal/privacy');
+  await runAction({ type: 'screen', screen: 'terms' });
+  expect(mockRouter.push).toHaveBeenCalledWith('/legal/terms');
+  expect(mockOpenPage).not.toHaveBeenCalled();
+  await runAction({ type: 'screen', screen: 'support' });
+  expect(mockOpenPage).toHaveBeenCalledWith(expect.stringMatching(/\/support$/));
 });
 
 it('opens tabs by going back to them, and other screens on top', async () => {

@@ -11,6 +11,10 @@ export const READABLE_WIDTH = 640;
  * in the middle, READABLE_WIDTH wide, while bands and backgrounds still reach both edges.
  */
 export function useGutter(base: number = Spacing.three): number {
-  const { width } = useWindowDimensions();
+  return gutterFor(useWindowDimensions().width, base);
+}
+
+/** The same padding for a measured width, for views narrower than the window (a sheet). */
+export function gutterFor(width: number, base: number = Spacing.three): number {
   return Math.max(base, (width - READABLE_WIDTH) / 2 + base);
 }

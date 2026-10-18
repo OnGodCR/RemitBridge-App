@@ -1083,4 +1083,19 @@ export const es: Copy = {
     trueCostLabel: 'Pagaste con',
     trueCostTaxLine: (funding, tax) => `Pagado con ${funding}, así que incluye el impuesto del 1% (${tax}).`,
   },
+
+  legal: {
+    eyebrow: 'Un último paso',
+    lead: 'Nuestros términos',
+    accent: 'y tu privacidad',
+    intro: 'Tu cuenta está lista. Lee ambos y acéptalos para usarla.',
+    changed: 'Cambiaron nuestros términos o nuestra política de privacidad. Léelos y acéptalos para seguir usando tu cuenta.',
+    agree: 'Leí y acepto los Términos de uso y la Política de privacidad.',
+    accept: 'Aceptar y continuar',
+    decline: 'Mejor cerrar sesión',
+    declineNote: 'Comparar precios funciona sin cuenta.',
+    failed: 'No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.',
+    englishOnly: 'Estos documentos están en inglés.',
+    openOnWeb: 'Abrir en la web',
+  },
 };

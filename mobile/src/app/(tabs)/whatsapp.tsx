@@ -14,7 +14,6 @@ import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { useAuth } from '@/lib/auth';
 import { useTabFocus } from '@/lib/current-tab';
-import { LINKS, openPage } from '@/lib/links';
 import { track } from '@/lib/track';
 import { formatNumber, openChat, whatsAppSettings, type WhatsAppSettings } from '@/lib/whatsapp';
 
@@ -104,7 +103,7 @@ export default function WhatsAppScreen() {
             <AppText variant="small" muted>
               {wt.privacy}
             </AppText>
-            <TextLink label={copy.account.privacy} onPress={() => openPage(LINKS.privacy)} />
+            <TextLink label={copy.account.privacy} onPress={() => router.push('/legal/privacy')} />
           </View>
         </FocusRise>
       </ScrollView>

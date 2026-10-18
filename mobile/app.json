@@ -3,7 +3,7 @@
     "name": "RemitBridge",
     "slug": "remitbridge",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "remitbridge",
     "userInterfaceStyle": "automatic",
@@ -11,7 +11,6 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "org.remitbridgelabs.app",
       "supportsTablet": true,
-      "requireFullScreen": true,
       "usesAppleSignIn": true,
       "associatedDomains": [
         "applinks:app.remitbridgelabs.org"

@@ -1140,3 +1140,24 @@ The year of birth and the newsletter switch moved to their own step before sign-
 | onboarding.about.lead | Two quick | दो छोटे | | APPROVED 2026-10-17 (Angad's mother, relayed by Angad) |
 | onboarding.about.accent | questions | सवाल | | APPROVED 2026-10-17 (Angad's mother, relayed by Angad) |
 | onboarding.about.intro | Your birth year never leaves this phone. | आपका जन्म वर्ष इस फ़ोन से बाहर नहीं जाता। | | APPROVED 2026-10-17 (Angad's mother, relayed by Angad) |
+
+
+## Terms and privacy step, 2026-10-17 (D188)
+
+Shown once after an account is made, and when either document changes. The documents
+themselves stay in English for now.
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| legal.eyebrow | One last step | आख़िरी कदम | | NEW 2026-10-17; review pending |
+| legal.lead | Our terms | हमारी शर्तें | | NEW 2026-10-17; review pending |
+| legal.accent | and your privacy | और आपकी गोपनीयता | | NEW 2026-10-17; review pending |
+| legal.intro | Your account is ready. Read both, then accept them to use it. | आपका खाता तैयार है। दोनों पढ़ें, फिर इस्तेमाल के लिए उन्हें स्वीकार करें। | | NEW 2026-10-17; review pending |
+| legal.changed | Our terms or privacy policy changed. Read them, then accept to keep using your account. | हमारी शर्तें या गोपनीयता नीति बदल गई है। उन्हें पढ़ें, फिर खाता इस्तेमाल करते रहने के लिए स्वीकार करें। | | NEW 2026-10-17; review pending |
+| legal.agree | I have read and agree to the Terms of use and the Privacy policy. | मैंने उपयोग की शर्तें और गोपनीयता नीति पढ़ ली हैं और मैं उनसे सहमत हूँ। | | NEW 2026-10-17; review pending |
+| legal.accept | Accept and continue | स्वीकार करें और आगे बढ़ें | | NEW 2026-10-17; review pending |
+| legal.decline | Sign out instead | इसके बजाय साइन आउट करें | | NEW 2026-10-17; review pending |
+| legal.declineNote | Comparing prices works without an account. | खाते के बिना भी कीमतों की तुलना होती है। | | NEW 2026-10-17; review pending |
+| legal.failed | Couldn’t save that. Check your connection and try again. | सेव नहीं हो सका। कनेक्शन देखें और फिर कोशिश करें। | | NEW 2026-10-17; review pending |
+| legal.englishOnly | These documents are in English. | ये दस्तावेज़ अंग्रेज़ी में हैं। | | NEW 2026-10-17; review pending |
+| legal.openOnWeb | Open on the web | वेब पर खोलें | | NEW 2026-10-17; review pending |

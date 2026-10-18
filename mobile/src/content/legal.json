@@ -1,0 +1,1025 @@
+{
+  "version": "terms October 14, 2026; privacy October 14, 2026",
+  "terms": {
+    "title": "Terms of use",
+    "updated": "Last updated October 14, 2026",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge Labs, a Washington nonprofit corporation (\"RemitBridge Labs\", \"we\") publishes and operates RemitBridge: the mobile app (including Remmy, its assistant), this site and the RemitBridge WhatsApp bot. By using any of them, you agree to these terms. Our "
+          },
+          {
+            "text": "privacy policy",
+            "href": "https://app.remitbridgelabs.org/privacy"
+          },
+          {
+            "text": " explains what we collect and why."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Who you're agreeing with"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "These terms are an agreement between you and RemitBridge Labs, and no one else. RemitBridge Labs is a legal entity of its own, separate from the people who founded it, run it, work or volunteer for it, contribute to it or support it, and from their families. None of those people is a party to these terms, or to any other agreement with you about RemitBridge, and none of them makes any promise to you personally."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "What RemitBridge is"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge compares what it costs to send money from the United States, and shows how much arrives. It gives information only. RemitBridge Labs does not send, hold or exchange money, and is not a bank, a money transmitter or a broker. To send money, you deal with the provider you choose, under that provider's terms."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Not advice"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Nothing in the app, on this site, from Remmy or from the bot is financial or legal advice. The tools, lessons and estimates are there to help you understand costs. Decisions about sending money are yours."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "AI answers"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Remmy and the WhatsApp bot use third-party AI to understand questions and answer using RemitBridge information. We check generated figures against the information supplied to the model, but these checks do not guarantee accuracy. An answer can be incomplete, misleading or wrong. Confirm figures in Compare and with the provider before sending money."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "With your permission, Remmy can open screens and comparisons, start lessons and offer to save a comparison. A requested action runs once. Saving requires your tap and an account. Remmy cannot send money, change settings or contact providers. You remain responsible for actions you choose. Use Report reply inside the chat to flag an answer for review. Do not submit sensitive personal or bank information."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Prices and RemitBridge choice"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Compare shows bank-account-funded prices only. Receiving methods, availability and eligibility vary by provider and route. Standard prices are ranked by the amount received. The highest listed standard result is labelled \"RemitBridge choice\"; this describes the comparison at your chosen amount and receiving method, not a personal recommendation, endorsement or guarantee. First-transfer promotions are listed separately. No provider pays for placement, and we have no affiliate links."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Tap a price to see its source and original collection time. Hand-checked quotes can remain eligible for up to seven days, while other quotes expire sooner. A collection time is not a promise that a price is still available. Estimates for amounts we did not check are labelled; provider fees, taxes, pickup charges, transfer speed and eligibility can differ. An unknown charge is not a promise of zero cost. Check the provider's final quote before sending."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Receipt analysis and calculators are estimates for understanding a past transfer. They can account for funding methods beyond those offered in Compare. Lessons and games are educational; completing them is not professional certification or financial advice. Rate alerts depend on published prices and notification delivery, and are not guaranteed to arrive at a particular time. Newsletter subscription is optional and can be cancelled in Account or through an email's unsubscribe link."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Using RemitBridge"
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Use it lawfully, and only for yourself or people you help."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Don't try to break it, overload it, get around its limits, or copy its data in bulk by automated means."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Use Remmy and the bot for questions about sending money and RemitBridge. Don't try to make them say or do something they aren't meant to."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Messages to Remmy and the bot, and receipt scans, have per-minute and daily limits, so the free service stays up for everyone."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Only scan receipts you have the right to share. You choose whether a receipt is kept for research."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "An account is optional. If you make one, keep access to your email, Apple or Google account safe. You can delete your account in the app at any time."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We may limit or stop access for anyone who misuses the service."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "No warranty"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge is free and provided as it is, without warranties of any kind. We work to keep prices accurate and the service running, but we can't promise either."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Limit of liability"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "To the fullest extent the law allows, RemitBridge Labs is not liable for any loss that comes from using or relying on RemitBridge, including a price that was out of date or wrong, or for any indirect, incidental, special, consequential or punitive damages, or lost money, profits or data. In any case, RemitBridge Labs' total liability for all claims relating to RemitBridge is limited to $50. Some places don't allow some of these limits, so they may not all apply to you."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Claims are against RemitBridge Labs only"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "To the fullest extent the law allows, any claim or dispute relating to RemitBridge (the app, this site or the WhatsApp bot) may be brought only against RemitBridge Labs. You agree not to bring it against any of RemitBridge Labs' founders, directors, officers, employees, volunteers or contributors, or any member of their families, and none of them is personally liable to you for anything relating to RemitBridge. Each of them may rely on and enforce this section as if they had signed these terms."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Time limit for claims"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Any claim relating to RemitBridge must be brought within one year after it arises, unless the law requires a longer period."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Children"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge is not directed at children under 13. Accounts are for people 13 and older; comparing prices works without one."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Copyright"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If you believe something in RemitBridge uses your copyrighted work without permission, email hello@remitbridgelabs.org with: the work, where it appears in RemitBridge, your contact details, a statement that you believe in good faith the use isn't authorized, and a statement that your notice is accurate. We'll look into it and remove anything that infringes."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Changes"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If these terms change, we'll update the date at the top. Please review this page for the current terms."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Law and courts"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "These terms are governed by the laws of the State of Washington, United States. Any dispute relating to RemitBridge will be decided only in the state or federal courts located in Washington State, and you agree to their jurisdiction."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "If part of these terms doesn't apply"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If a court decides any part of these terms can't be enforced, that part is limited as little as needed, and the rest still applies."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Contact"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge Labs, a Washington nonprofit corporation"
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "hello@remitbridgelabs.org",
+            "href": "mailto:hello@remitbridgelabs.org"
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Need our mailing address? Email "
+          },
+          {
+            "text": "hello@remitbridgelabs.org",
+            "href": "mailto:hello@remitbridgelabs.org"
+          },
+          {
+            "text": " and we'll send it."
+          }
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "updated": "Last updated October 14, 2026",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge is a free app that compares the cost of sending money abroad. RemitBridge Labs, a Washington nonprofit corporation (\"RemitBridge Labs\", \"we\") publishes and operates it, and is responsible for the data described here. No person who founded, runs or volunteers for RemitBridge Labs holds your data in their own name. This policy covers the RemitBridge mobile app (including Remmy, its assistant), this site and the RemitBridge WhatsApp bot."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "In short"
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "RemitBridge Labs does not send, hold or exchange money. RemitBridge only shows prices."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Nothing in the app, on this site or from the bot is financial or legal advice."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "We have no affiliate or paid relationships with providers. Providers are ranked by the amount received, and nothing else."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Prices come from providers' public websites, provider APIs used with the provider's permission (such as Wise's), prices entered by RemitBridge staff, and mid-market references such as Frankfurter, ExchangeRate-API and Wise. Prices change during the day, so one may be out of date."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Comparing prices needs no account. We don't sell data, and there is no advertising or third-party tracking."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Without an account"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "You can compare prices without signing up. The app still records how it's used, to count users and see which features help. Each record holds:"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "a random ID created when the app is first opened, which identifies this installation, rather than your hardware or advertising ID;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "what happened, such as \"comparison run\", with the choices involved, such as the route and the amount you checked;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "whether you're on iOS or Android, the app version, and the time."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We don't collect your precise location, contacts, hardware identifiers or advertising ID, and we don't track you across other apps or websites."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "With an account"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "An account is optional. If you create one, we also store:"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "your email address, or the account details Apple or Google share if you sign in with them;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "the name you give in Account, or the one Apple or Google share, used only to greet you in the app;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "anything you choose to save, such as comparisons and transfers you enter yourself (provider, amounts, rate, date and any note);"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "the usage records above, linked to your account while you're signed in."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Saved items are private to your account. Database rules stop anyone else from reading them."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Rate alerts"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If you turn on a rate alert, we keep the route, the amount, how you send and pay, your target, your language, and your phone's notification token (a code that lets a notification reach this app on your phone), with your account. After each price update we check your alert, and when a price reaches your target we send one notification, at most once a day. Asking for notifications happens only when you turn an alert on. Delete an alert in the app, or delete your account, and it's gone."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Newsletter"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "The newsletter is off unless you turn it on, either on the sign-in step when you first set up the app or later under Account. If you do, we send an email now and then about new countries, price changes and new guides, to the address your account already uses (for Sign in with Apple's \"Hide My Email\", Apple's relay address). We keep only that you turned it on, when, your app language, and a random code for the unsubscribe link. Every issue has a one-tap unsubscribe link; using it, turning the newsletter off in the app, or deleting your account removes all of that. We don't track whether you open an issue or click its links."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Scanning a receipt"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "The app asks for camera or photo access only when you scan a transfer receipt, and uses only the photo you take or choose. It reads the receipt on your phone first. Before anything leaves your phone, it covers names, addresses, phone numbers, email addresses, and card, account and reference numbers with solid boxes, removes the photo's hidden details (such as where it was taken), and shows you exactly what would be sent. Automatic covering can miss details: review the preview and cover anything else before sending."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "What's sent is the covered photo and the text read from it. Our server checks the text again and covers anything the phone missed. If it finds anything, it doesn't use or keep the photo."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Our server reads the transaction figures from the covered text: the amounts, fee, tax, exchange rate, currencies, date, provider and how you paid. When its own rules can't read a figure, it sends the covered text, and in some cases the covered photo, to an AI model run by Groq, a third-party provider. Our Groq account is configured for zero data retention for input and output content; Groq still retains service usage metadata. The app asks your permission before your first receipt is sent, and says on every scan that this can happen. If you don't allow it, nothing is sent."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "The text",
+            "bold": true
+          },
+          {
+            "text": " read from the receipt is never stored."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "The figures",
+            "bold": true
+          },
+          {
+            "text": ", where each came from, and when, are kept for 30 days and then deleted. You can delete them sooner in the app."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "The photo",
+            "bold": true
+          },
+          {
+            "text": " is never stored, unless you turn on \"Keep this receipt for research\". Then we keep the covered photo and the figures for 24 months, to study what people really pay, and delete them after that. We report research receipts only as totals, and only for groups of at least five receipts, so no single receipt can be picked out."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "A scanned receipt carries no account, phone number or device ID. The app adds up what your scans say you could have kept, on your phone only; that total never leaves it, and deleting a receipt in the app takes it out."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "On WhatsApp, if you send a photo of a receipt, our server reads it and covers the same personal details before any figures are read. Only the covered text goes on to be read, including by Groq, never the photo. The photo is deleted once it's read and is never stored. How we handle your number while it's read is below."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Remmy, the assistant in the app"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Remmy can explain costs, check published prices, open screens and comparisons, start lessons and offer to save a comparison. A requested navigation runs once; reopening the chat does not repeat it. Saving requires your tap and an account. Remmy cannot move money, change account settings or contact a provider."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Before the first message, we ask permission to process your chat. A message goes to our server with up to eight recent messages, your language, platform and a random installation ID for operation and abuse limits. The server also receives your network address. Plain screen-opening requests are handled on our server without a model. Other questions send the message, recent history and relevant RemitBridge information or tool results to Cloudflare Workers AI, with Groq as a fallback when capacity is exhausted or a provider fails. We do not intentionally send your account profile or installation ID to the model."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We do not save chat transcripts in our database. The current conversation stays in app memory when you close and reopen Remmy, until you start a new chat or the app process ends. Starting a new chat clears this local conversation; it does not delete saved comparisons, submitted suggestions or reports."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We record operational events with the installation ID, platform, time, tools used, model provider, limit reasons and failure diagnostics. Diagnostics may include rejected numeric fragments and provider error categories, rather than full questions or answers. These records are pseudonymous, not necessarily anonymous. If you submit a suggestion, we keep its text, language and date without attaching your account or installation ID."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "You can report a reply inside Remmy. Before sending, a confirmation explains that the selected reply is sent to RemitBridge for review, without your question or chat history. The report text, language and date are kept in our moderation inbox without an account or installation ID attached. Suggestions and reports are kept separately for review and improvement until no longer needed. They are not removed by starting a new chat or deleting an account."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We do not use your chats to train models. Cloudflare says it does not use customer content to train models without consent. Our Groq account is configured for zero data retention for input and output content; service usage metadata can still be retained by the provider. See "
+          },
+          {
+            "text": "Cloudflare's data policy",
+            "href": "https://developers.cloudflare.com/workers-ai/platform/data-usage/"
+          },
+          {
+            "text": " and "
+          },
+          {
+            "text": "Groq's data policy",
+            "href": "https://console.groq.com/docs/your-data"
+          },
+          {
+            "text": "."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Please do not type passwords, sign-in codes, account or card numbers, or other people's personal details. Chat text is not automatically covered like a scanned receipt and can reach the AI service as written. AI answers can be wrong. Check Compare and the provider before acting."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Learning and settings on your phone"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Your language, display preferences, consent choices and lesson or game progress are saved on your phone. Compare may cache checked prices for offline use and shows when cached data was loaded. These local records are separate from account data; removing the app or clearing its storage removes local records, subject to your operating system's backup behavior."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "WhatsApp"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "When you message our WhatsApp bot, we don't store your phone number. We keep a scrambled ID made from it (a keyed hash, which can't be turned back into the number), your reply language, and the last route you asked about."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We keep the number itself only while a receipt photo is read: to send you the answer a few minutes later, we keep it encrypted until the answer is sent, and never longer than an hour. Only the server that sends WhatsApp messages can unlock it. It never appears in our logs and goes to no one but WhatsApp."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Apart from a few exact commands (such as STOP, LINK or HINDI), the bot sends the text of your message to an AI model, which works out what you're asking and answers from RemitBridge's own information. The model is run by Cloudflare, or by Groq when Cloudflare's capacity is used up or its service fails. Neither gets your number, and neither uses what it's sent to train AI models. If you send a suggestion for the app, we keep its text, its language and the date, with no number or ID attached."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If you link WhatsApp from the WhatsApp tab in the app, we connect the scrambled ID (not your number) to your account, so comparisons you send with SAVE are kept there. Send UNLINK, or tap Unlink in the app, and the link is removed at once; deleting your account does the same. Send STOP and we delete everything we keep about your number."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Asking for a route"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If you ask us to check prices for a country we don't cover yet, we keep the two countries, how you'd like the money to arrive if you said, and when you asked. If you give an email address so we can tell you when it's ready, we send that one email and then delete the address; if we decide we can't add the route, we delete it then. Delete your account and your requests go with it."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Information you should not send"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We never ask for immigration documents, bank or card sign-in details, passwords, PINs or digital wallet credentials. Do not send these through chat, suggestions, reports or support; user-submitted text can contain whatever you include."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Keeping it safe"
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Everything travels encrypted, and the database encrypts what it stores."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "On your phone, your sign-in is stored encrypted, with a key kept in the phone's secure storage (the iPhone Keychain or Android Keystore) that never goes into a backup or onto another phone."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "A receipt photo is deleted from the app's storage as soon as its text is read; after that the app works only from the covered copy."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "There's no password to steal: you sign in with a code we email you, or with Apple or Google."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "To stop abuse, we count requests from each network address, and receipt checks and messages to Remmy from each phone (by the random ID above, per minute and per day), receipt checks from each account, and each WhatsApp chat. We keep only a scrambled form of the address or ID, which can't be turned back into it and changes every day, and automatically expire the short-lived counts."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "The deletions promised here run automatically: receipts after 30 days (24 months for research receipts), and a WhatsApp number held for a receipt within the hour."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Why we use it"
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "To run the app: signing you in and keeping what you save."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "To send the newsletter, only if you turned it on."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "To measure and improve it: counting users, comparisons and features used. We only report these as totals, never about an individual."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "We don't sell or rent your data, and we don't use it for advertising."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Who processes it"
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Supabase",
+            "bold": true
+          },
+          {
+            "text": " hosts the database and sign-in, in the United States."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Resend",
+            "bold": true
+          },
+          {
+            "text": " sends the sign-in code email, if you sign in with email, and the newsletter, if you turned it on."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Apple",
+            "bold": true
+          },
+          {
+            "text": " or "
+          },
+          {
+            "text": "Google",
+            "bold": true
+          },
+          {
+            "text": " handle sign-in if you choose them."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Expo",
+            "bold": true
+          },
+          {
+            "text": "'s push service, with "
+          },
+          {
+            "text": "Apple",
+            "bold": true
+          },
+          {
+            "text": " or "
+          },
+          {
+            "text": "Google",
+            "bold": true
+          },
+          {
+            "text": ", delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Groq",
+            "bold": true
+          },
+          {
+            "text": " runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp and Remmy (OpenAI's open gpt-oss models), when Cloudflare's capacity is used up or its service fails, it receives message text, relevant history and RemitBridge context, never your WhatsApp number. Zero data retention is on, and Groq doesn't train on what it's sent."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Cloudflare",
+            "bold": true
+          },
+          {
+            "text": " runs an AI model (Workers AI) on the text of most messages to our WhatsApp bot and to Remmy in the app. It receives the message, relevant conversation history and RemitBridge context, never your WhatsApp number, and doesn't use it to train AI models."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Meta",
+            "bold": true
+          },
+          {
+            "text": " carries the messages you exchange with the WhatsApp bot, under WhatsApp's own terms."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "GitHub",
+            "bold": true
+          },
+          {
+            "text": " runs the program that reads a receipt photo sent on WhatsApp. The photo is held only in that program's memory, on a temporary machine, and is never written to disk."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Vercel",
+            "bold": true
+          },
+          {
+            "text": " hosts this site."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "To check a receipt, our server also asks Frankfurter, a public exchange-rate service, for the rate on the receipt's date. That request holds only the two currencies and the date."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Each processes data only to provide its service to RemitBridge Labs."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Deleting your data"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "In the app, go to Account, then Delete account. This deletes your account and everything saved to it at once. If you signed in with Apple, it also ends RemitBridge's access to your Apple Account. The account link on usage records is removed, but pseudonymous installation IDs and operational records may remain for analytics and abuse prevention. These are not converted into anonymous totals by account deletion. Scans are stored separately without an account link; use the receipt deletion control in the app to delete them sooner. Submitted suggestions and reports are stored separately as described above. You can also email us to ask for deletion."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Children"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge is not directed at children under 13, and we don't knowingly collect their data. Before a phone's first account is created, the app asks for a year of birth. The year never leaves the phone and isn't kept; the phone remembers only whether an account can be created. Anyone under 13 can still compare prices, which needs no account. If you believe a child under 13 has given us personal information, email us and we'll delete it."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Changes"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "If this policy changes, we'll update the date at the top. Please review this page for the current policy."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Contact"
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "RemitBridge Labs, a Washington nonprofit corporation"
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "hello@remitbridgelabs.org",
+            "href": "mailto:hello@remitbridgelabs.org"
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "Need our mailing address? Email "
+          },
+          {
+            "text": "hello@remitbridgelabs.org",
+            "href": "mailto:hello@remitbridgelabs.org"
+          },
+          {
+            "text": " and we'll send it."
+          }
+        ]
+      }
+    ]
+  }
+}

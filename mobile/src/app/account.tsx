@@ -157,9 +157,9 @@ export default function AccountScreen() {
 
           <ListGroup title={a.about} cards>
             <ListRow icon="map" title={a.routeBoard} subtitle={a.routeBoardSub} onPress={() => router.push('/routes')} />
-            <ListRow external icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => openPage(LINKS.privacy)} />
+            <ListRow icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => router.push('/legal/privacy')} />
             <ListRow external icon="questionmark.circle" title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
-            <ListRow external icon="doc.text" title={a.terms} subtitle={a.termsSub} onPress={() => openPage(LINKS.terms)} />
+            <ListRow icon="doc.text" title={a.terms} subtitle={a.termsSub} onPress={() => router.push('/legal/terms')} />
           </ListGroup>
           <AppText variant="small" muted style={styles.legal}>
             {a.copyright(LEGAL_NAME, INCORPORATED)}

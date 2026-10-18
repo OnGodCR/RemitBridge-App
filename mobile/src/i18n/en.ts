@@ -1067,6 +1067,21 @@ export const en = {
     trueCostLabel: 'You paid with',
     trueCostTaxLine: (funding: string, tax: string) => `Paid by ${funding}, so the 1% tax (${tax}) is included.`,
   },
+
+  legal: {
+    eyebrow: 'One last step',
+    lead: 'Our terms',
+    accent: 'and your privacy',
+    intro: 'Your account is ready. Read both, then accept them to use it.',
+    changed: 'Our terms or privacy policy changed. Read them, then accept to keep using your account.',
+    agree: 'I have read and agree to the Terms of use and the Privacy policy.',
+    accept: 'Accept and continue',
+    decline: 'Sign out instead',
+    declineNote: 'Comparing prices works without an account.',
+    failed: 'Couldn’t save that. Check your connection and try again.',
+    englishOnly: 'These documents are in English.',
+    openOnWeb: 'Open on the web',
+  },
 };
 
 export type Copy = typeof en;
