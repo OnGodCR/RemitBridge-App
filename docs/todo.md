@@ -12,7 +12,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Remmy says "today's checked prices"**: fixed 2026-10-17 (D182): Remmy and WhatsApp no longer say when prices were checked. Deployed 2026-10-17; Hindi review of two rows pending.
 - [x] **Uncommitted quote-card edit**: kept with the estimate label and "arrives" restored (D183, 2026-10-17); Compare screenshot retaken.
 - [x] **Redeploy `remmy` and `whatsapp`** for D182: both deployed by Angad 2026-10-17.
-- [ ] **New production builds**: iOS 6 and Android 10 (2026-10-18) have the Google sign-in stall, fixed in 6a51d84. Rebuild once Angad confirms the fix on his phone; don't upload version code 10.
+- [x] **New production builds**: iOS 1.0.0 (7) and Android 1.0.0 (11), 2026-10-18, with the sign-in fixes (`docs/store/release-builds-2026-10-18b.md`). Upload version code 11 to Play internal testing.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
