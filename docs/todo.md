@@ -36,8 +36,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Hide what has no prices (D190)**: Compare, onboarding and Ask for a route offer only routes and ways of receiving with published prices; UPI, wallet, card, home delivery, Uganda, uncovered countries and the 13 summary-only posts held back in `docs/future-updates.md`.
 - [x] **Learn progress kept with the account (D191)**: built, merged on sign-in.
 - [x] **Learn progress migration**: run by Angad in the SQL editor 2026-10-18; smoke test 81/81 live (run by Claude).
-- [ ] **Redeploy `remmy` and `whatsapp`** (Angad): Remmy's route list now reads live prices, and UPI and the other methods are gone from both.
-- [ ] **New production builds for D190 and D191**, then replace the internal testing and production drafts on Play (Angad's go).
+- [x] **Redeploy `remmy` and `whatsapp`**: both deployed by Angad 2026-10-18.
+- [ ] **New production builds for D190 and D191**: started 2026-10-18, iOS `ad19a66c`, Android version code 12 (`docs/store/release-builds-2026-10-18c.md`); then replace the internal testing and production drafts on Play.
 - [ ] **Hindi for "Somewhere else?" (D190)**: 1 changed row in `docs/translation-review/hi.md`.
 - [ ] **Accept the terms again** on the new privacy date (October 18): expected, D188.
 
