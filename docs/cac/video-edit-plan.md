@@ -25,6 +25,14 @@ The working project is in Descript: "RemitBridge CAC Video"
   half-finished edit (Descript's AI credits ran out): its intro and technical part are
   still v5, so don't use it.
 
+- **v7** (2:58): v6 with Angad's two screen recordings as full-screen inserts in the
+  technical part: VS Code scrolling the total-cost formula over its first 2.7 seconds,
+  and the GitHub Actions Scrape runs at "Python workflows on GitHub Actions" (3 seconds),
+  each with a small label. Kept: the first 8 seconds of the VS Code recording and the
+  first 6 of the GitHub one, sped up 3x and 2x. Cut: the empty end of the file, the
+  folder clicking, the YAML part with an extension popup, and the page flipping. Full
+  copy in Downloads as `RemitBridge CAC v7.mp4`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are
