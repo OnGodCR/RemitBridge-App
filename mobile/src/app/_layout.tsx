@@ -21,6 +21,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { LanguageProvider, useCopy } from '@/i18n';
 import { useIsAdmin } from '@/lib/admin';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { ConsentGate } from '@/components/consent-gate';
 import { needsLegalConsent } from '@/lib/legal';
 import { openCompare } from '@/lib/open-compare';
 import { keepPhonesUpright } from '@/lib/orientation';
@@ -65,8 +66,8 @@ export default function RootLayout() {
 
 function Navigator() {
   const { ready, onboarded, session } = useAuth();
-  // An account that hasn't agreed to the current terms and privacy policy sees only that
-  // step until it agrees or signs out (D188).
+  // An account that hasn't agreed to the current terms and privacy policy sees that step
+  // over the app until it agrees or signs out (D188).
   const consent = needsLegalConsent(session);
   const isAdmin = useIsAdmin();
   const t = useTheme();
@@ -88,52 +89,52 @@ function Navigator() {
   if (!ready) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={!onboarded}>
-        <Stack.Screen name="onboarding" />
-      </Stack.Protected>
-      <Stack.Protected guard={consent}>
-        <Stack.Screen name="consent" />
-      </Stack.Protected>
-      <Stack.Protected guard={onboarded && !consent}>
-        <Stack.Screen name="(tabs)" />
-        {/* Account left the bottom bar for WhatsApp (D147): pushed from the button at the
-            top right of every tab, with its own back button in the green band. */}
-        <Stack.Screen name="account" />
-        <Stack.Screen name="fair-rate" options={{ ...pushed, title: titles.fairRate }} />
-        <Stack.Screen name="scam-check" options={{ ...pushed, title: titles.scamCheck }} />
-        <Stack.Screen name="true-cost" options={{ ...pushed, title: titles.trueCost }} />
-        <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
-        <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
-        <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
-        <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
-        {/* A lesson (D136) takes the whole screen, like Duolingo's, and closes with its own button. */}
-        <Stack.Screen name="lesson/[id]" options={{ presentation: 'fullScreenModal', headerShown: false, gestureEnabled: false }} />
-        {/* Remmy (D175): a sheet over whatever you were doing, so closing it brings you back. */}
-        <Stack.Screen name="remmy" options={{ presentation: 'modal', headerShown: false }} />
-        <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
-        <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />
-        <Stack.Screen name="saved" options={{ ...pushed, title: titles.saved }} />
-        <Stack.Screen name="alert" options={{ ...pushed, title: titles.alert }} />
-        <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
-        <Stack.Screen name="observatory" options={{ ...pushed, title: titles.observatory }} />
-        <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />
-        <Stack.Screen name="routes" options={{ ...pushed, title: titles.routeBoard }} />
-        <Stack.Screen name="request-route" options={{ ...pushed, title: titles.askForRoute }} />
-      </Stack.Protected>
-      {/* Reachable from onboarding and from Account. */}
-      <Stack.Screen name="sign-in" />
-      {/* The terms and privacy policy (D188), open from Account, Remmy and the consent step. */}
-      <Stack.Screen name="legal/[doc]" options={{ ...pushed, title: '' }} />
-      {/* Price entry (D54). The screen is hidden from everyone else, and RLS refuses the
-          insert anyway: the guard is convenience, the policy is the protection. */}
-      <Stack.Protected guard={isAdmin}>
-        <Stack.Screen name="admin" options={{ ...pushed, title: 'Add a price' }} />
-        <Stack.Screen name="metrics" options={{ ...pushed, title: 'Metrics' }} />
-        <Stack.Screen name="suggestions" options={{ ...pushed, title: 'Suggestions' }} />
-        <Stack.Screen name="newsletter" options={{ ...pushed, title: 'Newsletter' }} />
-      </Stack.Protected>
-    </Stack>
+    <>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Protected guard={!onboarded}>
+          <Stack.Screen name="onboarding" />
+        </Stack.Protected>
+        <Stack.Protected guard={onboarded}>
+          <Stack.Screen name="(tabs)" />
+          {/* Account left the bottom bar for WhatsApp (D147): pushed from the button at the
+              top right of every tab, with its own back button in the green band. */}
+          <Stack.Screen name="account" />
+          <Stack.Screen name="fair-rate" options={{ ...pushed, title: titles.fairRate }} />
+          <Stack.Screen name="scam-check" options={{ ...pushed, title: titles.scamCheck }} />
+          <Stack.Screen name="true-cost" options={{ ...pushed, title: titles.trueCost }} />
+          <Stack.Screen name="yearly-cost" options={{ ...pushed, title: titles.yearlyCost }} />
+          <Stack.Screen name="rate-history" options={{ ...pushed, title: titles.rateHistory }} />
+          <Stack.Screen name="glossary" options={{ ...pushed, title: titles.glossary }} />
+          <Stack.Screen name="module/[id]" options={{ ...pushed, title: '' }} />
+          {/* A lesson (D136) takes the whole screen, like Duolingo's, and closes with its own button. */}
+          <Stack.Screen name="lesson/[id]" options={{ presentation: 'fullScreenModal', headerShown: false, gestureEnabled: false }} />
+          {/* Remmy (D175): a sheet over whatever you were doing, so closing it brings you back. */}
+          <Stack.Screen name="remmy" options={{ presentation: 'modal', headerShown: false }} />
+          <Stack.Screen name="blog/index" options={{ ...pushed, title: titles.blog }} />
+          <Stack.Screen name="blog/[id]" options={{ ...pushed, title: '' }} />
+          <Stack.Screen name="saved" options={{ ...pushed, title: titles.saved }} />
+          <Stack.Screen name="alert" options={{ ...pushed, title: titles.alert }} />
+          <Stack.Screen name="remitbench" options={{ ...pushed, title: titles.remitbench }} />
+          <Stack.Screen name="observatory" options={{ ...pushed, title: titles.observatory }} />
+          <Stack.Screen name="quote/[id]" options={{ ...pushed, title: titles.quote }} />
+          <Stack.Screen name="routes" options={{ ...pushed, title: titles.routeBoard }} />
+          <Stack.Screen name="request-route" options={{ ...pushed, title: titles.askForRoute }} />
+        </Stack.Protected>
+        {/* Reachable from onboarding and from Account. */}
+        <Stack.Screen name="sign-in" />
+        {/* The terms and privacy policy (D188), open from Account, Remmy and WhatsApp. */}
+        <Stack.Screen name="legal/[doc]" options={{ ...pushed, title: '' }} />
+        {/* Price entry (D54). The screen is hidden from everyone else, and RLS refuses the
+            insert anyway: the guard is convenience, the policy is the protection. */}
+        <Stack.Protected guard={isAdmin}>
+          <Stack.Screen name="admin" options={{ ...pushed, title: 'Add a price' }} />
+          <Stack.Screen name="metrics" options={{ ...pushed, title: 'Metrics' }} />
+          <Stack.Screen name="suggestions" options={{ ...pushed, title: 'Suggestions' }} />
+          <Stack.Screen name="newsletter" options={{ ...pushed, title: 'Newsletter' }} />
+        </Stack.Protected>
+      </Stack>
+      {consent ? <ConsentGate /> : null}
+    </>
   );
 }
 
