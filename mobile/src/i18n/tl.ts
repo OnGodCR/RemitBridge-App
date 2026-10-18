@@ -410,6 +410,8 @@ export const tl: Copy = {
     supportSub: 'Mga tanong, at paano kami makontak',
     terms: 'Mga tuntunin ng paggamit',
     termsSub: 'Ang mga patakaran sa paggamit ng RemitBridge',
+    licenses: 'Mga open-source na lisensya',
+    licensesSub: 'Ang software, font at larawang ginagamit namin',
     copyright: (name: string, incorporated: boolean) =>
       incorporated ? `© 2026 ${name}, isang nonprofit corporation sa Washington` : `© 2026 ${name}`,
     admin: 'Admin',
@@ -887,7 +889,7 @@ export const tl: Copy = {
     send: 'Basahin ang resibo ko',
     /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
     savingsAcross: (n) => (n === 1 ? 'Mula sa 1 resibo sa phone na ito.' : `Mula sa ${n} resibo sa phone na ito.`),
-    savingsNone: (n) => (n === 1 ? 'Pinakamura na ang resibo mo.' : `Pinakamura na ang lahat ng ${n} resibo.`),
+    savingsNone: (n) => (n === 1 ? 'Pinakamura na ang resibo mo sa mga nakita namin.' : `Pinakamura na ang lahat ng ${n} resibo sa mga nakita namin.`),
     aiTitle: 'Puwedeng basahin ito ng AI',
     aiBody: 'Kapag hindi mabasa ng rules namin ang isang numero, ipinapadala namin ang natakpang resibo sa Groq, isang AI service. Hindi ito itinatabi ng Groq.',
     aiAskTitle: 'Ipadala sa isang AI service?',

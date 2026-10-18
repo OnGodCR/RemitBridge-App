@@ -410,6 +410,8 @@ export const hi: Copy = {
     supportSub: 'सवाल, और हमसे संपर्क कैसे करें',
     terms: 'इस्तेमाल की शर्तें',
     termsSub: 'RemitBridge इस्तेमाल करने के नियम',
+    licenses: 'ओपन-सोर्स लाइसेंस',
+    licensesSub: 'हमारे इस्तेमाल किए सॉफ़्टवेयर, फ़ॉन्ट और तस्वीरें',
     copyright: (name: string, incorporated: boolean) =>
       incorporated ? `© 2026 ${name}, वॉशिंगटन का एक गैर-लाभकारी निगम` : `© 2026 ${name}`,
     admin: 'एडमिन',
@@ -886,7 +888,7 @@ export const hi: Copy = {
     send: 'मेरी रसीद पढ़ें',
     /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
     savingsAcross: (n) => (n === 1 ? 'इस फ़ोन की 1 रसीद से।' : `इस फ़ोन की ${n} रसीदों से।`),
-    savingsNone: (n) => (n === 1 ? 'आपकी रसीद पहले से सबसे सस्ती थी।' : `सभी ${n} रसीदें पहले से सबसे सस्ती थीं।`),
+    savingsNone: (n) => (n === 1 ? 'हमें मिली कीमतों में आपकी रसीद पहले से सबसे सस्ती थी।' : `हमें मिली कीमतों में सभी ${n} रसीदें पहले से सबसे सस्ती थीं।`),
     aiTitle: 'इसे AI पढ़ सकता है',
     aiBody: 'अगर हमारे नियम कोई अंक नहीं पढ़ पाते, तो हम ढकी हुई रसीद Groq नाम की AI सेवा को भेजते हैं। Groq उसे नहीं रखता।',
     aiAskTitle: 'AI सेवा को भेजें?',

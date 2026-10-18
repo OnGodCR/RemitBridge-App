@@ -409,6 +409,8 @@ export const vi: Copy = {
     supportSub: 'Câu hỏi, và cách liên hệ với chúng tôi',
     terms: 'Điều khoản sử dụng',
     termsSub: 'Các quy định khi dùng RemitBridge',
+    licenses: 'Giấy phép mã nguồn mở',
+    licensesSub: 'Phần mềm, phông chữ và hình ảnh chúng tôi dùng',
     copyright: (name: string, incorporated: boolean) =>
       incorporated ? `© 2026 ${name}, một tổ chức phi lợi nhuận đăng ký tại Washington` : `© 2026 ${name}`,
     admin: 'Quản trị',
@@ -885,7 +887,7 @@ export const vi: Copy = {
     send: 'Đọc biên lai của tôi',
     /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
     savingsAcross: (n) => (n === 1 ? 'Từ 1 biên lai trên điện thoại này.' : `Từ ${n} biên lai trên điện thoại này.`),
-    savingsNone: (n) => (n === 1 ? 'Biên lai của bạn đã là rẻ nhất.' : `Cả ${n} biên lai đã là rẻ nhất.`),
+    savingsNone: (n) => (n === 1 ? 'Biên lai của bạn đã là rẻ nhất trong các giá chúng tôi tìm thấy.' : `Cả ${n} biên lai đã là rẻ nhất trong các giá chúng tôi tìm thấy.`),
     aiTitle: 'AI có thể đọc biên lai này',
     aiBody: 'Nếu quy tắc của chúng tôi không đọc được một số, chúng tôi gửi biên lai đã che cho Groq, một dịch vụ AI. Groq không lưu lại.',
     aiAskTitle: 'Gửi đến dịch vụ AI?',

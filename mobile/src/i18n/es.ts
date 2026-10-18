@@ -410,6 +410,8 @@ export const es: Copy = {
     supportSub: 'Preguntas, y cómo contactarnos',
     terms: 'Términos de uso',
     termsSub: 'Las reglas para usar RemitBridge',
+    licenses: 'Licencias de código abierto',
+    licensesSub: 'El software, las fuentes y las imágenes que usamos',
     copyright: (name: string, incorporated: boolean) =>
       incorporated ? `© 2026 ${name}, una corporación sin fines de lucro de Washington` : `© 2026 ${name}`,
     admin: 'Administración',
@@ -886,7 +888,7 @@ export const es: Copy = {
     send: 'Leer mi recibo',
     /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
     savingsAcross: (n) => (n === 1 ? 'De 1 recibo en este teléfono.' : `De ${n} recibos en este teléfono.`),
-    savingsNone: (n) => (n === 1 ? 'Tu recibo ya era el más barato.' : `Tus ${n} recibos ya eran los más baratos.`),
+    savingsNone: (n) => (n === 1 ? 'Tu recibo ya era el más barato que encontramos.' : `Tus ${n} recibos ya eran los más baratos que encontramos.`),
     aiTitle: 'Puede leerlo una IA',
     aiBody: 'Si nuestras reglas no leen un número, enviamos el recibo tapado a Groq, un servicio de IA. Groq no lo guarda.',
     aiAskTitle: '¿Enviar a un servicio de IA?',

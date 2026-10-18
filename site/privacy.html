@@ -16,7 +16,7 @@
 <header><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 17Q24 3 46 17"/><path d="M14 30v-6q10-9 20 0v6"/></svg>RemitBridge</a><nav><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a class="cta" href="https://www.remitbridgelabs.org/app">About the app</a></nav></div></header>
 <main class="wrap">
 <h1>Privacy policy</h1>
-<p class="muted">Last updated October 14, 2026</p>
+<p class="muted">Last updated October 17, 2026</p>
 <p>RemitBridge is a free app that compares the cost of sending money abroad. {{LEGAL_ENTITY}} ("RemitBridge Labs", "we") publishes and operates it, and is responsible for the data described here. No person who founded, runs or volunteers for RemitBridge Labs holds your data in their own name. This policy covers the RemitBridge mobile app (including Remmy, its assistant), this site and the RemitBridge WhatsApp bot.</p>
 
 <h2>In short</h2>
@@ -36,6 +36,7 @@
 <li>whether you're on iOS or Android, the app version, and the time.</li>
 </ul>
 <p>We don't collect your precise location, contacts, hardware identifiers or advertising ID, and we don't track you across other apps or websites.</p>
+<p>This site sets no cookies and loads no third-party trackers. Only partner links (pages at /p/ followed by a partner's name) count a visit: they keep a random ID in your browser's storage and record the visit and the partner's name, so we know which partners send people to RemitBridge.</p>
 
 <h2>With an account</h2>
 <p>An account is optional. If you create one, we also store:</p>
@@ -43,7 +44,8 @@
 <li>your email address, or the account details Apple or Google share if you sign in with them;</li>
 <li>the name you give in Account, or the one Apple or Google share, used only to greet you in the app;</li>
 <li>anything you choose to save, such as comparisons and transfers you enter yourself (provider, amounts, rate, date and any note);</li>
-<li>the usage records above, linked to your account while you're signed in.</li>
+<li>the usage records above, linked to your account while you're signed in;</li>
+<li>which version of the terms of use and this policy you agreed to, and when.</li>
 </ul>
 <p>Saved items are private to your account. Database rules stop anyone else from reading them.</p>
 
@@ -112,6 +114,7 @@
 <li><strong>Supabase</strong> hosts the database and sign-in, in the United States.</li>
 <li><strong>Resend</strong> sends the sign-in code email, if you sign in with email, and the newsletter, if you turned it on.</li>
 <li><strong>Apple</strong> or <strong>Google</strong> handle sign-in if you choose them.</li>
+<li><strong>Google's ML Kit</strong> reads a receipt's text on your phone, so the photo isn't sent anywhere to be read. Like Google's other software kits, it may send Google basic device and performance information.</li>
 <li><strong>Expo</strong>'s push service, with <strong>Apple</strong> or <strong>Google</strong>, delivers rate alert notifications. They get the notification token and the message (for example, the provider and the amount), nothing else.</li>
 <li><strong>Groq</strong> runs AI models. On a scanned receipt (currently Alibaba's Qwen), when our rules can't read a figure, it gets only the covered text, and in some cases the covered photo, never the original. On WhatsApp and Remmy (OpenAI's open gpt-oss models), when Cloudflare's capacity is used up or its service fails, it receives message text, relevant history and RemitBridge context, never your WhatsApp number. Zero data retention is on, and Groq doesn't train on what it's sent.</li>
 <li><strong>Cloudflare</strong> runs an AI model (Workers AI) on the text of most messages to our WhatsApp bot and to Remmy in the app. It receives the message, relevant conversation history and RemitBridge context, never your WhatsApp number, and doesn't use it to train AI models.</li>

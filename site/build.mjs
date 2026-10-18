@@ -66,7 +66,7 @@ export function render(html, c, pagePath = '/') {
   const head = [verify, shareTags(html, pagePath)].filter(Boolean).join('\n');
   const footer = [
     '<footer><div class="wrap">',
-    '<nav><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Contact</a><a href="https://www.remitbridgelabs.org">remitbridgelabs.org</a></nav>',
+    '<nav><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/licenses">Licenses</a><a href="/support">Contact</a><a href="https://www.remitbridgelabs.org">remitbridgelabs.org</a></nav>',
     `<p class="legal">${escape(copyrightLine(c))}<br><a href="mailto:${email}">${email}</a>${address ? `<br>${escape(address)}` : ''}</p>`,
     '</div></footer>',
   ].join('\n');
@@ -156,7 +156,7 @@ const ORIGIN = 'https://app.remitbridgelabs.org';
 const pathFor = (file) => '/' + file.replace(/\\/g, '/').replace(/(^|\/)index\.html$/, '').replace(/\.html$/, '');
 
 /** Pages that should be in the sitemap and carry a canonical; the rest are utility pages. */
-export const PUBLIC_PATHS = ['/', '/support', '/privacy', '/terms'];
+export const PUBLIC_PATHS = ['/', '/support', '/privacy', '/terms', '/licenses'];
 
 /**
  * Canonical, Open Graph and Twitter tags for a page, read from its own <title> and

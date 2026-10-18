@@ -394,6 +394,8 @@ export const en = {
     supportSub: 'Questions, and how to reach us',
     terms: 'Terms of use',
     termsSub: 'The rules for using RemitBridge',
+    licenses: 'Open-source licenses',
+    licensesSub: 'The software, fonts and images we use',
     copyright: (name: string, incorporated: boolean) =>
       incorporated ? `© 2026 ${name}, a Washington nonprofit corporation` : `© 2026 ${name}`,
     admin: 'Admin',
@@ -870,7 +872,7 @@ export const en = {
     send: 'Read my receipt',
     /** The savings counter on the Scan tab (D149); its title is result.keptTitle. */
     savingsAcross: (n: number) => (n === 1 ? 'From 1 receipt on this phone.' : `From ${n} receipts on this phone.`),
-    savingsNone: (n: number) => (n === 1 ? 'Your receipt was already the cheapest.' : `All ${n} receipts were already the cheapest.`),
+    savingsNone: (n: number) => (n === 1 ? 'Your receipt was already the cheapest we found.' : `All ${n} receipts were already the cheapest we found.`),
     aiTitle: 'An AI may read it',
     aiBody: 'If our rules can’t read a number, we send the covered receipt to Groq, an AI service. Groq doesn’t keep it.',
     aiAskTitle: 'Send to an AI service?',

@@ -1161,3 +1161,12 @@ themselves stay in English for now.
 | legal.failed | Couldn’t save that. Check your connection and try again. | सेव नहीं हो सका। कनेक्शन देखें और फिर कोशिश करें। | | NEW 2026-10-17; review pending |
 | legal.englishOnly | These documents are in English. | ये दस्तावेज़ अंग्रेज़ी में हैं। | | NEW 2026-10-17; review pending |
 | legal.openOnWeb | Open on the web | वेब पर खोलें | | NEW 2026-10-17; review pending |
+
+
+## Licenses row and a qualified claim, 2026-10-17 (legal checklist)
+
+| Key | English | Hindi | Reviewer notes | Status |
+|---|---|---|---|---|
+| account.licenses | Open-source licenses | ओपन-सोर्स लाइसेंस | | NEW 2026-10-17; review pending |
+| account.licensesSub | The software, fonts and images we use | हमारे इस्तेमाल किए सॉफ़्टवेयर, फ़ॉन्ट और तस्वीरें | | NEW 2026-10-17; review pending |
+| result.savingsNone | Your receipt was already the cheapest we found. | हमें मिली कीमतों में आपकी रसीद पहले से सबसे सस्ती थी। | | CHANGED 2026-10-17 ("we found" added); review pending |

@@ -160,6 +160,7 @@ export default function AccountScreen() {
             <ListRow icon="hand.raised" title={a.privacy} subtitle={a.privacySub} onPress={() => router.push('/legal/privacy')} />
             <ListRow external icon="questionmark.circle" title={a.support} subtitle={a.supportSub} onPress={() => openPage(LINKS.support)} />
             <ListRow icon="doc.text" title={a.terms} subtitle={a.termsSub} onPress={() => router.push('/legal/terms')} />
+            <ListRow external icon="list.bullet" title={a.licenses} subtitle={a.licensesSub} onPress={() => openPage(LINKS.licenses)} />
           </ListGroup>
           <AppText variant="small" muted style={styles.legal}>
             {a.copyright(LEGAL_NAME, INCORPORATED)}

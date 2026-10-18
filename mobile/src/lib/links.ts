@@ -11,6 +11,7 @@ export const LINKS = {
   privacy: `${SITE}/privacy`,
   support: `${SITE}/support`,
   terms: `${SITE}/terms`,
+  licenses: `${SITE}/licenses`,
 } as const;
 
 /** Where people and providers write to us (D22, D141), including "this price looks wrong". */

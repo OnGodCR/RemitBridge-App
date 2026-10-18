@@ -125,3 +125,6 @@ footer .legal { flex-basis: 100%; margin: 12px 0 0; padding-top: 20px; border-to
 [data-band] { position: relative; --lit: 0; --x: 50%; --y: 35%; }
 [data-band]::after { background: radial-gradient(38rem 38rem at var(--x) var(--y), rgba(255, 255, 255, 0.13), transparent 60%); }
 [data-band] > * { position: relative; z-index: 1; }
+
+/* Open-source licenses: each license's full text, readable and wrapping on a phone. */
+pre.license { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.5; background: rgba(20, 112, 90, 0.05); border-radius: 12px; padding: 16px; }

@@ -1,5 +1,5 @@
 {
-  "version": "terms October 14, 2026; privacy October 14, 2026",
+  "version": "terms October 14, 2026; privacy October 17, 2026",
   "terms": {
     "title": "Terms of use",
     "updated": "Last updated October 14, 2026",
@@ -311,7 +311,7 @@
   },
   "privacy": {
     "title": "Privacy policy",
-    "updated": "Last updated October 14, 2026",
+    "updated": "Last updated October 17, 2026",
     "blocks": [
       {
         "kind": "paragraph",
@@ -410,6 +410,14 @@
         ]
       },
       {
+        "kind": "paragraph",
+        "spans": [
+          {
+            "text": "This site sets no cookies and loads no third-party trackers. Only partner links (pages at /p/ followed by a partner's name) count a visit: they keep a random ID in your browser's storage and record the visit and the partner's name, so we know which partners send people to RemitBridge."
+          }
+        ]
+      },
+      {
         "kind": "heading",
         "text": "With an account"
       },
@@ -449,7 +457,15 @@
         "kind": "item",
         "spans": [
           {
-            "text": "the usage records above, linked to your account while you're signed in."
+            "text": "the usage records above, linked to your account while you're signed in;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "which version of the terms of use and this policy you agreed to, and when."
           }
         ]
       },
@@ -843,6 +859,18 @@
           },
           {
             "text": " handle sign-in if you choose them."
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "Google's ML Kit",
+            "bold": true
+          },
+          {
+            "text": " reads a receipt's text on your phone, so the photo isn't sent anywhere to be read. Like Google's other software kits, it may send Google basic device and performance information."
           }
         ]
       },
