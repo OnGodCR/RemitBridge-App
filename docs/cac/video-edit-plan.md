@@ -33,6 +33,16 @@ The working project is in Descript: "RemitBridge CAC Video"
   folder clicking, the YAML part with an extension popup, and the page flipping. Full
   copy in Downloads as `RemitBridge CAC v7.mp4`.
 
+- **v8** (2:57): Angad's fixes from watching v7. The arrow into "Amount received" is
+  straight; the frame on the right cuts in and out instantly (it faded too slowly into
+  the grandparents story, and the fade briefly showed his face twice); the remittance
+  card and its definition are up at once with the word typing straight away; the still
+  moments at the clip joins, where the camera was being stopped or started, are cut;
+  the VS Code insert ends before the empty end of the file; the GitHub insert now
+  starts at "Every six hours" and the price-collection diagram enters all at once when
+  it leaves; and in the codebase scene the language chips come in before their bars
+  grow. Full copy in Downloads as `RemitBridge CAC v8.mp4`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are
