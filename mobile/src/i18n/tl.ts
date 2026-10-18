@@ -427,7 +427,6 @@ export const tl: Copy = {
     newsletterOff: 'Naka-off ang newsletter.',
     writeNewsletter: 'Sumulat ng newsletter',
     writeNewsletterSub: 'Para sa lahat ng nag-on nito',
-    replay: 'Ulitin ang intro (dev lang)',
   },
 
   saved: {

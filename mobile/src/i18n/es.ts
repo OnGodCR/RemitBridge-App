@@ -427,7 +427,6 @@ export const es: Copy = {
     newsletterOff: 'Boletín desactivado.',
     writeNewsletter: 'Escribir un boletín',
     writeNewsletterSub: 'Para quienes lo activaron',
-    replay: 'Ver la bienvenida otra vez (solo en desarrollo)',
   },
 
   saved: {

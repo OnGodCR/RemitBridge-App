@@ -411,7 +411,6 @@ export const en = {
     newsletterOff: 'Newsletter off.',
     writeNewsletter: 'Write a newsletter',
     writeNewsletterSub: 'To everyone who turned it on',
-    replay: 'Replay onboarding (dev only)',
   },
 
   saved: {

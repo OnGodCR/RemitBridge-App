@@ -427,7 +427,6 @@ export const hi: Copy = {
     newsletterOff: 'न्यूज़लेटर बंद।',
     writeNewsletter: 'न्यूज़लेटर लिखें',
     writeNewsletterSub: 'उन सबको जिन्होंने इसे चालू किया',
-    replay: 'शुरुआत फिर से देखें (सिर्फ़ डेवलपमेंट में)',
   },
 
   saved: {

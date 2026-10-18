@@ -38,7 +38,7 @@ export default function AccountScreen() {
   const [languageOpen, setLanguageOpen] = useState(false);
   const canChooseLanguage = offeredLanguages().length > 1;
   const needVolunteers = languagesNeedingReview().length > 0;
-  const { session, signOut, resetOnboarding } = useAuth();
+  const { session, signOut } = useAuth();
   const [busy, setBusy] = useState(false);
   const isAdmin = useIsAdmin();
 
@@ -166,16 +166,6 @@ export default function AccountScreen() {
             {a.copyright(LEGAL_NAME, INCORPORATED)}
           </AppText>
 
-          {__DEV__ ? (
-            <Button
-              label={a.replay}
-              variant="plain"
-              onPress={async () => {
-                await signOut();
-                resetOnboarding();
-              }}
-            />
-          ) : null}
         </FocusRise>
       </ScrollView>
       <StatusBarShield />

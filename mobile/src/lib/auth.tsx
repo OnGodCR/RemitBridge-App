@@ -11,8 +11,6 @@ interface AuthState {
   /** Finished onboarding: signed in, or chose "Skip for now". */
   onboarded: boolean;
   finishOnboarding: () => void;
-  /** Development only: show onboarding again (Account tab, __DEV__ builds). */
-  resetOnboarding: () => void;
   signOut: () => Promise<void>;
 }
 
@@ -40,10 +38,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     finishOnboarding: () => {
       prefs.setOnboarded(true);
       setOnboardedFlag(true);
-    },
-    resetOnboarding: () => {
-      prefs.setOnboarded(false);
-      setOnboardedFlag(false);
     },
     signOut: async () => {
       await supabase?.auth.signOut();

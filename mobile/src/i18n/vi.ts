@@ -426,7 +426,6 @@ export const vi: Copy = {
     newsletterOff: 'Đã tắt bản tin.',
     writeNewsletter: 'Viết bản tin',
     writeNewsletterSub: 'Gửi cho mọi người đã bật nó',
-    replay: 'Xem lại phần giới thiệu (chỉ khi phát triển)',
   },
 
   saved: {
