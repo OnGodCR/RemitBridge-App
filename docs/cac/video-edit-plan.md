@@ -9,6 +9,7 @@ The working project is in Descript: "RemitBridge CAC Video"
 - **v3 with graphics** (2:56): v2 with the technical part and the closing rebuilt with
   graphics (below). Private preview: https://share.descript.com/view/jF7zRbwLuB0.
   The graphics' source is in `video-graphics/`.
+- **v4 intro graphics** (2:57): v3 with the intro rebuilt with graphics too.
 
 Times below are in v2.
 
@@ -54,10 +55,10 @@ replace a scene.
 
 ## Could also add (Claude can make these)
 
-1. **Intro graphics.** One paycheck splitting into three homes; a map with arcs from the
-   US to Mexico and Argentina; 1 income, 3 households, 9 people as a counter; "$900B+ a
-   year" with its source (World Bank); a "$0 fee" sticker that peels off to show the
-   exchange-rate markup.
+1. ~~Intro graphics~~ (done in v4): one paycheck splitting into three homes; a map with
+   arcs from the US to Mexico and Argentina; 1 income, 3 households, 9 people; "$905B" in
+   2024 (World Bank estimate); a "$0 fee" sticker beside an example of the markup it hides
+   ($500 to India, labelled as an example); a name title.
 2. **Captions** across the whole video, in the brand font, with the key words in green.
 3. **Background music** at a low level (YouTube Audio Library or Pixabay, both free), plus
    soft whooshes when graphics appear.

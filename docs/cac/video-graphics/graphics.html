@@ -1,6 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
 <script src="icons.js"></script>
+<script src="map.js"></script>
 <style>
 @font-face{font-family:J;src:url(file:///Users/vintibangkochar/Documents/GitHub/RemitBridge-App/site/fonts/PlusJakartaSans_500Medium.ttf);font-weight:500}
 @font-face{font-family:J;src:url(file:///Users/vintibangkochar/Documents/GitHub/RemitBridge-App/site/fonts/PlusJakartaSans_700Bold.ttf);font-weight:700}
@@ -58,6 +59,20 @@ const SEGS = {
   [34.982,38.681,"intent classification model routes requests between Groq and Cloudflare."],
   [38.939,42.537,"Altogether, RemitBridge spans roughly thirty-eight thousand lines of code"],
   [42.659,44.599,"across TypeScript, Python, and SQL."]],
+ intro: [
+  [0.201,3.540,"Imagine trying to stretch one paycheck across three different households."],
+  [3.737,6.715,"You're raising children in America while paying for your parents' life-saving"],
+  [6.727,10.750,"medication in Mexico, all while supporting your spouse's family in Argentina."],
+  [11.030,13.904,"For millions of immigrants, this is the unfortunate reality."],
+  [14.095,17.245,"There's only one income, but three households with nine people."],
+  [17.525,20.561,"Last summer, I visited my grandparents in India who sometimes"],
+  [32.114,35.050,"Money sent internationally to support loved ones is known as"],
+  [35.050,38.158,"a remittance, and more than nine hundred billion dollars of this money"],
+  [38.173,39.801,"is sent across borders worldwide."],
+  [40.209,44.688,"Yet, even transfers advertised as having zero fees can hide additional charges"],
+  [44.694,46.356,"through unfavorable exchange rates."],
+  [46.633,51.211,"I'm Angad Kochhar, and I built RemitBridge to bridge the gap between families and"],
+  [51.212,53.353,"getting their hard-earned money back home."]],
  close: [
   [0.340,4.131,"Ultimately, I can't make supporting three households easy, but I can help"],
   [4.132,7.911,"families keep more of what they earn and understand where every dollar goes, and"],
@@ -175,6 +190,77 @@ if (SECTION === 'tech') {
   });
 }
 
+if (SECTION === 'intro') {
+  // Two windows where Angad moves into the frame on the right; full frame in between.
+  const A0 = 0.15, A1 = W('Last summer')-0.1, B0 = W('Money sent')-0.15, B1 = W("I'm Angad")-0.05;
+  for (const [a,b] of [[A0,A1],[B0,B1]]) {
+    const s = scene(a, b);
+    addTo(s, `<div class="hole" style="left:1220px;top:150px;width:620px;height:780px"></div>`, a, 'fade');
+    addTo(s, `<div class="holeRing" style="left:1216px;top:146px;width:628px;height:788px"></div>`, a, 'fade');
+  }
+  // 1. One paycheck, three households
+  let s = scene(A0, W("You're raising")-0.1);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">One paycheck.<br>Three households.</div>`, A0+0.05, 'fade');
+  addTo(s, `<div class="abs" style="left:460px;top:420px;background:#fff;color:#14705a;border-radius:20px;padding:20px 32px;font-size:40px;font-weight:800;box-shadow:0 8px 0 #0b4f3f">One paycheck</div>`, W('paycheck'));
+  addTo(s, `<svg class="abs" style="left:180px;top:510px" width="840" height="140" viewBox="0 0 840 140" fill="none" stroke="#8fcab6" stroke-width="7" stroke-linecap="round"><path d="M420 5V55M420 55Q420 90 120 135M420 55V135M420 55Q420 90 720 135"/></svg>`, W('three different')-0.2, 'fade');
+  addTo(s, `<div class="abs row" style="left:120px;top:670px;gap:120px;color:#fff">${house('Home 1')}${house('Home 2')}${house('Home 3')}</div>`, W('three different'));
+
+  // 2. The map: one family across three countries
+  s = scene(W("You're raising"), W("There's only")-0.1);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">One family,<br>three countries</div>`, W("You're raising")+0.05, 'fade');
+  const M = window.MAP, ox = 560, oy = 260, sc = 1.0;
+  const land = M.out.map(c=>`<path d="${c.d}" fill="${c.k?'#14705a':'rgba(255,255,255,.10)'}" stroke="${c.k?'#8fcab6':'rgba(143,202,182,.35)'}" stroke-width="${c.k?2:1}"/>`).join('');
+  addTo(s, `<svg class="abs" style="left:${ox}px;top:${oy}px" width="${M.W}" height="${M.H}" viewBox="0 0 ${M.W} ${M.H}">${land}</svg>`, W("You're raising")+0.1, 'fade');
+  const P = k => [ox+M.pts[k][0], oy+M.pts[k][1]];
+  const dot = (k, t) => { const [x,y]=P(k); addTo(s, `<div class="abs" style="left:${x-14}px;top:${y-14}px;width:28px;height:28px;border-radius:50%;background:#fff;border:6px solid #46a085"></div>`, t); };
+  const arc = (a, b, bend, t) => { const [x1,y1]=P(a),[x2,y2]=P(b); const mx=(x1+x2)/2+bend, my=(y1+y2)/2; const len=Math.hypot(x2-x1,y2-y1)*1.25;
+    const el = addTo(s, `<svg class="abs" style="left:0;top:0" width="1920" height="1080" fill="none"><path d="M${x1} ${y1}Q${mx} ${my} ${x2} ${y2}" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="${len}" stroke-dashoffset="${len}"/></svg>`, t, 'dash'); el._len = len; };
+  const label = (x, y, head, sub, t) => addTo(s, `<div class="abs" style="left:${x}px;top:${y}px;background:#fff;color:#1c2024;border-radius:18px;padding:14px 22px;box-shadow:0 6px 0 #0b4f3f"><div style="font-size:30px;font-weight:800">${head}</div><div style="font-size:22px;font-weight:500;color:#5b6470">${sub}</div></div>`, t);
+  dot('us', W('America')); label(90, 380, 'United States', 'raising the children', W('America'));
+  arc('us','mx',-80, W('paying for')); dot('mx', W('medication')); label(90, 540, 'Mexico', "parents' medication", W('medication'));
+  arc('us','ar',160, W('all while')); dot('ar', W('Argentina')); label(90, 700, 'Argentina', "spouse's family", W('Argentina'));
+  addTo(s, `<div class="abs" style="left:90px;top:880px;font-size:34px;font-weight:700;color:#8fcab6">This is life for millions of immigrants.</div>`, W('For millions'), 'fade');
+
+  // 3. 1 income, 3 households, 9 people
+  s = scene(W("There's only"), A1);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">Stretched thin</div>`, W("There's only")+0.05, 'fade');
+  const person = `<svg width="46" height="60" viewBox="0 0 46 60"><circle cx="23" cy="14" r="11" fill="#fff"/><path d="M3 58c0-14 9-24 20-24s20 10 20 24z" fill="#fff"/></svg>`;
+  const col = (x, n, label, t, inner) => { addTo(s, `<div class="abs" style="left:${x}px;top:330px;width:330px;text-align:center"><div style="font-size:200px;font-weight:800;line-height:1">${n}</div><div style="font-size:38px;font-weight:700;color:#8fcab6;margin-top:6px">${label}</div></div>`, t); if(inner) addTo(s, inner, t+0.15, 'fade'); };
+  col(90, '1', 'income', W('one income'), `<div class="abs" style="left:205px;top:680px;background:#fff;color:#14705a;border-radius:14px;padding:12px 18px;font-size:30px;font-weight:800">$</div>`);
+  col(450, '3', 'households', W('three households'), `<div class="abs row" style="left:470px;top:665px;gap:6px">${[1,2,3].map(()=>`<svg width="90" height="80" viewBox="0 0 44 40"><path d="M4 19 22 4l18 15v19H4z" fill="#e8f2ee" stroke="#8fcab6" stroke-width="3" stroke-linejoin="round"/></svg>`).join('')}</div>`);
+  col(810, '9', 'people', W('nine people'), `<div class="abs" style="left:850px;top:660px;width:260px;display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:center">${Array(9).fill(person).join('')}</div>`);
+
+  // 4. What a remittance is
+  s = scene(B0, W('nine hundred')-0.1);
+  addTo(s, `<div class="abs kicker" style="left:90px;top:84px">The word for it</div>`, B0, 'fade');
+  addTo(s, `<div class="abs" style="left:90px;top:300px;width:1060px;background:#fff;color:#1c2024;border-radius:32px;padding:56px 60px;box-shadow:0 10px 0 #0b4f3f"><div style="font-size:96px;font-weight:800;color:#14705a">remittance</div><div style="font-size:30px;font-weight:500;color:#5b6470;margin-top:4px">noun</div><div style="font-size:46px;font-weight:700;margin-top:30px;line-height:1.25">Money sent across borders to support family and loved ones.</div></div>`, W('Money sent')+0.1);
+
+  // 5. $905B, World Bank estimate for 2024
+  s = scene(W('nine hundred'), W('Yet,')-0.1);
+  addTo(s, `<div class="abs kicker" style="left:90px;top:84px">Sent across borders</div>`, W('nine hundred'), 'fade');
+  const big = addTo(s, `<div class="abs" style="left:80px;top:250px;font-size:260px;font-weight:800;line-height:1;letter-spacing:-.03em">$0B</div>`, W('nine hundred'), 'count');
+  big._target = 905; big._until = W('billion'); big._fmt = v => '$' + v + 'B';
+  addTo(s, `<div class="abs" style="left:96px;top:560px;font-size:52px;font-weight:800">in a single year, worldwide</div>`, W('of this money'), 'fade');
+  addTo(s, `<div class="abs" style="left:96px;top:650px;font-size:30px;font-weight:500;color:#8fcab6">2024 estimate. Source: World Bank</div>`, W('of this money')+0.3, 'fade');
+
+  // 6. The $0 fee, and the markup it hides (example numbers, labelled as such)
+  s = scene(W('Yet,'), B1);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">"Zero fees"?</div>`, W('Yet,')+0.05, 'fade');
+  const sticker = addTo(s, `<div class="abs" style="left:110px;top:330px;width:360px;height:360px;border-radius:50%;background:#fff;color:#14705a;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 10px 0 #0b4f3f;transform-origin:center"><div style="font-size:120px;font-weight:800;line-height:1">$0</div><div style="font-size:44px;font-weight:800;letter-spacing:.08em">FEE</div></div>`, W('zero fees'));
+  sticker._rot = -8;
+  addTo(s, `<div class="abs" style="left:530px;top:300px;width:620px;background:#fff;color:#1c2024;border-radius:28px;padding:34px 38px;box-shadow:0 8px 0 #0b4f3f"><div style="font-size:22px;font-weight:700;letter-spacing:.12em;color:#5b6470">EXAMPLE: $500 TO INDIA</div>
+    <div style="display:flex;justify-content:space-between;font-size:32px;font-weight:700;margin-top:22px"><span>Real rate</span><span>₹88.00 per $1</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:32px;font-weight:700;margin-top:14px"><span>Rate you get</span><span>₹86.70 per $1</span></div>
+    <div style="height:2px;background:#e4e7eb;margin:24px 0"></div>
+    <div style="font-size:24px;font-weight:700;letter-spacing:.1em;color:#0e5c49">HIDDEN IN THE RATE</div>
+    <div style="font-size:64px;font-weight:800;color:#0e5c49;margin-top:4px">₹650 <span style="font-size:34px;color:#5b6470">(about $7)</span></div></div>`, W('hide additional'));
+  addTo(s, `<div class="abs" style="left:90px;top:800px;font-size:36px;font-weight:700;color:#8fcab6">The cost moves into the exchange rate.</div>`, W('unfavorable'), 'fade');
+
+  // 7. Name title, full frame
+  s = scene(W("I'm Angad")+0.2, W('getting their')+0.6);
+  addTo(s, `<div class="abs" style="left:90px;top:840px;background:#fff;color:#1c2024;border-radius:20px;padding:20px 30px;box-shadow:0 8px 0 #0b4f3f;border-left:10px solid #14705a"><div style="font-size:40px;font-weight:800">Angad Kochar</div><div style="font-size:26px;font-weight:500;color:#5b6470">Founder, RemitBridge Labs</div></div>`, W("I'm Angad")+0.2, 'fade');
+}
+
 if (SECTION === 'close') {
   const tEnd = W('You can find');
   // 1. One paycheck, three households
@@ -223,7 +309,9 @@ window.render = (t) => {
     if (it.kind==='draw') { st.transform = `scaleX(${ease(p)})`; st.opacity = t<it.tin?0:1; }
     if (it.kind==='drawr') { st.transform = `scaleX(${-ease(p)})`; st.opacity = t<it.tin?0:1; }
     if (it.kind==='drawv') { st.transform = `scaleY(${ease(p)})`; st.opacity = t<it.tin?0:1; }
-    if (it.kind==='count') { const q=clamp((t-it.tin)/((W('thousand')-it.tin)+0.3)); it.el.textContent = Math.round(38000*ease(q)).toLocaleString('en-US'); }
+    if (it.kind==='dash') { const path=it.el.querySelector('path'); path.style.strokeDashoffset = it.el._len*(1-ease(clamp((t-it.tin)/0.8))); st.opacity = t<it.tin?0:1; }
+    if (it.kind==='pop' && it.el._rot) st.transform += ` rotate(${it.el._rot*ease(p)}deg)`;
+    if (it.kind==='count') { const until=it.el._until??W('thousand'), target=it.el._target??38000, fmt=it.el._fmt??(v=>v.toLocaleString('en-US')); const q=clamp((t-it.tin)/((until-it.tin)+0.3)); it.el.textContent = fmt(Math.round(target*ease(q))); }
   }
 };
 window.render(0);

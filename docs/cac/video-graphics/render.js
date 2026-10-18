@@ -25,5 +25,5 @@ const ffmpeg = require('ffmpeg-static');
     ff.stdin.end();
     await new Promise(r => ff.on('close', r));
   }
-  await browser.close();
+  browser.close().catch(() => {}); setTimeout(() => process.exit(0), 1000);
 })().catch(e => { console.error(e); process.exit(1); });

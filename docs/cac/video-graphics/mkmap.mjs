@@ -1,0 +1,14 @@
+import { geoConicEqualArea, geoMercator, geoPath, geoCentroid } from 'd3-geo';
+import { feature } from 'topojson-client';
+import fs from 'fs';
+const world = JSON.parse(fs.readFileSync('node_modules/world-atlas/countries-110m.json'));
+const all = feature(world, world.objects.countries).features;
+const am = all.filter(f => { const [x, y] = geoCentroid(f); return x < -30 && x > -170 && y > -60 && f.id !== '304'; });
+const W = 560, H = 700;
+const proj = geoMercator().fitExtent([[10, 10], [W - 10, H - 10]], { type: 'FeatureCollection', features: am });
+const path = geoPath(proj);
+const hi = { '840': 'us', '484': 'mx', '032': 'ar' };
+const out = am.map(f => ({ d: path(f), k: hi[f.id] || '' }));
+const pts = { us: proj([-96, 38]), mx: proj([-99.1, 19.4]), ar: proj([-58.4, -34.6]) };
+fs.writeFileSync('map.js', 'window.MAP=' + JSON.stringify({ W, H, out, pts }) + ';');
+console.log(am.length, pts);
