@@ -9,43 +9,29 @@ RemitBridge: See What Sending Money Home Really Costs | Congressional App Challe
 
 ## Description
 
-A $0 fee doesn't mean a transfer is free. Most of what people lose when they send money
-home is hidden in the exchange rate. RemitBridge is a free app that shows what a transfer
-really costs, and how much your family actually receives.
+My family sends money to my grandparents in India, and I always assumed the fee was the
+whole cost. It isn't. A lot of the money disappears in the exchange rate, and most apps
+don't show you that part. So I built RemitBridge, a free app that shows what a transfer
+actually costs and how much your family ends up getting.
 
-I built RemitBridge for the 2026 Congressional App Challenge. My family sends money to my
-grandparents in India. For many families, those same transfers decide whether they can
-pay rent, buy groceries or afford school.
+You can compare providers by how much actually arrives (nobody pays to rank higher), scan
+an old receipt to see what you lost on it, ask Remmy, the app's assistant, for help, play
+some quick money lessons, or just text the WhatsApp bot "500 to India" if you don't want
+another app. The bot works in English and Hindi.
 
-What the app does:
-- Compare: ranks providers by how much money your family receives, not by the fee. No
-  provider can pay for a higher spot, and there are no affiliate links.
-- TrueCost: scan an old receipt. The text is read on your phone, private details are
-  covered before anything leaves it, and the app shows the hidden exchange-rate markup and
-  what you could have kept.
-- Remmy: an assistant that answers questions, runs comparisons and moves around the app
-  for you.
-- Learn: short lessons, games and a scam check.
-- WhatsApp: text "500 to India" and get today's prices, no app needed. Works in English
-  and Hindi.
+This is my entry for the 2026 Congressional App Challenge. It's built with React Native,
+TypeScript, Supabase and Python, and prices get updated every six hours.
 
-How it's built: React Native and TypeScript for iOS and Android, with Supabase
-(PostgreSQL and Edge Functions) as the backend. Python workflows on GitHub Actions collect
-prices every six hours, and every price is checked against independent exchange rates
-before anyone sees it.
-
-Timestamps
-0:00 Why it matters
+0:00 Why I made it
 0:53 The app
-1:59 How it's built
+1:59 How it works
 2:40 What's next
 
-Try it: https://remitbridgelabs.org/app
-Questions or a wrong price: hello@remitbridgelabs.org
+https://remitbridgelabs.org/app
+hello@remitbridgelabs.org
 
-RemitBridge gives information only. It never sends or holds money.
-
-I used AI tools to help build parts of RemitBridge and to edit this video.
+RemitBridge doesn't send or hold anyone's money, it just shows you the numbers. I used
+AI tools for parts of the app and the editing.
 
 #CongressionalAppChallenge #CAC2026 #Remittances #FinancialLiteracy #ReactNative
 
