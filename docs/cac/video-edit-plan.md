@@ -10,6 +10,9 @@ The working project is in Descript: "RemitBridge CAC Video"
   graphics (below). Private preview: https://share.descript.com/view/jF7zRbwLuB0.
   The graphics' source is in `video-graphics/`.
 - **v4 intro graphics** (2:57): v3 with the intro rebuilt with graphics too.
+- **v5 editorial** (2:57): all three graphics sections redrawn in a less generic style,
+  after Angad found v4's look template-like: a split screen with a camera move, serif
+  headlines, ink line drawings, monochrome logos and film grain.
 
 Times below are in v2.
 
