@@ -53,6 +53,13 @@ The working project is in Descript: "RemitBridge CAC Video"
   (contact names) and the Account screen with Angad's email; also cut, 27 seconds of
   loading after sign-in. Full copy in Downloads as `RemitBridge CAC v9.mp4`.
 
+- **v10** (2:57): the grandparents story (0:17 to 0:26) now shows Angad's three trip
+  photos ("CAC Pic 1-3" in his Downloads) as prints dropping onto the green background
+  as he speaks, under "Visiting my grandparents, India, last summer", with him in the
+  frame on the right. The photos are family pictures, so they are not in the repo; the
+  page loads them from `pics/` beside it. Full copy in Downloads as
+  `RemitBridge CAC v10.mp4`.
+
 **Current choice (Angad, 2026-10-17):** keep v6 as it is. The demo sounds sped up at
 1.1x, but at 1x the video runs about 3:05, and the lines that would have to go ("cute
 little guy", the blog posts, "let's dive into the app") give it personality, so none are

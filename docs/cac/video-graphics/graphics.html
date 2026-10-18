@@ -42,6 +42,10 @@ const SEGS = {
   [11.030,13.904,"For millions of immigrants, this is the unfortunate reality."],
   [14.095,17.245,"There's only one income, but three households with nine people."],
   [17.525,20.561,"Last summer, I visited my grandparents in India who sometimes"],
+  [20.566,21.873,"receive money from my family."],
+  [22.109,22.826,"We're fortunate."],
+  [22.836,25.566,"For them, that money provides comfort, maybe a nice vacation."],
+  [25.817,28.552,"But for other families, those same transfers could determine"],
   [32.114,35.050,"Money sent internationally to support loved ones is known as"],
   [35.050,38.158,"a remittance, and more than nine hundred billion dollars of this money"],
   [38.173,39.801,"is sent across borders worldwide."],
@@ -153,6 +157,15 @@ if (SECTION === 'intro') {
   C(s, 255, 640, `<div style="width:120px;height:80px;border-radius:14px;background:#fff;color:#14705a;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 0 #0b4f3f">$</div>`, W('one income')+0.25, 'drop');
   [-100,0,100].forEach((dx,i)=>C(s, 615+dx, 640, houseSvg(86, '#e8f2ee', '#8fcab6'), W('three households')+0.25+i*0.12, 'drop'));
   for(let i=0;i<9;i++) C(s, 975+((i%3)-1)*66, 620+Math.floor(i/3)*76, person, W('nine people')+0.05+i*0.03, 'pop');
+
+  // 3b. The grandparents: Angad's own photos, dropped in like prints
+  const C0 = A1, C1 = W('But for other')-0.1;
+  stage = box(C0, C1);
+  s = scene(stage, C0, C1, 'fade', 'fade');
+  title(s, 90, 110, ['Visiting my grandparents'], C0+0.05, 56);
+  const prints = [['pics/p3_m.jpg', 70, 230, 600, -5, W('visited')], ['pics/p1_m.jpg', 470, 300, 640, 4, W('receive money')], ['pics/p2_m.jpg', 200, 520, 600, -2, W('For them')]];
+  prints.forEach(([src,x,y,w,rot,t])=>add(s, `<div class="abs" style="left:${x}px;top:${y}px"><div style="transform:rotate(${rot}deg);background:#fff;padding:14px 14px 46px;border-radius:6px;box-shadow:0 12px 0 #072920,0 18px 40px rgba(0,0,0,.35)"><img src="${src}" style="display:block;width:${w}px;border-radius:2px"></div></div>`, t, 'drop'));
+  add(s, `<div class="abs" style="left:92px;top:178px;font-size:26px;font-weight:700;color:#8fcab6">India, last summer</div>`, W('in India'), 'fade');
 
   stage = box(B0, B1);
   // 4. What a remittance is
