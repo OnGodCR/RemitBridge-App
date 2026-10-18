@@ -6,9 +6,9 @@ import { MODULES, type Module } from '@/data/modules';
 
 /**
  * Learn progress (DECISIONS.md D107, D136): which terms have been learned (answered right in
- * a lesson), the XP earned, and the day streak. Kept on the phone only, like the other
- * preferences: no account needed, and nothing about what someone has learned is sent
- * anywhere.
+ * a lesson), the XP earned, and the day streak. Kept on the phone, so Learn works without an
+ * account; signed in, it is also kept with the account and merged on sign-in, so a new phone
+ * or a reinstall picks up where it left off (D190, lib/learn-sync.ts).
  */
 const KEY = 'rb.learned';
 const STATS_KEY = 'rb.learnStats';
@@ -58,11 +58,7 @@ function dayBefore(day: string): string {
 export function recordLesson(xp: number, today = localDay()): LearnStats {
   const streak = stats.lastDay === today ? stats.streak : stats.lastDay === dayBefore(today) ? stats.streak + 1 : 1;
   stats = { xp: stats.xp + xp, streak, lastDay: today, lessons: stats.lessons + 1 };
-  try {
-    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-  } catch {
-    // Progress is a convenience; never let storage break the app.
-  }
+  saveStats();
   listeners.forEach((l) => l());
   return stats;
 }
@@ -79,6 +75,60 @@ function save() {
   } catch {
     // Progress is a convenience; never let storage break the app.
   }
+}
+
+function saveStats() {
+  try {
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  } catch {
+    // Progress is a convenience; never let storage break the app.
+  }
+}
+
+export interface LearnSnapshot {
+  learned: string[];
+  stats: LearnStats;
+}
+
+/** Everything learned so far, for keeping with the account. */
+export function snapshot(): LearnSnapshot {
+  return { learned: [...learned], stats };
+}
+
+/**
+ * Two records of the same person's progress made one, losing nothing: every term learned on
+ * either, the larger counts (the two may have been made on different phones), and the
+ * streak of whichever had the later lesson.
+ */
+export function mergeProgress(a: LearnSnapshot, b: LearnSnapshot): LearnSnapshot {
+  const later = (b.stats.lastDay ?? '') > (a.stats.lastDay ?? '') ? b.stats : a.stats;
+  const sameDay = a.stats.lastDay === b.stats.lastDay;
+  return {
+    learned: [...new Set([...a.learned, ...b.learned])].sort(),
+    stats: {
+      xp: Math.max(a.stats.xp, b.stats.xp),
+      lessons: Math.max(a.stats.lessons, b.stats.lessons),
+      lastDay: later.lastDay,
+      streak: sameDay ? Math.max(a.stats.streak, b.stats.streak) : later.streak,
+    },
+  };
+}
+
+/** Takes on progress kept with the account, merged with what this phone has. */
+export function adoptProgress(remote: LearnSnapshot): LearnSnapshot {
+  const merged = mergeProgress(snapshot(), remote);
+  learned = new Set(merged.learned);
+  stats = merged.stats;
+  save();
+  saveStats();
+  listeners.forEach((l) => l());
+  return merged;
+}
+
+/** Called whenever progress changes, as long as the returned function hasn't been called. */
+export function onProgressChange(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 }
 
 export function markLearned(termId: string) {

@@ -10,8 +10,8 @@ import { AppText } from '@/components/ui';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { countryIn, currencyIn, useCopy } from '@/i18n';
+import { availableRoutes, useAvailability } from '@/lib/availability';
 import { prefs } from '@/lib/prefs';
-import { ROUTES } from '@/lib/routes';
 import { track } from '@/lib/track';
 
 /**
@@ -20,13 +20,15 @@ import { track } from '@/lib/track';
  * hairline rows, the country in bold, one plain line (the currency the family receives), an
  * arrow. One tap moves on. The delivery methods wait for Compare, where they're a choice.
  *
- * Everywhere else is one plain line pointing at the request form on Compare (PRD 6.7),
+ * Everywhere else is one plain line pointing at the route board in Account (PRD 6.7),
  * following the site's rule that tags are text and never pills.
  */
 export default function PickRoute() {
   const t = useTheme();
   const copy = useCopy();
   const o = copy.onboarding.route;
+  // Only routes with prices right now (D190).
+  const routes = availableRoutes(useAvailability());
 
   const pick = (routeId: string) => {
     prefs.setHomeRoute(routeId);
@@ -45,7 +47,7 @@ export default function PickRoute() {
       </Rise>
 
       <Rise step={1} style={[styles.index, { borderTopColor: t.border }]}>
-        {ROUTES.map((route) => {
+        {routes.map((route) => {
           const code = route.id.split('-')[1];
           const country = countryIn(copy, code);
           const money = currencyIn(copy, route.receiveCurrency);

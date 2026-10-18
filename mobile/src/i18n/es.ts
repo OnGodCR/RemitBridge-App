@@ -188,7 +188,7 @@ export const es: Copy = {
       accent: 'mandas dinero?',
       intro: 'Puedes cambiarla cuando quieras.',
       paidIn: (country, currency) => `${country}. Se paga en ${currency}`,
-      elsewhere: '¿A otro lugar? Pídelo en Comparar.',
+      elsewhere: '¿A otro lugar? Pídelo en Cuenta, Tablero de rutas.',
     },
     about: {
       eyebrow: 'Sobre ti',
@@ -238,7 +238,6 @@ export const es: Copy = {
     nothingMatches: (q) => `Nada coincide con “${q}”.`,
     notYet: 'Aún no',
     notCovered: 'todavía no disponible',
-    comingSoon: 'Próximamente',
     change: (label, value) => `${label}: ${value}. Cambiar`,
   },
 
@@ -660,7 +659,6 @@ export const es: Copy = {
   },
 
   blog: {
-    written: (n: number, total: number) => `${n} de ${total} escritos completos hasta ahora`,
     shown: (n: number, total: number) => `${n} de ${total} artículos`,
     all: 'Todos',
     series: {
@@ -670,8 +668,6 @@ export const es: Copy = {
       series4: 'Costo, velocidad, fallas',
       series5: 'Conectarlo todo',
     },
-    summaryOnly: 'Solo resumen',
-    notYet: 'La entrada completa viene pronto. Aquí está el resumen.',
     keepReading: 'Sigue leyendo',
     englishOnly: 'Los artículos están en inglés.',
   },

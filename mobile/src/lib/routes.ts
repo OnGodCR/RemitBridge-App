@@ -16,6 +16,14 @@ export type DeliveryMethod =
   | 'debit_card'
   | 'home_delivery';
 
+/**
+ * Every way of receiving the engine and Add a price know. Routes list only the ones with
+ * prices to show (D190, 2026-10-18): UPI, mobile wallets, debit cards and home delivery
+ * have none yet, so they wait in docs/future-updates.md. The app goes further and offers
+ * only what has a price today (lib/availability.ts).
+ */
+export const ALL_DELIVERY_METHODS: DeliveryMethod[] = ['bank_deposit', 'cash_pickup', 'mobile_wallet', 'upi', 'debit_card', 'home_delivery'];
+
 export interface Route {
   id: string;
   country: string;
@@ -31,7 +39,7 @@ export const ROUTES: Route[] = [
    
     sendCurrency: 'USD',
     receiveCurrency: 'INR',
-    deliveryMethods: ['bank_deposit', 'upi'],
+    deliveryMethods: ['bank_deposit', 'cash_pickup'],
   },
   {
     id: 'us-mx',
@@ -39,7 +47,7 @@ export const ROUTES: Route[] = [
    
     sendCurrency: 'USD',
     receiveCurrency: 'MXN',
-    deliveryMethods: ['bank_deposit', 'cash_pickup', 'debit_card'],
+    deliveryMethods: ['bank_deposit', 'cash_pickup'],
   },
   {
     id: 'us-ph',
@@ -47,7 +55,7 @@ export const ROUTES: Route[] = [
    
     sendCurrency: 'USD',
     receiveCurrency: 'PHP',
-    deliveryMethods: ['bank_deposit', 'cash_pickup', 'mobile_wallet'],
+    deliveryMethods: ['bank_deposit', 'cash_pickup'],
   },
   {
     id: 'us-vn',
@@ -55,7 +63,7 @@ export const ROUTES: Route[] = [
    
     sendCurrency: 'USD',
     receiveCurrency: 'VND',
-    deliveryMethods: ['bank_deposit', 'cash_pickup', 'home_delivery'],
+    deliveryMethods: ['bank_deposit', 'cash_pickup'],
   },
   // Tier 2 (D158, 2026-10-11): every other country Wise or Instarem prices from the US. Bank
   // deposit only, which is all either quotes; other providers are added by hand on a few routes.

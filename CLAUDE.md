@@ -224,6 +224,12 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
         the name and domain to RemitBridge Labs; then the site's Hindi.
       - The DCO check, when the first outside contributor starts.
 
+- [ ] **Only what has data, and Learn on the account (D190, D191, 2026-10-18):** built: Compare,
+      onboarding and Ask for a route offer only routes and ways of receiving with published
+      prices; everything held back is in `docs/future-updates.md`. Learn progress is kept with
+      the account (`learn_progress`, merged on sign-in). Left: Angad runs the migration and the
+      smoke test, redeploys `remmy` and `whatsapp`, then new builds for Play.
+
 ### Testing (once the features are set up)
 
 - [x] **Scan a real receipt** on the iPhone development build. Done 2026-10-08 (Angad).

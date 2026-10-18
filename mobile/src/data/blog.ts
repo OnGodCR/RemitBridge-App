@@ -47,15 +47,22 @@ export interface BlogPost {
   cover: string | null;
 }
 
-export const POSTS = data.posts as unknown as BlogPost[];
-export const SERIES = (data.series as { id: SeriesId }[]).map((s) => s.id);
+/**
+ * Only posts written in full (D190, Angad 2026-10-18: the stores want the full app, so no
+ * "Full post coming"). The summary-only ones wait in docs/future-updates.md and appear here
+ * once port-blog.mjs brings their body over; a series with nothing written yet waits too.
+ */
+export const POSTS = (data.posts as unknown as BlogPost[]).filter((p) => p.body);
+export const SERIES = (data.series as { id: SeriesId }[])
+  .map((s) => s.id)
+  .filter((id) => id === 'all' || POSTS.some((p) => p.series === id));
 
 export const postById = (id: number | string | undefined) => POSTS.find((p) => String(p.id) === String(id));
 
 /** Same series first, then neighbours, so there is always something to read next. */
 export function relatedTo(post: BlogPost, count = 3): BlogPost[] {
-  const same = POSTS.filter((p) => p.series === post.series && p.id !== post.id && p.body);
-  const others = POSTS.filter((p) => p.series !== post.series && p.id !== post.id && p.body);
+  const same = POSTS.filter((p) => p.series === post.series && p.id !== post.id);
+  const others = POSTS.filter((p) => p.series !== post.series && p.id !== post.id);
   return [...same, ...others].slice(0, count);
 }
 

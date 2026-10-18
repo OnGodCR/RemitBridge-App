@@ -13,8 +13,9 @@ jest.mock('@/data/blog-images', () => {
 });
 
 it('has all 30 posts, the written ones with bodies', () => {
-  expect(POSTS).toHaveLength(30);
-  expect(POSTS.filter((p) => p.body).length).toBeGreaterThanOrEqual(16);
+  // Summary-only posts stay out of the app until they're written (D190).
+  expect(POSTS.length).toBeGreaterThanOrEqual(17);
+  expect(POSTS.every((p) => p.body)).toBe(true);
 });
 
 it('gives every figure a picture with a size', () => {

@@ -1,5 +1,5 @@
 {
-  "version": "terms October 14, 2026; privacy October 17, 2026",
+  "version": "terms October 14, 2026; privacy October 18, 2026",
   "terms": {
     "title": "Terms of use",
     "updated": "Last updated October 14, 2026",
@@ -311,7 +311,7 @@
   },
   "privacy": {
     "title": "Privacy policy",
-    "updated": "Last updated October 17, 2026",
+    "updated": "Last updated October 18, 2026",
     "blocks": [
       {
         "kind": "paragraph",
@@ -458,6 +458,14 @@
         "spans": [
           {
             "text": "the usage records above, linked to your account while you're signed in;"
+          }
+        ]
+      },
+      {
+        "kind": "item",
+        "spans": [
+          {
+            "text": "your Learn progress: the words you've learned, your points, your day streak and how many lessons you've finished, so they follow you to a new phone or a reinstall;"
           }
         ]
       },
@@ -663,7 +671,7 @@
         "kind": "paragraph",
         "spans": [
           {
-            "text": "Your language, display preferences, consent choices and lesson or game progress are saved on your phone. Compare may cache checked prices for offline use and shows when cached data was loaded. These local records are separate from account data; removing the app or clearing its storage removes local records, subject to your operating system's backup behavior."
+            "text": "Your language, display preferences, consent choices and lesson or game progress are saved on your phone. If you're signed in, your Learn progress is also kept with your account (see above) and combined with your phone's when you sign in. Compare may cache checked prices for offline use and shows when cached data was loaded. These local records are separate from account data; removing the app or clearing its storage removes local records, subject to your operating system's backup behavior."
           }
         ]
       },

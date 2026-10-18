@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
+import { syncLearnProgress } from '@/lib/learn-sync';
 import { prefs } from '@/lib/prefs';
 import { supabase } from '@/lib/supabase';
 
@@ -30,6 +31,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data } = supabase.auth.onAuthStateChange((_event, next) => setSession(next));
     return () => data.subscription.unsubscribe();
   }, []);
+
+  // Learn progress follows the account (D190).
+  useEffect(() => {
+    if (ready) syncLearnProgress(session);
+  }, [ready, session]);
 
   const value: AuthState = {
     ready,

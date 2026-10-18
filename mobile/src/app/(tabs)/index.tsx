@@ -25,6 +25,7 @@ import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { announce } from '@/lib/announce';
 import { saveComparison } from '@/lib/comparisons';
+import { availableRoutes, methodsFor, useAvailability } from '@/lib/availability';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { agoIn, useCopy, useLanguage } from '@/i18n';
 import { money } from '@/lib/format';
@@ -58,24 +59,29 @@ export default function CompareScreen() {
   return <Compare key={p.at ?? 'home'} routeId={p.route} amount={p.amount} method={p.method} />;
 }
 
-/** Any route that starts in this country. Only the US for now (PRD 6.5). */
-const sendsFrom = (code: string) => ROUTES.some((r) => r.id.startsWith(`${code.toLowerCase()}-`));
-
 function Compare(initial: { routeId?: string; amount?: string; method?: string }) {
   const t = useTheme();
   const gutter = useGutter();
   const copy = useCopy();
+  // Only countries and ways of receiving that have prices right now (D190): nothing to pick
+  // that would come back empty.
+  const availability = useAvailability();
+  const live = availableRoutes(availability);
+  const shown = live.length ? live : ROUTES;
   const start =
-    ROUTES.find((r) => r.id === initial.routeId) ?? ROUTES.find((r) => r.id === prefs.homeRoute()) ?? ROUTES[0];
+    shown.find((r) => r.id === initial.routeId) ?? shown.find((r) => r.id === prefs.homeRoute()) ?? shown[0];
   const [from, setFrom] = useState(() => start.id.split('-')[0].toUpperCase());
-  const [to, setTo] = useState(() => start.id.split('-')[1].toUpperCase());
+  const [picked, setTo] = useState(() => start.id.split('-')[1].toUpperCase());
+  const sending = SENDING.filter((c) => shown.some((r) => r.id.startsWith(`${c.code.toLowerCase()}-`)));
+  const receiving = RECEIVING.filter((c) => shown.some((r) => r.id === `${from}-${c.code}`.toLowerCase()));
+  // A country whose prices expired while the screen was open gives way to the first one left.
+  const to = receiving.some((c) => c.code === picked) ? picked : (receiving[0]?.code ?? picked);
   const route = routeFor(from, to);
+  const methods = route ? methodsFor(availability, route) : [];
   const [amountText, setAmountText] = useState(() => cleanAmount(initial.amount ?? '') || '500');
   const amount = Math.min(Number(amountText) || 0, MAX_AMOUNT);
-  const [method, setMethod] = useState<DeliveryMethod>(() =>
-    start.deliveryMethods.find((m) => m === initial.method) ?? start.deliveryMethods[0],
-  );
-  const activeMethod = route && !route.deliveryMethods.includes(method) ? route.deliveryMethods[0] : method;
+  const [method, setMethod] = useState<DeliveryMethod>(() => (initial.method as DeliveryMethod) ?? 'bank_deposit');
+  const activeMethod = methods.length && !methods.includes(method) ? methods[0] : method;
   // Compare offers verified bank-account-funded quotes only.
   const funding: FundingMethod = 'bank_account';
   const checked = checkedAmountFor(amount);
@@ -101,16 +107,16 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
               label={copy.common.from}
               title={copy.compare.sendFrom}
               value={from}
-              options={SENDING}
-              covered={sendsFrom}
+              options={sending}
+              covered={() => true}
               onChange={setFrom}
             />
             <CountrySelect
               label={copy.common.to}
               title={copy.compare.sendTo}
               value={to}
-              options={RECEIVING}
-              covered={(code) => !!routeFor(from, code)}
+              options={receiving}
+              covered={() => true}
               onChange={setTo}
             />
           </View>
@@ -147,11 +153,15 @@ function Compare(initial: { routeId?: string; amount?: string; method?: string }
         <FocusRise style={[styles.body, { backgroundColor: t.background, paddingHorizontal: gutter }]}>
           {route ? (
             <>
-              <Segmented
-                options={route.deliveryMethods.map((m) => ({ value: m, label: copy.delivery[m] }))}
-                value={activeMethod}
-                onChange={setMethod}
-              />
+              {methods.length > 1 ? (
+                <Segmented
+                  options={methods.map((m) => ({ value: m, label: copy.delivery[m] }))}
+                  value={activeMethod}
+                  onChange={setMethod}
+                />
+              ) : (
+                <AppText variant="label">{copy.delivery[activeMethod]}</AppText>
+              )}
               <AppText variant="small" muted>{`${copy.funding.compareLabel}: ${copy.payment.bank_account}`}</AppText>
               {amount > 0 ? (
                 <>

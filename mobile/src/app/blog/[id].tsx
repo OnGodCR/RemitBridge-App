@@ -54,11 +54,9 @@ export default function BlogPostScreen() {
         </View>
         <AppText style={[styles.lede, { color: t.textSecondary }]}>{post.abstract}</AppText>
 
-        {post.body ? (
-          post.body.map((block, i) => <PostBlock key={i} block={block} series={post.series} />)
-        ) : (
-          <AppText muted>{copy.blog.notYet}</AppText>
-        )}
+        {(post.body ?? []).map((block, i) => (
+          <PostBlock key={i} block={block} series={post.series} />
+        ))}
 
         <View style={styles.more}>
           <Eyebrow header>{copy.blog.keepReading}</Eyebrow>

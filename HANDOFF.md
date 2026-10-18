@@ -3,10 +3,22 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-17 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-18 (see the sections just below; the older status after them is kept for history)
 
 **2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
 briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+
+## 2026-10-18: only what has data; Learn on the account (D190, D191)
+
+Compare, onboarding and Ask for a route read which routes and ways of receiving have
+published prices (`mobile/src/lib/availability.ts`) and offer only those: Uganda, the
+uncovered countries, UPI, wallet, card and home delivery are gone, as are the 13
+summary-only blog posts and "Coming soon". They come back by themselves when prices
+publish; the list is `docs/future-updates.md`. Learn progress is kept with the account in
+`learn_progress` and merged on sign-in (`mobile/src/lib/learn-sync.ts`). The privacy policy
+is dated October 18. Left for Angad: run `20261018000000_learn_progress.sql` in the SQL
+editor and the smoke test (81 checks), redeploy `remmy` and `whatsapp`, then new builds
+to replace the Play drafts (1.0.0 (11) has none of this).
 
 ## 2026-10-17: security audit
 

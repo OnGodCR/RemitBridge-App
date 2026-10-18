@@ -23,14 +23,12 @@ export default function BlogIndex() {
   const { language } = useLanguage();
   const [series, setSeries] = useState<SeriesId>('all');
   const shown = POSTS.filter((p) => series === 'all' || p.series === series);
-  const written = POSTS.filter((p) => p.body).length;
 
   useEffect(() => track('learn_opened', { page: 'blog' }), []);
 
   return (
     <ScrollView style={{ backgroundColor: t.background }} contentContainerStyle={[styles.content, { paddingHorizontal: gutter }]} contentInsetAdjustmentBehavior="automatic">
       <StatusBar style="auto" />
-      <AppText muted>{b.written(written, POSTS.length)}</AppText>
       {language.code !== 'en' ? <AppText muted>{b.englishOnly}</AppText> : null}
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.toggles}>

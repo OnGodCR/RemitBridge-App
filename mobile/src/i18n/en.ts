@@ -172,7 +172,7 @@ export const en = {
       accent: 'send money?',
       intro: 'You can change it anytime.',
       paidIn: (country: string, currency: string) => `${country}. Paid out in ${currency}`,
-      elsewhere: 'Somewhere else? Ask for it on Compare.',
+      elsewhere: 'Somewhere else? Ask for it in Account, Route board.',
     },
     about: {
       eyebrow: 'About you',
@@ -222,7 +222,6 @@ export const en = {
     nothingMatches: (q: string) => `Nothing matches “${q}”.`,
     notYet: 'Not yet',
     notCovered: 'not covered yet',
-    comingSoon: 'Coming soon',
     change: (label: string, value: string) => `${label}: ${value}. Change`,
   },
 
@@ -646,7 +645,6 @@ export const en = {
   },
 
   blog: {
-    written: (n: number, total: number) => `${n} of ${total} written in full so far`,
     shown: (n: number, total: number) => `${n} of ${total} posts`,
     all: 'All',
     series: {
@@ -656,8 +654,6 @@ export const en = {
       series4: 'Cost, speed, failure',
       series5: 'Connecting it up',
     },
-    summaryOnly: 'Summary only',
-    notYet: 'Full post coming. Here’s the summary.',
     keepReading: 'Keep reading',
     englishOnly: 'Posts are in English.',
   },

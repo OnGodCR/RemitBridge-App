@@ -170,7 +170,19 @@ export function dataTools(db: SupabaseClient, hooks: ToolHooks): ToolSpec[] {
       name: 'get_routes',
       about: 'The countries we cover from the US, and how money can arrive in each.',
       args: {},
-      run: async () => ({ countries: ROUTES.map((r) => `${r.country} (${r.deliveryMethods.map((d) => DELIVERY_LABELS[d]).join(', ')})`), count: ROUTES.length }),
+      // What has prices today, as Compare offers (D190); every route as written if the read fails.
+      run: async () => {
+        const { data } = await db.from('compare_quotes').select('route_id, delivery_method').eq('payment_method', 'bank_account').limit(10000);
+        const seen = new Map<string, Set<string>>();
+        for (const r of (data ?? []) as { route_id: string; delivery_method: string }[]) {
+          if (!seen.has(r.route_id)) seen.set(r.route_id, new Set());
+          seen.get(r.route_id)!.add(r.delivery_method);
+        }
+        const live = seen.size ? ROUTES.filter((r) => seen.has(r.id)) : ROUTES;
+        const ways = (r: (typeof ROUTES)[number]) =>
+          (Object.keys(DELIVERY_LABELS) as (keyof typeof DELIVERY_LABELS)[]).filter((d) => (seen.size ? seen.get(r.id)!.has(d) : r.deliveryMethods.includes(d)));
+        return { countries: live.map((r) => `${r.country} (${ways(r).map((d) => DELIVERY_LABELS[d]).join(', ')})`), count: live.length };
+      },
     },
     {
       name: 'search_knowledge',

@@ -9,9 +9,9 @@ import { Fonts, Spacing } from '@/constants/theme';
 import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
+import { availableRoutes, useAvailability } from '@/lib/availability';
 import { RECEIVING, SENDING } from '@/lib/countries';
 import { openCompare } from '@/lib/open-compare';
-import { ROUTES, routeFor } from '@/lib/routes';
 
 /**
  * Ask for a route from the board (PRD 6.7): the two countries, then the same request form
@@ -24,7 +24,10 @@ export default function RequestRoute() {
   const copy = useCopy();
   const [from, setFrom] = useState('US');
   const [to, setTo] = useState('NP');
-  const covered = routeFor(from, to);
+  // Covered means it has prices today (D190): a route still being built can be asked for.
+  const live = availableRoutes(useAvailability());
+  const routeTo = (f: string, c: string) => live.find((r) => r.id === `${f}-${c}`.toLowerCase());
+  const covered = routeTo(from, to);
 
   return (
     <KeyboardAvoidingView
@@ -44,7 +47,7 @@ export default function RequestRoute() {
             tone="plain"
             value={from}
             options={SENDING}
-            covered={(code) => ROUTES.some((r) => r.id.startsWith(`${code.toLowerCase()}-`))}
+            covered={(code) => live.some((r) => r.id.startsWith(`${code.toLowerCase()}-`))}
             onChange={setFrom}
           />
           <CountrySelect
@@ -53,7 +56,7 @@ export default function RequestRoute() {
             tone="plain"
             value={to}
             options={RECEIVING}
-            covered={(code) => !!routeFor(from, code)}
+            covered={(code) => !!routeTo(from, code)}
             onChange={setTo}
           />
         </View>

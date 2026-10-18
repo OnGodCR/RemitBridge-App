@@ -187,7 +187,7 @@ export const vi: Copy = {
       accent: 'về đâu?',
       intro: 'Bạn có thể đổi bất cứ lúc nào.',
       paidIn: (country, currency) => `${country}. Nhận bằng ${currency}`,
-      elsewhere: 'Gửi nơi khác? Hãy yêu cầu trong So sánh.',
+      elsewhere: 'Gửi nơi khác? Hãy yêu cầu trong Tài khoản, Bảng tuyến chuyển tiền.',
     },
     about: {
       eyebrow: 'Về bạn',
@@ -237,7 +237,6 @@ export const vi: Copy = {
     nothingMatches: (q) => `Không có kết quả cho “${q}”.`,
     notYet: 'Chưa có',
     notCovered: 'chưa hỗ trợ',
-    comingSoon: 'Sắp có',
     change: (label, value) => `${label}: ${value}. Đổi`,
   },
 
@@ -659,7 +658,6 @@ export const vi: Copy = {
   },
 
   blog: {
-    written: (n: number, total: number) => `Đã viết đầy đủ ${n} trên ${total} bài`,
     shown: (n: number, total: number) => `${n} trên ${total} bài`,
     all: 'Tất cả',
     series: {
@@ -669,8 +667,6 @@ export const vi: Copy = {
       series4: 'Chi phí, tốc độ, sự cố',
       series5: 'Kết nối mọi thứ',
     },
-    summaryOnly: 'Chỉ có tóm tắt',
-    notYet: 'Bài đầy đủ sắp có. Đây là phần tóm tắt.',
     keepReading: 'Đọc tiếp',
     englishOnly: 'Các bài viết bằng tiếng Anh.',
   },

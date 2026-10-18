@@ -188,7 +188,7 @@ export const hi: Copy = {
       accent: 'पैसे भेजते हैं?',
       intro: 'इसे कभी भी बदल सकते हैं।',
       paidIn: (country, currency) => `${country}। भुगतान ${currency} में`,
-      elsewhere: 'कहीं और भेजते हैं? तुलना में उसे माँगें।',
+      elsewhere: 'कहीं और भेजते हैं? खाता में, रूट बोर्ड पर उसे माँगें।',
     },
     about: {
       eyebrow: 'आपके बारे में',
@@ -238,7 +238,6 @@ export const hi: Copy = {
     nothingMatches: (q) => `“${q}” से कुछ नहीं मिला।`,
     notYet: 'अभी नहीं',
     notCovered: 'अभी उपलब्ध नहीं',
-    comingSoon: 'जल्द आ रहा है',
     change: (label, value) => `${label}: ${value}। बदलें`,
   },
 
@@ -660,7 +659,6 @@ export const hi: Copy = {
   },
 
   blog: {
-    written: (n: number, total: number) => `${total} में से ${n} पूरे लिखे जा चुके हैं`,
     shown: (n: number, total: number) => `${total} में से ${n} लेख`,
     all: 'सभी',
     series: {
@@ -670,8 +668,6 @@ export const hi: Copy = {
       series4: 'लागत, रफ़्तार, गड़बड़ी',
       series5: 'सब कुछ जोड़ना',
     },
-    summaryOnly: 'सिर्फ़ सारांश',
-    notYet: 'पूरी पोस्ट जल्द आएगी। अभी सारांश पढ़ें।',
     keepReading: 'आगे पढ़ें',
     englishOnly: 'लेख अंग्रेज़ी में हैं।',
   },

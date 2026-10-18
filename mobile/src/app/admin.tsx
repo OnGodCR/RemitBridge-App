@@ -26,7 +26,7 @@ import {
   type SavedEntry,
 } from '@/lib/admin';
 import { checkedAgo, money } from '@/lib/format';
-import { AMOUNTS, DELIVERY_LABELS, ROUTES, type DeliveryMethod } from '@/lib/routes';
+import { ALL_DELIVERY_METHODS, AMOUNTS, DELIVERY_LABELS, ROUTES, type DeliveryMethod } from '@/lib/routes';
 import { track } from '@/lib/track';
 import { EnglishOnly } from '@/i18n';
 
@@ -57,8 +57,8 @@ function AddPriceScreen() {
   const [routeId, setRouteId] = useState(ROUTES[0].id);
   const route = ROUTES.find((r) => r.id === routeId) ?? ROUTES[0];
   const [amount, setAmount] = useState<number>(500);
-  const [method, setMethod] = useState<DeliveryMethod>(route.deliveryMethods[0]);
-  const activeMethod = route.deliveryMethods.includes(method) ? method : route.deliveryMethods[0];
+  // Every method, not just the route's: a hand price is how a new way of receiving starts (D190).
+  const [activeMethod, setMethod] = useState<DeliveryMethod>('bank_deposit');
   const [fee, setFee] = useState('');
   const [rate, setRate] = useState('');
   const [received, setReceived] = useState('');
@@ -218,7 +218,7 @@ function AddPriceScreen() {
 
         <Section title="Delivery">
           <Segmented
-            options={route.deliveryMethods.map((m) => ({ value: m, label: DELIVERY_LABELS[m] }))}
+            options={ALL_DELIVERY_METHODS.map((m) => ({ value: m, label: DELIVERY_LABELS[m] }))}
             value={activeMethod}
             onChange={setMethod}
           />

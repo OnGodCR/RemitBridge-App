@@ -3,7 +3,17 @@
  * when every lesson has been read, and Continue goes to the first unread lesson in order.
  */
 import { MODULES } from '@/data/modules';
-import { markLearned, moduleProgress, nextStep, recordLesson, resetLearned, shownStats } from '@/lib/learn-progress';
+import {
+  adoptProgress,
+  markLearned,
+  mergeProgress,
+  moduleProgress,
+  nextStep,
+  recordLesson,
+  resetLearned,
+  shownStats,
+  snapshot,
+} from '@/lib/learn-progress';
 
 jest.mock('expo-sqlite/localStorage/install', () => {
   const store = new Map<string, string>();
@@ -59,5 +69,28 @@ describe('XP and the day streak (D136)', () => {
   it('crosses a month and a year by the calendar', () => {
     recordLesson(10, '2026-12-31');
     expect(recordLesson(10, '2027-01-01').streak).toBe(2);
+  });
+});
+
+describe('progress kept with the account (D190)', () => {
+  const day = (lastDay: string | null, streak: number, xp = 0, lessons = 0) => ({ xp, streak, lastDay, lessons });
+
+  it('merges without losing a term or a count', () => {
+    const m = mergeProgress(
+      { learned: ['corridor', 'remittance'], stats: day('2026-10-17', 3, 120, 6) },
+      { learned: ['remittance', 'mid-market-rate'], stats: day('2026-10-18', 1, 40, 2) },
+    );
+    expect(m.learned).toEqual(['corridor', 'mid-market-rate', 'remittance']);
+    expect(m.stats).toEqual({ xp: 120, lessons: 6, lastDay: '2026-10-18', streak: 1 });
+  });
+
+  it('keeps the longer streak when both last played the same day', () => {
+    const m = mergeProgress({ learned: [], stats: day('2026-10-18', 2) }, { learned: [], stats: day('2026-10-18', 5) });
+    expect(m.stats.streak).toBe(5);
+  });
+
+  it('a reinstalled phone takes on the account’s progress', () => {
+    adoptProgress({ learned: ['corridor'], stats: day('2026-10-18', 4, 90, 3) });
+    expect(snapshot()).toEqual({ learned: ['corridor'], stats: day('2026-10-18', 4, 90, 3) });
   });
 });

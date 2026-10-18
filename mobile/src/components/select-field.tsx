@@ -32,7 +32,6 @@ export interface SelectOption {
   short?: string;
   /** Right-hand detail in the list, e.g. the currency code. */
   detail: string;
-  disabled?: boolean;
   /** Can be picked, but has no prices: the detail says "Not yet" (PRD 6.7). */
   uncovered?: boolean;
   search: string[];
@@ -158,23 +157,22 @@ export function SelectField({
               const selected = item.value === current.value;
               return (
                 <Pressable
-                  disabled={item.disabled}
                   onPress={() => {
                     onChange(item.value);
                     close();
                   }}
                   accessibilityRole="button"
-                  accessibilityState={{ selected, disabled: !!item.disabled }}
-                  accessibilityLabel={`${item.name}${item.disabled ? `, ${copy.select.comingSoon}` : item.uncovered ? `, ${copy.select.notCovered}` : ''}`}
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={`${item.name}${item.uncovered ? `, ${copy.select.notCovered}` : ''}`}
                   style={({ pressed }) => [styles.row, { backgroundColor: pressed ? t.muted : 'transparent' }]}>
-                  <FlagSlot code={item.flag} dim={item.disabled} />
+                  <FlagSlot code={item.flag} />
                   <AppText
                     variant="label"
-                    style={[styles.rowName, { color: item.disabled ? t.textSecondary : t.text }]}>
+                    style={[styles.rowName, { color: t.text }]}>
                     {item.name}
                   </AppText>
                   <AppText variant="small" muted>
-                    {item.disabled ? copy.select.comingSoon : item.uncovered ? copy.select.notYet : item.detail}
+                    {item.uncovered ? copy.select.notYet : item.detail}
                   </AppText>
                   <View style={styles.check}>
                     {selected ? (

@@ -66,9 +66,8 @@ export function SeriesMark({ series }: { series: BlogPost['series'] }) {
 /** A card on the index: the whole card is one target, as on the website. */
 export function PostCard({ post }: { post: BlogPost }) {
   const t = useTheme();
-  const copy = useCopy();
   const date = usePostDate();
-  const meta = [date(post.publishedOn), post.readTime, post.body ? null : copy.blog.summaryOnly].filter(Boolean).join(' · ');
+  const meta = [date(post.publishedOn), post.readTime].filter(Boolean).join(' · ');
   return (
     <Pressable
       onPress={() => router.push({ pathname: '/blog/[id]', params: { id: String(post.id) } })}

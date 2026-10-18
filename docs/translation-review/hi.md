@@ -107,7 +107,7 @@ with your name and the date.
 | onboarding.route.accent | send money? | पैसे भेजते हैं? | | CHANGED 2026-10-10: from your notes, please read again
 | onboarding.route.intro | You can change it anytime. | इसे कभी भी बदल सकते हैं। | | CHANGED 2026-10-11: shorter, please read again
 | onboarding.route.paidIn | {country}. Paid out in {currency} | {country}। भुगतान {currency} में | |
-| onboarding.route.elsewhere | Somewhere else? Ask for it on Compare. | कहीं और भेजते हैं? तुलना में उसे माँगें। | | CHANGED 2026-10-11: shorter, please read again
+| onboarding.route.elsewhere | Somewhere else? Ask for it in Account, Route board. | कहीं और भेजते हैं? खाता में, रूट बोर्ड पर उसे माँगें। | | CHANGED 2026-10-18 (D190: now points to the route board); review pending
 | signIn.titleOnboarding | Want to save your checks? | अपनी जाँचें सँभालकर रखना चाहेंगे? | | CHANGED 2026-10-07: please read again
 | signIn.bodyOnboarding | Keep your checks for next time. Comparing works without one. | अपनी जाँचें अगली बार के लिए रखें। तुलना बिना खाते के भी होती है। | | CHANGED 2026-10-07: please read again CHANGED 2026-10-11: shorter, please read again
 | signIn.titleAccount | Sign in | साइन इन करें | | CHANGED 2026-10-07: please read again

@@ -78,8 +78,9 @@ describe('plan', () => {
   })
 
   it('takes UPI to mean India, and "cash 200" to mean the last route', () => {
-    expect(plan(parse('upi 500'), s()).action).toMatchObject({ type: 'compare', method: 'upi' })
-    expect((plan(parse('upi 500'), s()).action as { route: { id: string } }).route.id).toBe('us-in')
+    // UPI has no prices yet (D190), so India says which ways it does have.
+    expect(plan(parse('upi 500'), s()).action).toMatchObject({ type: 'say', say: { key: 'methodUnavailable', method: 'upi' } })
+    expect((plan(parse('upi 500'), s()).action as { say: { route: { id: string } } }).say.route.id).toBe('us-in')
     const cash = plan(parse('cash 200'), s({ lastRoute: 'us-mx' })).action
     expect(cash).toMatchObject({ type: 'compare', amount: 200, method: 'cash_pickup' })
   })

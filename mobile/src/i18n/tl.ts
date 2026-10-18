@@ -188,7 +188,7 @@ export const tl: Copy = {
       accent: 'nagpapadala?',
       intro: 'Puwede mo itong palitan kahit kailan.',
       paidIn: (country, currency) => `${country}. Matatanggap sa ${currency}`,
-      elsewhere: 'Sa ibang lugar? Hilingin ito sa Compare.',
+      elsewhere: 'Sa ibang lugar? Hilingin ito sa Account, Listahan ng mga ruta.',
     },
     about: {
       eyebrow: 'Tungkol sa iyo',
@@ -238,7 +238,6 @@ export const tl: Copy = {
     nothingMatches: (q) => `Walang tugma sa “${q}”.`,
     notYet: 'Wala pa',
     notCovered: 'hindi pa sakop',
-    comingSoon: 'Malapit na',
     change: (label, value) => `${label}: ${value}. Palitan`,
   },
 
@@ -660,7 +659,6 @@ export const tl: Copy = {
   },
 
   blog: {
-    written: (n: number, total: number) => `${n} sa ${total} ang buo nang naisulat`,
     shown: (n: number, total: number) => `${n} sa ${total} na post`,
     all: 'Lahat',
     series: {
@@ -670,8 +668,6 @@ export const tl: Copy = {
       series4: 'Gastos, bilis, pagkabigo',
       series5: 'Pagdugtong-dugtungin',
     },
-    summaryOnly: 'Buod lang',
-    notYet: 'Darating ang buong post. Narito ang buod.',
     keepReading: 'Magbasa pa',
     englishOnly: 'Nasa Ingles ang mga post.',
   },
