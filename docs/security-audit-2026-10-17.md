@@ -37,7 +37,7 @@ fixed or tightened; two small items are left, listed at the end.
 4. **Earlier today:** the review list's row-level security policy (D184), the terms
    acceptance (D188).
 
-Fixes 1 and 2 are in the source and need Angad to deploy the two functions:
+Fixes 1 and 2 are live: Angad deployed both functions on 2026-10-17, and each answered a test request through the new limiters. The commands, for the record:
 
 ```bash
 supabase functions deploy remmy --project-ref gmzljjdnwndvqciqicbx

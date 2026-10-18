@@ -98,7 +98,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **License the name and domain to RemitBridge Labs**: in writing.
 - [ ] **Read the security review**: `docs/security-review.md`, tick or comment on each change.
 - [x] **Two-factor everywhere**: done by Angad on his own accounts, 2026-10-17.
-- [ ] **Deploy the security fixes (2026-10-17 audit)**: `remmy` deployed by Angad and answering (2026-10-17). Left: `supabase functions deploy scan-receipt --project-ref gmzljjdnwndvqciqicbx`.
+- [x] **Deploy the security fixes (2026-10-17 audit)**: `remmy` and `scan-receipt` deployed by Angad 2026-10-17; both answer through the new limiters.
 - [ ] **Remove the Expo Go sign-in addresses** once Expo Go testing is over: Supabase, Authentication, URL Configuration, delete the `exp://` entries, keep `remitbridge://**`.
 - [ ] **Bylaws**: read the bylaws and board consent, choose officers, three signatures.
 - [ ] **DMCA agent**: decide; Claude suggests skipping it until users can post public content.
