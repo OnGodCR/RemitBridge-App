@@ -12,7 +12,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Remmy says "today's checked prices"**: fixed 2026-10-17 (D182): Remmy and WhatsApp no longer say when prices were checked. Deployed 2026-10-17; Hindi review of two rows pending.
 - [x] **Uncommitted quote-card edit**: kept with the estimate label and "arrives" restored (D183, 2026-10-17); Compare screenshot retaken.
 - [x] **Redeploy `remmy` and `whatsapp`** for D182: both deployed by Angad 2026-10-17.
-- [ ] **New production builds** (code is ready as of 2026-10-17), then TestFlight and Play internal testing.
+- [x] **New production builds**: built 2026-10-18, iOS 1.0.0 (6) and Android 1.0.0 (10), `docs/store/release-builds-2026-10-18.md`.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
@@ -21,7 +21,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Play Console, Sign in details**: review account and instructions added by Angad (2026-10-17). It only works on the next build, which has the password field.
 - [x] **Play Console, Target audience (18 and over) and Data safety**: saved by Claude 2026-10-17; App content shows nothing left.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
-- [ ] **New production builds for D184, D185 and D186**: only when Angad says go. The iPad (D185) and the new onboarding order (D186) also take effect with them.
+- [x] **New production builds for D184, D185 and D186**: built 2026-10-18, iOS 1.0.0 (6) and Android 1.0.0 (10), `docs/store/release-builds-2026-10-18.md`.
 - [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
 - [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
