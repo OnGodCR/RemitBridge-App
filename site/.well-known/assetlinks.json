@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "org.remitbridgelabs.app",
       "sha256_cert_fingerprints": [
-        "5D:02:45:77:2B:AB:0D:D3:65:84:93:EC:54:60:53:1F:03:35:7B:FC:95:2E:E6:34:7B:59:63:9E:D0:37:E3:AC"
+        "5D:02:45:77:2B:AB:0D:D3:65:84:93:EC:54:60:53:1F:03:35:7B:FC:95:2E:E6:34:7B:59:63:9E:D0:37:E3:AC",
+        "AD:4C:25:DD:6B:54:D5:70:FD:E1:0D:5E:B0:42:2C:51:7D:61:36:84:7D:BD:42:07:17:BB:E1:84:68:DB:33:83"
       ]
     }
   }
