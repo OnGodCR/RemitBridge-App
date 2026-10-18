@@ -1,0 +1,230 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<script src="icons.js"></script>
+<style>
+@font-face{font-family:J;src:url(file:///Users/vintibangkochar/Documents/GitHub/RemitBridge-App/site/fonts/PlusJakartaSans_500Medium.ttf);font-weight:500}
+@font-face{font-family:J;src:url(file:///Users/vintibangkochar/Documents/GitHub/RemitBridge-App/site/fonts/PlusJakartaSans_700Bold.ttf);font-weight:700}
+@font-face{font-family:J;src:url(file:///Users/vintibangkochar/Documents/GitHub/RemitBridge-App/site/fonts/PlusJakartaSans_800ExtraBold.ttf);font-weight:800}
+:root{--green:#14705a;--deep:#0b4f3f;--bg:#0c3a30;--mint:#8fcab6;--mintTint:#e8f2ee;--ink:#1c2024;--sub:#5b6470;--fee:#8d97a3;--markup:#46a085}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:J,sans-serif;color:#fff}
+.abs{position:absolute}
+.hole{position:absolute;border-radius:28px;box-shadow:0 0 0 3000px var(--bg)}
+.holeRing{position:absolute;border-radius:30px;border:4px solid rgba(143,202,182,.55)}
+.tag{position:absolute;background:#fff;color:var(--ink);font-weight:700;font-size:26px;padding:10px 20px;border-radius:14px}
+.kicker{font-size:24px;font-weight:700;letter-spacing:.16em;color:var(--mint);text-transform:uppercase}
+.title{font-size:60px;font-weight:800;line-height:1.08;margin-top:10px}
+.scene{position:absolute;inset:0}
+.card{position:absolute;border-radius:28px;background:rgba(255,255,255,.07);border:2px solid rgba(143,202,182,.35);padding:30px}
+.cardLabel{font-size:24px;font-weight:700;letter-spacing:.12em;color:var(--mint);text-transform:uppercase;margin-bottom:22px}
+.chip{display:flex;align-items:center;gap:18px;background:#fff;color:var(--ink);border-radius:20px;padding:16px 22px;font-size:32px;font-weight:700;box-shadow:0 6px 0 #0b4f3f}
+.chip svg{width:52px;height:52px;flex:none}
+.chip small{display:block;font-size:20px;font-weight:500;color:var(--sub);margin-top:2px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;gap:18px}
+.arrow{position:absolute;height:6px;background:var(--mint);border-radius:3px;transform-origin:left center}
+.arrow:after{content:"";position:absolute;right:-4px;top:-9px;border-left:18px solid var(--mint);border-top:12px solid transparent;border-bottom:12px solid transparent}
+.varrow{position:absolute;width:6px;background:var(--mint);border-radius:3px;transform-origin:center top}
+.varrow:after{content:"";position:absolute;bottom:-14px;left:-9px;border-top:18px solid var(--mint);border-left:12px solid transparent;border-right:12px solid transparent}
+.node{position:absolute;background:#fff;color:var(--ink);border-radius:24px;padding:24px;box-shadow:0 8px 0 #0b4f3f;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;font-size:28px;font-weight:700}
+.node svg{width:64px;height:64px}
+.node small{font-size:21px;font-weight:500;color:var(--sub)}
+.big{position:absolute;background:var(--green);border:3px solid var(--mint);border-radius:28px;padding:30px 36px;box-shadow:0 8px 0 #082f26}
+.pill{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:14px 26px;font-size:28px;font-weight:700}
+.check{display:flex;gap:18px;align-items:flex-start;font-size:30px;font-weight:700;line-height:1.25}
+.check i{flex:none;width:44px;height:44px;border-radius:50%;background:var(--green);border:3px solid var(--mint);display:flex;align-items:center;justify-content:center}
+.check small{display:block;font-size:22px;font-weight:500;color:var(--mint)}
+.panel{position:absolute;left:70px;top:150px;width:700px;height:780px;border-radius:32px;background:rgba(255,255,255,.96);color:var(--ink);padding:44px;box-shadow:0 10px 0 rgba(11,79,63,.6)}
+.panel .kicker{color:var(--green)}
+.panel .title{font-size:50px;color:var(--ink)}
+</style></head><body>
+<div id="root"></div>
+<script>
+const SECTION = new URLSearchParams(location.search).get('s') || 'tech';
+// Spoken segments, seconds from the start of each raw clip (Descript transcript).
+const SEGS = {
+ tech: [
+  [0.315,3.341,"I designed RemitBridge's full stack architecture using React Native"],
+  [3.355,7.631,"and TypeScript for iOS and Android with Supabase, PostgreSQL, and edge"],
+  [7.632,9.142,"functions powering the backend."],
+  [9.413,13.213,"Every six hours, Python workflows on GitHub actions collect codes through"],
+  [13.253,15.108,"APIs and AI-assisted scraping."],
+  [15.384,18.454,"My pipeline normalizes different fee structures and exchange rate"],
+  [18.454,22.255,"markups into one metric, what the recipient back home actually receives."],
+  [22.471,25.670,"Automated validation cross-checks calculations against independent"],
+  [25.702,28.579,"exchange rate sources, such as Frankfurt Exchange Rates, while"],
+  [28.579,30.370,"three volunteers verify screenshots."],
+  [30.610,34.957,"For WhatsApp, Meta's Cloud API connects to Supabase webhooks, where my Gem"],
+  [34.982,38.681,"intent classification model routes requests between Groq and Cloudflare."],
+  [38.939,42.537,"Altogether, RemitBridge spans roughly thirty-eight thousand lines of code"],
+  [42.659,44.599,"across TypeScript, Python, and SQL."]],
+ close: [
+  [0.340,4.131,"Ultimately, I can't make supporting three households easy, but I can help"],
+  [4.132,7.911,"families keep more of what they earn and understand where every dollar goes, and"],
+  [7.911,9.882,"that is my true goal with Remit Bridge."],
+  [10.081,14.855,"You can find Remit Bridge on iOS, Android, and at remitbridgelabs.org/app."],
+  [14.966,15.467,"Thank you."]]
+};
+const SPEED = SECTION === 'tech' ? 1.1 : 1.0;
+// Time a word is spoken, in output seconds: interpolated by character position.
+function W(phrase, nth=0){
+  let seen=0;
+  for(const [a,b,txt] of SEGS[SECTION]){
+    let i=-1, from=0;
+    while((i=txt.indexOf(phrase,from))!==-1){
+      if(seen++===nth) return (a+(b-a)*(i/txt.length))/SPEED;
+      from=i+1;
+    }
+  }
+  throw new Error('phrase not found: '+phrase);
+}
+function icon(k, color){const c=ICONS[k];return `<svg viewBox="0 0 24 24"><path fill="${color||'#'+c.hex}" d="${c.path}"/></svg>`}
+const groq = `<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#F55036"/><text x="32" y="42" font-family="J" font-weight="800" font-size="25" fill="#fff" text-anchor="middle">groq</text></svg>`;
+const bolt = `<svg viewBox="0 0 24 24"><path fill="#3FCF8E" d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>`;
+const clock = `<svg viewBox="0 0 24 24" fill="none" stroke="#14705a" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.8 2.3"/></svg>`;
+const globe = `<svg viewBox="0 0 24 24" fill="none" stroke="#14705a" stroke-width="2.2"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/></svg>`;
+const brain = `<svg viewBox="0 0 24 24" fill="none" stroke="#14705a" stroke-width="2.2" stroke-linejoin="round"><path d="M4 7h16v10H4z"/><path d="M8 11h3M8 14h6M15 11h1"/></svg>`;
+const tick = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+const mark = (s,c='#fff')=>`<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 33Q32 17 53 33"/><path d="M22 48v-6q10-9 20 0v6"/></svg>`;
+const house = (label)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:180px"><svg width="110" height="100" viewBox="0 0 44 40"><path d="M4 19 22 4l18 15v19H4z" fill="#e8f2ee" stroke="#14705a" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="25" width="10" height="13" fill="#14705a"/></svg><div style="font-size:26px;font-weight:700">${label}</div></div>`;
+
+// Elements: [html, inTime, kind, outTime?]. Scenes fade in and out around their contents.
+const R = document.getElementById('root');
+const items = [];
+function add(html, tin, kind='pop', tout=1e9){
+  const d=document.createElement('div'); d.innerHTML=html; const el=d.firstElementChild;
+  R.appendChild(el); items.push({el,tin,kind,tout}); return el;
+}
+function scene(from, to){ const s=document.createElement('div'); s.className='scene'; R.appendChild(s); items.push({el:s,tin:from,kind:'scene',tout:to}); return s; }
+function addTo(parent, html, tin, kind='pop'){ const d=document.createElement('div'); d.innerHTML=html; const el=d.firstElementChild; parent.appendChild(el); items.push({el,tin,kind,tout:1e9}); return el; }
+
+if (SECTION === 'tech') {
+  const END = 45.136/SPEED;
+  add(`<div class="hole" style="left:1220px;top:150px;width:620px;height:780px"></div>`, -1, 'none');
+  add(`<div class="holeRing" style="left:1216px;top:146px;width:628px;height:788px"></div>`, -1, 'none');
+  add(`<div class="tag" style="left:1250px;top:860px">Angad Kochar</div>`, 0.2, 'fade');
+  add(`<div class="abs kicker" style="left:90px;top:84px">How RemitBridge is built</div>`, 0.1, 'fade');
+
+  // 1. The app and the backend
+  const t2 = W('Every six hours'), t3 = W('Automated validation'), t4 = W('For WhatsApp'), t5 = W('Altogether');
+  let s = scene(0, t2-0.15);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">The app and its backend</div>`, 0.15, 'fade');
+  addTo(s, `<div class="card" style="left:90px;top:300px;width:470px;height:620px"><div class="cardLabel">The app</div></div>`, 0.4, 'fade');
+  addTo(s, `<div class="abs chip" style="left:125px;top:375px;width:400px">${icon('react')}<div>React Native</div></div>`, W('React Native'));
+  addTo(s, `<div class="abs chip" style="left:125px;top:500px;width:400px">${icon('typescript')}<div>TypeScript</div></div>`, W('TypeScript'));
+  addTo(s, `<div class="abs" style="left:125px;top:640px;font-size:22px;font-weight:700;letter-spacing:.12em;color:var(--mint)">RUNS ON</div>`, W('for iOS'), 'fade');
+  addTo(s, `<div class="abs chip" style="left:125px;top:690px;width:165px">${icon('apple')}<div>iOS</div></div>`, W('iOS'));
+  addTo(s, `<div class="abs chip" style="left:305px;top:690px;width:220px">${icon('android')}<div>Android</div></div>`, W('Android'));
+  addTo(s, `<div class="arrow" style="left:575px;top:610px;width:95px"></div>`, W('with Supabase')-0.2, 'draw');
+  addTo(s, `<div class="card" style="left:690px;top:300px;width:470px;height:620px"><div class="cardLabel">The backend</div></div>`, W('with Supabase')-0.1, 'fade');
+  addTo(s, `<div class="abs chip" style="left:725px;top:375px;width:400px">${icon('supabase')}<div>Supabase</div></div>`, W('Supabase'));
+  addTo(s, `<div class="abs chip" style="left:725px;top:500px;width:400px">${icon('postgresql')}<div>PostgreSQL<small>the database</small></div></div>`, W('PostgreSQL'));
+  addTo(s, `<div class="abs chip" style="left:725px;top:625px;width:400px">${bolt}<div>Edge Functions<small>server code</small></div></div>`, W('edge'));
+
+  // 2. The price pipeline
+  s = scene(t2, t3-0.15);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">Collecting prices</div>`, t2+0.05, 'fade');
+  addTo(s, `<div class="node" style="left:90px;top:300px;width:300px;height:230px">${clock}<div>Every 6 hours</div><small>on a schedule</small></div>`, W('Every six hours'));
+  addTo(s, `<div class="arrow" style="left:400px;top:412px;width:75px"></div>`, W('Python')-0.1, 'draw');
+  addTo(s, `<div class="node" style="left:485px;top:300px;width:300px;height:230px"><div style="display:flex;gap:18px">${icon('python')}${icon('githubactions')}</div><div>Python on<br>GitHub Actions</div></div>`, W('Python'));
+  addTo(s, `<div class="arrow" style="left:795px;top:412px;width:75px"></div>`, W('collect')-0.1, 'draw');
+  addTo(s, `<div class="node" style="left:880px;top:300px;width:280px;height:230px">${globe}<div>APIs and<br>AI-assisted scraping</div></div>`, W('APIs'));
+  addTo(s, `<div class="varrow" style="left:622px;top:545px;height:70px"></div>`, W('My pipeline'), 'drawv');
+  addTo(s, `<div class="abs stack" style="left:90px;top:640px;width:400px"><div class="pill">Upfront fee</div><div class="pill">Exchange-rate markup</div></div>`, W('fee structures'), 'fade');
+  addTo(s, `<div class="arrow" style="left:500px;top:735px;width:90px"></div>`, W('into one metric'), 'draw');
+  addTo(s, `<div class="big" style="left:610px;top:630px;width:550px"><div style="font-size:24px;font-weight:700;letter-spacing:.12em;color:var(--mint)">ONE NUMBER</div><div style="font-size:50px;font-weight:800;margin-top:6px">Amount received</div><div style="font-size:24px;font-weight:500;margin-top:8px;color:#e8f2ee">what family back home gets</div></div>`, W('one metric'));
+
+  // 3. Validation
+  s = scene(t3, t4-0.15);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">Checking every number</div>`, t3+0.05, 'fade');
+  addTo(s, `<div class="node" style="left:90px;top:380px;width:250px;height:230px"><svg viewBox="0 0 24 24" fill="none" stroke="#14705a" stroke-width="2.2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><div>New price</div><small>from a provider</small></div>`, t3+0.2);
+  addTo(s, `<div class="arrow" style="left:350px;top:492px;width:70px"></div>`, W('cross-checks'), 'draw');
+  addTo(s, `<div class="card" style="left:430px;top:300px;width:450px;height:390px"><div class="cardLabel">Publish gate</div></div>`, W('cross-checks'), 'fade');
+  addTo(s, `<div class="abs check" style="left:465px;top:380px;width:390px"><i>${tick}</i><div>Matches independent exchange rates<small>such as Frankfurter</small></div></div>`, W('Frankfurt'));
+  addTo(s, `<div class="abs check" style="left:465px;top:540px;width:390px"><i>${tick}</i><div>Screenshots checked by people</div></div>`, W('three volunteers'));
+  addTo(s, `<div class="arrow" style="left:890px;top:420px;width:60px"></div>`, W('verify')+0.1, 'draw');
+  addTo(s, `<div class="abs pill" style="left:960px;top:390px;background:var(--green);border-color:var(--mint)">Published</div>`, W('verify')+0.2);
+  addTo(s, `<div class="arrow" style="left:890px;top:575px;width:60px;background:#8d97a3"></div>`, W('verify')+0.3, 'draw');
+  addTo(s, `<div class="abs pill" style="left:960px;top:545px">Held back</div>`, W('verify')+0.4);
+  addTo(s, `<div class="abs" style="left:90px;top:760px;font-size:36px;font-weight:700;color:var(--mint)">A missing price is better than a wrong one.</div>`, W('screenshots')+0.2, 'fade');
+
+  // 4. WhatsApp
+  s = scene(t4, t5-0.15);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">The WhatsApp bot</div>`, t4+0.05, 'fade');
+  addTo(s, `<div class="node" style="left:90px;top:290px;width:300px;height:220px">${icon('whatsapp')}<div>A message</div><small>"500 to India"</small></div>`, W('WhatsApp'));
+  addTo(s, `<div class="arrow" style="left:400px;top:395px;width:75px"></div>`, W('Meta')-0.1, 'draw');
+  addTo(s, `<div class="node" style="left:485px;top:290px;width:300px;height:220px">${icon('meta')}<div>Meta Cloud API</div></div>`, W('Meta'));
+  addTo(s, `<div class="arrow" style="left:795px;top:395px;width:75px"></div>`, W('connects'), 'draw');
+  addTo(s, `<div class="node" style="left:880px;top:290px;width:280px;height:220px">${icon('supabase')}<div>Supabase webhook</div></div>`, W('Supabase webhooks'));
+  addTo(s, `<div class="varrow" style="left:1017px;top:525px;height:60px"></div>`, W('intent')-0.3, 'drawv');
+  addTo(s, `<div class="node" style="left:600px;top:610px;width:560px;height:150px;flex-direction:row;justify-content:center;gap:22px">${brain}<div style="text-align:left">Intent classification<br><small>works out what was asked</small></div></div>`, W('intent'));
+  addTo(s, `<div class="abs" style="left:90px;top:640px;font-size:24px;font-weight:700;letter-spacing:.12em;color:var(--mint)">ROUTED TO</div>`, W('routes'), 'fade');
+  addTo(s, `<div class="abs chip" style="left:90px;top:690px;width:220px">${groq}<div>Groq</div></div>`, W('Groq'));
+  addTo(s, `<div class="abs chip" style="left:90px;top:810px;width:300px">${icon('cloudflare')}<div>Cloudflare</div></div>`, W('Cloudflare'));
+
+  // 5. Code size. Bar shares from the repo on 2026-10-17: .ts/.tsx 87%, .py 7%, .sql 6%.
+  s = scene(t5, END+1);
+  addTo(s, `<div class="abs title" style="left:90px;top:120px">The codebase</div>`, t5+0.05, 'fade');
+  addTo(s, `<div class="abs" style="left:90px;top:290px;font-size:190px;font-weight:800;line-height:1" data-count="38000">0</div>`, t5+0.2, 'count');
+  addTo(s, `<div class="abs" style="left:100px;top:500px;font-size:40px;font-weight:700;color:var(--mint)">lines of code, roughly</div>`, W('lines of code'), 'fade');
+  const bars = [['typescript','TypeScript',87,'#3178C6',W('TypeScript')],['python','Python',7,'#3776AB',W('Python')],['postgresql','SQL',6,'#4169E1',W('SQL')]];
+  bars.forEach(([k,label,pct,col,t],i)=>{
+    const y=620+i*110;
+    addTo(s, `<div class="abs chip" style="left:90px;top:${y}px;width:290px">${icon(k)}<div>${label}</div></div>`, t);
+    addTo(s, `<div class="abs" style="left:400px;top:${y+22}px;height:44px;width:${Math.max(40,pct*7.6)}px;background:${col};border-radius:12px;transform-origin:left center;border:3px solid rgba(255,255,255,.6)"></div>`, t+0.05, 'draw');
+  });
+}
+
+if (SECTION === 'close') {
+  const tEnd = W('You can find');
+  // 1. One paycheck, three households
+  let s = scene(0.25, W('families keep')-0.1);
+  addTo(s, `<div class="panel"><div class="kicker">The reality</div><div class="title">One paycheck.<br>Three households.</div></div>`, 0.25, 'fade');
+  addTo(s, `<div class="abs" style="left:300px;top:470px;background:#14705a;color:#fff;border-radius:18px;padding:16px 26px;font-size:30px;font-weight:800;box-shadow:0 6px 0 #0b4f3f">One paycheck</div>`, W('supporting'));
+  addTo(s, `<svg class="abs" style="left:150px;top:540px" width="500" height="90" viewBox="0 0 500 90" fill="none" stroke="#46a085" stroke-width="6" stroke-linecap="round"><path d="M250 5V40M250 40Q250 60 70 85M250 40V85M250 40Q250 60 430 85"/></svg>`, W('three households'), 'fade');
+  addTo(s, `<div class="abs row" style="left:105px;top:640px;gap:30px;color:#1c2024">${house('United States')}${house('Mexico')}${house('Argentina')}</div>`, W('three households'));
+
+  // 2. Where every dollar goes (an example split, labelled as one)
+  s = scene(W('families keep'), tEnd-0.1);
+  addTo(s, `<div class="panel"><div class="kicker">Our goal</div><div class="title">Keep more.<br>See every dollar.</div></div>`, W('families keep'), 'fade');
+  addTo(s, `<div class="abs" style="left:115px;top:520px;font-size:24px;font-weight:700;color:#5b6470">EXAMPLE TRANSFER</div>`, W('understand'), 'fade');
+  const parts=[['Amount received','#14705a',470],['Exchange-rate markup','#46a085',90],['Fee','#8d97a3',50]];
+  let x=115;
+  parts.forEach(([l,c,w],i)=>{ addTo(s, `<div class="abs" style="left:${x}px;top:565px;width:${w}px;height:70px;background:${c};border-radius:${i==0?'14px 0 0 14px':i==2?'0 14px 14px 0':'0'};transform-origin:left center"></div>`, W('understand')+i*0.25, 'draw'); x+=w; });
+  parts.forEach(([l,c],i)=>{ addTo(s, `<div class="abs" style="left:115px;top:${670+i*62}px;display:flex;align-items:center;gap:16px;font-size:30px;font-weight:700;color:#1c2024"><span style="width:28px;height:28px;border-radius:8px;background:${c};display:inline-block"></span>${l}</div>`, W('every dollar')+i*0.2, 'fade'); });
+
+  // 3. End card, with Angad in the frame on the right
+  s = scene(tEnd, 99);
+  addTo(s, `<div class="hole" style="left:1220px;top:150px;width:620px;height:780px;box-shadow:0 0 0 3000px #14705a"></div>`, tEnd, 'fade');
+  addTo(s, `<div class="holeRing" style="left:1216px;top:146px;width:628px;height:788px;border-color:rgba(255,255,255,.7)"></div>`, tEnd, 'fade');
+  addTo(s, `<div class="abs" style="left:110px;top:230px">${mark(150)}</div>`, tEnd+0.1);
+  addTo(s, `<div class="abs" style="left:110px;top:400px;font-size:110px;font-weight:800;letter-spacing:-.02em">RemitBridge</div>`, tEnd+0.2, 'fade');
+  addTo(s, `<div class="abs" style="left:114px;top:540px;font-size:38px;font-weight:500;color:#e8f2ee;width:1000px">See what sending money really costs.</div>`, tEnd+0.35, 'fade');
+  addTo(s, `<div class="abs chip" style="left:110px;top:650px;width:200px">${icon('apple')}<div>iOS</div></div>`, W('iOS'));
+  addTo(s, `<div class="abs chip" style="left:330px;top:650px;width:240px">${icon('android')}<div>Android</div></div>`, W('Android'));
+  addTo(s, `<div class="abs" style="left:110px;top:790px;background:#fff;color:#14705a;border-radius:999px;padding:18px 34px;font-size:44px;font-weight:800;box-shadow:0 6px 0 #0b4f3f">remitbridgelabs.org/app</div>`, W('remitbridgelabs'));
+  addTo(s, `<div class="tag" style="left:1250px;top:860px">Thank you</div>`, W('Thank you'), 'fade');
+}
+
+const ease = p => 1-Math.pow(1-p,3);
+const back = p => { const c=1.7; return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2); };
+const clamp = v => Math.max(0,Math.min(1,v));
+window.render = (t) => {
+  for (const it of items) {
+    const st = it.el.style;
+    if (it.kind==='none') continue;
+    const p = clamp((t-it.tin)/(it.kind==='scene'?0.35:0.45));
+    const outP = clamp((t-it.tout)/0.3);
+    let op = (t<it.tin?0:ease(p))*(1-outP);
+    if (it.kind==='scene'){ st.opacity = op; continue; }
+    st.opacity = op;
+    if (it.kind==='pop') st.transform = `scale(${0.6+0.4*back(p)})`;
+    if (it.kind==='fade') st.transform = `translateY(${(1-ease(p))*22}px)`;
+    if (it.kind==='draw') { st.transform = `scaleX(${ease(p)})`; st.opacity = t<it.tin?0:1; }
+    if (it.kind==='drawr') { st.transform = `scaleX(${-ease(p)})`; st.opacity = t<it.tin?0:1; }
+    if (it.kind==='drawv') { st.transform = `scaleY(${ease(p)})`; st.opacity = t<it.tin?0:1; }
+    if (it.kind==='count') { const q=clamp((t-it.tin)/((W('thousand')-it.tin)+0.3)); it.el.textContent = Math.round(38000*ease(q)).toLocaleString('en-US'); }
+  }
+};
+window.render(0);
+</script></body></html>
