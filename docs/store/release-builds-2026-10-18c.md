@@ -22,7 +22,7 @@ Source: `39a1919` on `main` (app code `d015de8`).
 
 ## Next
 
-1. Play internal testing: a new release with version code 12, rolled out to the tester list.
+1. Play internal testing: version code 12 published to the tester list, 2026-10-18 3:14 PM (Claude, on Angad's "do the tester stuff"). Notes copied from 11; the one warning is the optional deobfuscation file.
 2. Angad installs it from the internal test link and checks Compare (no UPI, no Uganda),
    Learn progress after sign-in, and sign-in.
 3. Production: replace the 1.0.0 (11) draft with 12, then send for review on Angad's word.
