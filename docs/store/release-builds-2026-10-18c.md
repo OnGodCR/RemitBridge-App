@@ -10,12 +10,14 @@ Source: `39a1919` on `main` (app code `d015de8`).
 
 ## iOS
 
-- Build ID: `ad19a66c-14ee-496c-b22b-538303a3a154`; version 1.0.0; store.
+- Build ID: `ad19a66c-14ee-496c-b22b-538303a3a154`; version 1.0.0, build number 8; store.
+- Status: FINISHED. [Download IPA](https://expo.dev/artifacts/eas/xUP9ioYDCi9rmTyhD3QUZ1aLTU9afbU_UueFhvyl-NI.ipa)
 - [Build page](https://expo.dev/accounts/ongodcr/projects/remitbridge/builds/ad19a66c-14ee-496c-b22b-538303a3a154)
 
 ## Android
 
 - Build ID: `65789764-841f-4b5d-8124-9cd73b2dfcf3`; version 1.0.0, version code 12; store.
+- Status: FINISHED. [Download AAB](https://expo.dev/artifacts/eas/kSZJe7gDTEtUH5sIKniEJvpRlNRi6xByEwXC-SNI3l0.aab); saved to `~/Downloads/RemitBridge-1.0.0-12-play.aab`.
 - [Build page](https://expo.dev/accounts/ongodcr/projects/remitbridge/builds/65789764-841f-4b5d-8124-9cd73b2dfcf3)
 
 ## Next
