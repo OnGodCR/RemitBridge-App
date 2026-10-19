@@ -48,3 +48,21 @@ list in `mobile/src/lib/routes.ts` too, so Remmy and the WhatsApp bot offer it.
 - [ ] **The App Store** (waits on Apple's organization conversion, D141).
 - [ ] **15 Hindi rows** for the terms step and the legal checklist (D188, D189).
 - [ ] **Spanish, Tagalog and Vietnamese reviews** (D69).
+
+## RemitBridge 2.0 (Angad, 2026-10-18)
+
+New features, not data gaps. More ideas are in `docs/roadmap-2.0.md`.
+
+- [ ] **Stablecoin routes next to traditional providers.** Estimate the whole path from
+      dollars paid to local currency received: buying a stablecoin such as USDC, the network
+      fee, the exchange back and the cash-out fee, from live quotes. A routing step keeps only
+      exchanges, networks and cash-out providers that actually work together, then ranks them
+      with traditional providers by amount received. Show how long each takes, and flag
+      changing network fees, limited withdrawal options and the risk of a stablecoin losing
+      its peg. RemitBridge still never holds or moves money.
+- [ ] **A personal remittance history.** Keep redacted receipts with the account and build a
+      yearly report: total upfront fees and exchange-rate markups, measured against
+      historical rates and provider prices, so families see the cost over a year and not
+      one transfer at a time.
+- [ ] **Wider reach.** More API partnerships with providers, more sending and receiving
+      routes, and Arabic, Bengali and Portuguese, each reviewed by a fluent speaker.
