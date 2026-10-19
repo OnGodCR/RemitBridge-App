@@ -2469,4 +2469,5 @@ evidence; everyone else's blank stays held. That added Xoom 50 and Xe 48: 257 pa
 (the 6 above plus Xe Ethiopia, 10% above mid-market).
 Then Angad, on the two Ria Uganda rates up 2.45%: "ria is fine". `combine_weekly_rates.py
 --confirmed ria/us-ug` treats a confirmed change like any verified rate and notes who
-confirmed it; both pair (259 in all) and publish as Ria's first-transfer promotion.
+confirmed it; both pair (259 in all). The dry run published them, but the production run an hour later
+held all of Uganda: USD/UGX sources then disagreed by 0.59% (D166), so they wait for a rerun.
