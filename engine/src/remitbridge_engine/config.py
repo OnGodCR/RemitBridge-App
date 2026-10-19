@@ -84,6 +84,9 @@ FX_MAX_DISAGREEMENT_PCT = 0.5  # sources further apart than this hold the run
 # Reviewed manual quotes remain eligible for seven days from observation (Angad,
 # 2026-10-14). Keep captured_at unchanged; Compare applies its stale/older labels.
 MANUAL_QUOTE_MAX_AGE_S = 7 * 24 * 60 * 60
+# Fees are checked once a month and rates every week (Angad, 2026-10-18, D193): a fee
+# stays usable with a newer rate for 31 days from when it was checked.
+MANUAL_FEE_MAX_AGE_S = 31 * 24 * 60 * 60
 
 # --- Publish gate (PRD 9.7) ------------------------------------------------------------
 # 1. Math: amount received vs (S - F) * Q - R. Providers round, so allow the larger of a

@@ -31,6 +31,16 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
 
+## Weekly rates, monthly fees (D193, 2026-10-18)
+
+- [x] **First weekly round loaded**: 159 rates paired with the Oct 12–14 fees (`engine/manual/quotes/2026-10-18-weekly-rates.json`), published through the Scrape workflow.
+- [ ] **Xoom and Xe rates (105) held**: their rate screens don't show the payment method. Confirm their rate doesn't change with funding, or record the method in the next round.
+- [ ] **Remitly has no fees on file**: its 52 rates wait for the November fee pass (or a fee check now).
+- [ ] **Western Union**: 38 bank targets unchecked (Colombia, Nigeria, Kenya, Pakistan, Bangladesh first).
+- [ ] **Ria Uganda +2.45%**: confirm or drop the two held rates.
+- [ ] **Show the fee's date in Compare**: needs an app update (next build).
+- [ ] **November fee pass**: every fee from Oct 12–14 stops counting on Nov 12–14.
+
 ## Only what has data, and Learn on the account (D190, D191, 2026-10-18)
 
 - [x] **Hide what has no prices (D190)**: Compare, onboarding and Ask for a route offer only routes and ways of receiving with published prices; UPI, wallet, card, home delivery, Uganda, uncovered countries and the 13 summary-only posts held back in `docs/future-updates.md`.

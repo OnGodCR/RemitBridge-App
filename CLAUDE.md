@@ -230,6 +230,11 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       **sent to Google Play for review 2026-10-18**. Left: Google's decision; iOS 1.0.0 (8) waits
       on Apple's organization conversion.
 
+- [ ] **Weekly rates, monthly fees (D193, 2026-10-18):** `engine/scripts/combine_weekly_rates.py`
+      pairs each week's reviewed rates with the newest fee from the last 31 days. First round:
+      159 of 486 paired and pushed. Left: Xoom/Xe payment method, Remitly fees, the WU gaps,
+      Ria Uganda, the fee's date in Compare (app update), the November fee pass.
+
 ### Testing (once the features are set up)
 
 - [x] **Scan a real receipt** on the iPhone development build. Done 2026-10-08 (Angad).

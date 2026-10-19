@@ -2443,3 +2443,21 @@ first two Oct 18 rounds, and the finished Learn-games ChatGPT brief. Kept: `benc
 (CI runs the receipt benchmark on it), `docs/roadmap-2.0.md` (Angad's choice), the open
 ChatGPT research and price-check briefs, and every store document. Earlier entries here and
 in HANDOFF.md still name some deleted files; git history has them.
+
+**D193. Rates weekly, fees monthly** (Angad, 2026-10-18: "collecting all exchange rate
+differences every week, but collecting all the fees only every month since fees almost never
+change"). A hand price can now be built from this week's verified rate plus the newest fee
+checked for the same provider, route, typed amount, receiving and payment method, and
+promotional-or-regular basis, as long as that fee was checked in the last 31 days
+(`MANUAL_FEE_MAX_AGE_S`). The rate still counts for 7 days (D177). The amount received is
+(send amount minus fee) times the new rate, the arithmetic every earlier full quote met; the
+quote is dated by its rate, and the fee's own date, source and screenshot stay in the
+archived evidence. Nothing is guessed: a rate whose screen didn't show the payment method,
+or with no matching fee, is held. `engine/scripts/combine_weekly_rates.py` does the pairing.
+First round, 2026-10-18: 486 rows; 159 paired (Ria 64, MoneyGram 50, Western Union 24,
+WorldRemit 21) and 327 held (184 with no payment or delivery method, including every Xoom,
+Xe and Remitly rate; 80 skipped checks; 37 with no matching fee; 16 payout-currency
+mismatches; 8 USD payouts; the 2 Ria Uganda changes awaiting Angad). Local dry run: 153
+published, 6 quarantined by the range check (MoneyGram Ethiopia and Nigeria, WorldRemit
+Nigeria beat mid-market). Compare shows only the rate's date for now; showing the fee's
+date too needs an app update.
