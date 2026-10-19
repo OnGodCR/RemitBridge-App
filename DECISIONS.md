@@ -2467,3 +2467,6 @@ providers is now the bank-account rate (`SAME_RATE_ANY_FUNDING`), recorded as su
 evidence; everyone else's blank stays held. That added Xoom 50 and Xe 48: 257 paired, 229 held
 (36 Xoom with no matching fee, mostly cash pickup). Dry run: 249 published, 8 quarantined
 (the 6 above plus Xe Ethiopia, 10% above mid-market).
+Then Angad, on the two Ria Uganda rates up 2.45%: "ria is fine". `combine_weekly_rates.py
+--confirmed ria/us-ug` treats a confirmed change like any verified rate and notes who
+confirmed it; both pair (259 in all) and publish as Ria's first-transfer promotion.

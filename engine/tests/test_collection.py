@@ -100,3 +100,11 @@ def test_xoom_and_xe_rates_count_for_bank_account_funding(tmp_path):
     [obs], held = combine_weekly_rates([rate], [fee_quote(provider_id='xoom')])
     assert not held and obs['payment_method'] == 'bank_account'
     assert 'any funding' in obs['collection_evidence']['payment_basis']
+
+
+def test_a_confirmed_change_is_used_and_an_unconfirmed_one_held(tmp_path):
+    from remitbridge_engine.collection import combine_weekly_rates
+    rate = weekly(tmp_path, review_status='held_change_confirmation')
+    assert combine_weekly_rates([rate], [fee_quote()])[0] == []
+    [obs], held = combine_weekly_rates([rate], [fee_quote()], confirmed={('moneygram', 'us-in')})
+    assert not held and obs['collection_evidence']['change_confirmed_by'] == 'Angad'

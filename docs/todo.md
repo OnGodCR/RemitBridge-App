@@ -37,7 +37,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Xoom and Xe**: same rate for any funding (Angad, 2026-10-18); paired with bank-account fees. 36 Xoom rates (mostly cash pickup) still have no fee on file.
 - [ ] **Remitly has no fees on file**: its 52 rates wait for the November fee pass (or a fee check now).
 - [ ] **Western Union**: 38 bank targets unchecked (Colombia, Nigeria, Kenya, Pakistan, Bangladesh first).
-- [ ] **Ria Uganda +2.45%**: confirm or drop the two held rates.
+- [x] **Ria Uganda +2.45%**: confirmed by Angad 2026-10-18 ("ria is fine"); published as a first-transfer promotion.
 - [ ] **Show the fee's date in Compare**: needs an app update (next build).
 - [ ] **November fee pass**: every fee from Oct 12–14 stops counting on Nov 12–14.
 

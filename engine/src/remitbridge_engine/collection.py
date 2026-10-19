@@ -95,7 +95,8 @@ def _fee_key(provider, route, typed, delivery, payment, basis) -> tuple:
 
 
 def combine_weekly_rates(rate_rows: list[dict], fee_quotes: list[dict],
-                         now: datetime | None = None) -> tuple[list, list]:
+                         now: datetime | None = None,
+                         confirmed: set[tuple[str, str]] = frozenset()) -> tuple[list, list]:
     """Pair this week's verified rates with the newest monthly fee for the same quote (D193).
 
     Rates are checked weekly and fees monthly (Angad, 2026-10-18). A rate row is used only
@@ -119,6 +120,11 @@ def combine_weekly_rates(rate_rows: list[dict], fee_quotes: list[dict],
     observations, held = [], []
     for row in rate_rows:
         reasons = []
+        # A change of more than 2% waits for Angad; once he confirms the provider and route
+        # (`confirmed`), the rate is treated like any other verified one.
+        if (row.get("review_status") == "held_change_confirmation"
+                and (row.get("provider_id"), row.get("route_id")) in confirmed):
+            row = {**row, "review_status": "verified_rate_only", "change_confirmed_by": "Angad"}
         if row.get("rate_outcome") != "verified_rate" or row.get("review_status") != "verified_rate_only":
             held.append({"provider": row.get("provider_id"), "route": row.get("route_id"),
                          "reason": f"rate not usable ({row.get('review_status') or row.get('rate_outcome') or 'blank'})"})

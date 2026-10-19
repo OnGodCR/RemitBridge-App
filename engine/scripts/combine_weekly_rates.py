@@ -12,9 +12,12 @@ parser.add_argument('csv', type=Path, help='reviewed weekly rates')
 parser.add_argument('--fees', type=Path, nargs='+', required=True, help='earlier reviewed quote JSON files')
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--report', type=Path, required=True)
+parser.add_argument('--confirmed', nargs='*', default=[], metavar='PROVIDER/ROUTE',
+                    help='changes over 2%% Angad has confirmed, e.g. ria/us-ug')
 args = parser.parse_args()
 fee_quotes = [q for f in args.fees for q in json.loads(f.read_text())]
-observations, held = combine_weekly_rates(list(csv.DictReader(args.csv.open())), fee_quotes)
+confirmed = {tuple(c.split('/', 1)) for c in args.confirmed}
+observations, held = combine_weekly_rates(list(csv.DictReader(args.csv.open())), fee_quotes, confirmed=confirmed)
 for obs in observations:
     evidence = obs['collection_evidence']
     paths = [Path(p.strip()) for p in evidence['evidence_file'].split(';')]
