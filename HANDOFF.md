@@ -5,8 +5,14 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-18 (see the sections just below; the older status after them is kept for history)
 
-**2026-10-13: day-to-day work moves to ChatGPT** while Claude's usage is used up. Its full
-briefing, with Expo Go setup and every open item, is `CHATGPT_HANDOFF.md`.
+## 2026-10-18: repo cleanup
+
+At Angad's request, everything for the Congressional App Challenge is gone (`docs/cac/`, the
+CAC gap report, the AI usage log, the CAC to-dos), along with the ChatGPT handoff, the
+World Bank research data, the website's screenshots (`site/screens/`), superseded build
+notes and the finished Learn-games brief. The repo now holds the app, its backend and
+engine, the store pages and the store material. Older sections below still name some of
+those files; they live on in git history.
 
 ## 2026-10-18: only what has data; Learn on the account (D190, D191)
 
@@ -87,7 +93,7 @@ is available. Fresh store builds from clean committed ff6af09 both FINISHED:
 Android 1.0.0 (8), 27908f86-1347-4fd0-9d45-0bfb457f330e;
 iOS 1.0.0 (5), b44747b9-818f-4850-a1ad-591e4ceaebc9.
 Clean source passed 231 mobile tests, typecheck and lint. Both artifacts' metadata checked;
-see docs/store/release-builds-2026-10-16.md for download links, checks and limitations.
+since superseded by `docs/store/release-builds-2026-10-18c.md`.
 User completed Apple signing in the visible terminal. Fixed its npx PATH problem with
 /opt/homebrew/bin; after signing, a local ENOSPC upload failure was resolved by removing
 only an obsolete EAS CLI download cache and retrying with saved credentials. No personal
@@ -444,8 +450,7 @@ on 2026-09-30 evening). RLS smoke test: 52/52 after that push. Edge Functions de
 - The remittance tax now follows the IRS proposed rules (D97): no tax at $15 or less.
 - `.github/workflows/benchmark.yml` runs the full receipt benchmark on GitHub, by hand. It
   needs an `OPENROUTER_API_KEY` Actions secret.
-- `docs/translation-review/hi.md` is the Hindi review sheet; `docs/cac/submission.md` is the
-  draft CAC entry and video script.
+- `docs/translation-review/hi.md` is the Hindi review sheet.
 - Still Angad's: `supabase db push` for the two receipt migrations (refused for Claude as a
   production deploy, from the cloud and through a local session alike), the OpenRouter key,
   and the EAS build.
@@ -553,7 +558,6 @@ the branch on 2026-09-30; the scanner uses the app-wide string catalogue.
    organizations (item 8) are a natural place to ask. Hindi: Angad's mother (D117).
 10. **Wise:** the adapter is built and scheduled (D91); the thank-you to Simon Bruins went
    out 2026-10-01.
-11. **CAC:** after the app is finished (D117).
 
 ## The shape of the product
 

@@ -75,7 +75,7 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
 ## Build and release evidence
 
 - [x] New production builds FINISHED from latest committed app source ff6af09: Android
-  1.0.0 (8) and iOS 1.0.0 (5), 2026-10-16. See [build record](store/release-builds-2026-10-16.md).
+  1.0.0 (8) and iOS 1.0.0 (5), 2026-10-16. Superseded by [the version 12 builds](store/release-builds-2026-10-18c.md).
   The uncommitted quote-card edit was preserved/excluded. Neither build submitted.
 - [x] Basic artifact metadata inspected: expected identifiers/versions, Android target 36,
   blocked permissions absent, iOS purpose strings and aggregate privacy manifest present.

@@ -40,7 +40,7 @@ the work, not afterwards:
 - **Open items (below):** add each deferred item when it comes up, and tick it
   with a date when it lands.
 - **docs/todo.md:** the whole to-do list in one place, grouped by who acts (Angad,
-  2026-10-12), with CAC work left out. The RemitBridge pane shows it. Keep it in step with
+  2026-10-12). The RemitBridge pane shows it. Keep it in step with
   the open items: add, tick or remove there whenever they change.
 - **README.md:** whenever setup, commands, environment variables, or layout change.
 - **docs/MANUAL_RESEARCH.md:** whenever a provider gets no adapter because
@@ -83,7 +83,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Angad's dad holds it until Angad is 18 (D123): an individual account in his name (D134),
       enrolled and paid 2026-10-01; **active 2026-10-07** (Team ID QS9F7JU6H2, Program License
       Agreement accepted the same day). It must land
-      by about Oct 10 for the CAC demo's scan. EAS is ready: account
+      by about Oct 10. EAS is ready: account
       `ongodcr`, project @ongodcr/remitbridge linked, the two `EXPO_PUBLIC_SUPABASE_*`
       variables created for development. 2026-10-07: Angad signed in to Apple from
       `eas build`, which registered `org.remitbridgelabs.app` (Associated Domains, Push,
@@ -151,8 +151,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       grows more useful as prices pile up.
 - [x] **Receipt parser extractors (D130):** Claude wrote all 13 at Angad's request; 47 of 47
       on the fixtures, 97.8% on 60 OCR'd synthetic receipts before the OCR fixes. The model
-      now reads only what the rules miss or doubt. Done 2026-10-01. The CAC write-up must
-      say the parser is AI-written (`docs/AI_USAGE.md`).
+      now reads only what the rules miss or doubt. Done 2026-10-01.
 - [ ] **Wise and Instarem on 26 routes (D158, 2026-10-11):** 22 new Tier 2 routes; migration run
       by Angad, and the first run published 179 prices (Wise 99, Instarem 80). 23 routes live.
       2026-10-12: the Dominican Republic and Nicaragua are live with prices. Uganda is still
@@ -163,8 +162,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       Pangea, Intermex and Taptap Send forbid automation; Western Union's terms don't, but its
       prices sit behind bot protection. **Instarem is live** (D118): migration pushed by Angad,
       smoke test 55/55 with 9 providers, and the first Scrape run published 20 of 20; it
-      tops Compare for $500 to India (2026-10-01). The World Bank survey's US rows are in
-      `research/world-bank-rpw/` for research. Paysend is cleared but not built: its public pages show one
+      tops Compare for $500 to India (2026-10-01). Paysend is cleared but not built: its public pages show one
       amount and one price for several ways of receiving, so its numbers can't be verified yet;
       asked press@paysend.com for a feed on 2026-10-01 (`docs/outreach/permission-request.md`). The rest: Add a price, or their permission.
       **2026-10-04: 27 hand prices live** (Remitly, Western Union, MoneyGram, Xoom, WorldRemit,
@@ -242,15 +240,6 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       animations kept views from taking taps for a few seconds; all replaced. Confirm on a real phone.
 - [ ] **WhatsApp:** text "500 to India", then send a receipt photo.
 - [ ] **Launch email:** the first real send, when a requested route goes live.
-
-### CAC submission (internal deadline Oct 23, official Oct 26)
-
-Angad does this once the app itself is finished (D117).
-
-- [ ] **Write-up and video:** Angad rewrites `docs/cac/submission.md` (Claude's draft,
-      2026-10-01) in his own words, records the demo video (3 minutes at most), and submits.
-- [ ] **Scanner live for the demo** (D72): all six phases on `main`, every migration live
-      (52/52), the model on Groq. Left: the iPhone build and a real scan (above).
 
 ### Thank-yous and outreach (Angad sends)
 
@@ -379,11 +368,9 @@ Angad does this once the app itself is finished (D117).
 - [ ] **Learn redrawn (D152, 2026-10-10):** zigzag path with side cards, walked trail, a
       flag at the top, one-row header, the newest post in Library. Checked in a web render
       only; left: Angad looks on both phones.
-- [ ] **Screenshots (2026-10-12):** 15 of Angad's 18 for the website's /app page are in
-      `site/screens/` (the `simulator` build profile), and six 6.9-inch App
-      Store shots in `docs/store/screenshots/iphone-6.9/`. Left: the three scan shots (covered
-      receipt, "Check each value", the result) from Angad's iPhone, since the simulator build
-      has no ML Kit; the sample receipt is at `site/review/sample-receipt.jpg`.
+- [x] **Screenshots:** the store sets are in `docs/store/screenshots/` and uploaded to both
+      stores' listings. The website's set (`site/screens/`) was deleted in the
+      2026-10-18 cleanup.
 - [ ] **Google Play developer account (D143):** on hold for an organization account in
       RemitBridge Labs' name (Angad, 2026-10-04), not a personal one through his dad. Needs the
       accepted Articles and a D-U-N-S number. Organization accounts skip the personal-account
@@ -604,7 +591,6 @@ left edge on what counts. Use tokens from constants/theme.ts, never a hex value.
 - Force-pushes and history rewrites need an explicit yes.
 - Every commit is authored and committed as Angad Kochar only: no AI co-author trailers
   (Angad, 2026-10-17; history rewritten that day, old IDs in `docs/commit-id-map-2026-10-17.md`).
-  AI use is still disclosed in `docs/AI_USAGE.md`.
 
 ## graphify
 

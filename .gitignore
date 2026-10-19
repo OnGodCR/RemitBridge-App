@@ -49,4 +49,3 @@ benchmark/receipts/*.jpeg
 benchmark/receipts/*.png
 benchmark/receipts/*.heic
 !benchmark/receipts/*.redacted.png
-site/screens/_png/

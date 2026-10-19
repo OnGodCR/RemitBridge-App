@@ -18,11 +18,10 @@ Publication status and remaining gates: [launch checklist](docs/launch-checklist
 
 ## Status
 
-**Every MVP screen is built, and the WhatsApp bot is ready for Meta.** Prices come from
-manual entry until a provider allows automated checks. A receipt scanner for the 2026
-Congressional App Challenge is being built in phases (D72): the data model, redaction,
-parser harness, model fallback, validation and the scan screen are in. The app speaks
-English, with drafts in Hindi, Spanish, Tagalog and Vietnamese waiting on reviewers (D69). See [`HANDOFF.md`](HANDOFF.md)
+**The app is built and with the stores:** Android 1.0.0 (12) is in Google Play review, and
+iOS 1.0.0 (8) waits on Apple's organization conversion. Prices come from Wise and Instarem's
+feeds plus hand checks; the receipt scanner, Remmy and the WhatsApp bot are live. The app
+speaks English and Hindi, with drafts in Spanish, Tagalog and Vietnamese (D69). See [`HANDOFF.md`](HANDOFF.md)
 for where things stand and what's next.
 
 ## Launch routes
@@ -56,8 +55,6 @@ site/                app.remitbridgelabs.org: privacy policy, terms, contact and
                      the newsletter's unsubscribe page
                      (Vercel, root "site"; build.mjs fills in site.config.json, the operator's details)
 docs/                PRD, manual-research list, store/listing.md (what to paste into both stores)
-research/            world-bank-rpw/: the World Bank's US remittance price survey (Q2 2016 to Q1 2025)
-                     as CSV, its summary, and extract.py to rebuild both from the downloaded workbook
 ```
 
 ## Setup
@@ -85,8 +82,8 @@ variables for the `development` environment, then
 For the iOS simulator on an Apple Silicon Mac, use `--profile simulator`. Google ships ML
 Kit without Apple Silicon simulator code, so that profile leaves it out
 (`mobile/scripts/simulator-build.mjs`, run as EAS's pre-install hook): every screen works
-except reading a receipt. The website's screenshots in `site/screens/` and the App Store's in
-`docs/store/screenshots/` came from that build (iPhone 18 Pro, light mode, 9:41).
+except reading a receipt. The App Store screenshots in `docs/store/screenshots/` came from
+that build (iPhone 18 Pro, light mode, 9:41).
 
 Migrations can be tested on a throwaway Postgres before they're pushed:
 `supabase/tests/local_migrations.sh` (set `PG_BIN` to your Postgres `bin` folder).
@@ -136,9 +133,7 @@ More detail is in [`engine/README.md`](engine/README.md) and [`mobile/README.md`
 | [`HANDOFF.md`](HANDOFF.md) | Current state, what's next, open questions |
 | [`CLAUDE.md`](CLAUDE.md) | Rules for working on this repo, and the open items |
 | [`docs/MANUAL_RESEARCH.md`](docs/MANUAL_RESEARCH.md) | Providers blocked from scraping, left for manual research |
-| [`docs/cac-gap-report.md`](docs/cac-gap-report.md) | Congressional App Challenge features: what exists, what's missing, decisions needed |
 | [`docs/SECURITY.md`](docs/SECURITY.md) | What's sensitive, the threats, and what stops each one (D135) |
 | [`docs/security-review.md`](docs/security-review.md) | The security pass as a checklist for Angad to review |
 | [`OWNERSHIP.md`](OWNERSHIP.md), [`LICENSE`](LICENSE) | Who owns what: MIT code by Angad Kochar; the name and domain, to be licensed to RemitBridge Labs |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Signing off commits (DCO) |
-| [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Per-session log of files Claude created or changed, for the CAC's AI-use disclosure |

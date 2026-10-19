@@ -1,7 +1,7 @@
 # To do
 
 Everything still open, in one place (Angad, 2026-10-12: "make a list of exactly everything
-we need to do"). CAC work is left out on purpose. The RemitBridge pane reads this file, so
+we need to do"). The RemitBridge pane reads this file, so
 tick items here (`- [x]`) as they land. A `(due YYYY-MM-DD)` after a title puts it in the
 pane's Due group, and Claude's own dated items go into Claude's instructions every session.
 Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
@@ -12,7 +12,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Remmy says "today's checked prices"**: fixed 2026-10-17 (D182): Remmy and WhatsApp no longer say when prices were checked. Deployed 2026-10-17; Hindi review of two rows pending.
 - [x] **Uncommitted quote-card edit**: kept with the estimate label and "arrives" restored (D183, 2026-10-17); Compare screenshot retaken.
 - [x] **Redeploy `remmy` and `whatsapp`** for D182: both deployed by Angad 2026-10-17.
-- [x] **New production builds**: iOS 1.0.0 (7) and Android 1.0.0 (11), 2026-10-18, with the sign-in fixes (`docs/store/release-builds-2026-10-18b.md`). Upload version code 11 to Play internal testing.
+- [x] **New production builds**: iOS 1.0.0 (7) and Android 1.0.0 (11), 2026-10-18, with the sign-in fixes (superseded by version 12). Upload version code 11 to Play internal testing.
 - [ ] **Fresh hand-price round right before submitting**: the Oct 12 to 14 prices leave Compare Oct 19 to 21.
 - [ ] **Screenshots checked against the store builds**: the new set is from the web render; Remmy's icons draw blank there (`~/Desktop/RemitBridge-App-Store/README.md`).
 
@@ -21,7 +21,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Play Console, Sign in details**: review account and instructions added by Angad (2026-10-17). It only works on the next build, which has the password field.
 - [x] **Play Console, Target audience (18 and over) and Data safety**: saved by Claude 2026-10-17; App content shows nothing left.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
-- [x] **New production builds for D184, D185 and D186**: built 2026-10-18, iOS 1.0.0 (6) and Android 1.0.0 (10), `docs/store/release-builds-2026-10-18.md`.
+- [x] **New production builds for D184, D185 and D186**: built 2026-10-18, iOS 1.0.0 (6) and Android 1.0.0 (10), since superseded.
 - [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
 - [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
@@ -108,10 +108,6 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Content (Angad)
 
-- [ ] **CAC essays**: paste `docs/cac/chatgpt-essay-prompt.md` into ChatGPT with the form's questions, then rewrite the drafts in your own words; note in the AI-use answer how they were drafted.
-
-- [ ] **Three scan screenshots for the website**: covered receipt, "Check each value", the result, from your iPhone (sample receipt at `site/review/sample-receipt.jpg`).
-- [ ] **Learn game modes with ChatGPT**: paste `docs/outreach/chatgpt-learn-games.md`, pick from its proposal, then it opens a pull request (branch `chatgpt/learn-game-modes`) for Claude to review and merge. It also swaps Library's "Latest post" for the first post.
 - [ ] **Hand-checked prices with ChatGPT**: paste `docs/outreach/chatgpt-price-checks.md` into a ChatGPT project, then do a round ($200 and $500 to India, Mexico, the Philippines, Vietnam first); you click, it reads your screenshots and writes the SQL (D167).
 
 ## Legal, accounts and money (Angad)

@@ -43,4 +43,4 @@ Revolut and the banks.
 
 The World Bank's Remittance Prices Worldwide (remittanceprices.worldbank.org): quarterly
 prices by provider for 42 US routes, free to reuse with attribution. Newest survey Q3 2025,
-so research only, never a current price (D115). The US rows are in `research/world-bank-rpw/` (D118).
+so research only, never a current price (D115).

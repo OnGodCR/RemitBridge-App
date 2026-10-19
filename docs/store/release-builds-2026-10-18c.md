@@ -1,6 +1,6 @@
 # Production builds, 2026-10-18 (third round, D190 and D191)
 
-Replace iOS 7 and Android 11 (`release-builds-2026-10-18b.md`), which offered UPI and other
+Replace iOS 7 and Android 11, which offered UPI and other
 methods with no prices, showed Uganda and summary-only posts, and kept Learn progress on
 the phone only. Before building: 797 JS tests, typecheck, lint, the site check, the RLS
 smoke test 81/81 live; `learn_progress` migration run by Angad; `remmy` and `whatsapp`

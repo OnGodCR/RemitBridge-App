@@ -107,7 +107,7 @@ production-build tests remain required.
 
 Both new production builds finished successfully: Android 1.0.0 (8) and iOS 1.0.0 (5),
 from ff6af09. Basic artifact metadata checked; details/downloads in
-[release-builds-2026-10-16.md](release-builds-2026-10-16.md). Google Play verification is
+[release-builds-2026-10-18c.md](release-builds-2026-10-18c.md) (the current builds). Google Play verification is
 complete per Angad. These updates close the earlier build/verification waits, not the
 remaining device, security, legal, store-form or publication gates. iOS signing currently
 uses the individual Apple team while organization conversion remains separate.

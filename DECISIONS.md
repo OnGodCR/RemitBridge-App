@@ -2432,3 +2432,14 @@ If the read fails, nothing is written, so a phone can't overwrite the account. S
 progress stays on the phone, as before. The privacy policy says so (dated October 18, which
 asks accounts to accept the terms again, D188). Migration
 `20261018000000_learn_progress.sql`, for Angad to run in the SQL editor.
+
+**D192. The repo keeps only the app and its store material** (Angad, 2026-10-18: "clean up
+the entire repo, delete all files related to CAC and only keep the stuff related to app
+store and google store. Delete any other unnecessary files too"). Deleted: `docs/cac/`, the
+CAC gap report and CAC to-dos, and `docs/AI_USAGE.md` (written for CAC's AI disclosure;
+Angad chose to drop it). Also deleted: `CHATGPT_HANDOFF.md`, `research/world-bank-rpw/`,
+`site/screens/` (the website's screenshots), the superseded build notes for Oct 16 and the
+first two Oct 18 rounds, and the finished Learn-games ChatGPT brief. Kept: `benchmark/`
+(CI runs the receipt benchmark on it), `docs/roadmap-2.0.md` (Angad's choice), the open
+ChatGPT research and price-check briefs, and every store document. Earlier entries here and
+in HANDOFF.md still name some deleted files; git history has them.
