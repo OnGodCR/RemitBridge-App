@@ -2461,3 +2461,9 @@ mismatches; 8 USD payouts; the 2 Ria Uganda changes awaiting Angad). Local dry r
 published, 6 quarantined by the range check (MoneyGram Ethiopia and Nigeria, WorldRemit
 Nigeria beat mid-market). Compare shows only the rate's date for now; showing the fee's
 date too needs an app update.
+Same day, Angad: "Xoom and Xe show the same rate whatever the payment method, so pair their
+rates with the bank-account fees and publish them." A blank payment method from those two
+providers is now the bank-account rate (`SAME_RATE_ANY_FUNDING`), recorded as such in the
+evidence; everyone else's blank stays held. That added Xoom 50 and Xe 48: 257 paired, 229 held
+(36 Xoom with no matching fee, mostly cash pickup). Dry run: 249 published, 8 quarantined
+(the 6 above plus Xe Ethiopia, 10% above mid-market).

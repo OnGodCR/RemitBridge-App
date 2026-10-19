@@ -92,3 +92,11 @@ def test_weekly_rate_is_held_without_a_fresh_matching_fee(tmp_path):
     for rate, fees in samples:
         observations, held = combine_weekly_rates([rate], fees)
         assert observations == [] and len(held) == 1
+
+
+def test_xoom_and_xe_rates_count_for_bank_account_funding(tmp_path):
+    from remitbridge_engine.collection import combine_weekly_rates
+    rate = weekly(tmp_path, provider_id='xoom', payment_method='')
+    [obs], held = combine_weekly_rates([rate], [fee_quote(provider_id='xoom')])
+    assert not held and obs['payment_method'] == 'bank_account'
+    assert 'any funding' in obs['collection_evidence']['payment_basis']

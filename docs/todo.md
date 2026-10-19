@@ -33,8 +33,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Weekly rates, monthly fees (D193, 2026-10-18)
 
-- [x] **First weekly round loaded**: 159 rates paired with the Oct 12–14 fees (`engine/manual/quotes/2026-10-18-weekly-rates.json`), published through the Scrape workflow.
-- [ ] **Xoom and Xe rates (105) held**: their rate screens don't show the payment method. Confirm their rate doesn't change with funding, or record the method in the next round.
+- [x] **First weekly round loaded**: 257 rates paired (Xoom and Xe added on Angad's word) with the Oct 12–14 fees (`engine/manual/quotes/2026-10-18-weekly-rates.json`), published through the Scrape workflow.
+- [x] **Xoom and Xe**: same rate for any funding (Angad, 2026-10-18); paired with bank-account fees. 36 Xoom rates (mostly cash pickup) still have no fee on file.
 - [ ] **Remitly has no fees on file**: its 52 rates wait for the November fee pass (or a fee check now).
 - [ ] **Western Union**: 38 bank targets unchecked (Colombia, Nigeria, Kenya, Pakistan, Bangladesh first).
 - [ ] **Ria Uganda +2.45%**: confirm or drop the two held rates.

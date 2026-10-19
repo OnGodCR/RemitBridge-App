@@ -9,9 +9,9 @@ resume. Update it at the end of every working session.
 
 The price round came back rate-only (fees are checked monthly). New
 `engine/scripts/combine_weekly_rates.py` pairs each reviewed rate with the newest matching fee
-from the last 31 days; 159 of 486 paired, written to
+from the last 31 days; 257 of 486 paired (Xoom and Xe count as bank-account rates, Angad), written to
 `engine/manual/quotes/2026-10-18-weekly-rates.json` and pushed, which runs the Scrape
-workflow's manual publish. Local dry run: 153 published, 6 quarantined. Next week: run
+workflow's manual publish. Local dry run: 249 published, 8 quarantined. Next week: run
 `uv run python scripts/combine_weekly_rates.py <reviewed.csv> --fees manual/quotes/*.json
 --output manual/quotes/<date>-weekly-rates.json --report <somewhere>` from `engine/`.
 

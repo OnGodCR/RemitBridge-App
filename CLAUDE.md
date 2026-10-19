@@ -232,7 +232,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 - [ ] **Weekly rates, monthly fees (D193, 2026-10-18):** `engine/scripts/combine_weekly_rates.py`
       pairs each week's reviewed rates with the newest fee from the last 31 days. First round:
-      159 of 486 paired and pushed. Left: Xoom/Xe payment method, Remitly fees, the WU gaps,
+      257 of 486 paired and pushed (Xoom and Xe count as bank-account rates, Angad). Left: Remitly fees, the WU gaps,
       Ria Uganda, the fee's date in Compare (app update), the November fee pass.
 
 ### Testing (once the features are set up)

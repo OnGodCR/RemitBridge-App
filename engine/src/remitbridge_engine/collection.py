@@ -79,6 +79,12 @@ def prepare_collection(rows: list[dict], now: datetime | None = None) -> tuple[l
 
 PROMO_BASES = ("promotional", "promo_only", "first_transfer")
 
+# Providers whose rate is the same whatever the sender pays with (Angad, 2026-10-18: "Xoom
+# and Xe show the same rate whatever the payment method"). Their rate screens don't show
+# funding, so a blank payment method there is the bank-account rate. Everyone else's blank
+# stays held.
+SAME_RATE_ANY_FUNDING = {"xoom", "xe"}
+
 
 def _typed(amount) -> int:
     return int(float(amount))
@@ -117,6 +123,9 @@ def combine_weekly_rates(rate_rows: list[dict], fee_quotes: list[dict],
             held.append({"provider": row.get("provider_id"), "route": row.get("route_id"),
                          "reason": f"rate not usable ({row.get('review_status') or row.get('rate_outcome') or 'blank'})"})
             continue
+        if not row.get("payment_method") and row.get("provider_id") in SAME_RATE_ANY_FUNDING:
+            row = {**row, "payment_method": "bank_account",
+                   "payment_basis": "same rate for any funding (Angad, 2026-10-18)"}
         route = C.ROUTES_BY_ID.get(row.get("route_id"))
         if not route:
             reasons.append("unknown route")
