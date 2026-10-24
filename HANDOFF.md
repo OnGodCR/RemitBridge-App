@@ -5,6 +5,10 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-10-18 (see the sections just below; the older status after them is kept for history)
 
+## 2026-10-24: Google Play badge on the site
+
+The Android app is on Google Play but not yet in Play search. The site links to the listing with Google's badge (`site/google-play-badge.png`) on the home page, `/p/<partner>` and support. iPhone still says coming soon (waits on Apple's organization conversion).
+
 ## 2026-10-18: weekly rates with monthly fees (D193)
 
 The price round came back rate-only (fees are checked monthly). New

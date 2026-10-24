@@ -38,6 +38,8 @@ body.landing {
 .hero h1 em { font-style: normal; color: var(--mint); }
 .hero p.lede { font-size: 19px; color: var(--ink-muted); max-width: 34ch; margin: 0 0 28px; }
 .badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.play img { display: block; margin: -11px; }
+.badges { align-items: center; }
 .badge { border: 1px solid var(--ink-line); border-radius: 8px; padding: 8px 12px; font-size: 14px; color: var(--ink-muted); }
 .hero .phone { justify-self: center; transform: rotate(-4deg); }
 .hero::after {
@@ -208,7 +210,8 @@ body.landing {
         <h1>See what your family <em>really</em> receives.</h1>
         <p class="lede">Most of what a transfer costs hides in the exchange rate, not the fee. RemitBridge shows you both.</p>
         <div class="badges">
-          <span class="badge">Coming soon to the App Store and Google Play</span>
+          <a class="play" href="https://play.google.com/store/apps/details?id=org.remitbridgelabs.app"><img src="/google-play-badge.png" alt="Get it on Google Play" width="194" height="75"></a>
+          <span class="badge">iPhone: coming soon</span>
         </div>
       </div>
       <div class="pair" aria-hidden="true"><div class="phone back"><div class="screen"><img class="on" src="/screens/scan.webp" alt=""></div></div><div class="phone front"><div class="screen"><img class="on" src="/screens/compare.webp" alt=""></div></div></div>
@@ -300,11 +303,12 @@ body.landing {
 
   <section class="closing">
     <div class="wrap">
-      <p class="eyebrow">Coming soon</p>
+      <p class="eyebrow">On Google Play now. iPhone soon.</p>
       <h2>Ranked by what arrives. Nothing else.</h2>
       <p class="muted">No affiliate links, no paid placement and no ads. RemitBridge never sends, holds or exchanges money: it shows prices, and you send with the provider you choose. It compares sending from the US to 26 countries, from India, Mexico, the Philippines and Vietnam to Kenya, Nigeria, Pakistan and Brazil.</p>
       <div class="actions">
-        <a class="button" href="https://www.remitbridgelabs.org/truecost">Try the tools on the web</a>
+        <a class="play" href="https://play.google.com/store/apps/details?id=org.remitbridgelabs.app"><img src="/google-play-badge.png" alt="Get it on Google Play" width="194" height="75"></a>
+        <a class="button secondary" href="https://www.remitbridgelabs.org/truecost">Try the tools on the web</a>
         <a class="button secondary" href="/support">Questions?</a>
       </div>
     </div>

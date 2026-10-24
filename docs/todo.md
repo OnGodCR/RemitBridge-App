@@ -26,7 +26,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
 - [ ] **Hindi for the licenses row and the "cheapest we found" line (D189)**: 3 rows in `docs/translation-review/hi.md`.
-- [ ] **After launch: `site/p.html`**: change "coming soon to the App Store and Google Play" once both listings are live.
+- [x] **Google Play badge on the site** (2026-10-24): home, `/p/<partner>` and support link to the Play listing. Left: swap "iPhone: coming soon" for an App Store badge once iOS is live.
 - [ ] **Try the terms step on the new build (D188)**: sign up, read both documents, accept; then sign out and in again (it shouldn't ask twice).
 - [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
@@ -48,7 +48,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Learn progress migration**: run by Angad in the SQL editor 2026-10-18; smoke test 81/81 live (run by Claude).
 - [x] **Redeploy `remmy` and `whatsapp`**: both deployed by Angad 2026-10-18.
 - [x] **New production builds for D190 and D191**: iOS 1.0.0 (8) and Android 1.0.0 (12), 2026-10-18 (`docs/store/release-builds-2026-10-18c.md`). Android 12 on internal testing, tested by Angad.
-- [ ] **Google Play review**: 1.0.0 (12) sent for review 2026-10-18 (US only; publishes when approved, managed publishing off). Watch for Google's email; answer any policy questions.
+- [x] **Google Play review**: published 2026-10-18; 1.0.0 (12) sent for review 2026-10-18 (US only; publishes when approved, managed publishing off). Watch for Google's email; answer any policy questions.
 - [ ] **Hindi for "Somewhere else?" (D190)**: 1 changed row in `docs/translation-review/hi.md`.
 - [ ] **Accept the terms again** on the new privacy date (October 18): expected, D188.
 
