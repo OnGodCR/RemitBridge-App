@@ -2471,3 +2471,11 @@ Then Angad, on the two Ria Uganda rates up 2.45%: "ria is fine". `combine_weekly
 --confirmed ria/us-ug` treats a confirmed change like any verified rate and notes who
 confirmed it; both pair (259 in all). The dry run published them, but the production run an hour later
 held all of Uganda: USD/UGX sources then disagreed by 0.59% (D166), so they wait for a rerun.
+
+2026-10-25, Angad, on the 34 weekly rates that moved over 2% since 2026-10-18: "publish everything".
+`--confirmed` for MoneyGram, Remitly, Ria, Xe and Xoom to Egypt; MoneyGram, Ria, Xe and Xoom to
+Uganda; Ria and Western Union to Mexico; Xe to the Philippines. 248 rates now pair (28 more);
+Remitly Egypt and Xoom cash pickup to Egypt still have no fee on file. The publish gate still
+decides: the dry run published 202 and quarantined 10 (the 4 Ethiopia range failures, plus
+Ria Mexico and Xe Philippines, whose total cost moved over 2 points from their recent median),
+and held 36 on DOP and NGN source disagreement. A confirmation never overrides the gate.

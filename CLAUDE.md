@@ -232,7 +232,7 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
 
 - [ ] **Weekly rates, monthly fees (D193, 2026-10-18):** `engine/scripts/combine_weekly_rates.py`
       pairs each week's reviewed rates with the newest fee from the last 31 days. First round:
-      257 of 486 paired and pushed (Xoom and Xe count as bank-account rates, Angad). Second round 2026-10-24: 220 of 533 paired, dry run 190 published, 4 quarantined, 26 held on DOP/NGN sources; 34 over-2% moves wait for Angad. Left: Remitly fees, the WU gaps,
+      257 of 486 paired and pushed (Xoom and Xe count as bank-account rates, Angad). Second round 2026-10-24: 248 of 533 paired (over-2% moves confirmed by Angad 2026-10-25), dry run 202 published, 10 quarantined, 36 held on DOP/NGN sources. Left: Remitly fees, the WU gaps,
       the fee's date in Compare (app update), the November fee pass.
 
 ### Testing (once the features are set up)

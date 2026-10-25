@@ -12,11 +12,8 @@ The Android app is on Google Play but not yet in Play search. The site links to 
 ## 2026-10-24: second weekly round (D193)
 
 `~/Downloads/remitbridge-exchange-rates-2026-10-24.csv` (533 rows) paired with the Oct 12–18
-fees: 220 rates in `engine/manual/quotes/2026-10-24-weekly-rates.json`, pushed so the Scrape
-workflow publishes them. Local dry run: 190 published, 4 quarantined (MoneyGram and Xe
-Ethiopia beat mid-market), 26 held for rate-source disagreement on DOP and NGN (a Manual prices
-rerun picks them up once the sources agree). 313 rows held before the gate, 34 of them for moves
-over 2% that need Angad's confirmation (`docs/todo.md`). Remitly still has no fees on file.
+fees: 248 rates (the 34 over-2% moves confirmed by Angad, 2026-10-25) in `engine/manual/quotes/2026-10-24-weekly-rates.json`, pushed so the Scrape
+workflow publishes them. Local dry run: 202 published, 10 quarantined (MoneyGram and Xe Ethiopia beat mid-market; Ria Mexico and Xe Philippines tripped the anomaly check), 36 held for rate-source disagreement on DOP and NGN (a Manual prices rerun picks them up once the sources agree). Remitly still has no fees on file.
 
 ## 2026-10-18: weekly rates with monthly fees (D193)
 
