@@ -9,6 +9,15 @@ resume. Update it at the end of every working session.
 
 The Android app is on Google Play but not yet in Play search. The site links to the listing with Google's badge (`site/google-play-badge.png`) on the home page, `/p/<partner>` and support. iPhone still says coming soon (waits on Apple's organization conversion).
 
+## 2026-10-24: second weekly round (D193)
+
+`~/Downloads/remitbridge-exchange-rates-2026-10-24.csv` (533 rows) paired with the Oct 12–18
+fees: 220 rates in `engine/manual/quotes/2026-10-24-weekly-rates.json`, pushed so the Scrape
+workflow publishes them. Local dry run: 190 published, 4 quarantined (MoneyGram and Xe
+Ethiopia beat mid-market), 26 held for rate-source disagreement on DOP and NGN (a Manual prices
+rerun picks them up once the sources agree). 313 rows held before the gate, 34 of them for moves
+over 2% that need Angad's confirmation (`docs/todo.md`). Remitly still has no fees on file.
+
 ## 2026-10-18: weekly rates with monthly fees (D193)
 
 The price round came back rate-only (fees are checked monthly). New
