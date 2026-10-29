@@ -25,7 +25,12 @@ Review. 2026-10-29: the review contact is Angad's dad (Rahul Kochar, hello@ as t
 failed: Apple's API refuses review details with sign-in required unless the password comes
 in the same request. So no review block is kept in `store.config.json` (it would hold the
 password and his phone); Angad checks the section, pastes the notes from `listing.md` if
-they are missing, and types the password in App Store Connect.
+they are missing, and types the password in App Store Connect. Sign-in required and the username were
+filled in by Claude; the password is Angad's. The iPhone icon's Liquid Glass effects were
+turned off so the bridge reads as flat white (6793578); build 1.0.0 (11) carries it,
+uploaded 2026-10-29 and to replace build 8 on the version once processed. Builds 9 and 10
+were never uploaded (EAS numbering). Upload size: `.easignore` keeps `outputs/` out; the Mac
+had about 1 GB free that day.
 
 ## 2026-10-24: Google Play badge on the site
 
