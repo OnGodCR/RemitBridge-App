@@ -1,0 +1,38 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "version": "1.0.0",
+    "copyright": "2026 RemitBridge Labs",
+    "categories": [
+      "FINANCE",
+      "EDUCATION"
+    ],
+    "release": {
+      "automaticRelease": false,
+      "phasedRelease": false
+    },
+    "info": {
+      "en-US": {
+        "title": "RemitBridge",
+        "subtitle": "True cost of sending money",
+        "promoText": "Compare bank-funded transfers, scan receipts and ask Remmy about costs. See who delivers the most, learn with games, and check each price's collection time.",
+        "description": "Say you send $300 home every month. The app shows a $3.99 fee, so that feels like the cost. But the exchange rate it gives you is lower than the real one, and that gap can take more than the fee does. Over a year, it adds up to money your family never sees.\n\nRemitBridge shows you that gap.\n\nPick a country and an amount. You'll see what your family would get from each provider, ranked by how much actually arrives. The one at the top is marked RemitBridge choice. No company can pay to be there, because none of them pay us anything. Tap any price to see the fee and the exchange-rate markup split apart, and where the price came from. Prices are for paying from a bank account. Comparing doesn't need an account.\n\nAlready sent money? Take a photo of the receipt. Your name, address and account numbers are covered on your phone before anything leaves it. Then you'll see what that transfer really cost, whether the 1% federal remittance tax was charged right, and what you could have kept with another provider.\n\nGot a question? Ask Remmy, the assistant in the app. It answers from the prices we've checked and can take you to the right screen. It's an AI, so it can get things wrong, and it isn't financial advice.\n\nWant to know what the words on a receipt mean? Short lessons and games cover rates, fees, markups and scams. There are tools to check a rate, look over a message asking for money, and add up a year of sending. You can also set an alert for when a provider's price reaches your target.\n\nA few things RemitBridge will never do. It never sends or holds your money, and there's no send button. There are no ads and no affiliate links. We don't make anything when you pick a provider.\n\nRemitBridge is made by RemitBridge Labs, a nonprofit corporation. It covers sending from the US to more than 20 countries, including India, Mexico, the Philippines and Vietnam. Prices change, so check the final amount with the provider before you send.",
+        "keywords": [
+          "remittance",
+          "send money",
+          "exchange rate",
+          "transfer fee",
+          "compare",
+          "India",
+          "Mexico",
+          "Philippines",
+          "Vietnam",
+          "receipt"
+        ],
+        "marketingUrl": "https://app.remitbridgelabs.org",
+        "supportUrl": "https://app.remitbridgelabs.org/support",
+        "privacyPolicyUrl": "https://app.remitbridgelabs.org/privacy"
+      }
+    }
+  }
+}

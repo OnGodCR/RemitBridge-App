@@ -13,9 +13,15 @@ enrolled as Organization (Team ID QS9F7JU6H2). The App Store Connect record exis
 `mobile/eas.json`, and iOS 1.0.0 (8) was uploaded with `eas submit` (Angad signed in to Apple
 in the terminal; an App Manager API key now lives on EAS, so later uploads need no sign-in).
 The store text now says "more than 20 countries", since Compare had prices for 25 that day
-and the number moves. Left: the rest of the listing, privacy, age rating, review details,
-the 6.9-inch and 13-inch iPad screenshots (iPad simulator build 511308d1 queued), a
-TestFlight check on Angad's iPhone, then Submit for Review (Angad).
+and the number moves. Later the same day: the listing text, categories, copyright and version 1.0.0 went up with
+`eas metadata:push` (`mobile/store.config.json`, using the EAS API key, no browser); price
+Free, US only; privacy answers saved as a draft; age rating 13+ (Apple's 9+ raised to the
+terms' minimum); build 8 attached; iPhone shots (resized to the now-required 6.3-inch size)
+and new 13-inch iPad shots (web render at 2064x2752; the iPad simulator ran the app but
+ignored taps) uploaded. Left for Angad: publish the privacy answers and Content Rights (both
+are his attestations), the review contact and the review account's password, a TestFlight
+check, then Submit for Review. Review notes are in `listing.md`; typing them into the page by
+script did not save, so they go up with `eas metadata:push` once the contact is known.
 
 ## 2026-10-24: Google Play badge on the site
 

@@ -22,7 +22,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [x] **Play Console, Target audience (18 and over) and Data safety**: saved by Claude 2026-10-17; App content shows nothing left.
 - [x] **Play Console, Content rating**: IARC terms accepted, questionnaire filled (2026-10-17).
 - [x] **New production builds for D184, D185 and D186**: built 2026-10-18, iOS 1.0.0 (6) and Android 1.0.0 (10), since superseded.
-- [ ] **13-inch iPad screenshots for App Store Connect (D185)**: needed once the app supports iPad; take them from the iPad simulator after the new build.
+- [x] **13-inch iPad screenshots for App Store Connect (D185)**: taken 2026-10-28 from the web render at iPad size (the simulator wouldn't take taps) and uploaded.
 - [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
 - [ ] **Hindi for the licenses row and the "cheapest we found" line (D189)**: 3 rows in `docs/translation-review/hi.md`.
@@ -65,11 +65,13 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
+- [ ] **App Store, your part (2026-10-28):** publish the App Privacy answers (Apple's accuracy attestation), Content Rights, the App Review contact name and phone plus the review account's password, a TestFlight check on your iPhone, then Submit for Review.
+
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [x] **Apple organization conversion**: done; Membership details show RemitBridge Labs, Organization, Team ID QS9F7JU6H2 (seen 2026-10-28).
 - [x] **Google Play organization verification**: complete, confirmed by Angad 2026-10-16; first app can now be created.
 - [x] **App Store Connect app record**: RemitBridge, app ID 6828251107, company RemitBridge Labs, SKU `remitbridge` (2026-10-28). iOS 1.0.0 (8) uploaded with `eas submit` the same day (API key 4S667K8PN7, App Manager, stored on EAS).
-- [ ] **Paste the App Store listing** (in progress 2026-10-28: promotional text and description typed, not yet saved when Chrome disconnected): from `docs/store/listing.md`, availability US only, the eight new 6.9-inch screenshots in `~/Desktop/RemitBridge-App-Store/store/iphone-6.9/` (2026-10-17; the Oct 12 ones are out of date).
+- [x] **App Store listing** (2026-10-28): text, categories, copyright and version 1.0.0 pushed with `eas metadata:push` from `mobile/store.config.json`; price Free, US only; privacy answers saved (not published); age rating 13+ (Apple calculated 9+, raised to match the terms' 13+); build 8 attached; 8 iPhone shots (resized to the required 6.3-inch, 1206x2622) and 8 new 13-inch iPad shots (web render at 2064x2752, `~/Desktop/RemitBridge-App-Store/store/ipad-13/`) uploaded. Was: from `docs/store/listing.md`, availability US only, the eight new 6.9-inch screenshots in `~/Desktop/RemitBridge-App-Store/store/iphone-6.9/` (2026-10-17; the Oct 12 ones are out of date).
 - [x] **iPhone production build**: 1.0.0 (5), b44747b9-818f-4850-a1ad-591e4ceaebc9 FINISHED 2026-10-16. Apple signing completed by Angad; not submitted.
 - [ ] **Play Console**: create first app and upload the fresh production AAB, build 27908f86-1347-4fd0-9d45-0bfb457f330e, version code 8 (finished 2026-10-16). Do not use the older version code 6. Complete the forms from docs/store/listing.md.
 - [x] **Android phone screenshots**: six from the Samsung, in `docs/store/screenshots/android/` (2026-10-12).
