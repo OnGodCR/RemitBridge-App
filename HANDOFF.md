@@ -19,9 +19,13 @@ Free, US only; privacy answers saved as a draft; age rating 13+ (Apple's 9+ rais
 terms' minimum); build 8 attached; iPhone shots (resized to the now-required 6.3-inch size)
 and new 13-inch iPad shots (web render at 2064x2752; the iPad simulator ran the app but
 ignored taps) uploaded. Left for Angad: publish the privacy answers and Content Rights (both
-are his attestations), the review contact and the review account's password, a TestFlight
-check, then Submit for Review. Review notes are in `listing.md`; typing them into the page by
-script did not save, so they go up with `eas metadata:push` once the contact is known.
+are his attestations), the review account's password, a TestFlight check, then Submit for
+Review. 2026-10-29: the review contact is Angad's dad (Rahul Kochar, hello@ as the email).
+`eas metadata:push` created the review details with the contact, username and notes, then
+failed: Apple's API refuses review details with sign-in required unless the password comes
+in the same request. So no review block is kept in `store.config.json` (it would hold the
+password and his phone); Angad checks the section, pastes the notes from `listing.md` if
+they are missing, and types the password in App Store Connect.
 
 ## 2026-10-24: Google Play badge on the site
 
