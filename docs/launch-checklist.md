@@ -57,7 +57,8 @@ supabase functions deploy whatsapp --project-ref gmzljjdnwndvqciqicbx
 
 - [x] D-U-N-S received for RemitBridge Labs, confirmed by Angad 2026-10-14 (case 11089990).
 - [x] Apple organization-conversion request submitted by Angad (2026-10-14).
-- [ ] Apple approves/completes organization conversion.
+- [x] Apple organization conversion complete (seen in Membership details 2026-10-28).
+- [x] App Store Connect record created, app ID 6828251107; iOS 1.0.0 (8) uploaded 2026-10-28.
 - [x] Google Play organization verification complete, confirmed by Angad 2026-10-16;
   he can now create the first app. App record/submission steps remain separate.
 - [ ] Create/verify store app records for `org.remitbridgelabs.app`, intended US availability,

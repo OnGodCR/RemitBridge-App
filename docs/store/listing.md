@@ -59,7 +59,7 @@ Want to know what the words on a receipt mean? Short lessons and games cover rat
 
 A few things RemitBridge will never do. It never sends or holds your money, and there's no send button. There are no ads and no affiliate links. We don't make anything when you pick a provider.
 
-RemitBridge is made by RemitBridge Labs, a nonprofit corporation. It covers sending from the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Prices change, so check the final amount with the provider before you send.
+RemitBridge is made by RemitBridge Labs, a nonprofit corporation. It covers sending from the US to more than 20 countries, including India, Mexico, the Philippines and Vietnam. Prices change, so check the final amount with the provider before you send.
 ```
 
 **What's New** (first version):
@@ -120,7 +120,7 @@ intended audience is adults sending money. These are separate from the content r
 ```
 RemitBridge is a free information tool. It compares the cost of sending money from the US to family abroad and never moves money: there is no send button, no payments and no affiliate links.
 
-No account is needed: open the app, go to Compare, and prices load for the US to 26 countries, including India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and enables saved comparisons, manually entered transfers and rate alerts. Scans do not require an account.
+No account is needed: open the app, go to Compare, and prices load for the US to more than 20 countries, including India, Mexico, the Philippines and Vietnam. Signing in (email code, Sign in with Apple, or Google) is optional and enables saved comparisons, manually entered transfers and rate alerts. Scans do not require an account.
 
 Scan (the second tab, after Compare) reads a photo of a money-transfer receipt. To test it without a receipt of your own, open this sample on another screen and photograph it, or save it to Photos and use "Choose a photo": https://app.remitbridgelabs.org/review/sample-receipt.jpg (every name and number on it is made up). Personal details are covered on the phone before anything is sent. When our own rules can't read a figure, the covered text (and sometimes the covered photo) goes to Groq's AI model with zero data retention; the app asks permission before the first receipt is sent.
 
@@ -239,7 +239,7 @@ choose Google-generated app signing key when Play Console asks). Release name: u
 Release notes:
 
 ```
-First release. Compare what it costs to send money from the US to 26 countries, ranked by how much your family receives. Scan a transfer receipt to see what it really cost.
+First release. Compare what it costs to send money from the US to more than 20 countries, ranked by how much your family receives. Scan a transfer receipt to see what it really cost.
 ```
 
 After the first upload, copy Play App Signing's SHA-256 and SHA-1 (Setup > App signing)

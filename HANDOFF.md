@@ -3,7 +3,19 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-18 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-10-28 (see the sections just below; the older status after them is kept for history)
+
+## 2026-10-28: App Store submission started
+
+Apple finished the organization conversion: the developer account is RemitBridge Labs,
+enrolled as Organization (Team ID QS9F7JU6H2). The App Store Connect record exists
+(RemitBridge, app ID 6828251107, company RemitBridge Labs, SKU `remitbridge`), its ID is in
+`mobile/eas.json`, and iOS 1.0.0 (8) was uploaded with `eas submit` (Angad signed in to Apple
+in the terminal; an App Manager API key now lives on EAS, so later uploads need no sign-in).
+The store text now says "more than 20 countries", since Compare had prices for 25 that day
+and the number moves. Left: the rest of the listing, privacy, age rating, review details,
+the 6.9-inch and 13-inch iPad screenshots (iPad simulator build 511308d1 queued), a
+TestFlight check on Angad's iPhone, then Submit for Review (Angad).
 
 ## 2026-10-24: Google Play badge on the site
 
