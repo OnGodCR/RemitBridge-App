@@ -65,7 +65,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
-- [ ] **App Store, your part (2026-10-28):** publish the App Privacy answers (Apple's accuracy attestation), Content Rights, the review account's password (the contact, your dad, was pushed 2026-10-29; check it and the notes saved), a TestFlight check on your iPhone, then Submit for Review.
+- [ ] **App Store, your part (2026-10-28):** publish the App Privacy answers (Apple's accuracy attestation), Content Rights (review contact, sign-in and password saved and build 11 attached, 2026-10-29), a TestFlight check on your iPhone, then Submit for Review.
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [x] **Apple organization conversion**: done; Membership details show RemitBridge Labs, Organization, Team ID QS9F7JU6H2 (seen 2026-10-28).
