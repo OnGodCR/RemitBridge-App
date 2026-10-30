@@ -8,7 +8,7 @@
     "scheme": "remitbridge",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/images/icon-ios.png",
+      "icon": "./assets/expo.icon",
       "bundleIdentifier": "org.remitbridgelabs.app",
       "supportsTablet": true,
       "usesAppleSignIn": true,
