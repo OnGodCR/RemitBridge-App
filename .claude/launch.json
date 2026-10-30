@@ -1,0 +1,44 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mobile-web",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "expo",
+        "start",
+        "--web",
+        "--localhost",
+        "--port",
+        "8088",
+        "--no-dev"
+      ],
+      "cwd": "mobile",
+      "env": {
+        "EXPO_NO_TELEMETRY": "1",
+        "BROWSER": "none"
+      },
+      "port": 8088
+    },
+    {
+      "name": "metro-ios",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "expo",
+        "start",
+        "--dev-client",
+        "--localhost",
+        "--port",
+        "8081",
+        "--no-dev",
+        "--minify"
+      ],
+      "cwd": "mobile",
+      "env": {
+        "EXPO_NO_TELEMETRY": "1",
+        "BROWSER": "none"
+      },
+      "port": 8081
+    }
+  ]
+}
