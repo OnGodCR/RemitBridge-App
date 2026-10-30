@@ -28,9 +28,13 @@ password and his phone); Angad checks the section, pastes the notes from `listin
 they are missing, and types the password in App Store Connect. Sign-in required and the username were
 filled in by Claude; the password is Angad's. The iPhone icon's Liquid Glass effects were
 turned off so the bridge reads as flat white (6793578); build 1.0.0 (11) carries it,
-uploaded 2026-10-29 and attached to version 1.0.0 in place of build 8. App Review Information is complete (Angad reset the review account's password in Supabase and saved it in App Store Connect). 2026-10-30: Angad saw the icon still cut off. The .icon format bakes a glass rim whose
-corners clip even with the effects off, so iOS now uses the flat `icon-ios.png` (e178162) and
-build 1.0.0 (12) was started with auto-submit; it replaces build 11 on the version once processed. Left: privacy Publish, Content Rights, a TestFlight check, Submit for Review. Builds 9 and 10
+uploaded 2026-10-29 and attached to version 1.0.0 in place of build 8. App Review Information is complete (Angad reset the review account's password in Supabase and saved it in App Store Connect). 2026-10-30: the icon was still cut off. App Store Connect clipped each stroke of
+bridge.svg to its centre line (square ends, flat arch top). Angad wants the glass look, so the
+build-8 glass icon.json is back and the bridge is drawn as filled outlines on the full canvas
+(eee2a79); build 1.0.0 (13) carries it. Build 12 (a flat icon, e178162) is not used. Listing
+audited 2026-10-30: text, URLs, copyright, review sign-in and contact, 8 iPhone and 8 iPad
+screenshots, Finance/Education, 13+, US only, privacy answers (9 types) all in. Left for Angad:
+Content Rights and privacy Publish (both are his attestations), then Add for Review. Left: privacy Publish, Content Rights, a TestFlight check, Submit for Review. Builds 9 and 10
 were never uploaded (EAS numbering). Upload size: `.easignore` keeps `outputs/` out; the Mac
 had about 1 GB free that day.
 
