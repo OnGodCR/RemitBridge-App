@@ -36,7 +36,8 @@ audited 2026-10-30: text, URLs, copyright, review sign-in and contact, 8 iPhone 
 screenshots, Finance/Education, 13+, US only, privacy answers (9 types) all in. Content Rights set and
 privacy answers published by Angad, and build 13 attached to the version (2026-10-30). **Submitted for review
 2026-10-30** (status Waiting for Review) with build 13. Google Play: live in production (release Oct 23, 100%, "RemitBridge: Compare Transfers" by
-RemitBridge Labs, public page checked 2026-10-31). Left: Apple's decision; the icon in App
+RemitBridge Labs, public page checked 2026-10-31). Both stores open outside the US except the EU, China and sanctioned countries (D194,
+2026-10-31): Apple 147 countries on release, Play 148 plus rest of world, in Google's review. Left: Apple's decision; the icon in App
 Store Connect's header (build 8's render) should switch to build 13's once processed. Left: privacy Publish, Content Rights, a TestFlight check, Submit for Review. Builds 9 and 10
 were never uploaded (EAS numbering). Upload size: `.easignore` keeps `outputs/` out; the Mac
 had about 1 GB free that day.

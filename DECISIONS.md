@@ -2487,5 +2487,7 @@ Left out: the 27 EU countries, because Apple's Digital Services Act trader setup
 equivalent) would publish a phone number and postal address for RemitBridge Labs, which Angad
 chose not to show (2026-10-03); Cuba, Iran, North Korea and Syria, under full US sanctions; and
 mainland China (Apple needs an ICP licence there, and AI chat needs separate approval). Google
-Play: 148 countries/regions plus Play's "rest of world", sent for review 2026-10-31. The privacy
+Play: 148 countries/regions plus Play's "rest of world", sent for review 2026-10-31. App Store: 147 countries
+or regions "Available on App Release" (Apple lists no sanctioned countries), set 2026-10-31; a
+first save wrongly made all 175 available and was corrected minutes later, before any release. The privacy
 policy and terms are written for US law; the UK and other privacy regimes are not yet covered.
