@@ -2479,3 +2479,13 @@ Remitly Egypt and Xoom cash pickup to Egypt still have no fee on file. The publi
 decides: the dry run published 202 and quarantined 10 (the 4 Ethiopia range failures, plus
 Ria Mexico and Xe Philippines, whose total cost moved over 2 points from their recent median),
 and held 36 on DOP and NGN source disagreement. A confirmation never overrides the gate.
+
+**D194. Both stores open beyond the US, except the EU** (Angad, 2026-10-31: "Open more
+countries", then "All except EU"). Every price is still for sending from the US; the point is US
+senders on a foreign store account, and people abroad following their family's transfers.
+Left out: the 27 EU countries, because Apple's Digital Services Act trader setup (and Google's
+equivalent) would publish a phone number and postal address for RemitBridge Labs, which Angad
+chose not to show (2026-10-03); Cuba, Iran, North Korea and Syria, under full US sanctions; and
+mainland China (Apple needs an ICP licence there, and AI chat needs separate approval). Google
+Play: 148 countries/regions plus Play's "rest of world", sent for review 2026-10-31. The privacy
+policy and terms are written for US law; the UK and other privacy regimes are not yet covered.
