@@ -65,7 +65,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 ## Store blockers (Angad)
 
-- [ ] **App Store, your part (2026-10-28):** App Privacy published and Content Rights set (2026-10-30) (review contact, sign-in and password saved 2026-10-29; build 13, the glass icon without the cutoff, replaces build 11, 2026-10-30; build 13 attached; rest of the listing checked complete), a TestFlight check on your iPhone, then Submit for Review.
+- [x] **App Store, your part (2026-10-28), submitted for review 2026-10-30 with build 13:** App Privacy published and Content Rights set (2026-10-30) (review contact, sign-in and password saved 2026-10-29; build 13, the glass icon without the cutoff, replaces build 11, 2026-10-30; build 13 attached; rest of the listing checked complete), a TestFlight check on your iPhone, then Submit for Review.
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [x] **Apple organization conversion**: done; Membership details show RemitBridge Labs, Organization, Team ID QS9F7JU6H2 (seen 2026-10-28).

@@ -34,8 +34,9 @@ build-8 glass icon.json is back and the bridge is drawn as filled outlines on th
 (eee2a79); build 1.0.0 (13) carries it. Build 12 (a flat icon, e178162) is not used. Listing
 audited 2026-10-30: text, URLs, copyright, review sign-in and contact, 8 iPhone and 8 iPad
 screenshots, Finance/Education, 13+, US only, privacy answers (9 types) all in. Content Rights set and
-privacy answers published by Angad, and build 13 attached to the version (2026-10-30). Left:
-the icon on his iPhone from TestFlight build 13, then Add for Review and Submit. Left: privacy Publish, Content Rights, a TestFlight check, Submit for Review. Builds 9 and 10
+privacy answers published by Angad, and build 13 attached to the version (2026-10-30). **Submitted for review
+2026-10-30** (status Waiting for Review) with build 13. Left: Apple's decision; the icon in App
+Store Connect's header (build 8's render) should switch to build 13's once processed. Left: privacy Publish, Content Rights, a TestFlight check, Submit for Review. Builds 9 and 10
 were never uploaded (EAS numbering). Upload size: `.easignore` keeps `outputs/` out; the Mac
 had about 1 GB free that day.
 

@@ -227,8 +227,8 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       prices; everything held back is in `docs/future-updates.md`. Learn progress is kept with
       the account (`learn_progress`, merged on sign-in). Migration run by Angad, smoke test 81/81
       (2026-10-18); `remmy` and `whatsapp` redeployed by Angad; Android 1.0.0 (12) tested by Angad and
-      **sent to Google Play for review 2026-10-18**. Left: Google's decision; iOS 1.0.0 (8) waits
-      on Apple's organization conversion.
+      **sent to Google Play for review 2026-10-18**. Left: Google's decision; iOS 1.0.0 (13) submitted
+      to Apple for review 2026-10-30, as RemitBridge Labs.
 
 - [ ] **Weekly rates, monthly fees (D193, 2026-10-18):** `engine/scripts/combine_weekly_rates.py`
       pairs each week's reviewed rates with the newest fee from the last 31 days. First round:
