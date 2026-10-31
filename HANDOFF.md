@@ -46,6 +46,14 @@ had about 1 GB free that day.
 
 The Android app is on Google Play but not yet in Play search. The site links to the listing with Google's badge (`site/google-play-badge.png`) on the home page, `/p/<partner>` and support. iPhone still says coming soon (waits on Apple's organization conversion).
 
+## 2026-10-31: third weekly round, partial (D193)
+
+The collection's browsers failed partway, so this round has 170 rows and 478 checks unfinished.
+Source: `outputs/2026-10-30-full-refresh/fresh-observations-reviewed.csv` (the workbook in
+Downloads is a view of it). 102 paired into `engine/manual/quotes/2026-10-31-weekly-rates.json`;
+dry run 92 published, 6 quarantined (beat mid-market), 4 held on GHS source disagreement. Six
+Mexico change holds wait for Angad (`docs/todo.md`).
+
 ## 2026-10-24: second weekly round (D193)
 
 `~/Downloads/remitbridge-exchange-rates-2026-10-24.csv` (533 rows) paired with the Oct 12–18
