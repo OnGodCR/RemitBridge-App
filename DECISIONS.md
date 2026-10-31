@@ -2491,3 +2491,8 @@ Play: 148 countries/regions plus Play's "rest of world", sent for review 2026-10
 or regions "Available on App Release" (Apple lists no sanctioned countries), set 2026-10-31; a
 first save wrongly made all 175 available and was corrected minutes later, before any release. The privacy
 policy and terms are written for US law; the UK and other privacy regimes are not yet covered.
+
+2026-10-31, Angad, on six held Mexico rates (Xoom +3.2%, Ria +0.7%, Western Union +0.8%): "Confirm
+all six". `--confirmed xoom/us-mx ria/us-mx western-union/us-mx`. Western Union's two pair and
+pass the gate; Ria's and Xoom's four have no fee on file for the same amount, methods and basis,
+so they stay held until a fee is checked. A confirmation never supplies a missing fee.
