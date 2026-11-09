@@ -70,6 +70,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **App Store, your part (2026-10-28), submitted for review 2026-10-30 with build 13:** App Privacy published and Content Rights set (2026-10-30) (review contact, sign-in and password saved 2026-10-29; build 13, the glass icon without the cutoff, replaces build 11, 2026-10-30; build 13 attached; rest of the listing checked complete), a TestFlight check on your iPhone, then Submit for Review.
 
+- [ ] **New store builds for D196** (2026-11-09): Learn no longer opens the empty Papers and Workshops pages. JS-only, but the app has no over-the-air updates, so it needs iOS and Android production builds and store submissions.
 - [x] **Apple review (2026-11-09):** expedite requested from your dad's account; approved and live on the App Store the same day (`docs/outreach/apple-review-status.md`).
 
 - [x] **Google Play trader status** (Google's email of 2026-11-04, due 2027-02-01): declared **non-trader** by Claude at Angad's word, 2026-11-09 (D195). Play now shows "Non-trader" under Account details.

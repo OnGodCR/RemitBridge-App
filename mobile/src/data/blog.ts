@@ -70,6 +70,17 @@ export function relatedTo(post: BlogPost, count = 3): BlogPost[] {
  * Where a link inside a post goes in the app. The website's paths become app screens where
  * the app has one; anything else opens on the website.
  */
+/**
+ * Website pages with nothing in them yet (D196): no papers published, no workshops running.
+ * A link to one would open the full website on an empty page, so it shows as plain text.
+ * Take a path out of this list when its page has something to read.
+ */
+const HELD_BACK = new Set(['/papers', '/workshops']);
+
+export function isHeldBack(path: string): boolean {
+  return HELD_BACK.has(path.split('#')[0]);
+}
+
 export function linkTarget(path: string): { app: Href } | { web: string } {
   const [route] = path.split('#');
   if (route.startsWith('/blog/')) {

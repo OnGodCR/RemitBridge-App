@@ -38,6 +38,12 @@ list in `mobile/src/lib/routes.ts` too, so Remmy and the WhatsApp bot offer it.
 
 ## Learn
 
+- [ ] **Research papers and Workshops** (D196, 2026-11-09). Learn's "On the website" section
+      opened remitbridgelabs.org/papers ("Nothing published yet") and /workshops ("Not
+      running yet") in a browser sheet, with the whole website's menus and sign-in around them.
+      Bring each row back in `mobile/src/app/(tabs)/learn.tsx` once its page has something in
+      it (the strings are still in `en.ts`), and take its path out of `HELD_BACK` in
+      `mobile/src/data/blog.ts` so posts link to it again. Needs a new store build.
 - [ ] **13 blog posts that are only a summary so far** (posts 16, 18 and 20 to 30, including
       the whole "Connecting it up" series). They show once `scripts/port-blog.mjs` brings
       their full text over from the website; the series toggle comes back with its first

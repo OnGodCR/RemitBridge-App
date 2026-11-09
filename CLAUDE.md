@@ -46,7 +46,9 @@ the work, not afterwards:
 - **docs/MANUAL_RESEARCH.md:** whenever a provider gets no adapter because
   its terms or robots.txt forbid automated access.
 
-Latest phone feedback, 2026-10-14: Compare offers bank-account-funded prices only (D178).
+Latest phone feedback, 2026-11-09 (Angad's dad, App Store build): Learn's website rows led to
+empty pages; removed until they have content (D196). 2026-10-14: Compare offers
+bank-account-funded prices only (D178).
 Remmy navigation actions must not replay when the chat sheet reopens.
 
 ## Open items

@@ -2506,3 +2506,13 @@ D-U-N-S number and hello@ under App support on the public Play page, worldwide; 
 that rather than lose the app. This narrows the reason in D194 for leaving out the EU: the
 address is now public on Play anyway, though Apple's trader setup is still not done. Declared
 by Claude in Play Console at Angad's word.
+
+**D196. No empty website pages from inside the app** (Angad, 2026-11-09, passing on his dad's
+feedback from the App Store build: "last sections open web n create dead paths ... they are not
+plugged in well"). Learn's last section, "On the website", opened Research papers and Workshops
+on remitbridgelabs.org. Both pages say there is nothing yet, and they sit inside the full
+website (its menus, sign-in, "Join the lab"), so a tap led to an empty page with nowhere useful
+to go. The section is gone until those pages have content, the same rule as D190. The one blog
+post that linked to /papers now shows those words as plain text (`HELD_BACK` in
+`mobile/src/data/blog.ts`), and a test keeps every link in a post inside the app. Ships with the
+next store builds; there is no over-the-air update.

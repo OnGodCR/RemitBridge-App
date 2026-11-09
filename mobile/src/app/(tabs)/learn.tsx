@@ -17,11 +17,9 @@ import { useGutter } from '@/hooks/use-gutter';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy } from '@/i18n';
 import { nextStep, useLearnStats, useLearned } from '@/lib/learn-progress';
-import { openPage } from '@/lib/links';
 import { useTabFocus } from '@/lib/current-tab';
 import { FocusRise } from '@/components/motion-views';
 
-const WEBSITE = 'https://www.remitbridgelabs.org'; // the bare domain redirects here
 
 /** The first explainer introduces remittances before the technical posts. */
 const FIRST_POST = POSTS.find((post) => post.id === 1)!;
@@ -129,10 +127,6 @@ export default function LearnScreen() {
             <ListRow art={<RemitBenchArt />} title={copy.titles.remitbench} subtitle={l.remitbenchSub} onPress={() => router.push('/remitbench')} />
           </ListGroup>
 
-          <ListGroup title={l.website} cards>
-            <ListRow external icon="doc.richtext" title={l.papers} subtitle={l.papersSub} onPress={() => openPage(`${WEBSITE}/papers`)} />
-            <ListRow external icon="person.2" title={l.workshops} subtitle={l.workshopsSub} onPress={() => openPage(`${WEBSITE}/workshops`)} />
-          </ListGroup>
         </ScrollView>
       )}
       </FocusRise>

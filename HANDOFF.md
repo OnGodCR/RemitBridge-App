@@ -5,6 +5,16 @@ resume. Update it at the end of every working session.
 
 **Last updated:** 2026-11-09 (see the sections just below; the older status after them is kept for history)
 
+## 2026-11-09: Dead ends in Learn (D196)
+
+Angad's dad, on the App Store build: the last sections open the web and lead nowhere. Learn's
+"On the website" rows (Research papers, Workshops) opened remitbridgelabs.org pages that say
+nothing exists yet, inside the full website. The section is removed, and the blog's one link
+to /papers is plain text. Tests 244/244, typecheck and lint pass; not seen on a phone yet.
+Needs new iOS and Android store builds to reach people. Account's Support and Licenses rows
+still open app.remitbridgelabs.org pages in a browser sheet (working pages, but with the site's
+own menu and store badges).
+
 ## 2026-11-09: Live on the App Store
 
 Apple approved iOS 1.0.0 (13) the day an expedited review was requested from Rahul Kochar's

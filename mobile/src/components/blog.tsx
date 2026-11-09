@@ -8,7 +8,7 @@ import Svg, { Path } from 'react-native-svg';
 import { AppText, Button } from '@/components/ui';
 import { Fonts, Radius, Spacing } from '@/constants/theme';
 import { BLOG_IMAGES } from '@/data/blog-images';
-import { linkTarget, type BlogBlock, type BlogPost } from '@/data/blog';
+import { isHeldBack, linkTarget, type BlogBlock, type BlogPost } from '@/data/blog';
 import { TERMS } from '@/data/glossary';
 import { useTheme } from '@/hooks/use-theme';
 import { useCopy, useLanguage } from '@/i18n';
@@ -128,6 +128,9 @@ function Inline({ text, color }: { text: string; color: string }): ReactNode {
         );
       }
       const link = /^\[([^\]]+)\]\((\/[^)]*)\)$/.exec(token);
+      if (link && isHeldBack(link[2])) {
+        return <Fragment key={i}>{link[1].replace(/\{\{[a-z0-9-]+\|([^}]+)\}\}/g, '$1')}</Fragment>;
+      }
       if (link) {
         return (
           <AppText key={i} accessibilityRole="link" onPress={() => go(link[2])} style={[styles.link, { color: t.primary }]}>

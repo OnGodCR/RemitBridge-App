@@ -3,7 +3,7 @@
  * cover exists, and every link between posts lands on a post in the app.
  */
 import { BLOG_IMAGES } from '@/data/blog-images';
-import { linkTarget, POSTS, relatedTo } from '@/data/blog';
+import { isHeldBack, linkTarget, POSTS, relatedTo } from '@/data/blog';
 
 jest.mock('@/data/blog-images', () => {
   const keys = (require('@/data/blog.json') as { posts: { cover: string | null; body: { image?: string }[] | null }[] }).posts.flatMap(
@@ -38,6 +38,21 @@ it('sends every link between posts to a post in the app', () => {
       }
     }
   }
+});
+
+it('keeps every link in a post inside the app, or plain text', () => {
+  for (const p of POSTS) {
+    for (const b of p.body ?? []) {
+      for (const text of [b.text ?? '', ...(b.items ?? [])]) {
+        for (const [, path] of text.matchAll(/\]\((\/[^)]*)\)/g)) {
+          if ('web' in linkTarget(path)) expect(isHeldBack(path)).toBe(true);
+        }
+      }
+    }
+  }
+  expect(isHeldBack('/papers')).toBe(true);
+  expect(isHeldBack('/workshops')).toBe(true);
+  expect(isHeldBack('/blog')).toBe(false);
 });
 
 it('always has something to read next', () => {
