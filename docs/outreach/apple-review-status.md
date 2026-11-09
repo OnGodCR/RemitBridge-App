@@ -49,4 +49,10 @@ hello@remitbridgelabs.org
 
 ## Log
 
-- 2026-11-09: drafted. Not sent yet.
+- 2026-11-09: drafted.
+- 2026-11-09: sent by Claude from Angad's Chrome, signed in as Rahul Kochar, at Angad's request.
+  The contact form no longer has a status option, and its "request an expedited app review"
+  form asks only for the app and platform (RemitBridge, iOS), with no message field, so the
+  message above was not included. Apple's confirmation page: "We'll expedite review for
+  RemitBridge." A rejection's resubmission goes back to the expedited queue on its own. Don't
+  file another expedite request: Apple warns that repeated requests may be refused later.
