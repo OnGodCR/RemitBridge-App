@@ -26,7 +26,8 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Upload Play's tablet screenshots (D187)**: `Desktop/RemitBridge-App-Store/play-upload/4-tablet-7-inch` and `5-tablet-10-inch` (8 each) into the store listing's 7-inch and 10-inch slots.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
 - [ ] **Hindi for the licenses row and the "cheapest we found" line (D189)**: 3 rows in `docs/translation-review/hi.md`.
-- [x] **Google Play badge on the site** (2026-10-24): home, `/p/<partner>` and support link to the Play listing. Left: swap "iPhone: coming soon" for an App Store badge once iOS is live.
+- [x] **Google Play badge on the site** (2026-10-24): home, `/p/<partner>` and support link to the Play listing. The App Store badge joined it 2026-11-09 (Apple's official artwork, self-hosted as `site/app-store-badge.svg`).
+- [ ] **App Store badge on remitbridgelabs.org** (2026-11-09): the main website (separate repo) still needs the App Store link next to Google Play.
 - [ ] **Try the terms step on the new build (D188)**: sign up, read both documents, accept; then sign out and in again (it shouldn't ask twice).
 - [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.
@@ -69,9 +70,9 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 
 - [x] **App Store, your part (2026-10-28), submitted for review 2026-10-30 with build 13:** App Privacy published and Content Rights set (2026-10-30) (review contact, sign-in and password saved 2026-10-29; build 13, the glass icon without the cutoff, replaces build 11, 2026-10-30; build 13 attached; rest of the listing checked complete), a TestFlight check on your iPhone, then Submit for Review.
 
-- [ ] **Apple review still pending (2026-11-09):** expedited review requested from your dad's account the same day; Apple confirmed "We'll expedite review for RemitBridge" (`docs/outreach/apple-review-status.md`). Left: watch App Store Connect and your dad's Apple account email for the decision.
+- [x] **Apple review (2026-11-09):** expedite requested from your dad's account; approved and live on the App Store the same day (`docs/outreach/apple-review-status.md`).
 
-- [ ] **Google Play trader status, due 2027-02-01** (Google's email of 2026-11-04): declare trader or non-trader in Play Console (Manage account > Account details > About you), or Play stops updates and removes the app. Play reaches the UK, Norway, Iceland and Liechtenstein (D194 left out only the EU). Suggested: non-trader, since RemitBridge Labs is a nonprofit and the app earns nothing (no ads, purchases or affiliate links); a trader's phone and address go public, which D194 avoided. Your attestation to make.
+- [x] **Google Play trader status** (Google's email of 2026-11-04, due 2027-02-01): declared **non-trader** by Claude at Angad's word, 2026-11-09 (D195). Play now shows "Non-trader" under Account details.
 
 - [x] **D-U-N-S received**, confirmed by Angad 2026-10-14 (case #11089990).
 - [x] **Apple organization conversion**: done; Membership details show RemitBridge Labs, Organization, Team ID QS9F7JU6H2 (seen 2026-10-28).

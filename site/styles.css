@@ -105,6 +105,10 @@ main li::before { content: ""; position: absolute; left: 4px; top: 0.68em; width
 .button:hover { filter: brightness(1.08); }
 .button.secondary { background: var(--card); color: var(--foreground); border: 1px solid var(--border); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+/* Store badges side by side at the same visible height: Google's PNG carries 11px of clear space. */
+.badges { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0; }
+.play img { display: block; margin: -11px; }
+.appstore img { display: block; }
 
 /* Footer: the website's dark ink. */
 footer { background: var(--ink); color: var(--ink-foreground); }

@@ -3,7 +3,19 @@
 This file shows where the project stands right now. Read it first when you
 resume. Update it at the end of every working session.
 
-**Last updated:** 2026-10-28 (see the sections just below; the older status after them is kept for history)
+**Last updated:** 2026-11-09 (see the sections just below; the older status after them is kept for history)
+
+## 2026-11-09: Live on the App Store
+
+Apple approved iOS 1.0.0 (13) the day an expedited review was requested from Rahul Kochar's
+account (`docs/outreach/apple-review-status.md`). Listing:
+https://apps.apple.com/us/app/remitbridge/id6828251107 (seller RemitBridge Labs, Finance, 13+).
+app.remitbridgelabs.org now shows Apple's official App Store badge (`site/app-store-badge.svg`,
+self-hosted, from developer.apple.com) next to Google Play on the home page, `/p/<partner>` and
+support; badge styles moved to `styles.css`. The WhatsApp bot's "Getting the app" answer no
+longer says the app is on its way (needs a `whatsapp` and `remmy` redeploy by Angad to go live).
+Google Play: declared non-trader with the provider details public (D195). Left: the App Store
+badge on remitbridgelabs.org (separate repo).
 
 ## 2026-10-28: App Store submission started
 

@@ -56,3 +56,5 @@ hello@remitbridgelabs.org
   message above was not included. Apple's confirmation page: "We'll expedite review for
   RemitBridge." A rejection's resubmission goes back to the expedited queue on its own. Don't
   file another expedite request: Apple warns that repeated requests may be refused later.
+- 2026-11-09: approved. RemitBridge is live on the App Store
+  (https://apps.apple.com/us/app/remitbridge/id6828251107; seller RemitBridge Labs, 13+, Finance).

@@ -2496,3 +2496,13 @@ policy and terms are written for US law; the UK and other privacy regimes are no
 all six". `--confirmed xoom/us-mx ria/us-mx western-union/us-mx`. Western Union's two pair and
 pass the gate; Ria's and Xoom's four have no fee on file for the same amount, methods and basis,
 so they stay held until a fee is checked. A confirmation never supplies a missing fee.
+
+**D195. Google Play: non-trader, with the provider details public** (Angad, 2026-11-09:
+"Non-trader", then "Consent and save"). Google now requires every developer to declare trader
+status by 2027-02-01. RemitBridge Labs is a nonprofit and the app earns nothing (no ads, purchases,
+subscriptions or affiliate links), which matches Google's description of a non-trader. Saving
+the declaration needs consent to Google showing the organization's name, address, phone number,
+D-U-N-S number and hello@ under App support on the public Play page, worldwide; Angad accepted
+that rather than lose the app. This narrows the reason in D194 for leaving out the EU: the
+address is now public on Play anyway, though Apple's trader setup is still not done. Declared
+by Claude in Play Console at Angad's word.

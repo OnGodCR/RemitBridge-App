@@ -229,7 +229,10 @@ by kind (Angad's request, 2026-10-01): set every feature up first, then test.
       (2026-10-18); `remmy` and `whatsapp` redeployed by Angad; Android 1.0.0 (12) tested by Angad and
       **sent to Google Play for review 2026-10-18**. **Live on Google Play** (production release Oct 23, 100% rollout, public listing checked
       2026-10-31); iOS 1.0.0 (13) submitted
-      to Apple for review 2026-10-30, as RemitBridge Labs.
+      to Apple for review 2026-10-30, as RemitBridge Labs; expedite requested 2026-11-09 and
+      **live on the App Store** the same day (apps.apple.com/us/app/remitbridge/id6828251107,
+      seller RemitBridge Labs). The App Store badge is on app.remitbridgelabs.org (home,
+      `/p/<partner>`, support). Google Play: declared non-trader 2026-11-09 (D195).
 
 - [ ] **Weekly rates, monthly fees (D193, 2026-10-18):** `engine/scripts/combine_weekly_rates.py`
       pairs each week's reviewed rates with the newest fee from the last 31 days. First round:
