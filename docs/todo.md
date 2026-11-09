@@ -27,7 +27,7 @@ Details live in CLAUDE.md's open items and `docs/launch-checklist.md`.
 - [ ] **Hindi for the terms and privacy step (D188)**: 12 new rows in `docs/translation-review/hi.md`.
 - [ ] **Hindi for the licenses row and the "cheapest we found" line (D189)**: 3 rows in `docs/translation-review/hi.md`.
 - [x] **Google Play badge on the site** (2026-10-24): home, `/p/<partner>` and support link to the Play listing. The App Store badge joined it 2026-11-09 (Apple's official artwork, self-hosted as `site/app-store-badge.svg`).
-- [ ] **App Store badge on remitbridgelabs.org** (2026-11-09): the main website (separate repo) still needs the App Store link next to Google Play.
+- [x] **App Store badge on remitbridgelabs.org** (2026-11-09): live on /app next to Google Play (website repo, 94463da).
 - [ ] **Try the terms step on the new build (D188)**: sign up, read both documents, accept; then sign out and in again (it shouldn't ask twice).
 - [ ] **Legal review note (D188)**: the privacy policy could say the account keeps which terms version you accepted and when.
 - [x] **Hindi for the review sign-in and onboarding questions (D184, D186)**: approved by Angad's mother, relayed by Angad 2026-10-17.

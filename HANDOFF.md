@@ -14,8 +14,8 @@ app.remitbridgelabs.org now shows Apple's official App Store badge (`site/app-st
 self-hosted, from developer.apple.com) next to Google Play on the home page, `/p/<partner>` and
 support; badge styles moved to `styles.css`. The WhatsApp bot's "Getting the app" answer no
 longer says the app is on its way (needs a `whatsapp` and `remmy` redeploy by Angad to go live).
-Google Play: declared non-trader with the provider details public (D195). Left: the App Store
-badge on remitbridgelabs.org (separate repo).
+Google Play: declared non-trader with the provider details public (D195). The main website's /app page got
+the badge too (website repo, 94463da).
 
 ## 2026-10-28: App Store submission started
 
