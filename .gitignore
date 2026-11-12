@@ -49,3 +49,7 @@ benchmark/receipts/*.jpeg
 benchmark/receipts/*.png
 benchmark/receipts/*.heic
 !benchmark/receipts/*.redacted.png
+
+# Working files from price rounds and store submissions (screenshots, zips, scratch
+# scripts): large, and never meant for the repo
+outputs/

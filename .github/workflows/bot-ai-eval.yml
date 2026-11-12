@@ -45,7 +45,13 @@ jobs:
         with:
           node-version: 24
       - name: Test
-        run: node packages/bot/scripts/eval-ai.ts ${{ inputs.models }} > /dev/null
+        # The model names reach the shell as an environment value, never pasted into the
+        # script, so whatever is typed in the form is data and can't run as a command.
+        env:
+          EVAL_MODELS: ${{ inputs.models }}
+        run: |
+          read -r -a models <<< "$EVAL_MODELS"
+          node packages/bot/scripts/eval-ai.ts "${models[@]}" > /dev/null
       - name: Summary
         if: always()
         run: cat "$EVAL_OUT" >> "$GITHUB_STEP_SUMMARY" || true

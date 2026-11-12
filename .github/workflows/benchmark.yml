@@ -49,9 +49,14 @@ jobs:
           cache: npm
       - run: npm ci --workspace @remitbridge/receipt --include-workspace-root
       - name: Benchmark
+        # Inputs reach the shell as environment values, never pasted into the script, so
+        # whatever is typed in the form is data and can't run as a command.
+        env:
+          MODES: ${{ inputs.modes }}
+          LIMIT: ${{ inputs.limit }}
         run: |
-          args=(--modes "${{ inputs.modes }}" --out "$RUNNER_TEMP/results.md")
-          if [ -n "${{ inputs.limit }}" ]; then args+=(--limit "${{ inputs.limit }}"); fi
+          args=(--modes "$MODES" --out "$RUNNER_TEMP/results.md")
+          if [ -n "$LIMIT" ]; then args+=(--limit "$LIMIT"); fi
           node packages/receipt/scripts/benchmark.ts "${args[@]}" > /dev/null
           cat "$RUNNER_TEMP/results.md" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4

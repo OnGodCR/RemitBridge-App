@@ -49,7 +49,7 @@ jobs:
           echo "n=$n" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         if: steps.pending.outputs.n != '0'
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
         if: steps.pending.outputs.n != '0'
       - if: steps.pending.outputs.n != '0'
         working-directory: engine
